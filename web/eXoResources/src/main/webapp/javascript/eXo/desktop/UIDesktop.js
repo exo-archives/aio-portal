@@ -241,8 +241,14 @@ UIDesktop.prototype.removeApp = function(uri) {
 	var appId = uri.substr(uri.lastIndexOf("=") + 1) ;
 	var result = ajaxAsyncGetRequest(uri, false) ;
 	if(result == "OK") {
-		alert('appId = ' + appId) ;
+		eXo.desktop.UIDesktop.removeWindow(appId) ;
+		eXo.desktop.UIDockbar.removeDockbarIcon("DockItem" + appId) ;
 	}
-}
+};
+
+UIDesktop.prototype.removeWindow = function (idWindow) {
+	var uiWindow = document.getElementById(idWindow); 
+	if (uiWindow) eXo.core.DOMUtil.removeElement(uiWindow);
+};
 
 eXo.desktop.UIDesktop = new UIDesktop() ;
