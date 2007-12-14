@@ -214,6 +214,15 @@ UIDockbar.prototype.findIndex = function(object) {
   }
 } ;
 
+UIDockbar.prototype.removeDockbarIcon = function(idIcon) {
+	var icon = document.getElementById(idIcon);
+	if (icon) {
+		var toolTip = icon.previousSibling;
+		eXo.core.DOMUtil.removeElement(icon);
+		eXo.core.DOMUtil.removeElement(toolTip);
+	}
+};
+
 UIDockbar.prototype.reset = function() {
   var UIDockbar = eXo.desktop.UIDockbar ;
   var uiDockbar = document.getElementById("UIDockBar") ;
