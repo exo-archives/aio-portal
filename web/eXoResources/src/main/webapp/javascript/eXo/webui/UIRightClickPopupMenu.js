@@ -51,7 +51,10 @@ UIRightClickPopupMenu.prototype.clickRightMouse = function(event, elemt, menuId,
 		contextMenu.style.display = 'none' ;
 		return;
 	}
+	
+	document.oncontextmenu = function() {return false;}
 	eXo.core.MouseEventManager.addMouseDownHandler("eXo.webui.UIRightClickPopupMenu.hideContextMenu('" + menuId + "');")
+	document.oncontextmenu = null;
 
 	if(params) {
 		params = "," + params + "," ;
