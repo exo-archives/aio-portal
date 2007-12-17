@@ -187,14 +187,14 @@ UIWindow.prototype.initDND = function(e) {
 	var dragObjects = DOMUtil.findDescendantsByClass(uiPageDeskTop, "div", "UIDragObject") ;
 	if (dragObjects.length > 0) {
 		for (var i = 0; i < dragObjects.length; i ++) {
-				dragObjects[i].style.zIndex = i + 1 ;
+				var zIndex = dragObjects[i].style.zIndex || 1;
+				if (maxIndex < zIndex) 	maxIndex = parseInt(zIndex);
 		}
-		maxIndex = i*2 + 2 ;
+		maxIndex += 1;
 		dragBlock.style.zIndex = maxIndex ;
-		eXo.desktop.UIWindow.saveWindowProperties(dragBlock) ;
 		var uiDockbar = document.getElementById("UIDockBar") ;
 		if (uiDockbar.style.zIndex < maxIndex) {
-			uiDockbar.style.zIndex = maxIndex + 2 ;
+			uiDockbar.style.zIndex = maxIndex + 1 ;
 		}
 	}
 
