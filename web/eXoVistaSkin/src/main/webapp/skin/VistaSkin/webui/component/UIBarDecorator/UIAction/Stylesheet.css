@@ -1,0 +1,111 @@
+.UIAction {
+  padding: 8px 0px;
+}
+
+.UIAction .ActionContainer{
+	width: auto;
+	margin: auto;
+}
+
+.UIAction .ActionButton {
+	float:left;
+	margin: 0px 3px;
+}
+
+.UIAction .ActionContainer  a {
+  font-weight: normal ;
+}
+
+.UIAction .ActionContainer  a:hover {
+  color: #058ee6;
+}
+
+.UIAction .ActionContainer .Icon {
+	padding-left: 25px;
+	background-position: left center;
+	width: auto;
+	height: auto;
+} 
+
+/*##############################-Disabled ActionButton-################################*/
+.UIAction .DisabledStyle {
+}
+
+.UIAction .DisabledStyle .ButtonLeft {
+  background: url('background/SelectedActionButtonL12x24.png') no-repeat left;
+  padding: 0px 0px 0px 12px;
+}
+
+.UIAction .DisabledStyle .ButtonRight {
+  background: url('background/SelectedActionButtonR12x24.png') no-repeat right;
+  padding: 0px 12px 0px 0px ;
+}
+
+.UIAction .DisabledStyle .ButtonMiddle {
+	line-height: 22px; text-align: center; 
+	background: url('background/SelectedActionButtonM2x24.png') repeat-x;
+	display: table-cell;
+	padding: 0px 12px;	
+}
+
+.UIAction .DisabledStyle a {
+	color: gray;
+	cursor: default;
+}
+
+.UIAction .DisabledStyle a:hover {
+	color: gray;
+	cursor: default;
+}
+
+/*##############################-LightBlueStyle ActionButton-################################*/
+.UIAction .LightBlueStyle {}
+
+.UIAction .LightBlueStyle .ButtonLeft {
+  background: url('background/LightButtonLeft12x24.png') no-repeat left;
+  padding: 0px 0px 0px 12px;
+}
+
+.UIAction .LightBlueStyle .ButtonRight {
+  background: url('background/LightButtonRight12x24.png') no-repeat right;
+  padding: 0px 12px 0px 0px ;
+}
+
+.UIAction .LightBlueStyle .ButtonMiddle {
+ 	line-height: 24px; text-align: center; 
+	background: url('background/LightButtonMiddle1x24.png') repeat-x;
+	display: table-cell;
+	padding: 0px 12px;
+}
+
+/*##############################-SimpleStyle ActionButton-################################*/
+.UIAction .SimpleStyle {
+}
+
+.UIAction .SimpleStyle .ButtonLeft {
+  background: url('background/LeftSimpleButton20x24.png') no-repeat left top;
+  padding: 0px 0px 0px 12px;
+}
+
+.UIAction .SimpleStyle .ButtonRight {
+  background: url('background/RightSimpleButton20x24.png') no-repeat right top;
+  padding: 0px 12px 0px 0px ;
+}
+
+.UIAction .SimpleStyle .ButtonMiddle {
+  line-height: 24px;
+	background: url('background/CenterSimpleButton3x24.png') repeat-x top;
+	text-align: center;	
+	padding: 0px 8px;
+	display: table-cell;
+}
+
+.UIAction .SimpleStyle a {
+  color: #3d80e4; 
+  margin: 0px 6px;
+  white-space: nowrap;
+}
+
+.UIAction .SimpleStyle a:hover {
+  color: #2169d4; 
+}

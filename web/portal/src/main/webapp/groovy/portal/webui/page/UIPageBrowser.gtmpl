@@ -1,0 +1,26 @@
+<div class="UIPageBrowser" id="<%=uicomponent.getId();%>">
+	
+	<%/*Begin UIPageBrowser Content*/%>
+	<div style="padding: 3px"><% uicomponent.renderChildren() %></div>
+	<%/*End UIPageBrowser Content */%>
+	
+	<%if(uicomponent.isShowAddNewPage()) {%>
+	   
+	    <div class="UIAction"> 
+		    <table class="ActionContainer" align="center">
+			    <tr>
+			    	<td align="center">
+				      <a href="<%=uicomponent.event("AddNew")%>" class="ActionButton LightBlueStyle">
+				        <div class="ButtonLeft">
+				          <div class="ButtonRight">
+				            <div class="ButtonMiddle"><%=_ctx.appRes(uicomponent.getId() + ".action.addNewPage")%></div>
+				          </div>
+				        </div>
+				      </a>
+				    </td>
+		      </tr>
+		 	  </table>
+			</div>
+	    
+	<%}%>
+</div>

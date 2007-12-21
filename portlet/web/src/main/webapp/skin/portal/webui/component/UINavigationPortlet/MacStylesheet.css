@@ -1,0 +1,224 @@
+.UINavigationPortlet {
+  height: 48px;
+}
+
+.UINavigationPortlet .UINavigationBar {
+  height: 42px;
+}
+
+.UINavigationPortlet .UINavigationBar .PageNodeIcon {
+  background: url('/eXoMacSkin/skin/MacSkin/skinIcons/16x16/icons/DefaultPageIcon.png') no-repeat left;
+}
+
+.UINavigationPortlet .MiddleTab .TabLabel{
+	padding: 3px 0px 3px 20px ;
+}
+
+.UINavigationPortlet .UINavigationBar .LeftNavigationBar {
+  background: url('MacSkin/background/NavigationBgLeft6x41.png') no-repeat left top;
+  padding-left: 6px;
+  height: 41px;
+}
+
+.UINavigationPortlet .UINavigationBar .MiddleNavigationBar {
+  background: url('MacSkin/background/NavigationBg1x41.png') repeat-x top;
+  height: 41px;
+  padding-right: 10px;
+}
+
+.UINavigationPortlet .UINavigationBar .UIHorizontalTabs  {
+  height: 41px;
+  background: none;
+ 	position: expression('relative');
+}
+
+.UINavigationPortlet .UIHorizontalTabs .TabsContainer {
+  float:none;
+}
+
+/* Portal Navigation sub menus */
+
+.UINavigationPortlet .MenuItemContainer {
+	white-space: nowrap;
+	text-align: left; 
+}
+
+.UINavigationPortlet .MenuItemContainer .MenuItemDecorator {
+	padding: 0px;
+}
+
+.UINavigationPortlet .MenuItemContainer .LeftMiddleMenuDecorator {
+  background: url('MacSkin/background/MLItemSelector6x1.png') repeat-y left;
+  padding-left: 6px;
+}
+
+.UINavigationPortlet .MenuItemContainer .RightMiddleMenuDecorator {
+  background: url('MacSkin/background/MRItemSelector6x1.png') repeat-y right;
+  padding-right: 6px;
+}
+
+.UINavigationPortlet .MenuItemContainer .CenterMiddleMenuDecorator {
+  background: url('MacSkin/background/BgItemSelector1x4.png') repeat;
+  border-top: 1px solid #b3b3b3;
+}
+
+.UINavigationPortlet .MenuItemContainer .LeftBottomMenuDecorator {
+  background: url('MacSkin/background/BLItemSelector9x9.png') no-repeat left;
+  padding-left: 9px;
+  line-height: 9px;
+}
+
+.UINavigationPortlet .MenuItemContainer .RightBottomMenuDecorator {
+  background: url('MacSkin/background/BRItemSelector9x9.png') no-repeat right;
+  padding-right: 9px;
+  line-height: 9px;
+}
+
+.UINavigationPortlet .MenuItemContainer .CenterBottomMenuDecorator {
+  background: url('MacSkin/background/BCItemSelector1x9.png') repeat-x;
+  height: 9px; line-height: 9px; 
+}
+
+.UINavigationPortlet .MenuItemContainer .MenuItem {
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.UINavigationPortlet .MenuItemContainer .NormalItem {
+	border-bottom: 1px solid #dbdbdb;
+}
+
+.UINavigationPortlet .MenuItemContainer .OverItem {
+	background: url('MacSkin/background/OverItemSelectorBG1x25.png') repeat-x ;
+	line-height: 25px; 
+	border-bottom: 1px solid #dbdbdb;
+}
+
+.UINavigationPortlet .MenuItemContainer .SelectedItem {
+	background: url('MacSkin/background/OverItemSelectorBG1x25.png') repeat-x ;
+	line-height: 25px; 
+	border-bottom: 1px solid #dbdbdb;
+}
+
+.UINavigationPortlet .MenuItemContainer .ItemIcon {
+  line-height: 25px; 
+  padding-left: 20px;
+  margin-left: 4px;
+}
+
+.UINavigationPortlet .MenuItemContainer .MenuItemLabel {
+  line-height: 25px; 
+  padding: 0px 6px 0px 0px;
+}
+
+.UINavigationPortlet .MenuItemContainer .OverItem a {
+  color: white;
+  line-height: 25px;
+}
+
+.UINavigationPortlet .MenuItemContainer .OverItem .RightItemIcon {
+  line-height: 25px; 
+  padding-right: 20px;
+  background: url('MacSkin/icons/WhiteArrow.png') no-repeat right;
+}
+
+.UINavigationPortlet .MenuItemContainer .PageNodeIcon {
+  line-height: 25px ;
+  background: url('/eXoMacSkin/skin/MacSkin/skinIcons/16x16/icons/DefaultPageIcon.png') no-repeat left center;
+  padding: 0px 0px 0px 20px ;
+}
+
+.UINavigationPortlet .MenuItemContainer .NormalItem a {
+  color: #1d1d1d;
+  line-height: 25px;
+}
+
+.UINavigationPortlet .MenuItemContainer .NormalItem .RightItemIcon {
+  line-height: 25px; 
+  padding-right: 20px;
+  background: url('MacSkin/icons/GrayArrow.png') no-repeat right;
+}
+
+.UINavigationPortlet .MenuItemContainer .SelectedItem a {
+  color: white;
+  line-height: 25px;
+}
+
+.UINavigationPortlet .MenuItemContainer .SelectedItem .RightItemIcon {
+  line-height: 25px; 
+  padding-right: 20px;
+  background: url('MacSkin/background/BlackArrow.gif') no-repeat right;
+}
+
+
+/*  Supply footnotes to:
+		TL: Top Left.
+		TR: Top Right.
+		TC: Top Center.
+		ML: Middle Left.
+		MR: Middle Right.
+		MC: Middle Center.
+		BL: Bottom Left.
+		BR: Bottom Right.
+		BC: Bottom Right.
+		BG: Background.
+		*/
+/***********************/
+/*** Scroll Buttons ***/
+
+.UINavigationPortlet .ScrollButtons {
+	float: right;
+	padding: 9px 0px;
+	display: none;
+}
+
+.UINavigationPortlet .ScrollLeftButton {
+	cursor: pointer;
+  background: url('MacSkin/background/ScrollLeft17x17.gif') no-repeat left;
+  width: 17px;
+  height: 17px;
+  padding-left: 17px;
+  margin: 0px 5px;
+}
+
+.UINavigationPortlet .ScrollRightButton {
+	cursor: pointer;
+	background: url('MacSkin/background/ScrollRight17x17.gif') no-repeat right;
+  width: 17px;
+  height: 17px;
+  margin: 0px 4px;
+}
+
+.UINavigationPortlet .DisableScrollLeftButton {
+  cursor: pointer;
+	background: url('MacSkin/background/DisableScrollLeft17x17.gif') no-repeat left;
+  width: 17px;
+  height: 17px;
+  padding-left: 17px;
+  margin: 0px 5px;
+}
+
+.UINavigationPortlet .DisableScrollRightButton { 
+	cursor: pointer;
+	background: url('MacSkin/background/DisableScrollRight17x17.gif') no-repeat right;
+  width: 17px;
+  height: 17px;
+  margin: 0px 4px;
+}
+
+.UINavigationPortlet .HighlightScrollLeftButton {
+  cursor: pointer;
+	background: url('MacSkin/background/HighlightScrollLeft17x17.gif') no-repeat left;
+  width: 17px;
+  height: 17px;
+  padding-left: 17px;
+  margin: 0px 5px;
+}
+
+.UINavigationPortlet .HighlightScrollRightButton {
+	cursor: pointer;
+	background: url('MacSkin/background/HighlightScrollRight17x17.gif') no-repeat;
+  width: 17px;
+  height: 17px;
+  margin: 0px 4px;
+}		

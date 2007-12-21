@@ -1,0 +1,16 @@
+.UIGroupInfoContainer {
+}
+
+.UIGroupInfoContainer .HorizontalLayout {
+	border: solid 1px gray;
+	padding: 1px;
+}
+
+.UIGroupInfoContainer .HorizontalLayout .FormContainer {
+	padding: 10px 10px 0px 10px;
+}
+
+.UIGroupInfoContainer .TitleBar {
+	font-weight: bold;
+	padding: 0px 0px 0px 15px;
+}

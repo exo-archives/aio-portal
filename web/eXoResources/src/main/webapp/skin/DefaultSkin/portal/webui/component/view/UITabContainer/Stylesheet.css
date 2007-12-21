@@ -1,0 +1,41 @@
+.UITabContainer {
+	padding: 3px 7px 9px 7px;
+}
+
+.UITabContainer .HorizontalLayout {
+	margin: 0px;
+	border: 1px solid #b7b7b7;
+	border-top: none;
+	background: #ffffff;
+	padding: 0px 8px;
+}
+
+.UITabContainer .HorizontalLayout .UITabContentContainer .UITabContent{
+	padding-top: 10px;
+}
+
+.UITabContainer a.TabLabel {
+	padding: 0px 10px 0px 2px;
+	line-height: 22px; 
+
+}
+
+.UITabContainer .EditIcon {
+	overflow: hidden;
+}
+
+.LAYOUT-CONTAINER .UIHorizontalTabs .UITab  {
+	height: 24px; 
+}
+
+.LAYOUT-CONTAINER .UITabContainer .SelectedTab .EditIcon {
+	padding: 0px 8px 0px 2px;
+	width: 16px; height: 24px;
+	background: url('/eXoResources/skin/DefaultSkin/skinIcons/16x16/icons/SelectedEditTab.gif') no-repeat center ;
+}
+
+.LAYOUT-CONTAINER .UITabContainer .NormalTab .EditIcon  {
+	padding: 0px 8px 0px 2px;
+	width: 16px; height: 24px;
+	background: url('/eXoResources/skin/DefaultSkin/skinIcons/16x16/icons/NormalEditTab.gif') no-repeat center;
+} 

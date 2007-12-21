@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<configuration>
+
+	<component>
+    <type>org.exoplatform.services.jcr.ext.registry.RegistryService</type>
+    <init-params>
+      <properties-param>
+      	<name>locations</name>
+      	<property name="repository" value="system"/>
+      </properties-param>
+    </init-params>
+  </component>
+
+  <component>
+   <key>org.exoplatform.services.portletcontainer.persistence.PortletPreferencesPersister</key>
+   <type>org.exoplatform.portal.application.jcr.PortletPreferencesPersisterImpl</type>
+  </component>  
+  
+  <component>
+    <key>org.exoplatform.portal.config.DataStorage</key>
+    <type>org.exoplatform.portal.config.jcr.DataStorageImpl</type>     
+  </component>
+  
+   <component>
+    <key>org.exoplatform.portal.application.UserWidgetStorage</key>
+    <type>org.exoplatform.portal.application.jcr.UserWidgetStorageImpl</type>
+  </component>     
+  
+  <component>
+    <key>org.exoplatform.portal.config.UserACL</key>
+    <type>org.exoplatform.portal.config.UserACL</type>   
+    <init-params>	     
+      <value-param>
+        <name>super.user</name>
+        <description>administrator</description>
+        <value>root</value>	    
+      </value-param>
+      <value-param>
+        <name>guests.group</name>
+        <description>guests group</description>
+        <value>/platform/guests</value>	    
+      </value-param>          
+	  </init-params>   
+  </component>
+  
+  <component>
+   <key>org.exoplatform.services.portletcontainer.bundle.ResourceBundleDelegate</key>
+   <type>org.exoplatform.portal.application.ResourceBundleDelegateImpl</type>
+  </component>   
+
+  <component>
+    <key>org.exoplatform.portal.config.UserPortalConfigService</key>
+    <type>org.exoplatform.portal.config.UserPortalConfigService</type>   
+    <init-params>	
+      <value-param>
+        <name>default.user</name>
+        <description>If user configs are null, user configs will load configs from this default user</description>
+        <value>site</value>
+      </value-param>
+			<value-param>
+	    	<name>templateLocation</name>
+	    	<value>war:/conf/users</value>
+	    </value-param>
+	  </init-params>       
+  </component>   
+
+  <external-component-plugins>
+    <target-component>org.exoplatform.services.jcr.RepositoryService</target-component>
+    <component-plugin> 
+	    <name>add.nodeType</name>
+	    <set-method>addPlugin</set-method>
+	    <type>org.exoplatform.services.jcr.impl.AddNodeTypePlugin</type>
+	    <init-params>
+	      <values-param>
+	        <name>autoCreatedInNewRepository</name>    
+	        <value>jar:/conf/portal/model-nodetypes.xml</value> 
+	      </values-param>
+	    </init-params>
+    </component-plugin>
+  </external-component-plugins>      
+  
+  <external-component-plugins>
+    <target-component>org.exoplatform.services.organization.OrganizationService</target-component>
+    
+    <component-plugin> 
+      <name>user.portal.config.listener</name>
+      <set-method>addListenerPlugin</set-method>
+      <type>org.exoplatform.portal.config.UserPortalConfigListener</type>
+    </component-plugin>
+    
+    <component-plugin> 
+      <name>group.portal.config.listener</name>
+      <set-method>addListenerPlugin</set-method>
+      <type>org.exoplatform.portal.config.GroupPortalConfigListener</type>
+    </component-plugin>
+            
+  </external-component-plugins>  
+</configuration>
+

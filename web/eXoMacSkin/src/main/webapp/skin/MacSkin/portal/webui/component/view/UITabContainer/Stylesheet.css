@@ -1,0 +1,54 @@
+.UITabContainer {
+	padding: 2px 7px 7px 7px;
+}
+
+.UITabContainer .HorizontalLayout {
+	background: #ffffff;
+	border: solid 1px #7b7b7b;
+	border-top: none;
+}
+
+.UITabContainer .HorizontalLayout .UIContainer .LAYOUT-CONTAINER{
+	margin: 0px 5px 5px 5px;
+}
+
+.UITabContainer .HorizontalLayout .UIContainer .CONTROL-CONTAINER{
+	margin: 0px 2px 0px 2px;
+}
+
+.UITabContainer .HorizontalLayout .UIPortlet .CONTROL-PORTLET{
+	margin: 0px;
+}
+
+.UITabContainer .HorizontalLayout .UIPortlet .LAYOUT-PORTLET{
+	margin: 0px;
+}
+
+.UITabContainer .HorizontalLayout .UIPortlet .VIEW-PORTLET{
+	margin-left: 4px;
+}
+
+.UITabContainer a.TabLabel {
+	padding: 0px 10px 0px 2px;
+	line-height: 25px; height: 25px;
+}
+
+.UITabContainer .UIHorizontalTabs .UITab  {
+	height: 24px;
+}
+
+.UITabContainer .EditIcon {
+	overflow: hidden;
+}
+
+.LAYOUT-CONTAINER .UITabContainer .SelectedTab .EditIcon {
+  padding: 0px 6px 0px 0px;
+	height: 24px;	width: 16px;
+	background: url('/eXoMacSkin/skin/MacSkin/skinIcons/16x16/icons/EditIcon.png') no-repeat center;
+}
+
+.LAYOUT-CONTAINER .UITabContainer .NormalTab .EditIcon  {
+  padding: 0px 6px 0px 0px;
+	height: 24px;	width: 16px;
+	background: url('/eXoMacSkin/skin/MacSkin/skinIcons/16x16/icons/DisableEditIcon.gif') no-repeat center;
+}

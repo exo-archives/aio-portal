@@ -1,0 +1,79 @@
+@import url(UILoginForm/DefaultStylesheet.css) ;
+@import url(/eXoResources/skin/webui/component/UIToolbar/DefaultStylesheet.css) ;
+
+.UIWindow .UIAccountPortlet {
+  margin: 0px;
+  border: none;
+}
+
+.UIAccountPortlet {
+  background: white;
+  border: 1px solid #b7b7b7;
+  margin: 5px 5px 7px 5px;
+  padding: 10px 30px;
+}
+
+.UIAccountPortlet .UIFormTabPane{
+  margin: auto;
+  padding: 0px;
+  width: 700px;
+}
+
+.UIAccountPortlet .UIForm .HorizontalLayout .UIFormInputSet {
+  height: 295px; width: 400px;
+  padding-top: 15px;
+}
+
+/*########################-UIPersonalInfo-###########################*/
+
+.UIAccountPortlet .UITabContent .UIFormInputSet .FieldContainer {
+  width: 430px;
+  padding:6px 0px 0px 35px;
+}
+
+.UIAccountPortlet .UIItemSelector .ItemDetail .FieldContainer {
+  padding:0px;
+}
+
+/*########################-Template Selector-###########################*/
+
+.UIAccountPortlet .UIFormTabPane .UIItemSelector .RightColumnBigItemStyle .ItemList {
+  height: 302px;
+}
+
+.UIAccountPortlet .UIItemSelector .RightColumnBigItemStyle .ItemDetailList {
+  height: 320px;
+  padding-top: 5px;
+}
+
+.UIAccountPortlet .UIItemSelector .ItemDetailList .DefaultAccountImage{
+  width: 330px;
+  height: 195px;
+  margin: auto;
+  background: url('DefaultSkin/background/DefaultAccountImage.jpg') no-repeat;
+}
+
+.UIAccountPortlet .UIItemSelector .ItemDetailList .AdminAccountImage{
+  width: 330px;
+  height: 195px;
+  margin: auto;
+  background: url('DefaultSkin/background/AdminAccountImage.jpg') no-repeat;
+}
+
+.UIAccountPortlet .UIItemSelector .ItemDetailList .CommunityAccountImage{
+  width: 330px;
+  height: 195px;
+  margin: auto;
+  background: url('DefaultSkin/background/CommunityAccountImage.jpg') no-repeat;
+}
+
+.UIAccountPortlet .UIItemSelector .ItemDetailList .CompanyAccountImage{
+  width: 330px;
+  height: 195px;
+  margin: auto;
+  background: url('DefaultSkin/background/CompanyAccountImage.jpg') no-repeat;
+}
+
+.UIAccountForm .UITabPane .TabPaneContent .UITabContentContainer {
+  border: 1px solid #939393;
+}

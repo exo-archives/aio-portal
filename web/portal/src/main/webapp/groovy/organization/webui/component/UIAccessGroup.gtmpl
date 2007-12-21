@@ -1,0 +1,31 @@
+<%
+  import org.exoplatform.webui.form.UIFormPopupWindow;
+  import org.exoplatform.webui.core.UIGrid;
+  
+  def rcontext = _ctx.getRequestContext() ;
+	rcontext.getJavascriptManager().importJavascript('eXo.webui.UIPopupWindow');
+%>
+<div class="UIAccessGroup">
+  <% 
+    uicomponent.renderChildren();
+  %>
+  
+  <div class="UIAction"> 
+    <table class="ActionContainer" align="center">
+	    <tr>
+	    	<td align="center">
+		      <a href="javascript: eXo.webui.UIPopupWindow.show('<%=uicomponent.getChild(UIFormPopupWindow.class).getId();%>');" class="ActionButton SimpleStyle">
+		        <div class="ButtonLeft">
+		          <div class="ButtonRight">
+		            <div class="ButtonMiddle">
+		            	<div class="Icon SmallGroup16x16Icon">Select Access Group</div>
+		            </div>
+		          </div>
+		        </div>
+		      </a>
+		    </td>
+      </tr>
+ 	  </table>
+	</div>
+  
+</div>

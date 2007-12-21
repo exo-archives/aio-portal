@@ -1,0 +1,46 @@
+.UIWindow .UIAccountPortlet {
+  border: none;
+  margin: 0px;
+}
+
+.UIAccountPortlet {
+  background: white;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #b7b7b7;
+}
+
+.UIAccountPortlet .UIFormTabPane{
+  width: 670px;
+  margin: auto;
+  padding: 0px 6px;
+}
+
+.UIAccountPortlet .UIFormTabPane .UITabPane {
+  background: none; 
+  padding-top: 5px;
+}
+
+.UIAccountPortlet .UIForm .HorizontalLayout .UIFormInputSet {
+  height: 280px; width: 390px;
+  padding: 10px 20px 0px 20px; margin: auto;
+}
+
+/*########################-Template Selector-###########################*/
+
+.UIPersonalInfo {
+  padding: 6px;
+}
+
+.UIAccountPortlet .UIForm .HorizontalLayout .RightColumnBigItemStyle .UIFormInputSet {
+	
+}
+
+.UIAccountPortlet .UIItemSelector .RightColumnBigItemStyle .ItemDetailList {
+  background: white;
+  height: 300px;
+}
+
+.UIAccountPortlet .UIFormTabPane .UIItemSelector .RightColumnBigItemStyle .ItemList {
+  height: 280px;
+}

@@ -1,0 +1,29 @@
+.UIFooterPortlet {
+  height: 32px ;  
+}
+
+.UIFooterPortlet .LeftFooter {
+  background: url('MacSkin/background/FooterBgLeft28x32.png') no-repeat left;
+  padding-left: 28px;
+  height: 32px;
+}
+
+.UIFooterPortlet .RightFooter {
+  background: url('MacSkin/background/FooterBgRight28x32.png') no-repeat right;
+  padding-right: 28px;
+  height: 32px;
+}
+
+.UIFooterPortlet .RepeatFooter {
+  background: url('MacSkin/background/FooterBgMiddle1x32.png') repeat-x;
+  height: 32px;
+}
+
+.UIFooterPortlet .FooterInfoContainer {
+  height: 32px ;
+}
+
+.UIFooterPortlet .CopyrightInfo {
+  line-height: 30px;
+  text-align: center;
+}
