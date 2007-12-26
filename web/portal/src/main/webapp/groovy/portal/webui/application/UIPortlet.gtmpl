@@ -176,7 +176,7 @@
 									                    </a>
 								                <%        
 								                  }
-								                  if(supportModes != null && supportModes.size() > 0) {
+								                  if(supportModes != null && supportModes.size() > 0 && !supportModes.contains("view")) {
 								                %> 
 																			<a class="CategoryItem" href="<%=uicomponent.event("ChangePortletMode", "view")%>" >
 									                    	<div class="CategoryItemLabel">
