@@ -57,7 +57,7 @@
   padding-bottom: 6px;
 }
 
-.UINavigationPortlet .MenuItemContainer a.MenuItem {
+.UINavigationPortlet .MenuItemContainer .MenuItem a {
   background: url('DefaultSkin/background/BottomMenuItem220x1.gif') no-repeat bottom center;
 	cursor: pointer;
 	line-height: 24px;
@@ -67,12 +67,12 @@
 	color: #333333; font-weight: normal;
 }
 
-.UINavigationPortlet .MenuItemContainer a.MenuItem:hover {
+.UINavigationPortlet .MenuItemContainer .MenuItem a:hover {
 	background: #dfe0e0 url('DefaultSkin/background/BottomMenuItem220x1.gif') no-repeat bottom center;
 	color: #3e8df0;
 }
 
-.UINavigationPortlet .MenuItemContainer a.SelectedItem {
+.UINavigationPortlet .MenuItemContainer .SelectedItem {
 	background: #dfe0e0 url('DefaultSkin/background/BottomMenuItem220x1.gif') no-repeat bottom center;
 	line-height: 24px;
 	width: auto; 
