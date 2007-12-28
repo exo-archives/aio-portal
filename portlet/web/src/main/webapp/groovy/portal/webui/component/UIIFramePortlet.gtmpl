@@ -1,14 +1,5 @@
 <%
   import org.exoplatform.webui.application.portlet.PortletRequestContext ;
-  import org.exoplatform.web.application.JavascriptManager;
-  
-  StringBuilder str = new StringBuilder() ;
-  str.append("var popup = document.getElementById(\"UIIFramePortlet\");") ;
-  str.append("var DOMUtil = eXo.core.DOMUtil;") ;
-  str.append("var uiApp = DOMUtil.findAncestorByClass(popup, 'UIApplication');") ;
-  str.append("uiApp.style.overflow = 'hidden';") ;
-  JavascriptManager jsmanager = _ctx.getRequestContext().getJavascriptManager();
-  jsmanager.addCustomizedOnLoadScript(str) ;
 %>
 
 <div class="UIIFramePortlet" id="$uicomponent.id" style="height: 100%; width: 100%; overflow: hidden;">
