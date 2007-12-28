@@ -207,7 +207,7 @@ public class UIPageForm extends UIFormTabPane {
     if(title == null || title.trim().length() < 1) title = page.getName() ;
     page.setTitle(title);
     
-    if(!page.isShowMaxWindow()) {
+    if(!page.isShowMaxWindow()) {      
       page.setShowMaxWindow((Boolean) getUIFormCheckBoxInput("showMaxWindow").getValue());      
     }
     if(!PortalConfig.USER_TYPE.equals(page.getOwnerType())) {
@@ -224,7 +224,7 @@ public class UIPageForm extends UIFormTabPane {
       if(itemOption != null){
         page.setFactoryId(itemOption.getIcon());
         page.setTemplate((String)itemOption.getValue());
-        page.setShowMaxWindow(page.getFactoryId().equals(Page.DESKTOP_PAGE));
+        if(page.getFactoryId().equals(Page.DESKTOP_PAGE)) page.setShowMaxWindow(true);
       } 
     } 
     UIPageTemplateOptions uiConfigOptions = getChild(UIPageTemplateOptions.class);
