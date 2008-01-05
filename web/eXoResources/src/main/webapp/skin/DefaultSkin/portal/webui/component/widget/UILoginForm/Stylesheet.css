@@ -76,7 +76,6 @@
   width: 300px;
   margin: auto;
   text-align: right;
-  cursor: text;
 }
 
 .UILoginForm .LoginDetailBox .PasswordField {
@@ -84,7 +83,6 @@
   width: 300px;
   margin: auto;
   text-align: right;
-  cursor: text;
 }
 
 .UILoginForm .LoginDetailBox .CheckField {
@@ -115,6 +113,7 @@
   line-height: 18px;
   border: solid 1px #b7b7b7 ;
   padding: 0px 0px 0px 22px;
+  cursor: text;
 }
 
 .UILoginForm .LoginDetailBox .PasswordField input {
@@ -123,6 +122,7 @@
   line-height: 18px;
   border: solid 1px #b7b7b7 ;
   padding: 0px 0px 0px 22px;
+  cursor: text;
 }
 
 .UILoginForm .UIForm .VerticalLayout .UIAction {
