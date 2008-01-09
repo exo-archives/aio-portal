@@ -16,7 +16,7 @@
   <build>
     <resources>
       <resource>
-        <directory>src/main/exoplatform.sar</directory>
+        <directory>src/main/jboss</directory>
         <includes>
           <include>**/*</include>
         </includes>
