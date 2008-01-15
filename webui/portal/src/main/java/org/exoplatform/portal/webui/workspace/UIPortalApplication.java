@@ -19,7 +19,6 @@ package org.exoplatform.portal.webui.workspace;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.exoplatform.portal.application.PortalRequestContext;
@@ -136,11 +135,6 @@ public class UIPortalApplication extends UIApplication {
     SkinConfig skinConfig = skinService.getSkin(module, skin_) ;
     if(skinConfig == null) skinConfig = skinService.getSkin(module, "Default") ;
     return skinConfig ;
-  }
-  
-  public Set getThemeURLs(){
-  	SkinService skinService = getApplicationComponent(SkinService.class) ;
-  	return  skinService.getThemeURLs();  
   }
   
   public List<SkinConfig>  getPortletSkins() {
