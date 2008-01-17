@@ -43,6 +43,7 @@ public class SkinListener extends BaseComponentPlugin
   implements PortletLifecycleListener,  ServletContextListener {
 
   public void contextInitialized(ServletContextEvent event) {
+    System.out.println("\n\n\n\n============ initialized " + event.getServletContext().getServletContextName() + " context ============\n\n\n\n");
     preDeploy(null, null, event.getServletContext()) ;
   }
 

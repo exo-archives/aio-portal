@@ -9,7 +9,7 @@
   <artifactId>exo.portal.web.eXoMacSkin</artifactId>
   <packaging>war</packaging> 
   <version>${org.exoplatform.portal.version}</version>
-  <name>eXo Portal Resources</name>
+  <name>eXo Mac Skin</name>
 
   <build>
     <finalName>eXoMacSkin</finalName>

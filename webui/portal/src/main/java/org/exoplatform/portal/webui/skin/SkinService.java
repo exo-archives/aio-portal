@@ -84,10 +84,11 @@ public class SkinService {
     availableSkins_.add(skinName);
     String key = module + "$" + skinName;
     SkinConfig skinConfig = skinConfigs_.get(key);
-    if (skinConfig == null || skinConfig.isPrimary() == false)
+    if (skinConfig == null || skinConfig.isPrimary() == false){
       skinConfigs_.put(key,
           new SkinConfig(module, skinName, cssPath, isPrimary));
-    mergeCSS(cssPath, scontext);
+      mergeCSS(cssPath, scontext);
+    }
   }
 
   private void mergeCSS(String cssPath, ServletContext scontext) {
@@ -112,6 +113,7 @@ public class SkinService {
 
     String line = "";
     try {
+      System.out.println("\n\n\n" + scontext.getServletContextName() + " ==== " + resolvedPath + "\n\n\n");
       BufferedReader reader = new BufferedReader(new InputStreamReader(scontext
           .getResourceAsStream(resolvedPath)));
       try {
@@ -127,7 +129,22 @@ public class SkinService {
                   .indexOf(")"));
             }
             if(includedPath.startsWith("/")) {
-              sB.append(line + "\n");
+              String targetedContextName = includedPath.substring(includedPath.indexOf("/"), 
+                  includedPath.indexOf("/", 2));
+              String targetedResolvedPath = includedPath.substring(includedPath.indexOf("/", 2), 
+                  includedPath.lastIndexOf("/") + 1);
+              String targetedIncludedPath = includedPath.substring(includedPath
+                  .lastIndexOf("/") + 1);      
+              ServletContext targetedContext = scontext.getContext(targetedContextName);
+              System.out.println("\n\n\n\n =======> " + targetedContextName + " : " + targetedContext + "\n\n");
+              
+              
+              StringBuffer tempSB = new StringBuffer();
+              processMergeRecursively(pattern, tempSB, targetedContext, 
+                  targetedResolvedPath, targetedIncludedPath );
+              sB.append(tempSB);
+              
+              
             } else 
               processMergeRecursively(pattern, sB, scontext, resolvedPath, includedPath);
           } else {
