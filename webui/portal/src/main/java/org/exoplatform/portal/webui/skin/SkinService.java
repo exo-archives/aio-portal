@@ -113,7 +113,6 @@ public class SkinService {
 
     String line = "";
     try {
-      System.out.println("\n\n\n" + scontext.getServletContextName() + " ==== " + resolvedPath + "\n\n\n");
       BufferedReader reader = new BufferedReader(new InputStreamReader(scontext
           .getResourceAsStream(resolvedPath)));
       try {
@@ -136,15 +135,11 @@ public class SkinService {
               String targetedIncludedPath = includedPath.substring(includedPath
                   .lastIndexOf("/") + 1);      
               ServletContext targetedContext = scontext.getContext(targetedContextName);
-              System.out.println("\n\n\n\n =======> " + targetedContextName + " : " + targetedContext + "\n\n");
-              
               
               StringBuffer tempSB = new StringBuffer();
               processMergeRecursively(pattern, tempSB, targetedContext, 
                   targetedResolvedPath, targetedIncludedPath );
               sB.append(tempSB);
-              
-              
             } else 
               processMergeRecursively(pattern, sB, scontext, resolvedPath, includedPath);
           } else {
