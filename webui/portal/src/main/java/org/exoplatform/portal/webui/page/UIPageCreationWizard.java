@@ -181,11 +181,13 @@ public class UIPageCreationWizard extends UIPageWizard {
       }
       
       PageNode pageNode = uiPageSetInfo.getPageNode();
-      if (uiNodeSelector.searchPageNodeByUri(navigation, pageNode.getUri()) != null) {
-        uiApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.NameNotSame", null)) ;
-        Util.getPortalRequestContext().addUIComponentToUpdateByAjax(uiApp.getUIPopupMessages() );
+      String pageId = navigation.getOwnerType() + "::" + navigation.getOwnerId() + "::" + pageNode.getName() ;
+      DataStorage storage = uiWizard.getApplicationComponent(DataStorage.class);
+      if(storage.getPage(pageId) != null) {
+        uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.NameNotSame", null)) ;
+        context.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages() );
         uiWizard.viewStep(2);
-        return;
+        return;        
       }
     }
   }
