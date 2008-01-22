@@ -104,14 +104,14 @@
 }
 
 .UILoginForm .LoginDetailBox .UserNameField input {
-  background: white url('/eXoResources/skin/DefaultSkin/portal/webui/component/widget/UILoginForm/background/UsernameIcon20x20.gif') no-repeat left ;
+  background: white url('/eXoResources/skin/DefaultSkin/portal/webui/component/widget/UILoginForm/background/Login.gif') no-repeat left -96px;
   width: 180px; height: 20px;
   border: solid 1px #c4c4c4 ;
   padding: 0px 0px 0px 22px;
 }
 
 .UILoginForm .LoginDetailBox .PasswordField input {
-  background: white url('/eXoResources/skin/DefaultSkin/portal/webui/component/widget/UILoginForm/background/PasswordIcon20x20.gif') no-repeat left ;
+  background: white url('/eXoResources/skin/DefaultSkin/portal/webui/component/widget/UILoginForm/background/Login.gif') no-repeat left -114px;
   width: 180px; height: 20px;
   border: solid 1px #c4c4c4 ;
   padding: 0px 0px 0px 22px;
