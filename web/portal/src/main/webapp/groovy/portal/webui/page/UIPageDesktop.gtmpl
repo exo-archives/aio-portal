@@ -130,14 +130,14 @@
                   
                   <%if(rcontext.getRemoteUser() == null) {%>
 		                  <img id="SignInIcon" class="Icon" src="/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/icons/80x80/Signin.png"  alt="/eXoResources/skin/sharedImages/Blank.gif" title=""
-		                         onclick="<%=uicomponent.event("ShowLoginForm", null);%>" /><span class="Tooltip" style="display: none;"><span class="TooltipBox"><%=_ctx.appRes("UIPageDesktop.title.SignIn")%></span></span>
+		                         onclick="<%=uicomponent.event("ShowLoginForm", null);%>" /><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIPageDesktop.title.SignIn")%></span>
 		                  <img class="Separator" src="/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/background/Separator2x1.png"/>
                   <%}%>
 
                   <%if(modifiable) {%>
 		                  <img class="Icon" src="/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/icons/80x80/AddPortlet.png"  alt="/eXoResources/skin/sharedImages/Blank.gif" title=""
 		                       id="UIAddApplicationIcon"
-		                       onclick="<%=uicomponent.event("ShowAddNewApplication")%>"/><span class="Tooltip" style="display: none"><span class="TooltipBox"><%=_ctx.appRes("UIPageDesktop.title.SignIn")%></span></span>
+		                       onclick="<%=uicomponent.event("ShowAddNewApplication")%>"/><span class="Tooltip" style="display: none"><%=_ctx.appRes("UIPageDesktop.title.SignIn")%></span>
 		                  <img class="Separator" src="/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/background/Separator2x1.png"/>
                   <%}%>
                   <%                  
