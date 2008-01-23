@@ -19,6 +19,7 @@ package org.exoplatform.webui.organization;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.User;
 import org.exoplatform.web.application.ApplicationMessage;
+import org.exoplatform.webui.Util;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.core.UIApplication;
 import org.exoplatform.webui.form.UIFormInputSet;
@@ -26,6 +27,7 @@ import org.exoplatform.webui.form.UIFormStringInput;
 import org.exoplatform.webui.form.validator.EmailAddressValidator;
 import org.exoplatform.webui.form.validator.EmptyFieldValidator;
 import org.exoplatform.webui.form.validator.IdentifierValidator;
+import org.exoplatform.webui.form.validator.StringLengthValidator;
 
 /**
  * Created by The eXo Platform SARL
@@ -46,7 +48,8 @@ public class UIAccountInputSet extends UIFormInputSet {
                    addValidator(IdentifierValidator.class));
     addUIFormInput(new UIFormStringInput(PASSWORD1X, "password", null).
                    setType(UIFormStringInput.PASSWORD_TYPE).
-                   addValidator(EmptyFieldValidator.class)) ;
+                   addValidator(EmptyFieldValidator.class).
+                   addValidator(StringLengthValidator.class, 6, 30)) ;
     addUIFormInput(new UIFormStringInput(PASSWORD2X, "password", null).
                    setType(UIFormStringInput.PASSWORD_TYPE).
                    addValidator(EmptyFieldValidator.class)) ;
@@ -82,6 +85,7 @@ public class UIAccountInputSet extends UIFormInputSet {
     if(newUser) {
       User user = service.getUserHandler().createUserInstance(username) ;
       invokeSetBindingField(user) ;
+      user.setPassword(Util.encodeMD5(pass1x)) ;
       if(service.getUserHandler().findUserByName(user.getUserName()) != null) {
         Object[] args = {user.getUserName()} ;
         uiApp.addMessage(new ApplicationMessage("UIAccountInputSet.msg.user-exist", args)) ;
@@ -93,7 +97,8 @@ public class UIAccountInputSet extends UIFormInputSet {
       return true;
     }     
     User user = service.getUserHandler().findUserByName(username) ;    
-    invokeSetBindingField(user) ;   
+    invokeSetBindingField(user) ;
+    user.setPassword(Util.encodeMD5(pass1x)) ;
     service.getUserHandler().saveUser(user, true) ;
     return true;
   }
