@@ -98,7 +98,7 @@ public class UIAccountInputSet extends UIFormInputSet {
     }     
     User user = service.getUserHandler().findUserByName(username) ;    
     invokeSetBindingField(user) ;
-    user.setPassword(Util.encodeMD5(pass1x)) ;
+//    user.setPassword(Util.encodeMD5(pass1x)) ;
     service.getUserHandler().saveUser(user, true) ;
     return true;
   }
