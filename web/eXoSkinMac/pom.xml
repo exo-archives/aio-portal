@@ -12,6 +12,6 @@
   <name>eXo Mac Skin</name>
 
   <build>
-    <finalName>eXoSkinVista</finalName>
+    <finalName>eXoSkinMac</finalName>
   </build>
 </project>
