@@ -26,14 +26,13 @@ import org.exoplatform.webui.form.UIFormInput;
  *          phului@gmail.com
  * Nov 27, 2007  
  */
-public class PageNodeNameValidator implements Validator {
+public class FirstCharacterNameValidator implements Validator {
   
   public void validate(UIFormInput uiInput) throws Exception {
     String s = (String)uiInput.getValue();
     if(Character.isDigit(s.charAt(0))) {
       Object[] args = { uiInput.getName(), uiInput.getBindingField() };
-      throw new MessageException(new ApplicationMessage("PageNodeNameValidator.msg.invalid-digit", args, ApplicationMessage.WARNING)) ;
+      throw new MessageException(new ApplicationMessage("FirstCharacterNameValidator.msg", args, ApplicationMessage.WARNING)) ;
     }    
   }
-
 }
