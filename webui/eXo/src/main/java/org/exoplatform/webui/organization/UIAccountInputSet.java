@@ -85,7 +85,7 @@ public class UIAccountInputSet extends UIFormInputSet {
     if(newUser) {
       User user = service.getUserHandler().createUserInstance(username) ;
       invokeSetBindingField(user) ;
-      user.setPassword(Util.encodeMD5(pass1x)) ;
+      //user.setPassword(Util.encodeMD5(pass1x)) ;
       if(service.getUserHandler().findUserByName(user.getUserName()) != null) {
         Object[] args = {user.getUserName()} ;
         uiApp.addMessage(new ApplicationMessage("UIAccountInputSet.msg.user-exist", args)) ;
