@@ -35,7 +35,7 @@ public class JavascriptManager {
   public void addJavascript(CharSequence s) { javascript.append(s).append(" \n") ; }
 
   public void importJavascript(CharSequence s) {
-    if(!jsSrevice_.isModuleLoaded(s)) {
+    if(!jsSrevice_.isModuleLoaded(s) || "true".equals(System.getProperty("exo.product.developing"))) {
       javascript.append("eXo.require('").append(s).append("'); \n") ;      
     }
   }
