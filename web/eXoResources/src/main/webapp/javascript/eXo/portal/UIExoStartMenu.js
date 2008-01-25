@@ -7,24 +7,22 @@ function UIExoStartMenu() {
   this.clipTop = 1 ;
 	this.clipBottom = 1 ;
 	this.stepScroll = 5 ;
+	
+  this.itemStyleClass = "MenuItem" ;
+  this.itemOverStyleClass = "MenuItemOver" ;
+  this.containerStyleClass = "MenuItemContainer" ;
+  this.superClass = eXo.webui.UIPopupMenu ;
 } ;
+
 /**
  * Init function called when the page loads
  * After the configuration of the parameters, call the buildMenu function that
  * adds the javascript events to the buttons in the menu
  */
-
-
-
 UIExoStartMenu.prototype.init = function(popupMenu, container, x, y) {
   var uiStart = eXo.portal.UIExoStartMenu ;
   
-  this.superClass = eXo.webui.UIPopupMenu ;
   this.superClass.init(popupMenu, container.id, x, y) ;
-  
-  this.itemStyleClass = "MenuItem" ;
-  this.itemOverStyleClass = "MenuItemOver" ;
-  this.containerStyleClass = "MenuItemContainer" ;
   
   this.exoStartButton = eXo.core.DOMUtil.findFirstDescendantByClass(container, "div", "ExoStartButton") ;
   this.exoStartButton.onmouseover = function() {
@@ -54,118 +52,58 @@ UIExoStartMenu.prototype.onLoad = function() {
  *  . an id
  */
 UIExoStartMenu.prototype.buildMenu = function(popupMenu) {
-
+	if(typeof(popupMenu) == "string") popupMenu = document.getElementById(popupMenu) ;
+	
   var blockMenuItems = eXo.core.DOMUtil.findDescendantsByClass(popupMenu, "div", this.containerStyleClass) ;
   for (var i = 0; i < blockMenuItems.length; i++) {
-    if (!blockMenuItems[i].id) blockMenuItems[i].id = "StartMenuContainer-"+i ;
+    if (!blockMenuItems[i].id) blockMenuItems[i].id = Math.random().toString() ;
 		blockMenuItems[i].resized = false ;
   }
 	
   var menuItems = eXo.core.DOMUtil.findDescendantsByClass(popupMenu, "div", this.itemStyleClass) ;
   for(var i = 0; i < menuItems.length; i++) {
 		var menuItemContainer = eXo.core.DOMUtil.findFirstChildByClass(menuItems[i], "div", "MenuItemContainer") ;
-		if (menuItemContainer) {
-			menuItems[i].menuItemContainer = menuItemContainer ;
-			menuItems[i].id = "ReSearch" ;
-		}	
-		menuItems[i].onmouseover = function(event) {
-			this.className = eXo.portal.UIExoStartMenu.itemOverStyleClass ;
-			eXo.portal.UIExoStartMenu.onMenuItemOver(event, this) ;
-    }
-		menuItems[i].onmouseout = function(event) {
-			this.className = eXo.portal.UIExoStartMenu.itemStyleClass ;
-			eXo.portal.UIExoStartMenu.onMenuItemOut(event, this) ;
-    }
+		if (menuItemContainer) menuItems[i].menuItemContainer = menuItemContainer ;
+		
+		menuItems[i].onmouseover = this.onMenuItemOver ; 
+		menuItems[i].onmouseout = this.onMenuItemOut ;
 
     var labelItem = eXo.core.DOMUtil.findFirstDescendantByClass(menuItems[i], "div", "LabelItem") ;
     var link = eXo.core.DOMUtil.findDescendantsByTagName(labelItem, "a")[0] ;
     this.superClass.createLink(menuItems[i], link) ;
   }
-	
 };
-
-/**
- * Shows the start menu
- */
-UIExoStartMenu.prototype.showStartMenu = function(event) {
-  event = event || window.event ;
-  event.cancelBubble = true ;
-
-  var uiStartContainer = document.getElementById("StartMenuContainer") ;
-  eXo.portal.UIExoStartMenu.exoStartButton.className = "ExoStartButton ButtonClicked" ;
-  if(uiStartContainer.style.display == "block") {
-    eXo.portal.UIExoStartMenu.hideUIStartMenu() ;
-  } else {
-    eXo.portal.UIExoStartMenu.buttonClicked = true ;
-    var menuY = eXo.core.Browser.findPosY(eXo.portal.UIExoStartMenu.exoStartButton) ;
-    this.superClass.show(uiStartContainer) ;		
-		var y = menuY - uiStartContainer.offsetHeight ;
-		
-    if(window.pageYOffset) y -= window.pageYOffset ;
-    else if (document.documentElement.scrollTop) y -= document.documentElement.scrollTop ;
-    else if (document.body.scrollTop) y -= document.body.scrollTop ;
-		this.superClass.setPosition(uiStartContainer, 0, y) ;
-		
-    uiStartContainer.style.width = "238px" ;
-    uiStartContainer.style.height = uiStartContainer.offsetHeight + "px" ;
-  }
-  /*Hide eXoStartMenu whenever click on the UIApplication*/
-  var uiPortalApplication = document.getElementById("UIPortalApplication") ;
-  uiPortalApplication.onclick = eXo.portal.UIExoStartMenu.hideUIStartMenu ;
-};
-/**
- * Hides the start menu when the user clicks anywhere on the page
- */
-UIExoStartMenu.prototype.hideUIStartMenu = function() {
-  var uiStartContainer = document.getElementById("StartMenuContainer") ;
-  eXo.webui.UIPopupMenu.hide(uiStartContainer) ;
-  eXo.portal.UIExoStartMenu.buttonClicked = false ;
-  eXo.portal.UIExoStartMenu.exoStartButton.className = "ExoStartButton ButtonNormal" ;
-  eXo.portal.UIExoStartMenu.clearStartMenu() ;
-};
-
-UIExoStartMenu.prototype.clearStartMenu = function() {
-  eXo.webui.UIPopupMenu.currentVisibleContainers.clear() ;
-  eXo.webui.UIPopupMenu.setCloseTimeout() ;
-};
-
 
 /**
  * Called when the user points at a button
  * If this button has a submenu, adds it to the currentVisibleContainers array of UIPopupMenu
  * See UIPopupMenu for more details about how the elements are shown
  */
-UIExoStartMenu.prototype.onMenuItemOver = function(event, menuItem) {
-  	var menuItemContainer = menuItem.menuItemContainer ;
-		menuItem.style.position = "relative" ;
-		if (menuItemContainer) {
-    eXo.portal.UIExoStartMenu.showMenuItemContainer(event) ;
-    eXo.portal.UIExoStartMenu.superClass.pushVisibleContainer(menuItemContainer.id) ;
-	 }
+UIExoStartMenu.prototype.onMenuItemOver = function(event) {
+	this.className = eXo.portal.UIExoStartMenu.itemOverStyleClass ;
+	this.style.position = "relative" ;
+	if (this.menuItemContainer) {
+		
+		var menuItemContainer = this.menuItemContainer ;
+		var x = this.offsetWidth + this.offsetLeft ;
+	  var rootX = eXo.core.Browser.findPosX(this) ;
+		if (x + menuItemContainer.offsetWidth + rootX > eXo.core.Browser.getBrowserWidth()) {
+	    	x -= (menuItemContainer.offsetWidth + this.offsetWidth) ;
+	  }
+	  if (eXo.core.Browser.getBrowserType() == "ie") x -= 10;
+	 	menuItemContainer.style.left = x + "px" ;
+		eXo.portal.UIExoStartMenu.createSlide(this);
+    eXo.portal.UIExoStartMenu.superClass.pushVisibleContainer(this.menuItemContainer.id) ;
+	
+	}
 };
-/**
- * Shows the submenu (menuItemContainer) of the pointed button (menuItem)
- * Sets the position of the submenu so it appears entirely on the screen
- * If the submenu is too on the right or on the bottom, its position moves to the left or up
- */
- 
- UIExoStartMenu.prototype.showMenuItemContainer = function(event) {
 
-		var StartMenu = eXo.portal.UIExoStartMenu ;
-		if (!eXo.portal.UIExoStartMenu.lastItem) {
-				var event = event || window.event ;
-				var menuItem = event.target || event.srcElement ;
-		} else {
-			var menuItem = eXo.portal.UIExoStartMenu.lastItem ;
-			eXo.portal.UIExoStartMenu.lastItem = null ;
-		} 
-		while (menuItem.id != "ReSearch") {menuItem = menuItem.parentNode ;}
-
+UIExoStartMenu.prototype.createSlide = function(menuItem) {
+		
 		var menuItemContainer = menuItem.menuItemContainer ;
 		menuItemContainer.style.display = "block" ;
 		// fix width for menuContainer, only IE.
 		if (!menuItemContainer.resized) eXo.portal.UIExoStartMenu.setContainerSize(menuItemContainer);
-		// eXo.portal.UIExoStartMenu.setContainerSize(menuItemContainer);
 		
 	 	var blockMenu = eXo.core.DOMUtil.findFirstDescendantByClass(menuItemContainer, "div", "BlockMenu") ;
 		var parentMenu = blockMenu.parentNode;
@@ -173,16 +111,8 @@ UIExoStartMenu.prototype.onMenuItemOver = function(event, menuItem) {
 	 	var bottomElement = eXo.core.DOMUtil.findFirstChildByClass(parentMenu, "div", "BottomNavigator") ;
 
 		var menuContainer = eXo.core.DOMUtil.findFirstDescendantByClass(blockMenu, "div", "MenuContainer") ;
+		
 		if (!menuContainer.id) menuContainer.id = "eXo" + new Date().getTime() + Math.random().toString().substring(2) ;
-		
-		
-		var x = menuItem.offsetWidth + menuItem.offsetLeft ;
-	  var rootX = eXo.core.Browser.findPosX(menuItem) ;
-		if (x + menuItemContainer.offsetWidth + rootX > eXo.core.Browser.getBrowserWidth()) {
-	    	x -= (menuItemContainer.offsetWidth + menuItem.offsetWidth) ;
-	  }
-	  if (eXo.core.Browser.getBrowserType() == "ie") x -= 10;
-	 	menuItemContainer.style.left = x + "px" ;
 		
 		var browserHeight = eXo.core.Browser.getBrowserHeight() ;
 		if (menuContainer.offsetHeight + 64 > browserHeight) {
@@ -233,13 +163,72 @@ UIExoStartMenu.prototype.onMenuItemOver = function(event, menuItem) {
 			topElement.style.display = "none" ;
 			bottomElement.style.display = "none" ;
 	  }
-		var Y = eXo.portal.UIExoStartMenu.getDimension(menuItem, blockMenu) ;
+		var Y = eXo.portal.UIExoStartMenu.getDimension(menuItem) ;
 		if (Y != undefined)	menuItemContainer.style.top = Y + "px" ;
-		
 };
 
-UIExoStartMenu.prototype.getDimension = function(menuItem, menuContainer) {
-	if(document.documentElement.scrollTop)  var topPage = document.documentElement.scrollTop ;
+/**
+ * Called when the user leaves a button
+ * If this button has a submenu, adds it to the elementsToHide array of UIPopupMenu, 
+ * ad removes it from the currentVisibleContainers array.
+ * See UIPopupMenu for more details about how the elements are hidden
+ */
+UIExoStartMenu.prototype.onMenuItemOut = function(event) {
+	this.className = eXo.portal.UIExoStartMenu.itemStyleClass ;
+	if (this.menuItemContainer) {
+    eXo.portal.UIExoStartMenu.superClass.pushHiddenContainer(this.menuItemContainer.id) ;
+    eXo.portal.UIExoStartMenu.superClass.popVisibleContainer() ;
+    eXo.portal.UIExoStartMenu.superClass.setCloseTimeout() ;
+	}
+};
+
+/**
+ * Shows the start menu
+ */
+UIExoStartMenu.prototype.showStartMenu = function(event) {
+  event = event || window.event ;
+  event.cancelBubble = true ;
+
+  var uiStartContainer = document.getElementById("StartMenuContainer") ;
+  eXo.portal.UIExoStartMenu.exoStartButton.className = "ExoStartButton ButtonClicked" ;
+  if(uiStartContainer.style.display == "block") {
+    eXo.portal.UIExoStartMenu.hideUIStartMenu() ;
+  } else {
+    eXo.portal.UIExoStartMenu.buttonClicked = true ;
+    var menuY = eXo.core.Browser.findPosY(eXo.portal.UIExoStartMenu.exoStartButton) ;
+    this.superClass.show(uiStartContainer) ;		
+		var y = menuY - uiStartContainer.offsetHeight ;
+		
+    if(window.pageYOffset) y -= window.pageYOffset ;
+    else if (document.documentElement.scrollTop) y -= document.documentElement.scrollTop ;
+    else if (document.body.scrollTop) y -= document.body.scrollTop ;
+		this.superClass.setPosition(uiStartContainer, 0, y) ;
+		
+    uiStartContainer.style.width = "238px" ;
+    uiStartContainer.style.height = uiStartContainer.offsetHeight + "px" ;
+  }
+  /*Hide eXoStartMenu whenever click on the UIApplication*/
+  var uiPortalApplication = document.getElementById("UIPortalApplication") ;
+  uiPortalApplication.onclick = eXo.portal.UIExoStartMenu.hideUIStartMenu ;
+};
+/**
+ * Hides the start menu when the user clicks anywhere on the page
+ */
+UIExoStartMenu.prototype.hideUIStartMenu = function() {
+  var uiStartContainer = document.getElementById("StartMenuContainer") ;
+  eXo.webui.UIPopupMenu.hide(uiStartContainer) ;
+  eXo.portal.UIExoStartMenu.buttonClicked = false ;
+  eXo.portal.UIExoStartMenu.exoStartButton.className = "ExoStartButton ButtonNormal" ;
+  eXo.portal.UIExoStartMenu.clearStartMenu() ;
+};
+
+UIExoStartMenu.prototype.clearStartMenu = function() {
+  eXo.webui.UIPopupMenu.currentVisibleContainers.clear() ;
+  eXo.webui.UIPopupMenu.setCloseTimeout() ;
+};
+
+UIExoStartMenu.prototype.getDimension = function(menuItem) {
+	if(document.documentElement.scrollTop != undefined)  var topPage = document.documentElement.scrollTop ;
 	else if(document.body) var topPage = document.body.scrollTop ;
 	var PosY = eXo.core.Browser.findPosY(menuItem) - topPage ;
 	var browserHeight = eXo.core.Browser.getBrowserHeight() ;
@@ -296,21 +285,6 @@ UIExoStartMenu.prototype.scrollDown = function(id, height) {
 	}
 };
 	
-
-/**
- * Called when the user leaves a button
- * If this button has a submenu, adds it to the elementsToHide array of UIPopupMenu, 
- * ad removes it from the currentVisibleContainers array.
- * See UIPopupMenu for more details about how the elements are hidden
- */
-UIExoStartMenu.prototype.onMenuItemOut = function(event, menuItem) {
-		var menuItemContainer = menuItem.menuItemContainer ;
-		if (menuItemContainer) {
-    eXo.portal.UIExoStartMenu.superClass.pushHiddenContainer(menuItemContainer.id) ;
-    eXo.portal.UIExoStartMenu.superClass.popVisibleContainer() ;
-    eXo.portal.UIExoStartMenu.superClass.setCloseTimeout() ;
-	}
-};
 /**
  * Called only once for each submenu (thanks to the boolean resized)
  * Sets the width of the decorator parts to the width of the content part.

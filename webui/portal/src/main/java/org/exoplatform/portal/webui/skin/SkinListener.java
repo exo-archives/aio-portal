@@ -32,9 +32,7 @@ import org.exoplatform.container.component.BaseComponentPlugin;
 import org.exoplatform.services.portletcontainer.PortletLifecycleListener;
 import org.exoplatform.services.portletcontainer.pci.model.PortletApp;
 /**
- * Created by The eXo Platform SARL
- * Author : Tuan Nguyen
- *          tuan.nguyen@exoplatform.com
+ * Created by The eXo Platform SAS
  * Jan 19, 2007  
  */
 //TODO: Rename to SkinConfigListener    
@@ -60,7 +58,7 @@ public class SkinListener extends BaseComponentPlugin
       SkinService skinService = 
         (SkinService)rootContainer.getComponentInstanceOfType(SkinService.class);
       binding.setVariable("SkinService", skinService) ;
-      binding.setVariable("ServletContext", scontext) ;
+      binding.setVariable("ServletContext", scontext) ;      
       GroovyShell shell = new GroovyShell(binding);
       shell.evaluate(is);
       is.close() ;
