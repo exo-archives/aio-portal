@@ -16,7 +16,9 @@
  */
 package org.exoplatform.webui;
 
+import java.security.MessageDigest;
 import org.exoplatform.webui.config.InitParams;
+
 
 /**
  * Created by The eXo Platform SAS
@@ -56,4 +58,27 @@ public class Util {
     Object[] args =  {params} ;
     return type.getConstructor(CONSTRUCTOR_PARAMS).newInstance(args)  ;
   }
+  //TODO: dang.tung - md5 encription
+  /**
+   * 
+   * @param The string to give to encript
+   * @return The encripted string
+   */
+//  static public String encodeMD5(String str){
+//    if(str==null) str="" ; 
+//    StringBuffer hexString = new StringBuffer();
+//    try {
+//      MessageDigest algorithm = MessageDigest.getInstance("MD5");
+//      algorithm.reset();
+//      algorithm.update(str.getBytes());
+//      byte[] digest = algorithm.digest();
+//      for(int i=0; i< digest.length; i++) {
+//        hexString.append(Integer.toHexString(0x00FF & digest[i]));
+//      }
+//    } catch(Exception ex) {
+//      ex.printStackTrace();
+//      return "";
+//    }
+//    return hexString.toString();
+// }
 }

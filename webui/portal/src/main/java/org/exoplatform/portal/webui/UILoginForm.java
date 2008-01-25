@@ -65,7 +65,7 @@ public class UILoginForm extends UIForm {
       UILoginForm uiForm = event.getSource();
       String username = uiForm.getUIStringInput("username").getValue();
       String password = uiForm.getUIStringInput("password").getValue();
-      
+      //password = org.exoplatform.webui.Util.encodeMD5(password) ;
       OrganizationService orgService = uiForm.getApplicationComponent(OrganizationService.class);
       boolean authentication = orgService.getUserHandler().authenticate(username, password);
       if(!authentication){
@@ -74,6 +74,7 @@ public class UILoginForm extends UIForm {
         
       PortalRequestContext prContext = Util.getPortalRequestContext();
       HttpServletRequest request = prContext.getRequest();
+      
       request.getSession().invalidate();
       HttpSession session = request.getSession();
       session.setAttribute("authentication.username", username);
@@ -85,7 +86,5 @@ public class UILoginForm extends UIForm {
       String redirect = request.getContextPath() + "/private/" + portalName + "/";
       prContext.getResponse().sendRedirect(redirect);      
     }   
-    
   }
-  
 }
