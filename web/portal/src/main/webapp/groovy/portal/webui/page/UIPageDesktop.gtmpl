@@ -117,7 +117,7 @@
    	//if (navigations != null && navigations.size() > 0 && navigations.get(0).getNodes().size() > 0) {
    	if (navigations != null && navigations.size() > 0) {
        	print """ 
-        <div class="MenuItemContainer NavigationContainer" style="position: absolute; top: -450px;">
+        <div class="MenuItemContainer NavigationContainer">
           <div class="StartMenuDecorator">
             <div class="StartMenuTL">
               <div class="StartMenuTR">
@@ -147,7 +147,9 @@
             </div>
             <div class="StartMenuBL">
               <div class="StartMenuBR">
-              <div class="StartMenuBC"><span></span></div>
+              <div class="StartMenuBC">
+              	<div class="PointArrow"><span></span></div>
+              </div>
               </div>
             </div>
           </div>  
@@ -259,7 +261,7 @@
 					<div class="BottomLeftRightClickPopupMenu">
 						<div class="BottomRightRightClickPopupMenu">
 							<div class="BottomCenterRightClickPopupMenu">
-								<div class="ClickCenterBottom"><span></span></div>
+								<div class="MenuArrow"><span></span></div>
 							</div>
 						</div>
 					</div>
