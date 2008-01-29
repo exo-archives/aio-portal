@@ -41,7 +41,7 @@
 }
 
 .UIWelcomeWidget .StyleContent .UserWelcomeBox .LoggedUserName {
-  color: #84ccfc ;
+  color: #000 ;
   line-height: 26px;
   font-weight: bold; 
   text-align: center;
