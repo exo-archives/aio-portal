@@ -11,7 +11,7 @@
 }
 
 .UINavigationPortlet .MiddleTab .TabLabel{
-	padding: 3px 0px 3px 20px ;
+  padding: 3px 0px 3px 20px ;
 }
 
 .UINavigationPortlet .UINavigationBar .MiddleNavigationBar {
@@ -23,7 +23,7 @@
 .UINavigationPortlet .UINavigationBar .UIHorizontalTabs  {
   height: 41px;
   background: none;
- 	position: expression('relative');
+  position: expression('relative');
 }
 
 .UINavigationPortlet .UIHorizontalTabs .TabsContainer {
@@ -33,8 +33,8 @@
 /* Portal Navigation sub menus */
 
 .UINavigationPortlet .MenuItemContainer {
-	white-space: nowrap;
-	text-align: left; 
+  white-space: nowrap;
+  text-align: left; 
 }
 
 .UINavigationPortlet .MenuItemContainer .MenuItemDecorator {
@@ -74,20 +74,20 @@
 }
 
 .UINavigationPortlet .MenuItemContainer .MenuItem  a{
-	white-space: nowrap;
-	cursor: pointer;
-	display: block;
-	border-bottom: 1px solid #dbdbdb;
+  white-space: nowrap;
+  cursor: pointer;
+  display: block;
+  border-bottom: 1px solid #dbdbdb;
   color: #1d1d1d;
 }
 
 .UINavigationPortlet .MenuItemContainer .MenuItem a:hover {
-	background: url('MacSkin/background/UINavigationPortlet.png') repeat-x center -150px;
+  background: url('MacSkin/background/UINavigationPortlet.png') repeat-x center -150px;
   color: white;
 }
 
 .UINavigationPortlet .MenuItemContainer .SelectedItem {
-	background: url('MacSkin/background/UINavigationPortlet.png') repeat-x center -150px;
+  background: url('MacSkin/background/UINavigationPortlet.png') repeat-x center -150px;
   color: white;
 }
 
@@ -138,14 +138,14 @@
 /*** Scroll Buttons ***/
 
 .UINavigationPortlet .ScrollButtons {
-	float: right;
-	padding: 9px 0px;
-	display: none;
+  float: right;
+  padding: 9px 0px;
+  display: none;
 }
 
 .UINavigationPortlet .ScrollLeftButton {
-	cursor: pointer;
-  background: url('MacSkin/background/ScrollLeft17x17.gif') no-repeat left;
+  cursor: pointer;
+  background: url('MacSkin/background/UINavigationPortlet.png') no-repeat left -42px;
   width: 17px;
   height: 17px;
   padding-left: 17px;
@@ -153,8 +153,8 @@
 }
 
 .UINavigationPortlet .ScrollRightButton {
-	cursor: pointer;
-	background: url('MacSkin/background/ScrollRight17x17.gif') no-repeat right;
+  cursor: pointer;
+  background: url('MacSkin/background/UINavigationPortlet.png') no-repeat left -60px;
   width: 17px;
   height: 17px;
   margin: 0px 4px;
@@ -162,7 +162,7 @@
 
 .UINavigationPortlet .DisableScrollLeftButton {
   cursor: pointer;
-	background: url('MacSkin/background/DisableScrollLeft17x17.gif') no-repeat left;
+  background: url('MacSkin/background/UINavigationPortlet.png') no-repeat left -78px;
   width: 17px;
   height: 17px;
   padding-left: 17px;
@@ -170,8 +170,8 @@
 }
 
 .UINavigationPortlet .DisableScrollRightButton { 
-	cursor: pointer;
-	background: url('MacSkin/background/DisableScrollRight17x17.gif') no-repeat right;
+  cursor: pointer;
+  background: url('MacSkin/background/UINavigationPortlet.png') no-repeat left -96px;
   width: 17px;
   height: 17px;
   margin: 0px 4px;
@@ -179,7 +179,7 @@
 
 .UINavigationPortlet .HighlightScrollLeftButton {
   cursor: pointer;
-	background: url('MacSkin/background/HighlightScrollLeft17x17.gif') no-repeat left;
+  background: url('MacSkin/background/UINavigationPortlet.png') no-repeat left -114px;
   width: 17px;
   height: 17px;
   padding-left: 17px;
@@ -187,8 +187,8 @@
 }
 
 .UINavigationPortlet .HighlightScrollRightButton {
-	cursor: pointer;
-	background: url('MacSkin/background/HighlightScrollRight17x17.gif') no-repeat;
+  cursor: pointer;
+  background: url('MacSkin/background/UINavigationPortlet.png') no-repeat left -132px;
   width: 17px;
   height: 17px;
   margin: 0px 4px;
