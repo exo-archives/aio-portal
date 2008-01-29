@@ -329,18 +329,24 @@ UIDockbar.prototype.showNavigation = function(event) {
   var uiDockbar = document.getElementById("UIDockBar") ;
 	var dockNavigation = document.getElementById("DockNavigation") ;
 	dockNavigation.style.display = "block" ;
-
-	dockNavigation.menuItemContainer = eXo.core.DOMUtil.findFirstDescendantByClass(dockNavigation, "div", "MenuItemContainer");
-	eXo.portal.UIExoStartMenu.createSlide(dockNavigation);
+	dockNavigation.menuItemContainer = eXo.core.DOMUtil.findFirstDescendantByClass(dockNavigation, "div", "MenuItemContainer") ;
+	eXo.portal.UIExoStartMenu.createSlide(dockNavigation) ;
 	
-	var intTop = eXo.core.Browser.findMouseRelativeY(uiDockbar, event) ;
-	var intLeft = eXo.core.Browser.findMouseRelativeX(uiDockbar, event) ;
-
-	dockNavigation.style.left = intLeft + "px";
+	eXo.core.Mouse.update(event) ;
+	var fixWidthForIE7 = 0 ;
+	var uiWorkspaceContainer = document.getElementById("UIWorkspaceContainer") ;
+	if ((uiWorkspaceContainer && uiWorkspaceContainer.style.display != "none") && (event.clientX > uiWorkspaceContainer.clientWidth)
+			 && eXo.core.Browser.isIE7() && document.getElementById("UIDockBar")){
+		fixWidthForIE7 = uiWorkspaceContainer.clientWidth ;
+	}
+	
+	var intTop = eXo.core.Mouse.mouseyInPage - (eXo.core.Browser.findPosY(dockNavigation) - dockNavigation.offsetTop);
+	var intLeft = eXo.core.Mouse.mousexInPage - (eXo.core.Browser.findPosX(dockNavigation) - dockNavigation.offsetLeft) + fixWidthForIE7 ;
+	dockNavigation.style.left = intLeft + "px" ;
 	
 	var browserHeight = eXo.core.Browser.getBrowserHeight() ;
 	if (dockNavigation.menuItemContainer.offsetHeight + 64 < browserHeight) {
-		dockNavigation.style.top = intTop + "px";
+		dockNavigation.style.top = intTop + "px" ;
 	}
 	
 };
