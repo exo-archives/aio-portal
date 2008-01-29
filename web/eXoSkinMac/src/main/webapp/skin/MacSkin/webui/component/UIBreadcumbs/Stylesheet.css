@@ -1,11 +1,9 @@
-
 .UIBreadcumbsPortlet {
-	height: 34px;
+	height: 30px;
 }
 
 .UIBreadcumbs {
-  height:33px ;  line-height: 29px ;
-  vertical-align: middle ; 
+  height:30px ;  line-height: 30px ;
   padding: 0px 4px 0px 6px;
 }
 
@@ -14,7 +12,8 @@
 }
 
 .UIBreadcumbs a.Selected {
-	color: #0574db  ; 
+	color: #0574db ;
+	font-weight: bold;
 }
 
 .UIBreadcumbs .HomeIcon {
@@ -26,21 +25,6 @@
 
 .UIBreadcumbs .Home16x16Icon {
   display: none;
-}
-
-.UIBreadcumbs .LeftBreadcumbsBar {
-  padding: 0px 0px 0px 5px ;
-  background: url('background/LeftBreadcumbsBar5x33.png') no-repeat left;
-}
-
-.UIBreadcumbs .RightBreadcumbsBar {
-  padding: 0px 7px 0px 0px;
-  background: url('background/RightBreadcumbsBar7x33.png') no-repeat right;
-}
-
-.UIBreadcumbs .BreadcumbsInfoBar {
-  height: 33px; line-height: 33px; vertical-align: middle;
-  background: url('background/MiddleBreadcumbsBar1x33.png') repeat-x;
 }
 
 .UIBreadcumbs .RightBlackGridArrowIcon {

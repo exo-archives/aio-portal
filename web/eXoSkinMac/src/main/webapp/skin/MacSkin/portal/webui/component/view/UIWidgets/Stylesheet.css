@@ -27,7 +27,7 @@
 
 .UIWidgets .WidgetDecorator .WidgetsDecoratorBackground{
 	padding: 5px;
-	border: 1px #5a8ac1 solid;
+	border: 1px #b7b7b7 solid;
 	background: url('background/WidgetDecoratorBG1x85.png') repeat-x bottom;
 }
 

@@ -17,7 +17,7 @@
 }
 
 .UIApplicationRegistryPortlet .UIApplicationRegistryContainer {
-  padding: 10px;
+  padding: 5px 10px;
 }
 
 .UIApplicationRegistryPortlet .UIForm .HorizontalLayout .UIFormGrid td.FieldLabel {
