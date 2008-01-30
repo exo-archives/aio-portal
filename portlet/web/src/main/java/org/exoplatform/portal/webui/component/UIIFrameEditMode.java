@@ -43,7 +43,7 @@ import org.exoplatform.webui.form.UIFormStringInput;
 )
 public class UIIFrameEditMode extends UIForm {
 
-  final static public String FIELD_URL = "iframeUrl" ;
+  final static private String FIELD_URL = "iframeUrl" ;
   
   public UIIFrameEditMode() throws Exception {
     PortletRequestContext pcontext = (PortletRequestContext)WebuiRequestContext.getCurrentInstance() ;

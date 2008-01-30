@@ -28,6 +28,7 @@ import org.exoplatform.webui.core.lifecycle.UIApplicationLifecycle;
 @ComponentConfig(
   lifecycle =UIApplicationLifecycle.class
 )
+//TODO TrongTT: need to check this portlet whether be used or not
 public class UIAddPortletPortlet extends UIPortletApplication {
   
   public UIAddPortletPortlet() throws Exception {
