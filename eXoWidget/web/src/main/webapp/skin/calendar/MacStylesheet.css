@@ -6,11 +6,11 @@
 }
 
 .UICalendarWidget {
-	width: 217px;
+  width: 217px;
   font: normal 12px verdana;
-	text-align: center;
-	cursor: default;
-	margin: auto;
+  text-align: center;
+  cursor: default;
+  margin: auto;
 }
 
 .UICalendarWidget .TLCalendar {
