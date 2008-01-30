@@ -34,6 +34,10 @@
   margin-right: 2px ;
 }
 
+.UIControlWorkspace .UIDropDownControl { 
+	width: 216px;
+}
+
 /*########################### Tab ###########################*/
 .UIControlWorkspace .UIWorkspacePanel .ControlPanelExpandContainer {
   margin: 10px 4px;
