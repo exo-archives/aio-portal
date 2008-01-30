@@ -27,6 +27,11 @@
 	padding: 0px;
 }
 
+.UIAccountPortlet .AccountInputSet .SearchIcon {
+	background-position: no-repeat;
+	margin-left: 5px;
+}
+
 /*########################-UIPersonalInfo-###########################*/
 
 .UIAccountPortlet .UITabContent .UIFormInputSet .FieldContainer {
@@ -80,3 +85,4 @@
 .UIAccountForm .UITabPane .TabPaneContent .UITabContentContainer {
   border: 1px solid #939393;
 }
+
