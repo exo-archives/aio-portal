@@ -56,9 +56,7 @@ import org.exoplatform.webui.form.UIFormInputSet;
 import org.exoplatform.webui.form.UIFormSelectBox;
 import org.exoplatform.webui.form.UIFormStringInput;
 import org.exoplatform.webui.form.UIFormTabPane;
-import org.exoplatform.webui.form.validator.EmptyFieldValidator;
 import org.exoplatform.webui.form.validator.IdentifierValidator;
-import org.exoplatform.webui.form.validator.FirstCharacterNameValidator;
 import org.exoplatform.webui.form.validator.StringLengthValidator;
 import org.exoplatform.webui.organization.UIGroupMembershipSelector;
 import org.exoplatform.webui.organization.UIListPermissionSelector;
@@ -118,10 +116,8 @@ public class UIPageForm extends UIFormTabPane {
                  addUIFormInput(uiSelectBoxOwnerType).
                  addUIFormInput(ownerIdInput).
                  addUIFormInput(new UIFormStringInput("name", "name", null).
-                                addValidator(EmptyFieldValidator.class).
-                                addValidator(IdentifierValidator.class).
                                 addValidator(StringLengthValidator.class, 3, 30).
-                                addValidator(FirstCharacterNameValidator.class)).
+                                addValidator(IdentifierValidator.class)).
                  addUIFormInput(new UIFormStringInput("title", "title", null)).
                  addUIFormInput(new UIFormCheckBoxInput("showMaxWindow", "showMaxWindow", false));
     addUIFormInput(uiSettingSet) ;

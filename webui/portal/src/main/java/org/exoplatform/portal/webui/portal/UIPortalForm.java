@@ -59,8 +59,7 @@ import org.exoplatform.webui.form.UIFormSelectBox;
 import org.exoplatform.webui.form.UIFormStringInput;
 import org.exoplatform.webui.form.UIFormTabPane;
 import org.exoplatform.webui.form.validator.EmptyFieldValidator;
-import org.exoplatform.webui.form.validator.FirstCharacterNameValidator;
-import org.exoplatform.webui.form.validator.NameValidator;
+import org.exoplatform.webui.form.validator.IdentifierValidator;
 import org.exoplatform.webui.organization.UIListPermissionSelector;
 import org.exoplatform.webui.organization.UIPermissionSelector;
 import org.exoplatform.webui.organization.UIListPermissionSelector.EmptyIteratorValidator;
@@ -162,8 +161,7 @@ public class UIPortalForm extends UIFormTabPane {
     UIFormInputSet uiSettingSet = new UIFormInputSet("PortalSetting") ;
     uiSettingSet.addUIFormInput(new UIFormStringInput(FIELD_NAME, FIELD_NAME, null).
                                 addValidator(EmptyFieldValidator.class).
-                                addValidator(NameValidator.class).
-                                addValidator(FirstCharacterNameValidator.class).
+                                addValidator(IdentifierValidator.class).
                                 setEditable(false)).
                  addUIFormInput(new UIFormSelectBox(FIELD_LOCALE, FIELD_LOCALE, languages).
                                 addValidator(EmptyFieldValidator.class));
