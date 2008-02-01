@@ -43,13 +43,13 @@ public class UIFormStringInput extends UIFormInputBase<String> {
    */
   private short type_ = TEXT_TYPE ;
   /**
-   * maxsize of the text field.
+   * max size of text field
    */
   private int maxLength = 0 ;
   
   public UIFormStringInput(String name, String bindingExpression, String value) {
     super(name, bindingExpression, String.class);
-    this.value_ = value ;
+    this.value_ = value ; 
   }
   
   public UIFormStringInput(String name, String value) {
@@ -59,7 +59,7 @@ public class UIFormStringInput extends UIFormInputBase<String> {
   public UIFormStringInput setType(short type) {
     type_ = type;
     return this ;
-  } 
+  }
   
   public UIFormStringInput setMaxLength(int maxLength) {
     this.maxLength = maxLength ;
@@ -72,7 +72,9 @@ public class UIFormStringInput extends UIFormInputBase<String> {
   
   @SuppressWarnings("unused")
   public void decode(Object input, WebuiRequestContext context) throws Exception {
-    value_ = (String) input;
+    String val = (String) input ;
+    if((val == null || val.length() == 0) && type_ == PASSWORD_TYPE) return ; 
+    value_ = val ;
     if(value_ != null && value_.length() == 0) value_ = null ;
   }
   
@@ -85,8 +87,8 @@ public class UIFormStringInput extends UIFormInputBase<String> {
   	if(value_ != null && value_.length() > 0) {      
       w.write(" value='"); w.write(encodeValue(value_).toString()); w.write('\'');
     }
-    if (maxLength > 0) w.write(" maxlength='" + maxLength + "'") ;
-  	if (readonly_) w.write(" readonly ") ;  	
+    if(maxLength > 0) w.write(" maxlength='" + maxLength + "'") ;
+  	if (readonly_) w.write(" readonly ") ;
   	w.write("/>") ;
   }
   
