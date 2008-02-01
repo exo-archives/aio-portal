@@ -37,6 +37,11 @@
   margin-right: 2px ;
 }
 
+.UIControlWorkspace .UIPageNodeSelector .ContainerConfigOptions .JSContainer {
+	width: 215px;
+	overflow: hidden;
+}
+
 /*########################### Tab ###########################*/
 .UIControlWorkspace .UIWorkspacePanel .ControlPanelExpandContainer {
   margin: 10px 4px;
