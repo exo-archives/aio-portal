@@ -149,6 +149,7 @@ public class UIPortalComponentActionListener {
             uiTarget.createUIComponent(org.exoplatform.portal.webui.container.UIContainer.class, null, null);
           Container container = uiContainerConfig.getContainer(sourceId); 
           container.setId(String.valueOf(container.hashCode()));
+          System.out.println("TESSSSTT toUIContainer");
           PortalDataMapper.toUIContainer(uiContainer, container);      
           uiSource = uiContainer;   
         }else {
