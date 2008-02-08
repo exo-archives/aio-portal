@@ -14,15 +14,6 @@ config = "<page>" +
          "</page>";
 normalPageConfigs.addSelectItemOption(new SelectItemOption("Empty Layout", config, "EmptyLayout"));
 
-config = "<page>" +         
-         "  <owner-type></owner-type>" +
-         "  <owner-id></owner-id>" +
-         "  <name>UIPage</name>" +
-         "  <factory-id>Desktop</factory-id>" +
-         "</page>" ;
-
-normalPageConfigs.addSelectItemOption(new SelectItemOption("Desktop Layout", config, "DesktopImage"));
-
 SelectItemCategory columnPageConfigs = new SelectItemCategory("columnPageConfigs") ;
 categories.add(columnPageConfigs);  
 config = "<page>" +
