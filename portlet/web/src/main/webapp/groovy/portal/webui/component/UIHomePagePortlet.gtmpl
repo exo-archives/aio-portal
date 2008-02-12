@@ -19,14 +19,6 @@
 						</div>
 					</div>
 					<div class="SeparatorLine"><span></span></div>
-					<div class="AccountBlock HRManagerUser">
-						<div class="AccountInfos">
-							<div class="AccountTitle">H-R Camera</div>
-							<div class="Username">Username:<span>james</span></div>
-							<div class="Passwords">Password:<span>exo</span></div>
-						</div>
-					</div>
-					<div class="SeparatorLine"><span></span></div>
 					<div class="AccountBlock ManagerUser">
 						<div class="AccountInfos">
 							<div class="AccountTitle">Manager</div>

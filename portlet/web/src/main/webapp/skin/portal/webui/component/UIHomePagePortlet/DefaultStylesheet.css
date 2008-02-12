@@ -35,6 +35,7 @@
 	font-style: italic;
 	height: 45px;
 	padding-right: 18%;
+	letter-spacing: 1px;
 	color: #696a6a;
 }
 
@@ -42,6 +43,8 @@
 	font-size: 12px;
 	letter-spacing: 1px;
 	color: #ec7500;
+	font-weight: bold;
+	line-height: 16px;
 }
 
 .UIHomePagePortlet .HomePortletContent {
@@ -71,35 +74,28 @@
 .UIHomePagePortlet .HomePortletContent .AdministratorUser {
 	height: 100px;
 	float: left;
-	padding: 0px 20px 0px 70px ;
+	padding: 0px 20px 0px 80px ;
 	background: url('DefaultSkin/background/UserAccountsBG.gif') no-repeat left -100px;
-}
-
-.UIHomePagePortlet .HomePortletContent .HRManagerUser {
-	height: 100px;
-	float: left;
-	padding: 0px 20px 0px 70px ;
-	background: url('DefaultSkin/background/UserAccountsBG.gif') no-repeat left -200px;
 }
 
 .UIHomePagePortlet .HomePortletContent .ManagerUser {
 	height: 100px;
 	float: left;
-	padding: 0px 20px 0px 70px ;
+	padding: 0px 20px 0px 80px ;
 	background: url('DefaultSkin/background/UserAccountsBG.gif') no-repeat left -300px;
 }
 
 .UIHomePagePortlet .HomePortletContent .NormalUser {
 	height: 100px;
 	float: left;
-	padding: 0px 20px 0px 70px ;
+	padding: 0px 20px 0px 80px ;
 	background: url('DefaultSkin/background/UserAccountsBG.gif') no-repeat left -400px;
 }
 
 .UIHomePagePortlet .HomePortletContent .DemoUser {
 	height: 100px;
 	float: left;
-	padding: 0px 20px 0px 70px ;
+	padding: 0px 20px 0px 80px ;
 	background: url('DefaultSkin/background/UserAccountsBG.gif') no-repeat left -500px;
 }
 
