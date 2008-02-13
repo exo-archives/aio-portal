@@ -108,7 +108,7 @@
 
 %>
   
-<div class="UINavigationBar">
+<div class="UINavigationBar" style="border: 1px solid green;">
   <div class="LeftNavigationBar">
 	  <div class="RightNavigationBar">
 	    <div class="MiddleNavigationBar">
