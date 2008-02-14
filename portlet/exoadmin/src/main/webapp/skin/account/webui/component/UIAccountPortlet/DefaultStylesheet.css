@@ -19,17 +19,12 @@
 }
 
 .UIAccountPortlet .UIForm .HorizontalLayout .UIFormInputSet {
-  height: 295px; width: 400px;
+  height: 295px; width: 410px;
   padding-top: 15px;
 }
 
 .UIAccountPortlet .UIFormTabPane .WorkingArea .UIForm {
 	padding: 0px;
-}
-
-.UIAccountPortlet .AccountInputSet .SearchIcon {
-	background-position: no-repeat;
-	margin-left: 5px;
 }
 
 /*########################-UIPersonalInfo-###########################*/
@@ -86,3 +81,7 @@
   border: 1px solid #939393;
 }
 
+.UIAccountPortlet .AccountInputSet .SearchIcon {
+	background-position: no-repeat;
+	margin-left: 5px;
+}
