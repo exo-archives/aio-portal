@@ -117,7 +117,7 @@
    	//if (navigations != null && navigations.size() > 0 && navigations.get(0).getNodes().size() > 0) {
    	if (navigations != null && navigations.size() > 0) {
        	print """ 
-        <div class="MenuItemContainer NavigationContainer">
+        <div class="MenuItemContainer NavigationContainer" style="position: absolute; top: -450px;">
           <div class="StartMenuDecorator">
             <div class="StartMenuTL">
               <div class="StartMenuTR">
@@ -147,9 +147,7 @@
             </div>
             <div class="StartMenuBL">
               <div class="StartMenuBR">
-              <div class="StartMenuBC">
-              	<div class="PointArrow"><span></span></div>
-              </div>
+              <div class="StartMenuBC"><span></span></div>
               </div>
             </div>
           </div>  
@@ -229,7 +227,7 @@
 	          if(posX == null) posX = (String)x ;
 	          if(posY == null) posY = (String)y ;
 	          
-            jsmanager.addJavascript("eXo.desktop.UIWindow.init('${popupId}', true, ${posX}, ${posY});") ;
+            jsmanager.addJavascript("eXo.desktop.UIWindow.init('UIWindow-${popupId}', true, ${posX}, ${posY});") ;
         %>
         <%  x += 10; y += 20 ;%>
         <%}%>
@@ -261,7 +259,7 @@
 					<div class="BottomLeftRightClickPopupMenu">
 						<div class="BottomRightRightClickPopupMenu">
 							<div class="BottomCenterRightClickPopupMenu">
-								<div class="MenuArrow"><span></span></div>
+								<div class="ClickCenterBottom"><span></span></div>
 							</div>
 						</div>
 					</div>
@@ -298,7 +296,7 @@
                       String imgLocation = uiChild.getExoWindowID().getPortletApplicationName() + "/skin/DefaultSkin/portletIcons/" + uiChild.getExoWindowID().getPortletName() ;
                   %>
                       <img id="DockItem${uiChild.id}" onmousedown="eXo.webui.UIRightClickPopupMenu.clickRightMouse(event, this, 'DockbarContextMenu', '${uiChild.id}', null, 1)" class="Icon" src="/${imgLocation}.png" alt="/eXoResources/skin/sharedImages/Blank.gif"
-                           onerror="this.src='/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/icons/80x80/DefaultPortlet.png'" onclick="eXo.desktop.UIDesktop.showHideWindow('${uiChild.id}', this);" /><span class="Tooltip" style="display: none"><%=uiChild.getTitle();%></span>
+                           onerror="this.src='/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/icons/80x80/DefaultPortlet.png'" onclick="eXo.desktop.UIDesktop.showHideWindow('UIWindow-${uiChild.id}', this);" /><span class="Tooltip" style="display: none"><%=uiChild.getTitle();%></span>
                   <%}%>
 
                   <img class="Separator" src="/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/background/Separator2x1.png" />

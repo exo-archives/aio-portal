@@ -178,9 +178,9 @@ public class UIPortletActionListener {
    */
   public static void setNextMode(UIPortlet uiPortlet, PortletMode portletMode) {
     if (portletMode != null) {
-      if (portletMode.equals(PortletMode.HELP)) {
+      if (portletMode.equals(PortletMode.HELP.toString())) {
         uiPortlet.setCurrentPortletMode(PortletMode.HELP);
-      } else if (portletMode.equals(PortletMode.EDIT)) {
+      } else if (portletMode.equals(PortletMode.EDIT.toString())) {
         uiPortlet.setCurrentPortletMode(PortletMode.EDIT);
       } else {
         uiPortlet.setCurrentPortletMode(PortletMode.VIEW);
@@ -335,7 +335,7 @@ public class UIPortletActionListener {
       PortalRequestContext context = (PortalRequestContext) event
           .getRequestContext();
       List<UIPortlet> porletInstancesInPage = new ArrayList<UIPortlet>();
-      UIPortal uiPortal = uiPortlet.getAncestorOfType(UIPortal.class);
+      UIPortalApplication uiPortal = uiPortlet.getAncestorOfType(UIPortalApplication.class);
       uiPortal.findComponentOfType(porletInstancesInPage, UIPortlet.class);
       EventsWrapper eventsWrapper = (EventsWrapper) event.getRequestContext()
           .getAttribute(PORTLET_EVENTS);
@@ -453,7 +453,7 @@ public class UIPortletActionListener {
       setupPublicRenderParams(uiPortlet, request.getParameterMap());
       
       //set render params
-      Map renderParams = ((PortalRequestContext)event.getRequestContext()).getPortletParameters();
+      Map<String, String[]> renderParams = ((PortalRequestContext)event.getRequestContext()).getPortletParameters();
       uiPortlet.setRenderParametersMap(renderParams);
     }
   }
@@ -467,13 +467,13 @@ public class UIPortletActionListener {
    * parameters Map the one that are supported by the targeted portlet
    */
   static public void setupPublicRenderParams(UIPortlet uiPortlet,
-      Map requestParams) {
+      Map<String, String[]> requestParams) {
     UIPortal uiPortal = Util.getUIPortal();
-    Map publicParams = uiPortal.getPublicParameters();
+    Map<String, String[]> publicParams = uiPortal.getPublicParameters();
 
-    Iterator keys = requestParams.keySet().iterator();
+    Iterator<String> keys = requestParams.keySet().iterator();
     while (keys.hasNext()) {
-      String key = (String) keys.next();
+      String key = keys.next();
       if (uiPortlet.supportsPublicParam(key))
         publicParams.put(key, requestParams.get(key));
     }
@@ -579,11 +579,8 @@ public class UIPortletActionListener {
       UIPortlet uiPortlet = event.getSource();
       UIPortletForm uiPortletForm = uiMaskWS.createUIComponent(UIPortletForm.class, null, null);
       uiPortletForm.setValues(uiPortlet);
-      uiMaskWS.setUIComponent(uiPortletForm);
       uiMaskWS.setWindowSize(800, -1);
-      uiMaskWS.setShow(true);
 
-      Util.updateUIApplication(event);
       event.getRequestContext().addUIComponentToUpdateByAjax(uiMaskWS);
     }
   }

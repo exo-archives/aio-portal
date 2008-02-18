@@ -54,10 +54,9 @@ UIHorizontalTabs.prototype.displayTabContent = function(clickedEle) {
  * Gets the tab element and the tab content associated and displays them
  *  . changes the style of the tab
  *  . displays the tab content of the selected tab (display: block)
- * if paneId and tabId are provided, can get the tab content by Ajax
+ * if tabId are provided, can get the tab content by Ajax
  */
-UIHorizontalTabs.prototype.changeTabForUITabPane = function(clickedEle, paneId, tabId) {
-
+UIHorizontalTabs.prototype.changeTabForUITabPane = function(clickedEle, tabId, url) {
   var DOMUtil = eXo.core.DOMUtil;
   var uiSelectTab = DOMUtil.findAncestorByClass(clickedEle, "UITab") ;
 
@@ -65,7 +64,14 @@ UIHorizontalTabs.prototype.changeTabForUITabPane = function(clickedEle, paneId, 
   var uiTabs = eXo.core.DOMUtil.findDescendantsByClass(uiHorizontalTabs, "div", "UITab") ;
   var parentdHorizontalTab = uiHorizontalTabs.parentNode ;
   var contentTabContainer = DOMUtil.findFirstDescendantByClass(parentdHorizontalTab, "div", "UITabContentContainer") ;
-  var uiTabContent = DOMUtil.getChildrenByTagName(contentTabContainer, "div") ;
+  var uiTabContents = DOMUtil.findChildrenByClass(contentTabContainer, "div", "UITabContent") ;
+ 	var form = DOMUtil.getChildrenByTagName(contentTabContainer, "form") ;
+ 	if(form.length > 0) {
+ 		var tmp = DOMUtil.findChildrenByClass(form[0], "div", "UITabContent") ;
+  	for(var i = 0; i < tmp.length; i++) {
+  		uiTabContents.push(tmp[i]) ;
+  	}
+ 	}
   var index = 0 ;
   for(var i = 0; i < uiTabs.length; i++) {
     var styleTabDiv = DOMUtil.getChildrenByTagName(uiTabs[i], "div")[0] ;
@@ -76,17 +82,18 @@ UIHorizontalTabs.prototype.changeTabForUITabPane = function(clickedEle, paneId, 
 			continue ;
     }
     styleTabDiv.className = "NormalTab" ;
-    uiTabContent[i].style.display = "none" ;
+    uiTabContents[i].style.display = "none" ;
   }
-  uiTabContent[index].style.display = "block" ;
+  uiTabContents[index].style.display = "block" ;
 	if (eXo.ecm.UIJCRExplorer) {
 		try {
 				eXo.ecm.UIJCRExplorer.initViewNodeScroll();
 		} catch(e) {void(0);}
 	}
-  if(paneId !=null && tabId !=null){
-    var params = [ {name: "objectId", value : tabId} ] ;
-    ajaxAsyncGetRequest(eXo.env.server.createPortalURL(paneId, "SelectTab", true, params), false) ;
+  if(tabId !=null){
+  	//TODO: modify: dang.tung
+    url = url+"&objectId="+tabId ;
+    ajaxAsyncGetRequest(url, false) ;
   }
 
 };

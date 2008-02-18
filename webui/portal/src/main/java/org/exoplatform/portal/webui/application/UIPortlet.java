@@ -77,7 +77,7 @@ public class UIPortlet extends UIApplication {
 
   private boolean  showPortletMode = true ;
   
-  private Map renderParametersMap_ ;
+  private Map<String, String[]> renderParametersMap_ ;
   private ExoWindowID exoWindowId_ ;
   private PortletMode currentPortletMode_ = PortletMode.VIEW;
   private WindowState currentWindowState_ = WindowState.NORMAL;  
@@ -86,7 +86,7 @@ public class UIPortlet extends UIApplication {
 
   private List supportedProcessingEvents_;
   private List supportedPublicParams_;
-  private boolean portletInPortal_ = true;
+  private boolean portletInPortal_ = true;  
   
   public String getId()  { return exoWindowId_.getUniqueID() ; }
   
@@ -104,8 +104,8 @@ public class UIPortlet extends UIApplication {
   
   public void setPortletInPortal(boolean b) {
     portletInPortal_  = b;
-  }  
-  public boolean isPortletInPortal() { return portletInPortal_; }
+  }
+  public boolean isPortletInPortal() { return portletInPortal_; }  
   
   
   public String getTheme() {
@@ -160,8 +160,8 @@ public class UIPortlet extends UIApplication {
   
   public ExoWindowID  getExoWindowID() { return exoWindowId_ ; }
   
-  public  Map  getRenderParametersMap() { return renderParametersMap_ ;}
-  public  void setRenderParametersMap(Map map) { renderParametersMap_ =  map ; } 
+  public  Map<String, String[]>  getRenderParametersMap() { return renderParametersMap_ ;}
+  public  void setRenderParametersMap(Map<String, String[]> map) { renderParametersMap_ =  map ; } 
   
   public PortletMode getCurrentPortletMode() { return currentPortletMode_ ;}
   public void  setCurrentPortletMode(PortletMode mode) { currentPortletMode_ = mode;}
@@ -171,37 +171,32 @@ public class UIPortlet extends UIApplication {
   
   public List getSupportedProcessingEvents() { return supportedProcessingEvents_; }
   public void setSupportedProcessingEvents(List supportedProcessingEvents) {
-	supportedProcessingEvents_ = supportedProcessingEvents;
+    supportedProcessingEvents_ = supportedProcessingEvents;
   }
   
   public List getSupportedPublicRenderParameters() { return supportedPublicParams_; }
   public void setSupportedPublicRenderParameters(List supportedPublicRenderParameters) {
-	supportedPublicParams_ = supportedPublicRenderParameters;
+    supportedPublicParams_ = supportedPublicRenderParameters;
   }
   
   public  List<String> getSupportModes() { 
     if (supportModes_ != null) return supportModes_;
     PortletContainerService portletContainer =  getApplicationComponent(PortletContainerService.class);
     String  portletId = exoWindowId_.getPortletApplicationName() + Constants.PORTLET_META_DATA_ENCODER + exoWindowId_.getPortletName();   
-    PortletData portletData = (PortletData) portletContainer.getAllPortletMetaData().get(portletId);
+    PortletData portletData = portletContainer.getAllPortletMetaData().get(portletId);
     if(portletData == null) return null;
-    List sukepportsList = portletData.getSupports() ;
+    List<Supports> sukepportsList = portletData.getSupports() ;
     List<String> supportModes = new ArrayList<String>() ;
     for (int i = 0; i < sukepportsList.size(); i++) {
-      Supports supports = (Supports) sukepportsList.get(i) ;
+      Supports supports = sukepportsList.get(i) ;
       String mimeType = supports.getMimeType() ;
       if ("text/html".equals(mimeType)) {
-        List modes = supports.getPortletMode() ;
+        List<String> modes = supports.getPortletMode() ;
         for (int j =0 ; j < modes.size() ; j++) {
-          String mode =(String)modes.get(j) ;
+          String mode =modes.get(j) ;
           mode = mode.toLowerCase() ;
-          //check role admin
-          if("config".equals(mode)) { 
-            //if(adminRole) 
-            supportModes.add(mode) ;
-          } else {
-            supportModes.add(mode) ;
-          }
+          if("config".equals(mode)) supportModes.add(mode) ;
+          else supportModes.add(mode) ;
         }
         break ;
       }
@@ -221,7 +216,7 @@ public class UIPortlet extends UIApplication {
 	  if(supportedProcessingEvents_ == null) {
       PortletContainerService portletContainer =  getApplicationComponent(PortletContainerService.class);
       String  portletId = exoWindowId_.getPortletApplicationName() + Constants.PORTLET_META_DATA_ENCODER + exoWindowId_.getPortletName();   
-      PortletData portletData = (PortletData) portletContainer.getAllPortletMetaData().get(portletId);
+      PortletData portletData = portletContainer.getAllPortletMetaData().get(portletId);
       supportedProcessingEvents_ = portletData.getSupportedProcessingEvent();
 	  }
 	  if(supportedProcessingEvents_ == null) return false;
@@ -243,7 +238,7 @@ public class UIPortlet extends UIApplication {
 	  if(supportedPublicParams_ == null) {
       PortletContainerService portletContainer =  getApplicationComponent(PortletContainerService.class);
       String  portletId = exoWindowId_.getPortletApplicationName() + Constants.PORTLET_META_DATA_ENCODER + exoWindowId_.getPortletName();   
-      PortletData portletData = (PortletData) portletContainer.getAllPortletMetaData().get(portletId);
+      PortletData portletData = portletContainer.getAllPortletMetaData().get(portletId);
       supportedPublicParams_ = portletData.getSupportedPublicRenderParameter();
 	  }	
 	  if(supportedPublicParams_ == null) return false;
@@ -266,13 +261,13 @@ public class UIPortlet extends UIApplication {
    */
   public List<String> getPublicRenderParamNames() {
     UIPortal uiPortal = Util.getUIPortal();
-    Map publicParams = uiPortal.getPublicParameters();
+    Map<String, String[]> publicParams = uiPortal.getPublicParameters();
 
     List<String> publicParamsSupportedByPortlet = new ArrayList<String>();
     if (publicParams != null) {
-      Set keys = publicParams.keySet();
-      for (Iterator iter = keys.iterator(); iter.hasNext();) {
-        String key = (String) iter.next();
+      Set<String> keys = publicParams.keySet();
+      for (Iterator<String> iter = keys.iterator(); iter.hasNext();) {
+        String key = iter.next();
         if (supportsPublicParam(key)) {
           publicParamsSupportedByPortlet.add(key);
         }
@@ -282,18 +277,19 @@ public class UIPortlet extends UIApplication {
     return new ArrayList<String>();
   }  
   
-  public Map getPublicParameters() {
-    Map publicParamsMap = new HashMap();
+  public Map<String, String[]> getPublicParameters() {
+    Map<String, String[]> publicParamsMap = new HashMap<String, String[]>();
     UIPortal uiPortal = Util.getUIPortal();
-    Map publicParams = uiPortal.getPublicParameters();
-    Set allPublicParamsNames = publicParams.keySet();       
-    List supportedPublicParamNames = getPublicRenderParamNames();
-    for (Iterator iter = allPublicParamsNames.iterator(); iter.hasNext();) {
-      String oneOfAllParams = (String) iter.next();
+    Map<String, String[]> publicParams = uiPortal.getPublicParameters();
+    Set<String> allPublicParamsNames = publicParams.keySet();       
+    List<String> supportedPublicParamNames = getPublicRenderParamNames();
+    for (Iterator<String> iter = allPublicParamsNames.iterator(); iter.hasNext();) {
+      String oneOfAllParams = iter.next();
       if(supportedPublicParamNames.contains(oneOfAllParams))
         publicParamsMap.put(oneOfAllParams, publicParams.get(oneOfAllParams));
     }    
     return publicParamsMap;   
   }
+  
   
 }
