@@ -145,8 +145,8 @@
             <field  name="jcrPaths">
              	<collection type="java.util.ArrayList">
                 <value>              	
-		             	<object type="org.exoplatform.services.jcr.ext.hierarchy.impl.HierarchyConfig$JcrPath">              	 	
-		             		<field name="alias"><string>userApplicationData</string></field>
+		             <object type="org.exoplatform.services.jcr.ext.hierarchy.impl.HierarchyConfig$JcrPath">              	 	
+		             	<field name="alias"><string>userApplicationData</string></field>
 		                <field name="path"><string>ApplicationData</string></field>
 		                <field name="nodeType"><string>nt:unstructured</string></field>
 		                <field name="permissions">
