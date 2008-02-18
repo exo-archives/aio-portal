@@ -16,11 +16,7 @@
       org.exoplatform.widget.web.CalculatorWidget
 
     </param-value>
-  </context-param>
-  
-  <listener>
-    <listener-class>org.exoplatform.web.application.ApplicationRegister</listener-class>
-  </listener>
+  </context-param>  
   
   <filter>
     <filter-name>ResourceRequestFilter</filter-name>
@@ -30,6 +26,10 @@
   <filter-mapping>
     <filter-name>ResourceRequestFilter</filter-name>
     <url-pattern>/*</url-pattern>
-  </filter-mapping>
+  </filter-mapping>  
   
+	<listener>
+    <listener-class>org.exoplatform.web.application.ApplicationRegister</listener-class>
+  </listener>
+
 </web-app>
