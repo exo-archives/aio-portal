@@ -17,6 +17,7 @@ JavascriptService.addJavascript("eXo.core.Skin", "/javascript/eXo/core/Skin.js",
 JavascriptService.addJavascript("eXo.core.DragDrop", "/javascript/eXo/core/DragDrop.js", ServletContext);
 JavascriptService.addJavascript("eXo.core.TemplateEngine", "/javascript/eXo/core/TemplateEngine.js", ServletContext);
 JavascriptService.addJavascript("eXo.core.Spliter", "/javascript/eXo/core/Spliter.js", ServletContext);
+JavascriptService.addJavascript("eXo.core.Topic", "/javascript/eXo/core/Topic.js", ServletContext);
 
 /* Widget Javascripts */
 JavascriptService.addJavascript("eXo.widget.UIWidget", "/javascript/eXo/widget/UIWidget.js", ServletContext);
