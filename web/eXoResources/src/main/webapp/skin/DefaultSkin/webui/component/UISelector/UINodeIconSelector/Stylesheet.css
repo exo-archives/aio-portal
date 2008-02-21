@@ -3,12 +3,13 @@
 
 .UINodeIconSelector .LeftColumnStyle .ItemListContainer .ItemList {
   height: 240px;
-  background: white url('background/IconsBoxBg100x65.gif') no-repeat bottom center;
+  background: white url('background/IconImage.gif') no-repeat bottom;
 }
 
 .UINodeIconSelector .LeftColumnStyle .ItemListContainer .ItemDetailList {
   height: 263px;
 }
+
 
 .UINodeIconSelector .SelectedIconInfo {
   background: white;
@@ -26,13 +27,14 @@
 .UINodeIconSelector .SelectedIconInfo .UIFormInputSet .FieldContainer .ItemLabel{
   font-size: 12px; font-weight: normal;
   float: left;
-  width: 190px;
+  width: 180px;
   margin-left: 10px;
 }
 
 .UINodeIconSelector .SelectedIconInfo .UIFormInputSet .FieldContainer .ItemValue{
   margin-left: 0px;
-  float: left;
+  float: none;
+  color: #2F76E2;
 }
 
 .UINodeIconSelector .IconSelector {
@@ -45,13 +47,14 @@
 .UINodeIconSelector .IconSelector .Icon {
   float: left;
   margin: 2px ;
+  cursor: pointer ;
   width: 16px; height: 16px;
 }
 
 .UINodeIconSelector .IconSelector a {
   float: left;
+  margin: 2px ;
   border: 1px white solid;
-  margin: 2px;
   cursor: pointer ;
 }
 
@@ -61,8 +64,8 @@
 
 .UINodeIconSelector .IconSelector .SelectedBackground {
   float: left;
+  margin: 2px ;
   border: 1px red solid;
-  margin: 2px;
   cursor: pointer ;
 }
 
@@ -77,5 +80,10 @@
 }
 
 .UIMaskWorkspace .UIForm .HorizontalLayout .UINodeIconSelector .UIFormInputSet {
+	width: auto;
+	padding: 0px;
+}
+
+.UIMaskWorkspace .UINodeIconSelector .SelectedIconInfo .UIFormInputSet .FieldContainer {
 	width: auto;
 }
