@@ -219,6 +219,8 @@ UIDockbar.prototype.findIndex = function(object) {
 UIDockbar.prototype.removeDockbarIcon = function(idIcon) {
 	var icon = document.getElementById(idIcon);
 	if (icon) {
+		var portlet = document.getElementById("UIWindow-" + idIcon.replace(/[a-zA-Z]*/, ""));
+		if (portlet) portlet.style.display = "none";
 		var toolTip = icon.previousSibling;
 		eXo.core.DOMUtil.removeElement(icon);
 		eXo.core.DOMUtil.removeElement(toolTip);
