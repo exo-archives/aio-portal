@@ -219,7 +219,7 @@ public class UIPortletForm extends UIFormTabPane {
     for(UIFormStringInput ele : uiFormInputs) {
       preferences.setValue(ele.getName(), ele.getValue()) ;
     }
-    preferences.setMethodCalledIsAction(PCConstants.actionInt) ;
+    preferences.setMethodCalledIsAction(PCConstants.ACTION_INT) ;
     preferences.store() ;
   }  
   
