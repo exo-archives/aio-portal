@@ -153,9 +153,14 @@
 }
 
 .UIOrganizationPortlet .UIGroupManagement .UITrees {
- 	background: url('VistaSkin/background/UITreeBG.png') repeat;
- 	border-top: none;
+  background: url('VistaSkin/background/UITreeBG.png') repeat;
+  border-top: none;
   height: 224px;
+}
+
+.UIOrganizationPortlet .UIGroupManagement .UITrees .NodeIcon {
+  overflow:hidden;
+  white-space:nowrap;
 }
 
 .UIOrganizationPortlet .UIGroupManagement .GroupNavigationContainer {

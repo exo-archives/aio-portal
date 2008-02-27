@@ -17,6 +17,10 @@
 	padding: 4px 0px 7px 7px;
 }
 
+.UIOrganizationPortlet .UIGroupManagement .UITrees .NodeIcon {
+  overflow:hidden;
+  white-space:nowrap;
+}
 
 .UIOrganizationPortlet .OrganizationPortletContainer {
   padding: 5px 8px ;
