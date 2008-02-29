@@ -16,6 +16,11 @@
 	*width: 96%;
 }
 
+
+.UIOrganizationPortlet .UIGroupManagement .UITrees .NodeIcon {
+  white-space:nowrap;
+}
+
 .UIOrganizationPortlet .UIGroupManagement .UIGroupInfoContainer .UIGrid td {
 	height: auto;
 	padding: 4px 0px 7px 7px;
@@ -153,14 +158,10 @@
 }
 
 .UIOrganizationPortlet .UIGroupManagement .UITrees {
-  background: url('VistaSkin/background/UITreeBG.png') repeat;
-  border-top: none;
+ 	background: url('VistaSkin/background/UITreeBG.png') repeat;
+ 	border-top: none;
   height: 224px;
-}
-
-.UIOrganizationPortlet .UIGroupManagement .UITrees .NodeIcon {
-  overflow:hidden;
-  white-space:nowrap;
+  _width: 208px;
 }
 
 .UIOrganizationPortlet .UIGroupManagement .GroupNavigationContainer {
