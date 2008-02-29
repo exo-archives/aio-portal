@@ -284,13 +284,15 @@ public class DataStorageImpl implements DataStorage, Startable {
     RegistryEntry entry ;
     try {
       entry = regService_.getEntry(sessionProvider, portletPreferencesSet + "/" + name) ;
+      mapper_.map(entry.getDocument(), portletPreferences) ;
+      regService_.recreateEntry(sessionProvider, portletPreferencesSet, entry) ;
     } catch (ItemNotFoundException ie) {
       entry = new RegistryEntry(name) ;
+      mapper_.map(entry.getDocument(), portletPreferences) ;
       regService_.createEntry(sessionProvider, portletPreferencesSet, entry) ;
+    } finally {
+      sessionProvider.close() ;      
     }
-    mapper_.map(entry.getDocument(), portletPreferences) ;
-    regService_.recreateEntry(sessionProvider, portletPreferencesSet, entry) ;
-    sessionProvider.close() ;
   }
   
   public void remove(PortletPreferences portletPreferences) throws Exception {
