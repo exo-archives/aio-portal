@@ -275,20 +275,10 @@ DOMUtil.prototype.createElementNode = function(innerHTML, tagName) {
 	return applicationNode ;
 } ;
 /**
- * Generates an id based on the current time
+ * Generates an id based on the current time and random number
  */
 DOMUtil.prototype.generateId = function(objectId) {
-	var dateTime = new Date() ;
-	var time = dateTime.getTime() ;
-	return (objectId + "-" + time) ;
-} ;
-/**
- * Swaps the position of the sibling elements e1 and e2
- * TODO : needs to be implemented
- */
-DOMUtil.prototype.swapPosition = function(e1, e2) {
-  if (e1.parentNode != e2.parentNode) alert("Report  bug to the admin, cannot swap element position") ; 
-  var tmpSwap = document.createElement("div") ;
+	return (objectId + "-" + new Date().getTime() + Math.random().toString().substring(2)) ;
 } ;
 /**
  * Gets the style of an element, in several steps
