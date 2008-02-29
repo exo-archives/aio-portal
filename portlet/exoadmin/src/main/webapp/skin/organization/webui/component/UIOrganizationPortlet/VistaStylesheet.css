@@ -252,6 +252,11 @@
 .UIOrganizationPortlet .UIGroupManagement .UIGrid {
 }
 
+.UIOrganizationPortlet .UIGroupManagement .GroupNavigation .ScrollArea {
+	width:208px;
+}
+
+
 .UIOrganizationPortlet .UIGroupManagement .UIPageIterator {
 	width: 95%;
 	margin: auto;
@@ -261,9 +266,12 @@
 	width: auto;
 }
 
+.UIOrganizationPortlet .UIGroupManagement .UIGroupInfo .UIForm {
+	padding:0px;
+}
+
 .UIOrganizationPortlet .UIGroupForm .HorizontalLayout { 
 	height: 198px;
-	border-top: none;
 	padding: 35px 0px 0px 0px;
 }
 
