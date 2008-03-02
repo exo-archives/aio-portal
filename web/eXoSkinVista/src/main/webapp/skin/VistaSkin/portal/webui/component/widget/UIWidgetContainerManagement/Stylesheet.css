@@ -23,6 +23,7 @@
 
 .UIWidgetContainerManagement .CategoryTitleBar .Title {
 	float: left;
+	font-weight: bold;
 	line-height: 20px;
 	padding-left: 8px;
 }

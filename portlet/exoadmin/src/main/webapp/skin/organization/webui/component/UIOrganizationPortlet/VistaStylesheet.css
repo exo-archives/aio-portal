@@ -1,7 +1,7 @@
 .UIWindow .UIOrganizationPortlet {
   overflow: auto;
   border: none;
-  margin: 0px;
+  margin: 0px auto;
 }
 
 .UIOrganizationPortlet .OrganizationPortletContainer {

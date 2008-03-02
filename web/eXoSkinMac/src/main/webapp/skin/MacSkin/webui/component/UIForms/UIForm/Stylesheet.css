@@ -126,9 +126,8 @@
 
 /*####################- UIPermissionForm -#################*/
 
-.UIPermissionForm .UIForm  .HorizontalLayout .UIAccessGroup input.checkbox {
-	margin: 2px;
-	*margin: 0px;
+.UIPermissionForm .UIForm .HorizontalLayout .UIAccessGroup td.FieldLabel {
+  line-height: 16px;
 }
 
 .UIPermissionForm .UIForm .UIAccessGroup .UIFormGrid td.FieldComponent {
