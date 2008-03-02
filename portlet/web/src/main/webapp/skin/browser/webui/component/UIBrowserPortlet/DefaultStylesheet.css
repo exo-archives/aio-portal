@@ -110,7 +110,7 @@
 	padding: 0px 2px 0px 22px;
 	margin: 1px 5px 0px 0px;
 	border: inset 1px gray;
-	overflow-y:hidden ;
+	overflow-y: hidden ;
 }
 
 .UIBrowserPortlet .ArrowDownButton {
@@ -135,6 +135,8 @@
 	padding: 0px 0px 0px 5px;
 	border-bottom: solid 1px gray;
 	width: 99.5%;
+	height: 18px;
+	overflow: hidden;
 }
 
 .UIBrowserPortlet .TabContainer {
@@ -152,12 +154,15 @@
 }
 
 .UIBrowserPortlet .TabDetailBackground {
+ overflow: hidden;
 }
 
 .UIBrowserPortlet .TabLabel {
-  width: 150px; height: 18px;
+  width: 150px;
+  height: 18px;
 	background: url("DefaultSkin/background/UIBrowserPortlet.gif") no-repeat left -193px;
 	padding: 2px 5px 0px 21px; 
+	overflow: hidden;
 }
 
 .UIBrowserPortlet .ActiveTabDetailBackground .TabDetail {
