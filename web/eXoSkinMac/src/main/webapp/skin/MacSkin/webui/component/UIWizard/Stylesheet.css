@@ -157,7 +157,12 @@
 /*========================== Start UIWizard Step1 ==============================*/
 .UIWizard .UIContainerConfigOptions .UIDropDownControl {
 	width: 217px;
+	position: static;
 	margin-bottom: 2px;
+}
+
+.UIWizard .UIContainerConfigOptions .UIDropDownControl .UIDropDownAnchor {
+	width: 217px;
 }
 
 /*========================== Start UIWizard Step2 ==============================*/
@@ -282,6 +287,7 @@
 	height: 205px;
 	overflow-y: auto;
 	overflow-x: hidden;
+	width: 213px;
 }
 
 .UIWizard .LAYOUT-PAGE {

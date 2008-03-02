@@ -97,8 +97,12 @@
 
 .UIWizard .UIPageNodeSelector .UIDropDownControl {
 	width: 220px;
+  position: static;
 }
 
+.UIWizard .UIWizardContent .UIDropDownControl .UIDropDownAnchor {
+	width: 220px;
+}
 /*========================== End Wizard Content ==============================*/
 
 /*========================== Start ActionBar ==============================*/

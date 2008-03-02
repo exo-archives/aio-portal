@@ -7,6 +7,7 @@
 	jsmanager.addJavascript("eXo.webui.UIDropDownControl.init('$uicomponent.id');") ;
   def options = uicomponent.getOptions() ;
 %>
+<div style="position: relative; height: 0px;"><span></span></div>
 	<div class="UIDropDownControl" id="$uicomponent.id">
 		<div class="UIDropDownTitle" onclick="eXo.webui.UIDropDownControl.show(this, event);">
 			<div class="UIDropDownLeftTitle">
@@ -33,7 +34,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="UIDropDownAnchor" style="position: absolute ; display: none ; width: 100%">
+		<div class="UIDropDownAnchor" style="position: absolute ; display: none ;">
 			<div class="LeftTopItem">
 				<div class="RightTopItem">
 					<div class="CenterTopItem"><span></span></div>

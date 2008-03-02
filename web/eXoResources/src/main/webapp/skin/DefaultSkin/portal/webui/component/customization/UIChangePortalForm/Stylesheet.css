@@ -5,13 +5,13 @@
 .UIChagnePortalForm .TabPaneContent {
   border: 1px solid #d4d4d4;
   border-top: none;
-  padding: 0px 3px 3px 3px;
 }
 
 .UIChagnePortalForm .WorkingArea {
   padding: 15px 15px 25px 15px;
   height: 250px;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .UIChagnePortalForm .UIGrid .ActionContainer {
