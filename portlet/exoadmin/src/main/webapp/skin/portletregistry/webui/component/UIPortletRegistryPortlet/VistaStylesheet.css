@@ -1,3 +1,9 @@
+
+.UIWindow .UIApplicationRegistryPortlet {
+	border: none;
+	margin: 0px;
+}	
+	
 .UIApplicationRegistryPortlet {
 	border: 1px solid #b7b7b7;
 	height: auto;
@@ -9,6 +15,12 @@
   font-size: 14px; color: #058ee6; font-weight: bold; font-family: arial;
   margin: 5px 0px; 
   padding-left: 10px;
+}
+
+
+.UIApplicationRegistryPortlet .UIAvailablePortletForm input.checkbox{
+  margin: 0px 0px 0px 25px; 
+  width: 16px; height: 14px;
 }
 
 .UIApplicationRegistryPortlet .UIApplicationRegistryContainer {
