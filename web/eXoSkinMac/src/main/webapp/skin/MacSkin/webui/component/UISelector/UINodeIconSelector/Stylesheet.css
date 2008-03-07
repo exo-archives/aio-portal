@@ -17,6 +17,7 @@
   height: 35px;
   margin-top: 6px;
   line-height: 35px;
+  _width: 562px;
 }
 
 .UINodeIconSelector .SelectedIconInfo .UIFormInputSet .FieldContainer{
@@ -82,8 +83,4 @@
 .UIMaskWorkspace .UIForm .HorizontalLayout .UINodeIconSelector .UIFormInputSet {
 	width: auto;
 	padding: 0px;
-}
-
-.UIMaskWorkspace .UINodeIconSelector .SelectedIconInfo .UIFormInputSet .FieldContainer {
-	width: auto;
 }

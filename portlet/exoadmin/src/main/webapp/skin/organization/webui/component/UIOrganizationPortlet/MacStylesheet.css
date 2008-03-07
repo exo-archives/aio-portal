@@ -66,6 +66,10 @@
   margin: 4px auto 2px auto;
 }
 
+.UIOrganizationPortlet .UIBarStyle .BarStyle2 .UISearchForm .UIForm {
+  padding: 0px;
+}
+
 .UIOrganizationPortlet .UIToolbar .LargeToolbar .MembershipButton {
   float: left;
   width: 178px;
