@@ -46,6 +46,10 @@
 	border: none;
 }
 
+.UIOrganizationPortlet .UIUserManagement .UISearch .UIForm {
+  padding: 0px ; 
+}
+
 .UIOrganizationPortlet .UIUserManagement .UIFormInputSet .FieldContainer {
 	width: 410px;
 	margin: auto;
