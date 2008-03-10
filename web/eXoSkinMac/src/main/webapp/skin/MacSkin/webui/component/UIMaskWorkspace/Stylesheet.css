@@ -11,6 +11,10 @@
   height: 100%;
 }
 
+.UIMaskWorkspace .MaskContainer .WorkingArea .UIFormInputSet {
+  width: 90%;
+}
+
 .UIMaskWorkspace .TitleBarContainer {
   padding: 10px 13px 0px 10px;
 }
@@ -26,16 +30,6 @@
   height: 273px ; 
   overflow: auto;
   padding: 0px;
-}
-
-.UIMaskWorkspace .UITabContentContainer .UITabContent {
-  height: 273px ; 
-  overflow: auto;
-  padding: 0px;
-}
-
-.UIMaskWorkspace .UITabContentContainer .UITabContent .UIFormInputSet {
-  padding: 8px;
 }
 
 .UIMaskWorkspace .IconLayout {
