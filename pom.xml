@@ -88,7 +88,7 @@
             </property>
             <property>
               <name>mock.portal.dir</name>
-              <value>${exo.projects.directory.src}/portal/trunk/web/portal/src/main/webapp</value>
+              <value>${exo.projects.directory.src}/portal/branches/2.0/web/portal/src/main/webapp</value>
             </property>
             <property>
               <name>org.apache.commons.logging.Log</name>
@@ -150,7 +150,7 @@
         <exo.platform.version>2.0</exo.platform.version>
 
         <org.exoplatform.kernel.version>2.0</org.exoplatform.kernel.version>
-        <org.exoplatform.core.version>2.0</org.exoplatform.core.version>
+        <org.exoplatform.core.version>2.0.1</org.exoplatform.core.version>
         <org.exoplatform.portal.version>2.0</org.exoplatform.portal.version>
         <org.exoplatform.jcr.version>1.8</org.exoplatform.jcr.version>
         <org.exoplatform.pc.version>trunk</org.exoplatform.pc.version>

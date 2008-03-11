@@ -59,7 +59,7 @@ import org.exoplatform.webui.form.UIFormInputSet;
 import org.exoplatform.webui.form.UIFormStringInput;
 import org.exoplatform.webui.form.UIFormTabPane;
 import org.exoplatform.webui.form.UIFormTextAreaInput;
-import org.exoplatform.webui.form.validator.EmptyFieldValidator;
+import org.exoplatform.webui.form.validator.MandatoryValidator;
 /**
  * Author : Nhu Dinh Thuan
  *          nhudinhthuan@yahoo.com
@@ -88,7 +88,7 @@ public class UIPortletForm extends UIFormTabPane {
     UIFormInputSet uiSettingSet = new UIFormInputSet("PortletSetting") ;
   	uiSettingSet.
       addUIFormInput(new UIFormStringInput("id", "id", null).
-                     addValidator(EmptyFieldValidator.class).setEditable(false)).
+                     addValidator(MandatoryValidator.class).setEditable(false)).
       addUIFormInput(new UIFormStringInput("windowId", "windowId", null).setEditable(false)).
     	addUIFormInput(new UIFormStringInput("title", "title", null)).
   		addUIFormInput(new UIFormStringInput("width", "width", null)).
@@ -219,14 +219,14 @@ public class UIPortletForm extends UIFormTabPane {
     for(UIFormStringInput ele : uiFormInputs) {
       preferences.setValue(ele.getName(), ele.getValue()) ;
     }
-    preferences.setMethodCalledIsAction(PCConstants.ACTION_INT) ;
-    preferences.store() ;
-  }  
+    preferences.setMethodCalledIsAction(PCConstants.ACTION_INT);
+    preferences.store();
+  }
   
   
   private Map<String, String[]> getRenderParameterMap(UIPortlet uiPortlet) {
     Map<String, String[]> renderParams = uiPortlet.getRenderParametersMap();
-    
+
     if (renderParams == null) {
       renderParams = new HashMap<String, String[]>();
       uiPortlet.setRenderParametersMap(renderParams);

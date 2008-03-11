@@ -56,6 +56,7 @@ import org.exoplatform.webui.form.UIFormInputSet;
 import org.exoplatform.webui.form.UIFormSelectBox;
 import org.exoplatform.webui.form.UIFormStringInput;
 import org.exoplatform.webui.form.UIFormTabPane;
+import org.exoplatform.webui.form.validator.MandatoryValidator;
 import org.exoplatform.webui.form.validator.IdentifierValidator;
 import org.exoplatform.webui.form.validator.StringLengthValidator;
 import org.exoplatform.webui.organization.UIGroupMembershipSelector;
@@ -140,7 +141,7 @@ public class UIPageForm extends UIFormTabPane {
     uiPermissionSetting.addChild(uiListPermissionSelector);
     UIPermissionSelector uiEditPermission = createUIComponent(UIPermissionSelector.class, null, null);
     uiEditPermission.setRendered(false) ;
-    uiEditPermission.addValidator(org.exoplatform.webui.organization.UIPermissionSelector.EmptyFieldValidator.class);
+    uiEditPermission.addValidator(org.exoplatform.webui.organization.UIPermissionSelector.MandatoryValidator.class);
     uiEditPermission.setEditable(false);
     uiEditPermission.configure("UIPermissionSelector", "editPermission");
     uiPermissionSetting.addChild(uiEditPermission);
@@ -203,7 +204,7 @@ public class UIPageForm extends UIFormTabPane {
     if(title == null || title.trim().length() < 1) title = page.getName() ;
     page.setTitle(title);
     
-    if(!page.isShowMaxWindow()) {      
+    if(!page.isShowMaxWindow()) {
       page.setShowMaxWindow((Boolean) getUIFormCheckBoxInput("showMaxWindow").getValue());      
     }
     if(!PortalConfig.USER_TYPE.equals(page.getOwnerType())) {
@@ -225,7 +226,7 @@ public class UIPageForm extends UIFormTabPane {
     } 
     UIPageTemplateOptions uiConfigOptions = getChild(UIPageTemplateOptions.class);
     if(uiConfigOptions == null) return;
-    Page selectedPage = uiConfigOptions.getSelectedOption();
+    Page selectedPage = uiConfigOptions.createPageFromSelectedOption(page.getOwnerType(), page.getOwnerId());
     if(selectedPage == null) return ;
     page.setChildren(selectedPage.getChildren());
     page.setFactoryId(selectedPage.getFactoryId());
