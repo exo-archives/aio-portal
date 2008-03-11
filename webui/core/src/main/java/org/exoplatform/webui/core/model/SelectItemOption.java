@@ -26,11 +26,11 @@ package org.exoplatform.webui.core.model;
  * @see SelectItemCategory
  * @see org.exoplatform.webui.form.UIFormInputItemSelector
  */
-public class SelectItemOption <T extends Object> {
+public class SelectItemOption <T extends Object> extends SelectItem {
   /**
    * The label of the item
    */
-  protected String label_ ;
+  //protected String label_ ;
   /**
    * THe value of the item
    */
@@ -47,13 +47,18 @@ public class SelectItemOption <T extends Object> {
    * A description of the item
    */
   protected String description_ ;
+  /**
+   * Whether this item is disabled
+   */
+  protected boolean disabled_ = false;
   
   public SelectItemOption(String label, T value, String icon) {
     this(label, value, "", icon);
   }
   
   public SelectItemOption(String label, T value, String desc, String icon) {
-    label_ = label ;
+    //label_ = label ;
+	  super(label);
     value_ = value ;
     description_ = desc ; 
     icon_ = icon ;
@@ -72,8 +77,8 @@ public class SelectItemOption <T extends Object> {
     this(value.toString(), value, "", null);
   }
   
-  public  String getLabel() {  return label_ ;}
-  public void setLabel(String s) { label_ = s ; }
+//  public  String getLabel() {  return label_ ;}
+//  public void setLabel(String s) { label_ = s ; }
   
   public T getValue() { return value_ ; }
   public void   setValue(T s) { value_ =  s ; }
@@ -86,5 +91,15 @@ public class SelectItemOption <T extends Object> {
 
   public String getIcon() { return icon_; }
   public void setIcon(String icon) { this.icon_ = icon; }
+
+	public boolean isDisabled() {
+		return disabled_;
+	}
+	
+	public void setDisabled(boolean disabled) {
+		this.disabled_ = disabled;
+	}
+  
+  
   
 }
