@@ -78,6 +78,10 @@
 	padding-bottom: 0px;
 }
 
+.UINodeIconSelector .ItemDetailList .SelectedIconInfo .UIFormInputSet {
+	padding-bottom: 0px;
+}
+
 .UINodeIconSelector .CategoryContainer .OverflowContainer {
 	width: auto;
 } 
