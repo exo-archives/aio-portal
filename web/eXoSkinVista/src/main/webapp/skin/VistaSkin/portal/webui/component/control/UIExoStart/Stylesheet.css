@@ -211,6 +211,7 @@
   background-position: 0px 23px;
   border: solid 1px #b7b7b7 ;
   width: 100%;
+  _width: 99%;
 }
 
 .UIExoStart .StartMenuContainer .StartMenuContent {
