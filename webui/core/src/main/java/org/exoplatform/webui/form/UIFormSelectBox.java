@@ -24,9 +24,7 @@ import java.util.ResourceBundle;
 
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.core.UIComponent;
-import org.exoplatform.webui.core.model.SelectItem;
 import org.exoplatform.webui.core.model.SelectItemOption;
-import org.exoplatform.webui.core.model.SelectItemOptionGroup;
 /**
  * Represents a select element
  * 
@@ -47,10 +45,6 @@ public class UIFormSelectBox extends UIFormStringInput {
    * The list of options
    */
   private List<SelectItemOption<String>> options_ ;
-  /**
-   * The list of items, which can either be a {@link SelectItemOption} or {@link SelectItemOptionGroup}
-   */
-  private List<SelectItem> items_ ;
   
   /**
    * The javascript expression executed when an onChange event fires
@@ -187,61 +181,23 @@ public class UIFormSelectBox extends UIFormStringInput {
     
     w.write(">\n") ;
     
-//    for(SelectItemOption<String> item : options_) {
-//      String label = item.getLabel() ;
-//      try {
-//        label = res.getString(formId + ".label.option." + item.getValue()) ;
-//      } catch(MissingResourceException ex) {}
-//      
-//      if(item.isSelected()) {
-//        w.write("<option selected=\"selected\" value=\""); w.write(item.getValue()); w.write("\">"); 
-//      } else {
-//        w.write("<option value=\""); w.write(item.getValue()); w.write("\">"); 
-//      }
-//      w.write(label); w.write("</option>\n");
-//    }
-    for(SelectItem item : items_) {
-        if (item instanceof SelectItemOptionGroup) {
-        	w.write("<optgroup label=\""); w.write(item.getLabel()); w.write("\">");
-        	for (SelectItemOption option : ((SelectItemOptionGroup)item).getOptions()) {
-        		w.write(renderOption(context, option));
-        	}
-        	w.write("</optgroup>");
-        } else if (item instanceof SelectItemOption) {
-        	w.write(renderOption(context, (SelectItemOption)item));
-        }
-        
+    for(SelectItemOption<String> item : options_) {
+      String label = item.getLabel() ;
+      try {
+        label = res.getString(formId + ".label.option." + item.getValue()) ;
+      } catch(MissingResourceException ex) {}
+      
+      if(item.isSelected()) {
+        w.write("<option selected=\"selected\" value=\""); w.write(item.getValue()); w.write("\">"); 
+      } else {
+        w.write("<option value=\""); w.write(item.getValue()); w.write("\">"); 
       }
+      w.write(label); w.write("</option>\n");
+    }
+
     
     w.write("</select>\n") ;
     if (this.isMandatory()) w.write(" *");
-  }
-  
-  private String renderOption(WebuiRequestContext context, SelectItemOption option) {
-	  ResourceBundle res = context.getApplicationResourceBundle() ;
-	  UIForm uiForm = getAncestorOfType(UIForm.class) ;
-	    String formId =  null ;
-	    if(uiForm.getId().equals("UISearchForm")) formId = uiForm.<UIComponent>getParent().getId() ;
-	    else formId = uiForm.getId() ;
-
-	  String label = option.getLabel() ;
-      try {
-        label = res.getString(formId + ".label.option." + option.getValue()) ;
-      } catch(MissingResourceException ex) {}
-      
-	  StringBuffer r = new StringBuffer();
-        if(option.isSelected()) {
-          r.append("<option selected=\"selected\" value=\"");
-        } else {
-          r.append("<option value=\""); 
-        }
-        r.append(option.getValue());
-        if (option.isDisabled()) r.append(" disabled=\"disabled\"");
-        r.append("\">");
-        	r.append(label);
-        r.append("</option>\n");
-        
-        return r.toString();
   }
 
 }
