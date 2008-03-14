@@ -1,76 +1,63 @@
-.UIPortalManagement {}
+.UIPortalManagement {
+}
 
 .UIPortalManagement .UIPortletOptions .UIDropDownControl {
 	width: 218px;
 }
 
-.UIPortalManagement .TopTitleBar {
-  padding: 15px 85px 15px 0px;
-}
-
 .UIPortalManagement .UIToolbar .EditToolbar .Icon{
-	margin: 4px 8px 0px 14px;
+	margin: 4px 9px 0px 17px;
 }
 
 .UIPortalManagement .UIPortalManagementEditBar {
-  padding: 0px 7px ;
+  margin-top: 10px;
 }
 
 .UIPortalManagement .UIPortalManagementEditBar .EditContainerIcon {
-  width: 32px;  height: 32px;
-  background: url('/eXoSkinMac/skin/MacSkin/skinIcons/32x32/icons/ShowContainerButton.png') no-repeat;
+  width: 27px;  height: 23px;
+  background: url('icons/PortalManagement.gif') no-repeat;
 }
 
 .UIPortalManagement .UIPortalManagementEditBar .EditPortletIcon {
-  width: 32px;  height: 32px;
-  background: url('/eXoSkinMac/skin/MacSkin/skinIcons/32x32/icons/ShowPortletButton.png') no-repeat;
+  width: 27px;  height: 23px;
+  background: url('icons/PortalManagement.gif') no-repeat left -23px;
 }
 
 .UIPortalManagement .UIPortalManagementEditBar .LayoutModeIcon {
-  float: left;
-  margin: 4px 7px;
-  width: 32px;  height: 32px;
-  cursor : pointer;
-  background: url('background/LayoutMode.gif') no-repeat center;
+  width: 27px;  height: 23px;
+  background: url('icons/PortalManagement.gif') no-repeat left -69px;
 }
 
 .UIPortalManagement .UIPortalManagementEditBar .PreviewIcon {
-  width: 32px;  height: 32px;  
-  background: url('/eXoSkinMac/skin/MacSkin/skinIcons/32x32/icons/PreviesButton.png') no-repeat;
+  width: 27px;  height: 23px;
+  background: url('icons/PortalManagement.gif') no-repeat left -92px;
 }
 
 .UIPortalManagement .UIPortalManagementEditBar .EditPortalIcon { 
-  width: 32px;  height: 32px;
-  background: url('/eXoSkinMac/skin/MacSkin/skinIcons/32x32/icons/EditPortalButton.png') no-repeat;
-}
-
-.UIPortalManagement .UIPortalManagementEditBar .SavePortalIcon {
-  float: left;
-  width: 25px;  height: 24px;
-  margin: 4px 0px 0px 7px;
-  background: url('background/Save.gif') no-repeat;
+  width: 27px;  height: 23px;
+  background: url('icons/PortalManagement.gif') no-repeat left -46px;
 }
 
 .UIPortalManagement .UIToolbar .ControlToolbar {
-  margin: 12px 2px 0px 50px;
+	margin: 10px 2px 0px 95px; 
 }
 
 .UIPortalManagement .RollbackIcon {
-	width: 32px; height: 30px;
-	background: url('/eXoSkinMac/skin/MacSkin/skinIcons/32x32/icons/RollBackButton.png') no-repeat;
+	width: 24px; height: 20px;
+	background: url('icons/PortalManagement.gif') no-repeat left -115px;
 }
 
 .UIPortalManagement .FinishIcon {
-	width: 32px; height: 30px;
-	background: url('/eXoSkinMac/skin/MacSkin/skinIcons/32x32/icons/FinishButton.png') no-repeat;
+	width: 24px; height: 20px;
+	background: url('icons/PortalManagement.gif') no-repeat left -136px;
 }
 
 .UIPortalManagement .SaveIcon {
-	width: 32px; height: 30px;
-	background: url('/eXoSkinMac/skin/MacSkin/skinIcons/32x32/icons/SaveButton.png') no-repeat;
+	width: 24px; height: 19px;
+	background: url('icons/PortalManagement.gif') no-repeat left -156px;
 }
 
 .UIPortalManagement .AbortIcon {
-	width: 32px; height: 30px;
-	background: url('/eXoSkinMac/skin/MacSkin/skinIcons/32x32/icons/AbortButton.png') no-repeat;
+	width: 24px; height: 20px;
+	background: url('icons/PortalManagement.gif') no-repeat left -176px;
 }

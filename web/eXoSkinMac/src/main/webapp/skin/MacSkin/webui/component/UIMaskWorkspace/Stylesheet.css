@@ -44,14 +44,12 @@
 .UIMaskWorkspace .UIContainerForm {
 }
 
-.UIMaskWorkspace .UIForm .HorizontalLayout .FieldContainer {
-  width: 460px;
+.UIMaskWorkspace .UIForm .HorizontalLayout .SelectedIconInfo .UIFormInputSet {
+  margin: auto;
 }
 
-.UIMaskWorkspace .UIForm .HorizontalLayout .UIFormInputSet {
-  width: 450px;
-  margin: auto;
-  padding: 10px;
+.UIMaskWorkspace .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent{
+  _padding: 0px;
 }
 
 .UIMaskWorkspace .UIFormInputSet .UIFormGrid .SelectGroup {
