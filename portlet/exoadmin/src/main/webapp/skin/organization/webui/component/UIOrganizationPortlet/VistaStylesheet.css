@@ -16,6 +16,14 @@
 	*width: 96%;
 }
 
+.UIOrganizationPortlet .OrganizationPortletContainer .UIMembershipManagement .UIListMembershipType .UIGrid {
+	width: 99.3%;
+}
+
+.UIOrganizationPortlet .OrganizationPortletContainer .UIMembershipManagement .UIMembershipTypeForm {
+	width: 99.3%;
+}
+
 
 .UIOrganizationPortlet .UIGroupManagement .UITrees .NodeIcon {
   white-space:nowrap;
@@ -293,8 +301,12 @@
 .UIOrganizationPortlet .UIGroupInfo .UIGroupMembershipForm a.Icon{ 
 	background-position: left top;
 	background-repeat: no-repeat;
-	float: left; margin-left: 7px;
+	float: left; margin-left: 4px;
 	height: 24px; width: 24px;
+}
+
+.UIOrganizationPortlet .UIGroupInfo .UIGroupMembershipForm .Search { 
+	margin-top: 3px;
 }
 
 .UIOrganizationPortlet .UIGroupInfo .ListUserForSearch { 

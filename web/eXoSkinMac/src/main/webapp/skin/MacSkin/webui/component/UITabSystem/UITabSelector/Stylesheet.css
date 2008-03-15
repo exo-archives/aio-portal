@@ -3,6 +3,10 @@
   height: 31px;
 }
 
+.UITabSelector {
+  padding: 8px;
+}
+
 .UITabSelector .UIHorizontalTabs .LeftHorizontalTabs{
   background: url('/eXoResources/skin/DefaultSkin/webui/component/UITabSystem/UITabSelector/background/LeftFlatTabStyle2x31.gif') no-repeat left;
   padding-left: 2px;

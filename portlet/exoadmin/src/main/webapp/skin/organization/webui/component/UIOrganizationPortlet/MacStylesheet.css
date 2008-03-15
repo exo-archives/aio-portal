@@ -12,6 +12,15 @@
   *width: 97.5%;
 }
 
+.UIOrganizationPortlet .OrganizationPortletContainer .UIMembershipManagement .UIListMembershipType .UIGrid {
+	width: 99.2%;
+	margin: auto;
+}
+
+.UIOrganizationPortlet .OrganizationPortletContainer .UIMembershipManagement .UIMembershipTypeForm {
+	width: 99.3%;
+}
+
 .UIOrganizationPortlet .UIGroupManagement .UITrees .NodeIcon {
   white-space:nowrap;
 }
@@ -356,6 +365,10 @@
 	height: 24px; width: 24px;
 }
 
+.UIOrganizationPortlet .UIGroupInfo .UIGroupMembershipForm .Search { 
+	margin-top: 3px;
+}
+
 .UIOrganizationPortlet .UIGroupInfo .ListUserForSearch{ 
 	padding: 10px;
 }
@@ -368,7 +381,6 @@
 /*#######################  UIMemberShipManagement #################################*/
 
 .UIOrganizationPortlet .UIMembershipManagement {
-  width: 97%; 
   margin: auto;
 }
 

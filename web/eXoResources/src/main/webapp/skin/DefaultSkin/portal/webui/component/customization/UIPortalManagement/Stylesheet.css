@@ -43,21 +43,21 @@
 }
 
 .UIPortalManagement .RollbackIcon {
-	width: 24px; height: 24px;
+	width: 24px; height: 20px;
 	background: url('icons/PortalManagement.gif') no-repeat left -115px;
 }
 
 .UIPortalManagement .FinishIcon {
-	width: 24px; height: 24px;
+	width: 24px; height: 20px;
 	background: url('icons/PortalManagement.gif') no-repeat left -136px;
 }
 
 .UIPortalManagement .SaveIcon {
-	width: 24px; height: 24px;
-	background: url('icons/PortalManagement.gif') no-repeat left -158px;
+	width: 24px; height: 19px;
+	background: url('icons/PortalManagement.gif') no-repeat left -156px;
 }
 
 .UIPortalManagement .AbortIcon {
-	width: 24px; height: 24px;
+	width: 24px; height: 20px;
 	background: url('icons/PortalManagement.gif') no-repeat left -176px;
 }
