@@ -39,7 +39,7 @@ public class PageUtils {
    * This method create new Page and PageNode from an existing page and add created PageNode to children of parentNode
    *
    */
-  public static void createNodeFromPageTemplate(String nodeName, String nodeLabel,
+  public static PageNode createNodeFromPageTemplate(String nodeName, String nodeLabel,
                          String pageId, Map<String, String[]> portletPreferences, PageNode parentNode) throws Exception {
     
     UIPortalApplication uiPortalApp = Util.getUIPortalApplication()   ;
@@ -49,6 +49,7 @@ public class PageUtils {
     node.setUri(parentNode.getUri() + "/" + node.getName()) ;
     if(parentNode.getChildren() == null) parentNode.setChildren(new ArrayList<PageNode>())  ;
     parentNode.getChildren().add(node) ;
+    return node;
   }
   
   /**
@@ -56,7 +57,7 @@ public class PageUtils {
    * It also saves changes to database and UIPortal
    *
    */  
-  public static void createNodeFromPageTemplate(String nodeName, String nodeLabel,
+  public static PageNode  createNodeFromPageTemplate(String nodeName, String nodeLabel,
       String pageId, Map<String, String[]> portletPreferences, PageNavigation navi) throws Exception {
     
     UIPortal uiPortal = Util.getUIPortal() ;
@@ -67,6 +68,7 @@ public class PageUtils {
     navi.addNode(node) ;
     configService.update(navi) ;
     setNavigation(uiPortal.getNavigations(), navi) ;    
+    return node;
   }
     
   private static void setNavigation(List<PageNavigation> navs, PageNavigation nav) {
