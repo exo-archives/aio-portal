@@ -202,10 +202,11 @@ DOMUtil.prototype.findFirstDescendantByClass = function(root, elementName, clazz
 DOMUtil.prototype.findDescendantById = function(root, id) {
   var elements = root.getElementsByTagName('*') ;
   var ln = elements.length ;
+  var idValue;
   for (var i = 0; i < ln; i++) {
-    if (elements[i].getAttribute("id") == id) {
-      return elements[i] ;
-    }
+  	if (elements[i].getAttributeNode("id")) idValue = elements[i].getAttributeNode("id").value;
+  	else idValue = elements[i].getAttribute("id");
+   	if (idValue == id) return elements[i] ;
   }
   return null ;
 } ;
