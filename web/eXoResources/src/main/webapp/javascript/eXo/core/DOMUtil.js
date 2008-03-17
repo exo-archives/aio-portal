@@ -119,7 +119,7 @@ DOMUtil.prototype.findAncestorsByClass = function(element, clazz) {
 DOMUtil.prototype.findAncestorById = function(element,  id) {
   var parent = element.parentNode ;
   while (parent != null) {
-    if (parent.getAttributeNode("id").value == id) return parent ;
+    if (parent.getAttribute("id") == id) return parent ;
     parent = parent.parentNode ;
   }
   return null ;
