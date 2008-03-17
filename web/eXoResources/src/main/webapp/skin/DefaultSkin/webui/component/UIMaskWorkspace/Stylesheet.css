@@ -30,7 +30,7 @@
 }
 
 .UIMaskWorkspace .MaskContainer {
-	background: white;
+	background: #f5f5f5;
 }
 
 .UIMaskWorkspace .MaskContainer .UIFormTabPane .TabPaneContent .UITabContentContainer {
