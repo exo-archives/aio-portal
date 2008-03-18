@@ -42,8 +42,8 @@ public class UIPermissionSelector extends UISelector<String> {
   
   private Permission permission_;
   private boolean isEditable = true;
-	public UIPermissionSelector() throws Exception {
-    super(null, null) ;		
+  public UIPermissionSelector() throws Exception {
+    super(null, null) ;   
     isEditable = true;
     UIFormPopupWindow uiPopup = addChild(UIFormPopupWindow.class, null, "PopupPermissionSelector");
     uiPopup.setWindowSize(540, 0);  
@@ -56,8 +56,8 @@ public class UIPermissionSelector extends UISelector<String> {
     
     permission_ = new Permission();
   }
-	
-	public void configure(String iname, String bfield) {  
+  
+  public void configure(String iname, String bfield) {  
     setName(iname) ;
     setBindingField(bfield) ; 
   } 
@@ -105,7 +105,7 @@ public class UIPermissionSelector extends UISelector<String> {
       String value = (String)uiInputContainer.getValue() ; 
       if(value == null || value.trim().length() < 1) {
         String[] args =  {uiInputContainer.getBindingField()} ;
-        throw new MessageException(new ApplicationMessage("MandatoryValidator.msg.empty", args, ApplicationMessage.INFO)) ;
+        throw new MessageException(new ApplicationMessage("MandatoryValidatorIterator.msg.empty", args, ApplicationMessage.INFO)) ;
       }
     }
     
