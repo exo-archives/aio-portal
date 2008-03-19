@@ -108,6 +108,23 @@ UIPopupWindow.prototype.show = function(popup, isShowMask, middleBrowser) {
 	if (eXo.core.Browser.findPosY(popup) < 0) popup.style.top = scrollY + "px" ;
 	popup.style.visibility = "visible" ;
 } ;
+
+/**
+ * 	@author  : Lam Nguyen
+ * 
+ */
+UIPopupWindow.prototype.increasezIndex = function(popup) {
+  var DOMUtil = eXo.core.DOMUtil ;
+	if(typeof(popup) == "string") popup = document.getElementById(popup) ;
+	var portalApp = document.getElementById("UIPortalApplication") ;
+  var uiLogin = DOMUtil.findFirstDescendantByClass(portalApp, "div", "UILoginForm");
+  if(uiLogin) {
+      var curMaskzIndex = parseInt(DOMUtil.getStyle(document.getElementById('UIMaskWorkspace'), "zIndex"));
+      popup.style.zIndex = ++curMaskzIndex +"";
+//      popup.style.visibility = "visible";
+  }
+}
+
 /**
  * Hides (display: none) the popup window when the close button is clicked
  */
