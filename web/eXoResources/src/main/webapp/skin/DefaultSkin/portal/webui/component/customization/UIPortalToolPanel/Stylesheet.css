@@ -5,7 +5,9 @@
  * December 13, 2006
  * version: $Id$
  */
-.UIPortalToolPanel {}
+.UIPortalToolPanel {
+  width: 100%;
+}
 
 .UIPortalToolPanel .Body {
   padding: 7px 6px 5px 6px;
