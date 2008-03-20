@@ -192,13 +192,13 @@
 	margin-top: 5px;
 }
 
-.UIOrganizationPortlet .UIGroupManagement .UIBreadcumbs .HomeIcon{
+.UIOrganizationPortlet .UIGroupManagement .UIBreadcumbs .HomeIcon {
   width: 28px; height: 15px;
   margin-top: 9px;
   background: url('MacSkin/background/UIOrganizationPortlet.gif') no-repeat left -67px;
 }
 
-.UIOrganizationPortlet .UIGroupManagement .UIBreadcumbs{
+.UIOrganizationPortlet .UIGroupManagement .UIBreadcumbs {
 	padding:0px ;
 }
 
@@ -366,7 +366,7 @@
 	height: 24px; width: 24px;
 }
 
-.UIOrganizationPortlet .UIGroupInfo .UIGroupMembershipForm .Search { 
+.UIOrganizationPortlet .UIGroupInfo .UIGroupMembershipForm .SearchIcon { 
 	margin-top: 3px;
 }
 
