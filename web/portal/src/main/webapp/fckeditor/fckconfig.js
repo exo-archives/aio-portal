@@ -103,7 +103,9 @@ FCKConfig.ToolbarSets["Default"] = [
 ] ;
 
 FCKConfig.ToolbarSets["Basic"] = [
-	['Bold','Italic','-','OrderedList','UnorderedList','-','Link','Unlink','-','About']
+	['Bold','Italic','Underline','StrikeThrough','-','OrderedList','UnorderedList','-','Outdent','Indent','-','Link','Unlink'],
+	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
+	['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat','-','About']
 ] ;
 
 FCKConfig.ContextMenu = ['Generic','Link','Anchor','Image','Flash','Select','Textarea','Checkbox','Radio','TextField','HiddenField','ImageButton','Button','BulletedList','NumberedList','Table','Form'] ;
