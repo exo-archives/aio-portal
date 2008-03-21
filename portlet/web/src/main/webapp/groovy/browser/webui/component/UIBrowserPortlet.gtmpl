@@ -39,7 +39,7 @@
 		<div class="TabBackground">
 			<div class="TabContainer">
 				<div class="Separator"><span></span></div>
-				<div class="ActiveTabDetailBackground TabMenuItem">
+				<div class="ActiveTabDetailBackground TabMenuItem" style="width:150px;">
 					<div class="TabDetail">
 						<div class="CloseButton" style="display: none"
 								 onmouseover="eXo.application.browser.BrowserApplication.onMouseOver(this, 'CloseButton', 'ActiveCloseButton', true);" 
