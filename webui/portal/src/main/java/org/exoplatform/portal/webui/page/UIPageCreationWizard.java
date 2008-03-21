@@ -179,33 +179,20 @@ public class UIPageCreationWizard extends UIPageWizard {
       }
       
       PageNode pageNode = uiPageSetInfo.getPageNode();
-      String pageId = navigation.getOwnerType() + "::" + navigation.getOwnerId() + "::" + pageNode.getName() ;
-      //TODO: dang.tung - node name is existing
-      //---------------------------------------------------------------------------------------------
-      List<PageNode> nodes = navigation.getNodes();
       PageNode selectedPageNode = uiNodeSelector.getSelectedPageNode() ;
-      if(selectedPageNode == null) {
-      for(PageNode ele : nodes) {
-        if(ele.getUri().equals(pageNode.getUri())){
-          uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.NameNotSame", null)) ;
-          context.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages() );
-          uiWizard.viewStep(2);
-          return;   
-        }
+      List<PageNode> sibbling = new ArrayList<PageNode>() ;
+      if (selectedPageNode != null) sibbling = selectedPageNode.getChildren() ;
+      else sibbling = navigation.getNodes() ;
+      for(PageNode ele : sibbling) {
+    	if(ele.getUri().equals(pageNode.getUri())) {
+		  uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.NameNotSame", null)) ;
+	      context.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages() );
+	      uiWizard.viewStep(2);
+	      return;
+		}
       }
-      }
-      else {
-      List<PageNode> childs = selectedPageNode.getChildren() ;
-      for(PageNode child : childs) {
-        if(child.getUri().equals(pageNode.getUri())) {
-        uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.NameNotSame", null)) ;
-          context.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages() );
-          uiWizard.viewStep(2);
-          return;     
-        }
-      }
-       }
-      //----------------------------------------------------------------------------------------------
+      
+      String pageId = navigation.getOwnerType() + "::" + navigation.getOwnerId() + "::" + pageNode.getName() ;
       DataStorage storage = uiWizard.getApplicationComponent(DataStorage.class);
       if(storage.getPage(pageId) != null) {
         uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.NameNotSame", null)) ;
