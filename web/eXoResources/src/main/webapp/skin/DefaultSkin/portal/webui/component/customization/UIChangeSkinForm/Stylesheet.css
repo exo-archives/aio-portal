@@ -34,7 +34,7 @@
 }
 
 .UIChangeSkinForm .UIItemSelector .ItemListContainer .ItemList {
-  background: white url('background/ItemListBg167x127.gif') no-repeat bottom;
+  background: white url('background/ItemListBg167x127.gif') no-repeat bottom ;
 }
 
 .UIChangeSkinForm .UITabPane .TabPaneContent .UITabContentContainer { 
