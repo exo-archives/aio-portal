@@ -135,7 +135,7 @@ public class UIPageNavigationControlBar extends UIToolbar {
       UserPortalConfigService dataService = uiPageManagement.getApplicationComponent(UserPortalConfigService.class);
       List<PageNavigation> deleteNavigations = uiNodeSelector.getDeleteNavigations();
       for(PageNavigation nav : deleteNavigations) {
-        if(dataService.getPageNavigation(nav.getId()) != null) dataService.remove(nav);
+        if(dataService.getPageNavigation(nav.getId()) != null) dataService.remove(nav) ;
       }
       
       List<PageNavigation> navigations = uiNodeSelector.getPageNavigations();
@@ -150,7 +150,6 @@ public class UIPageNavigationControlBar extends UIToolbar {
       UIPortal uiPortal = Util.getUIPortal();
       UserPortalConfig portalConfig  = dataService.getUserPortalConfig(uiPortal.getName(), accessUser);
       uiPortal.setNavigation(portalConfig.getNavigations());
-      
       event.getSource().abort(event);
     }
 
@@ -166,6 +165,7 @@ public class UIPageNavigationControlBar extends UIToolbar {
  
   public void abort(Event<UIPageNavigationControlBar> event) throws Exception {
     UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
+    uiPortalApp.setEditting(false) ;
     PortalRequestContext prContext = Util.getPortalRequestContext();  
     UIPortal portal = Util.getUIPortal();
     UIControlWorkspace uiControl = uiPortalApp.findComponentById(UIPortalApplication.UI_CONTROL_WS_ID);
@@ -180,5 +180,5 @@ public class UIPageNavigationControlBar extends UIToolbar {
     prContext.addUIComponentToUpdateByAjax(uiWorkingWS) ;      
     prContext.setFullRender(true);
   }
-  
+    
 }
