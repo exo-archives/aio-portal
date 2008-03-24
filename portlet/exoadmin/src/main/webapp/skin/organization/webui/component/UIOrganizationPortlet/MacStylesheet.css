@@ -7,7 +7,6 @@
 
 .UIOrganizationPortlet {
   background: white;
-  border: 1px solid #b7b7b7;
   margin: 5px;
   padding: 5px;
   *width: 97.5%;
@@ -360,10 +359,11 @@
 }
 
 .UIOrganizationPortlet .UIGroupInfo .UIGroupMembershipForm a.Icon { 
-	background-position: left center;
+	background-position: left top;
 	background-repeat: no-repeat;
-	float: right;
+	float: left;
 	height: 24px; width: 24px;
+	margin-left: 4px;
 }
 
 .UIOrganizationPortlet .UIGroupInfo .UIGroupMembershipForm .SearchIcon { 

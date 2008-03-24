@@ -22,8 +22,13 @@
 }
 
 .UIAccountPortlet .UIForm .HorizontalLayout .UIFormInputSet {
-  height: 280px; width: 420px;
+  width: 420px;
   padding: 10px 20px 0px 20px; margin: auto;
+}
+
+
+.UIAccountPortlet .UIForm .HorizontalLayout  .UITabContent .UIFormInputSet {
+  width: 450px;  
 }
 
 .UIAccountPortlet .UIFormTabPane .WorkingArea .UIForm {
