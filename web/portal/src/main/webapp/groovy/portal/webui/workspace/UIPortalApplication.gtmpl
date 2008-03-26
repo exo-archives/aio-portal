@@ -18,23 +18,30 @@
     <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
     <link rel="shortcut icon" type="image/x-icon"  href="/portal/favicon.ico" />
     <link id="PortalSkin" rel="stylesheet" type="text/css" href="$portalSkin.CSSPath" />
-    <% 
-      for(portletSkin in portletSkins) { 
-    %> 
+    <%
+      for(portletSkin in portletSkins) {
+    %>
       <link id="${portletSkin.id}" rel="stylesheet" type="text/css" href= "$portletSkin.CSSPath" />
-    <%}%>    
-    
+    <%}%>
+
     <%if("true".equals(System.getProperty("exo.product.developing"))) {
         for(path in scriptsPaths) { %>
-      <script type="text/javascript" src="<%=path%>"></script>  
-        <%}   
- 	} else {%>
- 	  <script type="text/javascript" src="/portal/javascript/merged.js""></script>
- 	<%}%>
+          <script type="text/javascript" src="<%=path%>"></script>
+    <%  }
+      } else {
+    %>
+        <script type="text/javascript" src="/portal/javascript/merged.js""></script>
+    <%}%>
     <script type="text/javascript">
+      eXo.env.portal.context = '<%=docBase%>' ;
+      <%if(rcontext.getAccessPath() == 0) {%>
+          eXo.env.portal.accessMode = 'public' ;
+      <%} else {%>
+          eXo.env.portal.accessMode = 'private' ;
+      <%}%>
+      eXo.env.portal.portalName = '<%=rcontext.getPortalOwner()%>' ;
       eXo.env.server.context = '<%=docBase%>' ;
       eXo.env.server.portalBaseURL = '<%=rcontext.getURLBuilder().getBaseURL()%>' ;
-      
       eXo.env.client.skin = '$skin' ;
     </script>
   </head>
@@ -46,7 +53,7 @@
       //rcontext.getJavascriptManager().addOnResizeJavascript('eXo.core.UIMaskLayer.resizeMaskLayer');
     %>
     
-	<div class="$uicomponent.skin" id="UIPortalApplication" style="!height: 100%">
+	<div class="$uicomponent.skin" id="UIPortalApplication" style="!height: 100%; overflow-x: hidden;">
     	
 		<div class="AjaxLoadingMask" id="AjaxLoadingMask" style="display: none; margin: auto;">
       <div class="LoadingContainer">

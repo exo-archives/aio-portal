@@ -6,10 +6,8 @@ var eXo  = {
   desktop : { },
   
   core : { },
-  
-  ecm : { },
 
-  env : { client: {}, server: {} },
+  env : { portal: {}, client: {}, server: {} },
 
   portal : { },
     
@@ -22,11 +20,15 @@ var eXo  = {
   application : { 
   	browser : { }
   },
+  
+  ecm : { },  
+  
   calendar : { },
   
   contact : { },
   
-  forum : { },  
+  forum : { }, 
+   
   mail : { }  
 } ;
 
