@@ -1641,12 +1641,6 @@
 .YellowComment {
   background: url('/eXoResources/skin/DefaultSkin/skinIcons/16x16/icons/UserIcons/YellowComment.gif') no-repeat center left;
 }
-<<<<<<< .working
-<<<<<<< .working
-/*===========================End User Icons Stylesheet=======================*/
-
-
-=======
 
 .MoveUp16x16Icon {
 	background: url('/eXoResources/skin/DefaultSkin/skinIcons/16x16/icons/MoveUp.gif') no-repeat left center;
@@ -1655,16 +1649,3 @@
 .MoveDown16x16Icon {
 	background: url('/eXoResources/skin/DefaultSkin/skinIcons/16x16/icons/MoveDown.gif') no-repeat left center;
 }
-/*===========================End User Icons Stylesheet=======================*/
->>>>>>> .merge-right.r12407
-=======
-
-.MoveUp16x16Icon {
-	background: url('/eXoResources/skin/DefaultSkin/skinIcons/16x16/icons/MoveUp.gif') no-repeat left center;
-}
-
-.MoveDown16x16Icon {
-	background: url('/eXoResources/skin/DefaultSkin/skinIcons/16x16/icons/MoveDown.gif') no-repeat left center;
-}
-/*===========================End User Icons Stylesheet=======================*/
->>>>>>> .merge-right.r12407
