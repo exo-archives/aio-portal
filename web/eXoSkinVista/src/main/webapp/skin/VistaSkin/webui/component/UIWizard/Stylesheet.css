@@ -251,3 +251,12 @@
 	overflow-x: hidden;
 	width: 220px;
 }
+
+
+.UIWizard .UII18nPortlet .UISearchI18n .UIForm {
+	padding: 0px;
+}
+
+.UIWizard .UII18nPortlet .UIEditResource .UIForm {
+	padding: 0px;
+}
