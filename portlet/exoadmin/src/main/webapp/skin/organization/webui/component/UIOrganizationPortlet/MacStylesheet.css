@@ -303,8 +303,7 @@
 
 
 .UIOrganizationPortlet .UIGroupManagement .UIGrid {
-	width: 99%;
-	margin: auto;
+	*width: 99%;
 }
 
 .UIOrganizationPortlet .UIGroupManagement .PopupContent .UIGrid {
@@ -334,6 +333,7 @@
 .UIOrganizationPortlet .UIGroupManagement .UIGroupMembershipForm {
 	margin: 10px auto;
 	width: auto;
+	*width: 99.5%;
 }
 
 .UIOrganizationPortlet .UIGroupMembershipForm .HorizontalLayout .FormContainer {
