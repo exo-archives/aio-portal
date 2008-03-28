@@ -81,12 +81,12 @@ UIMaskLayer.prototype.createMask = function(blockContainerId, object, opacity, p
 		maskLayer.className = "MaskLayer" ;
 		maskLayer.id = "MaskLayer" ;
 		maskLayer.maxZIndex = 3 ;
-		maskLayer.style.width = "100%" ;
+		maskLayer.style.width = blockContainer.offsetWidth + "px"  ;
 		maskLayer.style.height = "100%" ;
 		maskLayer.style.top = "0px" ;
 		maskLayer.style.left = "0px" ;
 		maskLayer.style.zIndex = maskLayer.maxZIndex ;
-	
+
 		if(opacity) {
 	    Browser.setOpacity(maskLayer, opacity) ;
 		}
