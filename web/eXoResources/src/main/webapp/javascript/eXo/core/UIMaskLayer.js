@@ -86,7 +86,6 @@ UIMaskLayer.prototype.createMask = function(blockContainerId, object, opacity, p
 		maskLayer.style.top = "0px" ;
 		maskLayer.style.left = "0px" ;
 		maskLayer.style.zIndex = maskLayer.maxZIndex ;
-		eXo.core.UIMaskLayer.doScroll() ;
 	
 		if(opacity) {
 	    Browser.setOpacity(maskLayer, opacity) ;
@@ -111,6 +110,7 @@ UIMaskLayer.prototype.createMask = function(blockContainerId, object, opacity, p
 			if((blockContainer.offsetWidth > object.offsetLeft + object.offsetWidth) && (position == "TOP-RIGHT") || (position == "BOTTOM-RIGHT")) {
 		    object.style.left = blockContainer.offsetWidth - object.offsetWidth + "px" ;
 			}
+			eXo.core.UIMaskLayer.doScroll() ;
 	  }
 	}catch(err) {
 		alert(err) ;
