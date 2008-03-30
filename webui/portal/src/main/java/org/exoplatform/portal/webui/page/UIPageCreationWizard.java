@@ -172,7 +172,7 @@ public class UIPageCreationWizard extends UIPageWizard {
       uiWizard.updateWizardComponent();      
       PageNavigation navigation = uiNodeSelector.getSelectedNavigation();
       if(navigation == null) {
-        uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.notSelectedPageNavigation", new String[]{})) ;;
+        uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.notSelectedPageNavigation", new String[]{})) ;
         context.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
         uiWizard.viewStep(2);
         return ;
@@ -183,14 +183,15 @@ public class UIPageCreationWizard extends UIPageWizard {
       List<PageNode> sibbling = new ArrayList<PageNode>() ;
       if (selectedPageNode != null) sibbling = selectedPageNode.getChildren() ;
       else sibbling = navigation.getNodes() ;
-      for(PageNode ele : sibbling) {
-    	if(ele.getUri().equals(pageNode.getUri())) {
-		  uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.NameNotSame", null)) ;
-	      context.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages() );
-	      uiWizard.viewStep(2);
-	      return;
-		}
-      }
+      if(sibbling != null)
+        for(PageNode ele : sibbling) {
+        	if(ele.getUri().equals(pageNode.getUri())) {
+    		  uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.NameNotSame", null)) ;
+    	      context.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages() );
+    	      uiWizard.viewStep(2);
+    	      return;
+        	}
+        }
       
       String pageId = navigation.getOwnerType() + "::" + navigation.getOwnerId() + "::" + pageNode.getName() ;
       DataStorage storage = uiWizard.getApplicationComponent(DataStorage.class);

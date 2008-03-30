@@ -44,11 +44,11 @@ public class WelcomeWidget extends WidgetApplication<UIWidget> {
     MVCRequestContext appReqContext = new MVCRequestContext(this, pContext) ;
     String instanceId = uiWidget.getApplicationInstanceUniqueId() ;
     String userName = pContext.getRemoteUser() ;
-    String portalName = URLEncoder.encode(Util.getUIPortal().getName(),"UTF-8") ;
-    String logOutAction = pContext.getRequestContextPath() + "/public/" + portalName + "/" ;
     int posX = uiWidget.getProperties().getIntValue("locationX") ;
     int posY = uiWidget.getProperties().getIntValue("locationY") ;
     int zIndex = uiWidget.getProperties().getIntValue("zIndex") ;
+    String portalName = URLEncoder.encode(Util.getUIPortal().getName(),"UTF-8");
+    String logOutAction = pContext.getRequestContextPath() + "/public/" + portalName + "/";
     
 //    PortalContainer container  = PortalContainer.getInstance();
 //    UserWidgetStorageImpl service = 
@@ -58,7 +58,7 @@ public class WelcomeWidget extends WidgetApplication<UIWidget> {
 //      System.out.println("\n\n\n-----------IN WELCOME: " + new String(bytes));
 //      
 //    }
-    w.write("<div id = 'UIWelcomeWidget' userName = '"+userName+"' logOutAction = '"+logOutAction+"' applicationId = '"+instanceId+"' posX = '"+posX+"' posY = '"+posY+"' zIndex = '"+zIndex+"'><span></span></div>") ;
+    w.write("<div id = 'UIWelcomeWidget' logOutAction= '"+logOutAction+"' userName = '"+userName+"' applicationId = '"+instanceId+"' posX = '"+posX+"' posY = '"+posY+"' zIndex = '"+zIndex+"'><span></span></div>") ;
     String script = 
       "eXo.portal.UIPortal.createJSApplication('eXo.widget.web.welcome.UIWelcomeWidget','UIWelcomeWidget','"+instanceId+"','/eXoWidgetWeb/javascript/');";
     appReqContext.getJavascriptManager().addCustomizedOnLoadScript(script) ;
