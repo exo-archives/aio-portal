@@ -247,7 +247,11 @@ public class UIForm extends UIContainer  {
 
   public String getLabel(ResourceBundle res, String id) throws Exception {
     String label = getId() + ".label." + id;    
-    return res.getString(label);
+    try {
+      return res.getString(label);      
+    } catch (Exception e) {
+      return id ;
+    }
   }
   
   public String getUIComponentName() { return "uiform"; }
