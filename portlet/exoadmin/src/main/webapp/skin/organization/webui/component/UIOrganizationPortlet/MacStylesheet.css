@@ -7,9 +7,8 @@
 
 .UIOrganizationPortlet {
   background: white;
-  margin: 5px;
+  margin: 5px auto;
   padding: 5px;
-  *width: 97.5%;
 }
 
 .UIOrganizationPortlet .OrganizationPortletContainer .UIMembershipManagement .UIListMembershipType .UIGrid {

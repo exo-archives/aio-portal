@@ -36,7 +36,7 @@ import org.exoplatform.webui.core.lifecycle.UIApplicationLifecycle;
 public class UIOrganizationPortlet extends UIPortletApplication {
  
   public UIOrganizationPortlet() throws Exception {
-    setMinWidth(730) ;
+    setMinWidth(600) ;
   	addChild(UIViewMode.class, null, UIPortletApplication.VIEW_MODE);
   }
 
