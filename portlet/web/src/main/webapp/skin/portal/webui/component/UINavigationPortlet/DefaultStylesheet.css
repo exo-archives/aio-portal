@@ -108,7 +108,7 @@
 /*============ Scroll Buttons =====================*/
 .UINavigationPortlet .ScrollButtons {
 	float: right;
-	padding: 5px 0px;
+	padding: 5px;
 	display: none;
 }
 
