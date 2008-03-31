@@ -33,7 +33,7 @@
 .UIPermissionSelector .PermissionTypeBar .SeparateLine {
   float: left;
   width: 2px; height: 20px;
-  background: url('/eXoResources/skin/DefaultSkin/webui/component/UISelector/UIPermissionSelector/background/GrayLine2x2.gif') repeat-y ;
+  background: url('background/GrayLine2x2.gif') repeat-y ;
 }
 
 .UIPermissionSelector .PermissionInfoContainer .SelectedPermissionInfo {
@@ -57,8 +57,8 @@
 .UIPermissionSelector .PermissionInfoContainer .SelectedPermissionInfo .Label {
   margin: 8px 0px 5px 0px ;
   float: left ;
-  width: 150px ;
-  text-align:right;
+  width: 100px ;
+  text-align: right;
 }
 
 .UIPermissionSelector .PermissionInfoContainer .SelectedPermissionInfo .Info {
@@ -66,7 +66,6 @@
   background: none;
   margin: 8px 0px 5px 15px ;
   color: #0749c4 ;
-	width: 310px;
 }
 
 .UIPermissionSelector .PermissionInfoContainer .FloatBlockHidden {
