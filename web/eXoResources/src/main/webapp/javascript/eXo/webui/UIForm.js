@@ -81,9 +81,6 @@ UIForm.prototype.setHiddenValue = function(formId, typeId, hiddenValue) {
 * It also encodes the the form parameter values
 */
 UIForm.prototype.serializeForm = function (formElement) {
-  //TODO: TrongTT -> Solve the temporary problem about WYSIWYG Editor
-  try{eXo.ecm.ExoEditor.saveHandler();} catch(err) {}
-	
   var queryString = "";
   var element ;
   var elements = formElement.elements;
@@ -97,17 +94,14 @@ UIForm.prototype.serializeForm = function (formElement) {
     element = elements[i];
     //if(element.disabled) continue;
     switch(element.type) {
-      case "text": break;
-      case "password": break;
+      case "text":
       case "hidden":
-      	this.addField(element.name, element.value);  
-        break;  
-        
+      case "password":
       case "textarea" :  
         this.addField(element.name, element.value.replace(/\r/gi, ""));  
         break; 
           
-      case "checkbox": break;
+      case "checkbox":
       case "radio":
         if(element.checked) this.addField(element.name, element.value);  
         break;  
