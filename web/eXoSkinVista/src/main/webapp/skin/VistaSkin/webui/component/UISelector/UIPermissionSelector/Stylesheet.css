@@ -62,16 +62,16 @@
 .UIPermissionSelector .PermissionInfoContainer .SelectedPermissionInfo .Label {
   margin: 8px 0px 5px 0px ;
   float: left ;
-  width: 150px ;
+  width: 100px ;
   text-align: right;
 }
 
 .UIPermissionSelector .PermissionInfoContainer .SelectedPermissionInfo .Info {
-  padding: 8px 0px 5px 15px ;
+  margin: 8px 0px 5px 15px ;
   color: #0749c4 ;
   background: none;
   overflow: hidden;
-  width: 310px;
+  width: 390px;
 }
 
 .UIPermissionSelector .PermissionInfoContainer .FloatBlockHidden {
@@ -89,13 +89,11 @@
 .UIPermissionSelector .PermissionInfoContainer .DeletePermissionIcon  {
 	line-height: 24px; height: auto; width: auto;
 	padding-left: 25px;
-  margin: 1px 0px 0px 5px;
   background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/16x16/icons/DustBin.png') no-repeat left center;
 } 
 
 .UIPermissionSelector .PermissionInfoContainer .SelectPermissionIcon  {
 	line-height: 24px; height: auto; width: auto;
 	padding-left: 25px;
-  margin: 1px 0px 0px 0px;
   background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/16x16/icons/SelectPermissionIcon.png') no-repeat left center;
 } 
