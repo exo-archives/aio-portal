@@ -244,14 +244,11 @@ public class UIForm extends UIContainer  {
     ResourceBundle res = context.getApplicationResourceBundle() ;     
     return getLabel(res, id);
   }
-
+  
+  //TODO: Need to catch MissingResourceBunbleException
   public String getLabel(ResourceBundle res, String id) throws Exception {
     String label = getId() + ".label." + id;    
-    try {
-      return res.getString(label);      
-    } catch (Exception e) {
-      return id ;
-    }
+    return res.getString(label);      
   }
   
   public String getUIComponentName() { return "uiform"; }

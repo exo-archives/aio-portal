@@ -1,4 +1,7 @@
-<% String fieldName; %>
+<%
+	import java.util.MissingResourceException ;
+	String fieldName; 
+%>
 <div class="UIForm $uicomponent.id">
   <%uiform.begin()%>
   <div class="HorizontalLayout">
@@ -9,15 +12,18 @@
 	          if(field.isRendered()) {
 	      %>
               <tr>
-	              <%fieldName = uicomponent.getLabel(field.getName());%>
-	              <%//TODO: Tung.Pham modified
-	              	//if(!fieldName.equals(uicomponent.getId())) {
+	              <%
+	              	try {
+	              		fieldName = uicomponent.getLabel(field.getName());
+	              	} catch (MissingResourceException e) {
+	              		fieldName = field.getName() ;	
+	              	}
+	              %>
+	              <%
 	              	if(fieldName != null && fieldName.length() > 0 && !fieldName.equals(uicomponent.getId())) {
 	              %>                        
   	              <td class="FieldLabel">
-                    <%/*if(fieldName != null && fieldName.length() > 0) {*/%> 
-                      <%=uicomponent.getLabel(field.getName()) %>
-                    <%/*}*/%>
+                      <%=fieldName%>
                   </td>
   	              <td class="FieldComponent"><% uiform.renderField(field) %></td>
 	              <%} else {%>
