@@ -79,9 +79,9 @@ UIDesktop.prototype.showHideWindow = function(uiWindow, clickedElement) {
     eXo.desktop.UIWindow.saveWindowProperties(this.object, "HIDE");
     this.object.isShowed = false ;
   } else {
-	this.object.isShowed = true ;
+		this.object.isShowed = true ;
     var uiDockBar = document.getElementById("UIDockBar") ;
-				var uiPageDesktop	= document.getElementById("UIPageDesktop") ;
+		var uiPageDesktop	= document.getElementById("UIPageDesktop") ;
     eXo.desktop.UIDockbar.resetDesktopShowedStatus(uiPageDesktop, uiDockBar) ;
     eXo.animation.ImplodeExplode.explode(this.object, clickedElement, "UIPageDesktop", numberOfFrame, false) ;
     eXo.desktop.UIWindow.saveWindowProperties(this.object, "SHOW");
