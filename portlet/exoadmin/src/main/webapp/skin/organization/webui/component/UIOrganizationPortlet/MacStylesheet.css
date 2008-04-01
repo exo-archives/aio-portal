@@ -287,7 +287,8 @@
 }
 
 .UIOrganizationPortlet .UIGroupManagement .UITrees {
-	height: 216px;
+	height: 228px;
+	!height: 229px;
 	width: auto;
 	_width: 218px;
 }
