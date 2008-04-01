@@ -348,11 +348,14 @@ PortalDragDrop.prototype.setDragObjectProperties = function(dragObject, listComp
   if((listComponent.length > 0) && (eXo.core.DOMUtil.findFirstChildByClass(dragObject, "div", "CONTROL-BLOCK") != null)) {
     /*Set dragObject's width equal component in target */
     if(layout == "row") {
-      for(var i = 0; i < listComponent.length; i++) {
+      /*for(var i = 0; i < listComponent.length; i++) {
         if(listComponent[i] != dragObject) {
           dragObject.style.width = listComponent[i].offsetWidth + "px" ;
         }
-      }
+      }*/
+      
+      //modified by Pham Dinh Tan, fix bug drag and drop portlets
+      dragObject.style.width = "auto";
     } else {
       if(listComponent.length > 0) {
         dragObject.style.width = eXo.portal.PortalDragDrop.widthComponentInTarget + "px" ;
