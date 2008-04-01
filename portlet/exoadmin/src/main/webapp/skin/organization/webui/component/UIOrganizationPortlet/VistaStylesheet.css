@@ -175,7 +175,8 @@
 .UIOrganizationPortlet .UIGroupManagement .UITrees {
  	background: url('VistaSkin/background/UITreeBG.png') repeat;
  	border-top: none;
-  height: 224px;
+  height: 233px;
+	!height: 235px;
   width: auto;
   _width: 208px;
 }
