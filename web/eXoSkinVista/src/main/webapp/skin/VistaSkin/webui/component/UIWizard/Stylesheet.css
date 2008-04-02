@@ -225,6 +225,14 @@
   width: 220px;
 }
 
+<<<<<<< .mine
+.UIWizard .UIItemSelector {
+  padding: 10px;
+  margin: 0px;
+}
+
+=======
+>>>>>>> .r12613
 .UIWizard .UIItemSelector .RightColumnStyle .ItemDetailList {
   background: white url(background/ItemListBg1x13.png) repeat-x bottom;
   margin-right: 225px; 
@@ -250,9 +258,6 @@
   margin: auto;
 }
 
-.UIWizard .ScrollArea {
-	height: 250px;
-	overflow-y: auto;
-	overflow-x: hidden;
-	width: 220px;
+.UIWizard .TreeContainer {
+	height: 251px;
 }

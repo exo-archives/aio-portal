@@ -222,7 +222,7 @@
 
 .TopCenterContainerOptions {
 	background: url('background/TopCenterContainerOptions1x2.png') repeat-x ;
-	height: 2px; *width: 229px;
+	height: 2px;
 }
 
 .MiddleLeftContainerOptions {
@@ -250,7 +250,6 @@
 .BottomCenterContainerOptions {
 	background: url('background/BottomCenterContainerOptions1x9.png') repeat-x ;
 	height: 9px;
-	*width: 223px;
 }
 
 /*##############################- Bar Decorator-################################*/
