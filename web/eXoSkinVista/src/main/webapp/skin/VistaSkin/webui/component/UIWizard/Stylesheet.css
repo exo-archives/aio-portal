@@ -52,6 +52,13 @@
   height: 100%;
 }
 
+.UIWizard .UIWizardContent .WizardStepContent .UIForm {
+	padding: 10px;
+}
+
+.UIWizard .UIWizardContent .WizardStepContent .UISearchI18n .UIForm {
+	padding: 0px;
+}
 
 .UIWizard .UIWizardContent .WizardControlBar {
   height: 36px;
@@ -92,14 +99,15 @@
   margin: 0px 10px 0px 15px;
 }
 
-.UIWizard .UIPageNodeSelector .UIDropDownControl {
+.UIWizard .UIWizardContent .UIDropDownControl {
 	width: 220px;
-  position: static;
+	position: static;
 }
 
 .UIWizard .UIWizardContent .UIDropDownControl .UIDropDownAnchor {
 	width: 220px;
 }
+
 /*========================== End Wizard Content ==============================*/
 
 /*========================== Start ActionBar ==============================*/
@@ -217,10 +225,6 @@
   width: 220px;
 }
 
-.UIWizard .UIItemSelector {
-  padding: 10px;
-}
-
 .UIWizard .UIItemSelector .RightColumnStyle .ItemDetailList {
   background: white url(background/ItemListBg1x13.png) repeat-x bottom;
   margin-right: 225px; 
@@ -247,7 +251,7 @@
 }
 
 .UIWizard .ScrollArea {
-	height: 260px;
+	height: 250px;
 	overflow-y: auto;
 	overflow-x: hidden;
 	width: 220px;
