@@ -88,10 +88,6 @@
   height: 100%;
 }
 
-.UIWizard .UIWizardContent .WizardStepContent .UIForm {
-	padding: 10px;
-}
-
 .UIWizard .UIWizardContent .WizardControlBar {
   height: 34px;
   border: solid 1px #b7b7b7;
@@ -278,7 +274,7 @@
 }
 
 .UIWizard .ScrollArea {
-	height: 235px;
+	height: 243px;
 	overflow-y: auto;
 	overflow-x: hidden;
 	width: 213px;

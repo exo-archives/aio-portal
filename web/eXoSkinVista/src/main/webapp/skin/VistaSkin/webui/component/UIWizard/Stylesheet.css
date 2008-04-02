@@ -52,9 +52,6 @@
   height: 100%;
 }
 
-.UIWizard .UIWizardContent .WizardStepContent .UIForm {
-	padding: 10px;
-}
 
 .UIWizard .UIWizardContent .WizardControlBar {
   height: 36px;
@@ -220,6 +217,10 @@
   width: 220px;
 }
 
+.UIWizard .UIItemSelector {
+  padding: 10px;
+}
+
 .UIWizard .UIItemSelector .RightColumnStyle .ItemDetailList {
   background: white url(background/ItemListBg1x13.png) repeat-x bottom;
   margin-right: 225px; 
@@ -246,17 +247,8 @@
 }
 
 .UIWizard .ScrollArea {
-	height: 250px;
+	height: 260px;
 	overflow-y: auto;
 	overflow-x: hidden;
 	width: 220px;
-}
-
-
-.UIWizard .UII18nPortlet .UISearchI18n .UIForm {
-	padding: 0px;
-}
-
-.UIWizard .UII18nPortlet .UIEditResource .UIForm {
-	padding: 0px;
 }
