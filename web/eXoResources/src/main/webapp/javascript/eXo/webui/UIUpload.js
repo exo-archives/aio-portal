@@ -111,6 +111,9 @@ UIUpload.prototype.showUploaded = function(id, fileName) {
   progressBarFrame.style.display = "none" ;
   var tmp = element.parentNode;
   var temp = tmp.parentNode;
+  //TODO: dang.tung - always return true even we reload browser
+  var  input = parent.document.getElementById('input' + id);
+	input.value = "true" ;  
 };
 
 UIUpload.prototype.abortUpload = function(id) {
