@@ -52,6 +52,10 @@ UIDockbar.prototype.waitOnLoad = function(images) {
 UIDockbar.prototype.startDockBarEvt = function(evt) {
 	evt.cancelBubble = true ;
 	document.body.oncontextmenu = new Function("return false;") ;
+	if (eXo.core.Browser.isIE7()) {
+		var uiWorkingWorkspace = document.getElementById("UIWorkingWorkspace") ;
+		uiWorkingWorkspace.style.height = "0%" ;
+	}
 	var uiPageDesktop = document.getElementById("UIPageDesktop") ;
 	uiPageDesktop.onmouseover = eXo.desktop.UIDockbar.endDockBarEvt ;    
 } ;
