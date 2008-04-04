@@ -11,10 +11,6 @@
   height: 100%;
 }
 
-.UIMaskWorkspace .MaskContainer .WorkingArea .UIFormInputSet {
-  width: 90%;
-}
-
 .UIMaskWorkspace .TitleBarContainer {
   padding: 10px 13px 0px 10px;
 }
@@ -32,6 +28,14 @@
   padding: 0px;
 }
 
+.UIMaskWorkspace .UITabContentContainer .UITabContent .UIFormInputSet {
+  padding: 8px;
+}
+
+.UIMaskWorkspace .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent{
+  _padding: 0px;
+}
+
 .UIMaskWorkspace .IconLayout {
 	float: left ;
 	margin: 3px 5px 0px 5px ;
@@ -44,12 +48,12 @@
 .UIMaskWorkspace .UIContainerForm {
 }
 
-.UIMaskWorkspace .UIForm .HorizontalLayout .SelectedIconInfo .UIFormInputSet {
-  margin: auto;
+.UIMaskWorkspace .UIForm .HorizontalLayout .FieldContainer {
+  width: 460px;
 }
 
-.UIMaskWorkspace .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent{
-  _padding: 0px;
+.UIMaskWorkspace .UIForm .HorizontalLayout .SelectedIconInfo .UIFormInputSet {
+  margin: auto;
 }
 
 .UIMaskWorkspace .UIFormInputSet .UIFormGrid .SelectGroup {
@@ -111,6 +115,7 @@
 }
 
 .UIAddApplication .ApplicationDescription {
+
 }
 
 .UIAddApplication .UIItemSelector .ItemListContainer .ItemList {
@@ -161,7 +166,7 @@
 .UIAddApplication .AddButton {
 	float: right ; 
 	width: 24px ; height: 24px ;
-	background: url('icons/AddIcon.png') no-repeat center;
+	background: url('background/AddApplicationButton.png') no-repeat top;
   margin: 2px auto;
 	cursor: pointer ;
 }
@@ -169,14 +174,14 @@
 .UIAddApplication .SelectButton {
 	float: right ; 
 	width: 24px ; height: 24px ;
-	background: url('icons/SelectButton.png') no-repeat center;
+	background: url('background/AddApplicationButton.png') no-repeat left -24px;
   margin: auto;
 	cursor: pointer ;
 }
 
 .UIAddApplication .ApplicationItemIcon {
 	width: 10px; height: 10px;
-	background: url('icons/ApplicationItemIcon.png') no-repeat ;
+	background: url('background/AddApplicationButton.png') no-repeat left -48px ;
 	float: left;
 	margin: 6px 5px 0px 5px;
 }
