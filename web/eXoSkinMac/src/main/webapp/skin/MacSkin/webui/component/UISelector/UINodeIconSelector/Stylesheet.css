@@ -16,7 +16,7 @@
   border: solid 1px #b7b7b7 ;
   height: 35px;
   margin-top: 6px;
-  line-height: 35px;
+  _width: 562px;
 }
 
 .UINodeIconSelector .SelectedIconInfo .UIFormInputSet .FieldContainer{
@@ -79,6 +79,7 @@
   color: #058EE6;
 }
 
-.UINodeIconSelector .ItemDetailList .SelectedIconInfo .UIFormInputSet {
+.UIMaskWorkspace .UIForm .HorizontalLayout .UINodeIconSelector .UIFormInputSet {
+	width: auto;
 	padding: 0px;
 }

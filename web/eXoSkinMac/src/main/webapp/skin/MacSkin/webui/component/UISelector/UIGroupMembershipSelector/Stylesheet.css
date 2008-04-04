@@ -18,7 +18,6 @@
 
 .UIGroupMembershipSelector .UIBreadcumbs .BreadcumbsInfoBar {
 	background: #ffffff;
-	height: 30px;
 }
 
 .UIGroupMembershipSelector .UIBreadcumbs a.Selected {
@@ -38,7 +37,7 @@
 }
 
 .UIGroupMembershipSelector .MembershipTitle{
-  background: url('background/ThGridRepeatBg1x19.gif') repeat-x;
+  background: url('background/TitleBG1x20.gif') repeat-x;
   border: 1px #b7b7b7 solid; 
   height: 20px; line-height: 20px; vertical-align: middle;
   padding-left: 15px;
@@ -75,6 +74,10 @@
   height: 150px; width: auto;
   padding: 5px 10px;
   overflow: auto;
+}
+
+.UIGroupMembershipSelector .SelectedGroupPath .UIBreadcumbs {
+  border-bottom: 1px solid #b7b7b7;
 }
 
 .UIGroupMembershipSelector .MembershipSelector .Label {
