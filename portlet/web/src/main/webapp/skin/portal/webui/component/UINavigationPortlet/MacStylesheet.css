@@ -13,7 +13,7 @@
 .UINavigationPortlet .UIHorizontalTabs .TabsContainer {
   float: none;
 }
-
+ 
 .UINavigationPortlet .UINavigationBar .PageNodeIcon {
   background: url('/eXoSkinMac/skin/MacSkin/skinIcons/16x16/icons/DefaultPageIcon.png') no-repeat left;
 }
@@ -55,12 +55,12 @@
 }
 
 .UINavigationPortlet .MenuItemContainer .MenuItem a:hover {
-  background: url('MacSkin/background/UINavigationPortlet.png') repeat-x center -150px;
   color: white;
+  background-color: #3E83D3;
 }
 
 .UINavigationPortlet .MenuItemContainer .SelectedItem {
-  background: url('MacSkin/background/UINavigationPortlet.png') repeat-x center -150px;
+  background-color: #3E83D3;
   color: white;
 }
 
