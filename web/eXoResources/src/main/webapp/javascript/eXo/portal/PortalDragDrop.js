@@ -11,6 +11,7 @@ function PortalDragDrop() {
  * This function inits the PortalDragDrop object
  * It initializes a DragDrop object that will manage the drag events
  */
+
 PortalDragDrop.prototype.init = function(e) {
 	var DOMUtil = eXo.core.DOMUtil ;
 	var Browser = eXo.core.Browser ;
@@ -183,7 +184,12 @@ PortalDragDrop.prototype.init = function(e) {
         }
         /*Set properties for drag object */
         eXo.portal.PortalDragDrop.setDragObjectProperties(dragObject, tdElementList, "column", dndEvent.backupMouseEvent) ;
-      }      
+      }
+			//when dragObject out of page
+			if (Browser.findPosY(dragObject) < 2) {
+				DragDrop.dropCallback(dndEvent);
+				document.onmousemove = null;
+			}
     } 
   } ;
 
