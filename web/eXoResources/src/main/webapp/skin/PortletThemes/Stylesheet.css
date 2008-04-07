@@ -2634,6 +2634,10 @@
 
 /*------------------------------ SimpleBlue -----------------------------------*/
 
+.SimpleBlue {
+  padding: 5px;
+}
+
 .SimpleBlue .WindowPortletControl {
 	float: right;
 	padding: 0px 3px 0px 10px;
@@ -2773,6 +2777,10 @@
 }
 
 /*------------------------------ SimpleViolet -----------------------------------*/
+
+.SimpleViolet {
+  padding: 5px;
+}
 
 .SimpleViolet .WindowPortletControl {
 	float: right;
@@ -2916,7 +2924,10 @@
 }
 
 /*------------------------------ SimpleOrange -----------------------------------*/
-
+.SimpleOrange {
+  padding: 5px;
+}
+ 
 .SimpleOrange .WindowPortletControl {
 	float: right;
 	padding: 0px 3px 0px 10px;
@@ -3060,6 +3071,10 @@
 
 /*------------------------------ SimplePink -----------------------------------*/
 
+.SimplePink {
+  padding: 5px;
+}
+
 .SimplePink .WindowPortletControl {
 	float: right;
 	padding: 0px 3px 0px 10px;
@@ -3201,6 +3216,9 @@
 }
 
 /*------------------------------ SimpleGreen -----------------------------------*/
+.SimpleGreen {
+  padding: 5px;
+}
 
 .SimpleGreen .WindowPortletControl {
 	float: right;
