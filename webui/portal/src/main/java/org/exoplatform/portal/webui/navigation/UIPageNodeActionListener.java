@@ -73,7 +73,6 @@ public class UIPageNodeActionListener {
       UIPageNodeForm uiNodeForm = uiMaskWS.createUIComponent(UIPageNodeForm.class, null, null);
       uiNodeForm.setValues(null);
       uiMaskWS.setUIComponent(uiNodeForm);
-      uiMaskWS.setShow(true);
       
       Object parent = null;
       List<PageNode> pageNodes = uiPageNodeSelector.getSelectedNavigation().getNodes();
@@ -103,9 +102,9 @@ public class UIPageNodeActionListener {
       UIPortalToolPanel uiToolPanel = uiPortalApp.findFirstComponentOfType(UIPortalToolPanel.class) ;
       UIPageManagement uiManagement = uiPageNodeSelector.getParent();
       
-      UIControlWorkspace uiControl = uiPortalApp.findComponentById(UIPortalApplication.UI_CONTROL_WS_ID);
+      UIControlWorkspace uiControl = uiPortalApp.getChildById(UIPortalApplication.UI_CONTROL_WS_ID);
       pcontext.addUIComponentToUpdateByAjax(uiControl);
-      UIWorkspace uiWorkingWS = uiPortalApp.findComponentById(UIPortalApplication.UI_WORKING_WS_ID);
+      UIWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
       pcontext.addUIComponentToUpdateByAjax(uiWorkingWS) ;   
       uiWorkingWS.setRenderedChild(UIPortalToolPanel.class) ;
       uiToolPanel.setShowMaskLayer(true) ;
@@ -149,7 +148,6 @@ public class UIPageNodeActionListener {
       uiPageForm.setValues(uiPage);
       uiMaskWS.setUIComponent(uiPageForm);
       uiMaskWS.setWindowSize(640, 400);
-      uiMaskWS.setShow(true);
       pcontext.addUIComponentToUpdateByAjax(uiMaskWS);
       Class<?> [] childrenToRender = {UIPageNodeSelector.class, UIPageNavigationControlBar.class};      
       uiManagement.setRenderedChildrenOfTypes(childrenToRender);
@@ -175,7 +173,6 @@ public class UIPageNodeActionListener {
       PageNode selectedNode = PageNavigationUtils.searchPageNodeByUri(selectedNav, uri);
       uiNodeForm.setValues(selectedNode);
       uiNodeForm.setSelectedParent(obj);
-      uiMaskWS.setShow(true);
     }
   }
 

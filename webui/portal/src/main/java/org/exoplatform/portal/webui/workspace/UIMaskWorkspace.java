@@ -39,7 +39,6 @@ public class UIMaskWorkspace extends UIComponentDecorator {
   private boolean isShow = false ;
   
   public int getWindowWidth() { return width_ ; }
-  
   public int getWindowHeight() { return height_ ; }
   
   public void setWindowSize(int w, int h) {
@@ -48,12 +47,10 @@ public class UIMaskWorkspace extends UIComponentDecorator {
   }
   
   public boolean isShow() { return isShow;}
-  
-  public void setShow(boolean isShow) { this.isShow = isShow; }
+  public void setShow(boolean bln) { this.isShow = bln; }
   
   public <T extends UIComponent> T createUIComponent(Class<T> clazz, String configId, String id)throws Exception {
     T uicomponent = super.createUIComponent(clazz, configId, id);
-    this.isShow = (uicomponent != null);
     setUIComponent(uicomponent);
     return uicomponent;
   }
@@ -78,7 +75,6 @@ public class UIMaskWorkspace extends UIComponentDecorator {
       }
       if(uiMaskWorkspace == null || !uiMaskWorkspace.isShow()) return;
       uiMaskWorkspace.setUIComponent(null);
-      uiMaskWorkspace.setShow(false);
       uiMaskWorkspace.setWindowSize(-1, -1);
       event.getRequestContext().addUIComponentToUpdateByAjax(uiMaskWorkspace) ;
     }

@@ -311,7 +311,6 @@ public class UIExoStart extends UIComponent {
       UISkinSelector uiChangeSkin = uiMaskWS.createUIComponent(UISkinSelector.class, null, null);
       uiMaskWS.setUIComponent(uiChangeSkin);
       uiMaskWS.setWindowSize(640, 400);
-      uiMaskWS.setShow(true);
       event.getRequestContext().addUIComponentToUpdateByAjax(uiMaskWS);
     }
   }
@@ -326,7 +325,6 @@ public class UIExoStart extends UIComponent {
       UILanguageSelector languageForm = uiMaskWS.createUIComponent(UILanguageSelector.class);
       uiMaskWS.setUIComponent(languageForm);
       uiMaskWS.setWindowSize(640, 400);
-      uiMaskWS.setShow(true);
       event.getRequestContext().addUIComponentToUpdateByAjax(uiMaskWS);
       Util.updateUIApplication(event); 
     }
@@ -366,7 +364,6 @@ public class UIExoStart extends UIComponent {
       
       UIPortalSelector uiPortalSelector = uiMaskWS.createUIComponent(UIPortalSelector.class, null, null) ;
       uiMaskWS.setUIComponent(uiPortalSelector) ;
-      uiMaskWS.setShow(true) ;
       event.getRequestContext().addUIComponentToUpdateByAjax(uiMaskWS) ;
     }
   }
@@ -380,7 +377,6 @@ public class UIExoStart extends UIComponent {
      
       UIAccountSetting uiAccountForm = uiMaskWS.createUIComponent(UIAccountSetting.class, null, null) ;
       uiMaskWS.setUIComponent(uiAccountForm) ;
-      uiMaskWS.setShow(true) ;
       event.getRequestContext().addUIComponentToUpdateByAjax(uiMaskWS) ;
     }
   }

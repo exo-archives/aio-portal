@@ -122,7 +122,7 @@ public class UIPortalBrowser extends UIContainer {
       }
       
       event.getSource().loadPortalConfigs();
-      UIWorkspace uiWorkingWS = uiPortalApp.findComponentById(UIPortalApplication.UI_WORKING_WS_ID);    
+      UIWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);    
       event.getRequestContext().addUIComponentToUpdateByAjax(uiWorkingWS) ;
     }
   }
@@ -140,7 +140,6 @@ public class UIPortalBrowser extends UIContainer {
       UIMaskWorkspace uiMaskWS = uiApp.getChildById(UIPortalApplication.UI_MASK_WS_ID) ;
       UIPortalForm uiNewPortal = uiMaskWS.createUIComponent(UIPortalForm.class, "CreatePortal", "UIPortalForm");
       uiMaskWS.setUIComponent(uiNewPortal);
-      uiMaskWS.setShow(true);
       prContext.addUIComponentToUpdateByAjax(uiMaskWS);
     }
   }

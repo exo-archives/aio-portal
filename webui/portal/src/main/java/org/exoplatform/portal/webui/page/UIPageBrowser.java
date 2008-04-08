@@ -258,7 +258,6 @@ public class UIPageBrowser extends UISearch {
         UIPageForm uiPageForm = uiMaskWS.createUIComponent(UIPageForm.class, "UIBrowserPageForm", "UIPageForm");
         uiPageForm.setValues(uiPage);
         uiMaskWS.setUIComponent(uiPageForm);
-        uiMaskWS.setShow(true);
         pcontext.addUIComponentToUpdateByAjax(uiMaskWS);
         return;
       }
@@ -318,7 +317,7 @@ public class UIPageBrowser extends UISearch {
       uiManagement.setRenderedChild(UIPageBrowseControlBar.class) ;
       pcontext.addUIComponentToUpdateByAjax(uiControl) ;
 
-      UIWorkspace uiWorkingWS = uiPortalApp.findComponentById(UIPortalApplication.UI_WORKING_WS_ID);
+      UIWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
       pcontext.addUIComponentToUpdateByAjax(uiWorkingWS) ;
       pcontext.setFullRender(true);
     }
@@ -331,7 +330,6 @@ public class UIPageBrowser extends UISearch {
       UIMaskWorkspace uiMaskWS = uiApp.getChildById(UIPortalApplication.UI_MASK_WS_ID) ;
       UIPageForm uiPageForm = uiMaskWS.createUIComponent(UIPageForm.class, "UIBrowserPageForm", "UIPageForm");
       uiMaskWS.setUIComponent(uiPageForm);
-      uiMaskWS.setShow(true);
       
       uiPageForm.getUIStringInput("ownerType").setValue(PortalConfig.USER_TYPE);
       uiPageForm.getUIStringInput("ownerId").setValue(prContext.getRemoteUser()); 
@@ -420,7 +418,6 @@ public class UIPageBrowser extends UISearch {
     private void postSave(UIPortalApplication uiPortalApp, WebuiRequestContext context) throws Exception {
       UIMaskWorkspace uiMaskWS = uiPortalApp.getChildById(UIPortalApplication.UI_MASK_WS_ID) ;
       uiMaskWS.setUIComponent(null);
-      uiMaskWS.setShow(false);
       UIPortalToolPanel uiToolPanel = Util.getUIPortalToolPanel() ;      
       UIPageBrowser uiBrowser = (UIPageBrowser) uiToolPanel.getUIComponent() ;
       uiBrowser.reset();

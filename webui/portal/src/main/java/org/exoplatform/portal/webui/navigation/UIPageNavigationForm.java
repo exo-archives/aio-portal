@@ -132,7 +132,6 @@ public class UIPageNavigationForm extends UIForm {
       
       UIMaskWorkspace uiMaskWS = uiPortalApp.getChildById(UIPortalApplication.UI_MASK_WS_ID) ;
       uiMaskWS.setUIComponent(null);
-      uiMaskWS.setShow(false);
       pcontext.addUIComponentToUpdateByAjax(uiMaskWS) ;
     }
 

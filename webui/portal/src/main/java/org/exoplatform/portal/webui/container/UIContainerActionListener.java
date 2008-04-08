@@ -60,7 +60,6 @@ public class UIContainerActionListener {
         } else return ;
       }
       uiMaskWS.setUIComponent(containerForm);
-      uiMaskWS.setShow(true);
       event.getRequestContext().addUIComponentToUpdateByAjax(uiMaskWS);
       Util.updateUIApplication(event);
     }
@@ -117,7 +116,6 @@ public class UIContainerActionListener {
 
       uiMaskWorkspace.setWindowSize(700, 375);
       uiMaskWorkspace.setUIComponent(uiAddApplication);
-      uiMaskWorkspace.setShow(true);
       event.getRequestContext().addUIComponentToUpdateByAjax(uiMaskWorkspace);
       
     }

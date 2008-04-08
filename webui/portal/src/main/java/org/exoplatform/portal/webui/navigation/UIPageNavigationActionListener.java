@@ -57,7 +57,6 @@ public class UIPageNavigationActionListener {
       
       UIPageNavigationForm uiNavigationForm = uiMaskWS.createUIComponent(UIPageNavigationForm.class, null, null);
       uiMaskWS.setUIComponent(uiNavigationForm);      
-      uiMaskWS.setShow(true);
       event.getRequestContext().addUIComponentToUpdateByAjax(uiMaskWS);
     }
   }
@@ -80,7 +79,6 @@ public class UIPageNavigationActionListener {
       }
       uiNavigationForm.setValues(nav);
       uiMaskWS.setUIComponent(uiNavigationForm);      
-      uiMaskWS.setShow(true);
       event.getRequestContext().addUIComponentToUpdateByAjax(uiMaskWS);
       event.getRequestContext().addUIComponentToUpdateByAjax(uiManagement);     
     }

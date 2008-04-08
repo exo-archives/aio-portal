@@ -102,7 +102,7 @@
 		    </div>
 		  </div>
 		  
-		  <div class="VIEW-PORTLET">
+		  <div class="VIEW-PORTLET" id="VIEW-${portletId}">
 <%
   }
 	if(uicomponent.getShowInfoBar()) {
