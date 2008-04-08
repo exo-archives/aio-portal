@@ -20,6 +20,9 @@ PortalDragDrop.prototype.init = function(e) {
 	 * This function is called after the DragDrop object is initialized
 	 */
   DragDrop.initCallback = function (dndEvent) {
+  	if (!eXo.core.Browser.isFF() && document.getElementById("UIWorkingWorkspace")) {
+				document.getElementById("UIWorkingWorkspace").style.position = "relative";
+		}
   	var PortalDragDrop = eXo.portal.PortalDragDrop ;
     this.origDragObjectStyle = new eXo.core.HashMap() ;
     var dragObject = dndEvent.dragObject ;
