@@ -99,6 +99,7 @@
 
 .UIWizard .UIWizardContent .WizardControlBar .OverflowContainer {
   height: 34px;
+  overflow:visible;
 }
 
 .UIWizard .UIWizardContent .UIDropDownControl {
@@ -156,7 +157,7 @@
   background: #efefef;
   padding: 20px 0px;
   border:  solid 1px #cdcdcd;
-}
+ }
 
 .UIWizard .UIWizardPageSetInfo .SelectedPageInfo .PageNodeInfo {
   width: 90%; height: 25px; 
@@ -212,7 +213,7 @@
 
 .UIWizard .UIWizardPageSetInfo .UIFormWithTitle .FormContainer .UIFormGrid {
 	margin: auto;
-	width: 400px;
+	width: 500px;
 }
 
 .UIWizard .UIWizardPageSetInfo .UIFormWithTitle textarea {

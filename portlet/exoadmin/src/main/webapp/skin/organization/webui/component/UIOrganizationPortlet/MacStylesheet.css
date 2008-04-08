@@ -7,8 +7,9 @@
 
 .UIOrganizationPortlet {
   background: white;
-  margin: 5px auto;
+  margin: 5px;
   padding: 5px;
+  *width: 97.5%;
 }
 
 .UIOrganizationPortlet .OrganizationPortletContainer .UIMembershipManagement .UIListMembershipType .UIGrid {
@@ -288,7 +289,6 @@
 
 .UIOrganizationPortlet .UIGroupManagement .UITrees {
 	height: 228px;
-	!height: 229px;
 	width: auto;
 	_width: 218px;
 }
@@ -303,7 +303,8 @@
 
 
 .UIOrganizationPortlet .UIGroupManagement .UIGrid {
-	*width: 99%;
+	width: 99%;
+	margin: auto;
 }
 
 .UIOrganizationPortlet .UIGroupManagement .PopupContent .UIGrid {
@@ -332,8 +333,7 @@
 
 .UIOrganizationPortlet .UIGroupManagement .UIGroupMembershipForm {
 	margin: 10px auto;
-	width: auto;
-	*width: 99.5%;
+	width: 99%;
 }
 
 .UIOrganizationPortlet .UIGroupMembershipForm .HorizontalLayout .FormContainer {
@@ -345,7 +345,7 @@
 }
 
 .UIOrganizationPortlet .UIGroupForm .FormContainer { 
-	height: 203px;
+	height: 206px;
 	padding: 20px 0px 0px 0px;
 }
 

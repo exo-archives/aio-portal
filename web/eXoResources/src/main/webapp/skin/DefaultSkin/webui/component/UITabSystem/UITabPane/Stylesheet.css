@@ -2,20 +2,24 @@
 }
 
 .UITabPane .TabPaneContent {
-	padding: 8px;
+
 }
 
-.UITabPane .TabPaneContent .WorkingAreaWithHelp {  
-  width: auto;
+.UITabPane .TabPaneContent .WorkingArea {
 }
 
-.UITabPane .UITabContentContainer .UITabContent {
-  background: #f7f7f7;
-  border: solid 1px white; border-top: none;
-  padding: 7px ;
+.UITabPane .WorkingArea .UITabContent {
+  padding: 8px ;
+  border: solid 1px #ffffff; border-top: none;
 }
 
-.UITabPane .UITabContentContainer {
-  border: solid 1px #d5d5d5; border-top: none;
-  background: white;
+.UITabPane .WorkingAreaWithHelp .UITabContentContainer {
+  border: solid 1px #b7b7b7;
+  background: url('/eXoSkinMac/skin/MacSkin/background/Background1x4.png');
+}
+
+.UITabPane .WorkingAreaWithHelp .UITabContent {
+  background: #efefef;
+  border: solid 1px #c2c2c2;
+  padding: 5px ;
 }
