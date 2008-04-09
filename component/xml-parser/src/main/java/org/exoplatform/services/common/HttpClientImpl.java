@@ -152,7 +152,6 @@ public class HttpClientImpl  {
         return null;
       }
     }
-//    System.out.println("da tra link "+link+" va "+ http.getHostConfiguration().getHost());
     GetMethod get = new GetMethod(link);
     get.setFollowRedirects(true);
     get.getParams().setParameter("http.socket.timeout", new Integer(METHOD_TIMEOUT));

@@ -76,20 +76,4 @@ public class StringTokenizer {
     ADD_REGEX, NOT_REGEX, REGEX;
   }
 
-  /*public static void main(String[] args) {
-    SplitString split = new SplitString(
-        new char[]{'\"', '\'', }, new char[]{' ','\t', '\b', '\f', '\r'});
-    String text = " input name=\"hu  query\" size=15 maxlength=\"30\" style=\"width: 80px;\" type=\"text\' ";
-    List<String> values = split.split(text);
-    
-    System.out.println("Mang la : ");
-    
-    if(values.size() > 0)  System.out.print("{ \"");
-    for(int i = 0; i<values.size()-1 ; i++)
-      System.out.print(values.get(i) +"\", \"");
-    
-    if(values.size() > 1) System.out.print(values.get(values.size()-1) +"\" }");
-  }
-  */
-
 }

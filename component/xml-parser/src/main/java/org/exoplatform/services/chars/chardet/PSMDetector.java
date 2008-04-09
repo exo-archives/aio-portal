@@ -248,12 +248,9 @@ public abstract class PSMDetector {
       for (j=0; j < mItems; ) {
         st = Verifier.getNextState( mVerifier[mItemIdx[j]], 
             b, mState[j]) ;
-//      if (st != 0)
-//      System.out.println( "state(0x" + Integer.toHexString(0xFF&b) +") =>"+ Integer.toHexString(st&0xFF)+ " " + mVerifier[mItemIdx[j]].charset());
 
         if (st == Verifier.eItsMe) {
 
-//        System.out.println( "eItsMe(0x" + Integer.toHexString(0xFF&b) +") =>"+ mVerifier[mItemIdx[j]].charset());
 
           report( mVerifier[mItemIdx[j]].charset() );
           mDone = true ;
@@ -261,7 +258,6 @@ public abstract class PSMDetector {
 
         } else if (st == Verifier.eError ) {
 
-//        System.out.println( "eNotMe(0x" + Integer.toHexString(0xFF&b) +") =>"+ mVerifier[mItemIdx[j]].charset());
           mItems--;
           if (j < mItems ) {
             mItemIdx[j] = mItemIdx[mItems];	
@@ -366,7 +362,6 @@ public abstract class PSMDetector {
                 mStatisticsData[mItemIdx[j]].mFirstByteWeight(),
                 mStatisticsData[mItemIdx[j]].mSecondByteFreq(),
                 mStatisticsData[mItemIdx[j]].mSecondByteWeight() );
-//          System.out.println("FequencyScore("+mVerifier[mItemIdx[j]].charset()+")= "+ score);
             if(( 0 == eucCnt++) || (bestScore > score )) {
               bestScore = score;
               bestIdx = j;

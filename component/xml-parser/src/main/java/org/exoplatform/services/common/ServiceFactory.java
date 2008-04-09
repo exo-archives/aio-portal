@@ -105,7 +105,6 @@ public class ServiceFactory {
     }
     if(constructor == null) return null;
     constructor.setAccessible(true);
-//    System.out.println(constructor.toString());
     Object value = constructor.newInstance(new Object[]{});
     services.put(clazz, value);
     return value;
