@@ -81,9 +81,4 @@ public class StickerWidget extends WidgetApplication<UIWidget> {
     appReqContext.getJavascriptManager().addCustomizedOnLoadScript(script) ;
   }
   
-//  static public class SaveContentActionListener  extends EventListener<StickerWidget> {
-//    public void execute(Event<StickerWidget> event) throws Exception {
-//      System.out.println("\n\n\n\n\n\n\n\n\n  SAVE CONTENT !!!  \n\n\n\n\n\n\n\n\n\n");      
-//    }
-//  }
 }
