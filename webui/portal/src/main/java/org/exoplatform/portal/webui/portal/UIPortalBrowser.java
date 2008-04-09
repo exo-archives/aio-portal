@@ -72,8 +72,6 @@ public class UIPortalBrowser extends UIContainer {
 
   public void loadPortalConfigs() throws Exception {    
     DataStorage service = getApplicationComponent(DataStorage.class) ;
-//    UserACL userACL = getApplicationComponent(UserACL.class) ;
-//    String accessUser = Util.getPortalRequestContext().getRemoteUser() ;
     Query<PortalConfig> query = new Query<PortalConfig>(null, null, null, PortalConfig.class) ;
     PageList pageList = service.find(query, new Comparator<PortalConfig>(){
       public int compare(PortalConfig pconfig1, PortalConfig pconfig2) {
@@ -81,17 +79,6 @@ public class UIPortalBrowser extends UIContainer {
       }
     }) ;
     pageList.setPageSize(10) ;
-//    int i = 1 ;
-//    System.out.println("\n\n++++++++> PortalBrowse: " + pageList.getAvailable());
-//    while(i <= pageList.getAvailablePage()) {
-//      List<?> list = pageList.getPage(i) ;
-//      Iterator<?> itr = list.iterator() ;
-//      while(itr.hasNext()) {
-//        PortalConfig portalConfig = (PortalConfig)itr.next() ;
-//        if(!userACL.hasPermission(portalConfig,accessUser) )itr.remove() ;
-//      }
-//      i++ ;
-//    }
     UIGrid uiGrid = findFirstComponentOfType(UIGrid.class) ;
     uiGrid.setUseAjax(false);
     uiGrid.getUIPageIterator().setPageList(pageList);

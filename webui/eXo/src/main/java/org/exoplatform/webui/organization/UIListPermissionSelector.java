@@ -203,13 +203,6 @@ public class UIListPermissionSelector extends UISelector<String[]> {
       event.getRequestContext().addUIComponentToUpdateByAjax(uiForm.getParent());
     }
   }
-//  
-//  static  public class CloseActionListener extends EventListener<UIPopupWindow> {
-//    public void execute(Event<UIPopupWindow> event) throws Exception {
-//    //  UIPopupWindow uiPopupWindow = event.getSource();
-//      System.out.println("\n\n\n+++++++++++++++++++>>>>>>>>>>>>>>>>>> HUN");
-//    }
-//  }
   
   static public class ChangePublicModeActionListener extends EventListener<UIListPermissionSelector> {
     public void execute(Event<UIListPermissionSelector> event) throws Exception {

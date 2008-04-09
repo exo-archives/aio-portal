@@ -134,11 +134,6 @@ public class UIAccessGroup extends UIFormInputContainer<String> {
     
   static  public class DeleteActionListener extends EventListener<UIAccessGroup> {   
     public void execute(Event<UIAccessGroup> event) throws Exception {
-//      String groupId = event.getRequestContext().getRequestParameter(OBJECTID) ;
-//      UIAccessGroup uiAccessGroup = event.getSource() ;
-      
-      
-//      System.out.println("\n\n\n\n\n\n\n  REMOVE OBJECT: "+uiAccessGroup+"  \n\n\n\n\n\n\n");
     }
   }
 

@@ -102,7 +102,6 @@ public class UIGroupMembershipSelector extends UIContainer {
     if(action == null)  return;    
     
     String componentId =  context.getRequestParameter("selectorId") ;
-    System.out.println("\n\n\n\n == > tai day ta co "+componentId +"\n\n\n");
     if(componentId != null && componentId.trim().length() > 0 && componentId.equals(getId())) {
       Event<UIComponent> event = createEvent(action, Event.Phase.DECODE, context) ;   
       if(event != null) event.broadcast()  ;  

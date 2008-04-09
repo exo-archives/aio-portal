@@ -54,7 +54,6 @@ public class WelcomeWidgetHandler extends Command {
       String instantId = "avatar";
       String widgetType = "WelcomeWidget";
       String userName = req.getRemoteUser();
-      System.out.println("========> upRsource: " + upResource);
       UserWidgetStorage service = 
         (UserWidgetStorage)container.getComponentInstanceOfType(UserWidgetStorage.class) ;
       File file = new File(upResource.getStoreLocation());
