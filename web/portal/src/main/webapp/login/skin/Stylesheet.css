@@ -52,11 +52,13 @@
   float: left;
   width: 200px ;  height: 18px;
   border: solid 1px #b7b7b7 ;
+  padding-left: 18px;
   background: url('../skin/images/LoginBackground.gif') no-repeat left -243px;
 }
 
 .UILogin .LoginContent .FieldContainer input.Password {
   float: left;
+  padding-left: 18px;
   width: 200px ;  height: 18px;
   border: solid 1px #b7b7b7 ;
   background: url('../skin/images/LoginBackground.gif') no-repeat left -262px;
