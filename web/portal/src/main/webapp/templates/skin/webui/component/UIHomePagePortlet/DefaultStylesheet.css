@@ -31,18 +31,18 @@
 }
 
 .UIHomePagePortlet .AdImage .ProductSlogan {
-	font-size: 28px;
+	font-size: 24px;
 	font-style: italic;
 	height: 45px;
-	padding-right: 18%;
+	padding-right: 12%;
 	letter-spacing: 1px;
-	color: #696a6a;
+	color: #ec7500;
 }
 
 .UIHomePagePortlet .AdImage .ProductIntro {
 	font-size: 12px;
 	letter-spacing: 1px;
-	color: #ec7500;
+	color: #696a6a;
 	font-weight: bold;
 	line-height: 16px;
 }
