@@ -16,8 +16,11 @@
  */
 package org.exoplatform.portal.webui.component;
 
+import java.net.URL;
+
 import javax.portlet.PortletPreferences;
 
+import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.application.portlet.PortletRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
@@ -25,6 +28,7 @@ import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.lifecycle.UIFormLifecycle;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
+import org.exoplatform.webui.exception.MessageException;
 import org.exoplatform.webui.form.UIForm;
 import org.exoplatform.webui.form.UIFormStringInput;
 
@@ -53,11 +57,20 @@ public class UIIFrameEditMode extends UIForm {
   
   static public class SaveActionListener extends EventListener<UIIFrameEditMode> {
     public void execute(Event<UIIFrameEditMode> event) throws Exception {
-      PortletRequestContext pcontext = (PortletRequestContext)WebuiRequestContext.getCurrentInstance() ;
-      PortletPreferences pref = pcontext.getRequest().getPreferences();
-      pref.setValue("url", event.getSource().getUIStringInput(FIELD_URL).getValue()) ;
-      pref.store() ;
-      pcontext.setApplicationMode(PortletRequestContext.VIEW_MODE) ;
+		String url = event.getSource().getUIStringInput(FIELD_URL).getValue();
+		try {
+		  new URL(url);
+		  PortletRequestContext pcontext = (PortletRequestContext) WebuiRequestContext
+		      .getCurrentInstance();
+		  PortletPreferences pref = pcontext.getRequest().getPreferences();
+		  pref.setValue("url", event.getSource().getUIStringInput(FIELD_URL).getValue());
+		  pref.store();
+		  pcontext.setApplicationMode(PortletRequestContext.VIEW_MODE);
+		} catch (Exception e) {
+		  Object[] args = { FIELD_URL, "URL"};
+		  throw new MessageException(new ApplicationMessage("ExpressionValidator.msg.value-invalid",
+		      args));
+		}
     }
   }
 }
