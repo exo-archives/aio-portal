@@ -94,22 +94,23 @@ FCKConfig.TemplateReplaceCheckbox = true ;
 FCKConfig.ToolbarLocation = 'In' ;
 
 FCKConfig.ToolbarSets["Default"] = [
-	['Source','DocProps','-','Save','NewPage','Preview','-','Templates'],
+	['Source','DocProps','-','NewPage','Preview','-','Templates'],
 	['Cut','Copy','Paste','PasteText','PasteWord','-','Print','SpellCheck'],
 	['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
 	'/',
-	['Bold','Italic','-','Subscript','Superscript'],
+	['Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript'],
 	['Link','Unlink','Anchor'],
 	['Image','Flash','Table','Rule','SpecialChar','PageBreak'],
 	['TextColor','BGColor'],
-	['FitWindow','ShowBlocks']	
+	['FitWindow','ShowBlocks'],
+	['Style','FontFormat','FontName','FontSize']
 ] ;
 
 FCKConfig.ToolbarSets["Basic"] = [
-	['Style','FontFormat','FontName','FontSize', 'Underline','StrikeThrough'],
-	['Source','Bold','Italic','-','OrderedList','UnorderedList','-','Link','Unlink'],
-	['OrderedList','UnorderedList','-','Outdent','Indent','Blockquote'],
-	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull']
+	['Source','-','Bold','Italic','Underline','StrikeThrough','-','OrderedList','UnorderedList','Outdent','Indent'],
+	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
+	['Blockquote','-','Link','Unlink','-','FitWindow','ShowBlocks'],	
+	['Style','FontFormat','FontName','FontSize']
 ] ;
 
 FCKConfig.EnterMode = 'p' ;			// p | div | br
