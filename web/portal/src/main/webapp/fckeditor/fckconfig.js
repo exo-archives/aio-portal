@@ -65,7 +65,7 @@ FCKConfig.IncludeGreekEntities	= true ;
 
 FCKConfig.ProcessNumericEntities = false ;
 
-FCKConfig.AdditionalNumericEntities = ''  ;		// Single Quote: "'"
+FCKConfig.AdditionalNumericEntities = "'"  ;		// Single Quote: "'"
 
 FCKConfig.FillEmptyBlocks	= true ;
 
