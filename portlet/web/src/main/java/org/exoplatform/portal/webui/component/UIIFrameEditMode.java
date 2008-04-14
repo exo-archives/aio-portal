@@ -31,6 +31,7 @@ import org.exoplatform.webui.event.EventListener;
 import org.exoplatform.webui.exception.MessageException;
 import org.exoplatform.webui.form.UIForm;
 import org.exoplatform.webui.form.UIFormStringInput;
+import org.exoplatform.webui.form.validator.MandatoryValidator;
 
 /**
  * Created by The eXo Platform SARL
@@ -52,7 +53,8 @@ public class UIIFrameEditMode extends UIForm {
   public UIIFrameEditMode() throws Exception {
     PortletRequestContext pcontext = (PortletRequestContext)WebuiRequestContext.getCurrentInstance() ;
     PortletPreferences pref = pcontext.getRequest().getPreferences();
-    addUIFormInput(new UIFormStringInput(FIELD_URL, FIELD_URL, pref.getValue("url", "http://exoplatform.com"))) ;
+    addUIFormInput(new UIFormStringInput(FIELD_URL, FIELD_URL, pref.getValue("url", "http://exoplatform.com")).
+                   addValidator(MandatoryValidator.class)) ;
   }
   
   static public class SaveActionListener extends EventListener<UIIFrameEditMode> {
@@ -67,7 +69,7 @@ public class UIIFrameEditMode extends UIForm {
 		  pref.store();
 		  pcontext.setApplicationMode(PortletRequestContext.VIEW_MODE);
 		} catch (Exception e) {
-		  Object[] args = { FIELD_URL, "URL"};
+		  Object[] args = { "URL", "http://www.exoplatform.org"};
 		  throw new MessageException(new ApplicationMessage("ExpressionValidator.msg.value-invalid",
 		      args));
 		}
