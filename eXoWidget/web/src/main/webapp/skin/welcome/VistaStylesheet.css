@@ -121,8 +121,7 @@
 	font-weight: bold;
 	padding: 40px 25px;
 	text-decoration: underline;
-	cursor: pointer;
-	width: 60px; margin: auto;
+	cursor: pointer;margin: auto;
 	display: block ;
 }
 
