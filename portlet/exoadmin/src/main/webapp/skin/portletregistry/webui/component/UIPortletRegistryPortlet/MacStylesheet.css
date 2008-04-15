@@ -5,9 +5,15 @@
  * version: $Id$
  */
 
+.UIWindow .UIApplicationRegistryPortlet {
+	margin: 0px;
+	border: none;
+}
+
 .UIApplicationRegistryPortlet {
 	border: 1px solid #b7b7b7;
-	background: #fff;
+	background: #fff;	
+	margin: 5px;
 }
 
 .UIApplicationRegistryPortlet .Title {
@@ -17,7 +23,7 @@
 }
 
 .UIApplicationRegistryPortlet .UIApplicationRegistryContainer {
-  padding: 5px 10px;
+  padding: 10px;
 }
 
 .UIApplicationRegistryPortlet .UIForm .HorizontalLayout .UIFormGrid td.FieldLabel {
@@ -204,11 +210,10 @@
 }
 
 .UIApplicationRegistryPortlet .UIAvailablePortletForm td.text{
-  padding-left: 10px;
+  padding-left: 15px;
 }
 
 .UIApplicationRegistryPortlet .UIAvailablePortletForm input.checkbox{
-  margin: 0px 0px 0px 25px; 
   width: 16px; height: 14px;
 }
 

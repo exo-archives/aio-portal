@@ -28,7 +28,7 @@
 }
 
 .UIApplicationRegistryPortlet .UIApplicationRegistryContainer {
-  padding: 5px 10px;
+  padding: 10px;
 }
 
 .UIApplicationRegistryPortlet .UIAvailablePortletForm {
@@ -36,11 +36,10 @@
 }
 
 .UIApplicationRegistryPortlet .UIAvailablePortletForm td.text{
-  padding-left: 10px;
+  padding-left: 15px;
 }
 
 .UIApplicationRegistryPortlet .UIAvailablePortletForm input.checkbox{
-  margin: 0px 0px 0px 25px; 
   width: 16px; height: 14px;
 }
 
@@ -63,14 +62,6 @@
 .ApplicationRegistryWorkingArea .UIInfoPortletForm .HorizontalLayout .UIFormGrid {
 	width: 400px;
 	margin: auto;
-}
-
-.ApplicationRegistryWorkingArea .UIPermissionForm .UIAccessGroup .UIGrid td.text{
-  padding-left: 8px;
-}
-
-.UIApplicationRegistryPortlet .UIForm .HorizontalLayout .UIFormGrid td.FieldLabel {
-  padding: 5px 0px 5px 32px;
 }
 
 .UIApplicationRegistryPortlet .UIVerticalSlideTabs {
