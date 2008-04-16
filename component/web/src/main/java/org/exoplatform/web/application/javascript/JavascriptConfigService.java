@@ -27,42 +27,91 @@ import javax.servlet.ServletContext;
 
 public class JavascriptConfigService {
 
-  private Collection<String> availableScripts_;
-  private Collection<String> availableScriptsPaths_;
+	private Collection<String> availableScripts_;
+	private Collection<String> availableScriptsPaths_;
 
-  private String mergedJavascript = "";
-  
-  private ByteArrayOutputStream jsStream_ = null;
-  
-  public JavascriptConfigService() {
-    availableScripts_ = new ArrayList<String>();
-    availableScriptsPaths_ = new ArrayList<String>();
+	private String mergedJavascript = "";
+
+	private ByteArrayOutputStream jsStream_ = null;
+
+	public JavascriptConfigService() {
+		availableScripts_ = new ArrayList<String>();
+		availableScriptsPaths_ = new ArrayList<String>();
+	}
+
+	/**
+	 * return a collection  list This method should return the
+	 * availables scripts in the service
+	 * 
+	 * @return
+	 */
+	public Collection<String> getAvailableScripts() {
+		return availableScripts_;
+	}
+
+	public Collection<String> getAvailableScriptsPaths() {
+		return availableScriptsPaths_;
+	}  
+	
+	public void addJavascript(String module, String scriptPath,ServletContext scontext,String javascript) {
+    availableScripts_.add(module);        
+    availableScriptsPaths_.add("/" + scontext.getServletContextName() + scriptPath);
+    mergedJavascript = mergedJavascript.concat(javascript).concat("\n");        
   }
+	
+	/**
+	 * 
+	 * @param module
+	 * @param skinName
+	 * @param cssPath
+	 */
+	public void addJavascript(String module, String scriptPath, ServletContext scontext) {
+		String servletContextName = scontext.getServletContextName();		
+		availableScripts_.add(module);		
+		availableScriptsPaths_.add("/" + servletContextName + scriptPath);
+		String javascript = loadJavascript(scriptPath, scontext) ;
+		mergedJavascript = mergedJavascript.concat(javascript);
+	}
+	
+	public void removeJavaScript(String module,String scriptPath, ServletContext scontext) {				
+		String servletContextName = scontext.getServletContextName();						
+		availableScripts_.remove(module);
+		availableScriptsPaths_.remove("/" + servletContextName + scriptPath);		
+		StringBuilder sB = new StringBuilder();
+		for(String key:availableScriptsPaths_) {
+		  int index = key.indexOf("/", 1) ;		  
+			String contextName = key.substring(0, index);
+			String jsPath  = key.substring(index) ;						
+			try {
+				ServletContext servletContext = scontext.getContext(contextName) ;				
+				String javascript = loadJavascript(jsPath, servletContext) ;				
+				sB.append(javascript);				
+			} catch (Exception e) {
+			  e.printStackTrace();
+			}			
+		}
+		mergedJavascript = sB.toString();		
+	}	
 
-  /**
-   * return a collection  list This method should return the
-   * availables scripts in the service
-   * 
-   * @return
-   */
-  public Collection<String> getAvailableScripts() {
-    return availableScripts_;
-  }
-  
-  public Collection<String> getAvailableScriptsPaths() {
-    return availableScriptsPaths_;
-  }  
+	public byte[] getMergedJavascript() {
+		if(jsStream_ == null) {
+			jsStream_ = new ByteArrayOutputStream();
+			ByteArrayInputStream input = new ByteArrayInputStream(mergedJavascript.getBytes());
+			JSMin jsMin = new JSMin(input,jsStream_);
+			try {
+				jsMin.jsmin();				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return jsStream_.toByteArray();
+	}
 
-  /**
-   * 
-   * @param module
-   * @param skinName
-   * @param cssPath
-   */
-  public void addJavascript(String module, String scriptPath, ServletContext scontext) {
-    String servletContextName = scontext.getServletContextName();
-    availableScripts_.add(module);
-    availableScriptsPaths_.add("/" + servletContextName + scriptPath);
+	public boolean isModuleLoaded(CharSequence module) {
+		return getAvailableScripts().contains(module);
+	}
+	
+	private String loadJavascript(String scriptPath,ServletContext scontext) {
     StringBuffer sB = new StringBuffer();
     String line = ""; 
     try {
@@ -84,25 +133,6 @@ public class JavascriptConfigService {
       e.printStackTrace();
     }
     sB.append("\n");
-    mergedJavascript = mergedJavascript.concat(sB.toString());
+    return sB.toString();
   }
-  
-  public byte[] getMergedJavascript() {
-    if(jsStream_ == null) {
-      jsStream_ = new ByteArrayOutputStream();
-      ByteArrayInputStream input = new ByteArrayInputStream(mergedJavascript.getBytes());
-      JSMin jsMin = new JSMin(input,jsStream_);
-      try {
-        jsMin.jsmin();
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    }
-    return jsStream_.toByteArray();
-  }
-  
-  public boolean isModuleLoaded(CharSequence module) {
-    return getAvailableScripts().contains(module);
-  }
-  
 }
