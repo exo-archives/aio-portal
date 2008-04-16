@@ -9,18 +9,14 @@
  }
 
 .UIWindow .UIApplication {
-	_width: 99.6%;
 	overflow: auto;
-	/*
-	minh.js.exo
-	fix bug min-width in IE6 for portlets. 
-	*/
 }
 
 /**************************** UIPageBody ************************************/
 
 .UIPageBody .UIWindow {
-  width: auto ; height: auto;
+  width: 99% ; height: auto;
+  margin: 5px auto;
 }
 
 .UIPageBody .UIWindow .UIApplication {
@@ -113,12 +109,6 @@
 .UIPageBody .UIPortalWarning .CenterBottomWaring {
   background: url('/eXoResources/skin/sharedImages/CenterBottomWarning1x7.gif') repeat-x center;	
   height: 7px;
-}
-
-.UIPortal .VIEW-PORTLET .UIWindow {
-  width: 99%; height: auto;
-  padding: 5px 0px; 
-  margin: auto;
 }
 
 .UIPortal .VIEW-CONTAINER .VIEW-PORTLET .UIWindow {
