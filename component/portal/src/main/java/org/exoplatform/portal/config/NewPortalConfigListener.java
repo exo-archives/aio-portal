@@ -28,6 +28,7 @@ import org.exoplatform.commons.utils.IOUtil;
 import org.exoplatform.container.component.BaseComponentPlugin;
 import org.exoplatform.container.configuration.ConfigurationManager;
 import org.exoplatform.container.xml.InitParams;
+import org.exoplatform.container.xml.ObjectParameter;
 import org.exoplatform.container.xml.ValueParam;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.portal.application.PortletPreferences.PortletPreferencesSet;
@@ -52,7 +53,7 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
   private ConfigurationManager cmanager_ ;
   private DataStorage pdcService_;  
   private List<?> configs;
-  
+  private PageTemplateConfig pageTemplateConfig_ ;
   private String defaultPortal ;
   
   public NewPortalConfigListener(DataStorage pdcService,
@@ -61,10 +62,13 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     cmanager_ = cmanager ;
     pdcService_ = pdcService;
     
-    String checkPortal = "site";
+    ObjectParameter objectParam = params.getObjectParam("page.templates");
+    if(objectParam != null) pageTemplateConfig_ = (PageTemplateConfig) objectParam.getObject() ;
+    
+    String checkPortal = "classic";
     ValueParam valueParam = params.getValueParam("default.portal");
     if(valueParam != null) checkPortal = valueParam.getValue();
-    if(checkPortal == null  || checkPortal.trim().length() == 0) checkPortal = "site";    
+    if(checkPortal == null  || checkPortal.trim().length() == 0) checkPortal = "classic";    
     
     configs = params.getObjectParamValues(NewPortalConfig.class);
    
@@ -206,6 +210,20 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     InputStream is = cmanager_.getInputStream(templateLoc + path);
     String template = IOUtil.getStreamContentAsString(is);
     return StringUtils.replace(template, "@owner@", owner);
+  }
+  
+  public Page createPageFromTemplate(String temp) throws Exception {
+    return fromXML(getTemplateConfig(temp, "page"), Page.class) ;
+  }
+  
+  public PortletPreferencesSet createPortletPreferencesFromTemplate(String temp) throws Exception {
+    return fromXML(getTemplateConfig(temp, "portlet-preferences"), PortletPreferencesSet.class) ;
+  }
+  
+  private String getTemplateConfig(String name, String dataType) throws Exception {
+    String path = pageTemplateConfig_.getLocation() + "/" + name + "/" + dataType + ".xml" ;
+    InputStream is = cmanager_.getInputStream(path) ;
+    return IOUtil.getStreamContentAsString(is) ;
   }
   
   private <T> T fromXML(String xml, Class<T> clazz) throws Exception {

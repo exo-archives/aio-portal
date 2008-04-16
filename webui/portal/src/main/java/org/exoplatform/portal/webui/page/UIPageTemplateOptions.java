@@ -20,6 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.exoplatform.portal.config.UserPortalConfigService;
 import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.webui.application.WebuiRequestContext;
@@ -58,19 +59,11 @@ public class UIPageTemplateOptions extends UIFormInputItemSelector {
     WebuiRequestContext context = WebuiRequestContext.getCurrentInstance() ;
     Param param = initParams.getParam("PageLayout");          
     categories_ = param.getFreshObject(context) ;   
-    
-    SelectItemCategory category = getSelectedCategory();
-    if(category == null) return ;
-    SelectItemOption<?> itemOption = category.getSelectedItemOption();
-    if(itemOption == null) return ;
-    selectedItemOption_ = itemOption;
-    
+    selectedItemOption_ = getDefaultItemOption() ;
     List<SelectItemOption<String>> itemOptions = new ArrayList<SelectItemOption<String>>();
-    
     for(SelectItemCategory itemCategory: categories_){
       itemOptions.add(new SelectItemOption(itemCategory.getName()));
     }
-    
     // modify: Dang.Tung
     UIDropDownControl uiItemSelector = addChild(UIDropDownControl.class, null, "UIDropDownPageTemp");
     uiItemSelector.setOptions(itemOptions);
@@ -94,6 +87,14 @@ public class UIPageTemplateOptions extends UIFormInputItemSelector {
     selectedItemOption_ = null;
   }
   
+  public SelectItemOption<?> getDefaultItemOption() {
+    SelectItemCategory category = getSelectedCategory();
+    if(category == null) return null ;
+    SelectItemOption<?> itemOption = category.getSelectedItemOption();
+    if(itemOption == null) return  null ;
+    return itemOption;    
+  }
+
   public SelectItemOption getSelectedItemOption() { return selectedItemOption_; }
   
   @SuppressWarnings("unused")
@@ -106,18 +107,13 @@ public class UIPageTemplateOptions extends UIFormInputItemSelector {
     selectedItemOption_ = selectedItemOption;
   }
   
-  public Page getSelectedOption() throws Exception {
-    if(selectedItemOption_ == null) return null; 
-    if( selectedItemOption_.getValue() == null) return null;
-    return toPage(selectedItemOption_.getValue().toString()); 
+  public Page createPageFromSelectedOption(String ownerType, String ownerId) throws Exception {
+    if(selectedItemOption_ == null) selectedItemOption_ = getDefaultItemOption() ;
+    if(selectedItemOption_ == null) return null ;
+    Object temp = selectedItemOption_.getValue() ; 
+    if(temp == null) return null;
+    UserPortalConfigService configService = getApplicationComponent(UserPortalConfigService.class) ;
+    return configService.createPageTemplate(temp.toString(), ownerType, ownerId) ; 
   }
   
-  private Page toPage(String xml) throws Exception {
-    ByteArrayInputStream is = new ByteArrayInputStream( xml.getBytes()) ; 
-    IBindingFactory bfact = BindingDirectory.getFactory(Container.class);
-    IUnmarshallingContext uctx = bfact.createUnmarshallingContext();
-    return (Page) uctx.unmarshalDocument(is, null);
-  }
-
- 
 }

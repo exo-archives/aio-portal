@@ -462,7 +462,54 @@ public class UserPortalConfigService {
     preferences.setMethodCalledIsAction(PCConstants.ACTION_INT) ;
     preferences.store() ;
   }
-    
+  
+  public Page createPageTemplate(String temp, String ownerType, String ownerId) throws Exception {
+    Page page = newPortalConfigListener_.createPageFromTemplate(temp);
+    page.setOwnerType(ownerType) ;
+    page.setOwnerId(ownerId) ;
+    List<Application> apps = new ArrayList<Application>(3) ; 
+    getApplications(apps, page) ;
+    if(!apps.isEmpty()) {
+      for(Application ele : apps) {
+        makeInstanceId(ele, ownerType, ownerId) ;
+      }
+      createPortletPreferences(apps, temp) ;      
+    }
+    return page ;
+  }
+
+  private void makeInstanceId(Application app, String ownerType, String ownerId) {
+    StringBuilder builder = new StringBuilder(20) ;
+    builder.append(ownerType + "#" + ownerId + ":").append(app.getInstanceId()).append("/" + builder.hashCode()) ;
+    app.setInstanceId(builder.toString()) ;
+  }
+  
+  private void createPortletPreferences(List<Application> apps, String temp) throws Exception {
+    List<PortletPreferences> preferencesSet = newPortalConfigListener_.createPortletPreferencesFromTemplate(temp).getPortlets() ;
+    if(preferencesSet == null || preferencesSet.size() < 1) return ;
+    for(Application ele : apps) {
+      String appType = ele.getApplicationType() ;
+      if(appType == null || org.exoplatform.web.application.Application.EXO_PORTLET_TYPE.equals(appType)) {
+        savePortletPreferences(ele, preferencesSet) ;
+      }
+    }
+  }
+
+  private void savePortletPreferences(Application app, List<PortletPreferences> preferencesSet) throws Exception {
+    ExoWindowID windowID = new ExoWindowID(app.getInstanceId())  ;
+    String tmp = "/" + windowID.getPortletApplicationName() + "/" + windowID.getPortletName() ;
+    for(PortletPreferences preferences : preferencesSet) {
+      if(tmp.equals(preferences.getWindowId())) {
+        String[] fragments = windowID.getOwner().split("#") ;
+        preferences.setOwnerType(fragments[0]) ;
+        preferences.setOwnerId(fragments[1]) ;
+        preferences.setWindowId(windowID.getPersistenceId()) ;
+        storage_.save(preferences) ;
+        break ;
+      }
+    }
+  }
+
   @SuppressWarnings("unused")
   public void initListener(ComponentPlugin listener) { 
     if(listener instanceof  NewPortalConfigListener) {

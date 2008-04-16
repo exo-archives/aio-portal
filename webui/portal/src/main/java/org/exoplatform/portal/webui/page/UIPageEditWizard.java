@@ -64,7 +64,7 @@ import org.exoplatform.webui.event.EventListener;
     }
 )
 public class UIPageEditWizard extends UIPageWizard {
-  
+
   public UIPageEditWizard() throws Exception {
     addChild(UIWizardPageSetInfo.class, null, "EditWizard") ;
     UIWizardPageSelectLayoutForm layoutForm = addChild(UIWizardPageSelectLayoutForm.class, null, null).setRendered(false);
@@ -79,30 +79,29 @@ public class UIPageEditWizard extends UIPageWizard {
     if(options.get(0).getValue() != null)  options.add(0, curent);
     templateOption.setSelectOptionItem("Current Layout");
   }
-  
+
   private void saveData() throws Exception {
     UserPortalConfigService service = getApplicationComponent(UserPortalConfigService.class);
-    
+
     UIPagePreview uiPagePreview = getChild(UIPagePreview.class);
     UIPage uiPage = (UIPage)uiPagePreview.getUIComponent();
     Page page = PortalDataMapper.toPageModel(uiPage);
     service.update(page); 
-    
-    UIWizardPageSetInfo uiPageInfo = getChild(UIWizardPageSetInfo.class);  
-    UIPageNodeSelector uiNodeSelector = uiPageInfo.getChild(UIPageNodeSelector.class);      
+
+    UIPageNodeSelector uiNodeSelector = findFirstComponentOfType(UIPageNodeSelector.class) ;      
     PageNavigation pageNav =  uiNodeSelector.getSelectedNavigation();
     pageNav.setModifier(RequestContext.<WebuiRequestContext>getCurrentInstance().getRemoteUser());
     service.update(pageNav);
-    
+
     UIPortal uiPortal = Util.getUIPortal();
     for(PageNavigation editNav : uiNodeSelector.getPageNavigations()) {
       setNavigation(uiPortal.getNavigations(), editNav);
     }
-    String uri = pageNav.getId() + "::" + uiPageInfo.getPageNode().getUri();
+    String uri = pageNav.getId() + "::" + uiNodeSelector.getSelectedPageNode().getUri();
     PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal, PageNodeEvent.CHANGE_PAGE_NODE, null, uri) ;
     uiPortal.broadcast(pnevent, Event.Phase.PROCESS) ;
   }
-  
+
   private void setNavigation(List<PageNavigation> navs, PageNavigation nav) {
     for(int i = 0; i < navs.size(); i++) {
       if(navs.get(i).getId().equals(nav.getId())) {
@@ -111,24 +110,24 @@ public class UIPageEditWizard extends UIPageWizard {
       }
     }
   }
-  
+
   static  public class ViewStep1ActionListener extends EventListener<UIPageWizard> {
     public void execute(Event<UIPageWizard> event) throws Exception { 
       UIPageWizard uiWizard = event.getSource();
       uiWizard.setDescriptionWizard(2);
-      
+
       uiWizard.updateWizardComponent();
       uiWizard.viewStep(1);   
     }
   }
-  
+
   static  public class ViewStep2ActionListener extends EventListener<UIPageWizard> {
     public void execute(Event<UIPageWizard> event) throws Exception {
       UIPageWizard uiWizard = event.getSource();
       UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
       PortalRequestContext pcontext = Util.getPortalRequestContext() ;
       uiWizard.setDescriptionWizard(3);
-      
+
       uiWizard.updateWizardComponent();
       UIWizardPageSetInfo uiPageInfo = uiWizard.getChild(UIWizardPageSetInfo.class); 
       UIPageNodeSelector uiPageNodeSelector = uiPageInfo.getChild(UIPageNodeSelector.class);
@@ -138,7 +137,7 @@ public class UIPageEditWizard extends UIPageWizard {
         uiWizard.viewStep(1);
         return ;
       }
-      
+
       PageNode pageNode = uiPageNodeSelector.getSelectedPageNode() ;
       if(pageNode == null) {
         uiPortalApp.addMessage(new ApplicationMessage("UIPageEditWizard.msg.notSelectedPage", null)) ;
@@ -146,7 +145,7 @@ public class UIPageEditWizard extends UIPageWizard {
         uiWizard.viewStep(1);
         return ;
       }
-      
+
       UserPortalConfigService configService = uiWizard.getApplicationComponent(UserPortalConfigService.class) ;
       Page page = configService.getPage(pageNode.getPageReference(), pcontext.getRemoteUser()) ;
       if(page == null) {
@@ -160,7 +159,7 @@ public class UIPageEditWizard extends UIPageWizard {
         uiWizard.viewStep(1);
         return ;
       }
-      
+
       uiWizard.viewStep(2);
     }
   }
@@ -168,72 +167,66 @@ public class UIPageEditWizard extends UIPageWizard {
   static  public class ViewStep3ActionListener extends EventListener<UIPageEditWizard> {
     public void execute(Event<UIPageEditWizard> event) throws Exception {
       UIPageEditWizard uiWizard = event.getSource();
+      WebuiRequestContext context = event.getRequestContext() ;
       UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
       UIWizardPageSetInfo uiPageInfo = uiWizard.getChild(UIWizardPageSetInfo.class); 
-      UIPageNodeSelector uiPageNodeSelector = uiPageInfo.getChild(UIPageNodeSelector.class);
-      PageNode seletctedPageNode = uiPageNodeSelector.getSelectedPageNode() ;
+      PageNode seletctedPageNode = uiPageInfo.getPageNode() ;
       UserPortalConfigService userService = uiWizard.getApplicationComponent(UserPortalConfigService.class) ;
-      Page selectPage = userService.getPage(seletctedPageNode.getPageReference(), event.getRequestContext().getRemoteUser()) ;
+      Page selectPage = userService.getPage(seletctedPageNode.getPageReference(), context.getRemoteUser()) ;
 
       if(selectPage == null|| !selectPage.isModifiable()) {
         uiPortalApp.addMessage(new ApplicationMessage("UIPageEditWizard.msg.Invalid-editPermission", null)) ;
-        event.getRequestContext().addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages()) ;
+        context.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages()) ;
         uiWizard.viewStep(1);
         return ;
       }
       uiWizard.viewStep(3);      
       if(uiWizard.getSelectedStep() < 3){
         uiWizard.updateWizardComponent();
-        UIApplication uiApp = Util.getPortalRequestContext().getUIApplication() ;
-        uiApp.addMessage(new ApplicationMessage("UIPageEditWizard.msg.selectStep2", null)) ;
-        
-        Util.getPortalRequestContext().addUIComponentToUpdateByAjax(uiApp.getUIPopupMessages() );
+        uiPortalApp.addMessage(new ApplicationMessage("UIPageEditWizard.msg.selectStep2", null)) ;
+        context.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages() );
         return;
       }
-      
+
       UIExoStart uiExoStart = uiPortalApp.findFirstComponentOfType(UIExoStart.class);      
       uiExoStart.setUIControlWSWorkingComponent(UIWizardPageCreationBar.class);
       UIWizardPageCreationBar uiCreationBar = uiExoStart.getUIControlWSWorkingComponent();
-      
+
       UIPageEditBar uiPageEditBar = uiCreationBar.getChild(UIPageEditBar.class);
       UIWizardPageCreationBar uiParent = uiPageEditBar.getParent();
-      
+
       UIPageTemplateOptions uiPageTemplateOptions = uiWizard.findFirstComponentOfType(UIPageTemplateOptions.class);
-      PageNode pageNode = uiPageInfo.getPageNode();
-      
-      Page templatePage = uiPageTemplateOptions.getSelectedOption();
-      DataStorage configService = uiWizard.getApplicationComponent(DataStorage.class);
-      Page page = configService.getPage(pageNode.getPageReference());
+
+      Page templatePage = uiPageTemplateOptions.createPageFromSelectedOption(selectPage.getOwnerType(), selectPage.getOwnerId());
       boolean isDesktopPage = false;
       if(templatePage != null ) {
-        templatePage.setName(page.getName());
-        templatePage.setOwnerType(page.getOwnerType());
-        templatePage.setOwnerId(page.getOwnerId());
-        templatePage.setAccessPermissions(page.getAccessPermissions()) ;
-        templatePage.setEditPermission(page.getEditPermission()) ;
-        page  = templatePage;
-        isDesktopPage = Page.DESKTOP_PAGE.equals(page.getFactoryId());
+        templatePage.setName(selectPage.getName());
+        templatePage.setCreator(selectPage.getCreator()) ;
+        templatePage.setAccessPermissions(selectPage.getAccessPermissions()) ;
+        templatePage.setEditPermission(selectPage.getEditPermission()) ;
+        selectPage  = templatePage;
+        isDesktopPage = Page.DESKTOP_PAGE.equals(selectPage.getFactoryId());
         if(isDesktopPage) {
-          page.setChildren(new ArrayList<Object>());
-          page.setShowMaxWindow(true);
+          selectPage.setChildren(new ArrayList<Object>());
+          selectPage.setShowMaxWindow(true);
         }
       } else {
-        isDesktopPage = Page.DESKTOP_PAGE.equals(page.getFactoryId());
+        isDesktopPage = Page.DESKTOP_PAGE.equals(selectPage.getFactoryId());
       }
-      WebuiRequestContext context = Util.getPortalRequestContext() ;
-      page.setModifier(context.getRemoteUser());
-      
+      selectPage.setModifier(context.getRemoteUser());
+      selectPage.setTitle(seletctedPageNode.getLabel()) ;
+
       UIPagePreview uiPagePreview = uiWizard.getChild(UIPagePreview.class);
       UIPage uiPage = null;
-      if(Page.DEFAULT_PAGE.equals(page.getFactoryId())) {
+      if(Page.DEFAULT_PAGE.equals(selectPage.getFactoryId())) {
         uiPage = uiPagePreview.createUIComponent(context, UIPage.class, null, null);
       } else {
-        uiPage = uiPagePreview.createUIComponent(context, UIPage.class, page.getFactoryId(), null);
+        uiPage = uiPagePreview.createUIComponent(context, UIPage.class, selectPage.getFactoryId(), null);
       }
-      PortalDataMapper.toUIPage(uiPage, page);
+      PortalDataMapper.toUIPage(uiPage, selectPage);
       uiPortalApp.findFirstComponentOfType(UIPageBody.class).setUIComponent(null) ;
       uiPagePreview.setUIComponent(uiPage);
-      
+
       if(isDesktopPage){
         uiWizard.saveData();
         uiWizard.updateUIPortal(uiPortalApp, event);
@@ -242,7 +235,7 @@ public class UIPageEditWizard extends UIPageWizard {
 
       Class<?> [] childrenToRender = {UIPageEditBar.class, UIPortletOptions.class}; 
       uiParent.setRenderedChildrenOfTypes(childrenToRender);
-      
+
       uiPageEditBar.setUIPage(uiPage);      
       uiPageTemplateOptions.setSelectedOption(null);
       uiWizard.updateWizardComponent();
@@ -257,12 +250,12 @@ public class UIPageEditWizard extends UIPageWizard {
       uiWizard.updateUIPortal(uiPortalApp, event);
     }
   }  
-  
+
   static public class AbortActionListener extends EventListener<UIPageEditWizard> {
     public void execute(Event<UIPageEditWizard> event) throws Exception {
-//      UIPageEditWizard uiWizard = event.getSource();
+//    UIPageEditWizard uiWizard = event.getSource();
       UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
-//      uiWizard.updateUIPortal(uiPortalApp, event);    
+//    uiWizard.updateUIPortal(uiPortalApp, event);    
       PortalRequestContext pcontext = (PortalRequestContext)event.getRequestContext();
 
       UIControlWorkspace uiControl = uiPortalApp.getChildById(UIPortalApplication.UI_CONTROL_WS_ID);
@@ -274,7 +267,7 @@ public class UIPageEditWizard extends UIPageWizard {
       uiPortal.setMode(UIPortal.COMPONENT_VIEW_MODE);
       uiPortal.setRenderSibbling(UIPortal.class) ;    
       pcontext.setFullRender(true);
-      
+
       UIWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
       pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);      
     }

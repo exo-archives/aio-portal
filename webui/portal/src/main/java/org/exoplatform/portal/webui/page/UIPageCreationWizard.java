@@ -211,7 +211,7 @@ public class UIPageCreationWizard extends UIPageWizard {
       UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
       WebuiRequestContext context = Util.getPortalRequestContext() ;
       uiWizard.viewStep(4);
-      
+
       if(uiWizard.getSelectedStep() < 4){
         uiWizard.updateWizardComponent();
         uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.StepByStep",null)) ;
@@ -221,56 +221,33 @@ public class UIPageCreationWizard extends UIPageWizard {
 
       UIPageTemplateOptions uiPageTemplateOptions = uiWizard.findFirstComponentOfType(UIPageTemplateOptions.class);
       UIWizardPageSetInfo uiPageInfo = uiWizard.getChild(UIWizardPageSetInfo.class);        
-      
-      String ownerType = PortalConfig.USER_TYPE ;
-      String ownerId = context.getRemoteUser() ;
+
       UIPageNodeSelector uiNodeSelector = uiPageInfo.getChild(UIPageNodeSelector.class) ;
       PageNavigation pageNavi = uiNodeSelector.getSelectedNavigation() ;
-      if (pageNavi != null) {
-        ownerType = pageNavi.getOwnerType() ;
-        ownerId = pageNavi.getOwnerId() ;
-      }
-      
+      String ownerType = pageNavi.getOwnerType() ;
+      String ownerId = pageNavi.getOwnerId() ;
+
       PageNode pageNode = uiPageInfo.getPageNode();
-      Page page = uiPageTemplateOptions.getSelectedOption();
-      if(page == null){
-        page  = new Page();
-        page.setCreator(context.getRemoteUser());
-      }
-      if(page.getOwnerType() == null || page.getOwnerType().trim().length() == 0) {
-        page.setOwnerType(ownerType);
-      }
-      if(page.getOwnerId() == null || page.getOwnerId().trim().length() == 0) {
-        page.setOwnerId(ownerId);
-      }
-      if(page.getName() == null || page.getName().trim().length() == 0 || page.getName().equals("UIPage")) {
-        page.setName(pageNode.getName());
-      }
+      Page page = uiPageTemplateOptions.createPageFromSelectedOption(ownerType, ownerId);
+      page.setCreator(context.getRemoteUser());
+      page.setName(pageNode.getName());
       page.setModifiable(true);
       if(page.getTitle() == null || page.getTitle().trim().length() == 0) page.setTitle(pageNode.getName()) ;
-      
+
       boolean isDesktopPage = Page.DESKTOP_PAGE.equals(page.getFactoryId());
       if(isDesktopPage) page.setShowMaxWindow(true);
-      
-      String pageId = page.getPageId();
-      DataStorage service = uiWizard.getApplicationComponent(DataStorage.class);
-      Page existPage = service.getPage(pageId);
-      if(existPage != null) {
-        page.setName(page.getName() + String.valueOf(page.hashCode()));
-        page.setPageId(pageId + String.valueOf(page.hashCode()));
-      }
-      
+
       UIPagePreview uiPagePreview = uiWizard.getChild(UIPagePreview.class);
       UIPage uiPage = uiPagePreview.createUIComponent(context, UIPage.class, page.getFactoryId(), null);
       PortalDataMapper.toUIPage(uiPage, page);
       uiPagePreview.setUIComponent(uiPage);
-      
+
       if(isDesktopPage){
         uiWizard.saveData();
         uiWizard.updateUIPortal(uiPortalApp, event);
         return;
       }
-      
+
       uiWizard.updateWizardComponent();
       Class<?> [] childrenToRender = {UIPageEditBar.class, UIPortletOptions.class}; 
       UIExoStart uiExoStart = uiPortalApp.findFirstComponentOfType(UIExoStart.class);      
