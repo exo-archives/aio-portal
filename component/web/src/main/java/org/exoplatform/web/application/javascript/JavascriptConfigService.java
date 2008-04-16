@@ -53,10 +53,14 @@ public class JavascriptConfigService {
 		return availableScriptsPaths_;
 	}  
 	
+	/**
+	 * This method allow use to add javascript at runtime
+	 * */
 	public void addJavascript(String module, String scriptPath,ServletContext scontext,String javascript) {
     availableScripts_.add(module);        
     availableScriptsPaths_.add("/" + scontext.getServletContextName() + scriptPath);
-    mergedJavascript = mergedJavascript.concat(javascript).concat("\n");        
+    mergedJavascript = mergedJavascript.concat(javascript).concat("\n");
+    jsStream_ = null ;
   }
 	
 	/**
@@ -70,9 +74,14 @@ public class JavascriptConfigService {
 		availableScripts_.add(module);		
 		availableScriptsPaths_.add("/" + servletContextName + scriptPath);
 		String javascript = loadJavascript(scriptPath, scontext) ;
-		mergedJavascript = mergedJavascript.concat(javascript);
+		mergedJavascript = mergedJavascript.concat(javascript);		
 	}
 	
+	/**
+   * This method allow remove a javascript module.
+   * If use this method, all added javascript at runtime will be lost because 
+   * this method can not load from db or other storages
+   * */
 	public void removeJavaScript(String module,String scriptPath, ServletContext scontext) {				
 		String servletContextName = scontext.getServletContextName();						
 		availableScripts_.remove(module);
@@ -86,11 +95,11 @@ public class JavascriptConfigService {
 				ServletContext servletContext = scontext.getContext(contextName) ;				
 				String javascript = loadJavascript(jsPath, servletContext) ;				
 				sB.append(javascript);				
-			} catch (Exception e) {
-			  e.printStackTrace();
+			} catch (Exception e) {			  
 			}			
 		}
-		mergedJavascript = sB.toString();		
+		mergedJavascript = sB.toString();
+		jsStream_ = null ;
 	}	
 
 	public byte[] getMergedJavascript() {
