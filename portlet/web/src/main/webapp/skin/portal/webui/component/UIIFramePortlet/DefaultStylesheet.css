@@ -8,13 +8,13 @@
 .UIWindow .UIIFramePortlet {
 	border: none;
 	margin: 0px auto;
+	height: 100%;
 }
 
 .UIIFramePortlet .UIFormWithTitle .UIFormGrid {
 	width: auto;
 	margin: auto;
 }
-
 .UIIFramePortlet .UIFormWithTitle .HorizontalLayout .FormContainer {
 	border: 1px solid #c7c7c7;
 }
