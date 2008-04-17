@@ -269,12 +269,14 @@ public class UIExoStart extends UIComponent {
       UIPortalToolPanel uiToolPanel = uiWorkingWS.getChild(UIPortalToolPanel.class) ;
       uiToolPanel.setShowMaskLayer(false);
       uiToolPanel.setWorkingComponent(UIPageCreationWizard.class, null) ;
+      UIPageCreationWizard uiWizard = (UIPageCreationWizard) uiToolPanel.getUIComponent() ;
+      UIWizardPageSetInfo uiPageSetInfo = uiWizard.getChild(UIWizardPageSetInfo.class);
+      uiPageSetInfo.setShowPublicationDate(false) ;      
 
       uiExoStart.setUIControlWSWorkingComponent(UIWelcomeComponent.class) ;      
-
-      event.getRequestContext().addUIComponentToUpdateByAjax(uiWorkingWS) ;
       UIContainer uiParent = uiExoStart.getParent();
       UIComponentDecorator uiWorkingControl = uiParent.getChildById(UIControlWorkspace.WORKING_AREA_ID);
+      event.getRequestContext().addUIComponentToUpdateByAjax(uiWorkingWS) ;
       event.getRequestContext().addUIComponentToUpdateByAjax(uiWorkingControl) ;    
       event.getRequestContext().addUIComponentToUpdateByAjax(uiExoStart);
     }

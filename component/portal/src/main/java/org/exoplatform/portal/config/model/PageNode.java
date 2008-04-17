@@ -17,6 +17,7 @@
 package org.exoplatform.portal.config.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -30,7 +31,11 @@ public class PageNode  {
   private String icon ;
   private String name;
   private String resolvedLabel ;
-  
+  private Date startPublicationDate ;
+  private Date endPublicationDate ;
+  private boolean enabled = true ;
+  private boolean showPublicationDate = false ; 
+
   private String pageReference ;
   
   private transient boolean modifiable ;
@@ -67,6 +72,17 @@ public class PageNode  {
   
   public boolean isModifiable() { return modifiable ; }
   public void    setModifiable(boolean b) { modifiable = b ; }  
+  public Date getStartPublicationDate() { return startPublicationDate ; }
+  public void setStartPublicationDate(Date startDate) { startPublicationDate = startDate ; }
+
+  public Date getEndPublicationDate() { return endPublicationDate ; }
+  public void setEndPublicationDate(Date endDate) { endPublicationDate = endDate ; }
+
+  public boolean isEnabled() { return enabled ; }
+  public void setEnabled(boolean b) { enabled = b ; }
+  
+  public void setShowPublicationDate(Boolean show) { showPublicationDate = show.booleanValue() ; }
+  public boolean isShowPublicationDate() { return showPublicationDate ; }
   
   public PageNode clone() {
     PageNode newNode = new PageNode() ;
@@ -77,6 +93,10 @@ public class PageNode  {
     newNode.setResolvedLabel(resolvedLabel) ;
     newNode.setPageReference(pageReference);
     newNode.setModifiable(modifiable);
+    newNode.setShowPublicationDate(showPublicationDate) ;
+    newNode.setStartPublicationDate(startPublicationDate) ;
+    newNode.setEndPublicationDate(endPublicationDate) ;
+    newNode.setEnabled(enabled) ;
     if(children == null || children.size() < 1) return newNode;
     for(PageNode ele : children) {
       newNode.getChildren().add(ele.clone());
