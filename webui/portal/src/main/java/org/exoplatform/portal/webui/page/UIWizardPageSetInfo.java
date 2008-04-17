@@ -122,10 +122,11 @@ public class UIWizardPageSetInfo extends UIForm {
   public UIWizardPageSetInfo() throws Exception {
     UIPageNodeSelector  uiPageNodeSelector = addChild(UIPageNodeSelector.class, "WizardPageNodeSelector", null);    
     addUIFormInput(new UIFormStringInput(PAGE_NAME, "name", null).
-    				   addValidator(MandatoryValidator.class).
-                       addValidator(StringLengthValidator.class, 3, 30).
-                       addValidator(IdentifierValidator.class));
-    addUIFormInput(new UIFormStringInput(PAGE_DISPLAY_NAME, "label", null));
+    				       addValidator(MandatoryValidator.class).
+                   addValidator(StringLengthValidator.class, 3, 30).
+                   addValidator(IdentifierValidator.class));
+    addUIFormInput(new UIFormStringInput(PAGE_DISPLAY_NAME, "label", null).
+                   addValidator(StringLengthValidator.class, 3, 30));
     
     UITree uiTree = uiPageNodeSelector.getChild(UITree.class);
     uiTree.setUIRightClickPopupMenu(null);

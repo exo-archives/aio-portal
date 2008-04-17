@@ -32,6 +32,7 @@ import org.exoplatform.webui.form.UIFormStringInput;
 import org.exoplatform.webui.form.UIFormTextAreaInput;
 import org.exoplatform.webui.form.validator.MandatoryValidator;
 import org.exoplatform.webui.form.validator.NameValidator;
+import org.exoplatform.webui.form.validator.StringLengthValidator;
 
 /**
  * Created by The eXo Platform SARL
@@ -55,10 +56,12 @@ public class UIInfoPortletForm extends UIForm {
   
   public UIInfoPortletForm() throws Exception {
     addUIFormInput(new UIFormStringInput("applicationName", "applicationName", null).
-                   addValidator(MandatoryValidator.class).addValidator(NameValidator.class)) ;
-    
-    addUIFormInput(new UIFormStringInput("displayName", "displayName", null));
-    addUIFormInput(new UIFormTextAreaInput("description", "description", null));
+                   addValidator(MandatoryValidator.class).
+                   addValidator(StringLengthValidator.class, 3, 30).
+                   addValidator(NameValidator.class)) ;
+    addUIFormInput(new UIFormStringInput("displayName", "displayName", null).
+                   addValidator(StringLengthValidator.class, 3, 30));
+    addUIFormInput(new UIFormTextAreaInput("description", "description", null).setMaxLength(255));
   }
   
   public String getName() {return name_;}

@@ -39,7 +39,6 @@ import org.exoplatform.webui.core.lifecycle.UIFormLifecycle;
 import org.exoplatform.webui.core.model.SelectItemOption;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
-import org.exoplatform.webui.event.Event.Phase;
 import org.exoplatform.webui.form.UIForm;
 import org.exoplatform.webui.form.UIFormSelectBox;
 import org.exoplatform.webui.form.UIFormStringInput;
@@ -158,6 +157,10 @@ public class UII18nPortlet extends UIPortletApplication {
   }
   
   public void update(String name , String lang) throws Exception {
+    if(name!=null && name.trim().length()>0 && name.indexOf("*")<0){ 
+        if(name.charAt(0)!='*') name = "*"+name ;
+        if(name.charAt(name.length()-1)!='*') name += "*" ;
+    }
     ResourceBundleService resBundleServ = getApplicationComponent(ResourceBundleService.class);
     PageList pageList = resBundleServ.findResourceDescriptions(new Query(name,lang)) ;
     pageList.setPageSize(10) ;
