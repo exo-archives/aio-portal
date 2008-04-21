@@ -99,7 +99,7 @@
 
 .UIWizard .UIWizardContent .WizardControlBar .OverflowContainer {
   height: 34px;
-  overflow:visible;
+  overflow: visible;
 }
 
 .UIWizard .UIWizardContent .UIDropDownControl {
