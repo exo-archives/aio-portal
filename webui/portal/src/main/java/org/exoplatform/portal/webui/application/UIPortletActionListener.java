@@ -138,7 +138,7 @@ public class UIPortletActionListener {
       /*
        * Handle the events returned by the action output and broadcast a new UI
        * event to the ProcessEventsActionListener that will then target the
-       * portlet container service dircetly
+       * portlet container service directly
        */
       List<javax.portlet.Event> events = output.getEvents();
       if (events != null) {
@@ -178,9 +178,9 @@ public class UIPortletActionListener {
    */
   public static void setNextMode(UIPortlet uiPortlet, PortletMode portletMode) {
     if (portletMode != null) {
-      if (portletMode.equals(PortletMode.HELP.toString())) {
+      if (portletMode.equals(PortletMode.HELP)) {
         uiPortlet.setCurrentPortletMode(PortletMode.HELP);
-      } else if (portletMode.equals(PortletMode.EDIT.toString())) {
+      } else if (portletMode.equals(PortletMode.EDIT)) {
         uiPortlet.setCurrentPortletMode(PortletMode.EDIT);
       } else {
         uiPortlet.setCurrentPortletMode(PortletMode.VIEW);
@@ -334,22 +334,23 @@ public class UIPortletActionListener {
       UIPortlet uiPortlet = event.getSource();
       PortalRequestContext context = (PortalRequestContext) event
           .getRequestContext();
-      List<UIPortlet> porletInstancesInPage = new ArrayList<UIPortlet>();
+      List<UIPortlet> portletInstancesInPage = new ArrayList<UIPortlet>();
       UIPortalApplication uiPortal = uiPortlet.getAncestorOfType(UIPortalApplication.class);
-      uiPortal.findComponentOfType(porletInstancesInPage, UIPortlet.class);
+      uiPortal.findComponentOfType(portletInstancesInPage, UIPortlet.class);
       EventsWrapper eventsWrapper = (EventsWrapper) event.getRequestContext()
           .getAttribute(PORTLET_EVENTS);
       List<javax.portlet.Event> events = eventsWrapper.getEvents(); 
+      
       /*
        * Iterate over all the events that the processAction 
-       * has generated. Chek among all the portlet instances deployed in the
+       * has generated. Check among all the portlet instances deployed in the
        * page (usual layout or webos) which instance can be targeted by the
        * event and then process the event on the associated UIPortlet component
        */
       for (Iterator<javax.portlet.Event> iter = events.iterator(); iter.hasNext();) {
         javax.portlet.Event nativeEvent = iter.next();
         QName eventName = nativeEvent.getQName();
-        for (Iterator iterator = porletInstancesInPage.iterator(); iterator
+        for (Iterator iterator = portletInstancesInPage.iterator(); iterator
             .hasNext();) {
           UIPortlet uiPortletInPage = (UIPortlet) iterator.next();
           if (uiPortletInPage.supportsProcessingEvent(eventName)
@@ -359,12 +360,12 @@ public class UIPortletActionListener {
             eventsWrapper.increaseCounter(uiPortletInPage.getWindowId());
             if (context.useAjax()) {
               log
-                  .info("Events where generated inside the scope of an AJAX call, hence will only refresh the targeted portlets");
+                  .info("Events were generated inside the scope of an AJAX call, hence will only refresh the targeted portlets");
               event.getRequestContext().addUIComponentToUpdateByAjax(
                   uiPortletInPage);
             } else {
               log
-                  .info("Events where generated outside the scope of an AJAX call, hence will make a full render of the page");
+                  .info("Events were generated outside the scope of an AJAX call, hence will make a full render of the page");
               context.setFullRender(true);
             }
             if (newEvents != null && !newEvents.isEmpty()) {
@@ -573,15 +574,12 @@ public class UIPortletActionListener {
       UIPortal uiPortal = Util.getUIPortal();
       UIPortalApplication uiApp = uiPortal
           .getAncestorOfType(UIPortalApplication.class);
-      UIMaskWorkspace uiMaskWS = uiApp
-          .getChildById(UIPortalApplication.UI_MASK_WS_ID);
-
+      UIMaskWorkspace uiMaskWS = uiApp.getChildById(UIPortalApplication.UI_MASK_WS_ID);
+      uiMaskWS.setUpdated(true) ;
       UIPortlet uiPortlet = event.getSource();
       UIPortletForm uiPortletForm = uiMaskWS.createUIComponent(UIPortletForm.class, null, null);
       uiPortletForm.setValues(uiPortlet);
       uiMaskWS.setWindowSize(800, -1);
-
-      event.getRequestContext().addUIComponentToUpdateByAjax(uiMaskWS);
     }
   }
 

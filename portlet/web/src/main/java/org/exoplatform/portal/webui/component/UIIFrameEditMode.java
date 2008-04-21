@@ -18,6 +18,7 @@ package org.exoplatform.portal.webui.component;
 
 import java.net.URL;
 
+import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 
 import org.exoplatform.web.application.ApplicationMessage;
@@ -31,48 +32,42 @@ import org.exoplatform.webui.event.EventListener;
 import org.exoplatform.webui.exception.MessageException;
 import org.exoplatform.webui.form.UIForm;
 import org.exoplatform.webui.form.UIFormStringInput;
-import org.exoplatform.webui.form.validator.MandatoryValidator;
+import org.exoplatform.webui.form.validator.NullFieldValidator;
 
 /**
- * Created by The eXo Platform SARL
- * Author : Tran The Trong
- *          trongtt@gmail.com
+ * Created by The eXo Platform SARL Author : Tran The Trong trongtt@gmail.com
  * August 15, 2007 9:10:53 AM
  */
-@ComponentConfig(
-    lifecycle = UIFormLifecycle.class,
-    template = "system:/groovy/webui/form/UIFormWithTitle.gtmpl",
-    events = {
-      @EventConfig(listeners = UIIFrameEditMode.SaveActionListener.class)
-    }
-)
+@ComponentConfig(lifecycle = UIFormLifecycle.class, template = "system:/groovy/webui/form/UIFormWithTitle.gtmpl", events = { @EventConfig(listeners = UIIFrameEditMode.SaveActionListener.class) })
 public class UIIFrameEditMode extends UIForm {
 
-  final static private String FIELD_URL = "iframeUrl" ;
-  
+  final static private String FIELD_URL = "iframeUrl";
+
   public UIIFrameEditMode() throws Exception {
-    PortletRequestContext pcontext = (PortletRequestContext)WebuiRequestContext.getCurrentInstance() ;
+    PortletRequestContext pcontext = (PortletRequestContext) WebuiRequestContext
+        .getCurrentInstance();
     PortletPreferences pref = pcontext.getRequest().getPreferences();
-    addUIFormInput(new UIFormStringInput(FIELD_URL, FIELD_URL, pref.getValue("url", "http://exoplatform.com")).
-                   addValidator(MandatoryValidator.class)) ;
+    addUIFormInput(new UIFormStringInput(FIELD_URL, FIELD_URL, pref.getValue("url",
+        "http://www.exoplatform.com")).addValidator(NullFieldValidator.class));
   }
-  
+
   static public class SaveActionListener extends EventListener<UIIFrameEditMode> {
     public void execute(Event<UIIFrameEditMode> event) throws Exception {
-		String url = event.getSource().getUIStringInput(FIELD_URL).getValue();
-		try {
-		  new URL(url);
-		  PortletRequestContext pcontext = (PortletRequestContext) WebuiRequestContext
-		      .getCurrentInstance();
-		  PortletPreferences pref = pcontext.getRequest().getPreferences();
-		  pref.setValue("url", event.getSource().getUIStringInput(FIELD_URL).getValue());
-		  pref.store();
-		  pcontext.setApplicationMode(PortletRequestContext.VIEW_MODE);
-		} catch (Exception e) {
-		  Object[] args = { "URL", "http://www.exoplatform.org"};
-		  throw new MessageException(new ApplicationMessage("ExpressionValidator.msg.value-invalid",
-		      args));
-		}
+      String url = event.getSource().getUIStringInput(FIELD_URL).getValue();
+      try {
+        new URL(url);
+        PortletRequestContext pcontext = (PortletRequestContext) WebuiRequestContext
+            .getCurrentInstance();
+        PortletPreferences pref = pcontext.getRequest().getPreferences();
+        pref.setValue("url", event.getSource().getUIStringInput(FIELD_URL).getValue());
+        pref.store();
+        pcontext.setApplicationMode(PortletMode.VIEW);
+      } catch (Exception e) {
+        Object[] args = { FIELD_URL, "URL"};
+        throw new MessageException(new ApplicationMessage("ExpressionValidator.msg.value-invalid",
+            args));
+      }
     }
   }
+
 }
