@@ -65,7 +65,8 @@ public class UICategoryForm extends UIForm {
                    addValidator(IdentifierValidator.class));
     addUIFormInput(new UIFormStringInput(FIELD_DISPLAY_NAME, FIELD_DISPLAY_NAME, null).
                    addValidator(StringLengthValidator.class, 3, 30));
-    addUIFormInput(new UIFormTextAreaInput(FIELD_DESCRIPTION, FIELD_DESCRIPTION, null).setMaxLength(255)); 
+    addUIFormInput(new UIFormTextAreaInput(FIELD_DESCRIPTION, FIELD_DESCRIPTION, null).
+                   addValidator(StringLengthValidator.class, 0, 255)); 
   } 
 
   public void setValue(ApplicationCategory category) throws Exception {
