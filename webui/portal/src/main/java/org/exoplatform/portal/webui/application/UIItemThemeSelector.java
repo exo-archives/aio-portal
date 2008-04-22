@@ -220,6 +220,8 @@ public class UIItemThemeSelector extends UIFormInputBase<String> {
       String category = event.getRequestContext().getRequestParameter(OBJECTID) ;
       UIItemThemeSelector uiFormInput = uiDropDown.getParent() ;
       uiFormInput.setSelectedCategory(category) ;
+      UIPortletForm uiportletForm = uiFormInput.getAncestorOfType(UIPortletForm.class) ;
+      uiportletForm.setSelectedTab(uiportletForm.getChild(UIFormInputThemeSelector.class).getId()) ;
       event.getRequestContext().addUIComponentToUpdateByAjax(uiFormInput) ;
     }
     
