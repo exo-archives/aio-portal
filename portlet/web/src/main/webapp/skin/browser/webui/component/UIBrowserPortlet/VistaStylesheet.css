@@ -117,7 +117,7 @@
 }
 
 .UIBrowserPortlet .BrowserContent {
-	height: 89%;
+	 margin: auto;
 }
 
 .UIBrowserPortlet .TabBackground {
