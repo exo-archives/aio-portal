@@ -5,25 +5,29 @@
 
 .UIGroupMembershipSelector .UIBreadcumbs {
   font-weight: normal;
-  margin-bottom: 3px; 
+  height: auto;
+  margin-bottom: 3px; padding: 0px;
+  background: white;
 }
 
 .UIGroupMembershipSelector .UIBreadcumbs .LeftBreadcumbsBar {
-	background: none;
-	border: 1px solid #b7b7b7;
+  background: none;
+  height: auto;
+  border: 1px solid #b7b7b7;
 }
 
 .UIGroupMembershipSelector .UIBreadcumbs .RightBreadcumbsBar {
-	background: none;
+  background: none;
+  height: auto;
 }
 
 .UIGroupMembershipSelector .UIBreadcumbs .BreadcumbsInfoBar {
-	background: none;
-	height: 30px;
+  background: none;
+  height: auto;
 }
 
 .UIGroupMembershipSelector .UIBreadcumbs .HomeIcon {
-	float: left;
+  width: 24px; height: 24px;
   margin: 4px 2px 5px 2px ;
   background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/24x24/icons/SelectedGroup.png') no-repeat;
 }
@@ -32,10 +36,6 @@
 	float: left;
   margin: 5px 2px 5px 1px ;
   background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/16x16/icons/BlueGridRightArrow.gif');
-}
-
-.UIGroupMembershipSelector .SelectedGroupPath {
-  height: 35px;
 }
 
 .UIGroupMembershipSelector .Container {
