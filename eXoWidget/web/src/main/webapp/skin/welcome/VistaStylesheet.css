@@ -115,11 +115,11 @@
 }
 
 .UIWelcomeWidget .StyleContent .LabelSignin {
-	text-align: right;
+	text-align: center;
 	font-size: 10px;
 	color: #f98e03;
 	font-weight: bold;
-	padding: 40px 25px;
+  line-height: 73px;	
 	text-decoration: underline;
 	cursor: pointer;margin: auto;
 	display: block ;
