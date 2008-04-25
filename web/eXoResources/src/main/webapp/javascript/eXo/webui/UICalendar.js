@@ -24,7 +24,7 @@ UICalendar.prototype.create = function() {
 	clndr.id = this.calendarId ;
 	clndr.style.position = "absolute" ;
 	if (document.all) {
-		clndr.innerHTML = "<div class='UICalendarComponent'><iframe id='" + this.calendarId + "IFrame' src='javascript:false;' frameBorder='0' scrolling='no'></iframe><div style='position: absolute'></div></div>" ;
+		clndr.innerHTML = "<div class='UICalendarComponent'><iframe id='" + this.calendarId + "IFrame' frameBorder='0' scrolling='no'></iframe><div style='position: absolute'></div></div>" ;
 	} else {
 		clndr.innerHTML = "<div class='UICalendarComponent'><div style='position: absolute; width: 100%;'></div></div>" ;
 	}
@@ -59,15 +59,16 @@ UICalendar.prototype.show = function() {
 	  top = y + "px" ;
   }
 	
-		var drag = document.getElementById("blockCaledar");
-		var innerWidth = drag.offsetWidth;
-		drag.onmousedown = function(evt) {
-			var event = evt || window.event;
-			event.cancelBubble = true;
-			drag.style.position = "absolute";
-			drag.style.width = innerWidth + "px";
-			eXo.core.DragDrop.init(null, drag, drag, event);
-	 	}
+	var drag = document.getElementById("BlockCaledar");
+	var component =  eXo.core.DOMUtil.findAncestorByClass(drag, "UICalendarComponent");
+	var innerWidth = drag.offsetWidth;
+	drag.onmousedown = function(evt) {
+		var event = evt || window.event;
+		event.cancelBubble = true;
+		drag.style.position = "absolute";
+		drag.style.width = innerWidth + "px";
+		eXo.core.DragDrop.init(null, drag, component, event);
+	}
 	
 	//
 	var primary = eXo.core.DOMUtil.findAncestorById(this.dateField, "UIECMSearch");
