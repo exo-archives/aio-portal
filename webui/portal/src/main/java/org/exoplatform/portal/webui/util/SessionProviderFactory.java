@@ -17,34 +17,37 @@
 package org.exoplatform.portal.webui.util;
 
 import org.exoplatform.container.PortalContainer;
+import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.services.jcr.ext.app.SessionProviderService;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
 
 /**
  * Created by The eXo Platform SAS Author : Hoa Pham hoa.pham@exoplatform.com
- * Jan 28, 2008
+ * Jul 26, 2007
  */
 public class SessionProviderFactory {
 
-	public static boolean isAnonim() {
-		String userId = Util.getPortalRequestContext().getRemoteUser();
-		if (userId == null)
-			return true;
-		return false;
-	}
+  public static boolean isAnonim() {
+    String userId = Util.getPortalRequestContext().getRemoteUser();
+    if (userId == null)
+      return true;
+    return false;
+  }
 
-	public static SessionProvider createSystemProvider() {
-		return SessionProvider.createSystemProvider();
-	}
+  public static SessionProvider getSystemProvider() {
+    SessionProviderService service = (SessionProviderService) PortalContainer
+    .getComponent(SessionProviderService.class);
+    return service.getSystemSessionProvider(null) ;   
+  }
 
-	public static SessionProvider createSessionProvider() {
-		SessionProviderService service = (SessionProviderService) PortalContainer
-				.getComponent(SessionProviderService.class);
-		return service.getSessionProvider(null);
-	}
+  public static SessionProvider getSessionProvider() {
+    SessionProviderService service = (SessionProviderService) PortalContainer
+        .getComponent(SessionProviderService.class);
+    return service.getSessionProvider(null);
+  }
 
-	public static SessionProvider createAnonimProvider() {
-		return SessionProvider.createAnonimProvider();
-	}
+  public static SessionProvider getAnonimProvider() {
+    return SessionProvider.createAnonimProvider();
+  }
 
 }
