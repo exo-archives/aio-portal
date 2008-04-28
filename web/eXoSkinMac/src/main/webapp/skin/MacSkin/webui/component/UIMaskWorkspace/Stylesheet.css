@@ -30,6 +30,7 @@
 .UIMaskWorkspace .UITabContentContainer .UITabContent .UIFormInputSet {
   padding: 8px;
   width: auto;
+	width: 97%;
 }
 
 .UIMaskWorkspace .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent{
@@ -49,8 +50,6 @@
 }
 
 .UIMaskWorkspace .UINodeIconSelector .SelectedIconInfo .UIFormInputSet .FieldContainer{
-  width: auto;
-  padding-top: 10px;
 }
 
 .UIMaskWorkspace .UIForm .HorizontalLayout .FieldContainer {

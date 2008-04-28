@@ -36,6 +36,7 @@
 .UIMaskWorkspace .MaskContainer .UIFormTabPane .TabPaneContent .UITabContentContainer {
 	border: 1px solid #c7c7c7;
 	border-top: none;
+	*border: none;
 }
 
 .UIMaskWorkspace .BottomLeftDecorator {
@@ -56,6 +57,12 @@
 .UIMaskWorkspace .UIAddApplication .UIItemSelector .ItemDetailList {
 	margin-right: 0px; 
 	height: auto;
+}
+
+.UIMaskWorkspace .UITabPane .UITabContentContainer .UITabContent {
+	_border-right: 1px solid #C7C7C7;
+	_border-left: 1px solid #C7C7C7;
+	_border-bottom: 1px solid #C7C7C7;
 }
 /***********************************	UITabContent	************************************/
 .UIMaskWorkspace .UIHorizontalTabs {
