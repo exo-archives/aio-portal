@@ -34,19 +34,19 @@ public class SessionProviderFactory {
     return false;
   }
 
-  public static SessionProvider getSystemProvider() {
+  public static SessionProvider createSystemProvider() {
     SessionProviderService service = (SessionProviderService) PortalContainer
     .getComponent(SessionProviderService.class);
     return service.getSystemSessionProvider(null) ;   
   }
 
-  public static SessionProvider getSessionProvider() {
+  public static SessionProvider createSessionProvider() {
     SessionProviderService service = (SessionProviderService) PortalContainer
         .getComponent(SessionProviderService.class);
     return service.getSessionProvider(null);
   }
 
-  public static SessionProvider getAnonimProvider() {
+  public static SessionProvider createAnonimProvider() {
     return SessionProvider.createAnonimProvider();
   }
 
