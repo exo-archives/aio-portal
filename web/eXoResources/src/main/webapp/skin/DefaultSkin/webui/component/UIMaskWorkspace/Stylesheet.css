@@ -59,11 +59,6 @@
 	height: auto;
 }
 
-.UIMaskWorkspace .UITabPane .UITabContentContainer .UITabContent {
-	_border-right: 1px solid #C7C7C7;
-	_border-left: 1px solid #C7C7C7;
-	_border-bottom: 1px solid #C7C7C7;
-}
 /***********************************	UITabContent	************************************/
 .UIMaskWorkspace .UIHorizontalTabs {
 }
