@@ -79,6 +79,11 @@
 	height: 275px;
 }
 
+.UIMaskWorkspace .UITabPane .UITabContentContainer .UITabContent {
+	!border-top: none;
+	!border-bottom: 1px solid #C7C7C7; !border-left: 1px solid #C7C7C7; !border-right: 1px solid #C7C7C7;
+}
+
 .UIMaskWorkspace .UIForm .HorizontalLayout .SelectedIconInfo .UIFormInputSet {
 	margin: auto;
 }
