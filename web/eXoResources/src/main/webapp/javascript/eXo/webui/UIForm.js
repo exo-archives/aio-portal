@@ -23,13 +23,19 @@ UIForm.prototype.submitForm = function(formId, action, useAjax, callback) {
  try {
   if (FCKeditorAPI && typeof FCKeditorAPI == "object") {
  	  for ( var name in FCKeditorAPI.__Instances ) {
- 	  	var oEditor = FCKeditorAPI.__Instances[name] ;
- 	  	if ( oEditor.GetParentForm && oEditor.GetParentForm() == form ) {
- 	  		oEditor.UpdateLinkedField() ;
+ 	  	var oEditor ;
+ 	  	try {
+ 	  	  oEditor = FCKeditorAPI.__Instances[name] ;
+	 	  	if (oEditor && oEditor.GetParentForm && oEditor.GetParentForm() == form ) {
+	 	  		oEditor.UpdateLinkedField() ;
+	 	  	}
+ 	  	} catch(e) {
+ 	  	  continue ;
  	  	}
   	}
   }
  } catch(e) {}
+
   form.elements['formOp'].value = action ;
   if(useAjax) ajaxPost(form, callback) ;
   else  form.submit();
@@ -131,7 +137,7 @@ UIForm.prototype.serializeForm = function (formElement) {
         }
         break;
     } // switch
-   } // for   
+   } // for 
    return queryString;
 };
 
