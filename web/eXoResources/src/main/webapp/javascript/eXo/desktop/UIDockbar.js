@@ -170,10 +170,12 @@ UIDockbar.prototype.animationEvt = function(e) {
   var fixBugImageElement = document.getElementById("FixBug") ;
   
   var uiPageDesktop = document.getElementById("UIPageDesktop") ;
+  var fixIE7Position = uiPageDesktop.offsetLeft;
+
   var selectedIconX = eXo.desktop.UIDesktop.findPosXInDesktop(this) ;
   var middleIcon = selectedIconX + (this.offsetWidth / 2) ;
   var mouseX = eXo.core.Browser.findMouseRelativeX(uiPageDesktop, e) ;
-    
+
   var distanceWeight =  (middleIcon - mouseX)/(2*curve*(middleIcon - selectedIconX)) ;
   
   var selectedIconIndex = UIDockbar.findIndex(this) ;
