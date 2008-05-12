@@ -218,8 +218,7 @@
 }
 
 .UIOrganizationPortlet .UIGroupManagement .UIBreadcumbs .HomeIcon {
-  height: 16px; width: 16px;
-  background: url('/eXoResources/skin/DefaultSkin/skinIcons/16x16/icons/SmallGroup.gif') no-repeat;
+  background: url('/eXoResources/skin/DefaultSkin/skinIcons/16x16/icons/SmallGroup.gif') no-repeat center;
 }
 
 .UIOrganizationPortlet .UIGroupManagement .GroupPanel {
