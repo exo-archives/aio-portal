@@ -145,7 +145,7 @@
   	cssStyle += "display: "+ appDisplay +";" ;
   	cssStyle += "z-index: "+ appZIndex +";" ;
   	cssStyle += "width: "+ windowWidth +";" ;
-  	cssStyle += "height: "+ windowHeight +";" ;
+  	/*cssStyle += "height: "+ windowHeight +";" ;*/
   	cssStyle += "\"";
   	String theme = uicomponent.getSuitedTheme(null) ;
 %>
