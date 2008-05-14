@@ -141,6 +141,10 @@
 	width: 310px;
 }
 
+.UIAccessGroup .UIPageIterator {
+	width: 95%;
+}
+
 .UIForm .HorizontalLayout .UIAccessGroup input.checkbox {
 	margin: 2px;
 }
