@@ -21,6 +21,7 @@
 .UINodeIconSelector .SelectedIconInfo .UIFormInputSet .FieldContainer{
   white-space: nowrap;
   margin: 0px;
+	line-height: 32px;
 }
 
 .UINodeIconSelector .SelectedIconInfo .UIFormInputSet .FieldContainer .ItemLabel{
