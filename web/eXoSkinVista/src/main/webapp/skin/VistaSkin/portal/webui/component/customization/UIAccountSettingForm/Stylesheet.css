@@ -111,3 +111,8 @@
 	padding-top: 18px;
 }
 
+.UIAccountSettingForm .UITabContentContainer .FormContainer .UIFormGrid {
+	width: 100%;
+	margin: auto;
+}
+
