@@ -39,3 +39,7 @@
 .UIAccountPortlet .UILoginForm .UIForm input {
   width: 100px;
 }
+
+.UIAccountPortlet .UITabPane .UIForm .HorizontalLayout {
+	padding: 0px;
+}
