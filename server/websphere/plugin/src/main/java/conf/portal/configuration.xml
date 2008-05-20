@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <configuration>
+<!--
   <external-component-plugins>
     <target-component>org.exoplatform.services.listener.ListenerService</target-component>
     <component-plugin>
@@ -15,4 +16,5 @@
       </init-params>
 		</component-plugin>
   </external-component-plugins>
+-->
 </configuration>  
