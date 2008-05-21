@@ -249,7 +249,7 @@
 .UIHorizontalTabs .NormalTabStyle .SelectedTab {
   color: #307dcc;
   margin-right: 1px;
-   line-height: 27px;
+  line-height: 27px;
 }
 
 .UIHorizontalTabs .NormalTabStyle .SelectedTab .LeftTab {
