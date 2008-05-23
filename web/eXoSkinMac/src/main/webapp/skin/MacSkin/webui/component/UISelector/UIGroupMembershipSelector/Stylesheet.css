@@ -63,6 +63,7 @@
 
 .UIGroupMembershipSelector .UITrees {
   border-top: none;  
+  width: 99%;
 }
 
 .UIGroupMembershipSelector .UITrees .TreeContainer {
