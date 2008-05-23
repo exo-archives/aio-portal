@@ -206,11 +206,6 @@
   height: 192px;
 }
 
-.UIWizard .UIWizardPageSetInfo .UIFormWithTitle .FormContainer .UIFormGrid {
-	width: 500px;
-	margin: auto;
-}
-
 .UIWizard .UIWizardPageSetInfo .UIFormWithTitle .FieldContainer {
 	width: 380px;
 	margin-left: auto; margin-right: auto;
