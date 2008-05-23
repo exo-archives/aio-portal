@@ -25,6 +25,11 @@
 	border: 1px white solid;
 }
 
+.UIWidgets .UIDropDownControl .UIDropDownAnchor .ItemListOption {
+	width: 100%;
+	overflow: hidden;
+}
+
 .UIWidgets .WidgetDecorator .WidgetsDecoratorBackground{
 	padding: 5px;
 	border: 1px #5a8ac1 solid;

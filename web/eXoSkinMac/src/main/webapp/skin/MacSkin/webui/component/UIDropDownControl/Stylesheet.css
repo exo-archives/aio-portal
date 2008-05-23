@@ -8,11 +8,6 @@
 	width: 100%;
 }
 
-.UIDropDownControl .UIDropDownAnchor .LeftMiddelItem .ItemListOption {
-	width: 100%;
-	overflow: hidden;
-}
-
 .UIDropDownControl .UIDropDownTitle {
 	cursor:pointer;
 }

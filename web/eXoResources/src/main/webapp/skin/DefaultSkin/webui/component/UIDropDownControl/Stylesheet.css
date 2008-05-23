@@ -8,11 +8,6 @@
 	width: 100%;
 }
 
-.UIDropDownControl .UIDropDownAnchor .LeftMiddelItem .ItemListOption {
-	width: 100%;
-	overflow: hidden;
-}
-
 .UIDropDownControl .UIDropDownTitle {
 	background:white url(background/DropDownItemSelectorBG1x2.gif) repeat-x scroll center top;
 	border:1px solid #929292;

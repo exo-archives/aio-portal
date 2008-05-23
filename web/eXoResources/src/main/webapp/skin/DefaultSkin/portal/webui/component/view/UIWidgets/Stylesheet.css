@@ -20,6 +20,11 @@
 	width: 236px;
 }
 
+.UIWidgets .UIDropDownControl .UIDropDownAnchor .ItemListOption {
+	width: 100%;
+	overflow: hidden;
+}
+
 .UIWidgets .WidgetDecorator .TopLeftWidgetsDecorator {
 	background: url(background/UIWidgets.gif) no-repeat top left;
 	padding-left: 2px;
