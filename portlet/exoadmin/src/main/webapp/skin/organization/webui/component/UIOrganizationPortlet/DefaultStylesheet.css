@@ -260,8 +260,7 @@
 }
 
 .UIOrganizationPortlet .UIGroupManagement .UIGroupMembershipForm {
-	margin: 5px 0px 0px 0px;
-	height: 100%;
+	padding: 5px 0px 0px 0px;
 }
 
 .UIOrganizationPortlet .UIGroupForm .HorizontalLayout { 
