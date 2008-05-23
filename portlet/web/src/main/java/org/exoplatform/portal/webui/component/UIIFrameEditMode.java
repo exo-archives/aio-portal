@@ -54,9 +54,8 @@ public class UIIFrameEditMode extends UIForm {
     public void execute(Event<UIIFrameEditMode> event) throws Exception {
       UIIFrameEditMode uiForm = event.getSource();
       String url = uiForm.getUIStringInput(FIELD_URL).getValue();
+      UIIFramePortlet uiPortlet = uiForm.getParent();
       if(url==null || url.length()==0){
-        UIIFramePortlet uiPortlet = uiForm.getParent();
-        
         Object args[] = {uiForm.getLabel(uiForm.getUIStringInput(FIELD_URL).getId())};
         uiPortlet.addMessage(new ApplicationMessage("EmptyFieldValidator.msg.empty-input", args));
         uiForm.getUIStringInput(FIELD_URL).setValue(uiPortlet.getURL());
@@ -71,6 +70,7 @@ public class UIIFrameEditMode extends UIForm {
         pref.store();
         pcontext.setApplicationMode(PortletMode.VIEW);
       } catch (Exception e) {
+        uiForm.getUIStringInput(FIELD_URL).setValue(uiPortlet.getURL());
         Object[] args = { FIELD_URL, "URL"};
         throw new MessageException(new ApplicationMessage("ExpressionValidator.msg.value-invalid",
             args));
