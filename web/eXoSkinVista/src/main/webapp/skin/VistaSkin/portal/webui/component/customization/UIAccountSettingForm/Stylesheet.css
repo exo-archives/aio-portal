@@ -103,16 +103,6 @@
 	padding: 15px 0px;
 }
 
-.UIAccountSettingForm .UIFormGrid td.FieldLabel {
-	width: 180px;
-}
-
 .UIAccountSettingForm .UIForm .UIAction {
 	padding-top: 18px;
 }
-
-.UIAccountSettingForm .UITabContentContainer .FormContainer .UIFormGrid {
-	width: 100%;
-	margin: auto;
-}
-
