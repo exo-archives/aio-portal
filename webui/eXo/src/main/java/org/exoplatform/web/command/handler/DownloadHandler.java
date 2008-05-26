@@ -17,7 +17,6 @@
 package org.exoplatform.web.command.handler;
 
 import java.io.InputStream;
-import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -51,9 +50,7 @@ public class DownloadHandler extends Command {
       return;
     }
     if(dresource.getDownloadName() != null ){
-      String fileName = dresource.getDownloadName();
-      fileName = URLEncoder.encode(fileName, "utf-8");
-      res.setHeader("Content-Disposition", "attachment;filename="+fileName);
+      res.setHeader("Content-Disposition", "attachment;filename=\""+dresource.getDownloadName()+"\"");
     }
     res.setContentType(dresource.getResourceMimeType()) ;
     InputStream is = dresource.getInputStream() ;
