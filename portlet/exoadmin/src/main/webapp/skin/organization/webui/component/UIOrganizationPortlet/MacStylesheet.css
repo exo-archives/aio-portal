@@ -64,7 +64,7 @@
   float: left;
   width: 140px;
   cursor: pointer;
-	text-align: center;
+  text-align: center;
 }
 
 .UIOrganizationPortlet .ManagementTabContent {
@@ -285,9 +285,15 @@
   line-height: 24px;
 }
 
+.UIOrganizationPortlet .UIGroupManagement  .UISearch {
+  width: 99%;
+  margin: auto;
+  margin-bottom: 2px;
+}
+
 .UIOrganizationPortlet .UIGroupManagement .UIGrid {
-	width: 99%;
-	margin: auto;
+  width: 99%;
+  margin: auto;
 }
 
 .UIOrganizationPortlet .UIGroupManagement .UIGrid th {
