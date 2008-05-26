@@ -166,7 +166,7 @@
 
 .UIOrganizationPortlet .UIGroupManagement .UITrees .TreeContainer {
  	background: url('VistaSkin/background/UITreeBG.png') repeat;
-  height: 213px;
+  height: 223px;
 }
 
 .UIOrganizationPortlet .UIGroupManagement .UITrees .Node {
@@ -233,7 +233,7 @@
 
 .UIOrganizationPortlet .UIGroupManagement .UIForm .FormContainer {
   margin: auto;
-  padding: 0px;
+  padding: 0px; padding-top: 10px;
 }
 
 .UIOrganizationPortlet .UIGroupManagement .UIUserInGroup {
