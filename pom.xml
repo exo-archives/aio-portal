@@ -38,7 +38,6 @@
     <module>server/websphere/patch</module>
     <module>server/websphere/plugin</module>
 
-
   </modules>
 
   <build>
