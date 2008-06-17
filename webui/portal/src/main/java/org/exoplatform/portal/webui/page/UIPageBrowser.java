@@ -19,6 +19,7 @@ package org.exoplatform.portal.webui.page;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.jcr.query.InvalidQueryException;
 
@@ -107,11 +108,14 @@ public class UIPageBrowser extends UISearch {
 
   private static List<SelectItemOption<String>> OPTIONS = new ArrayList<SelectItemOption<String>>(3);
 
-  static{
-    OPTIONS.add(new SelectItemOption<String>("Owner Type", "ownerType"));
-    OPTIONS.add(new SelectItemOption<String>("Owner Id", "ownerId"));
-    OPTIONS.add(new SelectItemOption<String>("Name", "name"));
-  }
+  static {
+		WebuiRequestContext contextui = WebuiRequestContext
+				.getCurrentInstance();
+		ResourceBundle res = contextui.getApplicationResourceBundle();
+		OPTIONS.add(new SelectItemOption<String>(res.getString("UIPageBrowser.selectItem.ownerType"), "ownerType"));
+		OPTIONS.add(new SelectItemOption<String>(res.getString("UIPageBrowser.selectItem.ownerId"), "ownerId"));
+		OPTIONS.add(new SelectItemOption<String>(res.getString("UIPageBrowser.selectItem.name"), "name"));
+	}
 
   private Query<Page> lastQuery_ ;  
 
@@ -377,7 +381,6 @@ public class UIPageBrowser extends UISearch {
         postSave(uiPortalApp, pcontext) ;
         return;
       }
-
 
       page.setOwnerType(uiPage.getOwnerType());
       List<UIPortlet> uiPortlets = new ArrayList<UIPortlet>();
