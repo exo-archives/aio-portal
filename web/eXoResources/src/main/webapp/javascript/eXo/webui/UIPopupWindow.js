@@ -100,6 +100,7 @@ UIPopupWindow.prototype.show = function(popup, isShowMask, middleBrowser) {
 		} 
 		if (middleBrowser || !middleWindow) {
 			popup.style.top = Math.ceil((eXo.core.Browser.getBrowserHeight() - popup.offsetHeight ) / 2) + scrollY + "px";
+			popup.scrollIntoView(true);
 		}
 		// hack for position popup alway top in IE6.
 		var checkHeight = popup.offsetHeight > 300; 
@@ -111,7 +112,6 @@ UIPopupWindow.prototype.show = function(popup, isShowMask, middleBrowser) {
 	}
 	if (eXo.core.Browser.findPosY(popup) < 0) popup.style.top = scrollY + "px" ;
   popup.style.visibility = "visible" ;
-  popup.scrollIntoView(true);
 } ;
 /**
  * @param {Object} evt
