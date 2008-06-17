@@ -473,6 +473,12 @@
   padding-left: 3px;
 }
 
+.UIItemSelector .LeftColumnStyle .ItemList .Item .ContentItem {
+  width: 84%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 /*###########################- Item Over -############################*/
 
 .UIItemSelector .LeftColumnStyle .ItemList .OverItem {
@@ -500,6 +506,12 @@
   padding-left: 3px;
 }
 
+.UIItemSelector .LeftColumnStyle .ItemList .OverItem .ContentItem {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 /*##########################- Item Selected -#########################*/
 
 .UIItemSelector .LeftColumnStyle .ItemList .SelectedItem {
@@ -524,6 +536,12 @@
   background: url('background/SelectedItem.png') repeat-x left -168px;
   color: black;
   padding-left: 3px;
+}
+
+.UIItemSelector .LeftColumnStyle .ItemList .SelectedItem .ContentItem {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 /*###########################- End RightItemListStyle -#########################*/

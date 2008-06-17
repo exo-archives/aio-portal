@@ -437,6 +437,12 @@
   padding-left: 5px;
 }
 
+.UIItemSelector .LeftColumnStyle .ItemList .Item .ContentItem {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 /*###########################- Over Item (When mouse over on this item) -############################*/
 
 .UIItemSelector .LeftColumnStyle .ItemList .OverItem {
@@ -449,6 +455,9 @@
 .UIItemSelector .LeftColumnStyle .ItemList .OverItem .LeftItem {
   background: url('background/SelectedItem.gif') no-repeat left -52px;
   padding-left: 15px;
+  width: 91%;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .UIItemSelector .LeftColumnStyle .ItemList .OverItem .RightItem {
@@ -460,6 +469,12 @@
   height: 26px; line-height: 24px;
   color: #f67a02;
   padding-left: 5px;
+}
+
+.UIItemSelector .LeftColumnStyle .ItemList .OverItem .ContentItem {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 /*##########################- Selected Item  (When Item is selected)-#########################*/
@@ -485,6 +500,11 @@
   height: 26px; line-height: 24px;
   color: #0575CA; 
   padding-left: 5px;
+}
+.UIItemSelector .LeftColumnStyle .ItemList .SelectedItem .ContentItem {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 /*###########################- End LeftColumnItemList -#########################*/

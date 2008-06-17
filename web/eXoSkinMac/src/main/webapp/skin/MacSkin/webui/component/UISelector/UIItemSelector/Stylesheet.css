@@ -431,6 +431,12 @@
   padding-left: 8px;
 }
 
+.UIItemSelector .LeftColumnStyle .ItemList .Item .ContentItem {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 /*###########################- Over Item (When mouse over on this item) -############################*/
 
 .UIItemSelector .LeftColumnStyle .ItemList .OverItem {
@@ -456,6 +462,12 @@
   padding-left: 8px;
 }
 
+.UIItemSelector .LeftColumnStyle .ItemList .OverItem .ContentItem {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 /*##########################- Selected Item  (When Item is selected)-#########################*/
 
 .UIItemSelector .LeftColumnStyle .ItemList .SelectedItem {
@@ -477,6 +489,12 @@
 .UIItemSelector .LeftColumnStyle .ItemList .SelectedItem .ItemTitle {
   height: 24px; line-height: 24px; 
   padding-left: 8px;
+}
+
+.UIItemSelector .LeftColumnStyle .ItemList .SelectedItem .ContentItem {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 /*###########################- End LeftColumnItemList -#########################*/
