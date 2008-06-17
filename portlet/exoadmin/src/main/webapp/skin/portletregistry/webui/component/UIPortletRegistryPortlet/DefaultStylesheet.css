@@ -45,6 +45,10 @@
 	width: 100%;
 }
 
+.ApplicationRegistryWorkingArea .UIPermissionForm .UIFormGrid .UIFormGrid {
+	width: auto;
+	margin: auto;
+}
 
 .UIApplicationRegistryPortlet .UIAvailablePortletForm td.text{
   padding-left: 15px;
