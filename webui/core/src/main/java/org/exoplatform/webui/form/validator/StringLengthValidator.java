@@ -54,7 +54,8 @@ public class StringLengthValidator implements Validator {
       int length = ((String)uiInput.getValue()).trim().length();
       if(min_ <= length && max_ >= length) return ;
     }
-    //  modified by Pham Dinh Tan
+    
+    //modified by Pham Dinh Tan
     UIComponent uiComponent = (UIComponent) uiInput ;
     UIForm uiForm = uiComponent.getAncestorOfType(UIForm.class) ;    
     String label;

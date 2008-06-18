@@ -39,7 +39,8 @@ public class MandatoryValidator implements Validator {
     if((uiInput.getValue() != null) && ((String)uiInput.getValue()).trim().length() > 0) {
       return ;
     }
-//  modified by Pham Dinh Tan
+    
+    //modified by Pham Dinh Tan
     UIComponent uiComponent = (UIComponent) uiInput ;
     UIForm uiForm = uiComponent.getAncestorOfType(UIForm.class) ;    
     String label;

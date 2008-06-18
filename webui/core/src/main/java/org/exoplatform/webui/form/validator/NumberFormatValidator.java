@@ -34,10 +34,9 @@ public class NumberFormatValidator implements Validator {
     
   public void validate(UIFormInput uiInput) throws Exception {
 	  if (uiInput.getValue()==null || ((String)uiInput.getValue()).length()==0) return;
-   
-    //  modified by Pham Dinh Tan
+	  //  modified by Pham Dinh Tan
     UIComponent uiComponent = (UIComponent) uiInput ;
-    UIForm uiForm = uiComponent.getAncestorOfType(UIForm.class) ;    
+    UIForm uiForm = uiComponent.getAncestorOfType(UIForm.class) ;
     String label;
     try{
       label = uiForm.getLabel(uiInput.getName());

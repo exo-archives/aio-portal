@@ -35,7 +35,6 @@ public class EmailAddressValidator implements Validator {
     "[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[_A-Za-z0-9-.]+";
   
   public void validate(UIFormInput uiInput) throws Exception {
-	  if (uiInput.getValue()==null || ((String)uiInput.getValue()).trim().length()==0) return;
     //  modified by Pham Dinh Tan
     UIComponent uiComponent = (UIComponent) uiInput ;
     UIForm uiForm = uiComponent.getAncestorOfType(UIForm.class) ;    
@@ -47,9 +46,10 @@ public class EmailAddressValidator implements Validator {
     }
     label = label.trim();
     if(label.charAt(label.length() - 1) == ':') label = label.substring(0, label.length() - 1);
+	  if (uiInput.getValue()==null || ((String)uiInput.getValue()).trim().length()==0) return;
     String s = (String)uiInput.getValue();
     if(s.matches(EMAIL_REGEX)) return;
     Object[]  args = { label, uiInput.getBindingField() } ;
-    throw new MessageException(new ApplicationMessage("EmailAddressValidator.msg.Invalid-input", args, ApplicationMessage.WARNING)) ;
+    throw new MessageException(new ApplicationMessage("EmailAddressValidator.msg.Invalid-input", args, ApplicationMessage.WARNING )) ;
   }
 }
