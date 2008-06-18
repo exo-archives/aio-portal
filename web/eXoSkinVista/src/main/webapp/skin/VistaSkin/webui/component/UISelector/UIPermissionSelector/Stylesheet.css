@@ -72,6 +72,8 @@
   background: none;
   overflow: hidden;
   width: 320px;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .UIPermissionSelector .PermissionInfoContainer .FloatBlockHidden {
