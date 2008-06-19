@@ -16,6 +16,8 @@
  */
 package org.exoplatform.portal.webui.page;
 
+import java.util.ResourceBundle;
+
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.webui.UIWelcomeComponent;
 import org.exoplatform.portal.webui.portal.UIPortal;
@@ -98,11 +100,11 @@ public abstract class UIPageWizard extends UIWizard {
     uiExoStart.setUIControlWSWorkingComponent(UIPageCreateDescription.class);
     UIPageCreateDescription uiPageDescription = uiExoStart.getUIControlWSWorkingComponent();
     if(this.getClass() == UIPageEditWizard.class){
-      uiPageDescription.setTitle("Page Edit Wizard");
+      uiPageDescription.setTitle("UIPageCreateDescription.title.edit");
       uiPageDescription.addChild(UIDescription.class, null, "pageEditWizard");
       return;
     }
-    uiPageDescription.setTitle("Page Creation Wizard");
+    uiPageDescription.setTitle("UIPageCreateDescription.title.create");
     uiPageDescription.addChild(UIDescription.class, null, "pageWizard");
   }
   
@@ -112,11 +114,11 @@ public abstract class UIPageWizard extends UIWizard {
     uiExoStart.setUIControlWSWorkingComponent(UIPageCreateDescription.class);
     UIPageCreateDescription uiPageDescription = uiExoStart.getUIControlWSWorkingComponent();
     if(this.getClass() == UIPageEditWizard.class){
-      uiPageDescription.setTitle("Page Edit Wizard");
+      uiPageDescription.setTitle("UIPageCreateDescription.title.edit");
       uiPageDescription.addChild(UIDescription.class, null, "pageEditWizard" + Integer.toString(step));
       return;
     }
-    uiPageDescription.setTitle("Page Creation Wizard");
+    uiPageDescription.setTitle("UIPageCreateDescription.title.create");
     uiPageDescription.addChild(UIDescription.class, null, "pageWizard" + Integer.toString(step));
   }
   
