@@ -58,10 +58,6 @@
 	height: 20px; width: 20px;
 }
 
-.UIMaskWorkspace .UIFormTabPane .UITabPane .TabPaneContent {
-	padding: 2px;
-}
-
 .UIMaskWorkspace .UIForm .UITabContentContainer .UITabContent {
 	padding: 8px;
 }
