@@ -59,8 +59,13 @@
 }
 
 .UIMaskWorkspace .UIFormTabPane .UITabPane .TabPaneContent {
-	padding: 6px;
+	padding: 2px;
 }
+
+.UIMaskWorkspace .UIForm .UITabContentContainer .UITabContent {
+	padding: 8px;
+}
+
 
 /**********************************UITabSelector*****************************************/
 .UIMaskWorkspace .UITabPane .TabPaneContent .WorkingArea .CSSContent {
