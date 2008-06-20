@@ -58,6 +58,10 @@
 	height: 20px; width: 20px;
 }
 
+.UIMaskWorkspace .UIFormTabPane .UITabPane .TabPaneContent {
+	padding: 6px;
+}
+
 /**********************************UITabSelector*****************************************/
 .UIMaskWorkspace .UITabPane .TabPaneContent .WorkingArea .CSSContent {
   border: 1px solid #d5d5d5;
