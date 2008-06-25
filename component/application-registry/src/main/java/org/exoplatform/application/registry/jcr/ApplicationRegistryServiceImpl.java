@@ -8,11 +8,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
+import javax.jcr.PathNotFoundException;
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
-import javax.jcr.PathNotFoundException;
 import javax.jcr.Session;
 import javax.jcr.query.Query;
 import javax.jcr.query.QueryManager;
@@ -32,8 +31,8 @@ import org.exoplatform.services.jcr.ext.registry.RegistryService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.organization.MembershipHandler;
 import org.exoplatform.services.organization.OrganizationService;
-import org.exoplatform.services.portletcontainer.PortletContainerService;
-import org.exoplatform.services.portletcontainer.pci.PortletData;
+import org.exoplatform.services.portletcontainer.monitor.PortletContainerMonitor;
+import org.exoplatform.services.portletcontainer.monitor.PortletRuntimeData;
 import org.exoplatform.web.WebAppController;
 import org.picocontainer.Startable;
 
@@ -260,17 +259,17 @@ public class ApplicationRegistryServiceImpl implements ApplicationRegistryServic
     return returnApplication ;
   }
 
-  public void importAllPortlets() throws Exception {
+  public void importJSR168Portlets() throws Exception {
     PortalContainer manager  = PortalContainer.getInstance();
-    PortletContainerService pcService =
-      (PortletContainerService) manager.getComponentInstanceOfType(PortletContainerService.class) ;
-    Map<String, PortletData> allPortletMetaData = pcService.getAllPortletMetaData();
-    Iterator<String> iterator = allPortletMetaData.keySet().iterator();
+    PortletContainerMonitor monitor =
+      (PortletContainerMonitor) manager.getComponentInstanceOfType(PortletContainerMonitor.class) ;
+    Collection<?> portletDatas = monitor.getPortletRuntimeDataMap().values();  
     
+    Iterator<?> iterator = portletDatas.iterator();
     while(iterator.hasNext()) {
-      String portletHandle = iterator.next();
-      String categoryName = portletHandle.split("/")[0];
-      String portletName = portletHandle.split("/")[1];
+      PortletRuntimeData portletRuntimeData = (PortletRuntimeData) iterator.next();
+      String categoryName = portletRuntimeData.getPortletAppName();
+      String portletName = portletRuntimeData.getPortletName();
       
       ApplicationCategory category = null;
 
