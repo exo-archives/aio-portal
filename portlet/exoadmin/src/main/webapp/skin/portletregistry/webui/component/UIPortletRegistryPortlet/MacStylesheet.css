@@ -258,3 +258,7 @@
 	color: #3c3c3c; 
 	line-height: 25px;
 }
+
+.ApplicationRegistryWorkingArea .UIDragObject .UIInfoPortletForm .UIFormGrid {
+  margin: 6px auto 0px auto;
+}

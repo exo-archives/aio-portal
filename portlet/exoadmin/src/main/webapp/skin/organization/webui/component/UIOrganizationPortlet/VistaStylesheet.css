@@ -233,7 +233,7 @@
 
 .UIOrganizationPortlet .UIGroupManagement .UIForm .FormContainer {
   margin: auto;
-  padding: 12px 0px 0px 0px;
+  padding: 0px;
 }
 
 .UIOrganizationPortlet .UIGroupManagement .UIUserInGroup {
@@ -315,4 +315,8 @@
 .UIOrganizationPortlet .UIMembershipTypeForm .FormContainer {
 	width: 480px;
 	margin: auto;
+}
+
+.UIOrganizationPortlet .UIFormWithTitle .HorizontalLayout {
+ 	padding-top: 12px;
 }

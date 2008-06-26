@@ -53,3 +53,7 @@
 .UITabContainer .UIApplicationRegistryPortlet .UIAvailablePortletForm .HorizontalLayout {
   border: none;
 }
+
+.UITabContainer .UIApplicationRegistryPortlet .UIDragObject .HorizontalLayout {
+  border: none;
+}

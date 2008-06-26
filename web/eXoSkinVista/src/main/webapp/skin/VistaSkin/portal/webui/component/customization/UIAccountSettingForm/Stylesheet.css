@@ -2,11 +2,6 @@
   padding: 10px;
 }
 
-.UIAccountSettingForm .UITabPane .TabPaneContent .WorkingAreaWithHelp .UITabContentContainer .UITabContent{
- border: none;
- height: auto;
-}
-
 .UIAccountSettingForm .UITabPane .TabPaneContent .UITabContentContainer {
 	border: 1px solid #999999;
 }
