@@ -437,6 +437,12 @@
   padding-left: 5px;
 }
 
+.UIItemSelector .LeftColumnStyle .ItemList .Item .CenterItemTitle {
+  width: 96%;
+  overflow: hidden;
+  white-space:  nowrap;
+}
+
 .UIItemSelector .LeftColumnStyle .ItemList .Item .ContentItem {
   width: 100%;
   overflow: hidden;
@@ -471,6 +477,12 @@
   padding-left: 5px;
 }
 
+.UIItemSelector .LeftColumnStyle .ItemList .OverItem .CenterItemTitle {
+  width: 96%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 .UIItemSelector .LeftColumnStyle .ItemList .OverItem .ContentItem {
   width: 100%;
   overflow: hidden;
@@ -503,6 +515,12 @@
 }
 .UIItemSelector .LeftColumnStyle .ItemList .SelectedItem .ContentItem {
   width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.UIItemSelector .LeftColumnStyle .ItemList .SelectedItem .CenterItemTitle {
+  width: 96%;
   overflow: hidden;
   white-space: nowrap;
 }

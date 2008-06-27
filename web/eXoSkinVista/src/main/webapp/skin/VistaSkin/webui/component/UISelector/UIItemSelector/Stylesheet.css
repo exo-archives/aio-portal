@@ -480,6 +480,12 @@
   white-space: nowrap;
 }
 
+.UIItemSelector .LeftColumnStyle .ItemList .Item .CenterItemTitle {
+  width: 84%;
+  overflow: hidden;
+  white-space:  nowrap;
+}
+
 /*###########################- Item Over -############################*/
 
 .UIItemSelector .LeftColumnStyle .ItemList .OverItem {
@@ -513,6 +519,12 @@
   white-space: nowrap;
 }
 
+.UIItemSelector .LeftColumnStyle .ItemList .OverItem .CenterItemTitle {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 /*##########################- Item Selected -#########################*/
 
 .UIItemSelector .LeftColumnStyle .ItemList .SelectedItem {
@@ -540,6 +552,12 @@
 }
 
 .UIItemSelector .LeftColumnStyle .ItemList .SelectedItem .ContentItem {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.UIItemSelector .LeftColumnStyle .ItemList .SelectedItem .CenterItemTitle {
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
