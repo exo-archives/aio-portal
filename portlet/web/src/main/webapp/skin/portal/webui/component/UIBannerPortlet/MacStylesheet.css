@@ -47,6 +47,13 @@
   margin: 0px 7px;
  }
 
+.UIBannerPortlet .LoginContent .SeperatorLine {
+  float: right;
+  width: 2px; height: 23px;
+  background: url('MacSkin/background/SaperatorLine.gif') repeat-y;
+  margin: 0px 7px;
+ }
+
 .UIBannerPortlet .LoginContent .LogoutIcon {
   float: left;
   height: 24px;
