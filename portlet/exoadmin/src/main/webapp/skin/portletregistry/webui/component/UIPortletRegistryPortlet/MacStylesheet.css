@@ -18,6 +18,10 @@
 	overflow: auto;
 }
 
+.UIApplicationRegistryPortlet .CategoryContainer .EditIcon  {
+	float: none;
+}
+
 .UIApplicationRegistryPortlet .Title {
   font-size: 14px; color: #3470d4; font-weight: bold; font-family: arial;
   margin: 5px 0px; 
