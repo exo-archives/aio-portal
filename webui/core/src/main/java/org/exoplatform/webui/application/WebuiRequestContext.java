@@ -18,7 +18,6 @@ package org.exoplatform.webui.application;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.exoplatform.resolver.ApplicationResourceResolver;
@@ -66,12 +65,6 @@ abstract public class WebuiRequestContext extends RequestContext {
     uiApplication_ = uiApplication ;
     appRes_ = getApplication().getResourceBundle(uiApplication.getLocale()) ;   
   }
-  
-  public void refreshResourceBundle() throws Exception {
-    appRes_ = getApplication().getResourceBundle(uiApplication_.getLocale()) ;  
-  }
-  
-  public Locale getLocale() {  return uiApplication_.getLocale() ;} 
   
   public ResourceBundle getApplicationResourceBundle() {  return appRes_ ; }
   
