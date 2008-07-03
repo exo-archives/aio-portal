@@ -64,6 +64,9 @@
 	width: 218px;
 }
 
+.UIControlWorkspace .UIWorkspacePanel {
+  padding-bottom: 7px;
+}
 
 /*########################### End Tab ###########################*/
 /*########################### Slidebar ###########################*/

@@ -38,6 +38,10 @@
 	width: 221px;
 }
 
+.UIControlWorkspace .UIWorkspacePanel {
+  padding-bottom: 5px;
+}
+
 /*########################### Tab ###########################*/
 .UIControlWorkspace .UIWorkspacePanel .ControlPanelExpandContainer {
   margin: 10px 4px;
