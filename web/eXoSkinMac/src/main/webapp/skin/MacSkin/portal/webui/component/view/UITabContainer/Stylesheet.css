@@ -51,7 +51,7 @@
 }
 
 .UITabContainer .EditIcon {
-	overflow: hidden;
+	_float: none;
 }
 
 .LAYOUT-CONTAINER .UITabContainer .SelectedTab .EditIcon {
