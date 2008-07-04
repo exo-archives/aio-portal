@@ -31,10 +31,6 @@
   width: 95%;
 }
 
-.UIMaskWorkspace .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent {
-  _padding: 0px;
-}
-
 .UIMaskWorkspace .IconLayout {
 	float: left ;
 	margin: 3px 5px 0px 5px ;
@@ -70,9 +66,7 @@
 }
 
 .UIMaskWorkspace .UITabPane .TabPaneContent .CSSContent .UITabContent {
-  border: 1px solid white;
-  border-top: none;
-  margin: auto; height: auto;
+  height: auto;
   background: white;
 }
 

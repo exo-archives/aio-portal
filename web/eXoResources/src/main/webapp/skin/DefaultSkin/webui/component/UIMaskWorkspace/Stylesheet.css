@@ -69,10 +69,6 @@
 	margin: auto;
 }
 
-.UIMaskWorkspace .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent {
-  _padding: 0px;
-}
-
 /*********************************** End UITabContent	************************************/
 
 .UIMaskWorkspace .IconLayout {
@@ -100,9 +96,6 @@
 
 .UIMaskWorkspace .UITabPane .TabPaneContent .CSSContent .UITabContent {
 	height: auto;
-	border: 1px solid white;
-	border-top: none;
-	margin: auto;
 	overflow: hidden;
 }
 
@@ -125,7 +118,7 @@
 	border: none;
 }
 
-.UIAddApplication .UITabContentContainer .NoneAppsMessage{
+.UIAddApplication .UITabContentContainer .NoneAppsMessage {
 	padding: 10px;
 	text-align: center;
 	color: gray;

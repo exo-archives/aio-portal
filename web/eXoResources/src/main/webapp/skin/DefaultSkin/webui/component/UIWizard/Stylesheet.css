@@ -121,11 +121,11 @@
 	padding-right: 7px;
 }
 
-.UIWizard .WizardControlBar .UIAction .ActionButton{
+.UIWizard .WizardControlBar .UIAction .ActionButton {
 	float: right;
 }
 
-.UIWizard .WizardControlBar .UIAction .ActionContainer{
+.UIWizard .WizardControlBar .UIAction .ActionContainer {
 	width: 100%;
 }
 
@@ -253,4 +253,5 @@
 
 .UIWizard .TreeContainer {
 	height: 257px;
+	width: 220px;
 }

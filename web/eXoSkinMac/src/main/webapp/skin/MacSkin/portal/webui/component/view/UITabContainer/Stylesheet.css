@@ -51,6 +51,7 @@
 }
 
 .UITabContainer .EditIcon {
+  float: left;
 	_float: none;
 }
 
