@@ -29,11 +29,7 @@ form {
 
 html {
 	margin: 0px ; padding: 0px;
-}
-
-*html {
-	width: 100%;
-	overflow-x: hidden;
+	*overflow-x: hidden;
 }
 
 body {
