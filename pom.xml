@@ -26,6 +26,7 @@
     <module>web/eXoResources</module>
     <module>web/eXoSkinMac</module>
     <module>web/eXoSkinVista</module>
+	<module>web/rest</module>
     <module>web/portal</module>
 
     <module>server/tomcat/patch</module>
