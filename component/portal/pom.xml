@@ -14,7 +14,7 @@
   <description>eXo Portal Data</description>
 
   <dependencies>
-	<dependency>
+	  <dependency>
       <groupId>org.exoplatform.core</groupId>
       <artifactId>exo.core.component.organization.jdbc</artifactId>
       <version>${org.exoplatform.core.version}</version>

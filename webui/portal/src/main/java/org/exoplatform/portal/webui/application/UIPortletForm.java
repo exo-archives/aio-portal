@@ -184,28 +184,30 @@ public class UIPortletForm extends UIFormTabPane {
       input.setInternalWindowID(windowID) ;
       PortletApplicationsHolder holder = getApplicationComponent(PortletApplicationsHolder.class) ;
       Portlet pDatas = holder.getPortletMetaData(windowID.getPortletApplicationName(), windowID.getPortletName());
-      ExoPortletPreferences defaultPrefs = pDatas.getPortletPreferences();
-      PersistenceManager manager = getApplicationComponent(PersistenceManager.class) ;
-      PortletWindowInternal windowInfos = manager.getWindow(input, defaultPrefs);
-      PortletPreferences preferences = windowInfos.getPreferences();
-
-      UIFormInputSet uiPortletPrefSet = getChildById(FIELD_PORTLET_PREF) ;
-      uiPortletPrefSet.getChildren().clear() ;
-      Enumeration<String> prefNames = preferences.getNames() ;
-
-      if(!prefNames.hasMoreElements()) {
-        setSelectedTab("PortletSetting") ;
-        return ;
-      }
-      uiPortletPrefSet.setRendered(true) ;
-      setSelectedTab(FIELD_PORTLET_PREF) ;
-      while(prefNames.hasMoreElements()) {
-        String name = prefNames.nextElement() ;
-        if(!preferences.isReadOnly(name)) {
-          uiPortletPrefSet.addUIFormInput(new UIFormStringInput(name, null, preferences.getValue(name, "value"))) ;
+      if(pDatas != null) {
+        ExoPortletPreferences defaultPrefs = pDatas.getPortletPreferences();
+        PersistenceManager manager = getApplicationComponent(PersistenceManager.class) ;
+        PortletWindowInternal windowInfos = manager.getWindow(input, defaultPrefs);
+        PortletPreferences preferences = windowInfos.getPreferences();
+  
+        UIFormInputSet uiPortletPrefSet = getChildById(FIELD_PORTLET_PREF) ;
+        uiPortletPrefSet.getChildren().clear() ;
+        Enumeration<String> prefNames = preferences.getNames() ;
+  
+        while(prefNames.hasMoreElements()) {
+          String name = prefNames.nextElement() ;
+          if(!preferences.isReadOnly(name)) {
+            uiPortletPrefSet.addUIFormInput(new UIFormStringInput(name, null, preferences.getValue(name, "value"))) ;
+          }
+        }
+        if(uiPortletPrefSet.getChildren().size() > 0) {
+          uiPortletPrefSet.setRendered(true) ;
+          setSelectedTab(FIELD_PORTLET_PREF) ;
+          return ;
         }
       }
-    } 
+      setSelectedTab("PortletSetting") ;
+    }
   }
   
   private void savePreferences() throws Exception {
@@ -213,20 +215,12 @@ public class UIPortletForm extends UIFormTabPane {
     List<UIFormStringInput> uiFormInputs = new ArrayList<UIFormStringInput>(3) ;
     uiPortletPrefSet.findComponentOfType(uiFormInputs, UIFormStringInput.class) ;
     if(uiFormInputs.size() < 1) return ;
-    ExoWindowID windowID = uiPortlet_.getExoWindowID();
     Input input = new Input() ;
-    input.setInternalWindowID(windowID) ;
-    PortletApplicationsHolder holder = getApplicationComponent(PortletApplicationsHolder.class) ;
-    Portlet pDatas = holder.getPortletMetaData(windowID.getPortletApplicationName(), windowID.getPortletName());
-    ExoPortletPreferences defaultPrefs = pDatas.getPortletPreferences();
-    PersistenceManager manager = getApplicationComponent(PersistenceManager.class) ;
-    PortletWindowInternal windowInfos = manager.getWindow(input, defaultPrefs);
-    PortletPreferencesImp preferences = (PortletPreferencesImp) windowInfos.getPreferences();
-    for(UIFormStringInput ele : uiFormInputs) {
-      preferences.setValue(ele.getName(), ele.getValue()) ;
-    }
-    preferences.setMethodCalledIsAction(PCConstants.ACTION_INT);
-    preferences.store();
+    input.setInternalWindowID(uiPortlet_.getExoWindowID()) ;
+    Map<String, String> pers = new HashMap<String, String>() ;
+    for(UIFormStringInput ele : uiFormInputs) pers.put(ele.getName(), ele.getValue()) ;
+    PortletContainerService preferences = getApplicationComponent(PortletContainerService.class) ;
+    preferences.setPortletPreference(input, pers) ;
   }
   
   
