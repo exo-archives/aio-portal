@@ -108,7 +108,6 @@ public class UIPortalApplication extends UIApplication {
    * @param initParams
    * @throws Exception
    */
-  @SuppressWarnings("hiding")
   public UIPortalApplication(InitParams initParams) throws Exception { 
     PortalRequestContext  context = PortalRequestContext.getCurrentInstance() ;
     context.setUIApplication(this);
@@ -241,7 +240,6 @@ public class UIPortalApplication extends UIApplication {
    * @param initParams
    * @throws Exception
    */
-  @SuppressWarnings("hiding")
   private  void  initPublicPortal(PortalRequestContext context, InitParams initParams) throws Exception {
     if("true".equals(initParams.getParam("public.showControlWorkspace").getValue())) {
       addChild(UIControlWorkspace.class, UIPortalApplication.UI_CONTROL_WS_ID, null) ;      
@@ -255,7 +253,6 @@ public class UIPortalApplication extends UIApplication {
    * @param context
    * @throws Exception
    */
-  @SuppressWarnings("hiding")
   private  void  initPrivatePortal(PortalRequestContext context, String remoteUser) throws Exception {
     UserACL acl = getApplicationComponent(UserACL.class);
     if(acl.hasAccessControlWorkspacePermission(remoteUser))
@@ -274,7 +271,6 @@ public class UIPortalApplication extends UIApplication {
    * @param context
    * @throws Exception
    */
-  @SuppressWarnings({"hiding","unused"})
   private void addWorkingWorkspace(PortalRequestContext context) throws Exception {
     UIWorkspace uiWorkingWorkspace = 
       createUIComponent(UIWorkspace.class, UIPortalApplication.UI_WORKING_WS_ID, null) ;
