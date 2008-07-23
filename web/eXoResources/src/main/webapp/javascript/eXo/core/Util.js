@@ -215,3 +215,23 @@ String.prototype.trim = function () {
   var tmp = this.replace(/^\s*/, '');
   return tmp.replace(/\s*$/, '');
 }
+
+/**
+ * @author jeremi joslin
+ * 
+ * Function util
+ **/
+Function.prototype.bind = function(object) {
+  var method = this;
+  return function() {
+    method.apply(object, arguments);
+  }
+}
+
+Function.prototype.inherits = function(parentCtor) {
+  function tempCtor() {};
+  tempCtor.prototype = parentCtor.prototype;
+  this.superClass_ = parentCtor.prototype;
+  this.prototype = new tempCtor();
+  this.prototype.constructor = this;
+};
