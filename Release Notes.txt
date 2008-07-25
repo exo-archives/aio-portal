@@ -1,0 +1,69 @@
+==============================================
+	eXo Portal 2.1.1 release notes
+==============================================
+
+- Introduction
+	Portal, a typical product of eXoplatform, is a web operating system application. With the latest version 2.1, eXo portal not only takes advantages of a normal portal but it is also developed with outstanding features as:
+	+ Security:  Intelligently integrate and access to enterprise content, applications and processes. It is also very useful to establish internal or external information of an enterprise. It enables  administrators to decide which content and applications are pushed to which user according to the roles he has in a group or a business unit.
+	+ Personalization: Users are encouraged to design their own private layout and create personal content.
+	+ Flexibility: It is suitable for different operating system environments and adaptive to many types of databases.
+	+ Customization: Meets the requirements of both technical and non-technical users. This application provides open functions to encourage user's experiences and easily adapt to personal requirements and the technologies.
+	+ Collaboration: eXo Portal also provides community concepts. Access/Edit Permissions depend on a specific group of members while a member can be in some certain groups. It means that a member can have different types of permission.
+	+ Multi – languages: eXo Portal supports some package of languages for users of different countries as: English, French, Italian, Vietnamese,...
+	+ Multi - Skin: eXo portal allows to change the skin with: Default Skin, Vista Skin and MAC skin
+
+
+- System Requirements
+        Web Browser: IE6, IE7, FF2, FF3, Safari. Best for Frirefox 2 and upgrading to Firefox 3
+        JVM: version 1.5.0_xx only
+        Application Server : Tomcat, JBoss, Jonas, Websphere
+        Building Tools: Maven 2.0.4 and up
+
+
+
+- Complete list of issues fixed in eXo Portal 2.1.1
+	+ Bug
+
+		*MAJOR
+			PORTAL-1670  	 Unknow error when input dot symbol before characters in Name field when create new resource in i18n portlet
+			PORTAL-1774  	 Exception when change portal in special case
+			PORTAL-1679  	 Need to display language names in the request locale in UILanguageSelector
+			PORTAL-1716  	 Error exception when click Manage Pages
+			PORTAL-1781  	 Show message when edit page properties have Organization portlet
+			PORTAL-1796  	 IE6: Don't select function in Exo Start menu
+			PORTAL-1786  	 PortletContextRequest always return default locale en
+			PORTAL-1794  	 User workspace menu displays 'webos'
+			PORTAL-1840  	 Can not use classpath in jar
+			PORTAL-1661  	 I18n : UISearchForm.gtmpl
+			PORTAL-1659  	 I18n : UIPageDesktop.gtmpl
+			PORTAL-1803  	 Three column container layout width doesn't work
+
+		*MINOR
+			PORTAL-1610  	 I.E: Error display in Group Management with 3 skins
+			PORTAL-1725  	 Error displaying with all portlets when create page wizard have Tabs page config
+			PORTAL-1733  	 IE6: Error displaying when edit current portal with Default skin
+			PORTAL-1753  	 Error when change language is French
+			PORTAL-1756  	 FF3: Error displaying Banner portlet with Mac skin in Vietnamese language
+			PORTAL-1757  	 Error preview portal in Vista skin
+			PORTAL-1767  	 Have trouble with User Profile form in New Account portlet with Default and Mac skin
+			PORTAL-1785  	 Error when click a application portlet and restore down windown
+			PORTAL-1628  	 Error displaying in Icon of Select a page form with Mac skin
+			...............
+			and some other bugs with trivial priority
+
+	+ Improvement
+
+			PORTAL-1594  	 Should allows create all of username textfied includes dot symbol
+			PORTAL-1637  	 Should format for pop-up calendar is: "hh:mm:ss"
+			PORTAL-1641  	 Should correct some form in Portal and WebOS
+			PORTAL-1654  	 Should change "Publish the page during a period of time only" when create page or node
+			PORTAL-1797  	 increase the length after which text in truncated in UIGrid
+
+
+
+- Other resources and links
+     Company site        http://www.exoplatform.com
+     Community JIRA      http://jira.exoplatform.org
+     Comminity site      http://www.exoplatform.org
+     Developers wiki     http://wiki.exoplatform.org
+     Documentation       http://docs.exoplatform.org 
