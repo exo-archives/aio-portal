@@ -93,7 +93,7 @@
             </property>
             <property>
               <name>mock.portal.dir</name>
-              <value>${exo.projects.directory.src}/portal/branches/2.0/web/portal/src/main/webapp</value>
+              <value>${exo.projects.directory.src}/portal/tags/2.0/web/portal/src/main/webapp</value>
             </property>
             <property>
               <name>org.apache.commons.logging.Log</name>
