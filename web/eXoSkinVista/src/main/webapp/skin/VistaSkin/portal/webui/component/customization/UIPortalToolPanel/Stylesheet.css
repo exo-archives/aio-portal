@@ -62,12 +62,9 @@
 }
 
 .UIPortalToolPanel .Body {
-  padding:7px 6px 5px;
+  padding: 5px;
 }
 
-.UIPortalToolPanel .UIAccountPortlet {
-  margin-top: 7px;
-}
 /**################################ ItemDetailList ######################*/
 .UIPortalToolPanel .UIItemSelector .NormalStyle {
   height: 100% ;
