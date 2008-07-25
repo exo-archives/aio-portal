@@ -58,11 +58,11 @@ import org.exoplatform.webui.form.validator.StringLengthValidator;
 //      },
 public class UIContainerForm extends UIForm { 
 
-  private UIContainer uiContainer_ ;
-  private UIComponent backComponent_ ;
+  private UIContainer uiContainer_;
+  private UIComponent backComponent_;
 
   @SuppressWarnings("unchecked")
-  public UIContainerForm() throws Exception {//InitParams initParams
+  public UIContainerForm() throws Exception { //InitParams initParams
 //    super("UIContainerForm");
     this.addUIFormInput(new UIFormStringInput("id", "id", null).
                                 addValidator(MandatoryValidator.class).
@@ -71,9 +71,11 @@ public class UIContainerForm extends UIForm {
                  addUIFormInput(new UIFormStringInput("title", "title", null).
                                 addValidator(StringLengthValidator.class, 3, 30)).
                  addUIFormInput(new UIFormStringInput("width", "width", null).
-                                addValidator(ExpressionValidator.class, "(^([1-9]\\d*)(px||%)$)?", "width")).
+                                addValidator(ExpressionValidator.class, 
+                                    "(^([1-9]\\d*)(px|%)$)?", "UIContainerForm.msg.InvalidWidthHeight")).
                  addUIFormInput(new UIFormStringInput("height", "height", null).
-                                addValidator(ExpressionValidator.class, "(^([1-9]\\d*)(px||%)$)?", "height"));
+                                addValidator(ExpressionValidator.class, 
+                                    "(^([1-9]\\d*)(px|%)$)?", "UIContainerForm.msg.InvalidWidthHeight"));
     
 //    addChild(uiSettingSet);
 //    UIFormInputItemSelector uiTemplate = new UIFormInputItemSelector("Template", "template");
@@ -81,31 +83,31 @@ public class UIContainerForm extends UIForm {
 //    uiTemplate.setRendered(false);
 //    addUIFormInput(uiTemplate); 
     
-//    if(initParams == null) return ;    
+//    if(initParams == null) return;    
 //    UIFormInputItemSelector itemInput = getChild(UIFormInputItemSelector.class);
-//    RequestContext context = RequestContext.getCurrentInstance() ;    
+//    RequestContext context = RequestContext.getCurrentInstance();    
 //    List<SelectItemCategory> categories = 
-//      initParams.getParam("ContainerTemplateOption").getMapGroovyObject(context) ;
+//      initParams.getParam("ContainerTemplateOption").getMapGroovyObject(context);
 //    itemInput.setItemCategories(categories);
   } 
 
-  public void setValues(UIContainer uiContainer) throws Exception {
+  public void setValues(final UIContainer uiContainer) throws Exception {
     uiContainer_ = uiContainer;
-    Container container = PortalDataMapper.toContainer(uiContainer) ;
+    Container container = PortalDataMapper.toContainer(uiContainer);
     getUIStringInput("id").setEditable(false);
-    invokeGetBindingBean(container) ;
+    invokeGetBindingBean(container);
   }
 
-  public UIContainer getContainer() { return uiContainer_ ; }
+  public UIContainer getContainer() { return uiContainer_; }
 
-  public UIComponent getBackComponent() { return backComponent_ ; }
+  public UIComponent getBackComponent() { return backComponent_; }
   public void setBackComponent(UIComponent uiComp) throws Exception { backComponent_ = uiComp; }
 
-  static public class SaveActionListener  extends EventListener<UIContainerForm> {
-    public void execute(Event<UIContainerForm> event) throws Exception {
-      UIContainerForm uiForm = event.getSource() ;
-      UIContainer uiContainer = uiForm.getContainer() ;
-      uiForm.invokeSetBindingBean(uiContainer) ;
+  public static class SaveActionListener  extends EventListener<UIContainerForm> {
+    public void execute(final Event<UIContainerForm> event) throws Exception {
+      UIContainerForm uiForm = event.getSource();
+      UIContainer uiContainer = uiForm.getContainer();
+      uiForm.invokeSetBindingBean(uiContainer);
       PortalRequestContext pcontext = (PortalRequestContext)event.getRequestContext();
       
       UIMaskWorkspace uiMaskWorkspace = uiForm.getParent();
