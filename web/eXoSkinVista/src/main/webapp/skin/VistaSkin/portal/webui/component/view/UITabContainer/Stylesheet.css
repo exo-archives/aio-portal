@@ -1,5 +1,5 @@
 .UITabContainer {
-	padding: 3px 6px;
+	padding: 7px;
 }
 
 .UITabContainer .UIHorizontalTabs {
@@ -15,7 +15,7 @@
 }
 
 .UITabContainer .UITabContent {
-	padding-top: 8px;
+	padding: 0px;
 }
 
 .UITabContainer .TabLabel {
@@ -33,10 +33,6 @@
 	float: left;
 	width: 16px; height: 20px;
 	background: url('/eXoResources/skin/DefaultSkin/skinIcons/16x16/icons/NormalCloseTab.gif') no-repeat bottom;
-}
-
-.LAYOUT-CONTAINER .UIRowContainer .UITabContainer {
-	padding: 0px 10px 10px;
 }
 
 .UITabContainer .EditIcon {
@@ -60,4 +56,8 @@
 
 .UITabContainer .UIApplicationRegistryPortlet .UIDragObject .HorizontalLayout {
   border: none;
+}
+
+.UIPage .UITabContainer .TabContent {
+	height: 100%;
 }

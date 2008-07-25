@@ -17,6 +17,7 @@
 .UIWindow {
   width: 99% ; height: auto; /*Fix bug for IE6*/
   padding: 5px auto;
+  margin: auto;
 }
 
 .UIPageBody .UIWindow .UIApplication {
@@ -109,10 +110,6 @@
 .UIPageBody .UIPortalWarning .CenterBottomWaring {
   background: url('/eXoResources/skin/sharedImages/CenterBottomWarning1x7.gif') repeat-x center;	
   height: 7px;
-}
-
-.UIPageBody .UIPage .UITabContainer .HorizontalLayout {
-	*width: 99.5%;
 }
 
 .UIPortal .VIEW-CONTAINER .VIEW-PORTLET .UIWindow {

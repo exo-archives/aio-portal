@@ -9,7 +9,7 @@
 }
 
 .UITabContainer .UITabContentContainer .UITabContent {
-	padding: 10px;
+	padding: 5px;
 }
 
 .UITabContainer a.TabLabel {
@@ -55,4 +55,8 @@
 .UITabContainer .UIAccountPortlet .UIForm .UIFormGrid {
   margin: auto;
   width: auto;
+}
+
+.UIPage .UITabContainer .UITabContent {
+	height: 100%;
 }
