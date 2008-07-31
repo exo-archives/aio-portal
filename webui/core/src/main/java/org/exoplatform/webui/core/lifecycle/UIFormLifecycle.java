@@ -143,7 +143,7 @@ public class UIFormLifecycle  extends Lifecycle {
     for(UIComponent uiChild : children) {
       if(uiChild instanceof UIFormInputBase) {
         UIFormInputBase uiInput =  (UIFormInputBase) uiChild ;
-        if(uiInput.isValid()) continue;
+        if(!uiInput.isValid()) continue;
         List<Validator> validators = uiInput.getValidators() ;
         if(validators == null) continue;
         try {
