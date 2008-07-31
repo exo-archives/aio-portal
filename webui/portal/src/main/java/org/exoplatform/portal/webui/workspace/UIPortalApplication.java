@@ -76,15 +76,9 @@ public class UIPortalApplication extends UIApplication {
   
   protected static Log log = ExoLogger.getLogger("portal:UIPortalApplication"); 
   
-//  public static boolean DEVELOPING = false;
-  
   private boolean isEditting = false ;
   private String nodePath_;
   
-//  static {
-//    DEVELOPING =  "true".equals(System.getProperty("exo.product.developing")) ;
-//  }
-//
   final static public String UI_CONTROL_WS_ID = "UIControlWorkspace" ;
   final static public String UI_WORKING_WS_ID = "UIWorkingWorkspace" ;
   final static public String UI_MASK_WS_ID = "UIMaskWorkspace" ;
@@ -359,6 +353,14 @@ public class UIPortalApplication extends UIApplication {
         }
       }
       w.write("<div class=\"PortalResponse\">") ;
+      w.  write("<div class=\"PortalResponseData\">");
+      for(UIComponent uicomponent : uiDataComponents) {
+        if(log.isDebugEnabled())
+          log.debug("AJAX call: Need to refresh the UI component " + uicomponent.getName());
+        renderBlockToUpdate(uicomponent, context, w) ;
+      }
+      w.  write("</div>");
+
       if(!context.getFullRender()) {
         for(UIPortlet uiPortlet : uiPortlets) {
           if(log.isDebugEnabled())
@@ -383,14 +385,7 @@ public class UIPortalApplication extends UIApplication {
           w.write("</div>") ;
         }
       }
-      w.  write("<div class=\"PortalResponseData\">");
-      for(UIComponent uicomponent : uiDataComponents) {
-        if(log.isDebugEnabled())
-          log.debug("AJAX call: Need to refresh the UI component " + uicomponent.getName());
-    	  renderBlockToUpdate(uicomponent, context, w) ;
-      }
-      
-      w.  write("</div>");
+
       w.  write("<div class=\"PortalResponseScript\">"); 
       w.    write(pcontext.getJavascriptManager().getJavascript());
       w.    write("eXo.core.Browser.onLoad();\n"); 
