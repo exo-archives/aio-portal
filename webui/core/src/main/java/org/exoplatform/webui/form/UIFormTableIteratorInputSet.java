@@ -55,8 +55,9 @@ public class UIFormTableIteratorInputSet extends UIFormTableInputSet {
       List<UIFormInputBase> inputs = new ArrayList<UIFormInputBase>() ; 
       child.findComponentOfType(inputs, UIFormInputBase.class) ;
       for(UIFormInputBase input :  inputs) {
+        if (!input.isValid()) { continue; }
         String inputValue = context.getRequestParameter(input.getId()) ;
-        if(inputValue == null || inputValue.trim().length() == 0){
+        if (inputValue == null || inputValue.trim().length() == 0) {
           inputValue = context.getRequestParameter(input.getName()) ;
         }
         input.decode(inputValue, context);
