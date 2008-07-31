@@ -2,8 +2,8 @@
 .UIPage {}
 
 .UIPage .PageLayoutDecorator {
-	padding: 0px 13px 0px 10px ;
-	_padding: 0px 10px 0px 12px ;
+	padding: 0px;
+	/*_padding: 0px 10px 0px 12px ;*/
 	/*width: 97%;*/
 }
 
