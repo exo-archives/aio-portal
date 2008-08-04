@@ -226,15 +226,15 @@
 		                if(windowState == WindowState.MAXIMIZED) {
 	  	                maximizedAction = "eXo.portal.UIPortalControl.changeWindowState('"+portletId+"', 'normal');" ;
 	  	                maximizedMode = "Normal";
-	  	                restoreDown = "Restore Down";
+	  	                restoreDown = _ctx.appRes("UIPortlet.tooltip.MaximizeRestore");
 		                } else if(windowState == WindowState.MINIMIZED) {
 		                  minimizedAction = "eXo.portal.UIPortalControl.changeWindowState('"+portletId+"', 'normal');" ;
 	  	                minimizedMode = "Normal";
-	  	                restore = "Restore";
+	  	                restore = _ctx.appRes("UIPortlet.tooltip.MinimizeRestore");
 		                }
 	              %>
-		                <div class="ControlIcon ${minimizedMode}Icon" onclick="$minimizedAction" title="<%=_ctx.appRes("UIPortlet.tooltip.Minimize");%>" onmouseover="$onControlOver" onmouseout="$onControlOut"><span></span></div>
-		            		<div class="ControlIcon ${maximizedMode}Icon" onclick="$maximizedAction" title="<%=_ctx.appRes("UIPortlet.tooltip.Maximize");%>" onmouseover="$onControlOver" onmouseout="$onControlOut"><span></span></div> 
+		                <div class="ControlIcon ${minimizedMode}Icon" onclick="$minimizedAction" title="<%=restore;%>" onmouseover="$onControlOver" onmouseout="$onControlOut"><span></span></div>
+		            		<div class="ControlIcon ${maximizedMode}Icon" onclick="$maximizedAction" title="<%=restoreDown;%>" onmouseover="$onControlOver" onmouseout="$onControlOut"><span></span></div> 
 	              <%}%>    
 	              <div style="clear: left"><span></span></div>  
 	            </div>
