@@ -3,17 +3,68 @@
 ==============================================
 
 - Introduction
+	Portal, a typical product of eXoplatform, is a web operating system application. With the latest version 2.1, eXo portal not only takes advantages of a normal portal but it is also developed with outstanding features as:
+	+ Security:  Intelligently integrate and access to enterprise content, applications and processes. It is also very useful to establish internal or external information of an enterprise. It enables  administrators to decide which content and applications are pushed to which user according to the roles he has in a group or a business unit.
+	+ Personalization: Users are encouraged to design their own private layout and create personal content.
+	+ Flexibility: It is suitable for different operating system environments and adaptive to many types of databases.
+	+ Customization: Meets the requirements of both technical and non-technical users. This application provides open functions to encourage user's experiences and easily adapt to personal requirements and the technologies.
+	+ Collaboration: eXo Portal also provides community concepts. Access/Edit Permissions depend on a specific group of members while a member can be in some certain groups. It means that a member can have different types of permission.
+	+ Multi – languages: eXo Portal supports some package of languages for users of different countries as: English, French, Italian, Vietnamese,...
+	+ Multi - Skin: eXo portal allows to change the skin with: Default Skin, Vista Skin and MAC skin
 
-- What is new in eXo Portal 2.2
-	upgrade groovy template engine from groovy-all-minimal-1.5.4 to groovy-all-1.5.6 against in portal 2.1.x
-	upgrade jibx from 1.1.3 to 1.1.6a
-	Rename SkinListener to SkinConfigListener
 
 - System Requirements
+        Web Browser: IE6, IE7, FF2, FF3, Safari. Best for Frirefox 2 and upgrading to Firefox 3
+        JVM: version 1.5.0_xx only
+        Application Server : Tomcat, JBoss, Jonas, Websphere
+        Building Tools: Maven 2.0.6 and up
+
+
+- What is new in eXo Portal 2.2
+        + Portal 2.2 upgrade to use kernel 2.0.2, core 2.1, portlet-container 2.0.1, jcr 1.9.1, ws 1.2.1 
+	with many improvements of performances (should refer to each them for more details )
+        + Upgrade version to using of groovy template engine from groovy-all-minimal-1.5.4 to groovy-all-1.5.6
+        + Upgrade version to using of jibx from 1.1.3 to 1.1.6a
+        + Rename SkinListener to SkinConfigListener
+        + Deploy and integrate Rest services.
+        + Integrated Cometd into the portal.
+        + Language support for both user and browser language.
+        + New security layer (eXo Core 2.1). New LoginModule implementations including J2EE servers (Tomcat, JBoss, JOnAS).
+
 
 - Complete list of issues fixed in eXo Portal 2.2
 	+ Bug
+		* MAJOR
+		PORTAL-1821  	 Show exception when edit WSRPAdminPortlet
+		PORTAL-1803  	 Three column container layout width doesn't work
+		PORTAL-1542  	 Integration problem between Portal and Portlet Container- wsrp enabled
+		PORTAL-1840  	 Can not use classpath in jar
+		PORTAL-1876  	 Session time out when delete a portal which you do not have right to delete this portal
+		PORTAL-1693  	 Error when move Search User form in Group Managament tab of Organization portlet
+		PORTAL-1873  	 Unknown error when drag & drop container in tab and change skin
+
+		* MINOR
+		PORTAL-1874  	 Error drag & drop container when create page have tab page config
+		PORTAL-1693  	 Error when move Search User form in Group Managament tab of Organization portlet
+		PORTAL-1832  	 Error displaying in Exo Message with all skin
+		PORTAL-1859  	 UI Navigation bar is displayed under Breadcumbs Portlet
+		PORTAL-1855  	 IE6: Show Message Exo Form is Error when edit container/portlet in the first time
+		...............
+		and some other bugs with trivial priority
+
 	+ Improvement
+		PORTAL-1850	Add disabled in Container UIFormStringInput
+		PORTAL-1826	Should set default language is English when registers new account
+		PORTAL-1649	Language as a user preference
+
+
 	+ New Feature
+		PORTAL-1837	Should correct space of all portlets in portal
+		PORTAL-1843	Should change message when set width or height for portlet
 
 - Other resources and links
+     Company site        http://www.exoplatform.com
+     Community JIRA      http://jira.exoplatform.org
+     Comminity site      http://www.exoplatform.org
+     Developers wiki     http://wiki.exoplatform.org
+     Documentation       http://docs.exoplatform.org 
