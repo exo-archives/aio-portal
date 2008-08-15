@@ -23,8 +23,8 @@ BrowserApplication.prototype.init = function(instanceId) {
 	txtAddress.onkeypress = eXo.application.browser.BrowserApplication.onKeyPress ;
 
 	var firstCloseButton = DOMUtil.findFirstDescendantByClass(eXoBrowser, "div", "CloseButton") ;
-	firstCloseButton.onclick = function() {
-		eXo.application.browser.BrowserApplication.removeTabDetail(this) ;
+	firstCloseButton.onclick = function(event) {
+		eXo.application.browser.BrowserApplication.removeTabDetail(this, event) ;
 	};
 		
 	var firstTabDetail = firstCloseButton.parentNode.parentNode ;
@@ -112,7 +112,7 @@ BrowserApplication.prototype.createNewTab = function(clickedElement) {
   this.NumberOfTab++ ;
   txtAddress.value = "http://" ;
   var tabParent = clickedElement.parentNode ;
-  
+
   var activeTabList = DOMUtil.findChildrenByClass(tabParent, "div", "ActiveTabDetailBackground") ;
   for(var i = 0; i < activeTabList.length; i++) {
   	activeTabList[i].className = "TabDetailBackground TabMenuItem" ;
@@ -124,13 +124,12 @@ BrowserApplication.prototype.createNewTab = function(clickedElement) {
   var tabLabel = DOMUtil.findFirstDescendantByClass(cloneActiveTab, "div", "TabLabel") ;
   
   tabLabel.innerHTML = "(Untitled)" ;
-  
   cloneActiveTab.onclick = function() {
   	eXo.application.browser.BrowserApplication.activateTabDetail(this, ancestorNode) ;
   } ;
   var closeButton = DOMUtil.findFirstDescendantByClass(cloneActiveTab, "div", "CloseButton") ;
-  closeButton.onclick = function() {
-  	eXo.application.browser.BrowserApplication.removeTabDetail(this) ;
+  closeButton.onclick = function(event) {
+  	eXo.application.browser.BrowserApplication.removeTabDetail(this, event) ;
   } ;
   clickedElement.parentNode.insertBefore(cloneActiveTab, clickedElement) ;
   
@@ -183,7 +182,9 @@ BrowserApplication.prototype.activateTabDetail = function(selectedElement, ances
 		}
   }
 } ;
-BrowserApplication.prototype.removeTabDetail = function(clickedElement) {
+BrowserApplication.prototype.removeTabDetail = function(clickedElement, event) {
+	if(!event && window.event) event = window.event;
+	event.cancelBubble = true;
 	var DOMUtil = eXo.core.DOMUtil ;
 	if (this.NumberOfTab > 1) {
 		this.NumberOfTab-- ;
@@ -198,7 +199,7 @@ BrowserApplication.prototype.removeTabDetail = function(clickedElement) {
 		
 		var tabContent = DOMUtil.findFirstDescendantByClass(eXoBrowser, "div", "TabContent") ;
 		var iframes = DOMUtil.findDescendantsByClass(tabContent, "iframe", "IFrame") ;
-
+		
 		if (tabDetail.className == "ActiveTabDetailBackground TabMenuItem") {
 			var tabDetailList = DOMUtil.findDescendantsByClass(tabContainer, "div", "TabDetailBackground") ;
 			var index ;

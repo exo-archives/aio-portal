@@ -136,7 +136,7 @@ ImplodeExplode.prototype.doExplode = function(containerId ) {
 			} else {
 				win.style.top = X0 + "px" ;
 				win.style.left = Y0 + "px" ;
-				win.style.width = W0 + "px" ;
+				win.style.width = (!win.maximized) ? W0 + "px" : win.style.width ;
 				win.style.height = H0 + "px" ;
 				win.style.display = "block" ;
 				container.removeChild(win.animation) ;
