@@ -11,7 +11,7 @@
 }
 
 .UITabPane .UITabContent {
-	padding: 5px;
+	padding: 10px;
 }
 
 .UITabPane .TabPaneContent .UIQuickHelp {
@@ -19,6 +19,13 @@
   width: 25% ;
 }
 
-.UITabPane .UITabSelector .CSSContent {
-	border: 1px solid #d4d4d4;
+.UITabPane .UIForm .HorizontalLayout {
+	border: none;
+	background: none;
+	padding: 0px;
+}
+
+.UITabPane .UIFormWithTitle .HorizontalLayout {
+	border: 1px solid #b7b7b7;
+	border-top: none;
 }
