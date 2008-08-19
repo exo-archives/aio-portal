@@ -20,6 +20,7 @@
 
 .UITabSelector .UIHorizontalTabs .CenterHorizontalTabs {
   height: 31px;
+  padding: 0px;
   background: url('background/TabSelector.gif') repeat-x left -31px;
   padding: 0px;
 }

@@ -14,7 +14,7 @@
 .UITabPane .UITabContentContainer .UITabContent {
   background: #f7f7f7;
   border: solid 1px white; border-top: none;
-  padding: 15px 7px ;
+  padding: 10px ;
 }
 
 .UITabPane .UIForm .HorizontalLayout {
@@ -22,6 +22,7 @@
 	background: none;
 }
 
-.UITabPane .UIFormWidthTitle .HorizontalLayout {
+.UITabPane .UIFormWithTitle .HorizontalLayout {
 	border: 1px solid #b7b7b7;
+	border-top: none;
 }

@@ -1,6 +1,8 @@
 /*####################- HorizontalLayout -#################*/
 .UIForm .HorizontalLayout {
   border: 1px solid #aeaeae;
+  background: #F7F7F7;
+  padding: 10px;
 }
 
 .UIFormGrid {
