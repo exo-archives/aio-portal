@@ -461,9 +461,6 @@
 .UIItemSelector .LeftColumnStyle .ItemList .OverItem .LeftItem {
   background: url('background/SelectedItem.gif') no-repeat left -52px;
   padding-left: 15px;
-  width: 91%;
-  overflow: hidden;
-  white-space: nowrap;
 }
 
 .UIItemSelector .LeftColumnStyle .ItemList .OverItem .RightItem {
