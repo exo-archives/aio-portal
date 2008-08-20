@@ -48,8 +48,7 @@ public class UIWizardPageSelectLayoutForm extends UIForm {
   @SuppressWarnings("unchecked")
   public UIWizardPageSelectLayoutForm() throws Exception {
     //super("UIWizardPageSelectLayoutForm");
-    //super.setWithRenderTab(false);
-    
+    //super.setWithRenderTab(false);    
     UIPageTemplateOptions uiTemplateConfig = createUIComponent(UIPageTemplateOptions.class,"PageTemplateOption", null);    
     addUIComponentInput(uiTemplateConfig) ;
     //setSelectedTab(uiTemplateConfig.getId()) ;
