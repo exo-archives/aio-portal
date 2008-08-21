@@ -10,7 +10,6 @@ ResourceBundle res = contextres.getApplicationResourceBundle();
 SelectItemCategory normalPageConfigs = new SelectItemCategory("normalPageConfigs") ;
 categories.add(normalPageConfigs);
 normalPageConfigs.addSelectItemOption(new SelectItemOption(res.getString("UIWizardPageSelectLayoutForm.normalPageConfigs.EmptyLayout"), "empty", "EmptyLayout"));
-normalPageConfigs.addSelectItemOption(new SelectItemOption(res.getString("UIWizardPageSelectLayoutForm.normalPageConfigs.DesktopImage"), "desktop", "DesktopImage"));
 
 SelectItemCategory columnPageConfigs = new SelectItemCategory("columnPageConfigs") ;
 categories.add(columnPageConfigs);  
