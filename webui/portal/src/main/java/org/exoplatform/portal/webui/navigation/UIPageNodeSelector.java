@@ -107,7 +107,7 @@ import org.exoplatform.webui.event.EventListener;
   @ComponentConfig (
       type = UIDropDownControl.class ,
       id = "UIDropDown",
-      template = "system:/groovy/webui/core/UIDropDownControl.gtmpl",
+      template = "system:/groovy/portal/webui/navigation/UINavigationSelector.gtmpl",
       events = {
         @EventConfig(listeners = UIPageNodeSelector.SelectNavigationActionListener.class)
       }
@@ -172,11 +172,6 @@ public class UIPageNodeSelector extends UIContainer {
   }
   
   private void updateUI() {
-	  
-	WebuiRequestContext contextres = WebuiRequestContext.getCurrentInstance();
-	ResourceBundle res = contextres.getApplicationResourceBundle();
-	String navValueEnd = res.getString("UIPageNavigation.nav.label");
-	  
     if(navigations == null || navigations.size() < 1) {
       getChild(UIDropDownControl.class).setOptions(null) ;
       getChild(UITree.class).setSibbling(null) ;
@@ -185,9 +180,7 @@ public class UIPageNodeSelector extends UIContainer {
     
     List<SelectItemOption<String>> options = new ArrayList<SelectItemOption<String>>();
     for(PageNavigation navigation: navigations) { //navigation.getOwnerId()
-      
-      String label = navValueEnd.replace("{0}",navigation.getOwnerType() + ":" + navigation.getOwnerId());
-      options.add(new SelectItemOption<String>(label, navigation.getId()));
+        options.add(new SelectItemOption<String>(navigation.getOwnerType() + ":" + navigation.getOwnerId(), navigation.getId()));
     }
 
     UIDropDownControl uiNavigationSelector = getChild(UIDropDownControl.class);
