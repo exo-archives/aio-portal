@@ -280,9 +280,7 @@ UIWindow.prototype.onControlOver = function(element, isOver) {
   var originalElementName = element.className ;
   if(isOver) {
     var overElementName = "ControlIcon Over" + originalElementName.substr(originalElementName.indexOf(" ") + 1, 30) ;
-    element.className   = overElementName;
-    if(element.className == "ControlIcon OverRestoreIcon"){ element.title = "Restore Down" ;}
-    if(element.className == "ControlIcon OverMaximizedIcon"){element.title = "Maximize" ;}
+    element.className   = overElementName;   
   } else {
     var over = originalElementName.indexOf("Over") ;
     if(over >= 0) {
