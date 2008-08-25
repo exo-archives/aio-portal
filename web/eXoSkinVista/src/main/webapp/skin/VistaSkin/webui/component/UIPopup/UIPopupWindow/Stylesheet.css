@@ -18,10 +18,10 @@
 }
 
 .UIPopupWindow .PopupTitle {
-  margin-top: 6px; 
+  padding-top: 8px; 
   text-align: center;
   font-weight: bold; 
-  line-height: 20px; vertical-align: middle;
+  line-height: 20px;
   cursor: move;
 }
 
@@ -71,6 +71,12 @@
   width: 100%;
   background: white;
   overflow: auto;
+}
+
+.UIPopupWindow .PopupContent .UIGroupMembershipSelector .Container {
+  padding: 10px;
+  border: none;
+  background: none;
 }
 
 .UIPopupWindow .Content .UIPopupMessages {
