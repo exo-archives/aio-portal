@@ -115,7 +115,7 @@ import org.exoplatform.webui.form.validator.StringLengthValidator;
   @ComponentConfig (
       type = UIDropDownControl.class ,
       id = "UIDropDown",
-      template = "system:/groovy/webui/core/UIDropDownControl.gtmpl",
+      template = "system:/groovy/portal/webui/navigation/UINavigationSelector.gtmpl",
       events = {
         @EventConfig(listeners = UIPageNodeSelector.SelectNavigationActionListener.class)
       }
