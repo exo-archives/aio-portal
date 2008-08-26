@@ -19,7 +19,6 @@ package org.exoplatform.portal.webui.navigation;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.UserACL;
@@ -44,6 +43,7 @@ import org.exoplatform.portal.webui.navigation.UIPageNodeActionListener.PasteNod
 import org.exoplatform.portal.webui.page.UIPage;
 import org.exoplatform.portal.webui.page.UIPageBody;
 import org.exoplatform.portal.webui.page.UIPageEditBar;
+import org.exoplatform.portal.webui.page.UIWizardPageSetInfo;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIControlWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
@@ -60,6 +60,7 @@ import org.exoplatform.webui.core.UITree;
 import org.exoplatform.webui.core.model.SelectItemOption;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
+import org.exoplatform.webui.event.Event.Phase;
 
 /**
  * Created by The eXo Platform SARL
@@ -74,6 +75,13 @@ import org.exoplatform.webui.event.EventListener;
       events = {
         @EventConfig(listeners = UIPageNodeSelector.ChangeNodeActionListener.class),
         @EventConfig(listeners = CreateNavigationActionListener.class)
+      }
+  ),
+  @ComponentConfig(
+      id = "WizardPageNodeSelector",
+      template = "app:/groovy/portal/webui/navigation/UIPageNodeSelector.gtmpl" ,
+      events = {
+         @EventConfig(listeners = UIPageNodeSelector.SelectNavigationActionListener.class, phase=Phase.DECODE) 
       }
   ),
   @ComponentConfig(
