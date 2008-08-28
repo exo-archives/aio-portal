@@ -26,7 +26,6 @@ import org.exoplatform.portal.config.UserPortalConfigService;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
-import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.webui.navigation.UIPageNavigationActionListener.CreateNavigationActionListener;
 import org.exoplatform.portal.webui.navigation.UIPageNavigationActionListener.DeleteNavigationActionListener;
 import org.exoplatform.portal.webui.navigation.UIPageNavigationActionListener.EditNavigationActionListener;
@@ -73,14 +72,8 @@ import org.exoplatform.webui.event.Event.Phase;
       template = "app:/groovy/portal/webui/navigation/UIPageNodeSelector.gtmpl" ,
       events = {
         @EventConfig(listeners = UIPageNodeSelector.ChangeNodeActionListener.class),
-        @EventConfig(listeners = CreateNavigationActionListener.class)
-      }
-  ),
-  @ComponentConfig(
-      id = "WizardPageNodeSelector",
-      template = "app:/groovy/portal/webui/navigation/UIPageNodeSelector.gtmpl" ,
-      events = {
-         @EventConfig(listeners = UIPageNodeSelector.SelectNavigationActionListener.class, phase=Phase.DECODE) 
+        @EventConfig(listeners = CreateNavigationActionListener.class),
+        @EventConfig(listeners = UIPageNodeSelector.SelectNavigationActionListener.class, phase=Phase.DECODE) 
       }
   ),
   @ComponentConfig(
@@ -157,13 +150,7 @@ public class UIPageNodeSelector extends UIContainer {
     List<PageNavigation> pnavigations = getExistedNavigation(Util.getUIPortal().getNavigations()) ;
     UserACL userACL = getApplicationComponent(UserACL.class);
     for(PageNavigation nav  : pnavigations){      
-      if(PortalConfig.PORTAL_TYPE.equals(nav.getOwnerType())){
-        if(userACL.hasPermission(remoteUser, Util.getUIPortal().getEditPermission())){
-          navigations.add(nav.clone()) ;
-        }
-      }else if(userACL.hasEditPermission(nav, remoteUser)){
-        navigations.add(nav);
-      }
+      navigations.add(nav);
     }
     
     updateUI() ;

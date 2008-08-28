@@ -32,18 +32,27 @@ import org.exoplatform.webui.core.UIContainer;
   template = "system:/groovy/portal/webui/page/UIPageCreateDescription.gtmpl"   
 )
 public class UIPageCreateDescription extends UIContainer{
-   
 
-  private String title_ ;
+//  private String title_ ;
   
+  private String titleKey_ ;
+
   public UIPageCreateDescription() throws Exception{   
   } 
   
-  public void setTitle(String key){
-	WebuiRequestContext context = WebuiRequestContext.getCurrentInstance();
-	ResourceBundle res = context.getApplicationResourceBundle();
-	title_ = res.getString(key);
+  public String getTitleKey() {
+    return titleKey_;
   }
   
-  public String getTitle(){ return title_; }
+  public void setTitleKey(String titleKey_) {
+    this.titleKey_ = titleKey_;
+  }
+  
+//  public void setTitle(String key){
+//	WebuiRequestContext context = WebuiRequestContext.getCurrentInstance();
+//	ResourceBundle res = context.getApplicationResourceBundle();
+//	title_ = res.getString(key);
+//  }
+//  
+//  public String getTitle(){ return title_; }
 }
