@@ -33,17 +33,26 @@ import org.exoplatform.webui.core.UIContainer;
 )
 public class UIPageCreateDescription extends UIContainer{
    
+  private String titleKey_ ;
 
-  private String title_ ;
+//  private String title_ ;
   
   public UIPageCreateDescription() throws Exception{   
+  }
+
+  public String getTitleKey() {
+    return titleKey_;
+  }
+
+  public void setTitleKey(String titleKey_) {
+    this.titleKey_ = titleKey_;
   } 
   
-  public void setTitle(String key){
-	WebuiRequestContext context = WebuiRequestContext.getCurrentInstance();
-	ResourceBundle res = context.getApplicationResourceBundle();
-	title_ = res.getString(key);
-  }
-  
-  public String getTitle(){ return title_; }
+//  public void setTitle(String key){
+//	WebuiRequestContext context = WebuiRequestContext.getCurrentInstance();
+//	ResourceBundle res = context.getApplicationResourceBundle();
+//	title_ = res.getString(key);
+//  }
+//  
+//  public String getTitle(){ return title_; }
 }

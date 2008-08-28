@@ -100,11 +100,11 @@ public abstract class UIPageWizard extends UIWizard {
     uiExoStart.setUIControlWSWorkingComponent(UIPageCreateDescription.class);
     UIPageCreateDescription uiPageDescription = uiExoStart.getUIControlWSWorkingComponent();
     if(this.getClass() == UIPageEditWizard.class){
-      uiPageDescription.setTitle("UIPageCreateDescription.title.edit");
+      uiPageDescription.setTitleKey("UIPageCreateDescription.title.edit");
       uiPageDescription.addChild(UIDescription.class, null, "pageEditWizard");
       return;
     }
-    uiPageDescription.setTitle("UIPageCreateDescription.title.create");
+    uiPageDescription.setTitleKey("UIPageCreateDescription.title.create");
     uiPageDescription.addChild(UIDescription.class, null, "pageWizard");
   }
   
@@ -114,11 +114,11 @@ public abstract class UIPageWizard extends UIWizard {
     uiExoStart.setUIControlWSWorkingComponent(UIPageCreateDescription.class);
     UIPageCreateDescription uiPageDescription = uiExoStart.getUIControlWSWorkingComponent();
     if(this.getClass() == UIPageEditWizard.class){
-      uiPageDescription.setTitle("UIPageCreateDescription.title.edit");
+      uiPageDescription.setTitleKey("UIPageCreateDescription.title.edit");
       uiPageDescription.addChild(UIDescription.class, null, "pageEditWizard" + Integer.toString(step));
       return;
     }
-    uiPageDescription.setTitle("UIPageCreateDescription.title.create");
+    uiPageDescription.setTitleKey("UIPageCreateDescription.title.create");
     uiPageDescription.addChild(UIDescription.class, null, "pageWizard" + Integer.toString(step));
   }
   

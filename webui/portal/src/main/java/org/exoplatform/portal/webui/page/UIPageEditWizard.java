@@ -60,7 +60,7 @@ import org.exoplatform.webui.event.EventListener;
         @EventConfig(listeners = UIPageEditWizard.ViewStep2ActionListener.class),
         @EventConfig(listeners = UIPageEditWizard.ViewStep3ActionListener.class),
         @EventConfig(listeners = UIPageEditWizard.ViewStep4ActionListener.class),
-        @EventConfig(listeners = UIPageEditWizard.AbortActionListener.class)
+        @EventConfig(listeners = UIPageWizard.AbortActionListener.class)
     }
 )
 public class UIPageEditWizard extends UIPageWizard {
@@ -250,27 +250,5 @@ public class UIPageEditWizard extends UIPageWizard {
       uiWizard.updateUIPortal(uiPortalApp, event);
     }
   }  
-
-  static public class AbortActionListener extends EventListener<UIPageEditWizard> {
-    public void execute(Event<UIPageEditWizard> event) throws Exception {
-//    UIPageEditWizard uiWizard = event.getSource();
-      UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
-//    uiWizard.updateUIPortal(uiPortalApp, event);    
-      PortalRequestContext pcontext = (PortalRequestContext)event.getRequestContext();
-
-      UIControlWorkspace uiControl = uiPortalApp.getChildById(UIPortalApplication.UI_CONTROL_WS_ID);
-      UIComponentDecorator uiWorkingArea = uiControl.getChildById(UIControlWorkspace.WORKING_AREA_ID);
-      uiWorkingArea.setUIComponent(uiWorkingArea.createUIComponent(UIWelcomeComponent.class, null, null)) ;
-      pcontext.addUIComponentToUpdateByAjax(uiControl);  
-
-      UIPortal uiPortal = Util.getUIPortal();
-      uiPortal.setMode(UIPortal.COMPONENT_VIEW_MODE);
-      uiPortal.setRenderSibbling(UIPortal.class) ;    
-      pcontext.setFullRender(true);
-
-      UIWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
-      pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);      
-    }
-  }
 
 }
