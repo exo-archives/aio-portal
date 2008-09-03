@@ -16,9 +16,6 @@
  */
 package org.exoplatform.portal.webui.page;
 
-import java.util.ResourceBundle;
-
-import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.core.UIContainer;
 

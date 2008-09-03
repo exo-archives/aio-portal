@@ -152,13 +152,7 @@ public class UIPageNodeSelector extends UIContainer {
     List<PageNavigation> pnavigations = getExistedNavigation(Util.getUIPortal().getNavigations()) ;
     UserACL userACL = getApplicationComponent(UserACL.class);
     for(PageNavigation nav  : pnavigations){      
-      if(PortalConfig.PORTAL_TYPE.equals(nav.getOwnerType())){
-        if(userACL.hasPermission(remoteUser, Util.getUIPortal().getEditPermission())){
-          navigations.add(nav.clone()) ;
-        }
-      }else if(userACL.hasEditPermission(nav, remoteUser)){
-        navigations.add(nav);
-      }
+      navigations.add(nav);
     }
     
     updateUI() ;
