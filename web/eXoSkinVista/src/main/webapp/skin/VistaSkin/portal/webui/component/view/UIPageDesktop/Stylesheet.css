@@ -71,6 +71,11 @@
 
 .UIPageDesktop .UIApplication {
   overflow: auto ;
+  height: 350px;
+}
+
+.UIPageDesktop .UIWindow {
+  width: 780px ;	
 }
 
 /*=============================Right Click DockBar Menu=========================*/
