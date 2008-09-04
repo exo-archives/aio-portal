@@ -12,13 +12,13 @@
 </div>
 <script type="text/javascript">
 	var uiWorkingWS = document.getElementById("UIWorkingWorkspace");
-	if (uiWorkingWS){
+	if (uiWorkingWS){	
 		var iFrames = eXo.core.DOMUtil.findDescendantsByClass(uiWorkingWS, "div", "UIIFramePortlet");
 		if (iFrames.length) {
 			for (var i = 0; i < iFrames.length; i ++) {
 				var portletFrag = eXo.core.DOMUtil.findAncestorById(iFrames[i], "PORTLET-FRAGMENT");
 				if(!portletFrag.style.height) {
-					iFrames[i].style.height = "auto;";
+					iFrames[i].style.height = "100%";
 				} else {
 					var uiWindow = eXo.core.DOMUtil.findAncestorByClass(portletFrag, "UIWindow");
 					if(!uiWindow) {
