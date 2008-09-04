@@ -65,10 +65,14 @@
   cursor: nw-resize;
 }
 
-.UIPageDesktop .UIApplication {
-  overflow: auto;
+.UIPageDesktop .UIWindow {
+  width: 720px;
 }
 
+.UIPageDesktop .UIWindow .UIApplication {
+  overflow: auto;
+  height: 350px;
+}
 /*=============================Right Click DockBar Menu=========================*/
 
 .UIDockBar .UIRightClickPopupMenu .UIContextMenuContainer .TopLeftRightClickPopupMenu {

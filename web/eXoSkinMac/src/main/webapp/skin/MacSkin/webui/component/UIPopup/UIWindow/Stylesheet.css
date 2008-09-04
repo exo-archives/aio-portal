@@ -1,12 +1,4 @@
 /*##########################################################*/
-.UIPageDesktop .UIWindow {
-  width: 720px ;
-  height: auto;
-}
-
-.UIPageDesktop .UIWindow .UIApplication {
-  height: 350px ;
- }
 
 .UIWindow .UIApplication {
 	overflow: auto;
