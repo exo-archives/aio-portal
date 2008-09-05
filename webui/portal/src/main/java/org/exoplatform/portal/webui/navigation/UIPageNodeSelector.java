@@ -21,12 +21,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.exoplatform.portal.application.PortalRequestContext;
-import org.exoplatform.portal.config.UserACL;
 import org.exoplatform.portal.config.UserPortalConfigService;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
-import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.webui.navigation.UIPageNavigationActionListener.CreateNavigationActionListener;
 import org.exoplatform.portal.webui.navigation.UIPageNavigationActionListener.DeleteNavigationActionListener;
 import org.exoplatform.portal.webui.navigation.UIPageNavigationActionListener.EditNavigationActionListener;
@@ -43,7 +41,6 @@ import org.exoplatform.portal.webui.navigation.UIPageNodeActionListener.PasteNod
 import org.exoplatform.portal.webui.page.UIPage;
 import org.exoplatform.portal.webui.page.UIPageBody;
 import org.exoplatform.portal.webui.page.UIPageEditBar;
-import org.exoplatform.portal.webui.page.UIWizardPageSetInfo;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIControlWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
@@ -147,10 +144,8 @@ public class UIPageNodeSelector extends UIContainer {
 	}
 	
   public void loadNavigations() throws Exception {
-    String remoteUser = Util.getPortalRequestContext().getRemoteUser();
     navigations = new ArrayList<PageNavigation>();
     List<PageNavigation> pnavigations = getExistedNavigation(Util.getUIPortal().getNavigations()) ;
-    UserACL userACL = getApplicationComponent(UserACL.class);
     for(PageNavigation nav  : pnavigations){      
       navigations.add(nav);
     }
