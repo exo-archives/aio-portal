@@ -174,10 +174,10 @@ public class UIPageNodeActionListener {
       UserPortalConfigService service = parent.getApplicationComponent(UserPortalConfigService.class);
       PortalRequestContext pcontext = Util.getPortalRequestContext();
       UIPortalApplication uiPortalApp = parent.getAncestorOfType(UIPortalApplication.class);
-      Page test = service.getPage(pageId) ;
-      if(test != null) {
+      Page page = service.getPage(pageId) ;
+      if(page != null) {
         UserACL userACL = parent.getApplicationComponent(UserACL.class) ;
-        if(!userACL.hasPermission(test, pcontext.getRemoteUser())) {
+        if(!userACL.hasPermission(page, pcontext.getRemoteUser())) {
           uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.UserNotPermission", new String[]{pageId}, 1)) ;;
           pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
           return;
