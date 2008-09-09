@@ -239,8 +239,28 @@ public class UserPortalConfigService {
     portalConfigCache_.select(new ExpireKeyStartWithSelector(portal.getName())) ;
   }
 
+  public boolean hasPermission(String pageId, String accessUser) throws Exception  {
+    Page page = (Page) pageConfigCache_.get(pageId) ;    
+    if(page == null) page  = storage_.getPage(pageId) ;
+    if(!userACL_.hasPermission(page, accessUser)) return false;
+    return true;
+  }
+  
 //**************************************************************************************************
 
+  /**
+   * this method will load the page according to the pageId
+   * @param pageId
+   * @return
+   * @throws Exception
+   */
+  
+  public Page getPage(String pageId) throws Exception {
+    Page page = (Page) pageConfigCache_.get(pageId);
+    if(page == null) page  = storage_.getPage(pageId);
+    return page;
+  }
+  
   /**
    * This method  should load the page according to the pageId,  set view and edit  permission for the
    * Page object  according to the accessUser.
