@@ -110,20 +110,19 @@ public class UIPageBrowser extends UISearch {
   private static List<SelectItemOption<String>> OPTIONS = new ArrayList<SelectItemOption<String>>(3);
 
   static {
-		WebuiRequestContext contextui = WebuiRequestContext
-				.getCurrentInstance();
-		ResourceBundle res = contextui.getApplicationResourceBundle();
-		OPTIONS.add(new SelectItemOption<String>(res.getString("UIPageBrowser.selectItem.ownerType"), "ownerType"));
-		OPTIONS.add(new SelectItemOption<String>(res.getString("UIPageBrowser.selectItem.ownerId"), "ownerId"));
-		OPTIONS.add(new SelectItemOption<String>(res.getString("UIPageBrowser.selectItem.name"), "name"));
-	}
+    WebuiRequestContext contextui = WebuiRequestContext
+        .getCurrentInstance();
+    ResourceBundle res = contextui.getApplicationResourceBundle();
+    OPTIONS.add(new SelectItemOption<String>(res.getString("UIPageSearch.label.option.ownerType"), "ownerType"));
+    OPTIONS.add(new SelectItemOption<String>(res.getString("UIPageSearch.label.option.ownerId"), "ownerId"));
+    OPTIONS.add(new SelectItemOption<String>(res.getString("UIPageSearch.label.option.name"), "name"));
+  }
 
   private Query<Page> lastQuery_ ;  
 
   public UIPageBrowser() throws Exception {
-    super(OPTIONS);
-    //getChild(UISearchForm.class).setId("UIPageSearch");
-    getChild(UISearchForm.class).setId("UIPageSearch" + hashCode());
+    super(OPTIONS);    
+    getChild(UISearchForm.class).setId("UIPageSearch");
     UIGrid uiGrid = addChild(UIGrid.class, null, null) ;
     uiGrid.configure("pageId", BEAN_FIELD, ACTIONS) ;
     UIPageIterator uiIterator = uiGrid.getUIPageIterator() ; 
