@@ -269,8 +269,7 @@ public class UserPortalConfigService {
    * @throws Exception
    */
   public Page getPage(String pageId, String accessUser) throws Exception {
-    Page page = (Page) pageConfigCache_.get(pageId) ;    
-    if(page == null) page  = storage_.getPage(pageId) ;
+    Page page = getPage(pageId);
     if(page == null || !userACL_.hasPermission(page, accessUser)) return null;
     pageConfigCache_.put(pageId, page);
     return page ; 

@@ -234,7 +234,8 @@ public class UIPageBrowser extends UISearch {
           pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
           return;
         }
-      } else {               
+      } 
+      if(page == null){               
         uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.PageNotExist", new String[]{id},1)) ;;
         pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());    
         return;
@@ -259,7 +260,8 @@ public class UIPageBrowser extends UISearch {
       PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext();
       String id = pcontext.getRequestParameter(OBJECTID) ;
       UserPortalConfigService dao = uiPageBrowser.getApplicationComponent(UserPortalConfigService.class) ;
-      Page page = dao.getPage(id) ;    
+      Page page = dao.getPage(id) ; 
+      
       if(page != null) {
         UserACL userACL = uiPageBrowser.getApplicationComponent(UserACL.class) ;
         if(!userACL.hasPermission(page, pcontext.getRemoteUser())) {
@@ -267,7 +269,8 @@ public class UIPageBrowser extends UISearch {
           pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
           return;
         }
-      } else {               
+      } 
+      if(page == null){               
         uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.PageNotExist", new String[]{id},1)) ;;
         pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());    
         return;
@@ -277,14 +280,7 @@ public class UIPageBrowser extends UISearch {
       UIPageBody uiPageBody = uiPortalApp.findFirstComponentOfType(UIPageBody.class) ; 
       if(uiPageBody.getUIComponent() != null) uiPageBody.setUIComponent(null);
 
-      if(Page.DESKTOP_PAGE.equals(page.getFactoryId())) {
-        UIMaskWorkspace uiMaskWS = uiPortalApp.getChildById(UIPortalApplication.UI_MASK_WS_ID) ;
-        UIPageForm uiPageForm = uiMaskWS.createUIComponent(UIPageForm.class, "UIBrowserPageForm", "UIPageForm");
-        uiPageForm.setValues(uiPage);
-        uiMaskWS.setUIComponent(uiPageForm);
-        pcontext.addUIComponentToUpdateByAjax(uiMaskWS);
-        return;
-      }
+    
 
       UIControlWorkspace uiControl =  uiPortalApp.findFirstComponentOfType(UIControlWorkspace.class) ;
       UIComponentDecorator uiWorking = uiControl.getChildById(UIControlWorkspace.WORKING_AREA_ID) ;
@@ -308,8 +304,13 @@ public class UIPageBrowser extends UISearch {
       String id = pcontext.getRequestParameter(OBJECTID) ;
       UserPortalConfigService service = uiPageBrowser.getApplicationComponent(UserPortalConfigService.class) ;
       Page page = service.getPage(id) ;
+      UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);     
 
-      UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
+      if(Page.DESKTOP_PAGE.equals(page.getFactoryId())) {
+        uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.Invalid-Preview", new String[]{page.getName()})) ;;
+        pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
+        return;
+      }      
       if(page != null) {
         UserACL userACL = uiPageBrowser.getApplicationComponent(UserACL.class) ;
         if(!userACL.hasPermission(page, pcontext.getRemoteUser())) {
@@ -317,28 +318,21 @@ public class UIPageBrowser extends UISearch {
           pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
           return;
         }
-      } else {               
+      } 
+      if(page == null){               
         uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.PageNotExist", new String[]{id},1)) ;;
         pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());    
         return;
-      }
-   
-      if(Page.DESKTOP_PAGE.equals(page.getFactoryId())) {
-        uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.Invalid-Preview", new String[]{page.getName()})) ;;
-        pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
-        return;
-      }
+      }   
 
       UIPage uiPage =  uiPageBrowser.createUIComponent(event.getRequestContext(), UIPage.class,null,null) ;
       PortalDataMapper.toUIPage(uiPage, page);
-
       UIPortalToolPanel uiToolPanel = Util.getUIPortalToolPanel() ;
       UIPagePreview uiPagePreview = uiToolPanel.createUIComponent(UIPagePreview.class, "UIPagePreviewWithMessage", null) ;
       uiPagePreview.setUIComponent(uiPage) ;
       uiToolPanel.setUIComponent(uiPagePreview) ;
       uiToolPanel.setShowMaskLayer(true) ;
-      uiToolPanel.setRenderSibbling(UIPortalToolPanel.class) ;
-      
+      uiToolPanel.setRenderSibbling(UIPortalToolPanel.class) ;      
       UIControlWorkspace uiControl = uiPortalApp.findFirstComponentOfType(UIControlWorkspace.class) ;
       UIControlWSWorkingArea uiControlWorking = uiControl.getChildById(UIControlWorkspace.WORKING_AREA_ID) ;
       UIPageManagement uiManagement = uiControlWorking.findFirstComponentOfType(UIPageManagement.class) ;
