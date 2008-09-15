@@ -44,7 +44,7 @@ UIWindow.prototype.init = function(popup, isShow, posX, posY) {
  		this.originalWidth = 800;
  		this.originalHeight = 400;
  		maximizedIcon.className = "ControlIcon RestoreIcon";
- 		maximizedIcon.title = "Restore Down";
+ 		maximizedIcon.title = maximizedIcon.getAttribute("modeTitle");
  	  setTimeout(eXo.desktop.UIWindow.toForcus, 1000);
   }
 } ;
@@ -280,7 +280,9 @@ UIWindow.prototype.onControlOver = function(element, isOver) {
   var originalElementName = element.className ;
   if(isOver) {
     var overElementName = "ControlIcon Over" + originalElementName.substr(originalElementName.indexOf(" ") + 1, 30) ;
-    element.className   = overElementName;   
+    element.className   = overElementName; 
+    if(element.className == "ControlIcon OverRestoreIcon"){ element.title = element.getAttribute("modeTitle") ;}
+    if(element.className == "ControlIcon OverMaximizedIcon"){ element.title = element.getAttribute("normalTitle") ;}  
   } else {
     var over = originalElementName.indexOf("Over") ;
     if(over >= 0) {
