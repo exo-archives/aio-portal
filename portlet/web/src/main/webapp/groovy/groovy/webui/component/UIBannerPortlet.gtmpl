@@ -22,7 +22,13 @@
 					<div class="LoginContainer">
 						<div class="LoginContent">
 						<%if(prContext.getAccessPath() == PortalRequestContext.PRIVATE_ACCESS) {%>
-						  	
+			  			<div class="LoginLeft" style="float: left">
+								<div class="SeperatorLine"><span></span></div>
+									<a class="SettingIcon" onclick="$changeLanguageAction">
+										<%=_ctx.appRes("UIChangeLanguage.title.LanguageSetting")%>
+									</a>
+								<div style="clear: left;"><span></span></div>
+							</div>
 					  	<div class="LoginLeft" style="float: left">
 					  		<%=_ctx.appRes("UILogged.note.loggedUser")%>
 						  	<span style="padding: 0px 10px 0px 2px; color: #529ef1; font-weight:bold;">
