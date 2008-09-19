@@ -17,7 +17,6 @@
 package org.exoplatform.portletregistry.webui.component;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -31,8 +30,6 @@ import org.exoplatform.commons.utils.ObjectPageList;
 import org.exoplatform.commons.utils.PageList;
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.services.portletcontainer.PortletContainerService;
-//import org.exoplatform.services.portletcontainer.monitor.PortletContainerMonitor;
-//import org.exoplatform.services.portletcontainer.monitor.PortletRuntimeData;
 import org.exoplatform.services.portletcontainer.pci.PortletData;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;

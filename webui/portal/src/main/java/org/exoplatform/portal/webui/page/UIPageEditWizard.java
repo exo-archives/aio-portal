@@ -20,29 +20,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.exoplatform.portal.application.PortalRequestContext;
-import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.UserPortalConfigService;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
-import org.exoplatform.portal.webui.UIWelcomeComponent;
 import org.exoplatform.portal.webui.application.UIPortletOptions;
 import org.exoplatform.portal.webui.navigation.UIPageNodeSelector;
 import org.exoplatform.portal.webui.portal.PageNodeEvent;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.util.PortalDataMapper;
 import org.exoplatform.portal.webui.util.Util;
-import org.exoplatform.portal.webui.workspace.UIControlWorkspace;
 import org.exoplatform.portal.webui.workspace.UIExoStart;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
-import org.exoplatform.portal.webui.workspace.UIWorkspace;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.web.application.RequestContext;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
-import org.exoplatform.webui.core.UIApplication;
-import org.exoplatform.webui.core.UIComponentDecorator;
 import org.exoplatform.webui.core.model.SelectItemCategory;
 import org.exoplatform.webui.core.model.SelectItemOption;
 import org.exoplatform.webui.event.Event;
@@ -114,7 +108,7 @@ public class UIPageEditWizard extends UIPageWizard {
   static  public class ViewStep1ActionListener extends EventListener<UIPageWizard> {
     public void execute(Event<UIPageWizard> event) throws Exception { 
       UIPageWizard uiWizard = event.getSource();
-      uiWizard.setDescriptionWizard(2);
+      uiWizard.setDescriptionWizard(1);
 
       uiWizard.updateWizardComponent();
       uiWizard.viewStep(1);   
@@ -126,7 +120,6 @@ public class UIPageEditWizard extends UIPageWizard {
       UIPageWizard uiWizard = event.getSource();
       UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
       PortalRequestContext pcontext = Util.getPortalRequestContext() ;
-      uiWizard.setDescriptionWizard(3);
 
       uiWizard.updateWizardComponent();
       UIWizardPageSetInfo uiPageInfo = uiWizard.getChild(UIWizardPageSetInfo.class); 
@@ -160,6 +153,7 @@ public class UIPageEditWizard extends UIPageWizard {
         return ;
       }
 
+      uiWizard.setDescriptionWizard(2);
       uiWizard.viewStep(2);
     }
   }
@@ -170,9 +164,15 @@ public class UIPageEditWizard extends UIPageWizard {
       WebuiRequestContext context = event.getRequestContext() ;
       UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
       UIWizardPageSetInfo uiPageInfo = uiWizard.getChild(UIWizardPageSetInfo.class); 
-      PageNode seletctedPageNode = uiPageInfo.getPageNode() ;
+      PageNode selectedPageNode = uiPageInfo.getSelectedPageNode() ;
+      if(selectedPageNode == null) {
+        uiPortalApp.addMessage(new ApplicationMessage("UIPageEditWizard.msg.notSelectedPage", null)) ;
+        context.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages()) ;
+        uiWizard.viewStep(1);
+        return ;
+      }
       UserPortalConfigService userService = uiWizard.getApplicationComponent(UserPortalConfigService.class) ;
-      Page selectPage = userService.getPage(seletctedPageNode.getPageReference(), context.getRemoteUser()) ;
+      Page selectPage = userService.getPage(selectedPageNode.getPageReference(), context.getRemoteUser()) ;
 
       if(selectPage == null|| !selectPage.isModifiable()) {
         uiPortalApp.addMessage(new ApplicationMessage("UIPageEditWizard.msg.Invalid-editPermission", null)) ;
@@ -214,7 +214,7 @@ public class UIPageEditWizard extends UIPageWizard {
         isDesktopPage = Page.DESKTOP_PAGE.equals(selectPage.getFactoryId());
       }
       selectPage.setModifier(context.getRemoteUser());
-      selectPage.setTitle(seletctedPageNode.getLabel()) ;
+      selectPage.setTitle(selectedPageNode.getLabel()) ;
 
       UIPagePreview uiPagePreview = uiWizard.getChild(UIPagePreview.class);
       UIPage uiPage = null;
