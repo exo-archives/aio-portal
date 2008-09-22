@@ -17,6 +17,8 @@
 package org.exoplatform.portal.webui.page;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.exoplatform.portal.config.DataStorage;
@@ -163,6 +165,8 @@ public class UIPageCreationWizard extends UIPageWizard {
         uiWizard.updateWizardComponent();
         uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.StepByStep",null)) ;
         context.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages()) ;
+        uiWizard.setDescriptionWizard(2);
+        uiWizard.viewStep(2);
         return ;
       }
       
@@ -176,6 +180,19 @@ public class UIPageCreationWizard extends UIPageWizard {
         context.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
         uiWizard.viewStep(2);
         return ;
+      }
+      
+      if(uiPageSetInfo.getUIFormCheckBoxInput(UIWizardPageSetInfo.SHOW_PUBLICATION_DATE).isChecked()) {
+        Calendar startCalendar = uiPageSetInfo.getUIFormDateTimeInput(UIWizardPageSetInfo.START_PUBLICATION_DATE).getCalendar();
+        Date startDate = startCalendar.getTime();
+        Calendar endCalendar = uiPageSetInfo.getUIFormDateTimeInput(UIWizardPageSetInfo.END_PUBLICATION_DATE).getCalendar();
+        Date endDate = endCalendar.getTime();
+        if(startDate.after(endDate)) {
+          uiPortalApp.addMessage(new ApplicationMessage("UIPageNodeForm.msg.startDateBeforeEndDate", null)) ;
+          context.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
+          uiWizard.viewStep(2);
+          return;
+        }
       }
       
       PageNode pageNode = uiPageSetInfo.getPageNode();
