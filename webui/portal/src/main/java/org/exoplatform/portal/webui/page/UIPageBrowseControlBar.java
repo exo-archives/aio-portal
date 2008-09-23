@@ -88,7 +88,7 @@ public class UIPageBrowseControlBar extends UIToolbar {
       UIPortalToolPanel uiToolPanel = Util.getUIPortalToolPanel();      
       uiToolPanel.setShowMaskLayer(false);
       UIPageBrowser uiPageBrowser = (UIPageBrowser) uiBrowseControlBar.getBackComponent() ;
-      uiPageBrowser.reset();
+      uiPageBrowser.defaultValue(uiPageBrowser.getLastQuery());
       uiToolPanel.setUIComponent(uiPageBrowser) ;
 
       UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
