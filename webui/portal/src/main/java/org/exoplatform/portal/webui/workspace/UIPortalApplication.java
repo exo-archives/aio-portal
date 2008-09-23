@@ -20,6 +20,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.UserACL;
@@ -36,6 +37,7 @@ import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.UserProfile;
 import org.exoplatform.services.resources.LocaleConfig;
 import org.exoplatform.services.resources.LocaleConfigService;
+import org.exoplatform.services.resources.Orientation;
 import org.exoplatform.web.application.javascript.JavascriptConfigService;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
@@ -64,6 +66,8 @@ public class UIPortalApplication extends UIApplication {
 
   private boolean isEditting = false ;
   private String nodePath_;
+  private Locale locale_ = Locale.ENGLISH  ;
+  private Orientation orientation_ = Orientation.LT;
 
   final static public String UI_CONTROL_WS_ID = "UIControlWorkspace" ;
   final static public String UI_WORKING_WS_ID = "UIWorkingWorkspace" ;
@@ -118,21 +122,39 @@ public class UIPortalApplication extends UIApplication {
     localeConfig = localeConfigService.getLocaleConfig(portalLanguage) ;
     if(portalLanguage != null && portalLanguage.equals(localeConfig.getLanguage())) {
       setLocale(localeConfig.getLocale());
+      setOrientation(localeConfig.getOrientation());
       uiPortal.refreshNavigation(portalLanguage) ;
       return ;
     }
+    
     // if user language no support by portal -> get browser language if no -> get portal
     portalLanguage = context.getRequest().getLocale().getLanguage() ;
     localeConfig = localeConfigService.getLocaleConfig(portalLanguage) ;
+
+    //
     if(!portalLanguage.equals(localeConfig.getLanguage())) {
       localeConfig = localeConfigService.getLocaleConfig(uiPortal.getLocale()) ;
       portalLanguage = uiPortal.getLocale() ;
     }
+
+    //
     setLocale(localeConfig.getLocale()) ;
+    setOrientation(localeConfig.getOrientation());
+
     uiPortal.refreshNavigation(portalLanguage) ;
     //-------------------------------------------------------------------------------
-  } 
+  }
 
+  public Orientation getOrientation() {
+    return orientation_;
+  }
+
+  public void setOrientation(Orientation orientation) {
+    this.orientation_ = orientation;
+  }
+
+  public Locale getLocale() {  return locale_ ; }
+  public void   setLocale(Locale locale) { locale_ = locale ; }
 
   public void setEditting(boolean bln) { this.isEditting = bln ; }  
   public boolean isEditting() { return isEditting ; }
@@ -144,8 +166,8 @@ public class UIPortalApplication extends UIApplication {
 
   public Collection<SkinConfig> getPortalSkins() {
     SkinService skinService = getApplicationComponent(SkinService.class) ;
-    Collection<SkinConfig> portalSkins = skinService.getPortalSkins(skin_);
-    SkinConfig skinConfig = skinService.getSkin(Util.getUIPortal().getName(),skin_);
+    Collection<SkinConfig> portalSkins = skinService.getPortalSkins(skin_, getOrientation());
+    SkinConfig skinConfig = skinService.getSkin(Util.getUIPortal().getName(),skin_, getOrientation());
     if(skinConfig != null) {
       portalSkins.add(skinConfig);
     }
@@ -156,8 +178,9 @@ public class UIPortalApplication extends UIApplication {
   public void setSkin(String skin){ this.skin_ = skin; }
 
   private SkinConfig getSkin(String module) {
+    Orientation orientation = orientation_;
     SkinService skinService = getApplicationComponent(SkinService.class) ;
-    return skinService.getSkin(module, skin_) ;
+    return skinService.getSkin(module, skin_, orientation) ;
   }
 
   /**

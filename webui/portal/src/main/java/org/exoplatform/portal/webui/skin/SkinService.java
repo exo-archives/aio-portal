@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.EnumMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,36 +34,56 @@ import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.resources.Orientation;
 
 public class SkinService {
 
   protected static Log log = ExoLogger.getLogger("portal.SkinService");
 
-  private final static String REGEXP = "@import url(.*).*;";
+  private static final Map<Orientation, String> suffixMap = new EnumMap<Orientation, String>(Orientation.class);
 
-  private final static String BACKGROUND_REGEXP = "background.*:.*url(.*).*;";
+  static
+  {
+    suffixMap.put(Orientation.LT, "-lt.css");
+    suffixMap.put(Orientation.RT, "-rt.css");
+    suffixMap.put(Orientation.TL, "-lt.css");
+    suffixMap.put(Orientation.TR, "-lt.css");
+  }
 
-//private final static String CSS_SERVLET_URL = "/portal/css";  
+  private static final String LEFT_P = "\\(";
+  private static final String RIGHT_P = "\\)";
 
-  private Map<String, SkinConfig> portalSkins_ ;
+  /** Immutable and therefore thread safe. */
+  private static final Pattern IMPORT_PATTERN = Pattern.compile("(@import\\s+" + "url" + LEFT_P + "['\"]?" + ")([^'\"]+)(" + "['\"]?" + RIGHT_P + "\\s*;)");
 
-  private Map<String, SkinConfig> skinConfigs_;
+  /** Immutable and therefore thread safe. */
+  private static final Pattern BACKGROUND_PATTERN = Pattern.compile("(background\\s+:\\s+url" + LEFT_P + "['\"]?" + ")([^'\"]+)(" + "['\"]?" + RIGHT_P + "\\s*;)");
+
+  /** Immutable and therefore thread safe. */
+  private static final Pattern LT = Pattern.compile("/\\*\\s*orientation=lt\\s*\\*/");
+
+  /** Immutable and therefore thread safe. */
+  private static final Pattern RT = Pattern.compile("/\\*\\s*orientation=rt\\s*\\*/");
+
+  private Map<SkinKey, SkinConfig> portalSkins_ ;
+
+  private Map<SkinKey, SkinConfig> skinConfigs_;
 
   private HashSet<String> availableSkins_;
 
-  private Map<String, String> mergedCSS_;
+  private Map<String, String> cssCache_;
 
   private Map<String, Set<String>> portletThemes_;
 
   private boolean cacheResource_;
 
   public SkinService() {
-    portalSkins_ = new HashMap<String, SkinConfig>() ;
-    skinConfigs_ = new HashMap<String, SkinConfig>(20);
+    portalSkins_ = new HashMap<SkinKey, SkinConfig>() ;
+    skinConfigs_ = new HashMap<SkinKey, SkinConfig>(20);
     availableSkins_ = new HashSet<String>(5);
     cacheResource_ = !"true".equals(System
         .getProperty("exo.product.developing"));
-    mergedCSS_ = new HashMap<String, String>();
+    cssCache_ = new HashMap<String, String>();
   }
 
   public void addCategoryTheme(String categoryName) {
@@ -72,28 +93,48 @@ public class SkinService {
       portletThemes_.put(categoryName, new HashSet<String>());
   }  
 
-  public void addPortalSkin(String module, String skinName, String cssPath, ServletContext scontext) {
-    addPortalSkin(module, skinName, cssPath, scontext, false) ;
+  public void addPortalSkin(String module, String skinName, Orientation orientation, String cssPath, ServletContext scontext) {
+    addPortalSkin(module, skinName, orientation, cssPath, scontext, false) ;
   }
 
-  public void addPortalSkin(String module, String skinName, String cssPath,
+  public void addPortalSkin(String module, String skinName, String cssPath, ServletContext scontext) {
+    addPortalSkin(module, skinName, Orientation.LT, cssPath, scontext) ;
+    addPortalSkin(module, skinName, Orientation.RT, cssPath, scontext) ;
+  }
+
+  /**
+   * todo: check we can remove
+   */
+  public void addPortalSkin(String module, String skinName, Orientation orientation, String cssPath,
       ServletContext scontext, boolean isPrimary) {
     availableSkins_.add(skinName) ;
-    String key = module + "$" + skinName;
+    SkinKey key = new SkinKey(module, skinName, orientation);
     SkinConfig skinConfig = portalSkins_.get(key);
     if (skinConfig == null || isPrimary) {
-      portalSkins_.put(key, new SkinConfig(module, cssPath));
-      mergeCSS(cssPath, scontext);
+      portalSkins_.put(key, new SkinConfig(module, cssPath, orientation));
+      cacheCSS(skinConfig, scontext);
     }
   }
 
+  /**
+   * todo: check we can remove
+   */
   public void addPortalSkin(String module,String skinName, String cssPath, String cssData) {
-    String key = module + "$" + skinName;
+    SkinKey key = new SkinKey(module, skinName);
     SkinConfig skinConfig = portalSkins_.get(key);
     if (skinConfig == null) {
       portalSkins_.put(key, new SkinConfig(module, cssPath));      
     }
-    mergedCSS_.put(cssPath, cssData);
+    cssCache_.put(cssPath, cssData);
+  }
+
+  public void addSkin(
+    String module,
+    String skinName,
+    Orientation orientation,
+    String cssPath,
+    ServletContext scontext) {
+    addSkin(module, skinName, orientation, cssPath, scontext, false);
   }
 
   /**
@@ -103,28 +144,34 @@ public class SkinService {
    * @param cssPath
    */
   public void addSkin(String module, String skinName, String cssPath, ServletContext scontext) {
-    addSkin(module, skinName, cssPath, scontext, false);
+    addSkin(module, skinName, Orientation.LT, cssPath, scontext);
+    addSkin(module, skinName, Orientation.RT, cssPath, scontext);
   }
 
-  public void addSkin(String module, String skinName, String cssPath,
-      ServletContext scontext, boolean isPrimary) {
+  /**
+   * todo: check we can remove
+   */
+  public void addSkin(String module, String skinName, Orientation orientation, String cssPath, ServletContext scontext, boolean isPrimary) {
     availableSkins_.add(skinName);
-    String key = module + "$" + skinName;
+    SkinKey key = new SkinKey(module, skinName, orientation);
     SkinConfig skinConfig = skinConfigs_.get(key);
     if (skinConfig == null || isPrimary) {
-      skinConfigs_.put(key, new SkinConfig(module, cssPath));
-      mergeCSS(cssPath, scontext);
+      skinConfigs_.put(key, new SkinConfig(module, cssPath, orientation));
+      cacheCSS(skinConfig, scontext);
     }
   }
 
+  /**
+   * todo: check we can remove
+   */
   public void addSkin(String module, String skinName, String cssPath, String cssData) {
     availableSkins_.add(skinName);
-    String key = module + "$" + skinName;
+    SkinKey key = new SkinKey(module, skinName);
     SkinConfig skinConfig = skinConfigs_.get(key);    
     if (skinConfig == null) {      
       skinConfigs_.put(key, new SkinConfig(module, cssPath));      
     }
-    mergedCSS_.put(cssPath,cssData);
+    cssCache_.put(cssPath,cssData);
   }
 
   public void addTheme(String categoryName, List<String> themesName) {
@@ -147,15 +194,50 @@ public class SkinService {
     return availableSkins_.iterator();
   }
 
+  /**
+   * Return the CSS content of the file specified by the given URI.
+   *
+   * @param cssPath path of the css to find
+   * @param scontext the related servlet context
+   * @return the css
+   */
+  public String getCSS(String cssPath, ServletContext scontext) {
+    String css = null;
+
+    // Try cache first
+    if (cacheResource_) {
+      css = cssCache_.get(cssPath);
+    }
+
+    //
+    if (css == null) {
+      Orientation orientation = Orientation.LT;
+      if (cssPath.endsWith("-lt.css")) {
+        cssPath = cssPath.substring(0, cssPath.length() - "-lt.css".length()) + ".css";
+      } else if (cssPath.endsWith("-rt.css")) {
+        cssPath = cssPath.substring(0, cssPath.length() - "-rt.css".length()) + ".css";
+        orientation = Orientation.RT;
+      }
+      css = processCSS(cssPath, orientation, scontext, false);
+    }
+
+    //
+    return css;
+  }
+
   public String getMergedCSS(String cssPath) {
-    return mergedCSS_.get(cssPath);
+    return cssCache_.get(cssPath);
   }
 
   public Collection<SkinConfig> getPortalSkins(String skinName) {
-    Set<String> keys = portalSkins_.keySet();
+    return getPortalSkins(skinName, Orientation.LT);
+  }
+
+  public Collection<SkinConfig> getPortalSkins(String skinName, Orientation orientation) {
+    Set<SkinKey> keys = portalSkins_.keySet();
     Collection<SkinConfig> portalSkins = new ArrayList<SkinConfig>() ;
-    for(String key : keys) {
-      if(key.endsWith("$" + skinName)) portalSkins.add(portalSkins_.get(key)) ;
+    for(SkinKey key : keys) {
+      if(key.getName().equals(skinName) && key.getOrientation() == orientation) portalSkins.add(portalSkins_.get(key)) ;
     }
     return portalSkins ;
   }
@@ -164,29 +246,27 @@ public class SkinService {
     return portletThemes_;
   }
 
-  public SkinConfig getSkin(String key) {
-    return skinConfigs_.get(key);
+  public SkinConfig getSkin(String module, String skinName) {
+    return getSkin(module, skinName, Orientation.LT);
   }
 
-  public SkinConfig getSkin(String module, String skinName) {
-    SkinConfig config = skinConfigs_.get(module + "$" + skinName) ;
-    if(config == null) skinConfigs_.get(module + "$Default") ;
+  public SkinConfig getSkin(String module, String skinName, Orientation orientation) {
+    SkinConfig config = skinConfigs_.get(new SkinKey(module, skinName, orientation)) ;
+    if(config == null) skinConfigs_.get(new SkinKey(module, "Default", orientation)) ;
     return config;
   }
 
   public void invalidatePortalSkinCache(String portalName, String skinName) {
-    String key = portalName + "$" + skinName;
-    skinConfigs_.remove(key);
-  }
-
-  public void remove(String key) throws Exception {
+    SkinKey key = new SkinKey(portalName, skinName);
     skinConfigs_.remove(key);
   }
 
   public void remove(String module, String skinName) throws Exception {
-    String key = module + "$" + skinName;
+    SkinKey key;
     if (skinName.length() == 0)
-      key = module + "$Default";
+      key = new SkinKey(module, "Default");
+    else
+      key = new SkinKey(module, skinName);
     skinConfigs_.remove(key);
   }
 
@@ -198,93 +278,127 @@ public class SkinService {
     return skinConfigs_.size();
   }
 
-  /**
-   * This method is only called in production environment where all the css for the
-   * portlets displayed in the portal canvas are merged into as single CSS file
-   */
-//public SkinConfig getPortalSkin(String portalName,
-//String skinName, List<String> portletInPortal) {
-//String key = portalName + "$" + skinName;
-//SkinConfig portalSkinConfig = skinConfigs_.get(key);
-//if(portalSkinConfig == null) {
-////manage the portlet in portal merge and generate the css Path
-//StringBuffer buffer = new StringBuffer();
-//for (String module : portletInPortal) {
-//String portletKey = module + "$" + skinName;
-//SkinConfig portletConfig = skinConfigs_.get(portletKey);
-//if(portletConfig != null) {
-//String portletCSS = mergedCSS_.get(portletConfig.getCSSPath());
-//if(portletCSS != null) {
-//buffer.append(portletCSS);
-//}
-//}
-
-//}
-//String cssPath = CSS_SERVLET_URL + "/" + key + ".css";
-//mergedCSS_.put(cssPath, buffer.toString());
-//portalSkinConfig = new SkinConfig(portalName, cssPath, false);
-//skinConfigs_.put(key, portalSkinConfig);
-//}
-//return portalSkinConfig;
-//}
-
-
-  private void mergeCSS(String cssPath, ServletContext scontext) {
+  private void cacheCSS(SkinConfig config, ServletContext scontext) {
     if (cacheResource_) {
-      String relativeCSSPath = cssPath.substring(cssPath.indexOf("/", 2));
-      Pattern pattern = Pattern.compile(REGEXP);
-      StringBuffer sB = new StringBuffer();
-
-      String resolvedPath = relativeCSSPath.substring(0, relativeCSSPath
-          .lastIndexOf("/") + 1);
-      String includedPath = relativeCSSPath.substring(relativeCSSPath
-          .lastIndexOf("/") + 1);
-      processMergeRecursively(pattern, sB, scontext, resolvedPath, includedPath);
-      mergedCSS_.put(cssPath, sB.toString());
+      String css = processCSS(config.getCSSPath(), config.getOrientation(), scontext, true);
+      cssCache_.put(config.getVirtualCSSPath(), css);
     }
   }
 
-  private void processMergeRecursively(Pattern pattern, StringBuffer sB,
-      ServletContext scontext, String basePath, String pathToResolve) {
-    String resolvedPath = basePath.substring(0, basePath.lastIndexOf("/") + 1)
-    + pathToResolve;
+  private String processCSS(String cssPath, Orientation orientation, ServletContext scontext, boolean merge) {
+    String relativeCSSPath = cssPath.substring(cssPath.indexOf("/", 2));
+    String resolvedPath = relativeCSSPath.substring(0, relativeCSSPath.lastIndexOf("/") + 1);
+    String includedPath = relativeCSSPath.substring(relativeCSSPath.lastIndexOf("/") + 1);
+    StringBuffer sB = new StringBuffer();
+    processCSSRecursively(sB, merge, scontext, resolvedPath, includedPath, orientation);
+    return sB.toString();
+  }
 
+  private void processCSSRecursively(
+      StringBuffer sB,
+      boolean merge,
+      ServletContext scontext,
+      String basePath,
+      String pathToResolve,
+      Orientation orientation) {
+    String resolvedPath = basePath.substring(0, basePath.lastIndexOf("/") + 1) + pathToResolve;
+    String rootContext = resolvedPath.substring(0, resolvedPath.lastIndexOf("/") + 1);
+    String rootURL = "/" + scontext.getServletContextName() + rootContext;
     String line = "";
     try {
-      BufferedReader reader = new BufferedReader(new InputStreamReader(scontext
-          .getResourceAsStream(resolvedPath)));
+      BufferedReader reader = new BufferedReader(new InputStreamReader(scontext.getResourceAsStream(resolvedPath)));
       try {
         while ((line = reader.readLine()) != null) {
-          Matcher matcher = pattern.matcher(line);
+          Matcher matcher = IMPORT_PATTERN.matcher(line);
           if (matcher.find()) {
-            String includedPath = "";
-            if (line.contains("url('") || line.contains("url(\"")) {
-              includedPath = line.substring("@import url(".length() + 1, line
-                  .indexOf(")") - 1);
+            String includedPath = matcher.group(2);
+            if (merge) {
+              if(includedPath.startsWith("/")) {
+                int i1 = 0;
+                int i2 = includedPath.indexOf("/", 2);
+                int i3 = includedPath.lastIndexOf("/") + 1;
+                String targetedContextName = includedPath.substring(i1, i2);
+                String targetedResolvedPath = includedPath.substring(i2, i3);
+                String targetedIncludedPath = includedPath.substring(i3);
+                ServletContext targetedContext = scontext.getContext(targetedContextName);
+                processCSSRecursively(sB, merge, targetedContext, targetedResolvedPath, targetedIncludedPath, orientation);
+              } else
+                processCSSRecursively(sB, merge, scontext, resolvedPath, includedPath, orientation);
             } else {
-              includedPath = line.substring("@import url(".length(), line
-                  .indexOf(")"));
+              sB.append(matcher.group(1));
+              sB.append(rootURL);
+              sB.append(includedPath.substring(0, includedPath.length() - ".css".length()));
+              sB.append(getSuffix(orientation));
+              sB.append(matcher.group(3));
             }
-            if(includedPath.startsWith("/")) {
-              String targetedContextName = includedPath.substring(includedPath.indexOf("/"), 
-                  includedPath.indexOf("/", 2));
-              String targetedResolvedPath = includedPath.substring(includedPath.indexOf("/", 2), 
-                  includedPath.lastIndexOf("/") + 1);
-              String targetedIncludedPath = includedPath.substring(includedPath
-                  .lastIndexOf("/") + 1);      
-              ServletContext targetedContext = scontext.getContext(targetedContextName);
-
-              StringBuffer tempSB = new StringBuffer();
-              processMergeRecursively(pattern, tempSB, targetedContext, 
-                  targetedResolvedPath, targetedIncludedPath );
-              sB.append(tempSB);
-            } else 
-              processMergeRecursively(pattern, sB, scontext, resolvedPath, includedPath);
           } else {
-            String rootContext = resolvedPath.substring(0, resolvedPath
-                .lastIndexOf("/") + 1);
-            String rootURL = "/" + scontext.getServletContextName()
-            + rootContext;
+            append(line, rootURL, sB, orientation);
+          }
+        }
+      } catch (Exception ex) {
+        log.error("Problem while processing line : " + line, ex);
+      } finally {
+        try {
+          reader.close();
+        } catch (Exception ex) {
+        }
+      }
+    } catch (Exception e) {
+      log.error("Problem while merging CSS : " + resolvedPath, e);
+    }
+
+  }
+
+  private void append(String line, String basePath, StringBuffer sB, Orientation orientation) {
+
+    // Filter what if it's annotated with the alternative orientation
+    Pattern orientationPattern = orientation == Orientation.LT ? RT : LT;
+    Matcher matcher2 = orientationPattern.matcher(line);
+    if (matcher2.find()) {
+      return;
+    }
+
+    // Rewrite background url pattern
+    Matcher matcher = BACKGROUND_PATTERN.matcher(line);
+    if (matcher.find() && !matcher.group(2).startsWith("\"") && !matcher.group(2).startsWith("'")) {
+      sB.append(matcher.group(1)).append(basePath).append(matcher.group(2)).append(matcher.group(3)).append('\n');
+    }
+    else {
+      sB.append(line).append('\n');
+    }
+  }
+
+  static String getSuffix(Orientation orientation) {
+    return suffixMap.get(orientation);
+  }
+
+
+/*
+  private void processCSSRecursively(StringBuffer sB, boolean merge,
+      ServletContext scontext, String basePath, String pathToResolve) {
+    String resolvedPath = basePath.substring(0, basePath.lastIndexOf("/") + 1) + pathToResolve;
+    String rootContext = resolvedPath.substring(0, resolvedPath.lastIndexOf("/") + 1);
+    String rootURL = "/" + scontext.getServletContextName() + rootContext;
+    String line = "";
+    try {
+      BufferedReader reader = new BufferedReader(new InputStreamReader(scontext.getResourceAsStream(resolvedPath)));
+      try {
+        while ((line = reader.readLine()) != null) {
+          Matcher matcher = IMPORT_PATTERN.matcher(line);
+          if (matcher.find()) {
+            String includedPath = matcher.group(1);
+            if(includedPath.startsWith("/")) {
+              int i1 = 0;
+              int i2 = includedPath.indexOf("/", 2);
+              int i3 = includedPath.lastIndexOf("/") + 1;
+              String targetedContextName = includedPath.substring(i1, i2);
+              String targetedResolvedPath = includedPath.substring(i2, i3);
+              String targetedIncludedPath = includedPath.substring(i3);
+              ServletContext targetedContext = scontext.getContext(targetedContextName);
+              processCSSRecursively(sB, merge, targetedContext, targetedResolvedPath, targetedIncludedPath );
+            } else 
+              processCSSRecursively(sB, merge, scontext, resolvedPath, includedPath);
+          } else {
             rewriteLine(line, rootURL, sB);
           }
         }
@@ -303,24 +417,14 @@ public class SkinService {
   }
 
   private void rewriteLine(String line, String basePath, StringBuffer sB) {
-    Pattern backgroundPattern = Pattern.compile(BACKGROUND_REGEXP);
-    Matcher matcher = backgroundPattern.matcher(line);
-    if ((!matcher.find()) || line.contains("url(/") || line.contains("url('/")
-        || line.contains("url(\"/")) {
-      sB.append(line + "\n");
+    Matcher matcher = BACKGROUND_PATTERN.matcher(line);
+    if (!matcher.find() || matcher.group(2).startsWith("\"") || matcher.group(2).startsWith("'")) {
+      sB.append(line).append('\n');
       return;
     }
-    int firstIndex = line.indexOf("url(") + "url(".length();
-    int lastIndex = line.indexOf(")");
-    sB.append(line.substring(0, firstIndex));
-    String urlToRewrite = "";
-    if (line.contains("url('") || line.contains("url(\"")) {
-      urlToRewrite = line.substring(firstIndex + 1, lastIndex - 1);
-    } else {
-      urlToRewrite = line.substring(firstIndex, lastIndex);
-    }
-    sB.append(basePath + urlToRewrite);
-    sB.append(line.substring(lastIndex) + "\n");
-
+    sB.append(matcher.group(1));
+    sB.append(basePath).append(matcher.group(2));
+    sB.append(matcher.group(3)).append('\n');
   }
+*/
 }

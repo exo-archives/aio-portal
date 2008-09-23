@@ -29,7 +29,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.exoplatform.Constants;
+import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.resources.Orientation;
 import org.exoplatform.web.application.JavascriptManager;
 import org.exoplatform.web.application.URLBuilder;
 import org.exoplatform.webui.application.WebuiApplication;
@@ -103,12 +105,16 @@ public class PortalRequestContext extends WebuiRequestContext {
     
     urlBuilder = new PortalURLBuilder(nodeURI_);
   }
-  
+
   public void refreshResourceBundle() throws Exception {
-    appRes_ = getApplication().getResourceBundle(uiApplication_.getLocale()) ;  
+    appRes_ = getApplication().getResourceBundle(getLocale()) ;
   }
-  
-  public Locale getLocale() {  return uiApplication_.getLocale() ;} 
+
+  public Orientation getOrientation() {
+    return ((UIPortalApplication)uiApplication_).getOrientation();
+  }
+
+  public Locale getLocale() {  return ((UIPortalApplication)uiApplication_).getLocale();}
   
   public String getCacheLevel() { return cacheLevel_ ; }
 
