@@ -37,7 +37,7 @@
 							</div>
 						  <div class="LoginRight" style="float: left;" title="Sign Out">
 						    <div class="LoginSeperatorLine"><span></span></div>				  	
-								<a class="LogoutIcon" onclick="eXo.portal.logout();"><%=_ctx.appRes("UILogged.action.signout")%></a>
+								<a class="LogoutIcon" href="$signOutAction"><%=_ctx.appRes("UILogged.action.signout")%></a>
 							</div>		
 							<div style="clear: left;"><span></span></div>				
 						<%} else {%>
