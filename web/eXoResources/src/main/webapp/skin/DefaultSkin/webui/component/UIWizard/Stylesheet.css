@@ -154,11 +154,8 @@
 
 .UIWizard .UIWizardPageSetInfo .SelectedPageInfo .PageInfoContainer {
   background: #efefef;
-  padding: 20px 0px;
+  padding: 22px 0px;
   border:  solid 1px #cdcdcd;
-  
-  /*fix for bug PORTAL-1635*/
-  margin-bottom: 3px;
  }
 
 .UIWizard .UIWizardPageSetInfo .SelectedPageInfo .PageNodeInfo {

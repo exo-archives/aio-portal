@@ -231,6 +231,7 @@ public class UIPageCreationWizard extends UIPageWizard {
 
       if(uiWizard.getSelectedStep() < 4){
         uiWizard.updateWizardComponent();
+        uiWizard.setDescriptionWizard(uiWizard.getSelectedStep()) ;
         uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.StepByStep",null)) ;
         context.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages()) ;
         return ;
