@@ -111,12 +111,17 @@ public class UIPageNodeActionListener {
       uiToolPanel.setShowMaskLayer(true) ;
       pcontext.setFullRender(true);
       UserPortalConfigService portalConfigService = uiPopupMenu.getApplicationComponent(UserPortalConfigService.class);
-      Page page  = portalConfigService.getPage(selectNode.getPageReference(), pcontext.getRemoteUser());
-      if(page == null ) {
+      Page page = null;
+      if(selectNode.getPageReference() != null) page = portalConfigService.getPage(selectNode.getPageReference(), pcontext.getRemoteUser());
+      if(page == null) {
         Class<?> [] childrenToRender = {UIPageNodeSelector.class, UIPageNavigationControlBar.class };      
         uiManagement.setRenderedChildrenOfTypes(childrenToRender);
         uiToolPanel.setUIComponent(null) ;
-        uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.edit.NotEditPage", new String[]{})) ;
+        if(selectNode.getPageReference() != null && portalConfigService.getPage(selectNode.getPageReference()) != null) {
+          uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.edit.NotEditPage", new String[]{})) ;
+        } else {
+          uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.PageNotExist", new String[]{})) ;
+        }
         Util.getPortalRequestContext().addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages() );
         return;
       }
