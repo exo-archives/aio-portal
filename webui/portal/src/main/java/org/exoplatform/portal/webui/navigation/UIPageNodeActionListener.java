@@ -106,17 +106,22 @@ public class UIPageNodeActionListener {
       UIControlWorkspace uiControl = uiPortalApp.getChildById(UIPortalApplication.UI_CONTROL_WS_ID);
       pcontext.addUIComponentToUpdateByAjax(uiControl);
       UIWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
-      pcontext.addUIComponentToUpdateByAjax(uiWorkingWS) ;   
+      pcontext.addUIComponentToUpdateByAjax(uiWorkingWS) ;
       uiWorkingWS.setRenderedChild(UIPortalToolPanel.class) ;
       uiToolPanel.setShowMaskLayer(true) ;
       pcontext.setFullRender(true);
       UserPortalConfigService portalConfigService = uiPopupMenu.getApplicationComponent(UserPortalConfigService.class);
-      Page page  = portalConfigService.getPage(selectNode.getPageReference(), pcontext.getRemoteUser());
-      if(page == null ) {
+      Page page = null;
+      if(selectNode.getPageReference() != null) page = portalConfigService.getPage(selectNode.getPageReference(), pcontext.getRemoteUser());
+      if(page == null) {
         Class<?> [] childrenToRender = {UIPageNodeSelector.class, UIPageNavigationControlBar.class };      
         uiManagement.setRenderedChildrenOfTypes(childrenToRender);
         uiToolPanel.setUIComponent(null) ;
-        uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.edit.null", new String[]{})) ;
+        if(selectNode.getPageReference() != null && portalConfigService.getPage(selectNode.getPageReference()) != null) {
+          uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.edit.NotEditPage", new String[]{})) ;
+        } else {
+          uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.PageNotExist", new String[]{})) ;
+        }
         Util.getPortalRequestContext().addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages() );
         return;
       }
