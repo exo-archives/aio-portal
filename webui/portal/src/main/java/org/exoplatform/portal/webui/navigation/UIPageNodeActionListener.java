@@ -322,7 +322,7 @@ public class UIPageNodeActionListener {
       if(children != null) for(PageNode node : children) setNewUri(child, node) ; 
     }
     
-    public boolean isExistChild(PageNode parent, PageNode child) {
+    private boolean isExistChild(PageNode parent, PageNode child) {
       if(parent == null) return false;
       List<PageNode> nodes = parent.getChildren();
       if(nodes == null) {
@@ -335,7 +335,7 @@ public class UIPageNodeActionListener {
       return false;
     }
     
-    public boolean isExitChild(PageNavigation nav, PageNode child) {
+    private boolean isExitChild(PageNavigation nav, PageNode child) {
       List<PageNode> nodes = nav.getNodes();
       if(nodes.size() == 0) return false;
       for(PageNode node : nodes){
