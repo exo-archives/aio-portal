@@ -61,6 +61,7 @@ UICalendar.prototype.show = function() {
 	
 	var drag = document.getElementById("BlockCaledar");
 	var component =  eXo.core.DOMUtil.findAncestorByClass(drag, "UICalendarComponent");
+	var calendar = eXo.core.DOMUtil.findFirstChildByClass(drag, "div", "UICalendar");
 	var innerWidth = drag.offsetWidth;
 	drag.onmousedown = function(evt) {
 		var event = evt || window.event;
