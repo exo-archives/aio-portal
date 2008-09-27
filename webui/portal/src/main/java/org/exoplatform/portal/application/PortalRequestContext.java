@@ -18,6 +18,7 @@ package org.exoplatform.portal.application;
 
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
@@ -80,7 +81,7 @@ public class PortalRequestContext extends WebuiRequestContext {
     String cache = req.getParameter(CACHE_LEVEL);
     if(cache != null) cacheLevel_ = cache;
     
-    nodeURI_ = req.getRequestURI() ;
+    nodeURI_ = URLDecoder.decode(req.getRequestURI(), "UTF-8");
     String pathInfo = req.getPathInfo() ;
     if(pathInfo == null) pathInfo = "/" ;
     int colonIndex = pathInfo.indexOf("/", 1)  ;

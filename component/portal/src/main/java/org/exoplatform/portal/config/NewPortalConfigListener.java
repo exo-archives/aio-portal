@@ -69,11 +69,9 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     ValueParam valueParam = params.getValueParam("default.portal");
     if(valueParam != null) checkPortal = valueParam.getValue();
     if(checkPortal == null  || checkPortal.trim().length() == 0) checkPortal = "classic";    
-    
     configs = params.getObjectParamValues(NewPortalConfig.class);
    
     if(isInitedDB(checkPortal)) return;
-    
     for (Object ele : configs) {
       NewPortalConfig portalConfig  = (NewPortalConfig)ele;
       if(portalConfig.getOwnerType().equals("user")) {
