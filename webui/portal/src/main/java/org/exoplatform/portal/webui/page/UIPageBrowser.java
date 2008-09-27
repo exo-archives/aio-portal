@@ -280,7 +280,16 @@ public class UIPageBrowser extends UISearch {
       UIPageBody uiPageBody = uiPortalApp.findFirstComponentOfType(UIPageBody.class) ; 
       if(uiPageBody.getUIComponent() != null) uiPageBody.setUIComponent(null);
 
-    
+      if (Page.DESKTOP_PAGE.equals(page.getFactoryId())) {
+        UIMaskWorkspace uiMaskWS = uiPortalApp.getChildById(UIPortalApplication.UI_MASK_WS_ID);
+        UIPageForm uiPageForm = uiMaskWS.createUIComponent(
+            UIPageForm.class, "UIBrowserPageForm", "UIPageForm");
+        uiPageForm.setValues(uiPage);
+        uiMaskWS.setUIComponent(uiPageForm);
+        uiMaskWS.setShow(true);
+        pcontext.addUIComponentToUpdateByAjax(uiMaskWS);
+        return;
+      }
 
       UIControlWorkspace uiControl =  uiPortalApp.findFirstComponentOfType(UIControlWorkspace.class) ;
       UIComponentDecorator uiWorking = uiControl.getChildById(UIControlWorkspace.WORKING_AREA_ID) ;
