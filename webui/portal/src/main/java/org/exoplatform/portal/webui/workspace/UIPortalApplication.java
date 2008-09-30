@@ -370,13 +370,13 @@ public class UIPortalApplication extends UIApplication {
     SkinService skinService = getApplicationComponent(SkinService.class);
     for(UIPortlet uiPortlet : uiportlets){
       String module = uiPortlet.getExoWindowID().getPortletApplicationName() + "/" + uiPortlet.getExoWindowID().getPortletName() ;
-      SkinConfig skinConfig = skinService.getSkin(module,skin_) ;
+      SkinConfig skinConfig = skinService.getSkin(module,skin_, orientation_) ;
       if(skinConfig != null) skins.add(skinConfig);
     }
     StringBuilder b = new StringBuilder(1000) ;
     for(SkinConfig ele : skins) {
       b.append("eXo.core.Skin.addSkin('").append(ele.getId()).
-      append("','").append(ele.getCSSPath()).append("');\n"); 
+      append("','").append(ele.getVirtualCSSPath()).append("');\n");
     }
     return b.toString() ;
   }
