@@ -63,8 +63,3 @@
 .UIPage .PageLayoutDecorator .BottomCenterPage .FixBug {
   height: 38px ;   
 }
-
-.UIPage .UIRowContainer .UITabContainer .UIHorizontalTabs {
-  padding: 0px;
-}
-
