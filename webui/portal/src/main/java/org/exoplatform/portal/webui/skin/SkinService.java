@@ -18,6 +18,8 @@ package org.exoplatform.portal.webui.skin;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -42,6 +44,8 @@ public class SkinService {
 
 	private final static String CSS_SERVLET_URL = "/portal/css";
 
+	private Map<String, SkinConfig> portalSkins_;
+	
 	private Map<String, SkinConfig> skinConfigs_;
 
 	private HashSet<String> availableSkins_;
@@ -242,6 +246,15 @@ public class SkinService {
 		SkinConfig config = skinConfigs_.get(key);
 		return config;
 	}
+	
+	public Collection<SkinConfig> getPortalSkins(String skinName) {
+    Set<String> keys = portalSkins_.keySet();
+    Collection<SkinConfig> portalSkins = new ArrayList<SkinConfig>() ;
+    for(String key : keys) {
+      if(key.endsWith("$" + skinName)) portalSkins.add(portalSkins_.get(key)) ;
+    }
+    return portalSkins ;
+  }
 
 	public int size() {
 		return skinConfigs_.size();

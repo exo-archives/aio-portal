@@ -31,6 +31,7 @@ import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.skin.SkinConfig;
 import org.exoplatform.portal.webui.skin.SkinService;
 import org.exoplatform.portal.webui.util.PortalDataMapper;
+import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.UserProfile;
@@ -124,7 +125,7 @@ public class UIPortalApplication extends UIApplication {
 //    if(localeConfig == null) localeConfig = localeConfigService.getDefaultLocaleConfig();
 //    setLocale(localeConfig.getLocale());
     setOwner(context.getPortalOwner());
-//  TODO: dang.tung - set portal language by user preference -> browser -> default
+//    dang.tung - set portal language by user preference -> browser -> default
     //------------------------------------------------------------------------------
     String portalLanguage = null ;
     LocaleConfigService localeConfigService  = getApplicationComponent(LocaleConfigService.class) ;
@@ -161,6 +162,16 @@ public class UIPortalApplication extends UIApplication {
   public Collection<String> getJavascriptURLs() {
     JavascriptConfigService service = getApplicationComponent(JavascriptConfigService.class);
     return service.getAvailableScriptsPaths();
+  }
+  
+  public Collection<SkinConfig> getPortalSkins() {
+    SkinService skinService = getApplicationComponent(SkinService.class) ;
+    Collection<SkinConfig> portalSkins = skinService.getPortalSkins(skin_);
+    SkinConfig skinConfig = skinService.getSkin(Util.getUIPortal().getName(),skin_);
+    if(skinConfig != null) {
+      portalSkins.add(skinConfig);
+    }
+    return portalSkins;
   }
   
   public String getSkin() {  return skin_ ; }
@@ -214,8 +225,7 @@ public class UIPortalApplication extends UIApplication {
       // page
       SkinService skinService = getApplicationComponent(SkinService.class);
       SkinConfig skinConfig = skinService.getPortalSkin(uiPortal.getName(), skin_, portletInPortal);
-      if (skinConfig != null)
-        skins.add(skinConfig);
+      if (skinConfig != null) skins.add(skinConfig);
     }
 
     for (UIPortlet uiPortlet : uiportlets) {
