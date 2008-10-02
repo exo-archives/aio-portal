@@ -196,7 +196,11 @@ public class UIListPermissionSelector extends UISelector<String[]> {
     public void execute(Event<UIListPermissionSelector> event) throws Exception {
       String permission  = event.getRequestContext().getRequestParameter(OBJECTID) ;
       UIListPermissionSelector uiPermissions = event.getSource() ;
+      UIFormPageIterator pageIterator = (UIFormPageIterator) uiPermissions.getChild(UIFormGrid.class).getUIPageIterator() ;
+      int currentPage = pageIterator.getCurrentPage() ;
       uiPermissions.removePermission(permission);
+      while(currentPage > pageIterator.getAvailablePage()) currentPage-- ;
+      pageIterator.setCurrentPage(currentPage) ;
       UIContainer uiParent = uiPermissions.getParent() ;
       uiParent.setRenderedChild(UIListPermissionSelector.class) ;
       UIForm uiForm = uiPermissions.getAncestorOfType(UIForm.class);

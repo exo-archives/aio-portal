@@ -161,7 +161,11 @@ public class UIListUsers extends UISearch {
         return ;
       }
       service.getUserHandler().removeUser(userName, true) ;
+      UIPageIterator pageIterator = uiListUser.getChild(UIGrid.class).getUIPageIterator();
+      int currentPage = pageIterator.getCurrentPage();
       uiListUser.search(uiListUser.lastQuery_);
+      while(currentPage > pageIterator.getAvailablePage()) currentPage--;
+      pageIterator.setCurrentPage(currentPage);
       UIComponent uiToUpdateAjax = uiListUser.getAncestorOfType(UIUserManagement.class) ;
       event.getRequestContext().addUIComponentToUpdateByAjax(uiToUpdateAjax) ;
     }

@@ -72,16 +72,19 @@ public class UIPortalBrowser extends UIContainer {
 
   public void loadPortalConfigs() throws Exception {    
     DataStorage service = getApplicationComponent(DataStorage.class) ;
+    UIGrid uiGrid = findFirstComponentOfType(UIGrid.class) ;
+    int currentPage = uiGrid.getUIPageIterator().getCurrentPage() ;
     Query<PortalConfig> query = new Query<PortalConfig>(null, null, null, PortalConfig.class) ;
     PageList pageList = service.find(query, new Comparator<PortalConfig>(){
       public int compare(PortalConfig pconfig1, PortalConfig pconfig2) {
-        return pconfig1.getName().compareTo(pconfig2.getName());
+        return pconfig1.getName().compareTo(pconfig2.getName()) ;
       }
     }) ;
     pageList.setPageSize(10) ;
-    UIGrid uiGrid = findFirstComponentOfType(UIGrid.class) ;
-    uiGrid.setUseAjax(false);
-    uiGrid.getUIPageIterator().setPageList(pageList);
+    uiGrid.setUseAjax(false) ;
+    uiGrid.getUIPageIterator().setPageList(pageList) ;
+    while(currentPage > uiGrid.getUIPageIterator().getAvailablePage()) currentPage-- ;
+    uiGrid.getUIPageIterator().setCurrentPage(currentPage) ;
   } 
 
   static public class DeletePortalActionListener extends EventListener<UIPortalBrowser> {
