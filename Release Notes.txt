@@ -21,15 +21,9 @@
 
 
 - What is new in eXo Portal 2.2
-        + Portal 2.2 upgrade to use kernel 2.0.2, core 2.1, portlet-container 2.0.1, jcr 1.9.1, ws 1.2.1 
-	with many improvements of performances (should refer to each them for more details )
-        + Upgrade version to using of groovy template engine from groovy-all-minimal-1.5.4 to groovy-all-1.5.6
-        + Upgrade version to using of jibx from 1.1.3 to 1.1.6a
-        + Rename SkinListener to SkinConfigListener
-        + Deploy and integrate Rest services.
-        + Integrated Cometd into the portal.
-        + Language support for both user and browser language.
-        + New security layer (eXo Core 2.1). New LoginModule implementations including J2EE servers (Tomcat, JBoss, JOnAS).
+        + Portal 2.2.1 upgrade to use core 2.1.1, portlet-container 2.0.2, jcr 1.9.3
+	with many improvements of performances and security (should refer to each them for more details )
+        
 
 
 - Complete list of issues fixed in eXo Portal 2.2
