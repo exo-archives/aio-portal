@@ -88,10 +88,6 @@
   padding: 0px 6px;
 }
 
-.UITabSelector .FlatTabStyle .SelectedTab a.Title:hover {
-  color: #058ee6;
-}
-
 /************************************ List Permission Selector *******************************/
 .UIAccessGroup {
   padding: 10px;
