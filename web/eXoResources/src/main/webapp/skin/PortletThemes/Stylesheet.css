@@ -2920,7 +2920,6 @@
 
 .UIPortlet .SimpleViolet .BottomDecoratorCenter {
 	height: 18px;
-	*margin: 0px 1px;
 }
 
 /*------------------------------ SimpleOrange -----------------------------------*/
@@ -3066,7 +3065,6 @@
 
 .UIPortlet .SimpleOrange .BottomDecoratorCenter {
 	height: 18px;
-	*margin: 0px 1px;
 }
 
 /*------------------------------ SimplePink -----------------------------------*/
@@ -3360,5 +3358,4 @@
 
 .UIPortlet .SimpleGreen .BottomDecoratorCenter {
 	height: 18px;	
-	*margin: 0px 1px 0px 1px;
 }
