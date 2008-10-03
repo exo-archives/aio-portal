@@ -44,10 +44,6 @@
 	width: 100%;
 }
 
-.UIApplicationRegistryPortlet #UICategoryForm .UIFormGrid {
-	width: 100%;
-}
-
 .ApplicationRegistryWorkingArea .UIPermissionForm .UIFormGrid .UIFormGrid {
 	width: auto;
 	margin: auto;
@@ -215,11 +211,6 @@
 
 .ApplicationRegistryWorkingArea .eXoBrowserIcon {
   background: url(/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/icons/80x80/Register.png) no-repeat;
-}
-
-.ApplicationRegistryWorkingArea .UIInfoPortletForm {
-	width: 400px;
-	margin: auto;
 }
 
 .ApplicationRegistryWorkingArea .LabelButton {

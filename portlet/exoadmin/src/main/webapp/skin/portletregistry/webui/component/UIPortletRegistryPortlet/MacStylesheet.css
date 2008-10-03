@@ -52,7 +52,7 @@
 	width: 100%;
 }
 
-.ApplicationRegistryWorkingArea .UIPermissionForm .UIFormGrid .UIFormGrid {
+.ApplicationRegistryWorkingArea .UIPermissionForm .PublicCheck .UIFormGrid {
 	width: auto;
 }
 
@@ -135,16 +135,6 @@
   border-left: none;
   margin:0px;
   padding: 0px;
-}
-
-.ApplicationRegistryControlArea .UICategoryForm {
-	border: 1px solid #b7b7b7;
-}
-
-.ApplicationRegistryControlArea .UICategoryForm .HorizontalLayout{
-  padding: 10px;
-  background: url('/eXoSkinMac/skin/MacSkin/background/BgApplicationRegistryPortle1x4.gif');
-  border: 1px solid white;
 }
 
 /*################################Application Registry Working################################*/
@@ -235,44 +225,12 @@
   background: url(/eXoResources/skin/portal/webui/component/view/UIPageDesktop/DefaultSkin/icons/80x80/Register.png) no-repeat;
 }
 
-.ApplicationRegistryWorkingArea .UIForm .HorizontalLayout {
-  border: none;
-}
-
-.ApplicationRegistryWorkingArea .UIAvailablePortletForm {
-  padding: 10px;
-  background: url('/eXoSkinMac/skin/MacSkin/background/BgApplicationRegistryPortle1x4.gif');
-  border: 1px solid #b7b7b7;
-}
-
 .ApplicationRegistryWorkingArea .UIAvailablePortletForm .UIFormGrid {
 	width: 100%;
-}
-
-.ApplicationRegistryWorkingArea .UIPermissionForm .UIFormGrid {
-	width: 100%;
-}
-
-.ApplicationRegistryWorkingArea .UIInfoPortletForm {
-  border: 1px solid #b7b7b7;
-}
-
-.ApplicationRegistryWorkingArea .UIInfoPortletForm .HorizontalLayout{
-  padding: 10px 10px 10px 40px;
-  background: url('/eXoSkinMac/skin/MacSkin/background/BgApplicationRegistryPortle1x4.gif') repeat;
-  border: 1px solid white;
-}
-
-.ApplicationRegistryWorkingArea .UIInfoPortletForm .HorizontalLayout .UIFormGrid {
-  margin-top: 15px;
 }
 
 .ApplicationRegistryWorkingArea .LabelButton {
 	text-align: center; 
 	color: #3c3c3c; 
 	line-height: 25px;
-}
-
-.ApplicationRegistryWorkingArea .UIDragObject .UIInfoPortletForm .UIFormGrid {
-  margin: 6px auto 0px auto;
 }

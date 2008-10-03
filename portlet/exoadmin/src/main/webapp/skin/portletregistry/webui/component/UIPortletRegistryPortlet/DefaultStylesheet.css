@@ -23,6 +23,10 @@
 	padding: 10px;
 }
 
+.UIApplicationRegistryPortlet .UIInfoPortletForm {
+	padding: 10px;
+}
+
 .UIApplicationRegistryPortlet .CategoryContainer .EditIcon  {
 	float: none;
 }
@@ -35,10 +39,6 @@
 
 .UIApplicationRegistryPortlet .UIApplicationRegistryContainer {
   padding: 10px;
-}
-
-.UIApplicationRegistryPortlet .UIAvailablePortletForm {
-  margin: auto;
 }
 
 .UIApplicationRegistryPortlet .UIAvailablePortletForm .UIFormGrid {
@@ -64,18 +64,6 @@
 
 .ApplicationRegistryWorkingArea .UIPermissionForm .UIAccessGroup .UIGrid td.text{
   padding-left: 5px;
-}
-
-.UIApplicationRegistryPortlet .UIForm .HorizontalLayout {
-  border: none;
-}
-
-.ApplicationRegistryWorkingArea .UIInfoPortletForm {
-  padding: 10px 0px;
-}
-
-.ApplicationRegistryWorkingArea .UIInfoPortletForm .HorizontalLayout {
-  padding: 10px 10px 0px 0px;
 }
 
 .UIApplicationRegistryPortlet .UIVerticalSlideTabs {
@@ -104,9 +92,6 @@
 
 .ApplicationRegistryControlArea .CategoryManagement {
   border: 1px solid white;
-}
-
-.ApplicationRegistryControlArea .UICategoryForm .HorizontalLayout{
 }
 
 .ApplicationRegistryControlArea  .CategoryControlBar {
@@ -241,10 +226,6 @@
   margin: auto;
 }
 
-.ApplicationRegistryWorkingArea .UIAvailablePortletForm .FormContainer {
-	padding: 10px;
-}
-
 .ApplicationRegistryWorkingArea .UIAvailablePortletForm .UIGrid {
   width: 99%;
   margin: auto;
@@ -255,4 +236,3 @@
 	color: #3c3c3c; 
 	line-height: 25px;
 }
-
