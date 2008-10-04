@@ -204,7 +204,7 @@ public class UIPortalForm extends UIFormTabPane {
       UIPortalForm uiForm  =  event.getSource();      
       UIPortal uiPortal = Util.getUIPortal();
       uiForm.invokeSetBindingBean(uiPortal);
-      uiPortal.refreshNavigation();
+      //uiPortal.refreshNavigation();
       UIMaskWorkspace uiMaskWorkspace = uiForm.getParent();
       uiMaskWorkspace.setUIComponent(null);
       event.getRequestContext().addUIComponentToUpdateByAjax(uiMaskWorkspace);

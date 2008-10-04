@@ -19,6 +19,7 @@ package org.exoplatform.portal.webui.portal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -33,6 +34,8 @@ import org.exoplatform.portal.webui.portal.UIPortalComponentActionListener.Chang
 import org.exoplatform.portal.webui.portal.UIPortalComponentActionListener.MoveChildActionListener;
 import org.exoplatform.portal.webui.portal.UIPortalComponentActionListener.RemoveJSApplicationToDesktopActionListener;
 import org.exoplatform.portal.webui.portal.UIPortalComponentActionListener.ShowLoginFormActionListener;
+import org.exoplatform.portal.webui.util.Util;
+import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.services.resources.LocaleConfig;
 import org.exoplatform.services.resources.LocaleConfigService;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
@@ -101,7 +104,8 @@ public class UIPortal extends UIContainer {
     UIPageBody uiPageBody = findFirstComponentOfType(UIPageBody.class);    
     if(uiPageBody == null) return;
     uiPageBody.setPageBody(selectedNode_, this);
-    refreshNavigation() ;
+    UIPortalApplication uiApp = Util.getUIPortalApplication() ;
+    refreshNavigation(uiApp.getLocale()) ;
   }
 
   public void setSelectedNode(PageNode node) { selectedNode_ = node; }
@@ -139,6 +143,7 @@ public class UIPortal extends UIContainer {
     this.maximizedUIComponent = maximizedReferenceComponent;
   }
   
+  @Deprecated
   public void refreshNavigation() {
     LocaleConfig localeConfig = getApplicationComponent(LocaleConfigService.class).
                                 getLocaleConfig(locale) ;
@@ -151,17 +156,16 @@ public class UIPortal extends UIContainer {
     }
   }
   
-  public void refreshNavigation(String locale) {
-    LocaleConfig localeConfig = getApplicationComponent(LocaleConfigService.class).
-                                getLocaleConfig(locale) ;
-    for(PageNavigation nav : navigations) {
-      if(nav.getOwnerType().equals(PortalConfig.USER_TYPE)) continue ;
-      ResourceBundle res = localeConfig.getNavigationResourceBundle(nav.getOwnerType(), nav.getOwnerId()) ;
-      for(PageNode node : nav.getNodes()) {
-        resolveLabel(res, node) ;
-      }
-    }
-  }
+  public void refreshNavigation(Locale locale) {
+	    LocaleConfig localeConfig = getApplicationComponent(LocaleConfigService.class).getLocaleConfig(locale.getLanguage()) ;
+	    for(PageNavigation nav : navigations) {
+	      if(nav.getOwnerType().equals(PortalConfig.USER_TYPE)) continue ;
+	      ResourceBundle res = localeConfig.getNavigationResourceBundle(nav.getOwnerType(), nav.getOwnerId()) ;
+	      for(PageNode node : nav.getNodes()) {
+	        resolveLabel(res, node) ;
+	      }
+	    }
+	  }
   
   private void resolveLabel(ResourceBundle res, PageNode node) {
     node.setResolvedLabel(res) ;
