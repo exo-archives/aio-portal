@@ -264,7 +264,7 @@ public class UIPageBrowser extends UISearch {
       
       if(page != null) {
         UserACL userACL = uiPageBrowser.getApplicationComponent(UserACL.class) ;
-        if(!userACL.hasPermission(page, pcontext.getRemoteUser())) {
+        if(!userACL.hasEditPermission(page, pcontext.getRemoteUser())) {
           uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.edit.NotEditPage", new String[]{id}, 1)) ;;
           pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
           return;
