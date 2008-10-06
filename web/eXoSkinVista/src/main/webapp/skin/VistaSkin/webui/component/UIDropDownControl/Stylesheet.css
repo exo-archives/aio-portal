@@ -41,8 +41,9 @@
 }
 
 .ItemListContent .TopItemContainer {
-	height: 8px;
-	background: url('background/UpNaviArrow.gif') no-repeat center;
+	height: 15px;
+	background: white url('background/UpNaviArrow.gif') no-repeat center;
+	border-bottom: 1px solid #cdcdcd;
 }
 
 .ItemListContent .MiddleItemContainer {
@@ -50,8 +51,8 @@
 }
 
 .ItemListContent .BottomItemContainer {
-	height: 8px;
-	background: url('background/DownNaviArrow.gif') no-repeat center;
+	height: 15px;
+	background: white url('background/DownNaviArrow.gif') no-repeat center;
 }
 
 .UIDropDownControl .LeftTopItem {
