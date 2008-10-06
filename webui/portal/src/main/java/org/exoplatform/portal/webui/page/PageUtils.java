@@ -18,11 +18,13 @@ package org.exoplatform.portal.webui.page;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import javax.portlet.PortletPreferences;
 
 import org.exoplatform.portal.config.UserPortalConfigService;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
+import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
@@ -39,17 +41,17 @@ public class PageUtils {
    * This method create new Page and PageNode from an existing page and add created PageNode to children of parentNode
    *
    */
-  public static PageNode createNodeFromPageTemplate(String nodeName, String nodeLabel,
-                         String pageId, Map<String, String[]> portletPreferences, PageNode parentNode) throws Exception {
+  public static void createNodeFromPageTemplate(String nodeName, String nodeLabel,
+                         String pageId, PortletPreferences portletPreferences, PageNode parentNode) throws Exception {
     
     UIPortalApplication uiPortalApp = Util.getUIPortalApplication()   ;
     UserPortalConfigService configService = uiPortalApp.getApplicationComponent(UserPortalConfigService.class) ;
     String accessUser = Util.getPortalRequestContext().getRemoteUser() ;
-    PageNode node = configService.createNodeFromPageTemplate(nodeName, nodeLabel, pageId, portletPreferences, accessUser) ;
+    PageNode node = configService.createNodeFromPageTemplate(nodeName, nodeLabel,
+                                                pageId, PortalConfig.USER_TYPE, accessUser, portletPreferences);
     node.setUri(parentNode.getUri() + "/" + node.getName()) ;
     if(parentNode.getChildren() == null) parentNode.setChildren(new ArrayList<PageNode>())  ;
     parentNode.getChildren().add(node) ;
-    return node;
   }
   
   /**
@@ -57,23 +59,24 @@ public class PageUtils {
    * It also saves changes to database and UIPortal
    *
    */  
-  public static PageNode  createNodeFromPageTemplate(String nodeName, String nodeLabel,
-      String pageId, Map<String, String[]> portletPreferences, PageNavigation navi) throws Exception {
+  public static void createNodeFromPageTemplate(String nodeName, String nodeLabel,
+      String pageId, PortletPreferences portletPreferences, PageNavigation navi) throws Exception {
     
     UIPortal uiPortal = Util.getUIPortal() ;
     UserPortalConfigService configService = uiPortal.getApplicationComponent(UserPortalConfigService.class) ;
     String accessUser = Util.getPortalRequestContext().getRemoteUser() ;
-    PageNode node = configService.createNodeFromPageTemplate(nodeName, nodeLabel, pageId, portletPreferences, accessUser) ;
+    PageNode node = configService.createNodeFromPageTemplate(nodeName, nodeLabel,
+                  pageId, PortalConfig.USER_TYPE, accessUser, portletPreferences);
+    
     node.setUri(node.getName()) ;
     navi.addNode(node) ;
     configService.update(navi) ;
     setNavigation(uiPortal.getNavigations(), navi) ;    
-    return node;
   }
     
   private static void setNavigation(List<PageNavigation> navs, PageNavigation nav) {
     for(int i = 0; i < navs.size(); i++) {
-      if(navs.get(i).getId().equals(nav.getId())) {
+      if(navs.get(i).getId() == nav.getId()) {
         navs.set(i, nav);
         return;
       }
