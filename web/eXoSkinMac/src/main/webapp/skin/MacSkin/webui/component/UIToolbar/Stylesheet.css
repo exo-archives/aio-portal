@@ -291,3 +291,43 @@
 .UIToolbar .ControlToolbar .AbortIcon {
   background: url('background/ControlToolbar.png') no-repeat left -196px;
 }
+
+/*#################################- HeaderToolbar-##############################*/
+.UIToolbar .HeaderToolbar {
+  height: 31px;
+}
+
+.UIToolbar .HeaderToolbar .LeftBar {
+  padding-left: 7px;
+  background: url('background/HeaderToolbar.gif') no-repeat left top;
+}
+
+.UIToolbar .HeaderToolbar .RightBar {
+  padding-right: 7px;
+  background: url('background/HeaderToolbar.gif') no-repeat right top;
+}
+
+.UIToolbar .HeaderToolbar .CenterBar {
+  height: 31px; line-height: 31px;
+  background: url('background/HeaderToolbar.gif') repeat-x left -31px;
+}
+
+/*#################################- HeaderToolbar-##############################*/
+.UIToolbar .HeaderToolbar {
+  height: 31px;
+}
+
+.UIToolbar .HeaderToolbar .LeftBar {
+  padding-left: 7px;
+  background: url('background/HeaderToolbar.gif') no-repeat left top;
+}
+
+.UIToolbar .HeaderToolbar .RightBar {
+  padding-right: 7px;
+  background: url('background/HeaderToolbar.gif') no-repeat right top;
+}
+
+.UIToolbar .HeaderToolbar .CenterBar {
+  height: 31px; line-height: 31px;
+  background: url('background/HeaderToolbar.gif') repeat-x left -31px;
+}
