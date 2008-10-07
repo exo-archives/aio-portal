@@ -54,9 +54,13 @@
 }
 
 .UIPage .PageLayoutDecorator .BottomCenterPage {
-    background: url('background/PageLayout.png') repeat-x bottom; 
+  background: url('background/PageLayout.png') repeat-x bottom; 
 }
 
 .UIPage .PageLayoutDecorator .BottomCenterPage .FixBug {
   height: 15px;
+}
+
+.UIPage .UIRowContainer {
+	padding: 1px;
 }
