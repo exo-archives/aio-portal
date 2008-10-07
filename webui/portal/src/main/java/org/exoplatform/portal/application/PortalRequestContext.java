@@ -180,6 +180,4 @@ public class PortalRequestContext extends WebuiRequestContext {
       response_.setHeader(key, headers.get(key));
     }
   }
-  
-  
 }
