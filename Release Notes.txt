@@ -1,9 +1,9 @@
 ==============================================
-	eXo Portal 2.2 release notes
+	eXo Portal 2.2.1 release notes
 ==============================================
 
 - Introduction
-	Portal, a typical product of eXoplatform, is a web operating system application. With the latest version 2.1, eXo portal not only takes advantages of a normal portal but it is also developed with outstanding features as:
+	Portal, a typical product of eXoplatform, is a web operating system application. With the latest version 2.2, eXo portal not only takes advantages of a normal portal but it is also developed with outstanding features as:
 	+ Security:  Intelligently integrate and access to enterprise content, applications and processes. It is also very useful to establish internal or external information of an enterprise. It enables  administrators to decide which content and applications are pushed to which user according to the roles he has in a group or a business unit.
 	+ Personalization: Users are encouraged to design their own private layout and create personal content.
 	+ Flexibility: It is suitable for different operating system environments and adaptive to many types of databases.
@@ -20,41 +20,41 @@
         Building Tools: Maven 2.0.6 and up
 
 
-- What is new in eXo Portal 2.2
-        + Portal 2.2.1 upgrade to use core 2.1.1, portlet-container 2.0.2, jcr 1.9.3
-	with many improvements of performances and security (should refer to each them for more details )
+- What is new in eXo Portal 2.2.2
+        + Portal 2.2.2 upgrade to use lastest modules core 2.1.1, portlet-container 2.0.2, jcr 1.9.3 
+	  with many improvements of performances and security (should refer to each them for more details )
+	+ Improve user interface
         
 
 
-- Complete list of issues fixed in eXo Portal 2.2
+- Complete list of issues fixed in eXo Portal 2.2.1
 	+ Bug
 		* MAJOR
-		PORTAL-1821  	 Show exception when edit WSRPAdminPortlet
-		PORTAL-1803  	 Three column container layout width doesn't work
-		PORTAL-1542  	 Integration problem between Portal and Portlet Container- wsrp enabled
-		PORTAL-1840  	 Can not use classpath in jar
-		PORTAL-1876  	 Session time out when delete a portal which you do not have right to delete this portal
-		PORTAL-1693  	 Error when move Search User form in Group Managament tab of Organization portlet
-		PORTAL-1873  	 Unknown error when drag & drop container in tab and change skin
-
-		* MINOR
-		PORTAL-1874  	 Error drag & drop container when create page have tab page config
-		PORTAL-1693  	 Error when move Search User form in Group Managament tab of Organization portlet
-		PORTAL-1832  	 Error displaying in Exo Message with all skin
-		PORTAL-1859  	 UI Navigation bar is displayed under Breadcumbs Portlet
-		PORTAL-1855  	 IE6: Show Message Exo Form is Error when edit container/portlet in the first time
+		PORTAL-2077  	Portlet import the CSS for each instance on a Page
+		PORTAL-2032	The Server encountered an error when have a space in URL
+		PORTAL-1940 	Language of portal get value language of user
+		PORTAL-1959	Still delete page navigation of group when user have no permission to delete
+		PORTAL-1951	Error when copy a node to a place that already include a node has the same name
+		PORTAL-1962	Error display portal when set language for browser
 		...............
-		and some other bugs with trivial priority
+		and some other bugs be listed in JIRA
+		
+		* MINOR
+		PORTAL-1880  	Localization of tooltip in portlet states icons is not complete
+		PORTAL-1905  	In RSSParser, CDATA string is not removed for the pubDate param
+		PORTAL-2024	BugJS: Error when drag & drop pop-up calendar
+		...............
+		and some other bugs with trivial priority be listed in JIRA
 
 	+ Improvement
-		PORTAL-1850	Add disabled in Container UIFormStringInput
-		PORTAL-1826	Should set default language is English when registers new account
-		PORTAL-1649	Language as a user preference
+		PORTAL-1747	Should keep current pages list in search result after return from edit/view mode
+		PORTAL-1897	Portal skin improvement
+		PORTAL-1931	Add Dutch (nl) and German (de) locales
+	
+	+ Task 
+		PORTAL-1934	Allow to select language with normal userafter login to access portal
+		PORTAL-1984	Still show all messages when user don't have permission to view/edit/delete a page
 
-
-	+ New Feature
-		PORTAL-1837	Should correct space of all portlets in portal
-		PORTAL-1843	Should change message when set width or height for portlet
 
 - Other resources and links
      Company site        http://www.exoplatform.com
