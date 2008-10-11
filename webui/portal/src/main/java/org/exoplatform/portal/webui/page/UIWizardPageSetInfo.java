@@ -61,7 +61,8 @@ import org.exoplatform.webui.form.validator.StringLengthValidator;
       template = "app:/groovy/portal/webui/page/UIWizardPageSetInfo.gtmpl",
       events = {
         @EventConfig(listeners = UIWizardPageSetInfo.ChangeNodeActionListener.class, phase=Phase.DECODE),
-        @EventConfig(listeners = UIWizardPageSetInfo.SwitchPublicationDateActionListener.class, phase=Phase.DECODE)
+        @EventConfig(listeners = UIWizardPageSetInfo.SwitchPublicationDateActionListener.class, phase=Phase.DECODE),
+        @EventConfig(listeners = UIWizardPageSetInfo.SelectNavigationActionListener.class)
       }
   )
 })
