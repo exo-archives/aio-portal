@@ -32,6 +32,7 @@ import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.ComponentConfigs;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.UIComponent;
+import org.exoplatform.webui.core.UIDropDownControl;
 import org.exoplatform.webui.core.UIRightClickPopupMenu;
 import org.exoplatform.webui.core.UITree;
 import org.exoplatform.webui.core.UIWizard;
@@ -240,6 +241,17 @@ public class UIWizardPageSetInfo extends UIForm {
       event.getRequestContext().addUIComponentToUpdateByAjax(uiWizard) ;
     }
     
+  }
+  
+  static public class SelectNavigationActionListener extends EventListener<UIDropDownControl> {
+    public void execute(Event<UIDropDownControl> event) throws Exception {
+      UIDropDownControl uiDropDownControl = event.getSource() ;
+      UIWizardPageSetInfo uiForm = uiDropDownControl.getAncestorOfType(UIWizardPageSetInfo.class) ;
+      if(uiForm.isEditMode()) {
+        uiForm.reset() ;
+        uiForm.setShowPublicationDate(false) ;
+      }
+    }
   }
   
 }

@@ -50,6 +50,7 @@ import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.ComponentConfigs;
 import org.exoplatform.webui.config.annotation.EventConfig;
+import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.UIContainer;
 import org.exoplatform.webui.core.UIDropDownControl;
 import org.exoplatform.webui.core.UIRightClickPopupMenu;
@@ -369,6 +370,7 @@ public class UIPageNodeSelector extends UIContainer {
       UIPageNodeSelector uiPageNodeSelector = uiDropDownControl.getParent();
       event.getRequestContext().addUIComponentToUpdateByAjax(uiPageNodeSelector.getParent()) ;
       if(id != null) uiPageNodeSelector.selectNavigation(id);
+      uiPageNodeSelector.<UIComponent>getParent().broadcast(event, event.getExecutionPhase()) ;
     }
   }
 
