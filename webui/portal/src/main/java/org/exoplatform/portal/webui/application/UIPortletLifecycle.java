@@ -152,6 +152,7 @@ public class UIPortletLifecycle extends Lifecycle {
         "?" + PortalRequestContext.UI_COMPONENT_ID).append("=").append(
         uiPortlet.getId()).toString();
     input.setBaseURL(baseUrl);
+    input.setEscapeXml(true);
     if (userProfile != null)   input.setUserAttributes(userProfile.getUserInfoMap());
     else  input.setUserAttributes(new HashMap());
     
