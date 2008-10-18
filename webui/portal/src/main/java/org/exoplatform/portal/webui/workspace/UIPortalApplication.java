@@ -19,7 +19,9 @@ package org.exoplatform.portal.webui.workspace;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.exoplatform.portal.application.PortalRequestContext;
