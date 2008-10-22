@@ -76,18 +76,18 @@
 	    <div class="LabelButton">
           <%=_ctx.appRes("ApplicationRegistryWorkingArea.label.AddApplication")%>
       </div>
-	    <table class="ActionContainer" align="center">
+	    <table class="ActionContainer">
 		    <tr>
-		    	<td align="center">
-			      <a href="javascript: void(0);" onclick="<%=uicomponent.event("AddPortlet", "")%>" class="ActionButton LightBlueStyle">
+		    	<td>
+			      <div onclick="<%=uicomponent.event("AddPortlet", "")%>" class="ActionButton LightBlueStyle">
 			        <div class="ButtonLeft">
 			          <div class="ButtonRight">
 			            <div class="ButtonMiddle">
-			              <%=_ctx.appRes("ApplicationRegistryWorkingArea.action.AddApplication")%>
+			              <a href="javascript:void(0);"><%=_ctx.appRes("ApplicationRegistryWorkingArea.action.AddApplication")%></a>
 			            </div>
 			          </div>
 			        </div>
-			      </a>
+			      </div>
 			    </td>
 	      </tr>
 	 	  </table>

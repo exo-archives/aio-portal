@@ -22,7 +22,7 @@
 				                <div class="$className">
 				                  <div class="LeftTab">
 				                    <div class="RightTab">
-						                  <div class="MiddleTab" onClick="eXo.webui.UIHorizontalTabs.changeTabForUIFormTabpane(this, '$uiform.id', 'EditMode')">Edit Mode</div>
+						                  <div class="MiddleTab" onclick="eXo.webui.UIHorizontalTabs.changeTabForUIFormTabpane(this, '$uiform.id', 'EditMode')">Edit Mode</div>
 						                </div>
 				                  </div>
 				                </div>
@@ -40,7 +40,7 @@
 					                <div class="$className">
 					                  <div class="LeftTab">
 					                    <div class="RightTab">
-							                  <div class="MiddleTab" onClick="eXo.webui.UIHorizontalTabs.changeTabForUIFormTabpane(this, '$uiform.id', '$inputSet.id')">$tabName</div>
+							                  <div class="MiddleTab" onclick="eXo.webui.UIHorizontalTabs.changeTabForUIFormTabpane(this, '$uiform.id', '$inputSet.id')">$tabName</div>
 							                </div>
 					                  </div>
 					                </div>
@@ -85,22 +85,22 @@
 		        %>
           </div>
 			    <div class="UIAction">
-			      <table class="ActionContainer" align="center">
+			      <table class="ActionContainer">
 			      	<tr>
-			     	 		<td align="center">
+			     	 		<td>
 		          		<%for(action in uicomponent.getActions()) { 
 							      String actionLabel = _ctx.appRes(uicomponent.getName() + ".action." + action);
 							      String link = uicomponent.event(action) ;
 					        %>
-									<a href="$link" class="ActionButton LightBlueStyle">
+									<div onclick="$link" class="ActionButton LightBlueStyle">
 									  <div class="ButtonLeft">
 										  <div class="ButtonRight">
 										    <div class="ButtonMiddle">
-									       $actionLabel
+									      	<a href="javascript:void(0);">$actionLabel</a>
 										    </div>
 									    </div>
 										</div>
-									</a>
+									</div>
 	            		<%}%>
            			</td>
 	          	</tr>
