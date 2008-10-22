@@ -224,17 +224,9 @@ public class UIPageBrowser extends UISearch {
       PortalRequestContext pcontext = (PortalRequestContext)event.getRequestContext();
       String id = pcontext.getRequestParameter(OBJECTID) ;
       UserPortalConfigService service = uiPageBrowser.getApplicationComponent(UserPortalConfigService.class) ;
-      Page page = service.getPage(id) ;
 
       UIPortalApplication uiPortalApp = uiPageBrowser.getAncestorOfType(UIPortalApplication.class);
-      if(page != null) {
-        UserACL userACL = uiPageBrowser.getApplicationComponent(UserACL.class) ;
-        if(!userACL.hasPermission(page, pcontext.getRemoteUser())) {
-          uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.delete.NotDelete", new String[]{id}, 1)) ;;
-          pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
-          return;
-        }
-      } 
+      Page page = service.getPage(id) ;
       if(page == null){               
         uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.PageNotExist", new String[]{id},1)) ;;
         pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());    
@@ -259,22 +251,19 @@ public class UIPageBrowser extends UISearch {
       uiPortalApp.setEditting(true) ;
       PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext();
       String id = pcontext.getRequestParameter(OBJECTID) ;
-      UserPortalConfigService dao = uiPageBrowser.getApplicationComponent(UserPortalConfigService.class) ;
-      Page page = dao.getPage(id) ; 
+      UserPortalConfigService service = uiPageBrowser.getApplicationComponent(UserPortalConfigService.class) ;
       
-      if(page != null) {
-        UserACL userACL = uiPageBrowser.getApplicationComponent(UserACL.class) ;
-        if(!userACL.hasPermission(page, pcontext.getRemoteUser())) {
-          uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.edit.NotEditPage", new String[]{id}, 1)) ;;
-          pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
-          return;
-        }
-      } 
+      Page page = service.getPage(id) ; 
       if(page == null){               
         uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.PageNotExist", new String[]{id},1)) ;;
         pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());    
         return;
       }
+      if(!page.isModifiable()) {
+        uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.edit.NotEditPage", new String[]{id}, 1)) ;;
+        pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
+        return;
+      } 
      
       UIPage uiPage = Util.toUIPage(page, uiPageBrowser) ;
       UIPageBody uiPageBody = uiPortalApp.findFirstComponentOfType(UIPageBody.class) ; 
@@ -320,19 +309,16 @@ public class UIPageBrowser extends UISearch {
         pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
         return;
       }      
-      if(page != null) {
-        UserACL userACL = uiPageBrowser.getApplicationComponent(UserACL.class) ;
-        if(!userACL.hasPermission(page, pcontext.getRemoteUser())) {
-          uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.NotViewPage", new String[]{id}, 1)) ;;
-          pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
-          return;
-        }
-      } 
       if(page == null){               
         uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.PageNotExist", new String[]{id},1)) ;;
         pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());    
         return;
       }   
+      if(!page.isModifiable()) {
+        uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.NotViewPage", new String[]{id}, 1)) ;;
+        pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
+        return;
+      } 
 
       UIPage uiPage =  uiPageBrowser.createUIComponent(event.getRequestContext(), UIPage.class,null,null) ;
       PortalDataMapper.toUIPage(uiPage, page);
