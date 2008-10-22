@@ -33,31 +33,31 @@
 		              <% uiform.renderChild(1)%>
 		            </div> 				        
 			        <div class="UIAction"> 
-						<table class="ActionContainer" align="center">
-							<tr>
-								<td align="center">
-									 <a href="<%=uicomponent.url("Signin");%>" id="UIPortalLoginFormAction" class="ActionButton SimpleStyle">
-										 <div class="ButtonLeft">
-									    	 <div class="ButtonRight">
-									        	 <div class="ButtonMiddle">
-									              <%=_ctx.appRes("UILoginForm.label.Signin");%>
-									            </div>
-									         </div>
-									     </div>
-									 </a>								
-									 <a href="<%=uicomponent.event("Close");%>" class="ActionButton SimpleStyle">
-									 	<div class="ButtonLeft">
-									    	<div class="ButtonRight">
-									        	<div class="ButtonMiddle">
-									              <%=_ctx.appRes("UILoginForm.label.Discard")%>
-									          </div>
-									    	</div>
-									    </div>
-									 </a>								
-								</td>
-							</tr>
-						</table>
-					</div> 
+								<table class="ActionContainer">
+									<tr>
+										<td>
+											<div onclick="<%=uicomponent.url("Signin");%>" id="UIPortalLoginFormAction" class="ActionButton SimpleStyle">
+												<div class="ButtonLeft">
+													<div class="ButtonRight">
+														<div class="ButtonMiddle">
+															<a href="javascript:void(0);"><%=_ctx.appRes("UILoginForm.label.Signin");%></a>
+														</div>
+											 		</div>
+												</div>
+											</div>								
+											<div onclick="<%=uicomponent.event("Close");%>" class="ActionButton SimpleStyle">
+												<div class="ButtonLeft">
+											   	<div class="ButtonRight">
+											      <div class="ButtonMiddle">
+											        <a href="javascript:void(0);"><%=_ctx.appRes("UILoginForm.label.Discard")%></a>
+											      </div>
+											   	</div>
+											  </div>
+											</div>								
+										</td>
+									</tr>
+								</table>
+							</div> 
 			    </div>
 	          <%uiform.end()%>	          
 	        </div>
