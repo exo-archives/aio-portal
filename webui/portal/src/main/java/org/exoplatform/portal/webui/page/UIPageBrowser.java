@@ -224,16 +224,14 @@ public class UIPageBrowser extends UISearch {
       PortalRequestContext pcontext = (PortalRequestContext)event.getRequestContext();
       String id = pcontext.getRequestParameter(OBJECTID) ;
       UserPortalConfigService service = uiPageBrowser.getApplicationComponent(UserPortalConfigService.class) ;
-
       UIPortalApplication uiPortalApp = uiPageBrowser.getAncestorOfType(UIPortalApplication.class);
-      Page page = service.getPage(id) ;
-      if(page == null){               
+      if(service.getPage(id) == null){               
         uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.PageNotExist", new String[]{id},1)) ;;
         pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());    
         return;
       }
-     
-      if(!page.isModifiable()){
+      Page page = service.getPage(id, pcontext.getRemoteUser()) ;
+      if(page == null || !page.isModifiable()){
         uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.delete.NotDelete", new String[]{page.getName()})) ;;
         pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());  
         return;
@@ -253,13 +251,13 @@ public class UIPageBrowser extends UISearch {
       String id = pcontext.getRequestParameter(OBJECTID) ;
       UserPortalConfigService service = uiPageBrowser.getApplicationComponent(UserPortalConfigService.class) ;
       
-      Page page = service.getPage(id) ; 
-      if(page == null){               
+      if(service.getPage(id) == null){               
         uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.PageNotExist", new String[]{id},1)) ;;
         pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());    
         return;
       }
-      if(!page.isModifiable()) {
+      Page page = service.getPage(id, pcontext.getRemoteUser()) ; 
+      if(page == null || !page.isModifiable()) {
         uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.edit.NotEditPage", new String[]{id}, 1)) ;;
         pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
         return;
@@ -301,24 +299,24 @@ public class UIPageBrowser extends UISearch {
       PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext(); 
       String id = pcontext.getRequestParameter(OBJECTID) ;
       UserPortalConfigService service = uiPageBrowser.getApplicationComponent(UserPortalConfigService.class) ;
-      Page page = service.getPage(id) ;
       UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);     
 
+      if(service.getPage(id) == null){               
+        uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.PageNotExist", new String[]{id},1)) ;;
+        pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());    
+        return;
+      }   
+      Page page = service.getPage(id, pcontext.getRemoteUser()) ;
+      if(page == null || !page.isModifiable()) {
+        uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.NotViewPage", new String[]{id}, 1)) ;;
+        pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
+        return;
+      } 
       if(Page.DESKTOP_PAGE.equals(page.getFactoryId())) {
         uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.Invalid-Preview", new String[]{page.getName()})) ;;
         pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
         return;
       }      
-      if(page == null){               
-        uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.PageNotExist", new String[]{id},1)) ;;
-        pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());    
-        return;
-      }   
-      if(!page.isModifiable()) {
-        uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.NotViewPage", new String[]{id}, 1)) ;;
-        pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
-        return;
-      } 
 
       UIPage uiPage =  uiPageBrowser.createUIComponent(event.getRequestContext(), UIPage.class,null,null) ;
       PortalDataMapper.toUIPage(uiPage, page);
