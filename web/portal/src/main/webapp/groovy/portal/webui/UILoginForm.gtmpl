@@ -36,11 +36,11 @@
 								<table class="ActionContainer">
 									<tr>
 										<td>
-											<div onclick="<%=uicomponent.url("Signin");%>" id="UIPortalLoginFormAction" class="ActionButton SimpleStyle">
+											<div class="ActionButton SimpleStyle" onclick="<%=uicomponent.url("Signin");%>" id="UIPortalLoginFormAction">
 												<div class="ButtonLeft">
 													<div class="ButtonRight">
 														<div class="ButtonMiddle">
-															<a href="javascript:void(0);"><%=_ctx.appRes("UILoginForm.label.Signin");%></a>
+															<a href="#"><%=_ctx.appRes("UILoginForm.label.Signin");%></a>
 														</div>
 											 		</div>
 												</div>
