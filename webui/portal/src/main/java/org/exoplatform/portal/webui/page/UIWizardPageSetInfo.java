@@ -218,7 +218,10 @@ public class UIWizardPageSetInfo extends UIForm {
         pageNode = uiPageNodeSelector.getSelectedPageNode() ;
       }
       
-      if(pageNode == null) return ;
+      if(pageNode == null) {
+        uiForm.setShowPublicationDate(false) ;
+        return ;
+      }
       UserPortalConfigService configService = uiWizard.getApplicationComponent(UserPortalConfigService.class) ;
       String accessUser = event.getRequestContext().getRemoteUser() ;
       Page page = configService.getPage(pageNode.getPageReference(), accessUser) ;
