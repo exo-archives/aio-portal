@@ -34,7 +34,7 @@
 	    <div class="ApplicationDescription">
 	  		<div class="PortletIcons" title="$displayName" >
 	  		  <span>
-	  				<img src="/${srcBG}${name}.png" onError="src='${srcBGError}DefaultPortlet.png'" />
+	  				<img src="/${srcBG}${name}.png" onError="src='${srcBGError}DefaultPortlet.png'" alt="" />
 	  		  </span>
 	  		</div>
 	  		<div class="ApplicationContent">
