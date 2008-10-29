@@ -70,7 +70,7 @@
 		                <div class="LeftButton">
 		                  <div class="RightButton">
 		                    <div class="MiddleButton">
-		                    	<a onclick="javascript:void();">Sign in</a>
+		                    	<a onclick="#">Sign in</a>
 		                    </div>
 		                  </div>
 		                </div>
