@@ -56,6 +56,8 @@ public class UIFormSelectBox extends UIFormStringInput {
     setOptions(options);
   }
   
+  public boolean isMultiple() { return isMultiple_; }
+  
   final public UIFormSelectBox setMultiple(boolean bl) {
     isMultiple_ = bl ; return this ;
   }
