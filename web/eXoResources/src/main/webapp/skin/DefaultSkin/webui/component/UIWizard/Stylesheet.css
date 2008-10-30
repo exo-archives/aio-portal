@@ -18,19 +18,22 @@
 .UIWizard .UIWizardContent .WizardStepTitleBar {
   height: 29px;
   background: url('background/WizardStepBar.gif') repeat-x top;
-  border: solid 1px #aeaeae; border-bottom: none;
+  border: solid 1px #aeaeae; 
+  border-bottom: none;
 }
 
 .UIWizard .UIWizardContent .WizardStepTitleBar .WizardIcon {
   float:left;
-  width: 25px; height: 28px; 
+  width: 25px; 
+  height: 28px; 
   background: url('background/WizardIcon.gif') no-repeat left bottom;
   margin: 0px 8px 0px 10px;
 }
 
 .UIWizard .UIWizardContent .WizardStepTitleBar .WizardTitle {
   float: left;
-  height: 28px; line-height: 28px;  
+  height: 28px; 
+  line-height: 28px;  
   font-weight: bold;
 }
 
@@ -117,6 +120,9 @@
 	width: 50%;
 	float: right;
 	padding-right: 7px;
+}
+.UIWizard .WizardControlBar .UIAction {
+	padding: 8px 0 0;
 }
 
 .UIWizard .WizardControlBar .UIAction .ActionButton {
@@ -252,6 +258,4 @@
 }
 
 .UIWizard .TreeContainer {
-	height: 259px;
-	width: 220px;
-}
+	
