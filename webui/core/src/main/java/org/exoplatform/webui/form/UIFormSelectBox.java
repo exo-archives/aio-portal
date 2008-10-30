@@ -56,10 +56,11 @@ public class UIFormSelectBox extends UIFormStringInput {
     setOptions(options);
   }
   
+  public boolean isMultiple() { return isMultiple_; }
   final public UIFormSelectBox setMultiple(boolean bl) {
     isMultiple_ = bl ; return this ;
   }
-  
+
   final public UIFormSelectBox setSize(int i) { 
     size_ = i ; return this ;
   }
@@ -199,5 +200,4 @@ public class UIFormSelectBox extends UIFormStringInput {
     w.write("</select>\n") ;
     if (this.isMandatory()) w.write(" *");
   }
-
 }
