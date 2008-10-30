@@ -122,7 +122,9 @@
 .UIWizard .WizardControlBar .UIAction .ActionButton {
 	float: right;
 }
-
+.UIWizard .WizardControlBar .UIAction {
+	padding: 8px 0 0;
+}
 .UIWizard .WizardControlBar .UIAction .ActionContainer {
 	width: 100%;
 }
