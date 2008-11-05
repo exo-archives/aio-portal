@@ -40,7 +40,7 @@
 					                <div class="$className">
 					                  <div class="LeftTab">
 					                    <div class="RightTab">
-							                  <div class="MiddleTab" ="eXo.webui.UIHorizontalTabs.changeTabForUIFormTabpane(this, '$uiform.id', '$inputSet.id')">$tabName</div>
+							                  <div class="MiddleTab" onclick="eXo.webui.UIHorizontalTabs.changeTabForUIFormTabpane(this, '$uiform.id', '$inputSet.id')">$tabName</div>
 							                </div>
 					                  </div>
 					                </div>
