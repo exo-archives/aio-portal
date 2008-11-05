@@ -70,9 +70,14 @@ public class PortalController  extends HttpServlet {
       application.onInit() ;
       controller.addApplication(application) ;
       controller.register(new PortalRequestHandler()) ;
-      PortalContainer.setInstance(null) ;
     } catch (Throwable t){
       throw new ServletException(t) ;
+    } finally {
+      try {
+        PortalContainer.setInstance(null);
+      } catch (Exception e) {
+        log.warn("An error occured while cleaning the ThreadLocal", e);
+      }      
     }
     log.info("Init of PortalController Servlet successful");
   }
@@ -90,9 +95,14 @@ public class PortalController  extends HttpServlet {
       WebAppController controller = 
         (WebAppController)portalContainer.getComponentInstanceOfType(WebAppController.class) ;
       controller.service(req, res) ;
-      PortalContainer.setInstance(null) ;
     } catch (Throwable t){
       throw new ServletException(t) ;
+    } finally {
+      try {
+        PortalContainer.setInstance(null);
+      } catch (Exception e) {
+        log.warn("An error occured while cleaning the ThreadLocal", e);
+      }      
     }
   }
 }
