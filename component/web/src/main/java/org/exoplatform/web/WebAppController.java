@@ -115,20 +115,26 @@ public class WebAppController {
       PortalContainer portalContainer = PortalContainer.getInstance() ;
       List<ComponentRequestLifecycle> components = 
         portalContainer.getComponentInstancesOfType(ComponentRequestLifecycle.class) ;
-      ListenerService lservice = 
-        (ListenerService) portalContainer.getComponentInstanceOfType(ListenerService.class) ;
-      lservice.broadcast("exo.application.portal.start-http-request", this, req) ;
-      for(ComponentRequestLifecycle component : components) {
-        component.startRequest(portalContainer);
+      ListenerService lservice = (ListenerService) portalContainer.getComponentInstanceOfType(ListenerService.class);
+      try {
+        lservice.broadcast("exo.application.portal.start-http-request", this, req);
+        for (ComponentRequestLifecycle component : components) {
+          component.startRequest(portalContainer);
+        }
+        WindowInfosContainer.createInstance(portalContainer,
+                                            req.getSession().getId(),
+                                            req.getRemoteUser());
+        handler.execute(this, req, res);
+      } finally {
+        for (ComponentRequestLifecycle component : components) {
+          try {
+            component.endRequest(portalContainer);
+          } catch (Exception e) {
+            log.warn("An error occured while calling the endRequest method", e);
+          }
+        }
+        lservice.broadcast("exo.application.portal.end-http-request", this, req);
       }
-      WindowInfosContainer.createInstance(portalContainer, req.getSession().getId(), req.getRemoteUser());
-      
-      handler.execute(this, req, res) ;
-      
-      for(ComponentRequestLifecycle component : components) {
-        component.endRequest(portalContainer);
-      }
-      lservice.broadcast("exo.application.portal.end-http-request", this, req) ;
     }
   }
 }
