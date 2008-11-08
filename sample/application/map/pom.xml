@@ -1,9 +1,14 @@
 <project>
-  <groupId>org.exoplatform.portal</groupId>
+  <parent>
+    <groupId>org.exoplatform.portal</groupId>
+    <artifactId>config</artifactId>
+    <version>2.5rc1</version>
+  </parent> 
+  
   <modelVersion>4.0.0</modelVersion>
   <artifactId>exo.portal.sample.application.map</artifactId>
-  <version>0.1</version>
   <packaging>war</packaging>
+  <version>${org.exoplatform.portal.version}</version>
   <name>eXo Map portlet application</name>
   <url>http://www.exoplatform.org</url>
   <description>eXo Map application</description>
@@ -15,32 +20,10 @@
       <version>${org.exoplatform.portal.version}</version>
       <scope>provided</scope>
     </dependency>
-    
   </dependencies>
-  <profiles>
-    <profile>
-      <id>default</id>  
-      <activation>
-        <property><name>default</name></property>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <org.exoplatform.kernel.version>trunk</org.exoplatform.kernel.version>
-        <org.exoplatform.core.version>trunk</org.exoplatform.core.version>
-        <org.exoplatform.jcr.version>trunk</org.exoplatform.jcr.version>
-        <org.exoplatform.pc.version>trunk</org.exoplatform.pc.version>
-        <org.exoplatform.portal.version>trunk</org.exoplatform.portal.version>
-        <org.exoplatform.cs.version>trunk</org.exoplatform.cs.version>
-
-        <test.classes>Test</test.classes>
-        <test.skip>true</test.skip>
-
-      </properties>
-    </profile>
-  </profiles>
-
+ 
   <build>
-	    <finalName>map</finalName>
+    <finalName>map</finalName>
     <resources>
       <resource>
         <directory>src/main/java</directory>
@@ -88,7 +71,7 @@
           <systemProperties>
             <property>
               <name>mock.portal.dir</name>
-              <value>${exo.projects.directory.src}/portal/trunk/web/portal/src/main/webapp</value>
+              <value>${exo.projects.directory.src}/portal/tags/2.5rc1/web/portal/src/main/webapp</value>
             </property>
           </systemProperties>
         </configuration>
