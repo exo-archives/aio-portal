@@ -19,6 +19,7 @@ package org.exoplatform.portal.webui.component;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 
+import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.application.portlet.PortletRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
@@ -26,9 +27,9 @@ import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.lifecycle.UIFormLifecycle;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
+import org.exoplatform.webui.exception.MessageException;
 import org.exoplatform.webui.form.UIForm;
 import org.exoplatform.webui.form.UIFormStringInput;
-import org.exoplatform.webui.form.validator.MandatoryValidator;
 import org.exoplatform.webui.form.validator.URLValidator;
 
 /**
@@ -49,16 +50,30 @@ public class UIIFrameEditMode extends UIForm {
         .getCurrentInstance();
     PortletPreferences pref = pcontext.getRequest().getPreferences();
     addUIFormInput(new UIFormStringInput(FIELD_URL, FIELD_URL, pref.getValue("url",
-        "http://www.exoplatform.com")).
-        addValidator(MandatoryValidator.class).addValidator(URLValidator.class));
+        "http://www.exoplatform.com"))) ;
   }
 
   static public class SaveActionListener extends EventListener<UIIFrameEditMode> {
     public void execute(Event<UIIFrameEditMode> event) throws Exception {
+      UIIFrameEditMode uiForm = event.getSource();
+      String url = uiForm.getUIStringInput(FIELD_URL).getValue();
+      UIIFramePortlet uiPortlet = uiForm.getParent();
+      if(url == null || url.length() == 0){
+        Object args[] = {uiForm.getLabel(uiForm.getUIStringInput(FIELD_URL).getId())};
+        uiPortlet.addMessage(new ApplicationMessage("EmptyFieldValidator.msg.empty-input", args));
+        uiForm.getUIStringInput(FIELD_URL).setValue(uiPortlet.getURL());
+        return;
+      }
+      if(!url.trim().matches(URLValidator.URL_REGEX)) {
+        uiForm.getUIStringInput(FIELD_URL).setValue(uiPortlet.getURL());
+        Object[] args = { FIELD_URL, "URL"};
+        throw new MessageException(new ApplicationMessage("ExpressionValidator.msg.value-invalid",
+            args));
+      }
       PortletRequestContext pcontext = (PortletRequestContext) WebuiRequestContext
-          .getCurrentInstance();
+      .getCurrentInstance();
       PortletPreferences pref = pcontext.getRequest().getPreferences();
-      pref.setValue("url", event.getSource().getUIStringInput(FIELD_URL).getValue());
+      pref.setValue("url", uiForm.getUIStringInput(FIELD_URL).getValue());
       pref.store();
       pcontext.setApplicationMode(PortletMode.VIEW);
     }
