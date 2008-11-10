@@ -13,10 +13,18 @@ UICalendar.prototype.init = function(field, isDisplayTime) {
 		this.dateField.parentNode.style.position = '' ;
 	}
 	this.dateField = field ;
-	if (!document.getElementById(this.calendarId)) this.create() ;
-//	field.parentNode.style.position = 'relative' ;
-  field.parentNode.insertBefore(document.getElementById(this.calendarId), field) ;
+	if (!document.getElementById(this.calendarId)) this.create();
   this.show() ;
+
+// fix bug for IE 6
+
+  var cld = document.getElementById(this.calendarId);
+  if(eXo.core.Browser.isIE6())  {
+    var blockClnd = document.getElementById('BlockCaledar') ;
+    var iframe = document.getElementById(this.calendarId + 'IFrame') ;
+    iframe.style.height = blockClnd.offsetHeight + "px";
+  }
+  field.parentNode.insertBefore(cld, field) ;
 }
 
 UICalendar.prototype.create = function() {
