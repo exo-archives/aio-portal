@@ -26,6 +26,7 @@
   height: 22px; line-height: 22px;
   overflow: hidden;
   padding-left: 5px;
+  width: 261px;
 }
 
 .UISitemap .TitleBar a:hover {

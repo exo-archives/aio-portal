@@ -28,6 +28,7 @@
   border-bottom: none;
   overflow: hidden;
   padding-right: 4px;
+  width: 264px;
 }
 
 .UISitemap .TitleBar a:hover {
