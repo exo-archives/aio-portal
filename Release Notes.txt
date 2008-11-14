@@ -1,5 +1,5 @@
 ==============================================
-	eXo Portal 2.2 release notes
+	eXo Portal 2.2.2 release notes
 ==============================================
 
 - Introduction
@@ -20,41 +20,53 @@
         Building Tools: Maven 2.0.6 and up
 
 
-- What is new in eXo Portal 2.2
-        + Portal 2.2.1 upgrade to use core 2.1.1, portlet-container 2.0.2, jcr 1.9.3
-	with many improvements of performances and security (should refer to each them for more details )
-        
+- What is new in eXo Portal 2.2.2
+	+ Portal 2.2.2 upgrade to use kernel 2.0.4, core 2.1.2, portlet-container 2.0.3
+
+- Complete list of issues fixed in eXo Portal 2.2.2
+
+	** Bug
+	    * [PORTAL-1893] - Error displaying in Icon tan when add/edit node with French language
+	    * [PORTAL-1961] - UIFormUploadInput doesn't support big files
+	    * [PORTAL-1986] - Error when edit skin in Edit current portal
+	    * [PORTAL-1988] - Still show "Publication date & time" is checked when edit page wizard
+	    * [PORTAL-2023] - IE: Error Group Info form when click Search User icon
+	    * [PORTAL-2061] - IE6: Error displaying in Add Application with Vista skin
+	    * [PORTAL-2072] - Error in Window State with all portlet
+	    * [PORTAL-2079] - IE6: Error display in Edit mode tab with all skin
+	    * [PORTAL-2085] - IE6: Error display when create page wizard have tab page config with all skin
+	    * [PORTAL-2089] - Can't keep intact state when view/edit page in Manage pages
+	    * [PORTAL-2098] - Have trouble when delete time in pop-up calendar
+	    * [PORTAL-2103] - IE6: Error display when select a page is checked [show max window] and restore down with Vista skin
+	    * [PORTAL-2105] - Error display in User profile tab of Organization portlet when create page have 2 columns with all skin
+	    * [PORTAL-2147] - Little error display in footer portlet
+	    * [PORTAL-2166] - Show exception when edit page which user doesn't have permision to edit this page
+	    * [PORTAL-2168] - Have trouble with Browser when input invalid URL in Iframe portlet
+	    * [PORTAL-2172] - IE6: Nothing happen when click Sign In button in private mode
+	    * [PORTAL-2177] - IE7: Error UI when create/edit page wizard with Default skin
+	    * [PORTAL-2181] - Lose resource bundle in Page Navigation with English language
+	    * [PORTAL-2183] - Still edit/detele/view page when user doesn't permission to edit/delete/view in Manage Pages
+	    * [PORTAL-2185] - Error UI in Sitemap portlet when uncheck Show Info Bar with Vista skin in Preview page
+	    * [PORTAL-2186] - Error when change language in Middle Center Bar of Manage page
+	    * [PORTAL-2193] - Show message when click Community Management portlet
+	    * [PORTAL-2203] - Show exception when create/edit page wizard
+	    * [PORTAL-2210] - Lose all resource bundle in all program
+	    * [PORTAL-2226] - The org.exoplatform.portal.application.PortalController doesn't release properly the resources stored into the ThreadLocal
+	    * [PORTAL-2235] - Ensure that all the endRequest methods will be called whatever happens
+	    * [PORTAL-2263] - Show exception when select tab page config in create/edit page wizard
+	    * [PORTAL-2264] - i18n for UIFormDateTimeInput
 
 
-- Complete list of issues fixed in eXo Portal 2.2
-	+ Bug
-		* MAJOR
-		PORTAL-1821  	 Show exception when edit WSRPAdminPortlet
-		PORTAL-1803  	 Three column container layout width doesn't work
-		PORTAL-1542  	 Integration problem between Portal and Portlet Container- wsrp enabled
-		PORTAL-1840  	 Can not use classpath in jar
-		PORTAL-1876  	 Session time out when delete a portal which you do not have right to delete this portal
-		PORTAL-1693  	 Error when move Search User form in Group Managament tab of Organization portlet
-		PORTAL-1873  	 Unknown error when drag & drop container in tab and change skin
 
-		* MINOR
-		PORTAL-1874  	 Error drag & drop container when create page have tab page config
-		PORTAL-1693  	 Error when move Search User form in Group Managament tab of Organization portlet
-		PORTAL-1832  	 Error displaying in Exo Message with all skin
-		PORTAL-1859  	 UI Navigation bar is displayed under Breadcumbs Portlet
-		PORTAL-1855  	 IE6: Show Message Exo Form is Error when edit container/portlet in the first time
-		...............
-		and some other bugs with trivial priority
-
-	+ Improvement
-		PORTAL-1850	Add disabled in Container UIFormStringInput
-		PORTAL-1826	Should set default language is English when registers new account
-		PORTAL-1649	Language as a user preference
+	** Improvement
+	    * [PORTAL-1936] - CSS shot buld be cacheable by browser
 
 
-	+ New Feature
-		PORTAL-1837	Should correct space of all portlets in portal
-		PORTAL-1843	Should change message when set width or height for portlet
+	** Task
+	    * [PORTAL-2091] - increase the length of tooltip in truncated in UIGrid
+	    * [PORTAL-2182] - IE: Error UI in Manage Page with Vista skin
+
+
 
 - Other resources and links
      Company site        http://www.exoplatform.com
