@@ -19,17 +19,13 @@ package org.exoplatform.portal.webui.workspace;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.portlet.WindowState;
-
 import org.exoplatform.portal.account.UIAccountSetting;
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.webui.UIWelcomeComponent;
 import org.exoplatform.portal.webui.UIManagement.ManagementMode;
-import org.exoplatform.portal.webui.application.UIPortlet;
 import org.exoplatform.portal.webui.navigation.PageNavigationUtils;
 import org.exoplatform.portal.webui.navigation.UIPageManagement;
-import org.exoplatform.portal.webui.page.UIPageBody;
 import org.exoplatform.portal.webui.page.UIPageCreationWizard;
 import org.exoplatform.portal.webui.page.UIPageEditWizard;
 import org.exoplatform.portal.webui.page.UIWizardPageCreationBar;
@@ -337,14 +333,14 @@ public class UIExoStart extends UIComponent {
       String uri  = event.getRequestContext().getRequestParameter(OBJECTID);
       UIPortal uiPortal = Util.getUIPortal();
       uiPortal.setMode(UIPortal.COMPONENT_VIEW_MODE);
-      UIPageBody uiPageBody = uiPortal.findFirstComponentOfType(UIPageBody.class);
-      if(uiPageBody != null) {
-        if(uiPageBody.getMaximizedUIComponent() != null) {
-          UIPortlet currentPortlet =  (UIPortlet) uiPageBody.getMaximizedUIComponent();
-          currentPortlet.setCurrentWindowState(WindowState.NORMAL);
-          uiPageBody.setMaximizedUIComponent(null);
-        }
-      }
+//      UIPageBody uiPageBody = uiPortal.findFirstComponentOfType(UIPageBody.class);
+//      if(uiPageBody != null) {
+//        if(uiPageBody.getMaximizedUIComponent() != null) {
+//          UIPortlet currentPortlet =  (UIPortlet) uiPageBody.getMaximizedUIComponent();
+//          currentPortlet.setCurrentWindowState(WindowState.NORMAL);
+//          uiPageBody.setMaximizedUIComponent(null);
+//        }
+//      }
       PageNodeEvent<UIPortal> pnevent = 
         new PageNodeEvent<UIPortal>(uiPortal, PageNodeEvent.CHANGE_PAGE_NODE, null, uri) ;      
       uiPortal.broadcast(pnevent, Event.Phase.PROCESS) ;      

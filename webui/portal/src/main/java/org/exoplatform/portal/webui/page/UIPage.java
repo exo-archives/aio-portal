@@ -19,8 +19,6 @@ package org.exoplatform.portal.webui.page;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.portlet.WindowState;
-
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.webui.application.UIPortlet;
 import org.exoplatform.portal.webui.container.UIContainer;
@@ -123,14 +121,14 @@ public class UIPage extends UIContainer {
       String uri  = event.getRequestContext().getRequestParameter(OBJECTID);
       UIPortal uiPortal = Util.getUIPortal();
       uiPortal.setMode(UIPortal.COMPONENT_VIEW_MODE);
-      UIPageBody uiPageBody = uiPortal.findFirstComponentOfType(UIPageBody.class);
-      if(uiPageBody != null) {
-        if(uiPageBody.getMaximizedUIComponent() != null) {
-          UIPortlet currentPortlet =  (UIPortlet) uiPageBody.getMaximizedUIComponent();
-          currentPortlet.setCurrentWindowState(WindowState.NORMAL);
-          uiPageBody.setMaximizedUIComponent(null);
-        }
-      }
+//      UIPageBody uiPageBody = uiPortal.findFirstComponentOfType(UIPageBody.class);
+//      if(uiPageBody != null) {
+//        if(uiPageBody.getMaximizedUIComponent() != null) {
+//          UIPortlet currentPortlet =  (UIPortlet) uiPageBody.getMaximizedUIComponent();
+//          currentPortlet.setCurrentWindowState(WindowState.NORMAL);
+//          uiPageBody.setMaximizedUIComponent(null);
+//        }
+//      }
       PageNodeEvent<UIPortal> pnevent = 
         new PageNodeEvent<UIPortal>(uiPortal, PageNodeEvent.CHANGE_PAGE_NODE, null, uri) ;      
       uiPortal.broadcast(pnevent, Event.Phase.PROCESS) ;      
