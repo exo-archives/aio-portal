@@ -79,7 +79,7 @@
 	    <table class="ActionContainer">
 		    <tr>
 		    	<td>
-			      <div onclick="javascript: void(0);" onclick="<%=uicomponent.event("AddPortlet", "")%>" class="ActionButton LightBlueStyle">
+			      <div onclick="<%=uicomponent.event("AddPortlet", "")%>" class="ActionButton LightBlueStyle">
 			        <div class="ButtonLeft">
 			          <div class="ButtonRight">
 			            <div class="ButtonMiddle">
