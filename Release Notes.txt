@@ -1,0 +1,151 @@
+==============================================
+	eXo Portal 2.1.2 release notes
+==============================================
+
+- Introduction
+	Portal, a typical product of eXoplatform, is a web operating system application. With the latest version 2.1, eXo portal not only takes advantages of a normal portal but it is also developed with outstanding features as:
+	+ Security:  Intelligently integrate and access to enterprise content, applications and processes. It is also very useful to establish internal or external information of an enterprise. It enables  administrators to decide which content and applications are pushed to which user according to the roles he has in a group or a business unit.
+	+ Personalization: Users are encouraged to design their own private layout and create personal content.
+	+ Flexibility: It is suitable for different operating system environments and adaptive to many types of databases.
+	+ Customization: Meets the requirements of both technical and non-technical users. This application provides open functions to encourage user's experiences and easily adapt to personal requirements and the technologies.
+	+ Collaboration: eXo Portal also provides community concepts. Access/Edit Permissions depend on a specific group of members while a member can be in some certain groups. It means that a member can have different types of permission.
+	+ Multi – languages: eXo Portal supports some package of languages for users of different countries as: English, French, Italian, Vietnamese,...
+	+ Multi - Skin: eXo portal allows to change the skin with: Default Skin, Vista Skin and MAC skin
+
+
+- System Requirements
+        Web Browser: IE6, IE7, FF2, FF3, Safari. Best for Frirefox 2 and upgrading to Firefox 3
+        JVM: version 1.5.0_xx only
+        Application Server : Tomcat, JBoss, Jonas, Websphere
+        Building Tools: Maven 2.0.6 and up
+
+
+- What is new in eXo Portal 2.1.2
+        Upgrade to use jcr 1.8.3.1 for the performance fixing.
+        
+
+
+- Complete list of issues fixed in eXo Portal 2.2
+
+
+** Bug
+    * [PORTAL-1249] - Error when create new account with includes accents
+    * [PORTAL-1464] - Error when double click "Sign In" button in Sign In form
+    * [PORTAL-1564] - Can input User name and password in Show message form to login program
+    * [PORTAL-1570] - Error when change skin return homepage
+    * [PORTAL-1581] - Error when preview Iframe porlet with 3 skins
+    * [PORTAL-1593] - Error when set width and height for portlet and un-check Show Infor Bar
+    * [PORTAL-1595] - Have exception when do action the same on 2 or 3 browers
+    * [PORTAL-1596] - Allways save old password when create [edit, login ] user
+    * [PORTAL-1597] - Have trouble in home portlet when create more sub level in node
+    * [PORTAL-1606] - Have trouble when set width and height for banner portlet
+    * [PORTAL-1612] - IE6: Little error in Middle bar when restore down in Default and Vista skin
+    * [PORTAL-1635] - Have trouble when create new page click Publish the page during a period of time only with vista skin ( IE6)
+    * [PORTAL-1638] - [ Portal trunk-r14777]: Error using scroll in special case
+    * [PORTAL-1640] - [ Portal trunk-r14777]: Error displaying when add new node and restore down in special case in 3 skins ( IE )
+    * [PORTAL-1660] - I18n : UIPageNodeSelector.java
+    * [PORTAL-1665] - I18n : UIWizardPageSelectLayoutForm.gtmpl
+    * [PORTAL-1675] - Error when user does not have edit permission for page 
+    * [PORTAL-1682] - Current password checking  has a problem
+    * [PORTAL-1690] - Error drag & drop portlet
+    * [PORTAL-1693] - Error when move Search User form in Group Managament tab of Organization portlet
+    * [PORTAL-1694] - Error displaying in Edit Permission tab when create group in special case
+    * [PORTAL-1697] - UltimateProduct-2.0(branch): Little error in all existing categories of portlets with Vista skin
+    * [PORTAL-1700] - Error displaying when set page layout with 2 columns
+    * [PORTAL-1711] - Error when edit this node with user does not have permission 
+    * [PORTAL-1717] - Error when preview portal or page
+    * [PORTAL-1720] - I18n : UIPortal.js
+    * [PORTAL-1721] - IE: Do not add widget when create widget have label is Vietnamese language
+    * [PORTAL-1731] - [Portal trunk] Still action in dockbar when edit page & navi in Webos portal ( FF3)
+    * [PORTAL-1754] - IE6: Little error when create page have tab page configs with 3 skins
+    * [PORTAL-1758] - IE6: Lose Toolbar portlet when edit application in registry portlet
+    * [PORTAL-1778] - IE7: Error display when select a page/node in edit page & navi and then restore down with 3 skins
+    * [PORTAL-1779] - Error when create page wizard have column with some special portlet in Mac skin
+    * [PORTAL-1806] - IE6: Error displaying when create page wizard have tabs page config in Vista skin
+    * [PORTAL-1820] - Error when set height for Iframe porlet
+    * [PORTAL-1823] - FF: Little error when click edit mode of porlet with Vista skin
+    * [PORTAL-1829] - IE6: Error displaying when create/edit page wizard with Default skin
+    * [PORTAL-1840] - Can not use classpath in jar
+    * [PORTAL-1842] - Error displaying when select a page/node on Navigation bar
+    * [PORTAL-1844] - Error displaying when set width/height for portlet in tabs page config
+    * [PORTAL-1845] - IE6: Little error in UI trees Container when create/edit page wizard with Default skin
+    * [PORTAL-1847] - Error displaying in Scroll buttons with VIsta skin in Navigation bar
+    * [PORTAL-1849] - Error when set width/height for container
+    * [PORTAL-1852] - Error displaying in List Permission form with all skins
+    * [PORTAL-1853] - Error displaying in Decoration Themes tab when edit portlet
+    * [PORTAL-1854] - Error displaying in Page Description when edit current portal with Mac and Vista skin
+    * [PORTAL-1855] - IE6: Show Message Exo Form is Error when edit container/portlet in the first time
+    * [PORTAL-1859] - UI Navigation bar is displayed under Breadcumbs Portlet
+    * [PORTAL-1860] - Have trouble when show max window with page have tabs page config in Default skin
+    * [PORTAL-1862] - Manage Page displays Page & Navigation Explorer
+    * [PORTAL-1871] - IE6: Error displaying when change skin to Vista
+    * [PORTAL-1873] - Unknown error when drag & drop container in tab and change skin
+    * [PORTAL-1876] - Session time out when delete a portal which you do not have right to delete this portal
+    * [PORTAL-1880] - Localization of tooltip in portlet states icons is not complete
+    * [PORTAL-1892] - Little error display when change language to Dutch
+    * [PORTAL-1905] - In RSSParser, CDATA string is not removed for the pubDate param
+    * [PORTAL-1906] - Show exception when create page wizard and select desktop layout
+    * [PORTAL-1907] - Error displying Navigation Tab with Default and Vista skin
+    * [PORTAL-1910] - Error displaying in Application portlet when have tab page config
+    * [PORTAL-1911] - Have trouble with browser porlet when have tab page config
+    * [PORTAL-1916] - Can not select navigation from list when create page wizard
+    * [PORTAL-1924] - Little Error Widget Containers Management 
+    * [PORTAL-1939] - Error when change language in search option in Manage Page
+    * [PORTAL-1952] - Localization of tooltip in portlet states icons can't change language to French
+    * [PORTAL-1957] - Navigation does not work when a portlet is Maximized on the page
+    * [PORTAL-1959] - Still delete page navigation of group when user have no permission to delete
+    * [PORTAL-1965] - Error show message when user don't have permission to edit node's page
+    * [PORTAL-1988] - Still show "Publication date & time" is checked when edit page wizard
+    * [PORTAL-2017] - Can't Sign out by Toolbar porltet
+    * [PORTAL-2018] - Little error UI when create page wizard at step 1 with Vista skin
+    * [PORTAL-2024] - BugJS: Error when drag & drop pop-up calendar
+    * [PORTAL-2043] - Error when create page wizard in specical case
+    * [PORTAL-2051] - Unknown error when Change Window State
+    * [PORTAL-2077] - Portlet import the CSS for each instance on a Page
+    * [PORTAL-2134] - Customer: Make the public area of portal compatible with W3C validation
+    * [PORTAL-2135] - When there is not portal navigation pages labels are not displayed
+    * [PORTAL-2166] - Show exception when edit page which user doesn't have permision to edit this page
+    * [PORTAL-2168] - Have trouble with Browser when input invalid URL in Iframe portlet
+    * [PORTAL-2172] - IE6: Nothing happen when click Sign In button in private mode
+    * [PORTAL-2177] - IE7: Error UI when create/edit page wizard with Default skin
+    * [PORTAL-2183] - Still edit/detele/view page when user doesn't permission to edit/delete/view in Manage Pages
+    * [PORTAL-2186] - Error when change language in Middle Center Bar of Manage page
+    * [PORTAL-2203] - Show exception when create/edit page wizard
+    * [PORTAL-2210] - Lose all resource bundle in all program
+    * [PORTAL-2226] - The org.exoplatform.portal.application.PortalController doesn't release properly the resources stored into the ThreadLocal
+    * [PORTAL-2235] - Ensure that all the endRequest methods will be called whatever happens
+    * [PORTAL-2236] - The org.exoplatform.web.WebAppController doesn't release properly the resources stored into the ThreadLocal
+
+
+** Doc
+    * [PORTAL-1883] - Invalid comment in the repository-configuration.xml file
+
+** Improvement
+    * [PORTAL-1598] - Don't select last page when create more sub node in special case
+    * [PORTAL-1614] - Should have message when select a portal is being used
+    * [PORTAL-1747] - Should keep current pages list in search result after return from edit/view mode
+    * [PORTAL-1750] - add selectbox with groups in portal branch
+    * [PORTAL-1885] - Should increase the length in some form of portal and webos
+    * [PORTAL-1936] - CSS shot buld be cacheable by browser
+    * [PORTAL-1972] - Should not allow user typing path of file in Browse text box when upload file
+
+** New Feature
+    * [PORTAL-2015] - clone a navigation node
+
+** Task
+    * [PORTAL-1626] - Should change config in Skin list for Portal and WebOs
+    * [PORTAL-1934] - Allow to select language with normal userafter login to access portal
+    * [PORTAL-1950] - Change the first letter in Dutch language from lower case to upper case
+    * [PORTAL-1960] - Change message when user don't have permission to edit page in Edit page wizard
+    * [PORTAL-2195] - open API of UIFormCheckBoxInput then let developer can choice how is the label render (left side or right side) 
+    * [PORTAL-2265] - Change message when edit user infor
+    * [PORTAL-2266] - Accept URL from IP address or name of host
+
+
+
+- Other resources and links
+     Company site        http://www.exoplatform.com
+     Community JIRA      http://jira.exoplatform.org
+     Comminity site      http://www.exoplatform.org
+     Developers wiki     http://wiki.exoplatform.org
+     Documentation       http://docs.exoplatform.org 
