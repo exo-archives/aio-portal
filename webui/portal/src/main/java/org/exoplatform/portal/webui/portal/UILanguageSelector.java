@@ -112,6 +112,8 @@ public class UILanguageSelector extends UIContainer {
       if(remoteUser != null) {
         UserProfile userProfile = orgService.getUserProfileHandler().findUserProfileByName(remoteUser);
         userProfile.getUserInfoMap().put("user.language", language);
+        UserProfileHandler hanlder = orgService.getUserProfileHandler();
+        hanlder.saveUserProfile(userProfile, true) ;
       }
     }
   }
