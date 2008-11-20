@@ -1,2 +1,2 @@
-<Context path="/exoadmin" docBase="../../../eXoProjects/portal/branches/2.1.2/portlet/exoadmin/src/main/webapp" 
+<Context path="/exoadmin" docBase="../../../eXoProjects/portal/branches/2.1.3/portlet/exoadmin/src/main/webapp" 
          debug="0" reloadable="true" />
