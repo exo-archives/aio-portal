@@ -126,6 +126,7 @@ public class WebAppController {
                                             req.getRemoteUser());
         handler.execute(this, req, res);
       } finally {
+    	  WindowInfosContainer.setInstance(null);
         for (ComponentRequestLifecycle component : components) {
           try {
             component.endRequest(portalContainer);
