@@ -86,7 +86,8 @@ public class UIGroupMembershipSelector extends UIContainer {
     tree.setIcon("GroupAdminIcon");
     tree.setSelectedIcon("PortalIcon");
     tree.setBeanIdField("id");
-    tree.setBeanLabelField("groupName");
+    //tree.setBeanLabelField("groupName");
+    tree.setBeanLabelField("label");
     uiBreadcumbs.setBreadcumbsStyle("UIExplorerHistoryPath") ;
   }
   
