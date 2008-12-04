@@ -16,8 +16,6 @@
  */
 package org.exoplatform.portal.webui.page;
 
-import java.util.ResourceBundle;
-
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.webui.UIWelcomeComponent;
 import org.exoplatform.portal.webui.portal.UIPortal;
