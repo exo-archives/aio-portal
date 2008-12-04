@@ -85,7 +85,7 @@ public class UIPageNodeForm extends UIFormTabPane {
         addValidator(StringLengthValidator.class, 3, 30).
         addValidator(IdentifierValidator.class)).
     addUIFormInput(new UIFormStringInput("label", "label", null).
-        addValidator(StringLengthValidator.class, 3, 30)).
+        addValidator(StringLengthValidator.class, 3, 120)).
     addUIFormInput(uiDateInputCheck).
     addUIFormInput(new UIFormDateTimeInput(START_PUBLICATION_DATE, null, null).
         addValidator(MandatoryValidator.class).addValidator(DateTimeValidator.class)).
