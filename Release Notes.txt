@@ -43,6 +43,600 @@
 
 
 
+- Complete list of issues fixed in eXo Portal 2.5
+
+** Bug
+    * [PORTAL-82] - Portlet Jmx doesnt work on linux
+    * [PORTAL-694] -  [Paste Node] is only enable after using Cut or Copy node in Edit page
+    * [PORTAL-1099] - In Desktop layout: can not restore down porlets after change skin
+    * [PORTAL-1212] - IE6: Always have to signin twice after signout by function in exostart 
+    * [PORTAL-1221] - Manage page: Error UI of Desktop template when add page. See file attach
+    * [PORTAL-1229] - Error when edit current portal
+    * [PORTAL-1232] - Unknown error when edit Permission of Portal in special case
+    * [PORTAL-1234] - Error when edit User Management
+    * [PORTAL-1238] - Error dislay when create page Wizard in portlet Navigation
+    * [PORTAL-1239] - IE6: Error in display Navigation when create page by wizard
+    * [PORTAL-1240] - In Vista: Error in display  Web Explorer when add new tab
+    * [PORTAL-1241] - can not action when add new page include accents in IE
+    * [PORTAL-1242] - Error when click view in Banner and Footer porlet 
+    * [PORTAL-1243] - error display when select Show Infor Bar in Breadcumbs portlet
+    * [PORTAL-1244] - Error display when select portlet mode in Toolbar
+    * [PORTAL-1245] - Error when create new portal include accents 
+    * [PORTAL-1247] - Do not action when you created node include with accents
+    * [PORTAL-1248] - IE6: Error in displaying Browser portlet when do not show infor bar
+    * [PORTAL-1250] - Can not save after that check in "Show Max Window " 
+    * [PORTAL-1252] - Error display in preview of Organization portlet when select edit page wizard
+    * [PORTAL-1253] - Can not select page when create page or portal with include accents
+    * [PORTAL-1254] - Error in display in Widgets
+    * [PORTAL-1255] - Error in display Web Explorer portlet
+    * [PORTAL-1256] - Error in display duplicate scroll bar in Google of My Link
+    * [PORTAL-1257] - Always have to signin twice after that have along time
+    * [PORTAL-1258] - User can edit page while does not have edit permission in Edit Page & Nav
+    * [PORTAL-1259] - Error after edit page in Edit page and Nav
+    * [PORTAL-1262] - Error in display in Web explorer portlet
+    * [PORTAL-1263] - Can not Cut & paste in Navigation
+    * [PORTAL-1267] - Can not action when add many new tab in Web Explorer
+    * [PORTAL-1268] - Error search in Internationalization portlet
+    * [PORTAL-1269] - Error display password when select edit user 
+    * [PORTAL-1279] - Error when preview some portlets
+    * [PORTAL-1280] - Error display in Sample Portal Template preview when create new portal
+    * [PORTAL-1281] - Error display when change Skin Vista
+    * [PORTAL-1282] - Error in display file upload name when add property for node 
+    * [PORTAL-1284] - Error display language when select language by French
+    * [PORTAL-1286] - Error display in Links portlet
+    * [PORTAL-1287] - Error display when change skin by vista in Sitemap
+    * [PORTAL-1288] - Error display in portal templates when create new portal and edit page & Navi
+    * [PORTAL-1290] - Error display in Organization Management portlet when change skin by Mac
+    * [PORTAL-1291] - Can not action when change skin by Vista or Mac in sub page of Administration
+    * [PORTAL-1292] - Portlet applications with dashes cannot be added to classic pages
+    * [PORTAL-1293] - Error sign out when change skin Vista or Mac with portal name is VietNamese
+    * [PORTAL-1295] - Error display in Naviagation portlet when add node name have length
+    * [PORTAL-1296] - Error display when create page name have length
+    * [PORTAL-1297] - Error display Icon in IFrame portlet
+    * [PORTAL-1298] - Jboss: Session time out when create new page wizard with portal name is VietNamese
+    * [PORTAL-1299] - Error when check "Show Portlet Mode" in Homepage portlet
+    * [PORTAL-1301] - Error when Create new page Navi and then delete Navi
+    * [PORTAL-1302] - In IE 6.0: error in content of confirm message when delete a node. See file attach
+    * [PORTAL-1304] - Can't action when create page with 2 colum and select maximize
+    * [PORTAL-1305] - IE 7: Error drag & drop portlet 
+    * [PORTAL-1306] - Error when create new page that name is the same with existing page
+    * [PORTAL-1308] - Can't action MoveUp and MoveDown in page group Navigation
+    * [PORTAL-1310] - Can't input portal name start by number
+    * [PORTAL-1315] - I.E.6: Error display when edit page Edit Page & Nav, Edit page in Manage Page or Edit portal
+    * [PORTAL-1316] - I.E.6: Error display when select in Permission Setting
+    * [PORTAL-1319] - Allways default last portlet which you selected in Aministration after that do some action and you come back Administration
+    * [PORTAL-1323] - Sometime, error display in Application portlet
+    * [PORTAL-1330] - Error in displaying navigation in special case
+    * [PORTAL-1402] - Typo in the list of default user names shown in the home page
+    * [PORTAL-1404] - Do not action change theme in edit porlet
+    * [PORTAL-1414] - Do not select page when create new node
+    * [PORTAL-1416] - I.E 7: Lose Icon in User Workspace when edit page
+    * [PORTAL-1418] - Error in display when create new group in special case
+    * [PORTAL-1427] - Unknown error when create name in Internationzation in special case
+    * [PORTAL-1450] - Error when edit a widget but can delete it 
+    * [PORTAL-1466] - Could not  import portlets twice
+    * [PORTAL-1476] - Error in displaying New Account portlet with language by French when change skin by Mac & Vista
+    * [PORTAL-1477] - Error in displaying Group Management in Organization portlet
+    * [PORTAL-1480] - Error in displaying when preview Organization portlet with skin Default & Mac
+    * [PORTAL-1482] - Unknow Error when create new page with browser portlet and change skin
+    * [PORTAL-1483] - Little error in footer portlet with language by French
+    * [PORTAL-1484] - I.E.7: Error in  Edit  page and Navigation when  click on Administraion or Organization portlet 
+    * [PORTAL-1491] - I.E.7: Don't action Exo Start after that select edit page & Navi
+    * [PORTAL-1513] - error when updating portlets list
+    * [PORTAL-1518] - Don't show message when input pass & email wrong in New account portlet
+    * [PORTAL-1523] - Error when using scrollbar in Manage page
+    * [PORTAL-1525] - Unknow error when change password in Organization portlet
+    * [PORTAL-1526] - Unknown error when do the same action with 2 browser 
+    * [PORTAL-1528] - Error when create new user in New Account portlet
+    * [PORTAL-1529] - Nothing happen when create new portal
+    * [PORTAL-1530] - Unknown error when eidt IFrame portlet
+    * [PORTAL-1581] - Error when preview Iframe porlet with 3 skins
+    * [PORTAL-1588] - Can't keep intact state when delete user in Organization portlet
+    * [PORTAL-1597] - Have trouble in home portlet when create more sub level in node
+    * [PORTAL-1625] - FF3 beta 5: Error displaying in Container with 2 or 3 tab in 3 skins
+    * [PORTAL-1629] - [ Portal trunk-r14777]: Error displaying with some form have tab with Default skin
+    * [PORTAL-1630] - Don't change skin in edit current portal
+    * [PORTAL-1631] - [ Portal trunk-r14777]: Error displaying Search User form in Organization portlet with Mac skin
+    * [PORTAL-1632] - [Portal trunk-r14777]: Little error in Select Icon tab when edit portlet with Default skin
+    * [PORTAL-1633] - [ Portal trunk-r14777]: Error displaying Select Permission form with 3 skins
+    * [PORTAL-1634] - [Portal-trunk_r147777]: Have trouble when preview default page and restore down with Mac and Default skins
+    * [PORTAL-1635] - Have trouble when create new page click Publish the page during a period of time only with vista skin ( IE6)
+    * [PORTAL-1636] - [Portal-trunk_r147777]: Little error when create page at step 1 with Mac skin
+    * [PORTAL-1638] - [ Portal trunk-r14777]: Error using scroll in special case
+    * [PORTAL-1639] - [ Portal trunk-r14777]: Little error displaying in Drop Down Select Widget Container with Vista skin ( IE6)
+    * [PORTAL-1640] - [ Portal trunk-r14777]: Error displaying when add new node and restore down in special case in 3 skins ( IE )
+    * [PORTAL-1642] - [ Portal trunk-r14818]: Error displaying in Add application form when create new category in special case with 3 skins
+    * [PORTAL-1646] - [Portal- trunk_r14859]: Nothing happen after click widget container management icon in User workspace
+    * [PORTAL-1652] - Needs to keep user locale chosen by the user from public mode to authenticated mode of the portal
+    * [PORTAL-1653] - [Portal-trunk_r15096]Error displaying Available portlets in Mac and Vista skin
+    * [PORTAL-1656] - [Portal-trunk_r15096]Error displaying in Change portal form when create portal in special case with 3 skin ( IE)
+    * [PORTAL-1657] - [Portal trunk_r15096]: Error displaying in List Permission form with Mac & Vista skins ( IE6)
+    * [PORTAL-1659] - I18n : UIPageDesktop.gtmpl
+    * [PORTAL-1660] - I18n : UIPageNodeSelector.java
+    * [PORTAL-1661] - I18n : UISearchForm.gtmpl
+    * [PORTAL-1665] - I18n : UIWizardPageSelectLayoutForm.gtmpl
+    * [PORTAL-1669] - [ Portal trunk-r15096]: Error displaying in Select Portal form when create portal in special case ( IE)
+    * [PORTAL-1673] - Can not deploy portal
+    * [PORTAL-1675] - Error when user does not have edit permission for page 
+    * [PORTAL-1677] - Portal trunk : unknow error when add new category in Application portlet
+    * [PORTAL-1679] - Need to display language names in the request locale in UILanguageSelector
+    * [PORTAL-1681] - [Portal-trunk]: Little error in Edit category with Vista skin (IE7)
+    * [PORTAL-1684] - FF3: Error displaying in VIew Page with 3 skin
+    * [PORTAL-1685] - Little error in drop down list Portlet with Mac skin
+    * [PORTAL-1689] - FF3: Error displaying in "exo Message" form with 3 skins
+    * [PORTAL-1691] - [Portal trunk] Nothing happen after that click Signout in Welcome widget
+    * [PORTAL-1692] - [Portal-trunk] IE6: Error displaying in Select Icon Tab when edit portlet with Default skin
+    * [PORTAL-1693] - Error when move Search User form in Group Managament tab of Organization portlet
+    * [PORTAL-1694] - Error displaying in Edit Permission tab when create group in special case
+    * [PORTAL-1696] - UltimateProduct-2.0(branch): Don't display Sample Template Preview in Page Template tab
+    * [PORTAL-1697] - UltimateProduct-2.0(branch): Little error in all existing categories of portlets with Vista skin
+    * [PORTAL-1698] - Portal trunk: Error displaying in Select Icon tab when edit portlet with Vista skin
+    * [PORTAL-1705] - Have trouble in Exo Message form with 3 skins
+    * [PORTAL-1706] - Strange httprequests from custom portlets
+    * [PORTAL-1707] - [Portal-trunk] Little error in Gadget Container Management with French language
+    * [PORTAL-1708] - [Portal-trunk]: Error displaying in Drop Down list category with Default skin ( IE6)
+    * [PORTAL-1711] - Error when edit this node with user does not have permission 
+    * [PORTAL-1714] - Little error in Footer portlet with 3 skins
+    * [PORTAL-1721] - IE: Do not add widget when create widget have label is Vietnamese language
+    * [PORTAL-1725] - Error displaying with all portlets when create page wizard have Tabs page config
+    * [PORTAL-1729] - Error display in Exo Message when create page have tabs with Default skin
+    * [PORTAL-1731] - [Portal trunk] Still action in dockbar when edit page & navi in Webos portal ( FF3)
+    * [PORTAL-1733] - IE6: Error displaying when edit current portal with Default skin
+    * [PORTAL-1735] - Exception when create new portal 
+    * [PORTAL-1736] - Add encoding information in eXo.bat / eXo.sh
+    * [PORTAL-1737] - Little error in New Account portlet with Default skin
+    * [PORTAL-1740] - Error Edit Category icon of Application registry portlet in Tab page configs
+    * [PORTAL-1741] - IE6: Error when edit page wizard in special case with all skins
+    * [PORTAL-1744] - Error some form with French language
+    * [PORTAL-1745] - Error when preview Iframe portlet
+    * [PORTAL-1748] - Error Navigation bar when change language in edit current portal
+    * [PORTAL-1749] - Nothing happen when select a page/node in navigation bar
+    * [PORTAL-1767] - Have trouble with User Profile form in New Account portlet with Default and Mac skin
+    * [PORTAL-1786] - PortletContextRequest always return default locale en
+    * [PORTAL-1788] - IE6: Error when restore down in Manage Page with all skins
+    * [PORTAL-1801] - Wrong page display name in edit Page Wizzard
+    * [PORTAL-1805] - Cannot move the page-body with UI
+    * [PORTAL-1809] - IE7: Error displaying when create/edit page wizard with Mac and Vista skin
+    * [PORTAL-1813] - Error when show max windown of page/node with all skins
+    * [PORTAL-1814] - Edit Portlet link should never be visible for anonymous user
+    * [PORTAL-1815] - Portlet Description in the AppRegistry should be set to the value contained in the portlet.xml by default
+    * [PORTAL-1821] - Show exception when edit WSRPAdminPortlet
+    * [PORTAL-1824] - Lose resource bundle of user language
+    * [PORTAL-1842] - Error displaying when select a page/node on Navigation bar
+    * [PORTAL-1855] - IE6: Show Message Exo Form is Error when edit container/portlet in the first time
+    * [PORTAL-1856] - FF3: Don't show max window when page have tab page config
+    * [PORTAL-1859] - UI Navigation bar is displayed under Breadcumbs Portlet
+    * [PORTAL-1860] - Have trouble when show max window with page have tabs page config in Default skin
+    * [PORTAL-1862] - Manage Page displays Page & Navigation Explorer
+    * [PORTAL-1865] - Cannot build eXo Gadgets Web App
+    * [PORTAL-1871] - IE6: Error displaying when change skin to Vista
+    * [PORTAL-1873] - Unknown error when drag & drop container in tab and change skin
+    * [PORTAL-1876] - Session time out when delete a portal which you do not have right to delete this portal
+    * [PORTAL-1880] - Localization of tooltip in portlet states icons is not complete
+    * [PORTAL-1884] - [Portal-trunk-r18305]: Loose resource bundle when change language to French
+    * [PORTAL-1886] - [Portal-trunk-r18362]: Loose border in edit mode when edit Gadget Portlet with all skin
+    * [PORTAL-1887] - [Portal-trunk-r18362]: Show exception when maximize a portlet and after that delete this portlet
+    * [PORTAL-1888] - [Portal-trunk-r18362]IE7: Error UI in Edit Category of Application registry portlet with Vista skin
+    * [PORTAL-1890] - IE6: Little error in Account Setting form with Vista skin
+    * [PORTAL-1893] - Error displaying in Icon tan when add/edit node with French language
+    * [PORTAL-1894] - [Portal-trunk]: Error displaying UI Portal Component Login form
+    * [PORTAL-1896] - [Portal - trunk]: Error dispaying Dashboard portlet when set number of columns is 3 or 4
+    * [PORTAL-1901] - Error when change language in portal/webos
+    * [PORTAL-1902] - Bad interface with Login form
+    * [PORTAL-1904] - Error displaying some form in portal with Default skin
+    * [PORTAL-1905] - In RSSParser, CDATA string is not removed for the pubDate param
+    * [PORTAL-1907] - Error displying Navigation Tab with Default and Vista skin
+    * [PORTAL-1910] - Error displaying in Application portlet when have tab page config
+    * [PORTAL-1911] - Have trouble with browser porlet when have tab page config
+    * [PORTAL-1915] - Error displying in Select Icon Tab with Default skin
+    * [PORTAL-1916] - Can not select navigation from list when create page wizard
+    * [PORTAL-1920] - IE6: Error UI in User Profile form with Default and Mac skin
+    * [PORTAL-1922] - Error displaying in Exo Message form with Vista skin
+    * [PORTAL-1924] - Little Error Widget Containers Management 
+    * [PORTAL-1925] - Little error in Organization portlet when have tab page config with Default skin
+    * [PORTAL-1926] - dashboard does not work if there is no info bar
+    * [PORTAL-1927] - use the full height of the portlet for the sidebar
+    * [PORTAL-1928] - set a minimum size for the dashboard
+    * [PORTAL-1930] - IE6: Little error in Right Middle Item with Default skin ( Portal - trunk)
+    * [PORTAL-1939] - Error when change language in search option in Manage Page
+    * [PORTAL-1940] - Language of portal get value language of user
+    * [PORTAL-1941] - Error UI at step 1 when create/edit page wizard with Default skin
+    * [PORTAL-1942] - Show message when edit mode of DashboardPortlet
+    * [PORTAL-1943] - Error display when change language
+    * [PORTAL-1944] - Wrong label for title bar in Manage Pages after editing a classic page
+    * [PORTAL-1949] - Don't displaying language of user is changed in User Porfile tab when change language at Exo_Start
+    * [PORTAL-1951] - Error when copy a node to a place that already include a node has the same name
+    * [PORTAL-1952] - Localization of tooltip in portlet states icons can't change language to French
+    * [PORTAL-1957] - Navigation does not work when a portlet is Maximized on the page
+    * [PORTAL-1959] - Still delete page navigation of group when user have no permission to delete
+    * [PORTAL-1961] - UIFormUploadInput doesn't support big files
+    * [PORTAL-1962] - Error display portal when set language for browser
+    * [PORTAL-1963] - Portal-trunk_r19861: Error UI in Select Icon form when edit a portlet at Default skin
+    * [PORTAL-1964] - IE6: Error UI in Login form with Vista skin
+    * [PORTAL-1965] - Error show message when user don't have permission to edit node's page
+    * [PORTAL-1966] - [Unknown error] when edit page wizard
+    * [PORTAL-1967] - Portal-trunk: Error preview page when create page wizard have dashboard portlet and  there is no info bar
+    * [PORTAL-1968] - IE6: Error UI Workspace when resize window
+    * [PORTAL-1970] - Session time out when edit page wizard
+    * [PORTAL-1973] - Error check forgot user name/password when user was deleted
+    * [PORTAL-1975] - Error when edit label of Node
+    * [PORTAL-1982] - IE: Bug JS in Dashboard portlet
+    * [PORTAL-1985] - Still show User Workspace at step 1 when create page wizard
+    * [PORTAL-1986] - Error when edit skin in Edit current portal
+    * [PORTAL-1988] - Still show "Publication date & time" is checked when edit page wizard
+    * [PORTAL-1990] - application typo
+    * [PORTAL-1991] - remove the copy gadget button from the "add remote gadget form"
+    * [PORTAL-1992] - Error when edit page not found in Edit page wizard
+    * [PORTAL-1994] - Error when create new category
+    * [PORTAL-1998] - Unknonw error when click Copy Gadget in Registry portlet
+    * [PORTAL-2000] - when creating a local gadget we don't see the name in the list
+    * [PORTAL-2001] - Error UI in List permission form in Registry portlet
+    * [PORTAL-2005] - Position of Edit/delete icon in a portlet  with VIsta and Mac skin not correct 
+    * [PORTAL-2007] - when clicking on the cross of a "not current tab", it adds the application to the wrong category
+    * [PORTAL-2014] - IE: Error when click resgistry ( application ) portlet with all skin
+    * [PORTAL-2016] - View a node on the navigation bar and on the Breadcumbs need to be consisent
+    * [PORTAL-2018] - Little error UI when create page wizard at step 1 with Vista skin
+    * [PORTAL-2019] - Can't import or add application for category by John
+    * [PORTAL-2024] - BugJS: Error when drag & drop pop-up calendar
+    * [PORTAL-2028] - Lose Resource bundle when edit portlet in Registry portlet
+    * [PORTAL-2030] - Lose border in Access Permission form with Default and Mac skin in Registry porlet
+    * [PORTAL-2032] - The Server encountered an error when have a space in URL
+    * [PORTAL-2033] - Localize component UICalendar
+    * [PORTAL-2035] - Still display information previous page is selected to edit when click up level in edit page wizard.
+    * [PORTAL-2036] - Show exception when create new portal in special case
+    * [PORTAL-2037] - There is a problem when entering name of a page (node) that does not exist in Portal  on address bar
+    * [PORTAL-2038] - There is a problem when entering name of a page (node) that does not exist in Portal on address bar
+    * [PORTAL-2041] - Little error with Exo message form when have tab page config with Default skin
+    * [PORTAL-2042] - Show exception when login to portal by private mode in sepecial case
+    * [PORTAL-2043] - Error when create page wizard in specical case
+    * [PORTAL-2044] - Error when create new gadget in dashboard portlet
+    * [PORTAL-2049] - IE: Error preview page when change themes for portlet
+    * [PORTAL-2050] - Error when change language in edit current portal
+    * [PORTAL-2051] - Unknown error when Change Window State
+    * [PORTAL-2053] - IE6: Error display Footer portlet when have tab page config with Vista skin
+    * [PORTAL-2059] - Bug JS: Lose scroll when create/edit page wizard 
+    * [PORTAL-2065] - Error display when add appliation for category 
+    * [PORTAL-2066] - change the default view to canvas of the portlet "gadget wrapper"
+    * [PORTAL-2068] - IE: Disable when select gadget control bar to edit/delete
+    * [PORTAL-2072] - Error in Window State with all portlet
+    * [PORTAL-2073] - Description Container is resized to be smaller when you resize at step 2 in creating a new page by wizard
+    * [PORTAL-2077] - Portlet import the CSS for each instance on a Page
+    * [PORTAL-2079] - IE6: Error display in Edit mode tab with all skin
+    * [PORTAL-2081] - IE6: Error when edit page and restore down window
+    * [PORTAL-2085] - IE6: Error display when create page wizard have tab page config with all skin
+    * [PORTAL-2089] - Can't keep intact state when view/edit page in Manage pages
+    * [PORTAL-2090] - IE6: Error displaying in Category Content with Vista skin
+    * [PORTAL-2092] - rework the calendar gadget to make it more ergonomic
+    * [PORTAL-2093] - FF3: Error display in special case
+    * [PORTAL-2094] - Don't have any field to edit when clicking Demo Gadgets
+    * [PORTAL-2097] - Error display Gadget Details when have image
+    * [PORTAL-2098] - Have trouble when delete time in pop-up calendar
+    * [PORTAL-2099] - IE6: Error display in Category Title bar of Exo Gadget in Dashboard portlet
+    * [PORTAL-2101] - Should not allow to delete a category when editing that category
+    * [PORTAL-2103] - IE6: Error display when select a page is checked [show max window] and restore down with Vista skin
+    * [PORTAL-2105] - Error display in User profile tab of Organization portlet when create page have 2 columns with all skin
+    * [PORTAL-2106] - Error when search title of page have space in Manage Pages
+    * [PORTAL-2108] - gadget are not available to normal user by default
+    * [PORTAL-2110] - IE: Error displaying in Calendar gadget 
+    * [PORTAL-2112] - IE: Error when restore down window with Organization portlet
+    * [PORTAL-2113] - Unknow error when edit application which was deleted 
+    * [PORTAL-2114] - Null Pointer Exception when edit dashboard portlet
+    * [PORTAL-2115] - Unknown error when input invalid URL in Add a remote  gadget
+    * [PORTAL-2116] - [site map] can't return site map page  by select site map page after user  view direction content of page form link on site map
+    * [PORTAL-2118] - Unknown error when click Save button in Add Application form
+    * [PORTAL-2119] - Still see an application in category which was deleted
+    * [PORTAL-2122] - IE6: Don't select function in Exo Start menu when restore down windown
+    * [PORTAL-2126] - Error displaying in Gadget Details when add a remote gadget
+    * [PORTAL-2127] - Bug JS: List Permission form of Application Registry portlet is display under UI Page form
+    * [PORTAL-2128] - allow to retrieve al the preferences of a gadget
+    * [PORTAL-2129] - IE6: Error display in Calculator gadget in dashboard portlet
+    * [PORTAL-2131] - Unknown error when click Add Gadget in Dashboard portlet
+    * [PORTAL-2132] - Lose message when add new category 
+    * [PORTAL-2133] - Error display in Application registry
+    * [PORTAL-2134] - Customer: Make the public area of portal compatible with W3C validation
+    * [PORTAL-2137] - Error display when edit all gadget default 
+    * [PORTAL-2138] - Error when create new category have same name 
+    * [PORTAL-2140] - Error display when create page have dashboard portlet in tab page config
+    * [PORTAL-2141] - Calculator: does not calculate correctly: for example 0.1*0.1
+    * [PORTAL-2143] - error while refreshing the dashboard
+    * [PORTAL-2144] - js error when loading the dashboard
+    * [PORTAL-2145] - the header of gadget is hidden after passing the mouse on it
+    * [PORTAL-2147] - Little error display in footer portlet
+    * [PORTAL-2148] - Error display in Dashboard portlet
+    * [PORTAL-2149] - IE: Lose border in resource form when edit gadget with default skin
+    * [PORTAL-2150] - IE6: Can't drag & drop gadget to dashboard portlet
+    * [PORTAL-2151] - IE6: Lose borer with all gadget default
+    * [PORTAL-2152] - Error display in banner portlet with Mac and Vista skin
+    * [PORTAL-2154] - Error display when edit gadget form when restore down window
+    * [PORTAL-2155] - Error when inputted url is invalid to add gadget to dashboard in dashboard portlet
+    * [PORTAL-2157] - Nothing happen after edit gadget and click refresh icon
+    * [PORTAL-2158] - Error display in dashboard portelt when uncheck Show Info Bar/ Portlet Mode/Window State
+    * [PORTAL-2159] - Error displaying when create new gadget in special case with Vista skin
+    * [PORTAL-2160] - Little error in Up Arrow Icon in create/edit page wizard with Default skin
+    * [PORTAL-2161] - IE6: Error display gadget in dashboard portlet
+    * [PORTAL-2162] - BugJS: Error with displaying Footer portlet
+    * [PORTAL-2166] - Show exception when edit page which user doesn't have permision to edit this page
+    * [PORTAL-2167] - Unknown error when edit current portal 
+    * [PORTAL-2168] - Have trouble with Browser when input invalid URL in Iframe portlet
+    * [PORTAL-2169] - Todo gadget break the dashboard
+    * [PORTAL-2172] - IE6: Nothing happen when click Sign In button in private mode
+    * [PORTAL-2173] - IE: Error display when edit Weather Gadget
+    * [PORTAL-2174] - Little error in Add Permission button with Mac skin in Registry portlet
+    * [PORTAL-2175] - Error UI in Dashboard portlet 
+    * [PORTAL-2177] - IE7: Error UI when create/edit page wizard with Default skin
+    * [PORTAL-2178] - Error UI application portlet when have tab page config with all skin
+    * [PORTAL-2179] - IE: Have trouble when edit mode tab and click enter
+    * [PORTAL-2180] - Error when edit current portal
+    * [PORTAL-2183] - Still edit/detele/view page when user doesn't permission to edit/delete/view in Manage Pages
+    * [PORTAL-2185] - Error UI in Sitemap portlet when uncheck Show Info Bar with Vista skin in Preview page
+    * [PORTAL-2190] - Have trouble when create new page in Manage Page 
+    * [PORTAL-2191] - IE6: Error UI application portlet with Vista skin
+    * [PORTAL-2196] - Don't show sub-group in List permision form 
+    * [PORTAL-2212] - IE: Don't show Gadget portlet when un-check Show Infor Bar in Preview page when create page wizard
+    * [PORTAL-2213] - Session timeout when delete gadget in Dashboard portlet
+    * [PORTAL-2215] - Error UI in Sitemap portlet when create page wizard have 2 columns and uncheck Show Info Bar 
+    * [PORTAL-2218] - Error UI in pop-up calendar when check Publication date & time in create/edit page wizard
+    * [PORTAL-2220] - Lose restore icon in Gadget control bar with Vista and Mac skin
+    * [PORTAL-2225] - Still see portlet which selected to drag & drop in Edit current portal but don't click Save or Save & Finish 
+    * [PORTAL-2226] - The org.exoplatform.portal.application.PortalController doesn't release properly the resources stored into the ThreadLocal
+    * [PORTAL-2231] - Unknown error when add category in specical case
+    * [PORTAL-2232] - IE6: Lose some character in Ui Tree Container with all skin and language
+    * [PORTAL-2234] - Show message not correct in Forgot Username/Password when input email isn't exist in eXo
+    * [PORTAL-2235] - Ensure that all the endRequest methods will be called whatever happens
+    * [PORTAL-2236] - The org.exoplatform.web.WebAppController doesn't release properly the resources stored into the ThreadLocal
+    * [PORTAL-2237] - Lose style sheet with all portlet with Mac and Vista skin when create page wizard
+    * [PORTAL-2241] - Null pointer exception when localized login.jsp
+    * [PORTAL-2243] - WebUI: Cannot set null as default value of a CalendarField
+    * [PORTAL-2247] - Unknown error add a remote gadget in special case
+    * [PORTAL-2251] - Litte error in Permission Setting tab with Vista skin
+    * [PORTAL-2262] - Show exception when edit current portal
+    * [PORTAL-2275] - When a portal is not accessible to "anonymous" user we should redirect to the private one
+    * [PORTAL-2276] - Invalid French Translation
+    * [PORTAL-2285] - Lose Resoure bundle in locale.portal.webui
+    * [PORTAL-2286] - Session timeout when create/edit page wizard
+    * [PORTAL-2287] - Error when edit current portal in special case
+    * [PORTAL-2289] - Error when drag & drop PageBody when edit current portal
+    * [PORTAL-2294] - Error UI in Banner and Footer portlet with all skin 
+    * [PORTAL-2295] - Error when change language 
+    * [PORTAL-2296] - Error when add a remote gadget in special case
+    * [PORTAL-2299] - Error when change language from Arabic to English ( other language)
+    * [PORTAL-2300] - IE: Error UI Homepage portelt with all skin
+    * [PORTAL-2301] - IE: Error UI in Icon Tab when add new node in Default skin
+    * [PORTAL-2302] - IE6: Little error in Browser portlet when have tab page config in Vista skin
+    * [PORTAL-2303] - BugJS: Error in User workspace when restore down window ( IE6)
+    * [PORTAL-2307] - Lost PageBody when edit current portal with Vista and Mac skin
+    * [PORTAL-2309] - Unknown error when add new gadget in some cases
+    * [PORTAL-2311] - [application registry][gadget] Some problem happens when edit some special gadget
+    * [PORTAL-2312] - Updating user profile don't save in special case
+    * [PORTAL-2314] - Unknown error when add member with user name includes colon character.
+    * [PORTAL-2316] - Add a remote Gadget developed with GWT : Warning message when URI contains dot
+    * [PORTAL-2317] - In Gadget Container form: Don't focus cursor into selected field.
+    * [PORTAL-2320] - Nothing happen and throw exception in console when goto a page from eXo Start.
+    * [PORTAL-2324] - Bug unknown error when login with an user name unavailable
+    * [PORTAL-2329] - W3C error in DownloadService
+    * [PORTAL-2336] - [public mode][login] Unknown error appears when login by user who doesn't  exit in system
+    * [PORTAL-2337] - Show message error when select gadget from drop down list  of Control workspace
+    * [PORTAL-2339] - [application][category] can't add one application into two difference categories
+    * [PORTAL-2340] - [application][category] don't show message when add a exited application into [administration] category
+    * [PORTAL-2342] - User can not preview page although has access permission.
+    * [PORTAL-2343] - display not well on Arabic language
+    * [PORTAL-2344] - In IE 6 /Mac & Vista skin: Error UI when click on "Edit Gadget" icon
+    * [PORTAL-2347] - In Mac & Vista skin: Error UI on Banner of portal
+    * [PORTAL-2348] - [aplication registry][gadget] Has some problem with priority between "title" and "directory_title" field of a gadget which has created by add code
+    * [PORTAL-2349] - Show note "Page not found" after edit page wizard in special case.
+    * [PORTAL-2350] - In IE 6: Show value of Display name field is "null" when this field is blank.
+    * [PORTAL-2351] - Can not load gadgets in IE
+    * [PORTAL-2353] - In IE6 / Mac & Vista: Remove space when edit Category
+    * [PORTAL-2354] - Show duplicate membership in List permission popup. see file attach
+    * [PORTAL-2362] - Auto getting value into Title page field when edit page
+    * [PORTAL-2365] - In Mac & Vista skin / Add new gadget form: show icon of Mandatory field is incorrect.
+    * [PORTAL-2366] - In Mac & Vista skin: label of "Add permission" button was hidden when move mouse over that button.
+    * [PORTAL-2367] - In IE6 / Application registry porlet: Error UI when Restore down window
+    * [PORTAL-2368] - Gadget detail form: show duplicate value of URL
+    * [PORTAL-2370] - Created node by Create page wizard isn't displayed in Navigation pane & eXo Start.
+    * [PORTAL-2372] - [public mode][dashboard] need do some action for guest known that they can't add gadget in dashboard at public mode
+    * [PORTAL-2374] - Position of button is incorrect when edit "Dashboard" porlet.
+    * [PORTAL-2378] - Edit Portal: Footer porlet is auto moved above Page Description pane in special case.
+    * [PORTAL-2379] - Show message when create new account in Registry portlet
+    * [PORTAL-2380] - Show page by container is same with show page by porlet when create page with template is "Dashboard" layout
+    * [PORTAL-2383] - Some string are not localized in ForgetPasswordModule
+    * [PORTAL-2386] - [gadget][calendar] a little error when display calender gadget on IE6
+    * [PORTAL-2387] - Unknown error when add user into group in special case
+    * [PORTAL-2388] - NullPointerException when change language to French
+    * [PORTAL-2390] - Unknow error when edit user which was deleted.
+    * [PORTAL-2391] - Error when edit membership in group which was existed
+    * [PORTAL-2392] - Little error UI Message form when change language to Arabic in public mode
+    * [PORTAL-2393] - Lose delete icon in Gadget item with Vista skin
+    * [PORTAL-2396] - Don't change "Type" in UI Application form when input display name have length at least 3 character
+    * [PORTAL-2397] - Error UI in Application form in special case
+    * [PORTAL-2409] - Unknown error when change membership which was delete
+    * [PORTAL-2410] - After maximize a IFrame portlet, unable to reduce it or to change page
+    * [PORTAL-2413] - unknown error when edit mode Gadget Wrapper Portlet
+    * [PORTAL-2415] - [public mode][dashbord][gadget] lost right border of  gadget on dashboard page at Public mode on IE6
+    * [PORTAL-2416] - NullPointerException when edit gadget in Application registry
+    * [PORTAL-2418] - IE6: Can't back to first page when click Previous button on Navigation bar
+    * [PORTAL-2419] - Show message "Application is existing" when add applicaton into cateogry
+
+
+** Doc
+    * [PORTAL-1883] - Invalid comment in the repository-configuration.xml file
+
+** Improvement
+    * [PORTAL-671] - the button discard should be next to the login one
+    * [PORTAL-701] - For normal page, right-click on a page, a menu appears: remove [Edit Node's page] on this menu
+    * [PORTAL-1094] - update the organisation portlet whena  new user is added
+    * [PORTAL-1172] - the all pages don't need depending together when create page by wizard in special case
+    * [PORTAL-1260] - make URL crawlable
+    * [PORTAL-1264] - Config pages in public of webos portal in desktop template
+    * [PORTAL-1265] - Should display name in Internationlization are completed
+    * [PORTAL-1272] - Imrpove the page creation wizard
+    * [PORTAL-1289] - Should add "Get default" in tab Select Icon
+    * [PORTAL-1300] - Should check user name before check password when create new user
+    * [PORTAL-1365] - Do not  advantage for user when use page Navi in Portal WebOS
+    * [PORTAL-1371] - Update year in copyright statement
+    * [PORTAL-1421] - Should allow users to enter blanks when register in First name and Last name
+    * [PORTAL-1512] - [cometd]store the clientID in a cookie
+    * [PORTAL-1543] - Improve UIFormUploadInput to can be auto uploaded after user chose the file.
+    * [PORTAL-1569] - Should  provide a  check-box enable  user  to choose  all portlets in group of Application registry
+    * [PORTAL-1598] - Don't select last page when create more sub node in special case
+    * [PORTAL-1601] - when a connection is closed by a network error, the onError is not called in AjaxRequest
+    * [PORTAL-1609] - Modify SkinService & JavaScriptConfigService to allow add dynamic css/javascript at runtime for wcm
+    * [PORTAL-1616] - save the position of the gadget in the webOS page
+    * [PORTAL-1647] - refactor gadgets implementation to remove the changes in the core of shindig
+    * [PORTAL-1655] - keep the same session when authenticated user go across between public and private part
+    * [PORTAL-1746] - Broadcast some event when new PortalConfig is created or removed
+    * [PORTAL-1747] - Should keep current pages list in search result after return from edit/view mode
+    * [PORTAL-1789] - reduce the size of gadget for the left workspace
+    * [PORTAL-1797] - increase the length after which text in truncated in UIGrid
+    * [PORTAL-1812] - Ability to drag and drop the "Portal Page component" in the Edit Current Portal Page
+    * [PORTAL-1850] - Add disabled in Container UIFormStringInput 
+    * [PORTAL-1851] - Bulk save action when edit portlet mode in create page winzad
+    * [PORTAL-1877] - Upgrate fckeditor to the lastest version 2.6.3
+    * [PORTAL-1885] - Should increase the length in some form of portal and webos
+    * [PORTAL-1895] - Parameterize page URL
+    * [PORTAL-1897] - Portal skin improvement
+    * [PORTAL-1903] - Should hide the link of Edit portlet mode with anonymous session
+    * [PORTAL-1913] - Improve error reporting when portlet is missing
+    * [PORTAL-1929] - new design for add content
+    * [PORTAL-1931] - add Dutch (nl) and German (de) locales
+    * [PORTAL-1933] - upgrade shindig to the last revision
+    * [PORTAL-1936] - CSS shot buld be cacheable by browser
+    * [PORTAL-1956] - Disabled the "Save" and "Cancel" button in the "Edit tab" of the Portlet preferences edition, when the user edits the portal page
+    * [PORTAL-1972] - Should not allow user typing path of file in Browse text box when upload file
+    * [PORTAL-1974] - Have some change about design for portal
+    * [PORTAL-1977] - Make the "user name" zone in the portlet header as a link to the "edit account" page
+    * [PORTAL-1989] - order all the lists by name
+    * [PORTAL-1993] - remove the selector for "application" / "Widget" from the add remote gadget form
+    * [PORTAL-1995] - cut too long name in the list of gadget
+    * [PORTAL-1996] - after adding a gadget, we should be redirected to the gadget page
+    * [PORTAL-1997] - replace save by add and Back by Cancel in the add remote gadget
+    * [PORTAL-1999] - change the message when trying to save an empty gadget
+    * [PORTAL-2002] - change the button save to Create in the add local gadget
+    * [PORTAL-2003] - have a bigger textarea for the source code of the gadget
+    * [PORTAL-2004] - list the portlet by webapp name
+    * [PORTAL-2006] - add a warning message after clicking on auto import
+    * [PORTAL-2010] - review the design of the add apllication/widget to a category
+    * [PORTAL-2011] - use local gadgets by default 
+    * [PORTAL-2012] - the display name should be in big, not he name
+    * [PORTAL-2013] - remove the delete button, and implement the edit
+    * [PORTAL-2020] - Should limit length for some fileds in registry portlet
+    * [PORTAL-2029] - Add Cancel button in Edit Category form in Registry portlet
+    * [PORTAL-2031] - Broadcast some events when changes page/navigation
+    * [PORTAL-2040] - improve the detection of the browsers and environment
+    * [PORTAL-2055] - upgrade shindig to the last revision
+    * [PORTAL-2064] - Add a warning message after clicking on Delete portlet
+    * [PORTAL-2067] - Should have tooltip for all icon in Application Registry portlet
+    * [PORTAL-2069] - list the gadgets fromt he app registry
+    * [PORTAL-2095] - save the dashboard layout by user or for everyone
+    * [PORTAL-2096] - Should keep track of your tasks in To do Gadget 
+    * [PORTAL-2104] - refactor the dashboard to be reusable by other projects
+    * [PORTAL-2164] - Review the eXo start button
+    * [PORTAL-2187] - Leverage JCR 1.10
+    * [PORTAL-2188] - Investigate JCR based Organization service usage in Portal
+    * [PORTAL-2204] - Switch the usage of ExoCache to the new implementation ConcurrentFIFOExoCache
+    * [PORTAL-2205] - Allow render dynamic title, html meta info for portal page
+    * [PORTAL-2253] - generate the edit form for gadget prefs in javascript
+    * [PORTAL-2257] - order the categories by name
+    * [PORTAL-2273] - UserACL uses cached identity
+    * [PORTAL-2292] - Add new Plugin in UserACL allow define access controll workspace permission outside userACL service
+    * [PORTAL-2293] - Clean css aggregation to minimize the number of css served by the portal
+    * [PORTAL-2298] - CSS resource caching
+    * [PORTAL-2304] - Improve user selector component
+    * [PORTAL-2308] - A part of Calendar pop up is hidden when you open it in a specical case
+    * [PORTAL-2310] - Create CSS for UIUserSelector
+    * [PORTAL-2315] - should move scollbar to bottom in portlet Dashboard
+    * [PORTAL-2321] - should not reset inputted value into fields when click on "Search User" icon.
+    * [PORTAL-2323] - Change code in SkinServiceImpl to allow iterate SkinKey in predict order
+    * [PORTAL-2346] - In Application registry porlet: Need show tool tip when click on "Delete application" icon
+    * [PORTAL-2352] - Add member form: Still keep value of User name field after do some actions
+    * [PORTAL-2358] - Navigation label size
+    * [PORTAL-2361] - Make the Gadgets Portlet available in the application registry by default
+    * [PORTAL-2363] - In Select user form: Change label from "User" to "Search" to more exactly
+    * [PORTAL-2364] - In Membership management form: change title colum from "Type name" to "Membership name"
+    * [PORTAL-2373] - Improvement UIFormMultiValueInputSet to support remove field
+    * [PORTAL-2384] - Put the DASHBOARD page on the main menu for all users
+    * [PORTAL-2412] - make the default configuration not dependent of the hostname
+    * [PORTAL-2424] - [gadget][todo] should  create [save] button for  aplication To do aplication
+
+** New Feature
+    * [PORTAL-1274] - Integrate OpenSocial
+    * [PORTAL-1507] - Improve the Portal publication dates feature
+    * [PORTAL-1603] - add a border to gadgets
+    * [PORTAL-1617] - replace the widgets in the user workspace by gadgets
+    * [PORTAL-1676] - get the metadata of the gadget
+    * [PORTAL-1687] - Add dashboard in portal
+    * [PORTAL-1699] - UltimateProduct-2.0(branch): Lose some categories for portlets when restore down window
+    * [PORTAL-1730] - Make new PortletRegistryPortlet for Portal
+    * [PORTAL-1759] - PageNode visibility
+    * [PORTAL-1760] - save the gadget position
+    * [PORTAL-1761] - show/hide the list of available gadget 
+    * [PORTAL-1769] - saving preferences of the gadget as a portlet
+    * [PORTAL-1773] - show/hide widget as on Mac OS with a semi-transparent Background
+    * [PORTAL-2039] - add dom tools
+    * [PORTAL-2075] - add security token
+    * [PORTAL-2076] - change the way of storing gadget preferences to allow multi fields
+    * [PORTAL-2146] - add the possibility to add an rss feed to a dashboard
+    * [PORTAL-2248] - Add set Title
+    * [PORTAL-2252] - Make RTL skin for arabic language
+    * [PORTAL-2256] - Easier groups management
+
+** Task
+    * [PORTAL-1278] - Need alert message when delete Resource in Internationalization page
+    * [PORTAL-1294] - Change title of "middle center bar" in Manage Pages
+    * [PORTAL-1710] - Should change New Account form with 3 skin
+    * [PORTAL-1712] - Add rest application
+    * [PORTAL-1718] - expose logs configuration inside WEB-INF/conf
+    * [PORTAL-1724] - The message's title should be validated after (when) the language was changed
+    * [PORTAL-1732] - develop a helping class to develop selenium test
+    * [PORTAL-1734] - Change some text in Edit current portal and New Account form
+    * [PORTAL-1751] - create sample of gadget made in GWT
+    * [PORTAL-1825] - Should check cache of browser when change languge for browser in public mode
+    * [PORTAL-1843] - Should change message when set width or height for portlet
+    * [PORTAL-1900] - Review WebOS Portal Administration Guide v2.0
+    * [PORTAL-1912] - IE: Error displaying in Select Permission form with Mac and Vista skin
+    * [PORTAL-1932] - Little error in Widget Containers Management with Default skin
+    * [PORTAL-1934] - Allow to select language with normal userafter login to access portal
+    * [PORTAL-1935] - Separate webos from portal
+    * [PORTAL-1960] - Change message when user don't have permission to edit page in Edit page wizard
+    * [PORTAL-1971] - Should change display name in Dashboard portlet
+    * [PORTAL-1984] - Still show all messages when user don't have permission to view/edit/delete a page
+    * [PORTAL-2008] - There is a mistake on the word in UI Forgot Password Wizard
+    * [PORTAL-2046] - Migrate Lucene to the 2.2 version
+    * [PORTAL-2062] - Remove completely widgets from portal 2.5. Don't support eXo Widget anymore
+    * [PORTAL-2088] - Change tooltip from add widget to add gadget
+    * [PORTAL-2091] - increase the length of tooltip in truncated in UIGrid
+    * [PORTAL-2111] - Review gadgets application
+    * [PORTAL-2120] - Change some language for Add Gadget form 
+    * [PORTAL-2125] - Need to have an alert message for add an existed URL in add a remote gadget
+    * [PORTAL-2153] - Change UI Gadget portlet form in Default skin when edit portlet
+    * [PORTAL-2156] - Check all display name field in registry portlet and should use it in all program
+    * [PORTAL-2192] - IE: Error UIAction when edit gadget in application registry portlet
+    * [PORTAL-2202] - [public mode] has some errors when validate HTML code
+    * [PORTAL-2211] - IE: Change form UI Forgot Password
+    * [PORTAL-2224] - Change form when edit Gadget portlet with all skin
+    * [PORTAL-2238] - Add tooltip for all fields in Manage Pages
+    * [PORTAL-2245] - Change position of radio button in UI Add Application form
+    * [PORTAL-2249] - Decouple page caching and security
+    * [PORTAL-2258] - Avoid unnecessary char serialization
+    * [PORTAL-2259] - Optimize SimpleTemplateEngine to hardwire println operations to avoid unnecessary Groovy reflection
+    * [PORTAL-2260] - Performance tuning
+    * [PORTAL-2265] - Change message when edit user infor
+    * [PORTAL-2266] - Accept URL from IP address or name of host
+    * [PORTAL-2269] - Use text encoder framework
+    * [PORTAL-2271] - Use PropertyManager instead of system properties
+    * [PORTAL-2274] - in the Page creation wizard, should have a predifined template with a Dashboard portlet without border
+    * [PORTAL-2284] - include ldap support
+    * [PORTAL-2288] - Review Drop Down Navigation list with Default and Mac skin
+    * [PORTAL-2291] - Check all display name field in dashboard portlet with upper and lower characters
+    * [PORTAL-2327] - [applycation registry][add catagory] Validate the first character in name field to avoid duplicate displaying name
+    * [PORTAL-2375] - Add tooltip for all fields in Select User form
+    * [PORTAL-2382] - Change UI Permisson Setting form when create/edit cateogry in Registry portelt
+    * [PORTAL-2385] - Change UI Select User form in Organization portlet
+    * [PORTAL-2394] - Add thumbnail image default when gadget don't support thumbnail image 
+    * [PORTAL-2414] - Change Tooltip "KeyWord" in Select User form
+
+
+
 - Other resources and links
      Company site        http://www.exoplatform.com
      Community JIRA      http://jira.exoplatform.org
