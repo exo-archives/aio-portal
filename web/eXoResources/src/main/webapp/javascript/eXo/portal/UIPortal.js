@@ -313,9 +313,8 @@ UIPortal.prototype.showMaskLayer = function() {
 	object.className = "PreviewMode" ;
 	object.style.display = "none" ;
 	uiPortalApplication.appendChild(object) ;
-
 	this.maskLayer = eXo.core.UIMaskLayer.createMask("UIPortalApplication", object, 30, "TOP-RIGHT") ;
-	this.maskLayer.title = "Click here to turn off preview mode";
+	this.maskLayer.title = this.previewTitle ;
 	this.maskLayer.style.cursor = "pointer" ;
 	this.maskLayer.onclick = function() {
 		var layoutModeIcon = eXo.core.DOMUtil.findFirstDescendantByClass(uiPortalApplication, "a", "LayoutModeIcon") ;
