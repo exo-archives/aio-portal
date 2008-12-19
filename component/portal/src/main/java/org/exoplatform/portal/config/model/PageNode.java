@@ -33,7 +33,6 @@ public class PageNode  {
   private String resolvedLabel ;
   private Date startPublicationDate ;
   private Date endPublicationDate ;
-  private boolean enabled = true ;
   private boolean showPublicationDate = false ; 
 
   private String pageReference ;
@@ -78,9 +77,16 @@ public class PageNode  {
   public Date getEndPublicationDate() { return endPublicationDate ; }
   public void setEndPublicationDate(Date endDate) { endPublicationDate = endDate ; }
 
-  public boolean isEnabled() { return enabled ; }
-  public void setEnabled(boolean b) { enabled = b ; }
-  
+  public boolean isEnabled() { 
+    if(startPublicationDate != null && endPublicationDate != null) {
+      Date currentDate = new Date() ;
+      if(currentDate.compareTo(startPublicationDate) >= 0 && 
+          currentDate.compareTo(endPublicationDate) <= 0) return true ;
+    } else if(startPublicationDate == null && endPublicationDate == null) return true ;
+    return false ;
+
+  }
+
   public void setShowPublicationDate(Boolean show) { showPublicationDate = show.booleanValue() ; }
   public boolean isShowPublicationDate() { return showPublicationDate ; }
   
@@ -96,7 +102,6 @@ public class PageNode  {
     newNode.setShowPublicationDate(showPublicationDate) ;
     newNode.setStartPublicationDate(startPublicationDate) ;
     newNode.setEndPublicationDate(endPublicationDate) ;
-    newNode.setEnabled(enabled) ;
     if(children == null || children.size() < 1) return newNode;
     for(PageNode ele : children) {
       newNode.getChildren().add(ele.clone());

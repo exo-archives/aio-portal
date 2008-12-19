@@ -115,7 +115,6 @@ public class PageNavigationUtils {
     WebuiRequestContext context = WebuiRequestContext.getCurrentInstance() ;
     ExoContainer container = context.getApplication().getApplicationServiceContainer() ;
     UserPortalConfigService userService = (UserPortalConfigService)container.getComponentInstanceOfType(UserPortalConfigService.class);
-    checkPublicationDate(node) ;
     if(userService.getPage(node.getPageReference(), userName) == null || !node.isEnabled()) return null;
     PageNode copyNode = node.clone();
     copyNode.setChildren(new ArrayList<PageNode>());
@@ -128,13 +127,4 @@ public class PageNavigationUtils {
     return copyNode;
   }
   
-  public static void checkPublicationDate(PageNode node) {
-    boolean enable = true ;
-    if(node.isShowPublicationDate()) {
-      if(node.getEndPublicationDate() == null) enable = true ;
-      else if(node.getEndPublicationDate().compareTo(Calendar.getInstance().getTime()) < 0 ) enable = false ;
-      else enable = true ;
-    }
-    node.setEnabled(enable) ;
-  }
 }
