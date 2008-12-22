@@ -95,6 +95,10 @@ public class UIEditResource extends UIForm {
       String name = uiEditResource.getUIStringInput("name").getValue() ;
       String language = uiEditResource.getChild(UIFormSelectBox.class).getValue() ;
       
+      // get current page
+      UIPageIterator pageIterator = uiI18n.getChild(UIGrid.class).getUIPageIterator();
+      int currentPage = pageIterator.getCurrentPage();
+      
       PageList pageList = serv.findResourceDescriptions(new Query(name,language)) ;
       if((pageList.getAvailable() > 0)&& uiEditResource.isSave()) {
         UIApplication uiApp = event.getRequestContext().getUIApplication() ;
@@ -110,6 +114,7 @@ public class UIEditResource extends UIForm {
       
       // update when create new resource
       uiI18n.update(null, null) ;
+      pageIterator.setCurrentPage(currentPage);
       uiI18n.getChild(UIGrid.class).setRendered(true) ;
       UIForm uiSearch = uiI18n.getChildById("UISearchI18n") ;
       uiSearch.setRendered(true) ;
