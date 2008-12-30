@@ -1,4 +1,4 @@
-<Context path="/portal" docBase="../../../eXoProjects/portal/trunk/web/portal/src/main/webapp" 
+<Context path="/portal" docBase="../../../eXoProjects/portal/tags/2.5.1rc1/web/portal/src/main/webapp" 
   debug="0" reloadable="true" crossContext="true">
 
   <Logger className="org.apache.catalina.logger.SystemOutLogger"
