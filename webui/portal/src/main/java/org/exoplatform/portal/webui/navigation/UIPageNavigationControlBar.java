@@ -26,6 +26,7 @@ import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.webui.UIWelcomeComponent;
 import org.exoplatform.portal.webui.UIManagement.ManagementMode;
+import org.exoplatform.portal.webui.page.UIPageBody;
 import org.exoplatform.portal.webui.page.UIPageEditBar;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.util.PortalDataMapper;
@@ -173,6 +174,10 @@ public class UIPageNavigationControlBar extends UIToolbar {
     UIControlWSWorkingArea uiWorking = uiControl.getChildById(UIControlWorkspace.WORKING_AREA_ID);
     uiWorking.setUIComponent(uiWorking.createUIComponent(UIWelcomeComponent.class, null, null));
     prContext.addUIComponentToUpdateByAjax(uiControl);    
+    
+    // TODO tam.nguyen: remove maximized component in order to return to home page
+    UIPageBody uiPageBody = portal.findFirstComponentOfType(UIPageBody.class);
+    uiPageBody.setMaximizedUIComponent(null);
     
     UIWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
     UserPortalConfigService configService = uiPortalApp.getApplicationComponent(UserPortalConfigService.class);
