@@ -22,6 +22,7 @@ import java.net.URLDecoder;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -29,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
+import org.exoplatform.commons.utils.IOUtil;
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.container.RootContainer;
 import org.exoplatform.portal.webui.skin.SkinService;
@@ -50,7 +52,17 @@ public class ResourceRequestFilter implements Filter  {
     String uri = URLDecoder.decode(httpRequest.getRequestURI(),"UTF-8");
     HttpServletResponse httpResponse = (HttpServletResponse)  response ;
     if(isDeveloping_ && (uri.endsWith(".jstmpl") || uri.endsWith(".css") || uri.endsWith(".js"))) {
-        httpResponse.setHeader("Cache-Control", "no-cache");
+        try {
+          ServletContext sContext = httpRequest.getSession().getServletContext();
+          String relativeResourcePath = uri.substring(uri.indexOf("/", 2));
+          String  resource = IOUtil.getStreamContentAsString(sContext.getResourceAsStream(relativeResourcePath));
+          httpResponse.setHeader("Cache-Control", "no-cache");
+          response.getWriter().print(resource);
+          return;
+        } catch (Exception e) {
+          httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+          return;
+        }
     } else if(uri.endsWith(".css")) {
     	PortalContainer portalContainer = RootContainer.getInstance().getPortalContainer("portal") ;
     	SkinService skinService = (SkinService) portalContainer.getComponentInstanceOfType(SkinService.class);
@@ -60,6 +72,18 @@ public class ResourceRequestFilter implements Filter  {
     		log.info("Use a merged CSS: " + uri);
     		response.getWriter().print(mergedCSS);
     		return;
+    	} else {
+    	  try {
+    	    ServletContext sContext = httpRequest.getSession().getServletContext();
+    	    String relativeCSSPath = uri.substring(uri.indexOf("/", 2));
+    	    String  css = IOUtil.getStreamContentAsString(sContext.getResourceAsStream(relativeCSSPath));
+          httpResponse.setHeader("Cache-Control", "no-cache");
+          response.getWriter().print(css);
+          return;
+        } catch (Exception e) {
+          httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+          return;
+        }
     	}
     }
     chain.doFilter(request, response) ;
