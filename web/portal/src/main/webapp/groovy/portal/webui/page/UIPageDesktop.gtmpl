@@ -3,6 +3,7 @@
   import org.exoplatform.web.application.JavascriptManager ;
   import org.exoplatform.portal.config.model.PageNavigation ;
   import org.exoplatform.portal.config.model.PageNode ;
+  import org.exoplatform.portal.webui.util.Util;
   def rcontext = _ctx.getRequestContext() ;
   JavascriptManager jsmanager = rcontext.getJavascriptManager();
   
@@ -281,11 +282,17 @@
   	                  <img class="Icon" src="/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/icons/80x80/NavigationIcon.png" alt="" altText="/eXoResources/skin/sharedImages/Blank.gif" title=""
 	                       id="UIAddApplicationIcon"
 	                       onclick="eXo.desktop.UIDockbar.showNavigation(event)"/><span class="Tooltip" style="display: none"><%=_ctx.appRes("UIPageDesktop.title.pageNavigation")%></span>
-	                <%if(rcontext.getRemoteUser() == null) {%>
+<%String portalName = Util.getUIPortal().getName() ;
+String href = _ctx.getRequestContext().getRequestContextPath() + "/public/" + portalName + "/" ;
+%>	                
+<%if(rcontext.getRemoteUser() == null) {%>
 		                  <img id="SignInIcon" class="Icon" src="/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/icons/80x80/Signin.png" alt="" altText="/eXoResources/skin/sharedImages/Blank.gif" title=""
 		                         onclick="<%=uicomponent.event("ShowLoginForm", null);%>" /><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIPageDesktop.title.SignIn")%></span>
 		                  <img class="Separator" alt="" src="/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/background/Separator2x1.png"/>
-                  <%}%>
+                  <%} else {%>
+		<img id="SignOutIcon" class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/Signout.png" alt="" altText="/eXoResources/skin/sharedImages/Blank.gif" title=""
+ onclick="location.href='$href';" /><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIPageDesktop.title.SignOut")%></span>	                  		
+				<%} %>
 
                   <%if(modifiable) {%>
 		                  <img class="Icon" src="/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIPageDesktop/icons/80x80/AddPortlet.png" alt="" altText="/eXoResources/skin/sharedImages/Blank.gif" title=""
