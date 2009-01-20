@@ -187,7 +187,7 @@ public class UIPageActionListener {
         uiPortal.setSelectedNode(selecttedNode) ;
         uiPortal.setSelectedNavigation(nav);
       }
-      pcontext.getJavascriptManager().addCustomizedOnLoadScript("document.title=\"" + uiPortal.getSelectedNode().getResolvedLabel() + "\";") ;
+      pcontext.getJavascriptManager().addCustomizedOnLoadScript("document.title='" + uiPortal.getSelectedNode().getResolvedLabel().replaceAll("'", "\\\\'") + "';") ;
       uiPortal.setSelectedPaths(selectedPaths_);
       if(!currentUri.equals(uiPortal.getSelectedNode().getUri())) {
         if(uiPageBody.getMaximizedUIComponent() != null) {
