@@ -327,10 +327,15 @@ eXo.webui.UIDashboard = {
 			if(uiWindow && uiWindow.style.display == "none") {
 				windowHeight = parseInt(DOMUtil.getStyle(portletFragment, "height")) ;
 			}
-			middleItemCont.style.height = windowHeight - minusHeight
-						- parseInt(DOMUtil.getStyle(itemCont,"paddingTop"))
-						- parseInt(DOMUtil.getStyle(itemCont,"paddingBottom"))
-						- 5 + "px";
+			var middleItemContHeight = windowHeight - minusHeight
+																- parseInt(DOMUtil.getStyle(itemCont,"paddingTop"))
+																- parseInt(DOMUtil.getStyle(itemCont,"paddingBottom"))
+																- 5 ;
+	    // fix bug IE 6
+		  if (middleItemContHeight < 0) {
+		  	middleItemContHeight = 0;
+		  }
+			middleItemCont.style.height = middleItemContHeight + "px";
 			//dbContainer.style.height = windowHeight + "px";
 			if(middleItemCont.scrollHeight > middleItemCont.offsetHeight) {
 				topItemCont.style.display = "block";
