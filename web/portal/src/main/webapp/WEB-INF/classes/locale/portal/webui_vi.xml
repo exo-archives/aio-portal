@@ -737,7 +737,7 @@
       <NoPageNavigation>Bạn phải khởi tạo Navigation trước khi dùng chức năng này!</NoPageNavigation>
       <curentPage>Bạn không thể xóa trang này: Trang này đang được dùng bởi ứng dụng khác!</curentPage>
       <paste>
-        <sameName>Tên của node không tồn tại!</sameName>
+        <sameName>Tên của node đã tồn tại!</sameName>
 	<sameSrcAndDes>Node đích và node nguồn trùng nhau!</sameSrcAndDes>
       </paste>
     </msg>
@@ -1402,9 +1402,9 @@
     <tooltip>
       <PortletMode>Chế độ Portlet</PortletMode>
       <Minimize>Thu nhỏ cửa sổ</Minimize>
-      <MinimizeRestore>Restore</MinimizeRestore>
+      <MinimizeRestore>Khôi phục</MinimizeRestore>
       <Maximize>Phóng lớn cửa sổ</Maximize>
-      <MaximizeRestore>Restore Down</MaximizeRestore>
+      <MaximizeRestore>Thu nhỏ cửa sổ</MaximizeRestore>
       <editPortlet>Sửa Portlet</editPortlet>
       <deletePortlet>Xóa Portlet</deletePortlet>
       <ResizeWindow>Thay đổi kích cỡ cửa sổ</ResizeWindow>
@@ -1731,6 +1731,7 @@
     <button>
       <ok>Đồng ý</ok>
     </button>
+    <Close>Đóng cửa sổ</Close>
   </UIPopupMessages>
   <!--
   ############################################################################
@@ -1834,7 +1835,7 @@
       <hasNotPermission>Bạn không được quyền chỉnh sửa trang này!</hasNotPermission>
     </msg>
     <action>
-      <Close>Loại bỏ khỏi Dockbar!</Close>
+      <Close>Loại bỏ ứng dụng khỏi Dockbar!</Close>
       <Quit>Thoát</Quit>
       <action>
         <Open>Mở</Open>

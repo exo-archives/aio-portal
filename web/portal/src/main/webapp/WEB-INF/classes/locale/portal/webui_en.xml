@@ -1721,6 +1721,7 @@
     <button>
       <ok>OK</ok>
     </button>
+    <Close>Close Window</Close>
   </UIPopupMessages>
   <!--
   ############################################################################
