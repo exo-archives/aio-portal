@@ -61,7 +61,8 @@
 	float: left;/* orientation=rt */
 	width: 18px; height: 18px;
 	cursor: nw-resize;
-	background: url('background/ResizeArea18x18.gif') no-repeat;
+	background: url('background/ResizeArea18x18.gif') no-repeat left top; /* orientation=lt */
+	background: url('background/ResizeArea18x18-rt.gif') no-repeat right top; /* orientation=rt */
 }
 
 .DefaultTheme .Information {
