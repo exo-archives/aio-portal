@@ -166,6 +166,7 @@
 }
 
 .UIAddApplication .PortletIcon {
+	background: none;
 	float: left;/* orientation=lt */
 	float: right;/* orientation=rt */
 	width: 80px; height: 80px;

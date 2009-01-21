@@ -1,3 +1,9 @@
+
+
+.UIPageDesktop .UIWindow .WindowBarCenter .WindowPortletInfo {
+  cursor: move;
+}
+
 /*##########################################################*/
 .UIPageDesktop .UIWindow {
   width: 780px ;	

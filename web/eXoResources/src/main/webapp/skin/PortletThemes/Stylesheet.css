@@ -162,8 +162,6 @@
 }
 
 .MacTheme .WindowBarCenter .WindowPortletIcon {
-  background-position: left top; /* orientation=lt */
-  background-position: right top; /* orientation=rt */
 	padding-left: 20px; /* orientation=lt */
 	padding-right: 20px; /* orientation=rt */
 	height: 16px;
@@ -329,8 +327,6 @@
 }
 
 .MacGray .WindowBarCenter .WindowPortletIcon {
-  background-position: left top; /* orientation=lt */
-  background-position: right top; /* orientation=rt */
 	padding-left: 20px; /* orientation=lt */
 	padding-right: 20px; /* orientation=rt */
 	height: 16px;
@@ -497,8 +493,6 @@
 }
 
 .MacBlack .WindowBarCenter .WindowPortletIcon {
-  background-position: left top; /* orientation=lt */
-  background-position: right top; /* orientation=rt */
 	padding-left: 20px; /* orientation=lt */
 	padding-right: 20px; /* orientation=rt */
 	height: 16px;
@@ -663,9 +657,9 @@
 .MacGreenSteel .WindowBarCenter .WindowPortletInfo {
 	margin: 0px 70px 0px 0px;/* orientation=lt */
 	margin: 0px 0px 0px 70px;/* orientation=rt */
-}Steel .WindowBarCenter .WindowPortletIcon {
-  background-position: left top; /* orientation=lt */
-  background-position: right top; /* orientation=rt */
+}
+
+.MacGreenSteel .WindowBarCenter .WindowPortletIcon {
 	padding-left: 20px; /* orientation=lt */
 	padding-right: 20px; /* orientation=rt */
 	height: 16px;
@@ -690,7 +684,7 @@
 	width: 21px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: pointer;	
+	cursor: move;	
 	background-image: url('background/MacGreen.png');
 }
 
@@ -850,7 +844,7 @@
 	float: left; /* orientation=rt */
 	width: 30px; 
 	height: 20px;
-	cursor: pointer;	
+	cursor: move;	
 	background-image: url('background/VistaTheme.png'); /* orientation=lt */
 	background-image: url('background/VistaTheme-rt.png'); /* orientation=rt */
 }
@@ -1021,7 +1015,7 @@
 	float: right; /* orientation=lt */
 	float: left; /* orientation=rt */
 	width: 30px; height: 19px;
-	cursor: pointer;	
+	cursor: move;	
 	background-image: url('background/VistaBlue.png');
 }
 
@@ -1167,7 +1161,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: pointer;
+	cursor: move;
 	background-image: url('background/RoundCornerBlue.png');
 }
 
@@ -1324,7 +1318,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: pointer;
+	cursor: move;
 	background-image: url('background/RoundConerViolet.png');
 }
 
@@ -1482,7 +1476,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: pointer;
+	cursor: move;
 	background-image: url('background/RoundConerOrange.png');
 }
 
@@ -1642,7 +1636,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: pointer;
+	cursor: move;
 	background-image: url('background/RoundConerPink.png');
 }
 
@@ -1802,7 +1796,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: pointer;
+	cursor: move;
 	background-image: url('background/RoundConerGreen.png');
 }
 
@@ -1962,7 +1956,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: pointer;
+	cursor: move;
 	background-image: url('background/ShadowBlue.png');
 }
 
@@ -2120,7 +2114,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: pointer;
+	cursor: move;
 	background-image: url('background/ShadowViolet.png');
 }
 
@@ -2279,7 +2273,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: pointer;
+	cursor: move;
 	background-image: url('background/ShadowOrange.png');
 }
 
@@ -2438,7 +2432,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: pointer;
+	cursor: move;
 	background-image: url('background/ShadowPink.png');
 }
 
@@ -2597,7 +2591,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: pointer;
+	cursor: move;
 	background-image: url('background/ShadowGreen.png');
 }
 
@@ -2755,7 +2749,7 @@
 	width: 16px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: pointer;
+	cursor: move;
 }
 
 .SimpleBlue .Information {
@@ -2902,7 +2896,7 @@
 	width: 16px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: pointer;
+	cursor: move;
 }
 
 .SimpleViolet .Information {
@@ -3051,7 +3045,7 @@
 	width: 16px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: pointer;
+	cursor: move;
 }
 
 .SimpleOrange .Information {
@@ -3200,7 +3194,7 @@
 	width: 16px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: pointer;
+	cursor: move;
 }
 
 .SimplePink .Information {
@@ -3349,7 +3343,7 @@
 	width: 16px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: pointer;
+	cursor: move;
 }
 
 .SimpleGreen .Information {

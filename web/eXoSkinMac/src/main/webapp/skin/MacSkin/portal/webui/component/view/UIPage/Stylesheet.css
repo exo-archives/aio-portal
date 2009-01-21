@@ -1,10 +1,16 @@
 /*##############################-Page Layout Decorator-################################*/
 
+.UIPageBody .PageLayoutDecorator  {
+  padding: 0px ;
+}
+
 .UIPageBody .PageLayoutDecorator .TopLeftPage {
   background: url('background/PageLayout.png') no-repeat left top; /* orientation=lt */
   background: url('background/PageLayout-rt.png') no-repeat right top; /* orientation=rt */
   padding: 0px 0px 0px 142px; /* orientation=lt */
   padding: 0px 142px 0px 0px; /* orientation=rt */
+  _padding: 0px 0px 0px 139px; /* orientation=lt */
+  _padding: 0px 139px 0px 0px; /* orientation=rt */
 }
 		
 .UIPageBody .PageLayoutDecorator .TopRightPage {
@@ -17,7 +23,8 @@
 .UIPageBody .PageLayoutDecorator .TopCenterPage {
 	line-height: 110px; 
 	white-space: nowrap;
-	color: #1f2020;	
+	color: #1f2020;
+	_height: 110px;	
 	text-align: center;
 	font-weight: bold;
 	background: url('background/PageLayout.png') repeat-x center -228px;	
