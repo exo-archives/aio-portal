@@ -22,7 +22,9 @@ UIMaskLayer.prototype.createTransparentMask = function() {
 		document.getElementsByTagName("body")[0].appendChild(mask);
 	}
 	mask.style.width = "100%" ;
-	mask.style.height = "100%" ;
+	mask.style.height = eXo.core.Browser.getBrowserHeight() + "px" ;
+	mask.resizeId = eXo.core.DOMUtil.generateId("script_transparentMask_resize_") ;
+	eXo.core.Browser.addOnResizeCallback(mask.resizeId, eXo.core.UIMaskLayer.resizeTransparentMask) ;
 };
 /**
  * Hides the transparent mask
@@ -33,6 +35,7 @@ UIMaskLayer.prototype.removeTransparentMask = function() {
 	if (mask) {
 		mask.style.height = "0" ;
 		mask.style.width = "0" ;
+		eXo.core.Browser.onResizeCallback.remove(mask.getAttribute("resizeId")) ;
 	}
 };
 /**
@@ -82,7 +85,7 @@ UIMaskLayer.prototype.createMask = function(blockContainerId, object, opacity, p
 		maskLayer.id = "MaskLayer" ;
 		maskLayer.maxZIndex = 3 ;
 		maskLayer.style.width = "100%"  ;
-		maskLayer.style.height = "100%" ;
+		maskLayer.style.height = eXo.core.Browser.getBrowserHeight() + "px" ;
 		maskLayer.style.top = "1px" ;
 		maskLayer.style.left = "1px" ;
 		maskLayer.style.zIndex = maskLayer.maxZIndex ;
@@ -116,6 +119,8 @@ UIMaskLayer.prototype.createMask = function(blockContainerId, object, opacity, p
 		if(maskLayer.parentNode.id == "UIPage") {
 			eXo.core.UIMaskLayer.enablePageDesktop(false);
 	  }
+	  maskLayer.resizeId = eXo.core.DOMUtil.generateId("script_masklayer_resize_") ;
+	  eXo.core.Browser.addOnResizeCallback(maskLayer.resizeId, eXo.core.UIMaskLayer.resizeMaskLayer) ;
 	}catch(err) {
 		alert(err) ;
 	}
@@ -230,7 +235,7 @@ UIMaskLayer.prototype.removeMask = function(maskLayer) {
 	  }
 
   	parentNode.removeChild(maskLayer) ;
-  	
+  	eXo.core.Browser.onResizeCallback.remove(maskLayer.getAttribute("resizeId")) ;
 	}
 } ;
 
@@ -249,8 +254,18 @@ UIMaskLayer.prototype.enablePageDesktop = function(enabled) {
 	}
 };
 
+UIMaskLayer.prototype.resizeTransparentMask = function() {
+	var mask = document.getElementById("TransparentMaskLayer");
+	if(mask && mask.style.display != "none") {
+		mask.style.height = eXo.core.Browser.getBrowserHeight() + "px" ;
+	}
+};
+
 UIMaskLayer.prototype.resizeMaskLayer = function() {
-	return ;
+	var portalApp = document.getElementById("UIPortalApplication") ;
+	var mask = eXo.core.DOMUtil.findFirstDescendantByClass(portalApp, "div", "MaskLayer");
+	if(mask && mask.style.display == "none") return;
+	mask.style.height = eXo.core.Browser.getBrowserHeight() + "px" ;
 } ;
 
 eXo.core.UIMaskLayer = new UIMaskLayer() ;

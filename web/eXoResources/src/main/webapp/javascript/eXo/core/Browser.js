@@ -214,9 +214,11 @@ Browser.prototype.detectBrowser = function() {
 }
 
 Browser.prototype.managerResize = function() {
-	var Browser = eXo.core.Browser ;
-	clearTimeout(Browser.breakStream) ;
-	Browser.breakStream = setTimeout(eXo.core.Browser.onResize, 100) ;
+	if(eXo.core.Browser.currheight != document.documentElement.clientHeight) {
+ 		clearTimeout(eXo.core.Browser.breakStream) ;
+ 		eXo.core.Browser.breakStream = setTimeout(eXo.core.Browser.onResize, 100) ;
+ 	}
+ 	eXo.core.Browser.currheight = document.documentElement.clientHeight;
 }
 
 Browser.prototype.initCommon = function() {
