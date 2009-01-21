@@ -826,11 +826,6 @@
 
 /*-------------------------------- VistaTheme -----------------------------*/
 
-.UIPageDesktop .VistaTheme {
-	padding:4px 0px 0px 12px;/* orientation=lt */
-	padding:4px 12px 0px 0px;/* orientation=rt */
-}
-
 .VistaTheme .WindowBarCenter .WindowPortletInfo {
 	margin-right: 95px;/* orientation=lt */
 	margin-left: 95px;/* orientation=rt */
