@@ -183,7 +183,7 @@
   background: url('background/NavigationTab.png') repeat-x left -48px;
   cursor: pointer;
   padding: 0px 4px 0px 4px;
-  width: 65px; /* orientation=rt */
+  _width: 80px; /* orientation=rt */
   white-space: nowrap; /* orientation=rt */
 }
 
@@ -241,7 +241,7 @@
   background: url('background/NavigationTab.png') repeat-x bottom;
   cursor: pointer;
   padding: 0px 4px;
-  width: 65px; /* orientation=rt */
+  _width: 80px; /* orientation=rt */
   white-space: nowrap; /* orientation=rt */
 }
 
