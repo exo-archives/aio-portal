@@ -1,0 +1,57 @@
+/*########################- UIPageNodeSelector -######################*/
+.UIPageNodeSelector {
+}
+
+.UIPageNodeSelector .PageNodeSelectorContainer {
+  background: #f3f3f3 ;
+  padding: 5px ;
+  border: 1px solid #c6c6c9 ;
+}
+
+.UIPageNodeSelector .UIVerticalSlideTabs {
+  border: none; 
+}
+
+/*Created Tung.Dang*/
+.UIPageNodeSelector .UIDropDownControl {
+  padding: 0px 1px;
+}
+
+/*###############################-  -############################*/
+.UIPageNodeSelector .TreeSelectorTitle {
+  text-align: center; 
+  font-weight: normal;
+  height: 20px; line-height: 20px; 
+  background: white ;
+  border: 1px solid #b7b7b7 ; 
+  margin-bottom: 5px;
+}
+
+.UIPageNodeSelector .TabLabel {
+  margin-left: 10px;
+}
+
+.UIPageNodeSelector .OrganizationIcon {
+  background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/24x24/icons/MiniOrangeBoxPage.png') no-repeat;
+}
+
+.UIPageNodeSelector .PortalAdminIcon {
+  background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/16x16/icons/PortalAdmin.gif') no-repeat;
+}
+
+.UIPageNodeSelector .NavigationPortalIcon {
+  background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/24x24/icons/MiniOrangeBoxPage.png') no-repeat;
+}
+.UIPageManagement .UIPageNodeSelector .AddNavigationIcon {
+	background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/24x24/icons/EditNavigation.png') no-repeat left top;
+	cursor: pointer;
+	float: left; margin-left: -3px;
+	height: 22px; width: 19px;
+	display: block;
+}
+
+/*created: Tung.Dang*/
+.UIControlWorkspace .UIPageNodeSelector .UIDropDownControl {
+  float: left; 
+  width: 202px;
+}

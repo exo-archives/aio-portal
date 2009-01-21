@@ -1,0 +1,69 @@
+/*##############################-Page Layout Decorator-################################*/
+.UIPage .PageLayoutDecorator  {
+  padding: 0px ;
+  margin: 0px 2px auto 2px;
+}
+
+.UIPage .VIEW-PAGE {
+  padding: 0px;
+}
+
+.UIPage .PageLayoutDecorator .MiddlePageBG {
+  background: white ;
+}
+
+.UIPage .PageLayoutDecorator .TopLeftPage {
+  background: url('background/ViewPage.gif') no-repeat left -113px;
+  padding: 0px 0px 0px 143px ;
+}
+
+.UIPage .PageLayoutDecorator .TopRightPage {
+  background: url('background/ViewPage.gif') no-repeat right -226px;
+  padding: 0px 47px 0px 0px ; 
+}
+
+.UIPage .PageLayoutDecorator .TopCenterPage {
+  height: 112px ; line-height: 98px;  
+  background: url('background/ViewPage.gif') repeat-x center top;  
+  color: #525252; text-align: center;
+  font-weight: bold;
+  padding: 0px;
+}
+
+.UIPage .PageLayoutDecorator .MiddleLeftPage {
+  background: url('background/ViewPageRepeat.gif') repeat-y left ;
+  padding: 0px 0px 0px 22px ;
+}
+
+.UIPage .PageLayoutDecorator .MiddleRightPage {
+ background: url('background/ViewPageRepeat.gif') repeat-y right;
+ padding: 0px 23px 0px 0px ;
+}
+
+.UIPage .PageLayoutDecorator .MiddlePageBG {
+ height: 80px; 
+ background: white;
+}
+
+.UIPage .PageLayoutDecorator .BottomLeftPage {  
+  background: url('background/ViewPage.gif') no-repeat left -378px;
+  padding: 0px 0px 0px 46px ;
+}
+
+.UIPage .PageLayoutDecorator .BottomRightPage {
+  background: url('background/ViewPage.gif') no-repeat right -378px;
+  padding: 0px 35px 0px 0px ; 
+}
+
+.UIPage .PageLayoutDecorator .BottomCenterPage {
+  line-height: 38px;
+  background: url('background/ViewPage.gif') repeat-x center -339px ; 
+}
+
+.UIPage .PageLayoutDecorator .BottomCenterPage .FixBug {
+  height: 38px ;   
+}
+
+.UIPage .UIRowContainer {
+	padding: 1px;
+}

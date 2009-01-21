@@ -1,0 +1,133 @@
+.UIAction {
+  padding: 8px 0px;
+}
+
+.UIAction .ActionContainer{
+	width: auto;
+	margin: auto;
+}
+
+.UIAction .ActionButton {
+	float:left;
+	margin: 0px 3px;
+	cursor: pointer;
+}
+
+.UIAction .ActionContainer  a {
+  font-weight: normal ;
+}
+
+.UIAction .ActionContainer  a:hover {
+  color: #058ee6;
+}
+
+.UIAction .ActionContainer .Icon {
+	padding-left: 25px;
+	background-position: left center;
+	width: auto;
+	height: auto;
+} 
+
+/*##############################-Normal ActionButton-################################*/
+.UIAction .NormalStyle {
+}
+
+.UIAction .NormalStyle .ButtonLeft {
+  background: url('/eXoResources/skin/DefaultSkin/webui/component/UIBarDecorator/UIAction/background/NormalStyle.gif') no-repeat left top;
+  padding: 0px 0px 0px 3px;
+}
+
+.UIAction .NormalStyle .ButtonRight {
+  background: url('/eXoResources/skin/DefaultSkin/webui/component/UIBarDecorator/UIAction/background/NormalStyle.gif') no-repeat right top;
+  padding: 0px 3px 0px 0px ;
+}
+
+.UIAction .NormalStyle .ButtonMiddle {
+  line-height: 22px;
+	background: url('/eXoResources/skin/DefaultSkin/webui/component/UIBarDecorator/UIAction/background/NormalStyle.gif') repeat-x bottom;
+	padding: 0px 12px;	
+	display: table-cell;
+	white-space: nowrap;
+}
+
+/*##############################-Disabled ActionButton-################################*/
+.UIAction .DisabledStyle {
+}
+
+.UIAction .DisabledStyle .ButtonLeft {
+  background: url('background/DisabledStyle.png') no-repeat left top;
+  padding: 0px 0px 0px 12px;
+}
+
+.UIAction .DisabledStyle .ButtonRight {
+  background: url('background/DisabledStyle.png') no-repeat right top;
+  padding: 0px 12px 0px 0px ;
+}
+
+.UIAction .DisabledStyle .ButtonMiddle {
+	line-height: 22px; text-align: center; 
+	background: url('background/DisabledStyle.png') repeat-x bottom;
+	display: table-cell;
+	padding: 0px 12px;	
+}
+
+.UIAction .DisabledStyle a {
+	color: gray;
+	cursor: default;
+}
+
+.UIAction .DisabledStyle a:hover {
+	color: gray;
+	cursor: default;
+}
+
+/*##############################-LightBlueStyle ActionButton-################################*/
+.UIAction .LightBlueStyle {}
+
+.UIAction .LightBlueStyle .ButtonLeft {
+  background: url('background/LightButton.png') no-repeat left top;
+  padding: 0px 0px 0px 12px;
+}
+
+.UIAction .LightBlueStyle .ButtonRight {
+  background: url('background/LightButton.png') no-repeat right top;
+  padding: 0px 12px 0px 0px ;
+}
+
+.UIAction .LightBlueStyle .ButtonMiddle {
+ 	line-height: 24px; text-align: center; 
+	background: url('background/LightButton.png') repeat-x bottom;
+	display: table-cell;
+	padding: 0px 12px;
+}
+
+/*##############################-SimpleStyle ActionButton-################################*/
+.UIAction .SimpleStyle {
+}
+
+.UIAction .SimpleStyle .ButtonLeft {
+  background: url('background/SimpleButton.png') no-repeat left top;
+  padding: 0px 0px 0px 15px;
+}
+
+.UIAction .SimpleStyle .ButtonRight {
+  background: url('background/SimpleButton.png') no-repeat right -24px;
+  padding: 0px 15px 0px 0px ;
+}
+
+.UIAction .SimpleStyle .ButtonMiddle {
+  line-height: 24px;
+	background: url('background/SimpleButton.png') repeat-x left -48px;
+	text-align: center;	
+	display: table-cell;
+}
+
+.UIAction .SimpleStyle a {
+  color: #3d80e4; 
+  margin: 0px 6px;
+  white-space: nowrap;
+}
+
+.UIAction .SimpleStyle a:hover {
+  color: #2169d4; 
+}

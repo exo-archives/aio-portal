@@ -1,0 +1,147 @@
+.UILoginForm {
+  margin: auto;
+  padding: 25px 17px;
+}
+
+/*##############################- LoginBox Style-################################*/
+.UILoginForm .LoginDecorator {
+	width: 550px;
+	margin: auto;
+}
+
+.UILoginForm .LoginDecorator .LoginDecoratorBackground {
+  background: #FFFFFF;
+}
+
+.UILoginForm .LoginDecorator .TopLeftLoginDecorator {
+  background: url('background/BoxLoginDecorator.png') no-repeat left top;
+  padding: 0px 0px 0px 36px ;
+}
+
+.UILoginForm .LoginDecorator .TopCenterLoginDecorator {
+  background: url('background/BoxLoginDecorator.png') repeat-x center -30px;
+  height: 30px;
+}
+
+.UILoginForm .LoginDecorator .TopCenterLoginDecorator .SigninTitle {
+  color: #2169D4 ;
+  font-size: 13px; font-family: Verdana; font-weight: bold;
+	line-height: 30px; text-align: middle; 
+	padding-top: 0px;
+}
+
+.UILoginForm .LoginDecorator .TopRightLoginDecorator {
+  background: url('background/BoxLoginDecorator.png') no-repeat right -60px ;
+  padding: 0px 54px 0px 0px ;
+}
+
+.UILoginForm .LoginDecorator .MiddleLeftLoginDecorator {
+  background: url('background/BoxLoginRepeat-y.png') no-repeat left top;
+  padding: 0px 0px 0px 136px ;
+}
+
+.UILoginForm .LoginDecorator .MiddleRightLoginDecorator {
+  background: url('background/BoxLoginRepeat-y.png') repeat-y right ;
+  padding: 0px 16px 0px 0px ;
+}
+
+.UILoginForm .LoginDecorator .BottomLeftLoginDecorator {
+  background: url('background/BoxLoginDecorator.png') no-repeat left -90px ;
+  padding: 0px 0px 0px 14px ;
+}
+
+.UILoginForm .LoginDecorator .BottomCenterLoginDecorator {
+  background: url('background/BoxLoginDecorator.png') repeat-x bottom;
+  height: 41px;
+}
+
+.UILoginForm .LoginDecorator .BottomRightLoginDecorator {
+  background: url('background/BoxLoginDecorator.png') no-repeat right -90px ;
+  padding: 0px 16px 0px 0px ;
+}
+/* ============================End LoginDecorator============================== */
+
+.UILoginForm .LoginDetailBox .VerticalLayout {
+	padding-top: 10px;
+	overflow: auto;
+}
+
+.UILoginForm .LoginDetailBox .UserNameField {
+	padding: 5px;
+  width: 310px;
+  text-align: right;
+}
+
+.UILoginForm .LoginDetailBox .PasswordField {
+	padding: 5px;
+  width: 310px;
+  text-align: right;
+}
+
+.UILoginForm .LoginDetailBox .CheckField {
+  height: 20px;
+  width: 170px;
+  margin: 4px 0px 4px 110px;
+  padding-left: 30px;
+}
+
+.UILoginForm .LoginDetailBox .CheckField input {
+  float: left;
+  width: 16px;
+  border: none;
+}
+
+.UILoginForm .LoginDetailBox .CheckField .RememberLoginTitle {
+  float: left;
+  margin-left: 7px;
+  line-height: 20px; 
+}
+
+.UILoginForm .LoginDetailBox .ForgetPass {
+	padding-left: 150px;
+}
+
+.UILoginForm .LoginDetailBox .ForgetPass a {
+	color: orange;
+}
+
+.UILoginForm .LoginDetailBox label {
+  font-weight: bold;
+  padding-right: 4px;
+}
+
+.UILoginForm .LoginDetailBox .UserNameField input {
+  background: white url('/eXoResources/skin/DefaultSkin/portal/webui/component/widget/UILoginForm/background/Login.gif') no-repeat left -96px;
+  width: 180px; height: 20px;
+  border: solid 1px #c4c4c4 ;
+  padding: 0px 0px 0px 22px;
+}
+
+.UILoginForm .LoginDetailBox .PasswordField input {
+  background: white url('/eXoResources/skin/DefaultSkin/portal/webui/component/widget/UILoginForm/background/Login.gif') no-repeat left -114px;
+  width: 180px; height: 20px;
+  border: solid 1px #c4c4c4 ;
+  padding: 0px 0px 0px 22px;
+}
+
+.UILoginForm .LoginDetailBox .Message {
+  width: 280px; margin: auto; 
+  height: 20px; line-height: 20px; text-align: right;
+  color: #2169d4 ;
+  white-space: nowrap;
+  padding: 0px 10px 0px 0px;
+  cursor: pointer;
+}
+
+.UILoginForm .LoginDetailBox .Message a:hover{
+  cursor: pointer;
+  color: orange;
+}
+
+.UILoginForm .UIForm .VerticalLayout .UIAction {
+  padding: 13px 0px 10px 0px;
+  width: 390px;
+
+
+  
+}

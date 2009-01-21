@@ -1,0 +1,43 @@
+.UIBreadcumbsPortlet {
+	padding: 0px 2px 0px 6px;
+	height: 34px; 
+}
+
+.UIBreadcumbs {
+  height: 34px ;
+}
+
+.UIBreadcumbs a {
+	float: left ;
+}
+
+.UIBreadcumbs a.Selected {
+	color: #0073A9 ;  
+}
+
+.UIBreadcumbs .HomeIcon {
+	float: left;
+  margin: 5px 7px 0px 3px ;
+  width: 16px; height: 16px;
+  background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/16x16/icons/HomeIcon.gif') no-repeat center;
+}
+
+.UIBreadcumbs .LeftBreadcumbsBar {
+  padding-left: 8px ;
+  background: url('background/Breadcumbs.png') no-repeat left top;
+}
+
+.UIBreadcumbs .RightBreadcumbsBar {
+  padding-right: 9px;
+  background: url('background/Breadcumbs.png') no-repeat right -33px;
+}
+
+.UIBreadcumbs .BreadcumbsInfoBar {
+  background: url('background/Breadcumbs.png') repeat-x bottom;
+  height: 33px; line-height: 26px; vertical-align: middle;
+}
+
+.UIBreadcumbs .RightBlackGridArrowIcon {
+  float: left;
+  margin: 5px;
+}

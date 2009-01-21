@@ -1,0 +1,91 @@
+.UIAccountSettingForm {
+  padding: 15px 15px 10px 15px;
+}
+
+.UIAccountSettingForm .WorkingArea {
+  padding: 15px 15px 25px 15px;
+}
+
+.UIAccountSettingForm .UIHorizontalTabs {
+  color: #202020; font-weight: normal;
+  height: 32px;
+}
+
+.UIAccountSettingForm .UIHorizontalTabs .LeftHorizontalTabs {
+  padding-left: 11px; 
+  background: url('background/HorizontalTabs.gif') no-repeat left top;
+  height: 32px;
+}
+
+.UIAccountSettingForm .UIHorizontalTabs .RightHorizontalTabs {
+  padding-right: 11px;
+  background: url('background/HorizontalTabs.gif') no-repeat right top;
+  height: 32px;
+}
+
+.UIAccountSettingForm .UIHorizontalTabs .CenterHorizontalTabs {
+  background: url('background/HorizontalTabs.gif') repeat-x left -32px;
+  cursor: pointer;
+  height: 32px;
+  line-height: 32px;
+}
+
+.UIAccountSettingForm .UIHorizontalTabs .UITab a.Icon {
+	padding-left: 23px;
+	display: block;
+	line-height: 26px;
+}
+
+.UIAccountSettingForm .UIHorizontalTabs .UITab .AccountProfiles {
+	background: url('background/HorizontalTabs.gif') no-repeat left -64px;
+}
+
+.UIAccountSettingForm .UIHorizontalTabs .UITab .ChangePass {
+	background: url('background/HorizontalTabs.gif') no-repeat left -90px;
+}
+
+.UIAccountSettingForm .UIHorizontalTabs .UITab .NormalTab a {
+	font-weight: bold;
+	color: gray; 
+	margin-top: 2px;
+}
+
+.UIAccountSettingForm .UIHorizontalTabs .NormalTab .MiddleTab {
+  cursor: pointer;
+  padding: 0px 8px;
+}
+
+.UIAccountSettingForm .UIHorizontalTabs .UITab .HighlightTab a {
+	font-weight: bold;
+	color: blue; 
+	margin-top: 2px;
+}
+
+.UIAccountSettingForm .UIHorizontalTabs .UITab .SelectedTab a {
+	font-weight: bold;
+	color: #ffffff; 
+	margin-top: 2px;
+}
+
+.UIAccountSettingForm .UIHorizontalTabs .SelectedTab .MiddleTab {
+  line-height: 30px;
+  background: url('background/HorizontalTabs.gif') repeat-x bottom;
+  cursor: pointer;
+  padding: 0px 8px;
+}
+
+.UIAccountSettingForm .UIHorizontalTabs .LineSeparator {
+  float: left;
+  background: url('background/SeparatorLine.gif') repeat-y left;
+  height: 27px;  width: 2px;
+  margin-top: 2px;
+}
+
+.UIAccountSettingForm .UIForm .HorizontalLayout {
+	border: none;
+	padding: 16px 0px;
+}
+
+.UIAccountSettingForm .UIForm .UIAction {
+	padding-top: 18px;
+}

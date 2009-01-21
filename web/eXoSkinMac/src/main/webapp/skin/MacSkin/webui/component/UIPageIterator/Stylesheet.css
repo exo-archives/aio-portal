@@ -1,0 +1,112 @@
+.UIPageIterator {    
+  margin: 3px auto 0px auto ;
+  width: 99%;
+}
+
+.UIPageIterator .PageIteratorContainer {    
+  float: right ;
+  line-height: 24px ;  vertical-align: middle ;
+  overflow: hidden; 
+}
+
+.UIPageIterator .PageIteratorContainer .LeftPageIteratorBlock{    
+  float: right ;
+  margin-right: 15px;
+}
+
+.UIPageIterator .PageIteratorContainer .RightPageIteratorBlock{    
+  float: right ;
+}
+
+.UIPageIterator .Icon {
+  float: left ;
+  margin: 4px 2px 0px 2px ;
+  width: 18px ;  height: 17px ;
+}
+
+.UIPageIterator .TotalPages {
+  float: left ;
+  line-height: 22px ; vertical-align: middle;
+}
+
+.UIPageIterator .PagesTotalNumber {
+  float: left ;
+  line-height: 22px ; vertical-align: middle;
+  color: #058ee6; font-weight: bold;
+  margin-left: 5px;
+}
+
+/*
+* Repair by Duy Tu 09/07/07
+*/
+.UIPageIterator .LastTopPageIcon {
+  vertical-align: middle ;
+  background: url('background/ArrowPageIterator.gif') no-repeat top;
+  cursor: pointer ;
+}
+
+.UIPageIterator .NextTopPageIcon {
+  background: url('background/ArrowPageIterator.gif') no-repeat left -17px ;
+  cursor: pointer ;
+}
+
+ .UIPageIterator .LastPageIcon {
+  background: url('background/ArrowPageIterator.gif') no-repeat left -34px ;
+  cursor: pointer ; 
+}
+
+.UIPageIterator .NextPageIcon {
+  background: url('background/ArrowPageIterator.gif') no-repeat left -51px ;
+  cursor: pointer ;
+}
+
+.UIPageIterator .DisableLastTopPageIcon {
+  vertical-align: middle ;
+  background: url('background/ArrowPageIterator.gif') no-repeat left -68px ;
+  cursor: pointer ;
+}
+
+.UIPageIterator .DisableNextTopPageIcon {
+  background: url('background/ArrowPageIterator.gif') no-repeat left -85px ;
+  cursor: pointer ;
+}
+
+ .UIPageIterator .DisableLastPageIcon {
+  background: url('background/ArrowPageIterator.gif') no-repeat left -102px ;
+  cursor: pointer ; 
+}
+
+.UIPageIterator .DisableNextPageIcon {
+  background: url('background/ArrowPageIterator.gif') no-repeat left -119px ;
+  cursor: pointer ;
+}
+/* End */
+
+.UIPageIterator .Number {
+  float: left ;
+  padding: 0px 4px 0px 4px ;
+  margin: 0px 5px ;
+}
+
+.UIPageIterator .Number a.PageSelected {
+  color: #e73c14;
+  font-weight: bold;
+  border: 1px solid #b5b5b5;
+  margin: 0px 2px ;
+  padding: 0px 5px 1px 5px ;
+}
+
+.UIPageIterator .Number a {
+	height: 17px; 
+  margin: 3px 2px ;
+  padding: 0px 5px 1px 5px ;
+  color: #333333 ;
+  border: 1px solid #dfdfdf;
+  background: url('background/ArrowPageIterator.gif') repeat-x bottom;
+}
+
+.UIPageIterator .Number a:hover {
+  color: #0585D7 ;
+  border: 1px solid #0585D7;
+  background:white;
+}

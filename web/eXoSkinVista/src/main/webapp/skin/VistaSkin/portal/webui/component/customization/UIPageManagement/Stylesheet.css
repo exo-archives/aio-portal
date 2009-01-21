@@ -1,0 +1,19 @@
+.UIPageManagement {
+  padding: 0px 1px 1px 1px;
+}
+
+.UIPageManagement .UIQuickHelp {
+  margin-top: 3px;
+}
+
+.UIPageManagement .UIPageEditBar{
+  padding: 0px 5px;
+}
+
+.UIPageManagement .TopTitleBar {
+  padding: 15px 60px 15px 0px;
+}
+
+.UIPageManagement .UIVerticalSlideTabs .TreeContainer {
+	_width: 92%; 
+}

@@ -1,0 +1,73 @@
+.UIPopupCategory {
+	position: absolute ;
+	width: 120px ;
+	top: 15px;
+	left: -75px;
+}
+
+.UIPopupCategory .PopupCategoryDecorator {
+  padding-right: 5px;
+}
+
+.UIPopupCategory .PopupCategoryDecorator .PopupCategoryTL {
+  background: url('background/PopupCategory.png') no-repeat left -19px;
+  padding-left: 5px;
+}
+
+.UIPopupCategory .PopupCategoryDecorator .PopupCategoryTC {
+  height: 19px;
+  background: url('background/PopupCategory.png') repeat-x left -38px;
+}
+
+.UIPopupCategory .PopupCategoryDecorator .PopupCategoryTR {
+  background: url('background/PopupCategory.png') no-repeat right top;
+  padding: 0px 47px 0px 0px;
+}
+
+.UIPopupCategory .PopupCategoryDecorator .PopupCategoryML {
+  background: url('background/PopupCategoryRepeatY.png') repeat-y left;
+  padding-left: 5px;
+}
+
+.UIPopupCategory .PopupCategoryDecorator .PopupCategoryMC {
+  background: url('background/PopupCategoryMC1x4.png');
+}
+
+.UIPopupCategory .PopupCategoryDecorator .PopupCategoryMR {
+  background: url('background/PopupCategoryRepeatY.png') repeat-y right;
+  padding-right: 5px;
+}
+
+.UIPopupCategory .PopupCategoryDecorator .PopupCategoryBL {
+  background: url('background/PopupCategory.png') no-repeat left -57px;
+  padding-left: 9px;
+}
+
+.UIPopupCategory .PopupCategoryDecorator .PopupCategoryBC {
+  height: 9px;
+  background: url('background/PopupCategory.png') repeat-x left -75px;
+}
+
+.UIPopupCategory .PopupCategoryDecorator .PopupCategoryBR {
+  background: url('background/PopupCategory.png') no-repeat right -66px;
+  padding-right: 8px;
+}
+
+.UIPopupCategory .CategoryItem {
+  color: black;
+  cursor: pointer ;
+  display: block;
+}
+
+.UIPopupCategory .CategoryItem:hover {
+	background: #4079be;
+	color: white;
+}
+
+.UIPopupCategory .CategoryItem .CategoryItemLabel {
+  padding-left: 20px;
+  height: 22px;
+  line-height: 22px;
+  background: url('background/PopupCategory.png') no-repeat left -84px ;
+  margin-left: 5px;
+}

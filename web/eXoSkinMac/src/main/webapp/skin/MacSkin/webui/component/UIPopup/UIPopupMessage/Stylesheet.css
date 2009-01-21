@@ -1,0 +1,73 @@
+.UIPopupMessages {
+}
+
+.UIPopupMessages .UIHorizontalTabs {
+	height: 35px;
+	background: url('background/PopupMessages.gif') repeat-x top;
+	padding: 0px 4px 0px 4px;
+}
+
+.UIPopupMessages .UITabContent {
+	border: none;
+}
+
+.UIPopupMessages .PopupMessageBox {
+  padding: 5px;
+  height: 200px;
+  overflow: auto;
+}
+
+.UIPopupMessages .WarningMessage .MessageContainer  {
+  color: orange;
+  padding: 4px 0px 4px 10px;
+  border-bottom: 1px dotted #c3c3c3;
+}
+
+.UIPopupMessages .ErrorMessage .MessageContainer  {
+  color: red;
+  padding: 4px 0px 4px 10px;
+  border-bottom: 1px dotted #c3c3c3;
+}
+
+.UIPopupMessages .InfoMessage .MessageContainer {
+  padding: 4px 0px 4px 10px;
+  border-bottom: 1px dotted #c3c3c3;
+}
+
+.UIPopupMessages .PopupMessageContainer .PopupIcon {
+  float: left;
+  width: 25px; height: 17px;
+  margin-top: 5px;
+}
+
+.UIPopupMessages .PopupMessageContainer .InfoMessageIcon {
+	background: url(/eXoSkinMac/skin/MacSkin/skinIcons/16x16/icons/InfoIcon.gif) no-repeat top;
+}
+
+.UIPopupMessages .PopupMessageContainer .WarningMessageIcon {
+	background: url(/eXoSkinMac/skin/MacSkin/skinIcons/16x16/icons/WarningIcon.gif) no-repeat top;
+}
+
+.UIPopupMessages .PopupMessageContainer .ErrorMessageIcon {
+	background: url(/eXoSkinMac/skin/MacSkin/skinIcons/16x16/icons/ErrorIcon.gif) no-repeat top;
+}
+
+.UIPopupMessages .PopupMessageContainer .PopupMessage {
+  line-height: 16px;
+  vertical-align: middle;
+  padding: 5px 0px;
+  margin-left: 35px;
+}
+
+.UIPopupMessages .MessageActionBar {
+	background: url('background/PopupMessages.gif') repeat-x bottom;
+	height: 35px;
+}
+
+.UIPopupMessages .UIAction {
+	padding: 8px 0px 0px 0px;
+}
+
+.UIPopupMessages .UIAction .ActionContainer .ActionButton{
+	float: none;
+}

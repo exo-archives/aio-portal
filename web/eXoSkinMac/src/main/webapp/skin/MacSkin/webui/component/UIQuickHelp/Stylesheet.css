@@ -1,0 +1,145 @@
+.UIQuickHelp {
+}
+
+.UIQuickHelp .TopBar {
+  height: 26px ;
+}
+
+.UIQuickHelp .TopBar .TopBarLeft {
+  padding-left: 7px;
+  background: url('background/QuickHelp.gif') no-repeat left top;
+}
+
+.UIQuickHelp .TopBar .TopBarRight {
+  padding-right: 2px;
+  background: url('background/QuickHelp.gif') no-repeat right top;
+}
+
+.UIQuickHelp .TopBar .TopBarMiddle {
+  height: 26px ;
+  background: url('background/QuickHelp.gif') repeat-x left -26px;
+}
+
+.UIQuickHelp .TopBar .TopBarMiddle .TitleBar {
+  float: left;
+  width: 140px; height: 26px ;
+}
+
+.UIQuickHelp .TopBar .TopBarMiddle .TitleBar .BarLeft {
+  padding-left: 1px;
+  background: url('background/QuickHelp.gif') no-repeat left -78px;
+}
+
+.UIQuickHelp .TopBar .TopBarMiddle .TitleBar .BarRight {
+  padding-right: 27px;
+  background: url('background/QuickHelp.gif') no-repeat right -52px;
+}
+
+.UIQuickHelp .TopBar .TopBarMiddle .TitleBar .BarMiddle {
+  height: 26px ;
+  line-height: 26px;
+  background: url('background/QuickHelp.gif') repeat-x left -78px;
+}
+
+.UIQuickHelp .TopBar .TopBarMiddle .TitleBar .Title {
+  height: 26px ;
+  line-height: 26px;
+  vertical-align: middle;
+}
+
+.UIQuickHelp .TopBar .TopBarMiddle .TitleBar .Icon {
+  float: left;
+  height: 24px ;  width: 24px;
+  margin: 1px 7px 0px 3px;
+  background: url('/eXoSkinMac/skin/MacSkin/skinIcons/24x24/icons/HelpBox.gif') no-repeat;
+}
+
+.UIQuickHelp .TopBar .TopBarMiddle .TitleBar .BrownBook16x16Icon {
+  display: none;
+}
+
+.UIQuickHelp .ContentContainer {
+  background-color: white ;
+  border-right: solid #323ec7 1px ;
+  border-left: solid #323ec7 1px ;
+}
+
+.UIQuickHelp .Content {
+  padding: 3px;
+}
+
+.UIQuickHelp .ContentContainer .Content .ScrollArea {
+  overflow: auto;
+  border:  solid 1px #6aa4d5;
+}
+
+.UIQuickHelp .ContentContainer .Content .ScrollArea {
+  padding: 8px;
+}
+
+.UIQuickHelp .BottomBar {
+  height: 27px;
+  border: none;
+}
+
+.UIQuickHelp .BottomBar .BottomBarLeft {
+  padding-left: 2px;
+  background: url('background/QuickHelp.gif') no-repeat left -104px;
+}
+
+.UIQuickHelp .BottomBar .BottomBarRight {
+  padding-right: 5px;
+  background: url('background/QuickHelp.gif') no-repeat right -104px;
+}
+
+.UIQuickHelp .BottomBar .BottomBarMiddle {
+  height: 27px;
+  background: url('background/QuickHelp.gif') repeat-x left -131px;
+}
+
+.UIQuickHelp .BottomBar .ButtonBar {
+  margin-left: auto;
+  width: 90px;
+  height: 20px ;
+}
+
+.UIQuickHelp .BottomBar .ButtonBar .ButtonBarLeft {
+	height: 20px ;
+  padding-left: 23px ;
+  background: url('background/QuickHelp.gif') no-repeat left -158px;
+}
+
+.UIQuickHelp .BottomBar .ButtonBar .ButtonBarRight {
+	height: 20px ;
+  padding-right: 1px ;
+  background: url('background/QuickHelp.gif') repeat-x bottom;
+}
+
+.UIQuickHelp .BottomBar .BackButton {
+  width: 25px; height: 19px;
+  float: left ;
+  margin: 4px 0px 0px 5px;
+}
+
+.UIQuickHelp .BottomBar .ForwardButton {
+  width: 25px; height: 19px;
+  float: right ;
+  margin: 4px 5px 0px 0px;
+}
+
+.UIQuickHelp .UIQuickHelpContentPage .Icon {
+  float: left ;
+}
+
+.UIQuickHelp .UIQuickHelpContentPage ul {
+   list-style-image: url('background/BlueSquareBg.gif');
+}
+
+.UIQuickHelp .UIQuickHelpContentPage li {
+   margin-top: 10px;
+   margin-left: -20px;
+}
+
+.UIQuickHelp .UIQuickHelpContentPage a{
+   font-weight: bold;
+}

@@ -1,0 +1,21 @@
+.UIFormWithTitle {
+	width: 520px;
+  margin: 50px auto ;
+}
+
+.UIFormWithTitle .TitleBar {
+  background: url('/eXoSkinMac/skin/MacSkin/background/TitleBG1x19.gif') repeat-x;
+  height: 19px; line-height: 19px; vertical-align: middle; 
+  padding-left: 15px;
+  border: 1px solid #b7b7b7;
+}
+
+.UIFormWithTitle .HorizontalLayout {
+	border: 1px #cdcdcd solid;	
+	border-top: none;
+	padding: 0px;
+}
+
+.UIFormWithTitle .HorizontalLayout .FormContainer {
+  padding: 10px;
+}
