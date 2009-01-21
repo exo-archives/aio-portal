@@ -1751,7 +1751,7 @@
   <UIPortalToolPanel>
     <label>
       <copyrightText><![CDATA[ Bản quyền thuộc về công ty ]]></copyrightText>
-      <companyTitleText>eXo Platform SAS, © 2000-2008</companyTitleText>
+      <companyTitleText>eXo Platform SAS, © 2000-2009</companyTitleText>
     </label>
   </UIPortalToolPanel>
   <!--

@@ -1736,7 +1736,7 @@
   -->
   <UIPortalToolPanel>
     <label>
-      <copyrightText><![CDATA[Droit d'auteur &copy; 2000-2008. Tous droits réservés,]]></copyrightText>
+      <copyrightText><![CDATA[Droit d'auteur &copy; 2000-2009. Tous droits réservés,]]></copyrightText>
       <companyTitleText>eXo Platform SAS.</companyTitleText>
     </label>
   </UIPortalToolPanel>
