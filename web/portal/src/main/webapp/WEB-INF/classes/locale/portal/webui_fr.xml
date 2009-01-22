@@ -495,6 +495,7 @@
       <showWindowState>Afficher l'état :</showWindowState>
       <id>Id de la portlet :</id>
       <description>Description :</description>
+      <template>#{word.template}</template>
     </label>
     <action>
       <Close>Annuler</Close>

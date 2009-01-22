@@ -490,6 +490,7 @@
       <showWindowState>Show Window State :</showWindowState>
       <id>Portlet Id :</id>
       <description>Description :</description>
+      <template>Template</template>
     </label>
     <action>
       <Close>Cancel</Close>

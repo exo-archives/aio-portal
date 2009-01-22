@@ -493,6 +493,7 @@
       <showWindowState>Hiện cửa sổ :</showWindowState>
       <id>Mã Portlet :</id>
       <description>Mô tả :</description>
+      <template>Portlet mẫu:</template>
     </label>
     <action>
       <Close>Từ bỏ</Close>

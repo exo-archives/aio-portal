@@ -489,6 +489,7 @@
       <showWindowState>:أظهر حالة النافذة</showWindowState>
       <id>:رقم تعريف المدخل</id>
       <description>:الوصف</description>
+      <template>قالب</template>
     </label>
     <action>
       <Close>الغاء</Close>
