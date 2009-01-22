@@ -24,7 +24,7 @@
 	line-height: 110px; 
 	white-space: nowrap;
 	color: #1f2020;
-	_height: 110px;	
+	height: 110px;	
 	text-align: center;
 	font-weight: bold;
 	background: url('background/PageLayout.png') repeat-x center -228px;	

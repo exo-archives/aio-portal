@@ -237,11 +237,12 @@
 }
 
 .UIPageDesktop .MacTheme .ResizeArea {
-	float: left;/* orientation=rt */
-	float: right;/* orientation=lt */
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
 	width: 17px; height: 15px;
 	cursor: nw-resize;
-	background: url('background/ResizeArea17x15.png') no-repeat;
+	background: url('background/ResizeArea17x15.png') no-repeat right top; /* orientation=lt */
+	background: url('background/ResizeArea17x15-rt.png') no-repeat left top; /* orientation=rt */
 }
 
 .MacTheme .Information {
@@ -684,7 +685,7 @@
 	width: 21px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: move;	
+	cursor: pointer;	
 	background-image: url('background/MacGreen.png');
 }
 
@@ -844,7 +845,7 @@
 	float: left; /* orientation=rt */
 	width: 30px; 
 	height: 20px;
-	cursor: move;	
+	cursor: pointer;	
 	background-image: url('background/VistaTheme.png'); /* orientation=lt */
 	background-image: url('background/VistaTheme-rt.png'); /* orientation=rt */
 }
@@ -908,7 +909,8 @@
 	float: left;/* orientation=rt */
 	width: 9px; height: 12px;
 	cursor: nw-resize;
-	background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/16x16/icons/ResizeBG.gif') no-repeat bottom right;
+	background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/16x16/icons/ResizeBG.gif') no-repeat bottom right; /* orientation=lt */
+	background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/16x16/icons/ResizeBG-rt.gif') no-repeat bottom left; /* orientation=rt */
 }
 
 .VistaTheme .MiddleDecoratorLeft {
@@ -1015,7 +1017,7 @@
 	float: right; /* orientation=lt */
 	float: left; /* orientation=rt */
 	width: 30px; height: 19px;
-	cursor: move;	
+	cursor: pointer;	
 	background-image: url('background/VistaBlue.png');
 }
 
@@ -1161,7 +1163,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: move;
+	cursor: pointer;
 	background-image: url('background/RoundCornerBlue.png');
 }
 
@@ -1318,7 +1320,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: move;
+	cursor: pointer;
 	background-image: url('background/RoundConerViolet.png');
 }
 
@@ -1476,7 +1478,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: move;
+	cursor: pointer;
 	background-image: url('background/RoundConerOrange.png');
 }
 
@@ -1636,7 +1638,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: move;
+	cursor: pointer;
 	background-image: url('background/RoundConerPink.png');
 }
 
@@ -1796,7 +1798,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: move;
+	cursor: pointer;
 	background-image: url('background/RoundConerGreen.png');
 }
 
@@ -1956,7 +1958,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: move;
+	cursor: pointer;
 	background-image: url('background/ShadowBlue.png');
 }
 
@@ -2114,7 +2116,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: move;
+	cursor: pointer;
 	background-image: url('background/ShadowViolet.png');
 }
 
@@ -2273,7 +2275,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: move;
+	cursor: pointer;
 	background-image: url('background/ShadowOrange.png');
 }
 
@@ -2432,7 +2434,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: move;
+	cursor: pointer;
 	background-image: url('background/ShadowPink.png');
 }
 
@@ -2591,7 +2593,7 @@
 	width: 20px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: move;
+	cursor: pointer;
 	background-image: url('background/ShadowGreen.png');
 }
 
@@ -2749,7 +2751,7 @@
 	width: 16px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: move;
+	cursor: pointer;
 }
 
 .SimpleBlue .Information {
@@ -2896,7 +2898,7 @@
 	width: 16px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: move;
+	cursor: pointer;
 }
 
 .SimpleViolet .Information {
@@ -3045,7 +3047,7 @@
 	width: 16px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: move;
+	cursor: pointer;
 }
 
 .SimpleOrange .Information {
@@ -3194,7 +3196,7 @@
 	width: 16px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: move;
+	cursor: pointer;
 }
 
 .SimplePink .Information {
@@ -3343,7 +3345,7 @@
 	width: 16px; height: 16px;
 	margin-right: 2px; /* orientation=lt */
 	margin-left: 2px; /* orientation=rt */
-	cursor: move;
+	cursor: pointer;
 }
 
 .SimpleGreen .Information {
