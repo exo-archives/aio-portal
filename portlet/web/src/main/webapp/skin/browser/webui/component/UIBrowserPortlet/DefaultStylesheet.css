@@ -209,8 +209,7 @@
 }
 
 .UIBrowserPortlet .ActiveTabDetailBackground .TabDetail {
-	background: url("DefaultSkin/background/UIBrowserPortlet.gif") no-repeat left -193px;			/* orientation=lt */
-	background: url("DefaultSkin/background/UIBrowserPortlet.gif") no-repeat right -193px;		/* orientation=rt */
+
 }
 
 .UIBrowserPortlet .TabSeparator {

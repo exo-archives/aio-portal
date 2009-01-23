@@ -18,6 +18,8 @@
 	background: url('background/PageLayout-rt.png') no-repeat left -114px; /* orientation=rt */
 	padding: 0px 72px 0px 0px;	/* orientation=lt */
 	padding: 0px 0px 0px 72px; /* orientation=rt */
+	_padding: 0px 71px 0px 0px;	/* orientation=lt */
+	_padding: 0px 0px 0px 71px; /* orientation=rt */
 }
 
 .UIPageBody .PageLayoutDecorator .TopCenterPage {
