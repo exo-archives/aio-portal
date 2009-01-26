@@ -60,12 +60,12 @@
 	      </resource>
           <resource>
 	        <targetPath>conf/portal</targetPath>
-	        <directory>${basedir}/src/main/java/conf/portal</directory>
+	        <directory>${basedir}/src/main/resources/conf/portal</directory>
 	        <includes>
 	          <include>configuration.xml</include>
 	        </includes>
 	      </resource>
-	    </resources>		
+	    </resources>
 	</build>
 	<dependencies>
 		<!--dependency>
