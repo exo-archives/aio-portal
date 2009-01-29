@@ -87,28 +87,26 @@ public class ExoContainerConfig extends JsonContainerConfig {
 
     //
     String keyPath = keyFile.getAbsolutePath();
-    if (!keyFile.isFile()) {
-      log.debug("Found key file " + keyPath + " but it's not a file");
-    } else {
-      if (!keyFile.exists()) {
-        log.debug("No key file found at path " + keyPath + " generating a new key and saving it");
-        String key = generateKey();
-        Writer out = null;
-        try {
-          out = new FileWriter(keyFile);
-          out.write(key);
-          out.write('\n');
-          log.info("Generated key file " + keyPath + " for eXo Gadgets");
-        } catch (IOException e) {
-          log.error("Coult not create key file " + keyPath, e);
-        } finally {
-          Safe.close(out);
-        }
-      } else {
-        log.info("Found key file " + keyPath + " for gadgets security");
+    if (!keyFile.exists()) {
+      log.debug("No key file found at path " + keyPath + " generating a new key and saving it");
+      String key = generateKey();
+      Writer out = null;
+      try {
+        out = new FileWriter(keyFile);
+        out.write(key);
+        out.write('\n');
+        log.info("Generated key file " + keyPath + " for eXo Gadgets");
+      } catch (IOException e) {
+        log.error("Coult not create key file " + keyPath, e);
+      } finally {
+        Safe.close(out);
       }
-      this.keyPath = keyPath;
+    }  else if (!keyFile.isFile()) {
+      log.debug("Found key file " + keyPath + " but it's not a file");
+    }  else {
+      log.info("Found key file " + keyPath + " for gadgets security");
     }
+    this.keyPath = keyPath;
   }
 
 
