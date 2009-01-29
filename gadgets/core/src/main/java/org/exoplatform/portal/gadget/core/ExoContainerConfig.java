@@ -22,10 +22,21 @@ import org.apache.shindig.auth.BlobCrypterSecurityTokenDecoder;
 import org.apache.commons.logging.Log;
 import org.exoplatform.container.monitor.jvm.J2EEServerInfo;
 import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.commons.utils.Safe;
 import com.google.inject.name.Named;
 import com.google.inject.Inject;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+import java.io.OutputStream;
+import java.io.Writer;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.security.SecureRandom;
+import java.security.NoSuchAlgorithmException;
+
+import sun.misc.BASE64Encoder;
 
 /**
  * The goal of the container config subclass is to integrate security key file along
@@ -64,30 +75,31 @@ public class ExoContainerConfig extends JsonContainerConfig {
         } else {
           File keyFile = new File(confDir, "gadgets/key.txt");
           String keyPath = keyFile.getAbsolutePath();
-          if (!keyFile.exists()) {
-            log.debug("No key file found at path " + keyPath);
-          } else if (!keyFile.isFile()) {
+          if (!keyFile.isFile()) {
             log.debug("Found key file " + keyPath + " but it's not a file");
           } else {
-            log.info("Found key file " + keyPath + " for gadgets security");
+            if (!keyFile.exists()) {
+              log.debug("No key file found at path " + keyPath + " generating a new key and saving it");
+              String key = generateKey();
+              Writer out = null;
+              try {
+                out = new FileWriter(keyFile);
+                out.write(key);
+                out.write('\n');
+                log.info("Generated key file " + keyPath + " for eXo Gadgets");
+              } catch (IOException e) {
+                log.error("Coult not create key file " + keyPath, e);
+              } finally {
+                Safe.close(out);
+              }
+            } else {
+              log.info("Found key file " + keyPath + " for gadgets security");
+            }
             this.keyPath = keyPath;
           }
         }
       }
     }
-
-/*
-    //
-    try {
-      MessageDigest md = MessageDigest.getInstance("SHA1");
-      md.reset();
-      md.update(("" + System.currentTimeMillis()).getBytes());
-      Base64.encodeBase64(md.digest());
-    }
-    catch (NoSuchAlgorithmException e) {
-      throw new AssertionError(e);
-    }
-*/
   }
 
 
@@ -97,5 +109,19 @@ public class ExoContainerConfig extends JsonContainerConfig {
       return keyPath;
     }
     return super.getJson(container, parameter);
+  }
+
+  private static String generateKey() {
+    try {
+      SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+      random.setSeed(System.currentTimeMillis());
+      byte bytes[] = new byte[32];
+      random.nextBytes(bytes);
+      BASE64Encoder encoder = new BASE64Encoder();
+      return encoder.encode(bytes);
+    }
+    catch (NoSuchAlgorithmException e) {
+      throw new AssertionError(e);
+    }
   }
 }
