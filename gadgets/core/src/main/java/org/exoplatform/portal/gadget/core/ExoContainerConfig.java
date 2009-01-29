@@ -65,6 +65,8 @@ public class ExoContainerConfig extends JsonContainerConfig {
 
     //
     String confPath = info.getExoConfigurationDirectory();
+
+    File keyFile = null;
     if (confPath != null) {
       File confDir = new File(confPath);
       if (!confDir.exists()) {
@@ -73,32 +75,39 @@ public class ExoContainerConfig extends JsonContainerConfig {
         if (!confDir.isDirectory()) {
           log.debug("Exo conf directory (" + confPath + ") is not a directory");
         } else {
-          File keyFile = new File(confDir, "gadgets/key.txt");
-          String keyPath = keyFile.getAbsolutePath();
-          if (!keyFile.isFile()) {
-            log.debug("Found key file " + keyPath + " but it's not a file");
-          } else {
-            if (!keyFile.exists()) {
-              log.debug("No key file found at path " + keyPath + " generating a new key and saving it");
-              String key = generateKey();
-              Writer out = null;
-              try {
-                out = new FileWriter(keyFile);
-                out.write(key);
-                out.write('\n');
-                log.info("Generated key file " + keyPath + " for eXo Gadgets");
-              } catch (IOException e) {
-                log.error("Coult not create key file " + keyPath, e);
-              } finally {
-                Safe.close(out);
-              }
-            } else {
-              log.info("Found key file " + keyPath + " for gadgets security");
-            }
-            this.keyPath = keyPath;
-          }
+          keyFile = new File(confDir, "gadgets/key.txt");
         }
       }
+    }
+
+    //
+    if (keyFile == null) {
+      keyFile = new File("key.txt");
+    }
+
+    //
+    String keyPath = keyFile.getAbsolutePath();
+    if (!keyFile.isFile()) {
+      log.debug("Found key file " + keyPath + " but it's not a file");
+    } else {
+      if (!keyFile.exists()) {
+        log.debug("No key file found at path " + keyPath + " generating a new key and saving it");
+        String key = generateKey();
+        Writer out = null;
+        try {
+          out = new FileWriter(keyFile);
+          out.write(key);
+          out.write('\n');
+          log.info("Generated key file " + keyPath + " for eXo Gadgets");
+        } catch (IOException e) {
+          log.error("Coult not create key file " + keyPath, e);
+        } finally {
+          Safe.close(out);
+        }
+      } else {
+        log.info("Found key file " + keyPath + " for gadgets security");
+      }
+      this.keyPath = keyPath;
     }
   }
 
