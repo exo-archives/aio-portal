@@ -2292,7 +2292,7 @@
   -->
   <UIWidgetContainer>
     <tooltip>
-      <addWidget>Thêm Widget</addWidget>
+      <addWidget>Thêm Gadget</addWidget>
       <scrollDown>Cuốn xuống</scrollDown>
       <scrollUp>Cuộn lên</scrollUp>
     </tooltip>
