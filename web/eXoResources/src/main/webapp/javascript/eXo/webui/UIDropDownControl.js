@@ -69,13 +69,11 @@ UIDropDownControl.prototype.onclickEvt = function(obj, evt) {
 	uiDropDownAnchor.style.display = 'none' ;
 } ;
 
-UIDropDownControl.prototype.setOnResize = function(event) {
-	event = event || window.event;
-	event.cancelBubble = true;
+UIDropDownControl.prototype.setOnResize = function() {
 	var obj = document.getElementById("UIDropDown");
 	var DOMUtil = eXo.core.DOMUtil ;
 	var Browser = eXo.core.Browser ;
-	var dropDownAnchor = DOMUtil.findNextElementByTagName(obj, 'div') ;
+	var dropDownAnchor = DOMUtil.findFirstDescendantByClass(obj, 'div', "UIDropDownAnchor") ;
 	if (dropDownAnchor && dropDownAnchor.style.display == "block") {
 		var middleCont = DOMUtil.findFirstDescendantByClass(dropDownAnchor, "div", "MiddleItemContainer") ;
 		var topCont = DOMUtil.findPreviousElementByTagName(middleCont, "div") ;
