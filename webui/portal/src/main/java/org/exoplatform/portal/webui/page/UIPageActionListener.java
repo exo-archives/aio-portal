@@ -153,7 +153,7 @@ public class UIPageActionListener {
         uiPortal.setSelectedNode(selecttedNode);
 				if(selecttedNode == null) selectedPaths_.add(uiPortal.getSelectedNode()) ;
 				uiPortal.setSelectedPaths(selectedPaths_);
-				if(!currentUri.equals(uiPortal.getSelectedNode().getUri())) {
+				if(currentUri != null && !currentUri.equals(uiPortal.getSelectedNode().getUri())) {
           if(uiPageBody.getMaximizedUIComponent() != null) {
             UIPortlet currentPortlet =  (UIPortlet) uiPageBody.getMaximizedUIComponent();
             currentPortlet.setCurrentWindowState(WindowState.NORMAL);
