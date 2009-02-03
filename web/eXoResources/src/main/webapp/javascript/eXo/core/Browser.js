@@ -363,12 +363,15 @@ Browser.prototype.getBrowserType = function() {
 /**
  * Returns the horizontal position of an object relative to the window
  */
-Browser.prototype.findPosX = function(obj) {
+Browser.prototype.findPosX = function(obj, isRTL) {
   var curleft = 0;
-  while (obj) {
-    curleft += obj.offsetLeft ;
-    obj = obj.offsetParent ;
+  var tmpObj = obj ;
+  while (tmpObj) {
+    curleft += tmpObj.offsetLeft ;
+    tmpObj = tmpObj.offsetParent ;
   }
+  // if RTL return right position of obj
+  if(isRTL) return curleft + obj.offsetWidth ;
   return curleft ;
 } ;
 /**
@@ -385,9 +388,10 @@ Browser.prototype.findPosY = function(obj) {
 /**
  * Returns the horizontal position of an object relative to its container
  */
-Browser.prototype.findPosXInContainer = function(obj, container) {
-  var objX = eXo.core.Browser.findPosX(obj) ;
-  var containerX = eXo.core.Browser.findPosX(container) ;  
+Browser.prototype.findPosXInContainer = function(obj, container, isRTL) {
+  var objX = eXo.core.Browser.findPosX(obj, isRTL) ;
+  var containerX = eXo.core.Browser.findPosX(container, isRTL) ;
+  if(isRTL) return -(objX - containerX) ;
   return (objX - containerX) ;
 } ;
 /**
