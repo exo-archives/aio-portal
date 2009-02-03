@@ -69,39 +69,4 @@ UIDropDownControl.prototype.onclickEvt = function(obj, evt) {
 	uiDropDownAnchor.style.display = 'none' ;
 } ;
 
-UIDropDownControl.prototype.setOnResize = function() {
-	var obj = document.getElementById("UIDropDown");
-	var DOMUtil = eXo.core.DOMUtil ;
-	var Browser = eXo.core.Browser ;
-	var dropDownAnchor = DOMUtil.findFirstDescendantByClass(obj, 'div', "UIDropDownAnchor") ;
-	if (dropDownAnchor && dropDownAnchor.style.display == "block") {
-		var middleCont = DOMUtil.findFirstDescendantByClass(dropDownAnchor, "div", "MiddleItemContainer") ;
-		var topCont = DOMUtil.findPreviousElementByTagName(middleCont, "div") ;
-		var bottomCont = DOMUtil.findNextElementByTagName(middleCont, "div") ;
-		topCont.style.display = "block" ;
-		bottomCont.style.display = "block" ;
-		var visibleHeight = Browser.getBrowserHeight() - Browser.findPosY(middleCont) - 40 ;
-		var scrollHeight = middleCont.scrollHeight ;
-		if(scrollHeight > visibleHeight) {
-			topCont.style.display = "block" ;
-			bottomCont.style.display = "block" ;
-			middleCont.style.height = visibleHeight - topCont.offsetHeight - bottomCont.offsetHeight + "px" ;
-			topCont.onclick = function(event) {
-				event = event || window.event;
-				event.cancelBubble = true;
-			};
-			bottomCont.onclick = function(event){
-				event = event || window.event;
-				event.cancelBubble = true;
-			}
-		} else {
-			topCont.style.display = "none" ;
-			bottomCont.style.display = "none" ;
-			middleCont.scrollTop = 0;
-			middleCont.style.height = "auto";
-		}
-		DOMUtil.listHideElements(dropDownAnchor) ;
-	}
-} ;
-
 eXo.webui.UIDropDownControl = new UIDropDownControl() ;
