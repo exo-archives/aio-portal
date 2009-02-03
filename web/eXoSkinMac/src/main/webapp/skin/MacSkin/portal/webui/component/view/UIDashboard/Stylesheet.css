@@ -28,6 +28,7 @@
 	font-weight: bold;
 	cursor: move;
 	overflow: hidden;
+	white-space: nowrap;
 }
 
 .UIDashboard .UIDashboardEditForm {
@@ -76,8 +77,7 @@
 }
 
 .UIDashboardSelectContainer .DashboardItemContainer .InputContainer input {
-	margin: 0 3px 0 0; /* orientation=lt */
-	margin: 0 0 0 3px; /* orientation=rt */
+	margin: 0 3px 0 0;
 	font-size: 11px; width: 170px;
 }
 
@@ -274,13 +274,12 @@
 .UIDashboardContainer .GadgetContainer .AddIcon a:hover {
 	text-decoration: none;
 }
-	
+
 .GadgetContainer .UIColumns {
 }
 
 .GadgetContainer .UIColumn {
-	float: left; /* orientation=lt */
-	float: right; /* orientation=rt */
+	float: left;
 	width: 325px;
 	padding: 2px 0px;
 }

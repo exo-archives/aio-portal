@@ -270,6 +270,19 @@
 }
 	
 /*========================Start Menu Decorator======================*/
+
+.UIExoStart .StartMenuDecorator {
+	width: 100%;
+}
+
+.UIExoStart .StartMenuDecorator .StartMenuTC {
+	height: 0px;
+}
+
+.UIExoStart .StartMenuDecorator .StartMenuBC {
+	height: 0px;
+}
+
 .UIExoStart .StartMenuDecorator {
 }
 

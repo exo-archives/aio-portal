@@ -28,6 +28,7 @@
 	font-weight: bold;
 	cursor: move;
 	overflow: hidden;
+	white-space: nowrap;
 }
 
 .UIDashboard .UIDashboardEditForm {
