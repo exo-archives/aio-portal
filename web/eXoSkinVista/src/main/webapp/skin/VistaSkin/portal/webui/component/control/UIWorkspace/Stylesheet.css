@@ -58,6 +58,10 @@
 	width: 220px;
 }
 
+.UIControlWorkspace .UIWelcomeComponent .ItemSelectorContainer { 
+	
+}
+
 /*########################### Tab ###########################*/
 .UIControlWorkspace .UIWorkspacePanel .TabPortalIcon {
   float: left;  
