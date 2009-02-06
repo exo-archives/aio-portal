@@ -189,10 +189,10 @@ gadgets.IfrGadgetService.prototype.setHeight = function(height) {
   if (height > gadgets.container.maxheight_) {
     height = gadgets.container.maxheight_;
   }
-
   var element = document.getElementById(this.f);
   if (element) {
-    element.style.height = height + 'px';
+	  if(height <= 0) element.style.height = "auto" ;
+  	else element.style.height = height + 'px';
   }
 };
 
