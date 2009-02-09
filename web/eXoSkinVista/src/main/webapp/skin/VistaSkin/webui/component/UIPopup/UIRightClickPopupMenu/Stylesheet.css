@@ -11,12 +11,6 @@
   background: #ffffff;
   border: 1px solid white;
 }
-.UIRightClickPopupMenu .MenuItem {
-  clear: both;
-  cursor: pointer;
-  line-height: 24px;
-  white-space: nowrap;
-}
 
 .UIRightClickPopupMenu .RightClickCustomItem {
 	display: none;
@@ -31,10 +25,14 @@
 
 .UIRightClickPopupMenu .ItemIcon {
   margin: 0px 7px;
-  padding: 2px 0px 2px 26px;  	/* orientation=lt */
-	padding: 2px 26px 2px 0px;  	/* orientation=rt */
+  padding: 4px 0px 4px 26px;  	/* orientation=lt */
+	padding: 4px 26px 4px 0px;  	/* orientation=rt */
   line-height: 20px;
   width: auto;
+  clear: both;
+  cursor: pointer;
+  line-height: 24px;
+  white-space: nowrap;
 }
 
 .UIRightClickPopupMenu .Rename16x16Icon{
@@ -105,7 +103,7 @@
 
 .UIRightClickPopupMenu a:hover {
   color: orange;
-  background: #dee4f2;
+  background-color: #dee4f2;
 }
 
 .UIRightClickPopupMenu .TopLeftRightClickPopupMenu {

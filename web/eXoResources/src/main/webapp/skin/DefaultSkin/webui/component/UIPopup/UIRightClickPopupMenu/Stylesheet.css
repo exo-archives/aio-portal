@@ -14,15 +14,8 @@
   background: #f6f6f6;
 }
 
-.UIRightClickPopupMenu .MenuItem {
-  cursor: pointer;
-  line-height: 16px;
-  white-space: nowrap;
-  display: block;
-}
-
-.UIRightClickPopupMenu .MenuItem:hover {
-  background: #dee4f2;
+.UIRightClickPopupMenu .ItemIcon:hover {
+  background-color: #dee4f2;
 }
 
 .UIRightClickPopupMenu .RightClickCustomItem {
@@ -35,11 +28,14 @@
   padding: 5px 26px 5px 0px;/* orientation=rt */
   line-height: 16px;
   width: auto;
+  cursor: pointer;
+  white-space: nowrap;
+  display: block;
 }
 
 .UIRightClickPopupMenu .UIRightPopupMenuContainer a:hover {
   color: orange;
-  background: #dee4f2;
+  background-color: #dee4f2;
 }
 
 .UIRightClickPopupMenu .AddNode16x16Icon {

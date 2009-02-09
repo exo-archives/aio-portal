@@ -14,13 +14,6 @@
 	background: white url('background/BgItemSelector1x4.png') repeat;
 }
 
-.UIRightClickPopupMenu .MenuItem {
-	clear: both;
-	cursor: pointer;
-	line-height: 16px;
-	white-space: nowrap;
-	display: block;
-}
 
 .UIRightClickPopupMenu .RightClickCustomItem {
 	display: none;
@@ -39,6 +32,11 @@
 	padding: 5px 26px 5px 0px; /* orientation=rt */
 	line-height: 16px;
 	width: auto;
+	clear: both;
+	cursor: pointer;
+	line-height: 16px;
+	white-space: nowrap;
+	display: block;
 }
 
 .UIRightClickPopupMenu a {
@@ -47,7 +45,7 @@
 
 .UIRightClickPopupMenu a:hover {
 	color: orange;
-	background: #dee4f2;
+	background-color: #dee4f2;
 }
 
 .UIRightClickPopupMenu .AddNode16x16Icon {
