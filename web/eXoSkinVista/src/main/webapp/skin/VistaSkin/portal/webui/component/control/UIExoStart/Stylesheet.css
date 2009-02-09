@@ -249,6 +249,8 @@
   background: white url('background/AddApplicationrBG1x20.gif') repeat-x top;
   background-position: 0px 23px;
   width: 100%;
+  *border-right: 1px solid #D0D0D0; /* orientation=lt */
+	_border-right: 1px solid none; /* orientation=lt */
 }
 
 .UIExoStart .StartMenuContainer .StartMenuContent {
