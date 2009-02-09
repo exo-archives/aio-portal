@@ -2404,6 +2404,7 @@
       <Description>Description:</Description>
       <Close>Close</Close>
       <Add>Add and keep this application in page</Add>
+      <AddToStartup>Ajouter et exécuter l'application immédiatement</AddToStartup>
     </label>
   </UIAddNewApplication>
   <!--

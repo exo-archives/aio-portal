@@ -167,6 +167,15 @@
 	cursor: pointer;
 }
 
+.UIAddApplication .AddToStartUp {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 24px; height: 24px;
+	background: url('background/AddToStartup.gif') no-repeat center;
+	margin: 2px auto;
+	cursor: pointer;
+}
+
 .UIAddApplication .SelectButton {
 	float: right; /* orientation=lt */
 	float: left; /* orientation=rt */ 

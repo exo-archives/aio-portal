@@ -2419,6 +2419,7 @@
       <Description>Mô tả:</Description>
       <Close>Đóng</Close>
       <Add>Thêm và giữ cho ứng dụng này tại trang</Add>
+      <AddToStartup>Thêm và chạy ứng dụng</AddToStartup>
     </label>
   </UIAddNewApplication>
   <!--

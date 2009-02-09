@@ -175,7 +175,6 @@
 .UIAddApplication .ApplicationButton {
 	float: right; /* orientation=lt */
 	float: left; /* orientation=rt */ 
-  width: 25px;
 }
 
 .UIAddApplication .ApplicationContentLabel {
@@ -245,6 +244,15 @@
 	line-height: 26px; 
 	font-weight: bold ; color: #5c5c5c;
 	vertical-align: middle ;
+}
+
+.UIAddApplication .AddToStartUp {
+	float: right; /* orientation=lt */
+	float: left; /* orientation=rt */
+	width: 20px ; height: 20px ;
+	background: url('background/AddToStartup.gif') no-repeat bottom;
+	margin: 0px 3px ;
+	cursor: pointer ;
 }
 
 .UIAddApplication .SelectButton {

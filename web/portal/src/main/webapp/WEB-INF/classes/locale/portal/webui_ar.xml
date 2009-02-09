@@ -2399,6 +2399,7 @@
       <Description>:الوصف</Description>
       <Close>إغلاق</Close>
       <Add>Add and keep this application in page</Add>
+      <AddToStartup>Add and Run application immediately</AddToStartup>
     </label>
   </UIAddNewApplication>
   
