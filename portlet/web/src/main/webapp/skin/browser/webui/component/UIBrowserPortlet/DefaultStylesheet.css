@@ -8,7 +8,7 @@
 	margin: 7px 10px 0px 10px;
 	background: white;
 }
-
+	
 .UIBrowserPortlet .UIToolbar {
 	border-bottom: solid 1px gray;
 	padding: 3px 0px 3px 5px; /* orientation=lt */
@@ -143,8 +143,8 @@
 	background: url("DefaultSkin/background/UIBrowserPortlet-rt.gif") white no-repeat right -265px; /* orientation=rt */
 	padding: 0px 2px 0px 22px; /* orientation=lt */
 	padding: 0px 22px 0px 2px; /* orientation=rt */
-	margin: 1px 100px 0px 9px; /* orientation=lt */
-	margin: 1px 9px 0px 100px; /* orientation=rt */
+	margin: 1px 108px 0px 9px; /* orientation=lt */
+	margin: 1px 9px 0px 108px; /* orientation=rt */
 	border: inset 1px gray;
 	_padding-right: 32px; /* orientation=rt */
 }
