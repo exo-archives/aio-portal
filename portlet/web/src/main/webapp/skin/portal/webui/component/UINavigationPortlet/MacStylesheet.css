@@ -76,9 +76,27 @@
 	background: url('/eXoSkinMac/skin/MacSkin/skinIcons/16x16/icons/DefaultPageIcon.png') no-repeat scroll right center; /* orientation=rt */
 }
 
+.UINavigationPortlet .MenuItemContainer .SelectedItem {
+	line-height: 24px;
+	width: auto; 
+	background: url('DefaultSkin/background/HoverItem.gif') repeat-x bottom;
+}
+
 .UINavigationPortlet .MenuItemContainer .SelectedItem a {
-	color: #134580;
+	color: #0F33C6;
 	display: block;
+}
+
+.UINavigationPortlet .MenuItemContainer .SelectedItem .NormalItem a {
+	color: #1D1D1D;
+}
+
+.UINavigationPortlet .MenuItemContainer .SelectedItem .NormalItem a:hover {
+	color: #0F33C6;
+}
+
+.UINavigationPortlet .MenuItemContainer .NormalItem .SelectedItem a {
+	color:  #0F33C6;
 }
 
 .UINavigationPortlet .MenuItemContainer .ItemIcon {
