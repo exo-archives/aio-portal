@@ -105,7 +105,6 @@ BrowserApplication.prototype.getUrl = function(obj) {
 			tabLabels[i].innerHTML = this.convertURL(src) ;
 		}
 	}
-  
 } ;
 
 BrowserApplication.prototype.onMouseOver = function(object, normalClass, activeClass, isOver) {

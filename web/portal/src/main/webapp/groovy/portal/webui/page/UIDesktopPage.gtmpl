@@ -292,7 +292,7 @@
                   <div style="display:none">/eXoResources/skin/sharedImages/Blank.gif</div>
                   <img id="PortletsViewer" class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/ShowPortletsViewer.png" alt="" title=""/><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIPageDesktop.title.ShowPortletDesktop")%></span>
                   <div style="display:none">/eXoResources/skin/sharedImages/Blank.gif</div>
-                  <img id="WidgetsViewer" class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/HideWidgetsViewer.png" alt="" title=""/><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIPageDesktop.title.ShowWidgetDesktop")%></span>
+                  <img id="GadgetsViewer" class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/HideWidgetsViewer.png" alt="" title=""/><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIPageDesktop.title.ShowWidgetDesktop")%></span>
                 </div>
               </div>
             </div>
