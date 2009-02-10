@@ -201,7 +201,7 @@
 
 .UIAddApplication .AddToStartUp {
 	width: 20px; height: 24px;
-	background: url('background/AddToStartup.gif') no-repeat center;
+	background: url('background/AddToStartup.gif') no-repeat top;
 	float: right;/* orientation=lt */
 	float: left;/* orientation=rt */
 	cursor: pointer;
