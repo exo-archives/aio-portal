@@ -173,8 +173,7 @@
 }
 
 .UIAddApplication .ApplicationButton {
-	float: right; /* orientation=lt */
-	float: left; /* orientation=rt */ 
+
 }
 
 .UIAddApplication .ApplicationContentLabel {
