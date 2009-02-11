@@ -246,28 +246,23 @@
                   <img id="FixBug" alt="" src="/eXoResources/skin/sharedImages/Debug1x32.gif" />
                   
 	                <%if(rcontext.getRemoteUser() == null) {%>
-	                		<div style="display:none">/eXoResources/skin/sharedImages/Blank.gif</div>
 		                  <img id="SignInIcon" class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/Signin.png" alt="" title=""
 		                         onclick="<%=uicomponent.event("ShowLoginForm", null);%>" /><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIPageDesktop.title.SignIn")%></span>
                   <%} else {%>
-											<div style="display:none">/eXoResources/skin/sharedImages/Blank.gif</div>
 											<img id="SignOutIcon" class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/Signout.png" alt="" title=""
 		                         onclick="eXo.portal.logout()" /><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIPageDesktop.title.SignOut")%></span>	                  		
 									<%} %>
               		    <img class="Separator" alt="" src="/webosResources/skin/Defaultskin/portal/webui/component/view/UIPageDesktop/background/Separator2x1.png"/>
               		    
               		<% String changeLanguageAction = "if(document.getElementById('UIMaskWorkspace')) ajaxGet(eXo.env.server.createPortalURL('UIPortal', 'ChangeLanguage', true));" ; %>
-              		    <div style="display:none">/eXoResources/skin/sharedImages/Blank.gif</div>
               		    <img id="ChangeLanguageIcon" class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/ChangeLanguage.png" alt="" title=""
 		                         onclick="$changeLanguageAction" /><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIExoStart.item.ChangeLanguage")%></span>
 
-  	                  <div style="display:none">/eXoResources/skin/sharedImages/Blank.gif</div>
   	                  <img class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/NavigationIcon.png" alt="" title=""
 	                       id="NavigationIcon"
 	                       onclick="eXo.desktop.UIDockbar.showNavigation(event)"/><span class="Tooltip" style="display: none"><%=_ctx.appRes("UIPageDesktop.title.pageNavigation")%></span>
 		                  
                   <%if(modifiable) {%>
-		                  <div style="display:none">/eXoResources/skin/sharedImages/Blank.gif</div>
 		                  <img class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/AddPortlet.png" alt="" title=""
 		                       id="UIAddApplicationIcon"
 		                       onclick="<%=uicomponent.event("ShowAddNewApplication")%>"/><span class="Tooltip" style="display: none"><%=_ctx.appRes("UIPageDesktop.title.AddApplication")%></span>
@@ -285,19 +280,15 @@
                       
                     if(rcontext.getRemoteUser() != null) {
                   %>
-                  	  <div style="display:none">/eXoResources/skin/sharedImages/Blank.gif</div>	
                       <img id="DockItem${uiChild.id}" class="Icon <%=isVisible ? "ShowIcon": ""%>" onmousedown="eXo.webui.UIRightClickPopupMenu.clickRightMouse(event, this, 'DockbarContextMenu', '${uiChild.id}', null, 1)" src="/${imgLocation}.png" alt=""
                            onerror="this.src='/eXoResources/skin/sharedImages/Icon80x80/DefaultPortlet.png'" onclick="eXo.desktop.UIDesktop.showHideWindow('UIWindow-${uiChild.id}', this);" /><span class="Tooltip" style="display: none"><%=uiChild.getTitle();%></span>
                   <%}else{%>
-                  		<div style="display:none">/eXoResources/skin/sharedImages/Blank.gif</div>
                   		<img id="DockItem${uiChild.id}" class="Icon <%=isVisible ? "ShowIcon": ""%>" src="/${imgLocation}.png" alt=""
                            onerror="this.src='/eXoResources/skin/sharedImages/Icon80x80/DefaultPortlet.png'" onclick="eXo.desktop.UIDesktop.showHideWindow('UIWindow-${uiChild.id}', this);" /><span class="Tooltip" style="display: none"><%=uiChild.getTitle();%></span>
 									<%}}%>
 			
                   <img class="Separator" alt="" src="/webosResources/skin/Defaultskin/portal/webui/component/view/UIPageDesktop/background/Separator2x1.png" />
-                  <div style="display:none">/eXoResources/skin/sharedImages/Blank.gif</div>
                   <img id="PortletsViewer" class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/ShowPortletsViewer.png" alt="" title=""/><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIPageDesktop.title.ShowPortletDesktop")%></span>
-                  <div style="display:none">/eXoResources/skin/sharedImages/Blank.gif</div>
                   <img id="GadgetsViewer" class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/HideWidgetsViewer.png" alt="" title=""/><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIPageDesktop.title.ShowWidgetDesktop")%></span>
                 </div>
               </div>
