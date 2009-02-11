@@ -115,3 +115,7 @@
 	background: url('background/Gadget.png') repeat-x center -48px;
 	height: 10px;
 }
+
+.UIControlWorkspace .UIGadget iframe {
+	width: 215px ;
+}

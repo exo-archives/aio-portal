@@ -243,7 +243,10 @@ eXo.webui.UIDashboard = {
 		if(!uiContainer) return;
 		
 		var uiWindow = DOMUtil.findAncestorByClass(portletWindow, "UIWindow") ;
-		uiWindow.resizeCallback.put(DOMUtil.generateId(windowId), eXo.webui.UIDashboard.initHeight) ;
+		if(uiWindow) {
+			if(!uiWindow.resizeCallback) uiWindow.resizeCallback = new eXo.core.HashMap() ;
+			uiWindow.resizeCallback.put(DOMUtil.generateId(windowId), eXo.webui.UIDashboard.initHeight) ;
+		}
 		
 		var gadgetContainer = DOMUtil.findFirstChildByClass(uiContainer, "div", "GadgetContainer");
 		uiDashboard.style.overflow = "hidden";
