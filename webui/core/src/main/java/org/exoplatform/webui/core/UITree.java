@@ -173,8 +173,8 @@ public class UITree extends UIComponent {
     StringBuilder builder = new StringBuilder();
     
     // if field's length > max field's length then cut field value
-    if ((fieldValue.length() > getMaxTitleCharacter_()) && (getMaxTitleCharacter_() != 0)) {
-      fieldValue = fieldValue.substring(0, getMaxTitleCharacter_() - 3) + "...";
+    if ((fieldValue.length() > getMaxTitleCharacter()) && (getMaxTitleCharacter() != 0)) {
+      fieldValue = fieldValue.substring(0, getMaxTitleCharacter() - 3) + "...";
     }
     if(nodeIcon.equals(expandIcon)) {
       builder.append(" <div class=\"").append(nodeIcon).append("\" onclick=\"").append(actionLink).append("\">") ;
@@ -232,11 +232,11 @@ public class UITree extends UIComponent {
 
   public String getBeanIconField() { return beanIconField_; }  
   
-  public void setMaxTitleCharacter_(Integer maxTitleCharacter_) {
+  public void setMaxTitleCharacter(Integer maxTitleCharacter_) {
     this.maxTitleCharacter_ = maxTitleCharacter_;
   }
 
-  public Integer getMaxTitleCharacter_() {
+  public Integer getMaxTitleCharacter() {
     return maxTitleCharacter_;
   }
 
