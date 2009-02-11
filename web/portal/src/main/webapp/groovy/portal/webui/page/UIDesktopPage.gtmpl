@@ -245,7 +245,8 @@
                 <div class="IconContainer" id="IconContainer" style="text-align: center;">
                   <img id="FixBug" alt="" src="/eXoResources/skin/sharedImages/Debug1x32.gif" />
                   
-	                <%if(rcontext.getRemoteUser() == null) {%><div style="display:none">/eXoResources/skin/sharedImages/Blank.gif</div>
+	                <%if(rcontext.getRemoteUser() == null) {%>
+	                		<div style="display:none">/eXoResources/skin/sharedImages/Blank.gif</div>
 		                  <img id="SignInIcon" class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/Signin.png" alt="" title=""
 		                         onclick="<%=uicomponent.event("ShowLoginForm", null);%>" /><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIPageDesktop.title.SignIn")%></span>
                   <%} else {%>
@@ -254,6 +255,11 @@
 		                         onclick="eXo.portal.logout()" /><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIPageDesktop.title.SignOut")%></span>	                  		
 									<%} %>
               		    <img class="Separator" alt="" src="/webosResources/skin/Defaultskin/portal/webui/component/view/UIPageDesktop/background/Separator2x1.png"/>
+              		    
+              		<% String changeLanguageAction = "if(document.getElementById('UIMaskWorkspace')) ajaxGet(eXo.env.server.createPortalURL('UIPortal', 'ChangeLanguage', true));" ; %>
+              		    <div style="display:none">/eXoResources/skin/sharedImages/Blank.gif</div>
+              		    <img id="ChangeLanguageIcon" class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/ChangeLanguage.png" alt="" title=""
+		                         onclick="$changeLanguageAction" /><span class="Tooltip" style="display: none;"><%=_ctx.appRes("UIExoStart.item.ChangeLanguage")%></span>
 
   	                  <div style="display:none">/eXoResources/skin/sharedImages/Blank.gif</div>
   	                  <img class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/NavigationIcon.png" alt="" title=""
@@ -265,8 +271,8 @@
 		                  <img class="Icon" src="/eXoResources/skin/sharedImages/Icon80x80/AddPortlet.png" alt="" title=""
 		                       id="UIAddApplicationIcon"
 		                       onclick="<%=uicomponent.event("ShowAddNewApplication")%>"/><span class="Tooltip" style="display: none"><%=_ctx.appRes("UIPageDesktop.title.AddApplication")%></span>
-		                  <img class="Separator" alt="" src="/webosResources/skin/Defaultskin/portal/webui/component/view/UIPageDesktop/background/Separator2x1.png"/>
                   <%}%>
+		                  <img class="Separator" alt="" src="/webosResources/skin/Defaultskin/portal/webui/component/view/UIPageDesktop/background/Separator2x1.png"/>
                   <%                  
                     def res = rcontext.getApplicationResourceBundle() ;
                     String skin = rcontext.getUIApplication().getSkin() ;
