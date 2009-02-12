@@ -73,7 +73,7 @@
   </UITestForm>
   <StringLengthValidator>
     <msg>
-      <length-invalid>The field "{0}" must have length from "{1}" to "{2}" characters.</length-invalid>
+      <length-invalid>The field "{0}" must have a length between "{1}" and "{2}" characters.</length-invalid>
     </msg>
   </StringLengthValidator>
   <!--
