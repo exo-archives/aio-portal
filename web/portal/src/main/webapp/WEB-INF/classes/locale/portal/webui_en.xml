@@ -139,7 +139,7 @@
   -->
   <ResourceValidator>
     <msg>
-      <Invalid-char>Only alpha, digit, underscore and dot characters allowed for the field {0}</Invalid-char>
+      <Invalid-char>Only alpha, digit, underscore, dash and dot characters allowed for the field {0}</Invalid-char>
     </msg>
   </ResourceValidator>
   <!--
@@ -152,7 +152,7 @@
   <SpecialCharacterValidator>
     <msg>
       <invalid-digit>The "{0}" field must start with a character.</invalid-digit>
-      <Invalid-char>Only alpha, digit, underscore and space characters allowed for the field {0}</Invalid-char>
+      <Invalid-char>Only alpha, digit, underscore, dash and space characters allowed for the field {0}</Invalid-char>
     </msg>
   </SpecialCharacterValidator>
   <!--
@@ -231,7 +231,7 @@
   -->
   <IdentifierValidator>
     <msg>
-      <Invalid-char>Only alpha, digit and underscore characters allowed for the field {0}</Invalid-char>
+      <Invalid-char>Only alpha, digit, dash and underscore characters allowed for the field {0}</Invalid-char>
     </msg>
   </IdentifierValidator>
   <!--
@@ -406,7 +406,7 @@
     <msg>
       <user-not-exist>User {0} doesn't exist</user-not-exist>
       <user-not-empty>User name can not be empty!</user-not-empty>
-      <Invalid-char>The field {0} only has alpha, digit, comma characters and has to start and end with letter characters</Invalid-char>
+      <Invalid-char>The field {0} only has alpha, digit, comma, dash characters and has to start and end with letter characters</Invalid-char>
       <duplicate-user>User {0} duplicate</duplicate-user>
       <group-not-select>Please select a group!</group-not-select>
       <membership-exist>The membership type of user {0} is already in {1} group, please select another one!</membership-exist>
