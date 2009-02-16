@@ -14,32 +14,20 @@
 	background: white url('background/BgItemSelector1x4.png') repeat;
 }
 
-
 .UIRightClickPopupMenu .RightClickCustomItem {
 	display: none;
 }
 	
-.UIRightClickPopupMenu .SelectedMenuItem {
-	clear: both;
-	cursor: pointer;
-	line-height: 16px;
-	background: #dee4f2;
-}
-	
-.UIRightClickPopupMenu .ItemIcon {
-	margin: 0px 7px;
+.UIRightClickPopupMenu .MenuItem .ItemIcon {
 	padding: 5px 0px 5px 26px; /* orientation=lt */
 	padding: 5px 26px 5px 0px; /* orientation=rt */
 	line-height: 16px;
 	width: auto;
-	clear: both;
 	cursor: pointer;
 	white-space: nowrap;
 	display: block;
-}
-
-.UIRightClickPopupMenu a {
-	text-decoration: none;
+	background-position: 6px center; /* orientation=lt */
+  background-position: 95% center; /* orientation=rt */
 }
 
 .UIRightClickPopupMenu a:hover {
