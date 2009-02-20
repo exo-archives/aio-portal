@@ -227,7 +227,7 @@
   background: url('background/NormalTabStyle.gif') repeat-x left -26px;
   cursor: pointer;
   padding: 0px 4px;
-  _width: 80px; /* orientation=rt */
+  width: 80px; /* orientation=rt */
   white-space: nowrap; /* orientation=rt */
 }
 
@@ -281,7 +281,7 @@
   background: url('background/NormalTabStyle.gif') repeat-x center -131px;
   cursor: pointer;
   padding: 0px 4px;
-  _width: 80px; /* orientation=rt */
+  width: 80px; /* orientation=rt */
   white-space: nowrap; /* orientation=rt */
 }
 
