@@ -23,6 +23,7 @@ UIUpload.prototype.initUploadEntry = function(uploadId, isAutoUpload) {
 };
 
 UIUpload.prototype.createUploadEntry = function(uploadId, isAutoUpload) {
+	var I18n = eXo.core.I18n ;
   var iframe = document.getElementById(uploadId+'uploadFrame');
   var idoc = iframe.contentWindow.document ;
   var uploadAction = eXo.env.server.context + "/command?" ;
@@ -30,7 +31,7 @@ UIUpload.prototype.createUploadEntry = function(uploadId, isAutoUpload) {
   uploadAction += "&uploadId=" + uploadId+"&action=upload" ;
   idoc.open();
 	idoc.write("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>");
-  idoc.write("<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>");
+  idoc.write("<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='" + I18n.getLanguage() + "' lang='" + I18n.getLanguage() + "' dir=" + I18n.dir + ">");
   idoc.write("<head>");
   idoc.write("<style type='text/css'>");
   idoc.write(".UploadButton {width: 20px; height: 20px; cursor: pointer; vertical-align: bottom;");
