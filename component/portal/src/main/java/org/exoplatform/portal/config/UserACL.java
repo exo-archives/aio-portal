@@ -22,6 +22,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.container.xml.ValueParam;
+import org.exoplatform.container.xml.ValuesParam;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PortalConfig;
@@ -40,6 +41,7 @@ public class UserACL {
   private List<String> portalCreatorGroups_;
   private List<String> accessControlWorkspaceGroups_;
   private String navigationCreatorMembershipType_;
+  private List<String> mandatoryGroups_;
   private PortalACLPlugin portalACLPlugin;
 
   public UserACL(InitParams params) throws Exception {
@@ -65,6 +67,10 @@ public class UserACL {
     ValueParam portalCretorGroupsParam = params.getValueParam("portal.creator.groups");
     if(portalCretorGroupsParam != null) allGroups = portalCretorGroupsParam.getValue();
     portalCreatorGroups_ = defragmentPermission(allGroups);
+    
+    ValuesParam mandatoryGroupsParam = params.getValuesParam("mandatory.groups");
+    if(mandatoryGroupsParam != null) mandatoryGroups_ = mandatoryGroupsParam.getValues();
+    else mandatoryGroups_ = new ArrayList<String>();
   }
 
   private List<String> defragmentPermission(String permission) {
@@ -258,6 +264,10 @@ public class UserACL {
     if (id == null) { return false; }
 
     return id.isMemberOf(groupId, membership) ;
+  }
+  
+  public List<String> getMandatoryGroups() {
+    return mandatoryGroups_;
   }
 
   static public class Permission {

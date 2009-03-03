@@ -1988,6 +1988,7 @@
     <msg>
       <Edit>!يجب ان تختار مجموعة</Edit>
       <Delete>!لا يمكنك حذف هذه المجموعة لأنها تستخدم من قبل برنامج آخر</Delete>
+      <DeleteMandatory>You can't delete this group because it (or its child) is mandatory!</DeleteMandatory>
     </msg>
   </UIGroupManagement>
   <!--

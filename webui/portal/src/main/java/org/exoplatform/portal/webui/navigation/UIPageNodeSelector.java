@@ -159,7 +159,7 @@ public class UIPageNodeSelector extends UIContainer {
     if(getPageNavigation(portalSelectedNav.getId()) != null) {
       selectNavigation(portalSelectedNav.getId()) ;
       PageNode portalSelectedNode = Util.getUIPortal().getSelectedNode() ;
-      selectPageNodeByUri(portalSelectedNode.getUri()) ;  
+      if(portalSelectedNode != null) selectPageNodeByUri(portalSelectedNode.getUri()) ;  
       return;
     } 
     selectNavigation();

@@ -1996,6 +1996,7 @@
     <msg>
       <Edit>Bạn phải chọn một nhóm trước!</Edit>
       <Delete>Bạn không thể xóa nhóm này vì nó đang được dùng bởi chương trình khác!</Delete>
+      <DeleteMandatory>You can't delete this group because it (or its child) is mandatory!</DeleteMandatory>
     </msg>
   </UIGroupManagement>
   <!--

@@ -1981,6 +1981,7 @@
     <msg>
       <Edit>Vous devez sélectionner un groupe !</Edit>
       <Delete>La suppression de ce groupe est impossible car il est utilisé par un autre programme !</Delete>
+      <DeleteMandatory>You can't delete this group because it (or its child) is mandatory!</DeleteMandatory>
     </msg>
   </UIGroupManagement>
   <!--
