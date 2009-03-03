@@ -1,6 +1,7 @@
 function UIUpload() {
   this.listUpload = new Array();
   this.isAutoUpload = false;
+  //this.listLimitMB = new Array();
 };
 
 UIUpload.prototype.initUploadEntry = function(uploadId, isAutoUpload) {
@@ -16,14 +17,15 @@ UIUpload.prototype.initUploadEntry = function(uploadId, isAutoUpload) {
   }
   UIUpload.isAutoUpload = isAutoUpload;
 	if(response.upload[uploadId] == undefined || response.upload[uploadId].percent == undefined) {
+		//eXo.webui.UIUpload.listLimitMB.push();
 		this.createUploadEntry(uploadId, isAutoUpload);
 	} else if(response.upload[uploadId].percent == 100)  {
 		this.showUploaded(uploadId, decodeURIComponent(response.upload[uploadId].fileName));
 	} 
 };
 
+
 UIUpload.prototype.createUploadEntry = function(uploadId, isAutoUpload) {
-	var I18n = eXo.core.I18n ;
   var iframe = document.getElementById(uploadId+'uploadFrame');
   var idoc = iframe.contentWindow.document ;
   var uploadAction = eXo.env.server.context + "/command?" ;
@@ -31,7 +33,7 @@ UIUpload.prototype.createUploadEntry = function(uploadId, isAutoUpload) {
   uploadAction += "&uploadId=" + uploadId+"&action=upload" ;
   idoc.open();
 	idoc.write("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>");
-  idoc.write("<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='" + I18n.getLanguage() + "' lang='" + I18n.getLanguage() + "' dir=" + I18n.dir + ">");
+  idoc.write("<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>");
   idoc.write("<head>");
   idoc.write("<style type='text/css'>");
   idoc.write(".UploadButton {width: 20px; height: 20px; cursor: pointer; vertical-align: bottom;");
@@ -65,7 +67,6 @@ UIUpload.prototype.refeshProgress = function(elementId) {
   }
 
   var responseText = ajaxAsyncGetRequest(url, false);
-  
   if(list.length > 0) {
     setTimeout("eXo.webui.UIUpload.refeshProgress('" + elementId + "');", 1000); 
   }
@@ -78,6 +79,11 @@ UIUpload.prototype.refeshProgress = function(elementId) {
   }
   
   for(id in response.upload) {
+  	if (response.upload[id].status == "failed") {
+  		this.abortUpload(id);
+  		alert(response.upload[id].message);
+  		continue;
+  	}
     var element = document.getElementById(id+"ProgressIframe");
     var percent  =   response.upload[id].percent;
     var container = parent.document.getElementById(elementId);
