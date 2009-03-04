@@ -279,7 +279,8 @@
 }
 
 .GadgetContainer .UIColumn {
-	float: left;
+	float: left; /* orientation=lt */
+	float: right; /* orientation=rt */
 	width: 325px;
 	padding: 2px 0px;
 }
@@ -289,7 +290,8 @@
 	width: 320px;
 }
 .UIDashboardContainer .UIGadget .GadgetMenuBar{
-	text-align:left;
+	text-align: left; /* orientation=lt */
+	text-align: right; /* orientation=rt */
 }
 
 .UIDashboardContainer .UITarget {
@@ -298,6 +300,7 @@
 }
 
 .UIDashboard .Dragging {
-	margin: 3px 0px 0px 3px;
+	margin: 3px 0px 0px 3px; /* orientation=lt */
+	margin: 3px 3px 0px 0px; /* orientation=rt */
 }
 
