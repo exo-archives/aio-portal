@@ -139,9 +139,9 @@ public class ResourceBundleServiceImpl extends BaseResourceBundleService impleme
       Node regNode = regService_.getRegistry(sessionProvider).getNode() ;
       StringBuilder builder = new StringBuilder("select * from " + DataMapper.EXO_REGISTRYENTRY_NT) ;
       generateScript(builder, "jcr:path", regNode.getPath() + "/" + getServiceRegistryPath() + "/%") ;
-      generateScript(builder, DataMapper.TYPE, DataMapper.LOCALE) ;
-      generateScript(builder, DataMapper.NAME, q.getName()) ;
-      generateScript(builder, DataMapper.LANGUAGE, q.getLanguage()) ;
+      generateContainScript(builder, DataMapper.TYPE, DataMapper.LOCALE) ;
+      generateContainScript(builder, DataMapper.NAME, q.getName()) ;
+      generateContainScript(builder, DataMapper.LANGUAGE, q.getLanguage()) ;
       builder.append("order by ").append(DataMapper.NAME).append(",").append(DataMapper.LANGUAGE);
       Session session = regNode.getSession() ;
       QueryManager queryManager = session.getWorkspace().getQueryManager() ;
@@ -181,6 +181,20 @@ public class ResourceBundleServiceImpl extends BaseResourceBundleService impleme
     sql.append(name).append(" like '").append(value).append("'");
   }
   
+private void generateContainScript(StringBuilder sql, String name, String value){
+    
+    if(value == null || value.length() < 1) return ;
+    
+    if(value.indexOf("*")<0){
+      if(value.charAt(0)!='*') value = "*"+value ;
+      if(value.charAt(value.length()-1)!='*') value += "*" ;
+    }
+    value = value.replace('?', '_') ;
+    
+    if(sql.indexOf(" where") < 0) sql.append(" where "); else sql.append(" and ");
+    sql.append("contains(").append(name).append(", '").append(value).append("')");
+  }
+
   private String getServiceRegistryPath() {
     return RegistryService.EXO_SERVICES + "/" + SERVICE_NAME ;
   }
