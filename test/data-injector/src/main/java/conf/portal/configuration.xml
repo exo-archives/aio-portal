@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<configuration>
+  <external-component-plugins>
+    <target-component>org.exoplatform.services.organization.OrganizationService</target-component>
+    <component-plugin>
+      <name>organization.init.listener</name>
+      <set-method>addListenerPlugin</set-method>
+      <type>org.exoplatform.portal.initializer.organization.OrganizationInitializer</type>
+      <description>this listener populate organization data for the Portal</description>
+      <init-params>
+      	<object-param>
+      		<name>config</name>
+      		<description>description</description>
+      		<object type="org.exoplatform.portal.initializer.organization.OrganizationConfig">
+	      		<field name="groups">
+	      			<collection type="java.util.ArrayList">
+              	<value>
+				          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
+				            <field  name="name"><string>africa</string></field>
+				            <field  name="parentId"><string></string></field>
+				            <field  name="description"><string>Africa Group</string></field>
+				            <field  name="label"><string>Africa</string></field>
+				            <field	name="children">
+						          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
+						            <field  name="name"><string>country</string></field>
+						            <field  name="description"><string>Country</string></field>
+						            <field  name="label"><string>Country</string></field>
+						            <field  name="numberOfGroups"><string>3</string></field>
+								        <field	name="children">
+								          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
+								            <field  name="name"><string>provice</string></field>
+								            <field  name="description"><string>Province</string></field>
+								            <field  name="label"><string>Province</string></field>
+								            <field  name="numberOfGroups"><string>5</string></field>	            
+								          </object>
+						            </field>
+						          </object>
+				            </field>
+				          </object>
+              	</value>
+              	
+              	<value>
+				          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
+				            <field  name="name"><string>america</string></field>
+				            <field  name="parentId"><string></string></field>
+				            <field  name="description"><string>America Group</string></field>
+				            <field  name="label"><string>America</string></field>
+				            <field	name="children">
+						          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
+						            <field  name="name"><string>country</string></field>
+						            <field  name="description"><string>Country</string></field>
+						            <field  name="label"><string>Country</string></field>
+						            <field  name="numberOfGroups"><string>3</string></field>
+						          </object>
+						        </field>
+				          </object>
+              	</value>
+
+              	<value>
+				          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
+				            <field  name="name"><string>asia</string></field>
+				            <field  name="parentId"><string></string></field>
+				            <field  name="description"><string>Asia Group</string></field>
+				            <field  name="label"><string>Asia</string></field>
+				            <field	name="children">
+						          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
+						            <field  name="name"><string>country</string></field>
+						            <field  name="description"><string>Country</string></field>
+						            <field  name="label"><string>Country</string></field>
+						            <field  name="numberOfGroups"><string>3</string></field>
+						          </object>
+						        </field>
+				          </object>
+              	</value>
+
+              	<value>
+				          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
+				            <field  name="name"><string>europa</string></field>
+				            <field  name="parentId"><string></string></field>
+				            <field  name="description"><string>Europa Group</string></field>
+				            <field  name="label"><string>Europa</string></field>
+				            <field	name="children">
+						          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
+						            <field  name="name"><string>country</string></field>
+						            <field  name="description"><string>Country</string></field>
+						            <field  name="label"><string>Country</string></field>
+						            <field  name="numberOfGroups"><string>3</string></field>	            
+						          </object>
+				            </field>
+				          </object>
+              	</value>
+
+              	<value>
+				          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
+				            <field  name="name"><string>oceania</string></field>
+				            <field  name="parentId"><string></string></field>
+				            <field  name="description"><string>Oceania Group</string></field>
+				            <field  name="label"><string>Oceania</string></field>
+				            <field	name="children">
+						          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
+						            <field  name="name"><string>country</string></field>
+						            <field  name="description"><string>Country</string></field>
+						            <field  name="label"><string>Country</string></field>
+						            <field  name="numberOfGroups"><string>3</string></field>	            
+						          </object>
+				            </field>
+				          </object>
+              	</value>
+              </collection>
+	      		</field>
+      		</object>
+      	</object-param>
+      </init-params>
+    </component-plugin>
+  </external-component-plugins>
+</configuration>
+
