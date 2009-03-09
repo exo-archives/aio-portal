@@ -21,7 +21,7 @@ import java.util.List;
 import org.exoplatform.container.component.BaseComponentPlugin;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.portal.initializer.organization.OrganizationConfig.GroupsConfig;
-import org.exoplatform.services.organization.Group;
+import org.exoplatform.services.organization.OrganizationConfig.Group;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.OrganizationServiceInitializer;
 
@@ -44,43 +44,56 @@ public class OrganizationInitializer extends BaseComponentPlugin implements Orga
   }
 
   private void initGroups(List<GroupsConfig> configs, OrganizationService orgService) throws Exception {
-    for(Object ele : configs) {
-      createGroups((GroupsConfig) ele, orgService);
+    for(GroupsConfig ele : configs) {
+      createGroups(ele, orgService);
     }
   }
-
-  private void createGroupRecursively(GroupsConfig config, OrganizationService orgService) throws Exception {
-    createGroupEntry(config, orgService);
-    GroupsConfig children = config.getChildren();
-    if(children == null) return;
-    String parentId = config.getParentId();
-    if(parentId == null || parentId.trim().length() < 1){
-      children.setParentId("/" + config.getName());
-    } else {
-      children.setParentId(config.getParentId() + "/" + config.getName());
-    }
-    createGroups(children, orgService);
-  }
+//
+//  private void createGroupRecursively(GroupsConfig config, OrganizationService orgService) throws Exception {
+//    createGroupEntry(config.getGroup(), orgService);
+//    GroupsConfig children = config.getChildren();
+//    if(children == null) return;
+//    String parentId = config.getParentId();
+//    if(parentId == null || parentId.trim().length() < 1){
+//      children.setParentId("/" + config.getName());
+//    } else {
+//      children.setParentId(config.getParentId() + "/" + config.getName());
+//    }
+//    createGroups(children, orgService);
+//  }
 
   private void createGroups(GroupsConfig groupsConfig, OrganizationService service) throws Exception {
     String str = groupsConfig.getNumberOfGroups();
-    if(str == null || str.trim().length() < 1) {
-      createGroupRecursively(groupsConfig, service);
-    } else {
+    Group group = groupsConfig.getGroup() ;
+    if(str != null && str.trim().length() > 0) {
       int number = Integer.parseInt(str);
       for(int i = 0; i < number; i++){
-        GroupsConfig newConfig = new GroupsConfig();
-        newConfig.setName(groupsConfig.getName() + i);
-        newConfig.setDescription(groupsConfig.getDescription() + " #" +i);
-        newConfig.setLabel(groupsConfig.getLabel() + " #" +i);
-        newConfig.setParentId(groupsConfig.getParentId());
-        newConfig.setChildren(groupsConfig.getChildren());
-        createGroupRecursively(newConfig, service);
+        Group newGroup = new Group();
+        newGroup.setName(group.getName() + i);
+        newGroup.setDescription(group.getDescription() + " #" +i);
+        newGroup.setLabel(group.getLabel() + " #" +i);
+        newGroup.setParentId(group.getParentId());
+        createGroupEntry(newGroup, service);
       }
+    } else {
+    	createGroupEntry(group, service);
     }
+    
+    GroupsConfig children = groupsConfig.getChildren();
+    if(children == null) return;
+    String parentId = groupsConfig.getParentId();
+    if(parentId == null || parentId.trim().length() < 1){
+      children.setParentId("/" + groupsConfig.getName());
+    } else {
+      children.setParentId(groupsConfig.getParentId() + "/" + groupsConfig.getName());
+    }
+    createGroups(children, service);
+    
+    
+    //createGroupRecursively(groupsConfig.getChildren(), service);
   }
 
-  private void createGroupEntry(GroupsConfig config, OrganizationService orgService) throws Exception {
+  private void createGroupEntry(Group config, OrganizationService orgService) throws Exception {
     String groupId = null;
     String parentId = config.getParentId();
     if (parentId == null || parentId.length() == 0){
@@ -89,14 +102,14 @@ public class OrganizationInitializer extends BaseComponentPlugin implements Orga
       groupId = config.getParentId() + "/" + config.getName();
     }
     if (orgService.getGroupHandler().findGroupById(groupId) == null) {
-      Group group = orgService.getGroupHandler().createGroupInstance();
+      org.exoplatform.services.organization.Group group = orgService.getGroupHandler().createGroupInstance();
       group.setGroupName(config.getName());
       group.setDescription(config.getDescription());
       group.setLabel(config.getLabel());
       if (parentId == null || parentId.length() == 0) {
         orgService.getGroupHandler().addChild(null, group, true);
       } else {
-        Group parentGroup = orgService.getGroupHandler().findGroupById(parentId);
+        org.exoplatform.services.organization.Group parentGroup = orgService.getGroupHandler().findGroupById(parentId);
         orgService.getGroupHandler().addChild(parentGroup, group, true);
       }
       System.out.println("    Create Group " + groupId);

@@ -18,6 +18,8 @@ package org.exoplatform.portal.initializer.organization;
 
 import java.util.List;
 
+import org.exoplatform.services.organization.OrganizationConfig.Group;
+
 /**
  * Created by The eXo Platform SAS
  * Author : Pham Thanh Tung
@@ -45,48 +47,54 @@ public class OrganizationConfig {
   
   static public class GroupsConfig {
 
-    private String name;
+  	private org.exoplatform.services.organization.OrganizationConfig.Group group;
 
-    private String description;
-
-    private String parentId;
-
-    private String label;
-
-    private String numberOfGroups;
+  	private String numberOfGroups;
     
     private GroupsConfig children;
 
+    public GroupsConfig() {
+			group = new Group() ;
+		}
+    
+    public Group getGroup() {
+    	return group;
+    }
+    
+    public void setGroup(Group group) {
+    	this.group = group;
+    }
+    
     public String getDescription() {
-      return description;
+      return group.getDescription();
     }
 
     public void setDescription(String description) {
-      this.description = description;
+      group.setDescription(description);
     }
 
     public String getName() {
-      return name;
+      return group.getName();
     }
 
     public void setName(String name) {
-      this.name = name;
+      group.setName(name);
     }
 
     public String getParentId() {
-      return parentId;
+      return group.getParentId();
     }
 
     public void setParentId(String parentId) {
-      this.parentId = parentId;
+      group.setParentId(parentId);
     }
 
     public String getLabel() {
-      return label;
+      return group.getLabel();
     }
 
     public void setLabel(String label) {
-      this.label = label;
+      group.setLabel(label);
     }
 
     public String getNumberOfGroups() {
