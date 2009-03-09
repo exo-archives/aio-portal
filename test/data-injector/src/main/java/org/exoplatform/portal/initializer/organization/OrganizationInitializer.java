@@ -48,19 +48,6 @@ public class OrganizationInitializer extends BaseComponentPlugin implements Orga
       createGroups(ele, orgService);
     }
   }
-//
-//  private void createGroupRecursively(GroupsConfig config, OrganizationService orgService) throws Exception {
-//    createGroupEntry(config.getGroup(), orgService);
-//    GroupsConfig children = config.getChildren();
-//    if(children == null) return;
-//    String parentId = config.getParentId();
-//    if(parentId == null || parentId.trim().length() < 1){
-//      children.setParentId("/" + config.getName());
-//    } else {
-//      children.setParentId(config.getParentId() + "/" + config.getName());
-//    }
-//    createGroups(children, orgService);
-//  }
 
   private void createGroups(GroupsConfig groupsConfig, OrganizationService service) throws Exception {
     String str = groupsConfig.getNumberOfGroups();
@@ -88,9 +75,6 @@ public class OrganizationInitializer extends BaseComponentPlugin implements Orga
       children.setParentId(groupsConfig.getParentId() + "/" + groupsConfig.getName());
     }
     createGroups(children, service);
-    
-    
-    //createGroupRecursively(groupsConfig.getChildren(), service);
   }
 
   private void createGroupEntry(Group config, OrganizationService orgService) throws Exception {
