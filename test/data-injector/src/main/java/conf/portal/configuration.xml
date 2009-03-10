@@ -18,36 +18,14 @@
 				          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
 				          	<field name="group">
 											<object type="org.exoplatform.services.organization.OrganizationConfig$Group">
-						            <field  name="name"><string>africa</string></field>
-						            <field  name="parentId"><string></string></field>
-						            <field  name="description"><string>Africa Group</string></field>
-						            <field  name="label"><string>Africa</string></field>
+						            <field  name="name"><string>province</string></field>
+						            <field  name="parentId"><string>/africa/tanzania</string></field>
+						            <field  name="description"><string>Tanzania's province</string></field>
+						            <field  name="label"><string>Province</string></field>
 		                  </object>				          		
 				          	</field>
-				            <field	name="children">
-						          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
-						          	<field name="group">
-													<object type="org.exoplatform.services.organization.OrganizationConfig$Group">
-								            <field  name="name"><string>country</string></field>
-								            <field  name="description"><string>Country</string></field>
-								            <field  name="label"><string>Country</string></field>
-													</object>
-												</field>
-						            <field  name="numberOfGroups"><string>3</string></field>
-								        <field	name="children">
-								          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
-								          	<field name="group">
-															<object type="org.exoplatform.services.organization.OrganizationConfig$Group">
-										            <field  name="name"><string>provice</string></field>
-										            <field  name="description"><string>Province</string></field>
-										            <field  name="label"><string>Province</string></field>
-															</object>
-														</field>
-								            <field  name="numberOfGroups"><string>5</string></field>	            
-								          </object>
-						            </field>
-						          </object>
-				            </field>
+				          	<field name="from"><string>1</string></field>
+				          	<field name="to"><string>10</string></field>
 				          </object>
               	</value>
               	
@@ -55,24 +33,14 @@
 				          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
 				          	<field name="group">
 											<object type="org.exoplatform.services.organization.OrganizationConfig$Group">
-						            <field  name="name"><string>america</string></field>
-						            <field  name="parentId"><string></string></field>
-						            <field  name="description"><string>America Group</string></field>
-						            <field  name="label"><string>America</string></field>
+						            <field  name="name"><string>province</string></field>
+						            <field  name="parentId"><string>/america/usa</string></field>
+						            <field  name="description"><string>USA's province</string></field>
+						            <field  name="label"><string>Province</string></field>
 											</object>
 										</field>
-				            <field	name="children">
-						          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
-						          	<field name="group">
-													<object type="org.exoplatform.services.organization.OrganizationConfig$Group">
-								            <field  name="name"><string>country</string></field>
-								            <field  name="description"><string>Country</string></field>
-								            <field  name="label"><string>Country</string></field>
-													</object>
-												</field>
-						            <field  name="numberOfGroups"><string>3</string></field>
-						          </object>
-						        </field>
+				          	<field name="from"><string>1</string></field>
+				          	<field name="to"><string>10</string></field>
 				          </object>
               	</value>
 
@@ -80,24 +48,14 @@
 				          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
 				          	<field name="group">
 											<object type="org.exoplatform.services.organization.OrganizationConfig$Group">
-						            <field  name="name"><string>asia</string></field>
-						            <field  name="parentId"><string></string></field>
-						            <field  name="description"><string>Asia Group</string></field>
-						            <field  name="label"><string>Asia</string></field>
+						            <field  name="name"><string>province</string></field>
+						            <field  name="parentId"><string>/asia/vietnam</string></field>
+						            <field  name="description"><string>Viet Nam's province</string></field>
+						            <field  name="label"><string>Province</string></field>
 											</object>
 										</field>
-				            <field	name="children">
-						          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
-						          	<field name="group">
-													<object type="org.exoplatform.services.organization.OrganizationConfig$Group">
-								            <field  name="name"><string>country</string></field>
-								            <field  name="description"><string>Country</string></field>
-								            <field  name="label"><string>Country</string></field>
-													</object>
-												</field>
-						            <field  name="numberOfGroups"><string>3</string></field>
-						          </object>
-						        </field>
+				          	<field name="from"><string>1</string></field>
+				          	<field name="to"><string>10</string></field>
 				          </object>
               	</value>
 
@@ -105,24 +63,14 @@
 				          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
 				          	<field name="group">
 											<object type="org.exoplatform.services.organization.OrganizationConfig$Group">
-						            <field  name="name"><string>europa</string></field>
-						            <field  name="parentId"><string></string></field>
-						            <field  name="description"><string>Europa Group</string></field>
-						            <field  name="label"><string>Europa</string></field>
+						            <field  name="name"><string>province</string></field>
+						            <field  name="parentId"><string>/europa/france</string></field>
+						            <field  name="description"><string>France's province</string></field>
+						            <field  name="label"><string>Province</string></field>
 											</object>
 										</field>
-				            <field	name="children">
-						          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
-						          	<field name="group">
-													<object type="org.exoplatform.services.organization.OrganizationConfig$Group">
-								            <field  name="name"><string>country</string></field>
-								            <field  name="description"><string>Country</string></field>
-								            <field  name="label"><string>Country</string></field>
-													</object>
-												</field>
-						            <field  name="numberOfGroups"><string>3</string></field>	            
-						          </object>
-				            </field>
+				          	<field name="from"><string>1</string></field>
+				          	<field name="to"><string>10</string></field>
 				          </object>
               	</value>
 
@@ -130,26 +78,17 @@
 				          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
 				          	<field name="group">
 											<object type="org.exoplatform.services.organization.OrganizationConfig$Group">
-						            <field  name="name"><string>oceania</string></field>
-						            <field  name="parentId"><string></string></field>
-						            <field  name="description"><string>Oceania Group</string></field>
-						            <field  name="label"><string>Oceania</string></field>
+						            <field  name="name"><string>province</string></field>
+						            <field  name="parentId"><string>/oceania/australia</string></field>
+						            <field  name="description"><string>Australia</string></field>
+						            <field  name="label"><string>Province</string></field>
 											</object>
 										</field>
-				            <field	name="children">
-						          <object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$GroupsConfig">
-						          	<field name="group">
-													<object type="org.exoplatform.services.organization.OrganizationConfig$Group">
-								            <field  name="name"><string>country</string></field>
-								            <field  name="description"><string>Country</string></field>
-								            <field  name="label"><string>Country</string></field>
-													</object>
-												</field>
-						            <field  name="numberOfGroups"><string>3</string></field>	            
-						          </object>
-				            </field>
+				          	<field name="from"><string>1</string></field>
+				          	<field name="to"><string>10</string></field>
 				          </object>
               	</value>
+              	
               </collection>
 	      		</field>
       		</object>

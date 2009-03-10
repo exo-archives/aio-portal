@@ -27,44 +27,44 @@ import org.exoplatform.services.organization.OrganizationConfig.Group;
  * Mar 6, 2009  
  */
 public class OrganizationConfig {
-  
+
   List<GroupsConfig> groups;
   List<UsersConfig> users;
-  
+
   public List<GroupsConfig> getGroups() {
     return groups;
   }
   public void setGroups(List<GroupsConfig> groups) {
     this.groups = groups;
   }
-  
+
   public List<UsersConfig> getUsers() {
     return users;
   }
   public void setUsers(List<UsersConfig> users) {
     this.users = users;
   }
-  
+
   static public class GroupsConfig {
 
-  	private org.exoplatform.services.organization.OrganizationConfig.Group group;
+    private org.exoplatform.services.organization.OrganizationConfig.Group group;
 
-  	private String numberOfGroups;
-    
-    private GroupsConfig children;
+    private String from;
+
+    private String to;
 
     public GroupsConfig() {
-			group = new Group() ;
-		}
-    
+      group = new Group() ;
+    }
+
     public Group getGroup() {
-    	return group;
+      return group;
     }
-    
+
     public void setGroup(Group group) {
-    	this.group = group;
+      this.group = group;
     }
-    
+
     public String getDescription() {
       return group.getDescription();
     }
@@ -97,26 +97,26 @@ public class OrganizationConfig {
       group.setLabel(label);
     }
 
-    public String getNumberOfGroups() {
-      return numberOfGroups;
+    public String getFrom() {
+      return from;
     }
 
-    public void setNumberOfGroups(String number) {
-      numberOfGroups = number;
+    public void setFrom(String from) {
+      this.from = from;
     }
-    
-    public GroupsConfig getChildren() {
-      return children;
+
+    public String getTo() {
+      return to;
     }
-    
-    public void setChildren(GroupsConfig children) {
-      this.children = children;
+
+    public void setTo(String to) {
+      this.to = to;
     }
 
   }
-  
+
   static public class UsersConfig {
-    
+
   }
 
 }
