@@ -12,6 +12,10 @@
   <name>GWT Sample gadget</name>
   <url>http://www.exoplatform.org</url>
   <description>GWT Sample gadget</description>
+  <properties>
+    <gwtVersion>1.5.0</gwtVersion>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
@@ -22,7 +26,7 @@
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-servlet</artifactId>
-      <version>1.5.0</version>
+      <version>${gwtVersion}</version>
     </dependency>
     <dependency>
       <groupId>com.google.gwt</groupId>
@@ -32,7 +36,7 @@
     <dependency>
       <groupId>com.google.gwt</groupId>
       <artifactId>gwt-user</artifactId>
-      <version>1.5.0</version>
+      <version>${gwtVersion}</version>
       <scope>provided</scope>
       <!-- This JAR is used to generate JS files and shouldn't be included in the server side
            WAR. However an issue in the GWT maven plugin prevents it from working with
@@ -60,7 +64,7 @@
                 <artifactItem>
                   <groupId>com.google.gwt</groupId>
                   <artifactId>${gwtArtifactId}</artifactId>
-                  <version>1.5.0</version>
+                  <version>${gwtVersion}</version>
                   <type>zip</type>
                 </artifactItem>
               </artifactItems>
@@ -72,15 +76,15 @@
       <plugin>
         <groupId>com.totsp.gwt</groupId>
         <artifactId>maven-googlewebtoolkit2-plugin</artifactId>
-        <version>1.5.3-SNAPSHOT</version>
-        <configuration>
+        <version>2.0-beta18</version>
+       <configuration>
           <logLevel>WARN</logLevel> <!-- ERROR, WARN, INFO, TRACE, DEBUG, SPAM, ALL -->
-          <style>OBF</style> <!-- OBF[USCATED], PRETTY, DETAILED -->
+          <style>DETAILED</style> <!-- OBF[USCATED], PRETTY, DETAILED -->
           <runTarget>org.exoplatform.portal.sample.gadget.gwt/HelloWorld.html</runTarget>
-          <gwtHome>${java.io.tmpdir}/exo/gwt/${gwtArtifactId}-1.5.0</gwtHome>
-          <compileTarget>
+          <gwtHome>${java.io.tmpdir}/exo/gwt/${gwtArtifactId}-${gwtVersion}/</gwtHome>
+          <compileTargets>
             <value>org.exoplatform.portal.sample.gadget.gwt.HelloWorld</value>
-          </compileTarget>
+          </compileTargets>
           <extraJvmArgs>-Xmx1024m</extraJvmArgs>
         </configuration>
         <executions>
@@ -91,6 +95,7 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>

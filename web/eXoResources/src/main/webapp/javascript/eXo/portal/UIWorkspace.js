@@ -10,8 +10,7 @@ if(!eXo.portal.UIControlWorkspace) {
   eXo.portal.UIControlWorkspace = new UIWorkspace("UIControlWorkspace") ;
 };
 
-eXo.portal.UIControlWorkspace.onResize = function(width, height) {
-	
+eXo.portal.UIControlWorkspace.onResize = function(width, height) {	
 	this.width = width ;
 	this.height = height ;
 	var uiWorkspace = document.getElementById(this.id) ;
@@ -157,14 +156,6 @@ eXo.portal.UIControlWorkspace.showWorkspace = function() {
 	  	if (dragPosY > offsetHeight) dragObject.style.top = offsetHeight + "px" ;
 	  	if (dragPosX > offsetWidth) dragObject.style.left = offsetWidth + "px" ;			
 		}		
-	}
-	
-	// fix for DropDropList bug in IE by Pham Dinh Tan  
-	var dropDownAnchors = eXo.core.DOMUtil.findDescendantsByClass(document, "div", "UIDropDownAnchor");
-	for(var i = 0; i < dropDownAnchors.length; i++) {
-		if(dropDownAnchors[i].style.display != "none") {
-			dropDownAnchors[i].style.display = "none";
-		}
 	}
 	
 	/* -- END -- */
