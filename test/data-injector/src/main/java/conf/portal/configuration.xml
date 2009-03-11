@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <configuration>
-  <external-component-plugins>
-    <target-component>org.exoplatform.services.organization.OrganizationService</target-component>
-    <component-plugin>
-      <name>organization.init.listener</name>
-      <set-method>addListenerPlugin</set-method>
-      <type>org.exoplatform.portal.initializer.organization.OrganizationInitializer</type>
-      <description>this listener populate organization data for the Portal</description>
+	<component>
+		<key>org.exoplatform.portal.initializer.organization.OrganizationInitializer</key>
+		<type>org.exoplatform.portal.initializer.organization.OrganizationInitializer</type>
       <init-params>
       	<object-param>
       		<name>config</name>
@@ -91,9 +87,98 @@
               	
               </collection>
 	      		</field>
+      			<field name="users">
+      				<collection type="java.util.ArrayList">
+      					
+      					<value>
+      						<object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$UsersConfig">
+      							<field name="user">
+		                  <object type="org.exoplatform.services.organization.OrganizationConfig$User">
+		                    <field  name="userName"><string>user</string></field>
+		                    <field  name="password"><string>eXoPlatform</string></field>
+		                    <field  name="firstName"><string>First-Name</string></field>
+		                    <field  name="lastName"><string>Last-Name</string></field>
+		                    <field  name="email"><string>exo@localhost</string></field>
+		                    <field  name="groups"><string>member:/africa</string></field>
+		                  </object>
+      							</field>
+      							<field name="from"><string>0</string></field>
+      							<field name="to"><string>9</string></field>
+      						</object>
+      					</value>
+      					
+      					<value>
+      						<object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$UsersConfig">
+      							<field name="user">
+		                  <object type="org.exoplatform.services.organization.OrganizationConfig$User">
+		                    <field  name="userName"><string>user</string></field>
+		                    <field  name="password"><string>eXoPlatform</string></field>
+		                    <field  name="firstName"><string>First-Name</string></field>
+		                    <field  name="lastName"><string>Last-Name</string></field>
+		                    <field  name="email"><string>exo@localhost</string></field>
+		                    <field  name="groups"><string>member:/america</string></field>
+		                  </object>
+      							</field>
+      							<field name="from"><string>10</string></field>
+      							<field name="to"><string>19</string></field>
+      						</object>
+      					</value>
+
+      					<value>
+      						<object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$UsersConfig">
+      							<field name="user">
+		                  <object type="org.exoplatform.services.organization.OrganizationConfig$User">
+		                    <field  name="userName"><string>user</string></field>
+		                    <field  name="password"><string>eXoPlatform</string></field>
+		                    <field  name="firstName"><string>First-Name</string></field>
+		                    <field  name="lastName"><string>Last-Name</string></field>
+		                    <field  name="email"><string>exo@localhost</string></field>
+		                    <field  name="groups"><string>member:/asia</string></field>
+		                  </object>
+      							</field>
+      							<field name="from"><string>20</string></field>
+      							<field name="to"><string>29</string></field>
+      						</object>
+      					</value>
+
+      					<value>
+      						<object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$UsersConfig">
+      							<field name="user">
+		                  <object type="org.exoplatform.services.organization.OrganizationConfig$User">
+		                    <field  name="userName"><string>user</string></field>
+		                    <field  name="password"><string>eXoPlatform</string></field>
+		                    <field  name="firstName"><string>First-Name</string></field>
+		                    <field  name="lastName"><string>Last-Name</string></field>
+		                    <field  name="email"><string>exo@localhost</string></field>
+		                    <field  name="groups"><string>member:/europa</string></field>
+		                  </object>
+      							</field>
+      							<field name="from"><string>30</string></field>
+      							<field name="to"><string>39</string></field>
+      						</object>
+      					</value>
+
+      					<value>
+      						<object type="org.exoplatform.portal.initializer.organization.OrganizationConfig$UsersConfig">
+      							<field name="user">
+		                  <object type="org.exoplatform.services.organization.OrganizationConfig$User">
+		                    <field  name="userName"><string>user</string></field>
+		                    <field  name="password"><string>eXoPlatform</string></field>
+		                    <field  name="firstName"><string>First-Name</string></field>
+		                    <field  name="lastName"><string>Last-Name</string></field>
+		                    <field  name="email"><string>exo@localhost</string></field>
+		                    <field  name="groups"><string>member:/oceania</string></field>
+		                  </object>
+      							</field>
+      							<field name="from"><string>40</string></field>
+      							<field name="to"><string>49</string></field>
+      						</object>
+      					</value>
+
+      				</collection>
+      			</field>
       		</object>
       	</object-param>
       </init-params>
-    </component-plugin>
-  </external-component-plugins>
+	</component>     
 </configuration>

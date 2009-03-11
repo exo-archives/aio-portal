@@ -19,21 +19,22 @@ package org.exoplatform.portal.initializer.organization;
 import java.util.List;
 
 import org.exoplatform.services.organization.OrganizationConfig.Group;
+import org.exoplatform.services.organization.OrganizationConfig.User;
 
 /**
- * Created by The eXo Platform SAS
- * Author : Pham Thanh Tung
- *          thanhtungty@gmail.com
- * Mar 6, 2009  
+ * Created by The eXo Platform SAS Author : Pham Thanh Tung
+ * thanhtungty@gmail.com Mar 6, 2009
  */
 public class OrganizationConfig {
 
   List<GroupsConfig> groups;
-  List<UsersConfig> users;
+
+  List<UsersConfig>  users;
 
   public List<GroupsConfig> getGroups() {
     return groups;
   }
+
   public void setGroups(List<GroupsConfig> groups) {
     this.groups = groups;
   }
@@ -41,20 +42,21 @@ public class OrganizationConfig {
   public List<UsersConfig> getUsers() {
     return users;
   }
+
   public void setUsers(List<UsersConfig> users) {
     this.users = users;
   }
 
   static public class GroupsConfig {
 
-    private org.exoplatform.services.organization.OrganizationConfig.Group group;
+    private Group  group;
 
     private String from;
 
     private String to;
 
     public GroupsConfig() {
-      group = new Group() ;
+      group = new Group();
     }
 
     public Group getGroup() {
@@ -116,6 +118,36 @@ public class OrganizationConfig {
   }
 
   static public class UsersConfig {
+
+    private User   user;
+
+    private String from;
+
+    private String to;
+
+    public User getUser() {
+      return user;
+    }
+
+    public void setUser(User user) {
+      this.user = user;
+    }
+
+    public String getFrom() {
+      return from;
+    }
+
+    public void setFrom(String from) {
+      this.from = from;
+    }
+
+    public String getTo() {
+      return to;
+    }
+
+    public void setTo(String to) {
+      this.to = to;
+    }
 
   }
 

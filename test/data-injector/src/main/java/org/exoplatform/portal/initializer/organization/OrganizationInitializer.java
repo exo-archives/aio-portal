@@ -16,31 +16,44 @@
  */
 package org.exoplatform.portal.initializer.organization;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
-import org.exoplatform.container.component.BaseComponentPlugin;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.portal.initializer.organization.OrganizationConfig.GroupsConfig;
+import org.exoplatform.portal.initializer.organization.OrganizationConfig.UsersConfig;
+import org.exoplatform.services.organization.MembershipHandler;
+import org.exoplatform.services.organization.MembershipType;
 import org.exoplatform.services.organization.OrganizationService;
-import org.exoplatform.services.organization.OrganizationServiceInitializer;
 import org.exoplatform.services.organization.OrganizationConfig.Group;
+import org.exoplatform.services.organization.OrganizationConfig.User;
+import org.picocontainer.Startable;
 
 /**
- * Created by The eXo Platform SAS
- * thanhtungty@gmail.com Mar 4, 2009
+ * Created by The eXo Platform SAS thanhtungty@gmail.com Mar 4, 2009
  */
-public class OrganizationInitializer extends BaseComponentPlugin implements
-OrganizationServiceInitializer {
+public class OrganizationInitializer implements Startable {
 
-  private OrganizationConfig orgConfig;
+  private OrganizationConfig  orgConfig;
 
-  public OrganizationInitializer(InitParams initParams) {
+  private OrganizationService orgService;
+
+  public OrganizationInitializer(InitParams initParams, OrganizationService service) {
     orgConfig = (OrganizationConfig) initParams.getObjectParamValues(OrganizationConfig.class)
-    .get(0);
+                                               .get(0);
+    orgService = service;
   }
 
-  public void init(OrganizationService service) throws Exception {
-    initGroups(orgConfig.getGroups(), service);
+  public void start() {
+    try {
+      System.out.println("\n\n===============>Start Organization Injector[" + (new Date()).toString() + "]\n");
+      initGroups(orgConfig.getGroups(), orgService);
+      initUsers(orgConfig.getUsers(), orgService);
+      System.out.println("\n\n===============>Finish Organization Injector[" + (new Date()).toString() + "]\n");
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   private void initGroups(List<GroupsConfig> configs, OrganizationService orgService) throws Exception {
@@ -61,9 +74,8 @@ OrganizationServiceInitializer {
       if (i < 2) {
         group.setParentId(null);
         createGroupEntry(group, orgService);
-      }
-      else {
-        parent = parent + "/" + nodes[i-1];
+      } else {
+        parent = parent + "/" + nodes[i - 1];
         group.setParentId(parent);
         createGroupEntry(group, orgService);
       }
@@ -84,30 +96,89 @@ OrganizationServiceInitializer {
     }
   }
 
-  private void createGroupEntry(Group config, OrganizationService orgService)
-  throws Exception {
+  private void createGroupEntry(Group config, OrganizationService orgService) throws Exception {
     String groupId = null;
     String parentId = config.getParentId();
-    if (parentId == null || parentId.length() == 0){
+    if (parentId == null || parentId.length() == 0) {
       groupId = "/" + config.getName();
     } else {
       groupId = config.getParentId() + "/" + config.getName();
     }
     if (orgService.getGroupHandler().findGroupById(groupId) == null) {
-      org.exoplatform.services.organization.Group group =
-        orgService.getGroupHandler().createGroupInstance();
+      org.exoplatform.services.organization.Group group = orgService.getGroupHandler()
+                                                                    .createGroupInstance();
       group.setGroupName(config.getName());
       group.setDescription(config.getDescription());
       group.setLabel(config.getLabel());
       if (parentId == null || parentId.length() == 0) {
         orgService.getGroupHandler().addChild(null, group, true);
       } else {
-        org.exoplatform.services.organization.Group parentGroup =
-          orgService.getGroupHandler().findGroupById(parentId);
+        org.exoplatform.services.organization.Group parentGroup = orgService.getGroupHandler()
+                                                                            .findGroupById(parentId);
         orgService.getGroupHandler().addChild(parentGroup, group, true);
       }
-      System.out.println("    Create Group " + groupId);
+      //System.out.println("    Create Group " + groupId);
     }
+    else {
+      //System.out.println("    Group " + groupId + " already exists, ignoring the entry");
+    }
+  }
+
+  private void initUsers(List<UsersConfig> configs, OrganizationService service) throws Exception {
+    for (UsersConfig config : configs) {
+      int from = Integer.parseInt(config.getFrom());
+      int to = Integer.parseInt(config.getTo());
+      User u = config.getUser();
+      for (int i = from; i <= to; i++) {
+        User user = new User();
+        user.setUserName(u.getUserName() + i);
+        user.setPassword(u.getPassword());
+        user.setFirstName(u.getFirstName() + "-" + i);
+        user.setLastName(u.getLastName() + "-" + i);
+        user.setEmail(u.getEmail());    
+        user.setGroups(u.getGroups());
+        createUserEntry(user, service);
+      }
+    }
+  }
+
+  private void createUserEntry(User config, OrganizationService service) throws Exception {
+    MembershipHandler mhandler = service.getMembershipHandler();
+    org.exoplatform.services.organization.User user = service.getUserHandler()
+                                                             .createUserInstance(config.getUserName());
+    user.setPassword(config.getPassword());
+    user.setFirstName(config.getFirstName());
+    user.setLastName(config.getLastName());
+    user.setEmail(config.getEmail());
+    if (service.getUserHandler().findUserByName(config.getUserName()) == null) {
+      service.getUserHandler().createUser(user, true);
+      //System.out.println("    Created user " + config.getUserName());
+    } else {
+      //System.out.println("    User " + config.getUserName() + " already exists, ignoring the entry");
+    }
+
+    String groups = config.getGroups();
+    String[] entry = groups.split(",");
+    for (int j = 0; j < entry.length; j++) {
+      String[] temp = entry[j].trim().split(":");
+      String membership = temp[0];
+      String groupId = temp[1];
+      if (mhandler.findMembershipByUserGroupAndType(config.getUserName(), groupId, membership) == null) {
+        org.exoplatform.services.organization.Group group = service.getGroupHandler()
+                                                                   .findGroupById(groupId);
+        MembershipType mt = service.getMembershipTypeHandler().createMembershipTypeInstance();
+        mt.setName(membership);
+        mhandler.linkMembership(user, group, mt, true);
+        //System.out.println("    Created membership " + config.getUserName() + ", " + groupId + ", "
+        //    + membership);
+      } else {
+        //System.out.println("    Ignored membership " + config.getUserName() + ", " + groupId + ", "
+        //    + membership);
+      }
+    }
+  }
+
+  public void stop() {
   }
 
 }
