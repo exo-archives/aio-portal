@@ -18,8 +18,8 @@ package org.exoplatform.portal.application;
 
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.ExoContainerContext;
-import org.exoplatform.container.SessionManagerContainer;
 import org.exoplatform.container.SessionContainer;
+import org.exoplatform.container.SessionManagerContainer;
 import org.exoplatform.web.application.Application;
 import org.exoplatform.web.application.ApplicationLifecycle;
 import org.exoplatform.webui.application.WebuiRequestContext;
@@ -34,11 +34,18 @@ public class PortalApplicationLifecycle  implements  ApplicationLifecycle<WebuiR
   public void onStartRequest(Application app, WebuiRequestContext rcontext) throws Exception {
     ExoContainer pcontainer = ExoContainerContext.getCurrentContainer() ;
     SessionContainer.setInstance(((SessionManagerContainer) pcontainer).getSessionManager().getSessionContainer(rcontext.getSessionId()));
+    app.setAttribute("tran.the.trong", System.currentTimeMillis());
   }
 
   @SuppressWarnings("unused")
   public void onEndRequest(Application app, WebuiRequestContext rcontext) throws Exception {
-    SessionContainer.setInstance(null) ;
+    PortalStatisticService service = (PortalStatisticService) ExoContainerContext.
+    																			getCurrentContainer().getComponentInstanceOfType(PortalStatisticService.class);
+    PortalStatistic appStatistic = service.getPortalStatistic(app.getApplicationId());
+    long startTime = Long.valueOf(app.getAttribute("tran.the.trong").toString());
+    appStatistic.updateTime(System.currentTimeMillis() - startTime);
+
+  	SessionContainer.setInstance(null) ;
     ExoContainerContext.setCurrentContainer(null);
   }
   

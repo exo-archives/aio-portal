@@ -13,7 +13,7 @@ public class ApplicationStatistic {
 	}
 	
 	public void setMaxTime(long time) {
-		times[times.length] = time;
+//		times[times.length] = time;
 		if(time > maxTime) maxTime = time;
 	}
 }
