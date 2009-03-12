@@ -16,11 +16,22 @@
  */
 package org.exoplatform.portal.initializer.organization;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
+import org.exoplatform.commons.utils.PageList;
 import org.exoplatform.container.xml.InitParams;
+import org.exoplatform.portal.config.DataStorage;
+import org.exoplatform.portal.config.Query;
+import org.exoplatform.portal.config.UserPortalConfigService;
+import org.exoplatform.portal.config.model.Application;
+import org.exoplatform.portal.config.model.Container;
+import org.exoplatform.portal.config.model.Page;
+import org.exoplatform.portal.config.model.PageNavigation;
+import org.exoplatform.portal.config.model.PageNode;
+import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.initializer.organization.OrganizationConfig.GroupsConfig;
 import org.exoplatform.portal.initializer.organization.OrganizationConfig.UsersConfig;
 import org.exoplatform.services.organization.MembershipHandler;
@@ -28,26 +39,40 @@ import org.exoplatform.services.organization.MembershipType;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.OrganizationConfig.Group;
 import org.exoplatform.services.organization.OrganizationConfig.User;
+import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
 import org.picocontainer.Startable;
 
 /**
- * Created by The eXo Platform SAS thanhtungty@gmail.com Mar 4, 2009
+ * Created by The eXo Platform SAS
+ * thanhtungty@gmail.com Mar 4, 2009
  */
 public class OrganizationInitializer implements Startable {
 
-  private OrganizationConfig  orgConfig;
-
   private OrganizationService orgService;
+  private DataStorage portalConfigStorage;
 
-  public OrganizationInitializer(InitParams initParams, OrganizationService service) {
+  private OrganizationConfig  orgConfig;
+  private boolean autoCreateGroupPageNavi;
+  private int numberOfUserPage;
+  private PageList pages;
+
+  public OrganizationInitializer(InitParams initParams,
+                                 OrganizationService service,
+                                 UserPortalConfigService portalService,
+                                 DataStorage storage) {
     orgConfig = (OrganizationConfig) initParams.getObjectParamValues(OrganizationConfig.class)
-                                               .get(0);
+    .get(0);
+    autoCreateGroupPageNavi = Boolean.parseBoolean(initParams.getValueParam("auto.create.group.page.navigation").getValue());
+    numberOfUserPage = Integer.parseInt(initParams.getValueParam("auto.create.user.page.navigation").getValue());
+
     orgService = service;
+    portalConfigStorage = storage;
   }
 
   public void start() {
     try {
       System.out.println("\n\n===============>Start Organization Injector[" + (new Date()).toString() + "]\n");
+      pages = portalConfigStorage.find(new Query<Page>(null, null, Page.class));
       initGroups(orgConfig.getGroups(), orgService);
       initUsers(orgConfig.getUsers(), orgService);
       System.out.println("\n\n===============>Finish Organization Injector[" + (new Date()).toString() + "]\n");
@@ -106,7 +131,7 @@ public class OrganizationInitializer implements Startable {
     }
     if (orgService.getGroupHandler().findGroupById(groupId) == null) {
       org.exoplatform.services.organization.Group group = orgService.getGroupHandler()
-                                                                    .createGroupInstance();
+      .createGroupInstance();
       group.setGroupName(config.getName());
       group.setDescription(config.getDescription());
       group.setLabel(config.getLabel());
@@ -114,9 +139,10 @@ public class OrganizationInitializer implements Startable {
         orgService.getGroupHandler().addChild(null, group, true);
       } else {
         org.exoplatform.services.organization.Group parentGroup = orgService.getGroupHandler()
-                                                                            .findGroupById(parentId);
+        .findGroupById(parentId);
         orgService.getGroupHandler().addChild(parentGroup, group, true);
       }
+      if(autoCreateGroupPageNavi) createGroupPageNavi(pages, groupId);
       //System.out.println("    Create Group " + groupId);
     }
     else {
@@ -145,7 +171,7 @@ public class OrganizationInitializer implements Startable {
   private void createUserEntry(User config, OrganizationService service) throws Exception {
     MembershipHandler mhandler = service.getMembershipHandler();
     org.exoplatform.services.organization.User user = service.getUserHandler()
-                                                             .createUserInstance(config.getUserName());
+    .createUserInstance(config.getUserName());
     user.setPassword(config.getPassword());
     user.setFirstName(config.getFirstName());
     user.setLastName(config.getLastName());
@@ -165,7 +191,7 @@ public class OrganizationInitializer implements Startable {
       String groupId = temp[1];
       if (mhandler.findMembershipByUserGroupAndType(config.getUserName(), groupId, membership) == null) {
         org.exoplatform.services.organization.Group group = service.getGroupHandler()
-                                                                   .findGroupById(groupId);
+        .findGroupById(groupId);
         MembershipType mt = service.getMembershipTypeHandler().createMembershipTypeInstance();
         mt.setName(membership);
         mhandler.linkMembership(user, group, mt, true);
@@ -176,6 +202,63 @@ public class OrganizationInitializer implements Startable {
         //    + membership);
       }
     }
+  }
+
+  private void createGroupPageNavi(PageList pageList, String groupId) throws Exception {
+    PageNavigation navigation = portalConfigStorage.getPageNavigation(PortalConfig.GROUP_TYPE, groupId);
+    if (navigation != null) return;
+    
+    Random random = new Random();
+    pageList.setPageSize(10);
+    int n = random.nextInt(pageList.getAvailablePage()) + 1;
+    List<?> list = pageList.getPage(n);
+    n = random.nextInt(list.size());
+    Page page = (Page) list.get(n);
+    renewPage(page, PortalConfig.GROUP_TYPE, groupId);
+    portalConfigStorage.create(page);
+    
+    navigation = new PageNavigation();
+    navigation.setOwnerType(PortalConfig.GROUP_TYPE);
+    navigation.setOwnerId(groupId);
+    navigation.setPriority(5);
+    navigation.setNodes(new ArrayList<PageNode>());
+
+    PageNode node = new PageNode();
+    node.setName(page.getName());
+    node.setUri(page.getName());
+    node.setLabel(page.getName());
+    node.setPageReference(page.getPageId());
+    navigation.addNode(node);
+    portalConfigStorage.create(navigation);
+
+  }
+
+  public void renewPage(Page page, String ownerType, String ownerId) throws Exception {
+    page.setOwnerType(ownerType);
+    page.setOwnerId(ownerId);
+    page.setPageId(ownerType + "::" + ownerId + "::" + page.getName());
+    List<Application> apps = new ArrayList<Application>(5) ; 
+    getApplications(apps, page) ;
+    for(Application ele : apps) {
+      renewInstanceId(ele, ownerType, ownerId) ;
+    }
+  }
+
+  private void getApplications(List<Application> apps, Object component) {
+    if(component instanceof Application) {
+      apps.add((Application) component) ;
+    } else if(component instanceof Container) {
+      Container container = (Container) component ;
+      List<Object> children = container.getChildren() ;
+      if(children != null) for(Object ele : children) getApplications(apps, ele) ;
+    }    
+  }
+
+  private void renewInstanceId(Application app, String ownerType, String ownerId) {
+    ExoWindowID newExoWindowID = new ExoWindowID(app.getInstanceId()) ;
+    newExoWindowID.setOwner(ownerType + "#" + ownerId) ;
+    newExoWindowID.setUniqueID(String.valueOf(newExoWindowID.hashCode())) ;
+    app.setInstanceId(newExoWindowID.generatePersistenceId()) ;
   }
 
   public void stop() {

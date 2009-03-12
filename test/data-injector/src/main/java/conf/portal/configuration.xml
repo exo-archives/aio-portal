@@ -4,8 +4,20 @@
 		<key>org.exoplatform.portal.initializer.organization.OrganizationInitializer</key>
 		<type>org.exoplatform.portal.initializer.organization.OrganizationInitializer</type>
       <init-params>
+      	<value-param>
+      		<name>auto.create.group.page.navigation</name>
+      		<description>true or false</description>
+      		<value>true</value>
+      	</value-param>
+      	
+      	<value-param>
+      		<name>auto.create.user.page.navigation</name>
+      		<description>number of pages per user</description>
+      		<value>10</value>
+      	</value-param>
+
       	<object-param>
-      		<name>config</name>
+      		<name>organization</name>
       		<description>description</description>
       		<object type="org.exoplatform.portal.initializer.organization.OrganizationConfig">
 	      		<field name="groups">
