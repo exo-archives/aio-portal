@@ -21,11 +21,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import org.exoplatform.commons.utils.ObjectPageList;
 import org.exoplatform.commons.utils.PageList;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.Query;
-import org.exoplatform.portal.config.UserPortalConfigService;
+import org.exoplatform.portal.config.UserACL;
 import org.exoplatform.portal.config.model.Application;
 import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.Page;
@@ -50,29 +51,30 @@ public class OrganizationInitializer implements Startable {
 
   private OrganizationService orgService;
   private DataStorage portalConfigStorage;
-
+  private UserACL acl;
   private OrganizationConfig  orgConfig;
   private boolean autoCreateGroupPageNavi;
   private int numberOfUserPage;
-  private PageList pages;
+  private PageList pageIdList;
 
   public OrganizationInitializer(InitParams initParams,
                                  OrganizationService service,
-                                 UserPortalConfigService portalService,
-                                 DataStorage storage) {
+                                 UserACL acl,
+                                 DataStorage storage) throws Exception {
     orgConfig = (OrganizationConfig) initParams.getObjectParamValues(OrganizationConfig.class)
     .get(0);
     autoCreateGroupPageNavi = Boolean.parseBoolean(initParams.getValueParam("auto.create.group.page.navigation").getValue());
     numberOfUserPage = Integer.parseInt(initParams.getValueParam("auto.create.user.page.navigation").getValue());
 
     orgService = service;
+    this.acl = acl;
     portalConfigStorage = storage;
   }
 
   public void start() {
     try {
       System.out.println("\n\n===============>Start Organization Injector[" + (new Date()).toString() + "]\n");
-      pages = portalConfigStorage.find(new Query<Page>(null, null, Page.class));
+      pageIdList = getPageIdList();
       initGroups(orgConfig.getGroups(), orgService);
       initUsers(orgConfig.getUsers(), orgService);
       System.out.println("\n\n===============>Finish Organization Injector[" + (new Date()).toString() + "]\n");
@@ -142,7 +144,7 @@ public class OrganizationInitializer implements Startable {
         .findGroupById(parentId);
         orgService.getGroupHandler().addChild(parentGroup, group, true);
       }
-      if(autoCreateGroupPageNavi) createGroupPageNavi(pages, groupId);
+      if(autoCreateGroupPageNavi) createPageNavigation(PortalConfig.GROUP_TYPE, groupId, 1);
       //System.out.println("    Create Group " + groupId);
     }
     else {
@@ -202,38 +204,67 @@ public class OrganizationInitializer implements Startable {
         //    + membership);
       }
     }
+    createPageNavigation(PortalConfig.USER_TYPE, user.getUserName(), numberOfUserPage);
   }
 
-  private void createGroupPageNavi(PageList pageList, String groupId) throws Exception {
-    PageNavigation navigation = portalConfigStorage.getPageNavigation(PortalConfig.GROUP_TYPE, groupId);
-    if (navigation != null) return;
-    
+  private void createPageNavigation(String ownerType, String ownerId, int number) throws Exception {
+    if(PortalConfig.GROUP_TYPE.equals(ownerType) && ownerId.charAt(0) == '/') {
+      ownerId = ownerId.substring(1);
+    }
+    PageNavigation navigation = portalConfigStorage.getPageNavigation(ownerType, ownerId);
+    boolean noNavigation = (navigation == null); 
+    if (noNavigation) {
+      navigation = new PageNavigation();
+      navigation.setOwnerType(ownerType);
+      navigation.setOwnerId(ownerId);
+      navigation.setPriority(5);
+      navigation.setNodes(new ArrayList<PageNode>());
+    }
+
+    for(int i = 0; i < number; i++) {
+      Page page = getRandomPage();
+      if(number > 1) page.setName(page.getName() + i);
+      if(PortalConfig.USER_TYPE.equals(ownerType)) {
+        page.setAccessPermissions(null);
+        page.setEditPermission(null);
+      }
+      else if(PortalConfig.GROUP_TYPE.equals(ownerType)) {
+        page.setAccessPermissions(new String [] {"*:/" + ownerId});
+        page.setEditPermission(acl.getMakableMT() + ":/" + ownerId);
+      }
+      renewPage(page, ownerType, ownerId);
+      portalConfigStorage.create(page);
+
+      PageNode node = new PageNode();
+      node.setName(page.getName());
+      node.setUri(page.getName());
+      node.setLabel(page.getName());
+      node.setPageReference(page.getPageId());
+      navigation.addNode(node);
+    }
+    if(noNavigation) portalConfigStorage.create(navigation);
+    else portalConfigStorage.save(navigation);
+  }
+
+  private Page getRandomPage() throws Exception {
     Random random = new Random();
-    pageList.setPageSize(10);
-    int n = random.nextInt(pageList.getAvailablePage()) + 1;
-    List<?> list = pageList.getPage(n);
+    int n = random.nextInt(pageIdList.getAvailablePage()) + 1;
+    List<?> list = pageIdList.getPage(n);
     n = random.nextInt(list.size());
-    Page page = (Page) list.get(n);
-    renewPage(page, PortalConfig.GROUP_TYPE, groupId);
-    portalConfigStorage.create(page);
-    
-    navigation = new PageNavigation();
-    navigation.setOwnerType(PortalConfig.GROUP_TYPE);
-    navigation.setOwnerId(groupId);
-    navigation.setPriority(5);
-    navigation.setNodes(new ArrayList<PageNode>());
-
-    PageNode node = new PageNode();
-    node.setName(page.getName());
-    node.setUri(page.getName());
-    node.setLabel(page.getName());
-    node.setPageReference(page.getPageId());
-    navigation.addNode(node);
-    portalConfigStorage.create(navigation);
-
+    return portalConfigStorage.getPage((String)list.get(n));
   }
 
-  public void renewPage(Page page, String ownerType, String ownerId) throws Exception {
+  private PageList getPageIdList() throws Exception {
+    List<String> list = new ArrayList<String>(10);
+    PageList pageList = portalConfigStorage.find(new Query<Page>(null, null, Page.class));
+    for(Object ele : pageList.getAll()) {
+      Page page = (Page)ele;
+      list.add(page.getPageId());
+    }
+    return new ObjectPageList(list, 10);
+  }
+
+  private void renewPage(Page page, String ownerType, String ownerId) throws Exception {
     page.setOwnerType(ownerType);
     page.setOwnerId(ownerId);
     page.setPageId(ownerType + "::" + ownerId + "::" + page.getName());
