@@ -16,14 +16,9 @@
  */
 package org.exoplatform.portal.application;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.exoplatform.application.registry.Application;
-import org.exoplatform.application.registry.ApplicationRegistryService;
 import org.exoplatform.management.ManagementAware;
 import org.exoplatform.management.ManagementContext;
 import org.exoplatform.management.annotations.Managed;
@@ -60,5 +55,15 @@ public class PortalStatisticService implements ManagementAware {
   @Managed
   public long getMaxTime(String id) {
   	return apps.get(id).getMaxTime();
+  }
+
+  @Managed
+  public long getMinTime(String id) {
+  	return apps.get(id).getMinTime();
+  }
+  
+  @Managed
+  public double getAverageTime(String id) {
+  	return apps.get(id).getAverageTime() ;
   }
 }

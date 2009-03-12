@@ -18,13 +18,13 @@ package org.exoplatform.portal.application;
 
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.ExoContainerContext;
-import org.exoplatform.container.SessionManagerContainer;
 import org.exoplatform.container.SessionContainer;
+import org.exoplatform.container.SessionManagerContainer;
 import org.exoplatform.web.application.Application;
 import org.exoplatform.web.application.ApplicationLifecycle;
 import org.exoplatform.webui.application.WebuiRequestContext;
 
-public class PortalApplicationLifecycle  implements  ApplicationLifecycle<WebuiRequestContext> {
+public class PortalStatisticLifecycle  implements  ApplicationLifecycle<WebuiRequestContext> {
   
   @SuppressWarnings("unused")
   public void onInit(Application app) {
@@ -32,14 +32,16 @@ public class PortalApplicationLifecycle  implements  ApplicationLifecycle<WebuiR
  
   @SuppressWarnings("unused")
   public void onStartRequest(Application app, WebuiRequestContext rcontext) throws Exception {
-    ExoContainer pcontainer = ExoContainerContext.getCurrentContainer() ;
-    SessionContainer.setInstance(((SessionManagerContainer) pcontainer).getSessionManager().getSessionContainer(rcontext.getSessionId()));
+    app.setAttribute("tran.the.trong", System.currentTimeMillis());
   }
 
   @SuppressWarnings("unused")
   public void onEndRequest(Application app, WebuiRequestContext rcontext) throws Exception {
-    SessionContainer.setInstance(null) ;
-    ExoContainerContext.setCurrentContainer(null);
+    PortalStatisticService service = (PortalStatisticService) ExoContainerContext.
+    																			getCurrentContainer().getComponentInstanceOfType(PortalStatisticService.class);
+    PortalStatistic appStatistic = service.getPortalStatistic(app.getApplicationName());
+    long startTime = Long.valueOf(app.getAttribute("tran.the.trong").toString());
+    appStatistic.updateTime(System.currentTimeMillis() - startTime);
   }
   
   @SuppressWarnings("unused")
