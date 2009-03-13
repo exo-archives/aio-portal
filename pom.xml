@@ -50,6 +50,7 @@
     
 
     <module>sample/application/map</module>
+    <module>sample/portlets</module>
   </modules>
 
   <build>
