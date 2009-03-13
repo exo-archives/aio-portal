@@ -2,10 +2,10 @@
 UIVerticalScroller = function () {} ;
 
 UIVerticalScroller.prototype.init = function() {
-	this.loopCount = 0 ;
-	this.maxLoopTime = 10 ;
+	eXo.webui.UIVerticalScroller.loopCount = 0 ;
+	eXo.webui.UIVerticalScroller.maxLoopTime = 10 ;
 	eXo.gadget.UIGadget.resizeContainer() ;
-	this.refreshScroll(0) ;
+	eXo.webui.UIVerticalScroller.refreshScroll(0) ;
 } ;
 
 UIVerticalScroller.prototype.refreshScroll = function(id) {
@@ -24,16 +24,15 @@ UIVerticalScroller.prototype.refreshScroll = function(id) {
 	var itemSize = items.length ;
 	var index = null ;
 	
-	this.loopCount++ ;
-	console.log(this.loopCount) ;
-	if(this.loopStream) clearTimeout(this.loopStream) ;
+	eXo.webui.UIVerticalScroller.loopCount++ ;
+	if(eXo.webui.UIVerticalScroller.loopStream) clearTimeout(this.loopStream) ;
 	
 	for(var i = 0 ; i < itemSize ; ++i) {
 		if((items[i].style.display == "block") && (index == null)) index = i ;
 
     var iframe = DOMUtil.findFirstDescendantByClass(items[i], "iframe", "gadgets-gadget") ;
-  	if((!iframe || !iframe.height) && (this.loopCount < this.maxLoopTime)) {
-  		this.loopStream = setTimeout("eXo.webui.UIVerticalScroller.refreshScroll("+ id+ ");", 200) ;
+  	if((!iframe || !iframe.height) && (eXo.webui.UIVerticalScroller.loopCount < eXo.webui.UIVerticalScroller.maxLoopTime)) {
+  		eXo.webui.UIVerticalScroller.loopStream = setTimeout("eXo.webui.UIVerticalScroller.refreshScroll("+ id+ ");", 200) ;
       return ;
     }
   }
