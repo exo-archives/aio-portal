@@ -16,8 +16,13 @@
  */
 package org.exoplatform.application.registry;
 
+import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.management.MBeanServer;
+import javax.management.ObjectInstance;
+import javax.management.ObjectName;
 
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.services.organization.Group;
@@ -47,72 +52,63 @@ public class TestApplicationRegistryService extends BasicTestCase {
   protected MembershipType mType1,mType2, mTypeDefault ;
   protected User user1, user2 ,userDefault;     
 
+  protected ApplicationRegistryService service_ ;
+  protected int initialCats;
+  protected int initialApps;
+  
   public TestApplicationRegistryService(String name) {
     super(name);
   }
 
-  public void testService() throws Exception {
+  @Override
+  protected void setUp() throws Exception {
+  	super.setUp();
     PortalContainer portalContainer = PortalContainer.getInstance() ;
-    ApplicationRegistryService service = (ApplicationRegistryService)portalContainer.getComponentInstanceOfType(ApplicationRegistryService.class) ;
+    service_ = (ApplicationRegistryService)portalContainer.getComponentInstanceOfType(ApplicationRegistryService.class) ;
+    initialCats = service_.getApplicationCategories().size();
+    initialApps = service_.getAllApplications().size();
+  }
+  
+  public void testInitializeService() throws Exception {
+    assertNotNull(service_) ;
+    assertEquals(3, initialCats);
+    assertEquals(8, initialApps);
+  }
+  
+  public void testApplicationCategory() throws Exception {
+  	//Add new ApplicationRegistry
+    String categoryName = "Category1" ;
+    String categoryDes = "Description for category 1" ;
+    ApplicationCategory category1 = createAppCategory(categoryName, categoryDes) ;
+    service_.save(category1) ;
     
-    assertNotNull(service) ;
-    assertAppCategoryOperation(service) ;
-    assertApplicationOperation(service) ;
+    int numberOfCats = service_.getApplicationCategories().size() ;
+    assertEquals(initialCats + 1, numberOfCats) ;
+    
+    ApplicationCategory returnedCategory1 = service_.getApplicationCategory(categoryName);
+    assertNotNull(returnedCategory1) ;
+    assertEquals(category1.getName(), returnedCategory1.getName()) ;
+    assertEquals(categoryName, returnedCategory1.getName()) ;
+    
+    //Update the ApplicationRegistry
+    String newDescription = "New description for category 1";
+    category1.setDescription(newDescription);
+    service_.save(category1);
+    
+    numberOfCats = service_.getApplicationCategories().size();
+    assertEquals(initialCats + 1, numberOfCats);
+    returnedCategory1 = service_.getApplicationCategory(categoryName);
+    assertEquals(newDescription, returnedCategory1.getDescription());
+    
+    //Remove the ApplicationRegistry
+    service_.remove(category1);
+    numberOfCats = service_.getApplicationCategories().size();
+    assertEquals(initialCats, numberOfCats);
+    
+    returnedCategory1 = service_.getApplicationCategory(categoryName);
+    assertNull(returnedCategory1);
+  }
 
-    service.clearAllRegistries() ;
-  }
-  
-  void assertAppCategoryOperation(ApplicationRegistryService service) throws Exception {
-    assertAppCategorySave(service) ;
-    assertAppCategoryGet(service) ;
-    //assertAppCategoryGetByAccessUser(service) ;
-    assertCategoryUpdate(service) ;
-    assertCategoryRemove(service) ;
-  }
-  
-  void assertAppCategorySave(ApplicationRegistryService service) throws Exception {
-    String categoryName = "Office" ;
-    String categoryDes = "Tools for officer." ;
-    ApplicationCategory category = createAppCategory(categoryName, categoryDes) ;
-
-    // Before save category
-    int numberOfCategories = service.getApplicationCategories().size() ;
-    assertEquals(0, numberOfCategories) ;
-    
-    // Save category
-    service.save(category) ;
-    
-    numberOfCategories = service.getApplicationCategories().size() ;
-    assertEquals(1, numberOfCategories) ;
-    
-    ApplicationCategory returnCategory1 = service.getApplicationCategories().get(0) ;
-    assertNotNull(returnCategory1) ;
-    assertEquals(category.getName(), returnCategory1.getName()) ;
-    assertEquals(categoryName, returnCategory1.getName()) ;
-    
-    ApplicationCategory returnCategory2 = service.getApplicationCategory(categoryName);
-    assertNotNull(returnCategory2) ;
-    assertEquals(category.getName(), returnCategory2.getName()) ;
-    assertEquals(categoryName, returnCategory2.getName()) ;
-    service.clearAllRegistries() ;
-  }
-  
-  void assertAppCategoryGet(ApplicationRegistryService service) throws Exception {
-    String[] categoryNames = {"Office", "Game"} ;
-    
-    for (String name : categoryNames) {
-      ApplicationCategory category = createAppCategory(name, "None") ;
-      service.save(category) ;
-    }
-    
-    for (String  name : categoryNames) {
-      ApplicationCategory returnCategory = service.getApplicationCategory(name) ;
-      assertEquals(name, returnCategory.getName()) ;
-    }
-    
-    service.clearAllRegistries() ;
-  }
-  
   void assertAppCategoryGetByAccessUser(ApplicationRegistryService service) throws Exception {
     PortalContainer portalContainer = PortalContainer.getInstance() ;
     OrganizationService orgService = (OrganizationService) portalContainer.getComponentInstanceOfType(OrganizationService.class) ;
@@ -153,56 +149,6 @@ public class TestApplicationRegistryService extends BasicTestCase {
       }
     }
     assertEquals(1, returnCategorys.size()) ;
-
-    service.clearAllRegistries() ;
-  }
-  
-  void assertCategoryUpdate(ApplicationRegistryService service) throws Exception {
-    String categoryName = "Office" ;
-    String categoryDes = "Tools for officer." ;
-
-    ApplicationCategory category = createAppCategory(categoryName, categoryDes) ;
-    service.save(category) ;
-    
-    int numberOfCategories = service.getApplicationCategories().size() ;
-    assertEquals(1, numberOfCategories) ;
-    
-    ApplicationCategory returnCategory1 = service.getApplicationCategory(categoryName);
-    assertEquals(categoryDes, returnCategory1.getDescription()) ;
-
-    // Use save() method to update category
-    String newDescription = "New description for office category." ;
-    category.setDescription(newDescription) ;
-    service.save(category) ;
-    
-    List<ApplicationCategory> categories = service.getApplicationCategories() ;
-    assertEquals(1, categories.size()) ;
-    
-    ApplicationCategory returnCategory = categories.get(0) ;
-    assertEquals(newDescription, returnCategory.getDescription()) ;
-    
-    service.clearAllRegistries() ;
-  }
-  
-  void assertCategoryRemove(ApplicationRegistryService service) throws Exception {
-    String[] categoryNames = {"Office", "Game"} ;
-    
-    for (String name : categoryNames) {
-      ApplicationCategory category = createAppCategory(name, "None") ;
-      service.save(category) ;
-    }
-    
-    for (String  name : categoryNames) {
-      ApplicationCategory returnCategory = service.getApplicationCategory(name) ;      
-      service.remove(returnCategory) ;
-      
-      ApplicationCategory returnCategory2 = service.getApplicationCategory(name) ;
-      assertNull(returnCategory2);
-    }
-    
-    int numberOfCategories = service.getApplicationCategories().size() ;
-    assertEquals(0, numberOfCategories) ;
-    service.clearAllRegistries() ;
   }
     
   void assertApplicationOperation(ApplicationRegistryService service) throws Exception {
@@ -235,7 +181,7 @@ public class TestApplicationRegistryService extends BasicTestCase {
       Application app = service.getApplication(appId) ;
       assertEquals(appName, app.getApplicationName()) ;  
     }
-    service.clearAllRegistries() ;
+//    service.clearAllRegistries() ;
   }
   
   void assertApplicationUpdate(ApplicationRegistryService service) throws Exception {
@@ -301,7 +247,7 @@ public class TestApplicationRegistryService extends BasicTestCase {
     List<Application> apps2 = service.getApplications(appCategory) ;
     assertEquals(2, apps2.size()) ;
     
-    service.clearAllRegistries() ;
+//    service.clearAllRegistries() ;
   }
   
   void assertApplicationRemove(ApplicationRegistryService service) throws Exception {
@@ -328,7 +274,7 @@ public class TestApplicationRegistryService extends BasicTestCase {
 
     List<Application> apps2 = service.getApplications(appCategory) ;
     assertEquals(0, apps2.size()) ;  
-    service.clearAllRegistries() ;
+//    service.clearAllRegistries() ;
   }
 
   private ApplicationCategory createAppCategory(String categoryName, String categoryDes) {
@@ -411,4 +357,7 @@ public class TestApplicationRegistryService extends BasicTestCase {
     return u;
   }
 
+  public void testClearAllRegistry() throws Exception {
+  	service_.clearAllRegistries() ;
+  }
 }

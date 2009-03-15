@@ -24,7 +24,7 @@
     <init-params>
       <properties-param>
       	<name>locations</name>
-      	<property name="repository" value="system"/>
+      	<property name="repository" value="portal"/>
       </properties-param>
     </init-params>
   </component>

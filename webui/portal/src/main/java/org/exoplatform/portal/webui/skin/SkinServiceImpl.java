@@ -21,6 +21,7 @@ import java.io.Reader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -36,11 +37,18 @@ import java.util.regex.Pattern;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
+import org.exoplatform.management.annotations.Managed;
+import org.exoplatform.management.annotations.ManagedDescription;
+import org.exoplatform.management.jmx.annotations.NameTemplate;
+import org.exoplatform.management.jmx.annotations.Property;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.resources.Orientation;
 import org.exoplatform.commons.utils.PropertyManager;
 import org.exoplatform.commons.utils.Safe;
 
+@Managed
+@NameTemplate(@Property(key="service", value="skin"))
+@ManagedDescription("Skin service")
 public class SkinServiceImpl implements SkinService {
 
   protected static Log log = ExoLogger.getLogger("portal.SkinService");
@@ -391,5 +399,39 @@ public class SkinServiceImpl implements SkinService {
       orientation = Orientation.LT;
     }
     return suffixMap.get(orientation);
+  }
+  
+  @Managed
+  @ManagedDescription ("Get list of registered skins ")
+  public String[] getListSkinConfigs() {
+	// get all available skin
+    List<String> availableSkin = new ArrayList<String>() ;
+    for(String skin : availableSkins_) {
+    	availableSkin.add(skin) ;
+    }
+    // sort skin name asc
+    Collections.sort(availableSkin);
+    
+    return availableSkin.toArray(new String[availableSkin.size()]);
+  }
+  
+  @Managed
+  @ManagedDescription ("Reload all skins")
+  public void reloadAllSkin() {
+	// remove all ltCache, rtCache
+	Set<String> keys = ltCache.keySet();
+    
+	for(String key : keys) {
+      ltCache.remove(key) ;
+      rtCache.remove(key) ;
+    }
+	
+  }
+  
+  @Managed
+  @ManagedDescription ("Reload skin up to skinID")
+  public void reloadSkinBySkinID(String skinID) {
+	ltCache.remove(skinID);
+	rtCache.remove(skinID);
   }
 }

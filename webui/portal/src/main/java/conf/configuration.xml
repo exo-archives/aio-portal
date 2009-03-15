@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <configuration>
   <component>
-   <key>org.exoplatform.portal.webui.skin.SkinService</key>
-   <type>org.exoplatform.portal.webui.skin.SkinServiceImpl</type>
+		<key>org.exoplatform.portal.webui.skin.SkinService</key>
+		<type>org.exoplatform.portal.webui.skin.SkinServiceImpl</type>
+  </component>  
+
+  <component>
+		<type>org.exoplatform.portal.application.ApplicationStatisticService</type>
   </component>  
 
   <external-component-plugins>
