@@ -34,11 +34,18 @@ public class PortalApplicationLifecycle  implements  ApplicationLifecycle<WebuiR
   public void onStartRequest(Application app, WebuiRequestContext rcontext) throws Exception {
     ExoContainer pcontainer = ExoContainerContext.getCurrentContainer() ;
     SessionContainer.setInstance(((SessionManagerContainer) pcontainer).getSessionManager().getSessionContainer(rcontext.getSessionId()));
+    app.setAttribute("startTime", System.currentTimeMillis());
   }
 
   @SuppressWarnings("unused")
   public void onEndRequest(Application app, WebuiRequestContext rcontext) throws Exception {
-    SessionContainer.setInstance(null) ;
+    PortalStatisticService service = (PortalStatisticService) ExoContainerContext.
+    																			getCurrentContainer().getComponentInstanceOfType(PortalStatisticService.class);
+    PortalStatistic appStatistic = service.getPortalStatistic(app.getApplicationId());
+    long startTime = Long.valueOf(app.getAttribute("startTime").toString());
+    appStatistic.updateTime(System.currentTimeMillis() - startTime);
+
+  	SessionContainer.setInstance(null) ;
     ExoContainerContext.setCurrentContainer(null);
   }
   

@@ -16,8 +16,16 @@
  */
 package org.exoplatform.portal.application;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import javax.jcr.Node;
+import javax.jcr.NodeIterator;
+import javax.jcr.Session;
+import javax.jcr.query.QueryManager;
+import javax.jcr.query.QueryResult;
 
 import org.exoplatform.management.ManagementAware;
 import org.exoplatform.management.ManagementContext;
@@ -25,6 +33,11 @@ import org.exoplatform.management.annotations.Managed;
 import org.exoplatform.management.annotations.ManagedDescription;
 import org.exoplatform.management.jmx.annotations.NameTemplate;
 import org.exoplatform.management.jmx.annotations.Property;
+import org.exoplatform.portal.config.jcr.DataMapper;
+import org.exoplatform.portal.config.model.PortalConfig;
+import org.exoplatform.services.jcr.ext.common.SessionProvider;
+import org.exoplatform.services.jcr.ext.registry.RegistryEntry;
+import org.exoplatform.services.jcr.ext.registry.RegistryService;
 
 /**
  * @author <a href="mailto:trongtt@gmail.com">Tran The Trong</a>
@@ -39,8 +52,52 @@ public class PortalStatisticService implements ManagementAware {
 
   private Map<String, PortalStatistic> apps = new ConcurrentHashMap<String, PortalStatistic>();
   
+  private final String ASC = "ASC";
+  private final String DESC = "DESC";
+  
+  private RegistryService regService_;
+  private DataMapper mapper_;
+  public PortalStatisticService(RegistryService res) {
+    regService_ = res;
+    mapper_ = new DataMapper();
+    
+  }
+  
   public void setContext(ManagementContext context) {
     this.context = context;
+  }
+  
+  @Managed
+  @ManagedDescription ("Get Portal's page List")
+  public String[] getPortalList() {
+    ArrayList<String> list = new ArrayList<String>();
+    SessionProvider sessionProvider = SessionProvider.createSystemProvider();
+    StringBuilder builder = new StringBuilder("select * from " + DataMapper.EXO_REGISTRYENTRY_NT);
+    
+    try {
+      String registryNodePath = regService_.getRegistry(sessionProvider).getNode().getPath();
+      Session session = regService_.getRegistry(sessionProvider).getNode().getSession();
+      generateLikeScript(builder, "jcr:path", registryNodePath + "/%") ;
+      generateLikeScript(builder, DataMapper.EXO_DATA_TYPE, "PortalConfig") ;
+      QueryManager queryManager = session.getWorkspace().getQueryManager();
+      javax.jcr.query.Query query = queryManager.createQuery(builder.toString(), "sql");
+      QueryResult result = query.execute();
+      
+      NodeIterator itr = result.getNodes();
+      while (itr.hasNext()) {
+        Node node = itr.nextNode();
+        String entryPath = node.getPath().substring(registryNodePath.length() + 1);
+        RegistryEntry entry = regService_.getEntry(sessionProvider, entryPath);
+        list.add(mapper_.fromDocument(entry.getDocument(), PortalConfig.class).getName());
+      }
+        Collections.sort(list);
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+    finally {
+      sessionProvider.close();
+    }
+    return list.toArray(new String[list.size()]);
   }
   
   public PortalStatistic getPortalStatistic(String appId) {
@@ -66,4 +123,23 @@ public class PortalStatisticService implements ManagementAware {
   public double getAverageTime(String id) {
   	return apps.get(id).getAverageTime() ;
   }
+  
+  @Managed
+  @ManagedDescription("return count of an specify portal")
+  public long executionCount(String id){
+    return apps.get(id).viewCount();
+  }
+  
+  private void generateLikeScript(StringBuilder sql, String name, String value) {
+    if (value == null || value.length() < 1)
+      return;
+    if (sql.indexOf(" where") < 0)
+      sql.append(" where ");
+    else
+      sql.append(" and ");
+    value = value.replace('*', '%');
+    value = value.replace('?', '_');
+    sql.append(name).append(" like '").append(value).append("'");
+  }
+
 }

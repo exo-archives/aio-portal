@@ -18,6 +18,10 @@ package org.exoplatform.portal.application;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -46,10 +50,13 @@ public class ApplicationStatisticService implements ManagementAware {
 
   private Map<String, ApplicationStatistic> apps = new ConcurrentHashMap<String, ApplicationStatistic>();
   
+  private final String ASC = "ASC";
+  private final String DESC = "DESC";
+
   public ApplicationStatisticService(ApplicationRegistryService appRegistryService) {
     this.appRegistryService = appRegistryService;
   }
-
+  
   public void setContext(ManagementContext context) {
     this.context = context;
   }
@@ -68,7 +75,7 @@ public class ApplicationStatisticService implements ManagementAware {
     	appIds.add(app.getId()) ;
     }
     Collections.sort(appIds) ;
-    return appIds.toArray(new String[list.size()]) ;
+    return appIds.toArray(new String[appIds.size()]) ;
   }
   
   public ApplicationStatistic getApplicationStatistic(String appId) {
@@ -79,4 +86,145 @@ public class ApplicationStatisticService implements ManagementAware {
   	}
   	return app;
 	}
+  
+  @Managed
+  @ManagedDescription("return max time of an specify application")
+  public long getMaxTime(String appId) {
+    ApplicationStatistic app = apps.get(appId); 
+    return app.getMaxTime();
+  }
+  
+  @Managed
+  @ManagedDescription("return min time of an specify application")
+  public long getMinTime(String appId) {
+    ApplicationStatistic app = apps.get(appId); 
+    return app.getMinTime();
+  }
+  
+  @Managed
+  @ManagedDescription("return average time of an specify application")
+  public double getAverageTime(String appId) {
+    ApplicationStatistic app = apps.get(appId); 
+    return app.getAverageTime();
+  }
+  
+  @Managed
+  @ManagedDescription("return count of an specify application")
+  public long executionCount(String appId){
+    ApplicationStatistic app = apps.get(appId); 
+    return app.executionCount();
+  }
+  
+  @Managed
+  @ManagedDescription("returns  10 slowest applications")
+  public String[] slowestApplications() {
+    List<Application> list = null;
+    Map application = new HashMap();
+    try {
+      list = appRegistryService.getAllApplications();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    
+    for(Application app : list) {
+      ApplicationStatistic appSta = getApplicationStatistic(app.getId()); 
+      // remove application haven't loaded
+      if (appSta.getAverageTime() != 0) {
+        application.put(app.getId(), appSta.getAverageTime());
+      }
+    }
+    
+    return sort(application, DESC) ;
+  }
+  
+  @Managed
+  @ManagedDescription("returns  10 fastest applications")
+  public String[] fastestApplications() {
+    List<Application> list = null;
+    Map application = new HashMap();
+    try {
+      list = appRegistryService.getAllApplications();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    
+    for(Application app : list) {
+      ApplicationStatistic appSta = getApplicationStatistic(app.getId()); 
+      // remove application haven't loaded
+      if (appSta.getAverageTime() != 0) {
+        application.put(app.getId(), appSta.getAverageTime());
+      }
+    }
+    
+    return sort(application, ASC) ;
+  }
+  
+  @Managed
+  @ManagedDescription("returns  10 most executed applications")
+  public String[] mostExecutedApplications() {
+    List<Application> list = null;
+    Map application = new HashMap();
+    try {
+      list = appRegistryService.getAllApplications();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    
+    for(Application app : list) {
+      ApplicationStatistic appSta = getApplicationStatistic(app.getId()); 
+      // remove application haven't loaded
+      if (appSta.executionCount() != 0) {
+        application.put(app.getId(), appSta.executionCount());
+      }
+    }
+
+    return sort(application,DESC) ;
+  }
+  
+  private String[] sort(Map source, String order) {
+    String[] app = new String[10];
+    List<Object> list = new LinkedList<Object>(source.entrySet());
+    if (order.equals(ASC)) {
+      Collections.sort(list, new Comparator<Object>() {
+           public int compare(Object o1, Object o2) {
+             double value1 = Double.parseDouble(((Map.Entry) (o1)).getValue().toString());
+             double value2 = Double.parseDouble(((Map.Entry) (o2)).getValue().toString());
+             if( value1 > value2 ) {
+               return 1;
+             } else if( value1 < value2 ) {
+               return -1;
+             } else {
+               return 0;
+             }
+           }
+      });
+    } else if (order.equals(DESC)) {
+      Collections.sort(list, new Comparator<Object>() {
+        public int compare(Object o1, Object o2) {
+          double value1 = Double.parseDouble(((Map.Entry) (o1)).getValue().toString());
+          double value2 = Double.parseDouble(((Map.Entry) (o2)).getValue().toString());
+          if( value2 > value1 ) {
+            return 1;
+          } else if( value2 < value1 ) {
+            return -1;
+          } else {
+            return 0;
+          }
+        }
+   });
+    }
+    
+    int index = 0;
+    for (Iterator it = list.iterator(); it.hasNext();) {
+      Map.Entry entry = (Map.Entry)it.next();
+      app[index] = (String) entry.getKey();
+      index++;
+      if (index >= app.length) {
+        break;
+      }
+    }
+    return app;
+
+  }
+  
 }
