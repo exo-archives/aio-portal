@@ -535,7 +535,6 @@ public class UserPortalConfigService implements Startable {
   public String getDefaultPortal() { return newPortalConfigListener_.getDefaultPortal(); }
 
   public void start() {
-    System.out.println("\n\n\nstart user portal config service");
     if(newPortalConfigListener_ == null) return;
     try {
       newPortalConfigListener_.run();

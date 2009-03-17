@@ -77,7 +77,6 @@ public class UserPortalConfigListener extends UserEventListener {
   }
   @SuppressWarnings("unused")
   public void preSave(User user, boolean isNew) throws Exception {
-    System.out.println("\n\n\npreSave: " + user.getUserName());
     PortalContainer container  = PortalContainer.getInstance() ;
     /*     
      * TODO Call start method on RegistryService to allow ecm, ultimate can run with JDK6. 
