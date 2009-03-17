@@ -3,32 +3,31 @@
     <groupId>org.exoplatform.portal</groupId>
     <artifactId>config</artifactId>
     <version>2.5.3-SNAPSHOT</version>
-  </parent> 
+  </parent>
 
   <modelVersion>4.0.0</modelVersion>
   <artifactId>exo.portal.portlet.exoadmin</artifactId>
   <packaging>war</packaging>
-  <version>${org.exoplatform.portal.version}</version>
   <name>exo-portal.portlets.exoadmin Portlet</name>
   <url>http://www.exoplatform.org</url>
   <description>exo-portal.portlets.exoadmin Portlet</description>
-  
+
   <dependencies>
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.webui.portal</artifactId>
       <version>${org.exoplatform.portal.version}</version>
       <scope>provided</scope>
-    </dependency>   
-    
+    </dependency>
+
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.webui.eXo</artifactId>
       <version>${org.exoplatform.portal.version}</version>
       <scope>provided</scope>
-    </dependency> 
-  </dependencies> 
-  
+    </dependency>
+  </dependencies>
+
   <build>
     <finalName>exoadmin</finalName>
   </build>

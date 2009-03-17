@@ -1,14 +1,13 @@
-<project> 
+<project>
   <parent>
     <groupId>org.exoplatform.portal</groupId>
     <artifactId>config</artifactId>
     <version>2.5.3-SNAPSHOT</version>
-  </parent> 
+  </parent>
 
   <modelVersion>4.0.0</modelVersion>
   <artifactId>exo.portal.webui.eXo</artifactId>
   <packaging>jar</packaging>
-  <version>${org.exoplatform.portal.version}</version>
   <name>eXo portal webui eXo</name>
   <url>http://www.exoplatform.org</url>
   <description>eXo portal webui eXo</description>
@@ -18,12 +17,12 @@
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.webui.core</artifactId>
       <version>${org.exoplatform.portal.version}</version>
-    </dependency> 
-    
+    </dependency>
+
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.component.application-registry</artifactId>
       <version>${org.exoplatform.portal.version}</version>
-    </dependency> 
+    </dependency>
   </dependencies>
 </project>

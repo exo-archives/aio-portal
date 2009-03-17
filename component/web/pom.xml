@@ -1,31 +1,30 @@
-<project> 
+<project>
   <parent>
     <groupId>org.exoplatform.portal</groupId>
     <artifactId>config</artifactId>
     <version>2.5.3-SNAPSHOT</version>
-  </parent> 
+  </parent>
 
   <modelVersion>4.0.0</modelVersion>
   <artifactId>exo.portal.component.web</artifactId>
   <packaging>jar</packaging>
-  <version>${org.exoplatform.portal.version}</version>
   <name>eXo portal component web</name>
   <url>http://www.exoplatform.org</url>
   <description>eXo portal component web</description>
 
   <dependencies>
-		<dependency>
+    <dependency>
       <groupId>org.exoplatform.core</groupId>
       <artifactId>exo.core.component.organization.api</artifactId>
       <version>${org.exoplatform.core.version}</version>
     </dependency>
-        
+
     <dependency>
       <groupId>org.exoplatform.core</groupId>
       <artifactId>exo.core.component.resources.api</artifactId>
       <version>${org.exoplatform.core.version}</version>
     </dependency>
-    
+
     <dependency>
       <groupId>org.exoplatform.portletcontainer</groupId>
       <artifactId>exo.pc.component.core</artifactId>
@@ -39,8 +38,8 @@
     </dependency>
 
     <dependency>
-	    <groupId>org.apache.shindig</groupId>
-		  <artifactId>shindig-gadgets</artifactId>
+      <groupId>org.apache.shindig</groupId>
+      <artifactId>shindig-gadgets</artifactId>
       <version>${org.shindig.version}</version>
     </dependency>
 
@@ -50,12 +49,12 @@
         <version>1.4</version>
         <type>jar</type>
     </dependency>
-		
-		<dependency>
-    	<groupId>org.json</groupId>
-    	<artifactId>json</artifactId>
-    	<version>20070829</version>
-    	<type>jar</type>
+
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20070829</version>
+      <type>jar</type>
     </dependency>
   </dependencies>
 </project>

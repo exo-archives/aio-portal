@@ -1,26 +1,25 @@
 <project>
-	<parent>
-		<groupId>org.exoplatform.portal</groupId>
-		<artifactId>config</artifactId>
-		<version>2.5.3-SNAPSHOT</version>
-	</parent>
-	
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>exo.portal.portlet.dashboard</artifactId>
-	<packaging>war</packaging>
-	<version>${org.exoplatform.portal.version}</version>
-	<name>exo-portal.portlets.dashboard Portlet</name>
-	<url>http://www.exoplatform.org</url>
+  <parent>
+    <groupId>org.exoplatform.portal</groupId>
+    <artifactId>config</artifactId>
+    <version>2.5.3-SNAPSHOT</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>exo.portal.portlet.dashboard</artifactId>
+  <packaging>war</packaging>
+  <name>exo-portal.portlets.dashboard Portlet</name>
+  <url>http://www.exoplatform.org</url>
   <description>exo-portal.portlets.dashboard Portlet</description>
-  
+
   <dependencies>
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.webui.portal</artifactId>
       <version>${org.exoplatform.portal.version}</version>
       <scope>provided</scope>
-    </dependency>   
-    
+    </dependency>
+
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.webui.eXo</artifactId>
@@ -33,8 +32,8 @@
       <version>${org.exoplatform.portal.version}</version>
       <scope>provided</scope>
     </dependency>
-  </dependencies> 
-  
+  </dependencies>
+
   <build>
     <finalName>dashboard</finalName>
   </build>
@@ -45,7 +44,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <configuration>
-			<suppressionsLocation>${basedir}/src/main/resources/suppressions.xml</suppressionsLocation>
+      <suppressionsLocation>${basedir}/src/main/resources/suppressions.xml</suppressionsLocation>
         </configuration>
       </plugin>
     </plugins>
