@@ -77,6 +77,7 @@ public class UserPortalConfigListener extends UserEventListener {
   }
   @SuppressWarnings("unused")
   public void preSave(User user, boolean isNew) throws Exception {
+    System.out.println("\n\n\npreSave: " + user.getUserName());
     PortalContainer container  = PortalContainer.getInstance() ;
     /*     
      * TODO Call start method on RegistryService to allow ecm, ultimate can run with JDK6. 
@@ -86,8 +87,6 @@ public class UserPortalConfigListener extends UserEventListener {
      */    
     RegistryService registryService = (RegistryService)container.getComponentInstanceOfType(RegistryService.class);
     registryService.start();
-    UserPortalConfigService portalConfigService = 
-      (UserPortalConfigService)container.getComponentInstanceOfType(UserPortalConfigService.class) ;
     DataStorage dataStorage = (DataStorage)container.getComponentInstanceOfType(DataStorage.class) ;
     String userName = user.getUserName() ;
     String id = PortalConfig.USER_TYPE + "::" + userName ;
@@ -98,12 +97,12 @@ public class UserPortalConfigListener extends UserEventListener {
     pageNav.setOwnerId(userName);
     pageNav.setPriority(5);
     pageNav.setNodes(new ArrayList<PageNode>());
-    portalConfigService.create(pageNav);
+    dataStorage.create(pageNav);
     
     Widgets widgets = new Widgets() ;
     widgets.setOwnerType(PortalConfig.USER_TYPE) ;
     widgets.setOwnerId(userName) ;
     widgets.setChildren(new ArrayList<Container>()) ;
-    portalConfigService.create(widgets) ;
+    dataStorage.create(widgets) ;
   }
 }

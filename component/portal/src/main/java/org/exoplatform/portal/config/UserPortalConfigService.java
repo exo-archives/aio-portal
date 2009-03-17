@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.logging.Log;
 import org.exoplatform.commons.utils.PageList;
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.container.component.ComponentPlugin;
@@ -40,6 +41,7 @@ import org.exoplatform.portal.config.model.Widgets;
 import org.exoplatform.services.cache.CacheService;
 import org.exoplatform.services.cache.ExoCache;
 import org.exoplatform.services.cache.ExpireKeyStartWithSelector;
+import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.organization.Group;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.portletcontainer.PCConstants;
@@ -51,6 +53,7 @@ import org.exoplatform.services.portletcontainer.pci.model.Portlet;
 import org.exoplatform.services.portletcontainer.plugins.pc.PortletApplicationsHolder;
 import org.exoplatform.services.portletcontainer.plugins.pc.portletAPIImp.PortletPreferencesImp;
 import org.exoplatform.services.portletcontainer.plugins.pc.portletAPIImp.persistenceImp.PersistenceManager;
+import org.picocontainer.Startable;
 /**
  * Created by The eXo Platform SAS
  * Apr 19, 2007
@@ -58,7 +61,7 @@ import org.exoplatform.services.portletcontainer.plugins.pc.portletAPIImp.persis
  * This service is used to load the PortalConfig, Page config  and  Navigation config for a given 
  * user.
  */
-public class UserPortalConfigService {
+public class UserPortalConfigService implements Startable {
 
   private DataStorage  storage_ ;
   private UserACL userACL_;
@@ -70,6 +73,7 @@ public class UserPortalConfigService {
   protected ExoCache widgetsCache_ ;
   
   private NewPortalConfigListener newPortalConfigListener_;
+  private Log log = ExoLogger.getLogger("Portal:UserPortalConfigService");
 
   /**
    *The constructor should create the DataStorage object and broadcast "the UserPortalConfigService.onInit"
@@ -135,7 +139,6 @@ public class UserPortalConfigService {
         navigations.add(navigation) ;
       }
     }
-    
     Widgets userWidgets = getWidgets(PortalConfig.USER_TYPE+"::"+accessUser) ;
     Collections.sort(navigations, new Comparator<PageNavigation>() {
       public int compare(PageNavigation nav1, PageNavigation nav2) {
@@ -530,4 +533,17 @@ public class UserPortalConfigService {
   }
   
   public String getDefaultPortal() { return newPortalConfigListener_.getDefaultPortal(); }
+
+  public void start() {
+    System.out.println("\n\n\nstart user portal config service");
+    if(newPortalConfigListener_ == null) return;
+    try {
+      newPortalConfigListener_.run();
+    } catch (Exception e) {
+      log.error(e);
+    }
+  }
+
+  public void stop() {
+  }
 }

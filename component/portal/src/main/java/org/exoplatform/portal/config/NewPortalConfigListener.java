@@ -65,13 +65,15 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     ObjectParameter objectParam = params.getObjectParam("page.templates");
     if(objectParam != null) pageTemplateConfig_ = (PageTemplateConfig) objectParam.getObject() ;
     
-    String checkPortal = "classic";
+    String defaultPortal = "classic";
     ValueParam valueParam = params.getValueParam("default.portal");
-    if(valueParam != null) checkPortal = valueParam.getValue();
-    if(checkPortal == null  || checkPortal.trim().length() == 0) checkPortal = "classic";    
+    if(valueParam != null) defaultPortal = valueParam.getValue();
+    if(defaultPortal == null  || defaultPortal.trim().length() == 0) defaultPortal = "classic";    
     configs = params.getObjectParamValues(NewPortalConfig.class);
-   
-    if(isInitedDB(checkPortal)) return;
+  }
+  
+  public void run() throws Exception {
+    if(isInitedDB(defaultPortal)) return;
     for (Object ele : configs) {
       NewPortalConfig portalConfig  = (NewPortalConfig)ele;
       if(portalConfig.getOwnerType().equals("user")) {
@@ -129,7 +131,6 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
       createPage(config, owner);
       createPageNavigation(config, owner);
       createPortletPreferences(config, owner);
-      //createWidgets(config, owner);
     }
   }
   
@@ -166,7 +167,12 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
       xml = getTemplateConfig(config, owner, "navigation");
     }
     PageNavigation navigation = fromXML(xml, PageNavigation.class);
-    pdcService_.create(navigation);
+    if(pdcService_.getPageNavigation(navigation.getId()) == null) {
+      pdcService_.create(navigation);
+    }
+    else {
+      pdcService_.save(navigation);
+    }
   }
   
   private void createWidgets(NewPortalConfig config, String owner) throws Exception { 
@@ -176,8 +182,14 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     } else {
       xml = getTemplateConfig(config, owner, "widgets");
     }
+    if(xml == null) return;
     Widgets widgets = fromXML(xml, Widgets.class);
-    pdcService_.create(widgets);
+    if(pdcService_.getWidgets(widgets.getId()) == null) {
+      pdcService_.create(widgets);
+    }
+    else {
+      pdcService_.save(widgets);
+    }
   }
   
   private void createPortletPreferences(NewPortalConfig config, String owner) throws Exception {
