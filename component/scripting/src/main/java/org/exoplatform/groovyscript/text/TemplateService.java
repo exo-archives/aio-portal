@@ -23,6 +23,7 @@ import java.io.InputStream;
 
 import org.exoplatform.commons.utils.IOUtil;
 import org.exoplatform.container.xml.InitParams;
+import org.exoplatform.management.annotations.ManagedBy;
 import org.exoplatform.resolver.ResourceResolver;
 import org.exoplatform.services.cache.CacheService;
 import org.exoplatform.services.cache.ExoCache;
@@ -30,19 +31,20 @@ import org.exoplatform.services.cache.ExoCache;
  * Created by The eXo Platform SAS
  * Dec 26, 2005
  */
+@ManagedBy(TemplateManaged.class)
 public class TemplateService  {
   
   private SimpleTemplateEngine engine_  ;
   private ExoCache templatesCache_ ;
-  
+  public TemplateManaged managed;
   private boolean cacheTemplate_  =  true ;
-
+  
   @SuppressWarnings("unused")
   public TemplateService(InitParams params, 
                          CacheService cservice) throws Exception {
     engine_ = new SimpleTemplateEngine() ;
-    templatesCache_ = cservice.getCacheInstance(TemplateService.class.getName()) ;
-    templatesCache_.setLiveTime(10000) ;
+    setTemplatesCache(cservice.getCacheInstance(TemplateService.class.getName()));
+    getTemplatesCache().setLiveTime(10000) ;
   }
   
   public void merge(Template template, BindingContext context) throws  Exception {
@@ -65,10 +67,11 @@ public class TemplateService  {
   }
   
   final public Template getTemplate(String url, ResourceResolver resolver, boolean cacheable) throws Exception {
+    long startTime = System.currentTimeMillis();
     Template template = null ;
     if(cacheable)  {
       String resourceId =  resolver.createResourceId(url) ;
-      template = (Template)templatesCache_.get(resourceId) ;
+      template = (Template)getTemplatesCache().get(resourceId) ;
     }
     if(template != null)  return template ;   
     InputStream is = resolver.getInputStream(url);
@@ -85,14 +88,27 @@ public class TemplateService  {
     
     if(cacheable) {
       String resourceId =  resolver.createResourceId(url) ;
-      templatesCache_.put(resourceId, template) ;
+      getTemplatesCache().put(resourceId, template) ;
     }
+    long endTime = System.currentTimeMillis();
+    System.out.println("aa" + url);
+    TemplateStatistic templateStatistic = managed.getTemplateStatistic(url);
+    templateStatistic.setTime(endTime - startTime);
     return template ;
   }
   
   final public void invalidateTemplate(String name, ResourceResolver resolver)throws Exception {
     String resourceId =  resolver.createResourceId(name) ;
-    templatesCache_.remove(resourceId) ;
+    getTemplatesCache().remove(resourceId) ;
   }
+
+  public void setTemplatesCache(ExoCache templatesCache_) {
+	this.templatesCache_ = templatesCache_;
+  }
+	
+  public ExoCache getTemplatesCache() {
+	return templatesCache_;
+  }
+
   
 }
