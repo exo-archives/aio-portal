@@ -47,12 +47,12 @@ public class ApplicationStatistic {
     }
   }
   
-  public long getMaxTime(){
-    return maxTime;
+  public double getMaxTime(){
+    return ((double)maxTime)/60;
   }
   
-  public long getMinTime(){
-    return minTime;
+  public double getMinTime(){
+    return ((double)minTime)/60;
   }
   
   public double getAverageTime() {
@@ -60,7 +60,7 @@ public class ApplicationStatistic {
     for (int index = 0; index < length; index++) {
       sumTime += times[index];
     }
-    return (length == 0) ? 0 :sumTime/length;
+    return (length == 0) ? 0 :((double)sumTime)/60/length;
   }
   
   public long executionCount(){

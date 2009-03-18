@@ -89,14 +89,14 @@ public class ApplicationStatisticService implements ManagementAware {
   
   @Managed
   @ManagedDescription("return max time of an specify application")
-  public long getMaxTime(String appId) {
+  public double getMaxTime(String appId) {
     ApplicationStatistic app = apps.get(appId); 
     return app.getMaxTime();
   }
   
   @Managed
   @ManagedDescription("return min time of an specify application")
-  public long getMinTime(String appId) {
+  public double getMinTime(String appId) {
     ApplicationStatistic app = apps.get(appId); 
     return app.getMinTime();
   }

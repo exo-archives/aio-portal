@@ -39,7 +39,7 @@ public class PortalStatisticLifecycle  implements  ApplicationLifecycle<WebuiReq
   public void onEndRequest(Application app, WebuiRequestContext rcontext) throws Exception {
     PortalStatisticService service = (PortalStatisticService) ExoContainerContext.
     																			getCurrentContainer().getComponentInstanceOfType(PortalStatisticService.class);
-    PortalStatistic appStatistic = service.getPortalStatistic(app.getApplicationName());
+    PortalStatistic appStatistic = service.getPortalStatistic(((PortalRequestContext)rcontext).getPortalOwner());
     long startTime = Long.valueOf(app.getAttribute("tran.the.trong").toString());
     appStatistic.updateTime(System.currentTimeMillis() - startTime);
   }

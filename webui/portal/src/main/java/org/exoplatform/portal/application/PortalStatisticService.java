@@ -110,18 +110,23 @@ public class PortalStatisticService implements ManagementAware {
 	}
   
   @Managed
-  public long getMaxTime(String id) {
+  public double getMaxTime(String id) {
   	return apps.get(id).getMaxTime();
   }
 
   @Managed
-  public long getMinTime(String id) {
+  public double getMinTime(String id) {
   	return apps.get(id).getMinTime();
   }
   
   @Managed
   public double getAverageTime(String id) {
   	return apps.get(id).getAverageTime() ;
+  }
+  
+  @Managed
+  public double getThroughput(String id) {
+  	return apps.get(id).getThroughput() ;
   }
   
   @Managed
