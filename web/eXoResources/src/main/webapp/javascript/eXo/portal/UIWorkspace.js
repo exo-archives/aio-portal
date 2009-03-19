@@ -158,6 +158,15 @@ eXo.portal.UIControlWorkspace.showWorkspace = function() {
 		}		
 	}
 	
+	// fix for DropDropList bug in IE by Pham Dinh Tan  
+	var dropDownAnchors = eXo.core.DOMUtil.findDescendantsByClass(document, "div", "UIDropDownAnchor");
+	for(var i = 0; i < dropDownAnchors.length; i++) {
+		if(dropDownAnchors[i].style.display != "none") {
+			dropDownAnchors[i].style.display = "none";
+			dropDownAnchors[i].style.visibility = "hidden";
+		}
+	}
+	
 	/* -- END -- */
 	var params = [ {name: "objectId", value : cws.showControlWorkspace} ] ;
 	ajaxAsyncGetRequest(eXo.env.server.createPortalURL(this.id, "SetVisible", true, params), false) ;
