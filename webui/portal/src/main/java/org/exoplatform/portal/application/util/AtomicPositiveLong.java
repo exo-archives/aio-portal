@@ -29,6 +29,12 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class AtomicPositiveLong extends AtomicLong {
 
+  /**
+   * Create an atomic positive long with an inital provided value.
+   *
+   * @param initialValue the initial value
+   * @throws IllegalArgumentException if the value is negative
+   */
   public AtomicPositiveLong(long initialValue) throws IllegalArgumentException {
     super(initialValue);
 
@@ -38,6 +44,9 @@ public class AtomicPositiveLong extends AtomicLong {
     }
   }
 
+  /**
+   * Create an atomic positive long with no initial value.
+   */
   public AtomicPositiveLong() {
     super(-1);
   }
