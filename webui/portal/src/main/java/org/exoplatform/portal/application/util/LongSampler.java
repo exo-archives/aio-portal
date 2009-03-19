@@ -16,8 +16,6 @@
  */
 package org.exoplatform.portal.application.util;
 
-import org.exoplatform.portal.application.util.BoundedBuffer;
-
 /**
  * An object that sample long values.
  *
