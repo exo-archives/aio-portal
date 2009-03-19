@@ -41,6 +41,10 @@ import java.util.NoSuchElementException;
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
  * @version $Revision$
  * @todo move to common utils
+ * @todo develop a non blocking implementation pretty much like the ConcurrentLinkedQueue does
+ * @todo although I don't think this class is a bottleneck as there is very short lived synchronization
+ * @todo and actually I don't know if it's feasible to have a non blocking impl due to the size value
+ *
  */
 public class BoundedBuffer<T> implements Iterable<T> {
 
