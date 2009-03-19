@@ -47,6 +47,23 @@ public class TemplateService  {
     getTemplatesCache().setLiveTime(10000) ;
   }
   
+  public void merge(String name, BindingContext context) throws Exception {
+  	long startTime = System.currentTimeMillis();
+  	
+    Template template = getTemplate(name, context.getResourceResolver());
+		context.put("_ctx", context) ;
+		context.setGroovyTemplateService(this) ;
+		Writable writable = template.make(context) ;
+		writable.writeTo(context.getWriter());
+		
+		long endTime = System.currentTimeMillis();
+    
+    TemplateStatistic templateStatistic = managed.getTemplateStatistic(name);
+    templateStatistic.setTime(endTime - startTime);
+    templateStatistic.setResolver(context.getResourceResolver());
+  }
+  
+  @Deprecated
   public void merge(Template template, BindingContext context) throws  Exception {
     context.put("_ctx", context) ;
     context.setGroovyTemplateService(this) ;
@@ -54,12 +71,13 @@ public class TemplateService  {
     writable.writeTo(context.getWriter());
   }
   
-  public void include(String name, BindingContext context) throws  Exception  {
+  public void include(String name, BindingContext context) throws  Exception  {  
     if(context == null)  throw new Exception("Binding cannot be null") ;
     context.put("_ctx", context) ;
     Template template = getTemplate(name, context.getResourceResolver()) ;
     Writable writable = template.make(context) ;
     writable.writeTo(context.getWriter()) ;
+    
   }
   
   final public Template getTemplate(String name, ResourceResolver resolver) throws Exception {
@@ -67,7 +85,6 @@ public class TemplateService  {
   }
   
   final public Template getTemplate(String url, ResourceResolver resolver, boolean cacheable) throws Exception {
-    long startTime = System.currentTimeMillis();
     Template template = null ;
     if(cacheable)  {
       String resourceId =  resolver.createResourceId(url) ;
@@ -90,10 +107,7 @@ public class TemplateService  {
       String resourceId =  resolver.createResourceId(url) ;
       getTemplatesCache().put(resourceId, template) ;
     }
-    long endTime = System.currentTimeMillis();
-    System.out.println("aa" + url);
-    TemplateStatistic templateStatistic = managed.getTemplateStatistic(url);
-    templateStatistic.setTime(endTime - startTime);
+    
     return template ;
   }
   
@@ -111,4 +125,5 @@ public class TemplateService  {
   }
 
   
+
 }

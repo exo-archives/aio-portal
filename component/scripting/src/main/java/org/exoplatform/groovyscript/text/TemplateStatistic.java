@@ -18,48 +18,53 @@ package org.exoplatform.groovyscript.text;
 
 import org.exoplatform.management.ManagementAware;
 import org.exoplatform.management.ManagementContext;
+import org.exoplatform.resolver.ResourceResolver;
 
 /**
- * Created by The eXo Platform SAS
- * Author : eXoPlatform
- *          exo@exoplatform.com
- * Mar 17, 2009  
+ * Created by The eXo Platform SAS Author : tam.nguyen
+ * tam.nguyen@exoplatform.com Mar 17, 2009
  */
 
 public class TemplateStatistic implements ManagementAware {
   private ManagementContext context;
-  
-private final long[] times = new long[1000];
-  
-  private String name;
+
+  private final long[]      times        = new long[1000];
+
+  private String            name;
+
   // counter varible, for first in first out purpose in times array
-  private int counter = 0;
-  private long maxTime = 0;
-  private long minTime = 0;
-  
+  private int               counter      = 0;
+
+  private long              maxTime      = 0;
+
+  private long              minTime      = 0;
+
   // length varible, store the length of array
-  private int length = 0;
-  
+  private int               length       = 0;
+
   // count varible, store number of request
-  private long countRequest = 0;
-  
+  private long              countRequest = 0;
+
+  // resolver for name
+  private ResourceResolver  resolver;
+
   public TemplateStatistic(String name) {
     this.name = name;
   }
+
   public void setTime(long time) {
-    
-    System.out.println("ggg" + time);
+
     times[counter] = time;
     // if time > max time then put a new max time value
-    if(time > maxTime) { 
+    if (time > maxTime) {
       maxTime = time;
     }
     // generate first value for min time
     if (minTime == 0) {
-      minTime = time; 
+      minTime = time;
     }
     // if time < min time then put a new min time value
-    if(time < minTime) {
+    if (time < minTime) {
       minTime = time;
     }
     counter++;
@@ -72,28 +77,36 @@ private final long[] times = new long[1000];
       length = times.length;
     }
   }
-  
-  public double getMaxTime(){
-    return ((double)maxTime)/60;
+
+  public double getMaxTime() {
+    return ((double) maxTime) / 60;
   }
-  
-  public double getMinTime(){
-    return ((double)minTime)/60;
+
+  public double getMinTime() {
+    return ((double) minTime) / 60;
   }
-  
+
   public double getAverageTime() {
     long sumTime = 0;
     for (int index = 0; index < length; index++) {
       sumTime += times[index];
     }
-    return (length == 0) ? 0 :((double)sumTime)/length/60;
+    return (length == 0) ? 0 : ((double) sumTime) / length / 60;
   }
-  
-  public long executionCount(){
+
+  public long executionCount() {
     return countRequest;
   }
-  
+
   public void setContext(ManagementContext context) {
     this.context = context;
+  }
+
+  public void setResolver(ResourceResolver resolver) {
+    this.resolver = resolver;
+  }
+
+  public ResourceResolver getResolver() {
+    return resolver;
   }
 }
