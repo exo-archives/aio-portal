@@ -1,5 +1,8 @@
 package org.exoplatform.portal.application;
 
+import org.exoplatform.portal.application.util.AtomicPositiveLong;
+import org.exoplatform.portal.application.util.LongSampler;
+
 
 /**
  * Created by The eXo Platform SAS
@@ -10,67 +13,68 @@ package org.exoplatform.portal.application;
 
 public class ApplicationStatistic {
 
-  private String       appId;
+  /** . */
+  private static final int ONE_SECOND = 1000;
 
-  private final long[] times        = new long[1000];
+  private String        appId;
 
-  // counter varible, for first in first out purpose in times array
-  private int          counter      = 0;
+  private final LongSampler times = new LongSampler(1000);
 
-  private long         maxTime      = 0;
+  private final AtomicPositiveLong maxTime = new AtomicPositiveLong(-1);
 
-  private long         minTime      = 0;
-
-  // length varible, store the length of array
-  private int          length       = 0;
+  private final AtomicPositiveLong minTime = new AtomicPositiveLong(-1);
 
   // count varible, store number of request
-  private long         countRequest = 0;
+  private volatile long countRequest = 0;
 
   public ApplicationStatistic(String appId) {
     this.appId = appId;
   }
 
-  public void setTime(long time) {
+  /**
+   * Log the time.
+   *
+   * @param timeMillis the time to log in milliseconds
+   */
+  public void logTime(long timeMillis) {
 
-    times[counter] = time;
+    //
+    times.add(timeMillis);
+
     // if time > max time then put a new max time value
-    if (time > maxTime) {
-      maxTime = time;
-    }
+    maxTime.setIfGreater(timeMillis);
+
     // generate first value for min time
-    if (minTime == 0) {
-      minTime = time;
-    }
-    // if time < min time then put a new min time value
-    if (time < minTime) {
-      minTime = time;
-    }
-    counter++;
-    length++;
-    countRequest++;
-    if (counter == times.length) {
-      counter = 0;
-    }
-    if (length >= times.length) {
-      length = times.length;
-    }
+    minTime.setIfLower(timeMillis);
   }
 
   public double getMaxTime() {
-    return ((double) maxTime) / 60;
+    long maxTime = this.maxTime.get();
+    if (maxTime == -1) {
+      return -1;
+    }
+    return ((double) maxTime) / 60D;
   }
 
   public double getMinTime() {
-    return ((double) minTime) / 60;
+    long minTime = this.minTime.get();
+    if (minTime == -1) {
+      return -1;
+    }
+    return ((double) minTime) / 60D;
   }
 
   public double getAverageTime() {
-    long sumTime = 0;
-    for (int index = 0; index < length; index++) {
-      sumTime += times[index];
-    }
-    return (length == 0) ? 0 : ((double) sumTime) / 60 / length;
+    return times.average() / 60D;
+  }
+
+  /**
+   * Compute the throughput.
+   *
+   * @return the throughput
+   */
+  public double getThroughput() {
+    return times.countAboveThreshold(System.currentTimeMillis() - ONE_SECOND);
   }
 
   public long executionCount() {

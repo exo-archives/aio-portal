@@ -38,7 +38,7 @@ public class PortletApplicationLifecycle  implements  ApplicationLifecycle<Webui
     ApplicationStatisticService service = (ApplicationStatisticService) app.getApplicationServiceContainer().getComponentInstanceOfType(ApplicationStatisticService.class);
     ApplicationStatistic appStatistic = service.getApplicationStatistic(app.getApplicationId());
     long startTime = Long.valueOf(app.getAttribute(ATTRIBUTE_NAME).toString());
-    appStatistic.setTime(System.currentTimeMillis() - startTime);
+    appStatistic.logTime(System.currentTimeMillis() - startTime);
   }
   
   @SuppressWarnings("unused")
