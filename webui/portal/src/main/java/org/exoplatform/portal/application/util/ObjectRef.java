@@ -19,11 +19,13 @@ package org.exoplatform.portal.application.util;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
+ * An internal class to keep a reference onto another object, it is used in the bounded buffer implementation.
+ *
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
  * @version $Revision$
  * @todo move to common utils
  */
-public class ObjectRef<T> {
+class ObjectRef<T> {
 
   /** . */
   final T object;
@@ -31,7 +33,7 @@ public class ObjectRef<T> {
   /** . */
   final AtomicReference<ObjectRef<T>> next;
 
-  public ObjectRef(T object) {
+  ObjectRef(T object) {
     this.object = object;
     this.next = new AtomicReference<ObjectRef<T>>();
   }
