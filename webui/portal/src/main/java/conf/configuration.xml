@@ -5,10 +5,6 @@
 		<type>org.exoplatform.portal.webui.skin.SkinServiceImpl</type>
   </component>  
 
-  <component>
-		<type>org.exoplatform.portal.application.ApplicationStatisticService</type>
-  </component>  
-
   <external-component-plugins>
     <target-component>org.exoplatform.services.portletcontainer.PortletApplicationRegister</target-component>
     <component-plugin>

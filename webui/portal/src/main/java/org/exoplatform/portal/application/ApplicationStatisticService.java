@@ -34,6 +34,7 @@ import org.exoplatform.management.annotations.Managed;
 import org.exoplatform.management.annotations.ManagedDescription;
 import org.exoplatform.management.jmx.annotations.NameTemplate;
 import org.exoplatform.management.jmx.annotations.Property;
+import org.picocontainer.Startable;
 
 /**
  * @author <a href="mailto:trongtt@gmail.com">Tran The Trong</a>
@@ -42,7 +43,7 @@ import org.exoplatform.management.jmx.annotations.Property;
 @Managed
 @NameTemplate(@Property(key = "service", value = "ApplicationStatistic"))
 @ManagedDescription("Application manager")
-public class ApplicationStatisticService implements ManagementAware {
+public class ApplicationStatisticService implements ManagementAware, Startable {
 
   private ManagementContext                 context;
 
@@ -258,4 +259,9 @@ public class ApplicationStatisticService implements ManagementAware {
 
   }
 
+  public void start() {
+  }
+
+  public void stop() {
+  }
 }

@@ -38,6 +38,7 @@ import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
 import org.exoplatform.services.jcr.ext.registry.RegistryEntry;
 import org.exoplatform.services.jcr.ext.registry.RegistryService;
+import org.picocontainer.Startable;
 
 /**
  * @author <a href="mailto:trongtt@gmail.com">Tran The Trong</a>
@@ -46,7 +47,7 @@ import org.exoplatform.services.jcr.ext.registry.RegistryService;
 @Managed
 @NameTemplate(@Property(key = "service", value = "PortalStatistic"))
 @ManagedDescription("Application manager")
-public class PortalStatisticService implements ManagementAware {
+public class PortalStatisticService implements ManagementAware, Startable {
 
   private ManagementContext            context;
 
@@ -174,4 +175,9 @@ public class PortalStatisticService implements ManagementAware {
     sql.append(name).append(" like '").append(value).append("'");
   }
 
+  public void start() {
+  }
+
+  public void stop() {
+  }
 }
