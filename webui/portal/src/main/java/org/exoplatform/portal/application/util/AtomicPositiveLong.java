@@ -19,7 +19,7 @@ package org.exoplatform.portal.application.util;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Extends the @link{AtommicLong} to contain positive longs. If no initial value
+ * Extends the @link{AtomicLong} to contain positive longs. If no initial value
  * is provided when the object is created then the value is -1 to indicate that
  * it is not yet initialized.
  *
