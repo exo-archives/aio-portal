@@ -26,13 +26,14 @@ import org.exoplatform.webui.application.WebuiRequestContext;
 
 public class PortalStatisticLifecycle  implements  ApplicationLifecycle<WebuiRequestContext> {
   
+  private static final String ATTRIBUTE_NAME = "PortalStatistic";
   @SuppressWarnings("unused")
   public void onInit(Application app) {
   }
  
   @SuppressWarnings("unused")
   public void onStartRequest(Application app, WebuiRequestContext rcontext) throws Exception {
-    app.setAttribute("tran.the.trong", System.currentTimeMillis());
+    app.setAttribute(ATTRIBUTE_NAME, System.currentTimeMillis());
   }
 
   @SuppressWarnings("unused")
@@ -40,7 +41,7 @@ public class PortalStatisticLifecycle  implements  ApplicationLifecycle<WebuiReq
     PortalStatisticService service = (PortalStatisticService) ExoContainerContext.
     																			getCurrentContainer().getComponentInstanceOfType(PortalStatisticService.class);
     PortalStatistic appStatistic = service.getPortalStatistic(((PortalRequestContext)rcontext).getPortalOwner());
-    long startTime = Long.valueOf(app.getAttribute("tran.the.trong").toString());
+    long startTime = Long.valueOf(app.getAttribute(ATTRIBUTE_NAME).toString());
     appStatistic.updateTime(System.currentTimeMillis() - startTime);
   }
   

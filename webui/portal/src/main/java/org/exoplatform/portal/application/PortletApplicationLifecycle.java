@@ -22,6 +22,7 @@ import org.exoplatform.webui.application.WebuiRequestContext;
 
 public class PortletApplicationLifecycle  implements  ApplicationLifecycle<WebuiRequestContext> {
   
+  private static final String ATTRIBUTE_NAME = "AppStatistic";
   @SuppressWarnings("unused")
   public void onInit(Application app) {
     
@@ -29,14 +30,14 @@ public class PortletApplicationLifecycle  implements  ApplicationLifecycle<Webui
   
   @SuppressWarnings("unused")
   public void onStartRequest(Application app, WebuiRequestContext context) throws Exception {
-  	app.setAttribute("tran.the.trong", System.currentTimeMillis());
+  	app.setAttribute(ATTRIBUTE_NAME, System.currentTimeMillis());
   }
   
   @SuppressWarnings("unused")
   public void onEndRequest(Application app, WebuiRequestContext context) throws Exception {
     ApplicationStatisticService service = (ApplicationStatisticService) app.getApplicationServiceContainer().getComponentInstanceOfType(ApplicationStatisticService.class);
     ApplicationStatistic appStatistic = service.getApplicationStatistic(app.getApplicationId());
-    long startTime = Long.valueOf(app.getAttribute("tran.the.trong").toString());
+    long startTime = Long.valueOf(app.getAttribute(ATTRIBUTE_NAME).toString());
     appStatistic.setTime(System.currentTimeMillis() - startTime);
   }
   

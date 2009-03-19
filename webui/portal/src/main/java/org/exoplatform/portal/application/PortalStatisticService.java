@@ -44,45 +44,51 @@ import org.exoplatform.services.jcr.ext.registry.RegistryService;
  * @version $Revision$
  */
 @Managed
-@NameTemplate(@Property(key="service", value="PortalStatistic"))
+@NameTemplate(@Property(key = "service", value = "PortalStatistic"))
 @ManagedDescription("Application manager")
 public class PortalStatisticService implements ManagementAware {
 
-  private ManagementContext context;
+  private ManagementContext            context;
 
   private Map<String, PortalStatistic> apps = new ConcurrentHashMap<String, PortalStatistic>();
-  
-  private final String ASC = "ASC";
-  private final String DESC = "DESC";
-  
-  private RegistryService regService_;
-  private DataMapper mapper_;
+
+  private final String                 ASC  = "ASC";
+
+  private final String                 DESC = "DESC";
+
+  private RegistryService              regService_;
+
+  private DataMapper                   mapper_;
+
   public PortalStatisticService(RegistryService res) {
     regService_ = res;
     mapper_ = new DataMapper();
-    
+
   }
-  
+
   public void setContext(ManagementContext context) {
     this.context = context;
   }
-  
+
+  /*
+   * Get Portal's page List
+   */
   @Managed
-  @ManagedDescription ("Get Portal's page List")
+  @ManagedDescription("Get Portal's page List")
   public String[] getPortalList() {
     ArrayList<String> list = new ArrayList<String>();
     SessionProvider sessionProvider = SessionProvider.createSystemProvider();
     StringBuilder builder = new StringBuilder("select * from " + DataMapper.EXO_REGISTRYENTRY_NT);
-    
+
     try {
       String registryNodePath = regService_.getRegistry(sessionProvider).getNode().getPath();
       Session session = regService_.getRegistry(sessionProvider).getNode().getSession();
-      generateLikeScript(builder, "jcr:path", registryNodePath + "/%") ;
-      generateLikeScript(builder, DataMapper.EXO_DATA_TYPE, "PortalConfig") ;
+      generateLikeScript(builder, "jcr:path", registryNodePath + "/%");
+      generateLikeScript(builder, DataMapper.EXO_DATA_TYPE, "PortalConfig");
       QueryManager queryManager = session.getWorkspace().getQueryManager();
       javax.jcr.query.Query query = queryManager.createQuery(builder.toString(), "sql");
       QueryResult result = query.execute();
-      
+
       NodeIterator itr = result.getNodes();
       while (itr.hasNext()) {
         Node node = itr.nextNode();
@@ -90,51 +96,72 @@ public class PortalStatisticService implements ManagementAware {
         RegistryEntry entry = regService_.getEntry(sessionProvider, entryPath);
         list.add(mapper_.fromDocument(entry.getDocument(), PortalConfig.class).getName());
       }
-        Collections.sort(list);
+      Collections.sort(list);
     } catch (Exception ex) {
       ex.printStackTrace();
-    }
-    finally {
+    } finally {
       sessionProvider.close();
     }
     return list.toArray(new String[list.size()]);
   }
-  
+
+  /*
+   * get PortalStatistic, if it doesn't exits, create a new one
+   */
   public PortalStatistic getPortalStatistic(String appId) {
-  	PortalStatistic app = apps.get(appId);
-  	if(app == null) {
-  		app = new PortalStatistic(appId);
-  		apps.put(appId, app);
-  	}
-  	return app;
-	}
-  
-  @Managed
-  public double getMaxTime(String id) {
-  	return apps.get(id).getMaxTime();
+    PortalStatistic app = apps.get(appId);
+    if (app == null) {
+      app = new PortalStatistic(appId);
+      apps.put(appId, app);
+    }
+    return app;
   }
 
+  /*
+   * return max time of an specify portal
+   */
   @Managed
+  @ManagedDescription("return max time of an specify portal")
+  public double getMaxTime(String id) {
+    return apps.get(id).getMaxTime();
+  }
+
+  /*
+   * return min time of an specify portal
+   */
+  @Managed
+  @ManagedDescription("return min time of an specify portal")
   public double getMinTime(String id) {
-  	return apps.get(id).getMinTime();
+    return apps.get(id).getMinTime();
   }
-  
+
+  /*
+   * return average time of an specify portal
+   */
   @Managed
+  @ManagedDescription("return average time of an specify portal")
   public double getAverageTime(String id) {
-  	return apps.get(id).getAverageTime() ;
+    return apps.get(id).getAverageTime();
   }
-  
+
+  /*
+   * return throughput of an specify portal
+   */
   @Managed
+  @ManagedDescription("return throughput of an specify portal")
   public double getThroughput(String id) {
-  	return apps.get(id).getThroughput() ;
+    return apps.get(id).getThroughput();
   }
-  
+
+  /*
+   * return count of an specify portal
+   */
   @Managed
   @ManagedDescription("return count of an specify portal")
-  public long executionCount(String id){
+  public long executionCount(String id) {
     return apps.get(id).viewCount();
   }
-  
+
   private void generateLikeScript(StringBuilder sql, String name, String value) {
     if (value == null || value.length() < 1)
       return;
