@@ -51,8 +51,10 @@ public class LongSampler extends BoundedBuffer<Long> {
    * @return the count of values above the provided threshold
    */
   public int countAboveThreshold(long threshold) {
+    System.out.println("bbb"+threshold);
     int count = 0;
     for (long value : this) {
+      System.out.println("aaaa"+value);
       if (value >= threshold) {
         count ++;
       }

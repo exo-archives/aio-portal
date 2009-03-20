@@ -1,89 +1,84 @@
 package org.exoplatform.portal.application;
 
+import org.exoplatform.portal.application.util.AtomicPositiveLong;
+import org.exoplatform.portal.application.util.LongSampler;
+
 public class PortalStatistic {
 
-  private String       portalName;
+  private String                   portalName;
 
-  private final long[] times          = new long[1000];
+  /** . */
+  private static final int         ONE_SECOND   = 20000;
 
-  private final long[] throughput     = new long[1000];
+  private String                   appId;
 
-  // will be use for number of request in 10 second
-  private final long   throughputTime = 10;
+  private final LongSampler        times        = new LongSampler(1000);
 
-  // counter varible, for first in first out purpose in times array
-  private int          counter        = 0;              ;
+  private final LongSampler        throughput   = new LongSampler(1000);
 
-  private long         maxTime        = 0;
+  private final AtomicPositiveLong maxTime      = new AtomicPositiveLong();
 
-  private long         minTime        = 0;
-
-  // length varible, store the length of array
-  private int          length         = 0;
+  private final AtomicPositiveLong minTime      = new AtomicPositiveLong();
 
   // count varible, store number of request
-  private long         countRequest   = 0;
+  private volatile long            countRequest = 0;
 
-  public PortalStatistic(String portalName) {
-    this.portalName = portalName;
+  public PortalStatistic(String appId) {
+    this.appId = appId;
   }
 
-  public void updateTime(long time) {
+  /**
+   * Log the time.
+   * 
+   * @param timeMillis the time to log in milliseconds
+   */
+  public void logTime(long timeMillis) {
 
-    times[counter] = time;
-    throughput[counter] = System.currentTimeMillis();
+    //
+    times.add(timeMillis);
+    
+    // add current time to throughput array
+    throughput.add(System.currentTimeMillis());
+
     // if time > max time then put a new max time value
-    if (time > maxTime) {
-      maxTime = time;
-    }
+    maxTime.setIfGreater(timeMillis);
+
     // generate first value for min time
-    if (minTime == 0) {
-      minTime = time;
-    }
-    // if time < min time then put a new min time value
-    if (time < minTime) {
-      minTime = time;
-    }
-    counter++;
-    length++;
+    minTime.setIfLower(timeMillis);
+
     countRequest++;
-    if (counter == times.length) {
-      counter = 0;
-    }
-    if (length >= times.length) {
-      length = times.length;
-    }
   }
 
   public double getMaxTime() {
-    return ((double) maxTime) / 60;
+    long maxTime = this.maxTime.get();
+    if (maxTime == -1) {
+      return -1;
+    }
+    return ((double) maxTime) / 60D;
   }
 
   public double getMinTime() {
-    return ((double) minTime) / 60;
+    long minTime = this.minTime.get();
+    if (minTime == -1) {
+      return -1;
+    }
+    return ((double) minTime) / 60D;
   }
 
   public double getAverageTime() {
-    long sumTime = 0;
-    for (int index = 0; index < length; index++) {
-      sumTime += times[index];
-    }
-    return (length == 0) ? 0 : ((double) sumTime) / 60 / length;
+    return times.average() / 60D;
+  }
+
+  /**
+   * Compute the throughput.
+   * 
+   * @return the throughput
+   */
+  public double getThroughput() {
+    return throughput.countAboveThreshold(System.currentTimeMillis() - ONE_SECOND);
   }
 
   public long viewCount() {
     return countRequest;
-  }
-
-  public double getThroughput() {
-    long now = System.currentTimeMillis();
-    int index = length - 1;
-    long numberRequest = 0;
-    while ((index >= 0) && ((now - throughputTime * 60) > throughput[index])) {
-      numberRequest++;
-      index--;
-    }
-    return ((double) numberRequest) / throughputTime;
-
   }
 }

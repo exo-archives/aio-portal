@@ -43,7 +43,7 @@ public class PortalApplicationLifecycle  implements  ApplicationLifecycle<WebuiR
     																			getCurrentContainer().getComponentInstanceOfType(PortalStatisticService.class);
     PortalStatistic appStatistic = service.getPortalStatistic(app.getApplicationId());
     long startTime = Long.valueOf(app.getAttribute("startTime").toString());
-    appStatistic.updateTime(System.currentTimeMillis() - startTime);
+    appStatistic.logTime(System.currentTimeMillis() - startTime);
 
   	SessionContainer.setInstance(null) ;
     ExoContainerContext.setCurrentContainer(null);
