@@ -18,6 +18,7 @@ package org.exoplatform.portal.application;
 
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.ExoContainerContext;
+import org.exoplatform.container.PortalContainer;
 import org.exoplatform.container.SessionContainer;
 import org.exoplatform.container.SessionManagerContainer;
 import org.exoplatform.web.application.Application;
@@ -38,11 +39,11 @@ public class PortalStatisticLifecycle  implements  ApplicationLifecycle<WebuiReq
 
   @SuppressWarnings("unused")
   public void onEndRequest(Application app, WebuiRequestContext rcontext) throws Exception {
-    PortalStatisticService service = (PortalStatisticService) ExoContainerContext.
-    																			getCurrentContainer().getComponentInstanceOfType(PortalStatisticService.class);
-    PortalStatistic appStatistic = service.getPortalStatistic(((PortalRequestContext)rcontext).getPortalOwner());
-    long startTime = Long.valueOf(app.getAttribute(ATTRIBUTE_NAME).toString());
-    appStatistic.logTime(System.currentTimeMillis() - startTime);
+  	PortalStatisticService service = (PortalStatisticService) PortalContainer.getInstance().
+  	getComponentInstanceOfType(PortalStatisticService.class);
+  	PortalStatistic appStatistic = service.getPortalStatistic(((PortalRequestContext)rcontext).getPortalOwner());
+  	long startTime = Long.valueOf(app.getAttribute(ATTRIBUTE_NAME).toString());
+  	appStatistic.logTime(System.currentTimeMillis() - startTime);
   }
   
   @SuppressWarnings("unused")

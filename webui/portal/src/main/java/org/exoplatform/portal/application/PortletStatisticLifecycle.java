@@ -20,7 +20,7 @@ import org.exoplatform.web.application.Application;
 import org.exoplatform.web.application.ApplicationLifecycle;
 import org.exoplatform.webui.application.WebuiRequestContext;
 
-public class PortletApplicationLifecycle  implements  ApplicationLifecycle<WebuiRequestContext> {
+public class PortletStatisticLifecycle  implements  ApplicationLifecycle<WebuiRequestContext> {
   
   private static final String ATTRIBUTE_NAME = "AppStatistic";
   @SuppressWarnings("unused")
