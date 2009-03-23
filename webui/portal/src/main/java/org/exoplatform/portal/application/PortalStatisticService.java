@@ -20,17 +20,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
 import javax.jcr.Session;
 import javax.jcr.query.QueryManager;
 import javax.jcr.query.QueryResult;
-
-import org.exoplatform.management.ManagementAware;
 import org.exoplatform.management.ManagementContext;
 import org.exoplatform.management.annotations.Managed;
 import org.exoplatform.management.annotations.ManagedDescription;
+import org.exoplatform.management.annotations.ManagedName;
 import org.exoplatform.management.jmx.annotations.NameTemplate;
 import org.exoplatform.management.jmx.annotations.Property;
 import org.exoplatform.portal.config.jcr.DataMapper;
@@ -45,17 +45,11 @@ import org.picocontainer.Startable;
  * @version $Revision$
  */
 @Managed
-@NameTemplate(@Property(key = "service", value = "PortalStatistic"))
-@ManagedDescription("Application manager")
-public class PortalStatisticService implements ManagementAware, Startable {
+@NameTemplate(@Property(key = "service", value = "portalstatistic"))
+@ManagedDescription("The portal statistic service")
+public class PortalStatisticService implements Startable {
 
-  private ManagementContext            context;
-
-  private Map<String, PortalStatistic> apps = new ConcurrentHashMap<String, PortalStatistic>();
-
-  private final String                 ASC  = "ASC";
-
-  private final String                 DESC = "DESC";
+  private ConcurrentMap<String, PortalStatistic> apps = new ConcurrentHashMap<String, PortalStatistic>();
 
   private RegistryService              regService_;
 
@@ -67,15 +61,11 @@ public class PortalStatisticService implements ManagementAware, Startable {
 
   }
 
-  public void setContext(ManagementContext context) {
-    this.context = context;
-  }
-
   /*
-   * Get Portal's page List
+   * Returns the list of the known portal names.
    */
   @Managed
-  @ManagedDescription("Get Portal's page List")
+  @ManagedDescription("The list of known portal identifiers")
   public String[] getPortalList() {
     ArrayList<String> list = new ArrayList<String>();
     SessionProvider sessionProvider = SessionProvider.createSystemProvider();
@@ -107,60 +97,63 @@ public class PortalStatisticService implements ManagementAware, Startable {
   }
 
   /*
-   * get PortalStatistic, if it doesn't exits, create a new one
+   * Get PortalStatistic, if it doesn't exits, create a new one.
    */
   public PortalStatistic getPortalStatistic(String appId) {
     PortalStatistic app = apps.get(appId);
     if (app == null) {
       app = new PortalStatistic(appId);
-      apps.put(appId, app);
+      PortalStatistic existing = apps.putIfAbsent(appId, app);
+      if (existing != null) {
+        app = existing;
+      }
     }
     return app;
   }
 
   /*
-   * return max time of an specify portal
+   * Returns the max time of a specified portal
    */
   @Managed
-  @ManagedDescription("return max time of an specify portal")
-  public double getMaxTime(String id) {
-    return apps.get(id).getMaxTime();
+  @ManagedDescription("The maximum execution time of a specified portal in seconds")
+  public double getMaxTime(@ManagedDescription("The portal id") @ManagedName("portalId") String id) {
+    return toSeconds(getPortalStatistic(id).getMaxTime());
   }
 
   /*
-   * return min time of an specify portal
+   * Return the min time of a specified portal
    */
   @Managed
-  @ManagedDescription("return min time of an specify portal")
-  public double getMinTime(String id) {
-    return apps.get(id).getMinTime();
+  @ManagedDescription("The mininum execution time of a specified portal in seconds")
+  public double getMinTime(@ManagedDescription("The portal id") @ManagedName("portalId") String id) {
+    return toSeconds(getPortalStatistic(id).getMinTime());
   }
 
   /*
-   * return average time of an specify portal
+   * Return the average time of a specified portal
    */
   @Managed
-  @ManagedDescription("return average time of an specify portal")
-  public double getAverageTime(String id) {
-    return apps.get(id).getAverageTime();
+  @ManagedDescription("The average execution time of a specified portal in seconds")
+  public double getAverageTime(@ManagedDescription("The portal id") @ManagedName("portalId") String id) {
+    return toSeconds(getPortalStatistic(id).getAverageTime());
   }
 
   /*
-   * return throughput of an specify portal
+   * Return the throughput of a specified portal
    */
   @Managed
-  @ManagedDescription("return throughput of an specify portal")
-  public double getThroughput(String id) {
-    return apps.get(id).getThroughput();
+  @ManagedDescription("The number of request per second of a specified portal")
+  public double getThroughput(@ManagedDescription("The portal id") @ManagedName("portalId") String id) {
+    return getPortalStatistic(id).getThroughput();
   }
 
   /*
-   * return count of an specify portal
+   * Return the count of a specified portal
    */
   @Managed
-  @ManagedDescription("return count of an specify portal")
-  public long executionCount(String id) {
-    return apps.get(id).viewCount();
+  @ManagedDescription("The execution count of a specified portal")
+  public long getExecutionCount(@ManagedDescription("The portal id") @ManagedName("portalId") String id) {
+    return getPortalStatistic(id).viewCount();
   }
 
   private void generateLikeScript(StringBuilder sql, String name, String value) {
@@ -173,6 +166,10 @@ public class PortalStatisticService implements ManagementAware, Startable {
     value = value.replace('*', '%');
     value = value.replace('?', '_');
     sql.append(name).append(" like '").append(value).append("'");
+  }
+
+  private double toSeconds(double value) {
+    return value == -1 ? -1 : value / 1000D;
   }
 
   public void start() {

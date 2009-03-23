@@ -16,8 +16,6 @@
  */
 package org.exoplatform.groovyscript.text;
 
-import org.exoplatform.management.ManagementAware;
-import org.exoplatform.management.ManagementContext;
 import org.exoplatform.resolver.ResourceResolver;
 
 /**
@@ -25,8 +23,7 @@ import org.exoplatform.resolver.ResourceResolver;
  * tam.nguyen@exoplatform.com Mar 17, 2009
  */
 
-public class TemplateStatistic implements ManagementAware {
-  private ManagementContext context;
+public class TemplateStatistic {
 
   private final long[]      times        = new long[1000];
 
@@ -79,11 +76,11 @@ public class TemplateStatistic implements ManagementAware {
   }
 
   public double getMaxTime() {
-    return ((double) maxTime) / 60;
+    return maxTime;
   }
 
   public double getMinTime() {
-    return ((double) minTime) / 60;
+    return minTime;
   }
 
   public double getAverageTime() {
@@ -91,15 +88,11 @@ public class TemplateStatistic implements ManagementAware {
     for (int index = 0; index < length; index++) {
       sumTime += times[index];
     }
-    return (length == 0) ? 0 : ((double) sumTime) / length / 60;
+    return (length == 0) ? 0 : ((double) sumTime) / length;
   }
 
   public long executionCount() {
     return countRequest;
-  }
-
-  public void setContext(ManagementContext context) {
-    this.context = context;
   }
 
   public void setResolver(ResourceResolver resolver) {

@@ -25,13 +25,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.exoplatform.application.registry.Application;
 import org.exoplatform.application.registry.ApplicationRegistryService;
-import org.exoplatform.management.ManagementAware;
-import org.exoplatform.management.ManagementContext;
 import org.exoplatform.management.annotations.Managed;
 import org.exoplatform.management.annotations.ManagedDescription;
+import org.exoplatform.management.annotations.ManagedName;
 import org.exoplatform.management.jmx.annotations.NameTemplate;
 import org.exoplatform.management.jmx.annotations.Property;
 import org.picocontainer.Startable;
@@ -41,15 +41,13 @@ import org.picocontainer.Startable;
  * @version $Revision$
  */
 @Managed
-@NameTemplate(@Property(key = "service", value = "ApplicationStatistic"))
-@ManagedDescription("Application manager")
-public class ApplicationStatisticService implements ManagementAware, Startable {
-
-  private ManagementContext                 context;
+@NameTemplate(@Property(key = "service", value = "applicationstatistic"))
+@ManagedDescription("Application statistic service")
+public class ApplicationStatisticService implements Startable {
 
   private ApplicationRegistryService        appRegistryService;
 
-  private Map<String, ApplicationStatistic> apps = new ConcurrentHashMap<String, ApplicationStatistic>();
+  private ConcurrentMap<String, ApplicationStatistic> apps = new ConcurrentHashMap<String, ApplicationStatistic>();
 
   private final String                      ASC  = "ASC";
 
@@ -59,16 +57,12 @@ public class ApplicationStatisticService implements ManagementAware, Startable {
     this.appRegistryService = appRegistryService;
   }
 
-  public void setContext(ManagementContext context) {
-    this.context = context;
-  }
-
   /*
-   * returns a list of applicationId sorted alphabetically
+   * Returns the list of applicationId sorted alphabetically.
    */
   @Managed
-  @ManagedDescription("returns a list of applicationId sorted alphabetically")
-  public String[] list() {
+  @ManagedDescription("The list of application identifier sorted alphabetically")
+  public String[] getApplicationList() {
     List<Application> list = null;
     try {
       list = appRegistryService.getAllApplications();
@@ -86,11 +80,14 @@ public class ApplicationStatisticService implements ManagementAware, Startable {
   /*
    * get ApplicationStatistic by application id, if it isn't exits, create a new one
    */
-  public ApplicationStatistic getApplicationStatistic(String appId) {
+  public ApplicationStatistic getApplicationStatistic(@ManagedDescription("The application id") @ManagedName("applicationId") String appId) {
     ApplicationStatistic app = apps.get(appId);
     if (app == null) {
       app = new ApplicationStatistic(appId);
-      apps.put(appId, app);
+      ApplicationStatistic existing = apps.putIfAbsent(appId, app);
+      if (existing != null) {
+        app = existing;
+      }
     }
     return app;
   }
@@ -99,39 +96,39 @@ public class ApplicationStatisticService implements ManagementAware, Startable {
    * return max time of an specify application
    */
   @Managed
-  @ManagedDescription("return max time of an specify application")
-  public double getMaxTime(String appId) {
-    ApplicationStatistic app = apps.get(appId);
-    return app.getMaxTime();
+  @ManagedDescription("The maximum execution time of a specified application in seconds")
+  public double getMaxTime(@ManagedDescription("The application id") @ManagedName("applicationId") String appId) {
+    ApplicationStatistic app = getApplicationStatistic(appId);
+    return toSeconds(app.getMaxTime());
   }
 
   /*
    * return min time of an specify application
    */
   @Managed
-  @ManagedDescription("return min time of an specify application")
-  public double getMinTime(String appId) {
-    ApplicationStatistic app = apps.get(appId);
-    return app.getMinTime();
+  @ManagedDescription("The minimum execution time of a specified application in seconds")
+  public double getMinTime(@ManagedDescription("The application id") @ManagedName("applicationId") String appId) {
+    ApplicationStatistic app = getApplicationStatistic(appId);
+    return toSeconds(app.getMinTime());
   }
 
   /*
    * return average time of an specify application
    */
   @Managed
-  @ManagedDescription("return average time of an specify application")
-  public double getAverageTime(String appId) {
-    ApplicationStatistic app = apps.get(appId);
-    return app.getAverageTime();
+  @ManagedDescription("Return the average execution time of a specified application in seconds")
+  public double getAverageTime(@ManagedDescription("The application id") @ManagedName("applicationId") String appId) {
+    ApplicationStatistic app = getApplicationStatistic(appId);
+    return toSeconds(app.getAverageTime());
   }
 
   /*
    * return count of an specify application
    */
   @Managed
-  @ManagedDescription("return count of an specify application")
-  public long executionCount(String appId) {
-    ApplicationStatistic app = apps.get(appId);
+  @ManagedDescription("The execution count of a specified application")
+  public long getExecutionCount(@ManagedDescription("The application id") @ManagedName("applicationId") String appId) {
+    ApplicationStatistic app = getApplicationStatistic(appId);
     return app.executionCount();
   }
 
@@ -139,8 +136,8 @@ public class ApplicationStatisticService implements ManagementAware, Startable {
    * returns  10 slowest applications
    */
   @Managed
-  @ManagedDescription("returns  10 slowest applications")
-  public String[] slowestApplications() {
+  @ManagedDescription("The list of the 10 slowest applications")
+  public String[] getSlowestApplications() {
     List<Application> list = null;
     Map application = new HashMap();
     try {
@@ -164,8 +161,8 @@ public class ApplicationStatisticService implements ManagementAware, Startable {
    * returns  10 fastest applications
    */
   @Managed
-  @ManagedDescription("returns  10 fastest applications")
-  public String[] fastestApplications() {
+  @ManagedDescription("The list of the 10 fastest applications")
+  public String[] getFastestApplications() {
     List<Application> list = null;
     Map application = new HashMap();
     try {
@@ -189,8 +186,8 @@ public class ApplicationStatisticService implements ManagementAware, Startable {
    * returns  10 most executed applications
    */
   @Managed
-  @ManagedDescription("returns  10 most executed applications")
-  public String[] mostExecutedApplications() {
+  @ManagedDescription("The list of the 10 most executed applications")
+  public String[] getMostExecutedApplications() {
     List<Application> list = null;
     Map application = new HashMap();
     try {
@@ -257,6 +254,10 @@ public class ApplicationStatisticService implements ManagementAware, Startable {
     }
     return app;
 
+  }
+
+  private double toSeconds(double value) {
+    return value == -1 ? -1 : value / 1000D;
   }
 
   public void start() {

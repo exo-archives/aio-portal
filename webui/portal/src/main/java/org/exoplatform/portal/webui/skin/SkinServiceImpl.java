@@ -39,6 +39,7 @@ import javax.servlet.ServletContext;
 import org.apache.commons.logging.Log;
 import org.exoplatform.management.annotations.Managed;
 import org.exoplatform.management.annotations.ManagedDescription;
+import org.exoplatform.management.annotations.ManagedName;
 import org.exoplatform.management.jmx.annotations.NameTemplate;
 import org.exoplatform.management.jmx.annotations.Property;
 import org.exoplatform.services.log.ExoLogger;
@@ -402,8 +403,8 @@ public class SkinServiceImpl implements SkinService {
   }
   
   @Managed
-  @ManagedDescription ("Get list of registered skins ")
-  public String[] getListSkinConfigs() {
+  @ManagedDescription ("The list of registered skins identifiers")
+  public String[] getSkinConfigList() {
 	// get all available skin
     List<String> availableSkin = new ArrayList<String>() ;
     for(String skin : availableSkins_) {
@@ -419,19 +420,14 @@ public class SkinServiceImpl implements SkinService {
   @ManagedDescription ("Reload all skins")
   public void reloadAllSkin() {
 	// remove all ltCache, rtCache
-	Set<String> keys = ltCache.keySet();
-    
-	for(String key : keys) {
-      ltCache.remove(key) ;
-      rtCache.remove(key) ;
-    }
-	
+    ltCache.clear();
+    rtCache.clear();
   }
   
   @Managed
-  @ManagedDescription ("Reload skin up to skinID")
-  public void reloadSkinBySkinID(String skinID) {
-	ltCache.remove(skinID);
-	rtCache.remove(skinID);
+  @ManagedDescription ("Reload a specified skin")
+  public void reloadSkin(@ManagedDescription("The skin id") @ManagedName("skinId") String skinId) {
+	  ltCache.remove(skinId);
+	  rtCache.remove(skinId);
   }
 }

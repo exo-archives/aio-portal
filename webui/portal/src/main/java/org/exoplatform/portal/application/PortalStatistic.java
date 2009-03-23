@@ -5,12 +5,10 @@ import org.exoplatform.portal.application.util.LongSampler;
 
 public class PortalStatistic {
 
-  private String                   portalName;
-
   /** . */
   private static final int         ONE_SECOND   = 20000;
 
-  private String                   appId;
+  private final String             appId;
 
   private final LongSampler        times        = new LongSampler(1000);
 
@@ -46,6 +44,7 @@ public class PortalStatistic {
     // generate first value for min time
     minTime.setIfLower(timeMillis);
 
+    //
     countRequest++;
   }
 
@@ -54,7 +53,7 @@ public class PortalStatistic {
     if (maxTime == -1) {
       return -1;
     }
-    return ((double) maxTime) / 60D;
+    return maxTime;
   }
 
   public double getMinTime() {
@@ -62,11 +61,11 @@ public class PortalStatistic {
     if (minTime == -1) {
       return -1;
     }
-    return ((double) minTime) / 60D;
+    return minTime;
   }
 
   public double getAverageTime() {
-    return times.average() / 60D;
+    return times.average();
   }
 
   /**

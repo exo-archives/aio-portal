@@ -25,10 +25,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.exoplatform.management.ManagementAware;
-import org.exoplatform.management.ManagementContext;
 import org.exoplatform.management.annotations.Managed;
 import org.exoplatform.management.annotations.ManagedDescription;
+import org.exoplatform.management.annotations.ManagedName;
 import org.exoplatform.management.jmx.annotations.NameTemplate;
 import org.exoplatform.management.jmx.annotations.Property;
 import org.exoplatform.resolver.ResourceResolver;
@@ -39,22 +38,15 @@ import org.exoplatform.resolver.ResourceResolver;
  */
 
 @Managed
-@NameTemplate(@Property(key = "service", value = "TemplateStatistic"))
-@ManagedDescription("Template manager")
-public class TemplateManaged implements ManagementAware {
-  /** . */
-  private ManagementContext              context;
+@NameTemplate(@Property(key = "service", value = "templatestatistic"))
+@ManagedDescription("Template statistic service")
+public class TemplateManaged {
 
   private Map<String, TemplateStatistic> apps = new ConcurrentHashMap<String, TemplateStatistic>();
 
   private final String                   ASC  = "ASC";
 
   private final String                   DESC = "DESC";
-
-  // *****
-  public void setContext(ManagementContext context) {
-    this.context = context;
-  }
 
   private TemplateService service;
 
@@ -80,8 +72,8 @@ public class TemplateManaged implements ManagementAware {
    * returns a list of templateId sorted alphabetically
    */
   @Managed
-  @ManagedDescription("returns a list of templateId sorted alphabetically")
-  public String[] list() {
+  @ManagedDescription("The list of template identifiers sorted alphabetically")
+  public String[] getTemplateList() {
     List<Object> list = new LinkedList<Object>(apps.entrySet());
     String[] app = new String[list.size()];
     int index = 0;
@@ -110,8 +102,8 @@ public class TemplateManaged implements ManagementAware {
    * Clear the template cache by name
    */
   @Managed
-  @ManagedDescription("Clear the template cache")
-  public void reload(String name) {
+  @ManagedDescription("Clear the template cache for a specified template identifier")
+  public void reload(@ManagedDescription("The template id") @ManagedName("templateId") String name) {
     try {
       TemplateStatistic app = apps.get(name);
       ResourceResolver resolver = app.getResolver();
@@ -125,28 +117,28 @@ public class TemplateManaged implements ManagementAware {
    * return max time of an specify template
    */
   @Managed
-  @ManagedDescription("return max time of an specify template")
-  public double getMaxTime(String name) {
+  @ManagedDescription("The maximum rendering time of a specified template in seconds")
+  public double getMaxTime(@ManagedDescription("The template id") @ManagedName("templateId") String name) {
     TemplateStatistic app = apps.get(name);
-    return app.getMaxTime();
+    return toSeconds(app.getMaxTime());
   }
 
   /*
    * return min time of an specify template
    */
   @Managed
-  @ManagedDescription("return min time of an specify template")
-  public double getMinTime(String name) {
+  @ManagedDescription("The minimum rendering time of a specified template in seconds")
+  public double getMinTime(@ManagedDescription("The template id") @ManagedName("templateId") String name) {
     TemplateStatistic app = apps.get(name);
-    return app.getMinTime();
+    return toSeconds(app.getMinTime());
   }
 
   /*
    * return count of an specify template
    */
   @Managed
-  @ManagedDescription("return count of an specify template")
-  public long executionCount(String name) {
+  @ManagedDescription("The rendering count of a specified template")
+  public long getExecutionCount(@ManagedDescription("The template id") @ManagedName("templateId") String name) {
     TemplateStatistic app = apps.get(name);
     return app.executionCount();
   }
@@ -155,18 +147,18 @@ public class TemplateManaged implements ManagementAware {
    * return average time of an specify template
    */
   @Managed
-  @ManagedDescription("return average time of an specify template")
-  public double getAverageTime(String name) {
+  @ManagedDescription("The average rendering time of a specified template in seconds")
+  public double getAverageTime(@ManagedDescription("The template id") @ManagedName("templateId") String name) {
     TemplateStatistic app = apps.get(name);
-    return app.getAverageTime();
+    return toSeconds(app.getAverageTime());
   }
 
   /*
    * returns 10 slowest template
    */
   @Managed
-  @ManagedDescription("returns 10 slowest template")
-  public String[] slowestTemplate() {
+  @ManagedDescription("The list of the 10 slowest templates")
+  public String[] getSlowestTemplate() {
 
     Map application = new HashMap();
     List<Object> list = new LinkedList<Object>(apps.entrySet());
@@ -183,15 +175,15 @@ public class TemplateManaged implements ManagementAware {
    * returns 10 slowest template
    */
   @Managed
-  @ManagedDescription("returns 10 most executed template")
-  public String[] mostExecutedTemplate() {
+  @ManagedDescription("The list of the 10 most executed templates")
+  public String[] getMostExecutedTemplate() {
 
     Map application = new HashMap();
     List<Object> list = new LinkedList<Object>(apps.entrySet());
     for (Iterator it = list.iterator(); it.hasNext();) {
       Map.Entry entry = (Map.Entry) it.next();
       String url = (String) entry.getKey();
-      application.put(url, executionCount(url));
+      application.put(url, getExecutionCount(url));
     }
 
     return sort(application, DESC);
@@ -201,8 +193,8 @@ public class TemplateManaged implements ManagementAware {
    * returns 10 fastest template
    */
   @Managed
-  @ManagedDescription("returns 10 fastest template")
-  public String[] fastestApplications() {
+  @ManagedDescription("The list of the 10 fastest templates")
+  public String[] getFastestTemplates() {
 
     Map application = new HashMap();
     List<Object> list = new LinkedList<Object>(apps.entrySet());
@@ -259,5 +251,9 @@ public class TemplateManaged implements ManagementAware {
     }
     return app;
 
+  }
+
+  private double toSeconds(double value) {
+    return value == -1 ? -1 : value / 1000D;
   }
 }

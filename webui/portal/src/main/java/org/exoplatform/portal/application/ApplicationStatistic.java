@@ -13,7 +13,7 @@ public class ApplicationStatistic {
   /** . */
   private static final int         ONE_SECOND   = 20000;
 
-  private String                   appId;
+  private final String             appId;
 
   private final LongSampler        times        = new LongSampler(1000);
 
@@ -23,7 +23,7 @@ public class ApplicationStatistic {
 
   private final AtomicPositiveLong minTime      = new AtomicPositiveLong();
 
-  // count varible, store number of request
+  // count variable, store number of request
   private volatile long            countRequest = 0;
 
   public ApplicationStatistic(String appId) {
@@ -49,6 +49,7 @@ public class ApplicationStatistic {
     // generate first value for min time
     minTime.setIfLower(timeMillis);
 
+    //
     countRequest++;
   }
 
@@ -57,7 +58,7 @@ public class ApplicationStatistic {
     if (maxTime == -1) {
       return -1;
     }
-    return ((double) maxTime) / 60D;
+    return maxTime;
   }
 
   public double getMinTime() {
@@ -65,11 +66,11 @@ public class ApplicationStatistic {
     if (minTime == -1) {
       return -1;
     }
-    return ((double) minTime) / 60D;
+    return minTime;
   }
 
   public double getAverageTime() {
-    return times.average() / 60D;
+    return times.average();
   }
 
   /**
