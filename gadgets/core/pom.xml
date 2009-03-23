@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.exoplatform.portal</groupId>
 		<artifactId>exo.portal.gadgets</artifactId>
-		<version>2.5.3rc1</version>
+		<version>2.5.3-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>exo.portal.gadgets-core</artifactId>
@@ -77,7 +77,7 @@
             <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.component.web</artifactId>
-      <version>2.5.3rc1</version>
+      <version>2.5.3-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
 		<dependency>
