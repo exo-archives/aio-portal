@@ -919,6 +919,9 @@
       <Loading>...تحميل</Loading>
       <Abort>الغاء</Abort>
     </label>
+    <msg>
+      <deletePageBody>This component contains PageBody. Can not delete !</deletePageBody>
+    </msg>
   </UIPortalApplication>
   <!--
   #############################################################################
