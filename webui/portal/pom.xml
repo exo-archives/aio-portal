@@ -22,13 +22,13 @@
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.webui.core</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
+      <version>2.5.3-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.webui.eXo</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
+      <version>2.5.3-SNAPSHOT</version>
     </dependency>
 
     <dependency>
@@ -40,13 +40,13 @@
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.component.portal</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
+      <version>2.5.3-SNAPSHOT</version>
     </dependency>
 
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.component.application-registry</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
+      <version>2.5.3-SNAPSHOT</version>
     </dependency>
 
     <dependency>
@@ -63,7 +63,7 @@
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.gadgets-core</artifactId>
-      <version>${org.exoplatform.portal.version}</version>
+      <version>2.5.3-SNAPSHOT</version>
     </dependency>
   </dependencies>
 </project>
