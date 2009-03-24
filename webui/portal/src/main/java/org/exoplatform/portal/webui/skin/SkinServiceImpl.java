@@ -408,7 +408,7 @@ public class SkinServiceImpl implements SkinService {
   
   @Managed
   @ManagedDescription ("The list of registered skins identifiers")
-  public String[] getSkinConfigList() {
+  public String[] getSkinList() {
 	// get all available skin
     List<String> availableSkin = new ArrayList<String>() ;
     for(String skin : availableSkins_) {
