@@ -1719,6 +1719,11 @@
       <ok>نعم</ok>
     </button>
     <Close>Close Window</Close>
+    <label>
+      <Info>Information</Info>
+      <Warning>Warning</Warning>
+      <Error>Error</Error>
+    </label>
   </UIPopupMessages>
   <!--
   ############################################################################
