@@ -422,7 +422,7 @@ public class SkinServiceImpl implements SkinService {
   
   @Managed
   @ManagedDescription ("Reload all skins")
-  public void reloadAllSkin() {
+  public void reloadSkins() {
 	// remove all ltCache, rtCache
     ltCache.clear();
     rtCache.clear();
