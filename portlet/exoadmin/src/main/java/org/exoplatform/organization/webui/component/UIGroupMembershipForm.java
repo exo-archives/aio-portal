@@ -186,8 +186,7 @@ public class UIGroupMembershipForm extends UIForm {
       String listNotExist = null;
       for(String username : userNames) {
         if(username == null || username.trim().length() == 0) {
-          uiApp.addMessage(new ApplicationMessage("UIGroupMembershipForm.msg.user-not-empty", null)) ;
-          return ;
+          continue ;
         }
         User user = service.getUserHandler().findUserByName(username);
         if(user == null) {

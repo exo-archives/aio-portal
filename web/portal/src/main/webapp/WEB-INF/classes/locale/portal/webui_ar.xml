@@ -406,7 +406,7 @@
       <user-not-exist>المستخدم "(0)" لا وجود له</user-not-exist>
       <user-not-empty>اسم المستخدم لا يمكن أن يكون فارغا</user-not-empty>
       <Invalid-char>الميدان"(0)" يسمح: حروف، أرقام، التشديد على نقطة فقط والتأكيد على اندفاعة</Invalid-char>
-      <duplicate-user>المستخدم "(0)" متكرر</duplicate-user>
+      <duplicate-user>Some users is duplicated. Please re-check it!</duplicate-user>
       <group-not-select>!الرجاء اختيار مجموعة</group-not-select>
       <membership-exist>!نوع العضوية للمستخدم "(0)"  موجود في المجموعة "(1)"، يرجى اختيار واحد آخر</membership-exist>
     </msg>
