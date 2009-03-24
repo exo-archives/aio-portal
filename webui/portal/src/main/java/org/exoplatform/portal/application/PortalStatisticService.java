@@ -27,7 +27,6 @@ import javax.jcr.NodeIterator;
 import javax.jcr.Session;
 import javax.jcr.query.QueryManager;
 import javax.jcr.query.QueryResult;
-import org.exoplatform.management.ManagementContext;
 import org.exoplatform.management.annotations.Managed;
 import org.exoplatform.management.annotations.ManagedDescription;
 import org.exoplatform.management.annotations.ManagedName;
@@ -65,7 +64,7 @@ public class PortalStatisticService implements Startable {
    * Returns the list of the known portal names.
    */
   @Managed
-  @ManagedDescription("The list of known portal identifiers")
+  @ManagedDescription("The identifier list of known portals")
   public String[] getPortalList() {
     ArrayList<String> list = new ArrayList<String>();
     SessionProvider sessionProvider = SessionProvider.createSystemProvider();
