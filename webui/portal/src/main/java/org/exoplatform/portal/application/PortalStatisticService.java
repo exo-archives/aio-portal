@@ -44,7 +44,11 @@ import org.picocontainer.Startable;
  * @version $Revision$
  */
 @Managed
-@NameTemplate(@Property(key = "service", value = "portalstatistic"))
+@NameTemplate({
+  @Property(key = "view", value = "portal"),
+  @Property(key = "service", value = "statistic"),
+  @Property(key = "type", value = "portal")
+})
 @ManagedDescription("The portal statistic service")
 public class PortalStatisticService implements Startable {
 
@@ -64,7 +68,7 @@ public class PortalStatisticService implements Startable {
    * Returns the list of the known portal names.
    */
   @Managed
-  @ManagedDescription("The identifier list of known portals")
+  @ManagedDescription("The list of identifier of the known portals")
   public String[] getPortalList() {
     ArrayList<String> list = new ArrayList<String>();
     SessionProvider sessionProvider = SessionProvider.createSystemProvider();

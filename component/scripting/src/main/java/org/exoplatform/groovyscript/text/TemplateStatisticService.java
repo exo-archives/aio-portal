@@ -30,7 +30,6 @@ import org.exoplatform.management.annotations.ManagedDescription;
 import org.exoplatform.management.annotations.ManagedName;
 import org.exoplatform.management.jmx.annotations.NameTemplate;
 import org.exoplatform.management.jmx.annotations.Property;
-import org.exoplatform.resolver.ResourceResolver;
 
 /**
  * Created by The eXo Platform SAS Author : tam.nguyen tamndrok@gmail.com Mar
@@ -38,21 +37,21 @@ import org.exoplatform.resolver.ResourceResolver;
  */
 
 @Managed
-@NameTemplate(@Property(key = "service", value = "templatestatistic"))
+@NameTemplate({
+  @Property(key = "view", value = "portal"),
+  @Property(key = "service", value = "statistic"),
+  @Property(key = "type", value = "template")
+})
 @ManagedDescription("Template statistic service")
-public class TemplateManaged {
+public class TemplateStatisticService {
 
-  private Map<String, TemplateStatistic> apps = new ConcurrentHashMap<String, TemplateStatistic>();
+  final Map<String, TemplateStatistic> apps = new ConcurrentHashMap<String, TemplateStatistic>();
 
   private final String                   ASC  = "ASC";
 
   private final String                   DESC = "DESC";
 
-  private TemplateService service;
-
-  public TemplateManaged(TemplateService service) {
-    this.service = service;
-    service.managed = this;
+  public TemplateStatisticService() {
   }
 
   /*
@@ -83,34 +82,6 @@ public class TemplateManaged {
       index++;
     }
     return app;
-  }
-
-  /*
-   * Clear the templates cache
-   */
-  @Managed
-  @ManagedDescription("Clear the template cache")
-  public void reload() {
-    try {
-      service.getTemplatesCache().clearCache();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  /*
-   * Clear the template cache by name
-   */
-  @Managed
-  @ManagedDescription("Clear the template cache for a specified template identifier")
-  public void reload(@ManagedDescription("The template id") @ManagedName("templateId") String name) {
-    try {
-      TemplateStatistic app = apps.get(name);
-      ResourceResolver resolver = app.getResolver();
-      service.getTemplatesCache().remove(resolver.createResourceId(name));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
   }
 
   /*
@@ -158,7 +129,7 @@ public class TemplateManaged {
    */
   @Managed
   @ManagedDescription("The list of the 10 slowest templates")
-  public String[] getSlowestTemplate() {
+  public String[] getSlowestTemplates() {
 
     Map application = new HashMap();
     List<Object> list = new LinkedList<Object>(apps.entrySet());
@@ -176,7 +147,7 @@ public class TemplateManaged {
    */
   @Managed
   @ManagedDescription("The list of the 10 most executed templates")
-  public String[] getMostExecutedTemplate() {
+  public String[] getMostExecutedTemplates() {
 
     Map application = new HashMap();
     List<Object> list = new LinkedList<Object>(apps.entrySet());

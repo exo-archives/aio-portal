@@ -41,7 +41,11 @@ import org.picocontainer.Startable;
  * @version $Revision$
  */
 @Managed
-@NameTemplate(@Property(key = "service", value = "applicationstatistic"))
+@NameTemplate({
+  @Property(key = "view", value = "portal"),
+  @Property(key = "service", value = "statistic"),
+  @Property(key = "type", value = "application")
+})
 @ManagedDescription("Application statistic service")
 public class ApplicationStatisticService implements Startable {
 
@@ -61,7 +65,7 @@ public class ApplicationStatisticService implements Startable {
    * Returns the list of applicationId sorted alphabetically.
    */
   @Managed
-  @ManagedDescription("The list of application identifier sorted alphabetically")
+  @ManagedDescription("The list of application identifiers sorted alphabetically")
   public String[] getApplicationList() {
     List<Application> list = null;
     try {

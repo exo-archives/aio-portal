@@ -48,7 +48,11 @@ import org.exoplatform.commons.utils.PropertyManager;
 import org.exoplatform.commons.utils.Safe;
 
 @Managed
-@NameTemplate(@Property(key="service", value="skin"))
+@NameTemplate({
+  @Property(key = "view", value = "portal"),
+  @Property(key = "service", value = "management"),
+  @Property(key="type", value="skin")
+})
 @ManagedDescription("Skin service")
 public class SkinServiceImpl implements SkinService {
 

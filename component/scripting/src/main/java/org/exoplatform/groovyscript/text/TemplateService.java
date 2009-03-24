@@ -24,25 +24,40 @@ import java.io.InputStream;
 import org.exoplatform.commons.utils.IOUtil;
 import org.exoplatform.container.xml.InitParams;
 import org.exoplatform.management.annotations.ManagedBy;
+import org.exoplatform.management.annotations.Managed;
+import org.exoplatform.management.annotations.ManagedDescription;
+import org.exoplatform.management.annotations.ManagedName;
+import org.exoplatform.management.jmx.annotations.NameTemplate;
+import org.exoplatform.management.jmx.annotations.Property;
 import org.exoplatform.resolver.ResourceResolver;
 import org.exoplatform.services.cache.CacheService;
 import org.exoplatform.services.cache.ExoCache;
+import org.picocontainer.Startable;
+
 /**
  * Created by The eXo Platform SAS
  * Dec 26, 2005
  */
-@ManagedBy(TemplateManaged.class)
-public class TemplateService  {
+@Managed
+@NameTemplate({
+  @Property(key = "view", value = "portal"),
+  @Property(key = "service", value = "management"),
+  @Property(key = "type", value = "template")
+})
+@ManagedDescription("Template management service")
+public class TemplateService implements Startable {
   
   private SimpleTemplateEngine engine_  ;
   private ExoCache templatesCache_ ;
-  public TemplateManaged managed;
+  private TemplateStatisticService statisticService;
   private boolean cacheTemplate_  =  true ;
-  
+
   @SuppressWarnings("unused")
-  public TemplateService(InitParams params, 
+  public TemplateService(InitParams params,
+                         TemplateStatisticService statisticService,
                          CacheService cservice) throws Exception {
     engine_ = new SimpleTemplateEngine() ;
+    this.statisticService = statisticService;
     setTemplatesCache(cservice.getCacheInstance(TemplateService.class.getName()));
     getTemplatesCache().setLiveTime(10000) ;
   }
@@ -58,7 +73,7 @@ public class TemplateService  {
 		
 		long endTime = System.currentTimeMillis();
     
-    TemplateStatistic templateStatistic = managed.getTemplateStatistic(name);
+    TemplateStatistic templateStatistic = statisticService.getTemplateStatistic(name);
     templateStatistic.setTime(endTime - startTime);
     templateStatistic.setResolver(context.getResourceResolver());
   }
@@ -117,13 +132,44 @@ public class TemplateService  {
   }
 
   public void setTemplatesCache(ExoCache templatesCache_) {
-	this.templatesCache_ = templatesCache_;
+	  this.templatesCache_ = templatesCache_;
   }
 	
   public ExoCache getTemplatesCache() {
-	return templatesCache_;
+	  return templatesCache_;
   }
 
-  
+  /*
+   * Clear the templates cache
+   */
+  @Managed
+  @ManagedDescription("Clear the template cache")
+  public void reloadTemplates() {
+    try {
+      templatesCache_.clearCache();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 
+  /*
+   * Clear the template cache by name
+   */
+  @Managed
+  @ManagedDescription("Clear the template cache for a specified template identifier")
+  public void reloadTemplate(@ManagedDescription("The template id") @ManagedName("templateId") String name) {
+    try {
+      TemplateStatistic app = statisticService.apps.get(name);
+      ResourceResolver resolver = app.getResolver();
+      templatesCache_.remove(resolver.createResourceId(name));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void start() {
+  }
+
+  public void stop() {
+  }
 }
