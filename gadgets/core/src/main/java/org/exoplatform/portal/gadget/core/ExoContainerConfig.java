@@ -27,9 +27,6 @@ import com.google.inject.name.Named;
 import com.google.inject.Inject;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileNotFoundException;
-import java.io.OutputStream;
 import java.io.Writer;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -62,7 +59,7 @@ public class ExoContainerConfig extends JsonContainerConfig {
   private Log log = ExoLogger.getLogger(ExoContainerConfig.class);
 
   /** . */
-  private String keyPath;
+  private static volatile String _keyPath;
 
   @Inject
   public ExoContainerConfig(@Named("shindig.containers.default") String s) throws ContainerConfigException {
@@ -104,7 +101,7 @@ public class ExoContainerConfig extends JsonContainerConfig {
         out.write(key);
         out.write('\n');
         log.info("Generated key file " + keyPath + " for eXo Gadgets");
-        this.keyPath = keyPath;
+        setKeyPath(keyPath);
       } catch (IOException e) {
         log.error("Coult not create key file " + keyPath, e);
       } finally {
@@ -114,17 +111,38 @@ public class ExoContainerConfig extends JsonContainerConfig {
       log.debug("Found key file " + keyPath + " but it's not a file");
     }  else {
       log.info("Found key file " + keyPath + " for gadgets security");
-      this.keyPath = keyPath;
+      setKeyPath(keyPath);
+    }
+  }
+
+  private void setKeyPath(String keyPath) {
+    // _keyPath is volatile so no concurrent writes and read are safe
+    synchronized (ExoContainerConfig.class) {
+      if (_keyPath != null && !_keyPath.equals(keyPath)) {
+        throw new IllegalStateException("There is already a configured key path old=" + _keyPath + " new=" + keyPath);
+      }
+      _keyPath = keyPath;
     }
   }
 
 
   @Override
   public Object getJson(String container, String parameter) {
-    if (parameter.equals(BlobCrypterSecurityTokenDecoder.SECURITY_TOKEN_KEY_FILE) && keyPath != null) {
-      return keyPath;
+    if (parameter.equals(BlobCrypterSecurityTokenDecoder.SECURITY_TOKEN_KEY_FILE) && _keyPath != null) {
+      return _keyPath;
     }
     return super.getJson(container, parameter);
+  }
+
+  /**
+   * It's not public as we don't want to expose it to the outter world. The fact that this class
+   * is instantiated by Guice and the ExoDefaultSecurityTokenGenerator is managed by exo kernel
+   * force us to use static reference to share the keyPath value.
+   *
+   * @return the key path
+   */
+  static String getKeyPath() {
+    return _keyPath;
   }
 
   /**
