@@ -14,10 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.portal.application;
+package org.exoplatform.commons.utils;
 
 import junit.framework.TestCase;
-import org.exoplatform.portal.application.util.AtomicPositiveLong;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>

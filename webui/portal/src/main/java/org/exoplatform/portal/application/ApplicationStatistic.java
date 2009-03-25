@@ -1,7 +1,7 @@
 package org.exoplatform.portal.application;
 
-import org.exoplatform.portal.application.util.AtomicPositiveLong;
-import org.exoplatform.portal.application.util.LongSampler;
+import org.exoplatform.commons.utils.AtomicPositiveLong;
+import org.exoplatform.commons.utils.LongSampler;
 
 /**
  * Created by The eXo Platform SAS Author : tam.nguyen

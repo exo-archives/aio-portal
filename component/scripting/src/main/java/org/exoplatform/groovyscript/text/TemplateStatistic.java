@@ -16,6 +16,8 @@
  */
 package org.exoplatform.groovyscript.text;
 
+import org.exoplatform.commons.utils.AtomicPositiveLong;
+import org.exoplatform.commons.utils.LongSampler;
 import org.exoplatform.resolver.ResourceResolver;
 
 /**
@@ -25,22 +27,16 @@ import org.exoplatform.resolver.ResourceResolver;
 
 public class TemplateStatistic {
 
-  private final long[]      times        = new long[1000];
+  private final LongSampler        times        = new LongSampler(1000);
 
   private String            name;
 
-  // counter varible, for first in first out purpose in times array
-  private int               counter      = 0;
+  private final AtomicPositiveLong maxTime      = new AtomicPositiveLong();
 
-  private long              maxTime      = 0;
+  private final AtomicPositiveLong minTime      = new AtomicPositiveLong();
 
-  private long              minTime      = 0;
-
-  // length varible, store the length of array
-  private int               length       = 0;
-
-  // count varible, store number of request
-  private long              countRequest = 0;
+  // count variable, store number of request
+  private volatile long            countRequest = 0;
 
   // resolver for name
   private ResourceResolver  resolver;
@@ -49,46 +45,39 @@ public class TemplateStatistic {
     this.name = name;
   }
 
-  public void setTime(long time) {
+  public void setTime(long timeMillis) {
 
-    times[counter] = time;
+    //
+    times.add(timeMillis);
+    
     // if time > max time then put a new max time value
-    if (time > maxTime) {
-      maxTime = time;
-    }
+    maxTime.setIfGreater(timeMillis);
+
     // generate first value for min time
-    if (minTime == 0) {
-      minTime = time;
-    }
-    // if time < min time then put a new min time value
-    if (time < minTime) {
-      minTime = time;
-    }
-    counter++;
-    length++;
+    minTime.setIfLower(timeMillis);
+
+    //
     countRequest++;
-    if (counter == times.length) {
-      counter = 0;
-    }
-    if (length >= times.length) {
-      length = times.length;
-    }
   }
 
   public double getMaxTime() {
+    long maxTime = this.maxTime.get();
+    if (maxTime == -1) {
+      return -1;
+    }
     return maxTime;
   }
 
   public double getMinTime() {
+    long minTime = this.minTime.get();
+    if (minTime == -1) {
+      return -1;
+    }
     return minTime;
   }
 
   public double getAverageTime() {
-    long sumTime = 0;
-    for (int index = 0; index < length; index++) {
-      sumTime += times[index];
-    }
-    return (length == 0) ? 0 : ((double) sumTime) / length;
+    return times.average();
   }
 
   public long executionCount() {

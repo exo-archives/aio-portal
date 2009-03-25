@@ -14,17 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.portal.application;
+package org.exoplatform.commons.utils;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 import junit.framework.TestCase;
-
-import java.util.Iterator;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ArrayList;
-import java.lang.ref.WeakReference;
-
-import org.exoplatform.portal.application.util.BoundedBuffer;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
