@@ -163,34 +163,32 @@ UIExoStartMenu.prototype.createSlide = function(menuItem) {
 		if(!menuContainer.curentHeight || (menuContainer.curentHeight != curentHeight)) {
 			eXo.portal.UIExoStartMenu.initSlide(menuContainer, curentHeight) ;
 		}
-		topElement.onmousedown = function() {
+		topElement.onmousedown = function(evt) {
+			if(!evt) evt = window.event ;
+      evt.cancelBubble = true;
 			eXo.portal.VerticalScrollManager.scrollComponent(blockMenu.id, true, 15) ;
 		};
-//		topElement.onmouseoup = function() {
-//			if (menuContainer.repeat) {
-//				clearTimeout(menuContainer.repeat) ;
-//				menuContainer.repeat = null ;
-//			}
-//		};
+		topElement.onmouseup = function(evt) {
+			if(!evt) evt = window.event ;
+      evt.cancelBubble = true;
+      eXo.portal.VerticalScrollManager.cancelScroll() ;
+		};
 		topElement.onclick = function(event) {
-			clearTimeout(menuContainer.repeat) ;
-			menuContainer.repeat = null ;
 			event = event || window.event ;
 			event.cancelBubble = true ;
 		};
 		
-		bottomElement.onmousedown = function() {
+		bottomElement.onmousedown = function(evt) {
+			if(!evt) evt = window.event ;
+			evt.cancelBubble = true;
 			eXo.portal.VerticalScrollManager.scrollComponent(blockMenu.id, false, 15) ;
 		};
-//		bottomElement.onmouseoup = function() {
-//			if (menuContainer.repeat) {
-//				clearTimeout(menuContainer.repeat) ;
-//				menuContainer.repeat = null ;
-//			}
-//		};			
+		bottomElement.onmouseup = function(evt) {
+			if(!evt) evt = window.event ;
+			evt.cancelBubble = true;
+      eXo.portal.VerticalScrollManager.cancelScroll() ;
+		};			
 		bottomElement.onclick = function(event) {
-			clearTimeout(menuContainer.repeat) ;
-			menuContainer.repeat = null ;
 			event = event || window.event ;
 			event.cancelBubble = true ;
 		};
