@@ -106,11 +106,17 @@ UIExoStartMenu.prototype.onMenuItemOver = function(event) {
 		 	var posParent = eXo.portal.UIExoStartMenu.findPositionParent(this) ;
 		 	var objTop = eXo.core.Browser.findPosY(this) ;
 		 	y = objTop - eXo.core.Browser.findPosY(posParent) ;
+		 	var topPos ;
+		 	if(document.documentElement && document.documentElement.scrollTop) {
+		 		topPos = document.documentElement.scrollTop ;
+		 	} else {
+		 		topPos = document.body.scrollTop ;
+		 	}
 		 	if(objTop + menuItemContainer.offsetHeight >= browserHeight) {
 				y += (this.offsetHeight - menuItemContainer.offsetHeight) ;
-			 	if(y + (eXo.core.Browser.findPosY(posParent) - document.documentElement.scrollTop) < 0) {
+			 	if(y + (eXo.core.Browser.findPosY(posParent) - topPos) < 0) {
 				 	var objBottom = objTop + this.offsetHeight ;
-			 		y += (browserHeight - objBottom) - (browserHeight - menuItemContainer.offsetHeight)/2 + document.documentElement.scrollTop ;
+			 		y += (browserHeight - objBottom) - (browserHeight - menuItemContainer.offsetHeight)/2 + topPos ;
 			 	}
 		 	}
 	 	} else {
