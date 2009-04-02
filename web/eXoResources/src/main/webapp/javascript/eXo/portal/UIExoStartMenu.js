@@ -91,10 +91,17 @@ UIExoStartMenu.prototype.onMenuItemOver = function(event) {
 		if (x + menuItemContainer.offsetWidth + rootX > eXo.core.Browser.getBrowserWidth()) {
     	x -= (menuItemContainer.offsetWidth + this.offsetWidth) ;
 	  }
+	  
+	  
+	  //padWidth is used for improvement PORTAL-2827
 	 	if(eXo.core.I18n.isLT()) {
-	 		if(eXo.core.Browser.isIE6()) x -= 10 ;
-	 		menuItemContainer.style.left = x + "px" ;
-	 	}	else menuItemContainer.style.right =  x + "px" ;
+		  var padWidth = eXo.core.Browser.findPosX(this) - eXo.core.Browser.findPosX(menuItemContainer.offsetParent) ;
+	 		menuItemContainer.style.left = x + padWidth + "px" ;
+	 	}	else {
+	 		var padWidth = (eXo.core.Browser.findPosX(menuItemContainer.offsetParent) + menuItemContainer.offsetParent.offsetWidth) 
+	 		    - (eXo.core.Browser.findPosX(this) + this.offsetWidth) ;
+	 		menuItemContainer.style.right = x + padWidth + "px" ;
+	 	}
 		eXo.portal.UIExoStartMenu.createSlide(this);
     eXo.portal.UIExoStartMenu.superClass.pushVisibleContainer(this.menuItemContainer.id) ;
     
