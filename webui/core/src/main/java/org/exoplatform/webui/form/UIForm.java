@@ -234,7 +234,7 @@ public class UIForm extends UIContainer  {
     b.append("')");
     return b.toString() ;
   }
-  
+
   public String getLabel(String id) throws Exception {
     WebuiRequestContext context = WebuiRequestContext.getCurrentInstance() ;
     ResourceBundle res = context.getApplicationResourceBundle() ;     

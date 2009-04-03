@@ -45,7 +45,8 @@ import org.exoplatform.webui.organization.UIUserProfileInputSet;
   events = {
     @EventConfig(listeners = UIUserInfo.SaveActionListener.class),
     @EventConfig(listeners = UIUserInfo.BackActionListener.class, phase = Phase.DECODE),
-    @EventConfig(listeners = UIUserInfo.ToggleChangePasswordActionListener.class, phase = Phase.DECODE)
+    @EventConfig(listeners = UIUserInfo.ToggleChangePasswordActionListener.class, phase = Phase.DECODE),
+    @EventConfig(listeners = UIFormTabPane.SelectTabActionListener.class, phase = Phase.DECODE)
   }
 )
 public class UIUserInfo extends UIFormTabPane { 

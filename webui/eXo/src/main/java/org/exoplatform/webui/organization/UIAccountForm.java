@@ -60,6 +60,7 @@ import org.exoplatform.webui.form.UIFormInputWithActions.ActionData;
         events = {
           @EventConfig(listeners = UIAccountForm.SaveActionListener.class ),
           @EventConfig(listeners = UIAccountForm.ResetActionListener.class, phase = Phase.DECODE),
+          @EventConfig(listeners = UIFormTabPane.SelectTabActionListener.class, phase = Phase.DECODE),
           @EventConfig(listeners = UIAccountForm.SearchUserActionListener.class, phase = Phase.DECODE)
         }
     )

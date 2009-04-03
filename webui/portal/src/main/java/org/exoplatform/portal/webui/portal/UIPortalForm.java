@@ -70,7 +70,8 @@ import org.exoplatform.webui.organization.UIListPermissionSelector.EmptyIterator
     template = "system:/groovy/webui/form/UIFormTabPane.gtmpl",     
     events = {
       @EventConfig(listeners = UIPortalForm.SaveActionListener.class),
-      @EventConfig(listeners = UIMaskWorkspace.CloseActionListener.class, phase = Phase.DECODE)
+      @EventConfig(listeners = UIMaskWorkspace.CloseActionListener.class, phase = Phase.DECODE),
+      @EventConfig(listeners = UIFormTabPane.SelectTabActionListener.class, phase = Phase.DECODE)
     }
   ),
   @ComponentConfig(

@@ -67,7 +67,8 @@ import org.exoplatform.webui.form.validator.StringLengthValidator;
     template = "system:/groovy/portal/webui/portal/UIPortletForm.gtmpl",
     events = {
       @EventConfig(listeners = UIPortletForm.SaveActionListener.class),
-      @EventConfig(listeners = UIPortletForm.CloseActionListener.class, phase = Phase.DECODE)
+      @EventConfig(listeners = UIPortletForm.CloseActionListener.class, phase = Phase.DECODE),
+      @EventConfig(listeners = UIFormTabPane.SelectTabActionListener.class, phase = Phase.DECODE)
     }
 )   
 public class UIPortletForm extends UIFormTabPane {	

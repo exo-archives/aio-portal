@@ -17,6 +17,7 @@
 package org.exoplatform.webui.form;
 
 import org.exoplatform.webui.application.WebuiRequestContext;
+import org.exoplatform.webui.application.portlet.PortletRequestContext;
 import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
@@ -64,13 +65,25 @@ abstract public class UIFormTabPane extends UIForm {
   
   public boolean hasRenderResourceTabName() { return withRenderTabName ; }
   public void setRenderResourceTabName(boolean bool) { withRenderTabName = bool ; }
+
+  @SuppressWarnings("unchecked")
+  public String eventAsync(String name, String beanId) throws Exception {
+    WebuiRequestContext context = WebuiRequestContext.getCurrentInstance() ;
+    String frAction = context.getURLBuilder().createURL(this, null, null) ;
+    StringBuilder b = new StringBuilder() ;
+    b.append(frAction) ;
+    b.append("&amp;").append(UIForm.ACTION).append("=").append(name);
+    b.append("&amp;").append(RENDER_TAB).append("=").append(beanId);    
+    return b.toString() ;
+  }
   
   static public class SelectTabActionListener extends EventListener<UIFormTabPane> {
     public void execute(Event<UIFormTabPane> event) throws Exception {
       WebuiRequestContext context = event.getRequestContext() ;
-      String renderTab = context.getRequestParameter(UIComponent.OBJECTID) ;
+      String renderTab = context.getRequestParameter(RENDER_TAB) ;
       if(renderTab == null) return;
       event.getSource().setSelectedTab(renderTab) ;
+      context.setResponseComplete(true) ;
     }
   }
 

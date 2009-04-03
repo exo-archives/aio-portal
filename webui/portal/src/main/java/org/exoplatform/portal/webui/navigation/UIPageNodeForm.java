@@ -64,7 +64,8 @@ import org.exoplatform.webui.form.validator.StringLengthValidator;
       @EventConfig(listeners = UIPageNodeForm.SaveActionListener.class ),
       @EventConfig(phase = Phase.DECODE, listeners = UIMaskWorkspace.CloseActionListener.class ),
       @EventConfig(listeners = UIPageNodeForm.SwitchPublicationDateActionListener.class, phase = Phase.DECODE ),
-      @EventConfig(listeners = UIPageNodeForm.ClearPageActionListener.class, phase = Phase.DECODE)
+      @EventConfig(listeners = UIPageNodeForm.ClearPageActionListener.class, phase = Phase.DECODE),
+      @EventConfig(listeners = UIFormTabPane.SelectTabActionListener.class, phase = Phase.DECODE)
     }
 )
 public class UIPageNodeForm extends UIFormTabPane {
