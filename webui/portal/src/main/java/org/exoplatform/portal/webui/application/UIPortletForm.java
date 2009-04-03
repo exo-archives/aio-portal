@@ -110,6 +110,8 @@ public class UIPortletForm extends UIFormTabPane {
     SkinService skinService = getApplicationComponent(SkinService.class);
     uiThemeSelector.getChild(UIItemThemeSelector.class).setValues(skinService.getPortletThemes());
     addUIFormInput(uiThemeSelector);
+    
+    setActions(new String[]{"Save", "Close"});
   }
   
   public UIComponent getBackComponent() { return backComponent_; }

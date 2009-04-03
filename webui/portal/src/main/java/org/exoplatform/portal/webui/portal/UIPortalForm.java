@@ -85,7 +85,8 @@ import org.exoplatform.webui.organization.UIListPermissionSelector.EmptyIterator
     events = {
       @EventConfig(name  = "Save", listeners = UIPortalForm.CreateActionListener.class),
       @EventConfig(listeners = UIPortalForm.SelectItemOptionActionListener.class, phase = Phase.DECODE),
-      @EventConfig(listeners = UIMaskWorkspace.CloseActionListener.class, phase = Phase.DECODE)
+      @EventConfig(listeners = UIMaskWorkspace.CloseActionListener.class, phase = Phase.DECODE),
+      @EventConfig(listeners = UIFormTabPane.SelectTabActionListener.class, phase = Phase.DECODE)
     }
   ),
   @ComponentConfig(
@@ -133,6 +134,7 @@ public class UIPortalForm extends UIFormTabPane {
     createDefaultItem();
     setSelectedTab("PortalSetting") ;
     invokeGetBindingBean(Util.getUIPortal()) ;
+    setActions(new String[]{"Save", "Close"});
   }
   
   @SuppressWarnings("unchecked")

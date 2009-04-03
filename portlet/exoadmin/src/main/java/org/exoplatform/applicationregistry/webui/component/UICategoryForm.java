@@ -52,7 +52,8 @@ import org.exoplatform.webui.organization.UIListPermissionSelector.EmptyIterator
     template =  "system:/groovy/webui/form/UIFormTabPane.gtmpl",
     events = {
       @EventConfig(listeners = UICategoryForm.SaveActionListener.class),
-      @EventConfig(listeners = UICategoryForm.CancelActionListener.class, phase = Phase.DECODE)
+      @EventConfig(listeners = UICategoryForm.CancelActionListener.class, phase = Phase.DECODE),
+      @EventConfig(listeners = UIFormTabPane.SelectTabActionListener.class, phase = Phase.DECODE)
     }
 )
 public class UICategoryForm extends UIFormTabPane { 
@@ -85,6 +86,8 @@ public class UICategoryForm extends UIFormTabPane {
     uiListPermissionSelector.addValidator(EmptyIteratorValidator.class) ;
     uiPermissionSetting.addChild(uiListPermissionSelector);
     addUIComponentInput(uiPermissionSetting) ;
+    
+    setActions(new String[]{"Save", "Cancel"});
   } 
 
   public void setValue(ApplicationCategory category) throws Exception {

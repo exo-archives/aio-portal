@@ -17,7 +17,7 @@
 		                if(uicomponent.hasEditMode()) {
 		                	String className="NormalTab" ;
 					        		if(selTabId.equals("") || selTabId.equals("EditMode")) className="SelectedTab" ;
-					        		String actionLink = "" + uicomponent.event("SelectTab","EditMode") + "" ;
+					        		String actionLink = "ajaxAsyncGetRequest('" + uicomponent.makeSelectTabURL("SelectTab","EditMode") + "');" ;
 		              %>
 		              
 				              <div class="UITab NormalTabStyle">
@@ -37,7 +37,7 @@
 					        		if(inputSet.getId().equals(selTabId)) className="SelectedTab" ;
 				              String tabName = inputSet.getName() ; 
 				              tabName = _ctx.appRes(uicomponent.getId() + ".tab.label." + inputSet.getName()) ; 
-				              String actionLink = "" + uicomponent.event("SelectTab",inputSet.getId()) + "" ;
+				              String actionLink = "ajaxAsyncGetRequest('" + uicomponent.makeSelectTabURL("SelectTab",inputSet.getId()) + "');" ;
                   %>
 					              <div class="UITab NormalTabStyle">
 					                <div class="$className">

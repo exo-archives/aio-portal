@@ -67,7 +67,7 @@ abstract public class UIFormTabPane extends UIForm {
   public void setRenderResourceTabName(boolean bool) { withRenderTabName = bool ; }
 
   @SuppressWarnings("unchecked")
-  public String eventAsync(String name, String beanId) throws Exception {
+  public String makeSelectTabURL(String name, String beanId) throws Exception {
     WebuiRequestContext context = WebuiRequestContext.getCurrentInstance() ;
     String frAction = context.getURLBuilder().createURL(this, null, null) ;
     StringBuilder b = new StringBuilder() ;

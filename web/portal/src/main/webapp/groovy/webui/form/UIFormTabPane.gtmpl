@@ -20,7 +20,7 @@
 					        		if(inputSet.getId().equals(selTabId)) className="SelectedTab" ;
 				              //String tabName = inputSet.getName() ; 
 			                tabName = _ctx.appRes(uicomponent.getName() + ".tab.label." + inputSet.name) ;
-			                String actionLink = "ajaxAsyncGetRequest('" + uicomponent.eventAsync("SelectTab",inputSet.getId()) + "');" ;
+			                String actionLink = "ajaxAsyncGetRequest('" + uicomponent.makeSelectTabURL("SelectTab",inputSet.getId()) + "');" ;
                   %>
 					              <div class="UITab NormalTabStyle">
 					                <div class="$className">
