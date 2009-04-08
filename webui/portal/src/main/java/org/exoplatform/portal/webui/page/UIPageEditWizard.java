@@ -245,8 +245,6 @@ public class UIPageEditWizard extends UIPageWizard {
         isDesktopPage = Page.DESKTOP_PAGE.equals(selectPage.getFactoryId());
       }
       selectPage.setModifier(context.getRemoteUser());
-      selectPage.setTitle(selectedPageNode.getLabel()) ;
-      
       UIPagePreview uiPagePreview = uiWizard.getChild(UIPagePreview.class);
       UIPage uiPage = null;
       if(Page.DESKTOP_PAGE.equals(selectPage.getFactoryId())) {
