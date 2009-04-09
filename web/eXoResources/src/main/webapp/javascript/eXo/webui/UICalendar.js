@@ -291,6 +291,10 @@ UICalendar.prototype.setSeconds = function(object) {
 			this.currentDay = this.currentDate.getDate();
 			this.currentMonth = this.currentDate.getMonth() + 1;
 			this.currentYear = this.currentDate.getFullYear();
+			// format date
+			this.currentDay = (this.currentDay > 9) ? this.currentDay : "0"+this.currentDay;
+			this.currentMonth = (this.currentMonth > 9) ? this.currentMonth : "0"+this.currentMonth;
+			this.currentYear = (this.currentYear > 9) ? this.currentYear : "0"+this.currentYear;
 			if(this.isDisplayTime) timeString = this.currentMonth + "/" + this.currentDay + "/" + this.currentYear + " " + timeString;
 			this.dateField.value = timeString;
 	}
@@ -312,6 +316,11 @@ UICalendar.prototype.setMinus = function(object) {
 			this.currentDay = this.currentDate.getDate();
 			this.currentMonth = this.currentDate.getMonth() + 1;
 			this.currentYear = this.currentDate.getFullYear();
+			// format date
+			this.currentDay = (this.currentDay > 9) ? this.currentDay : "0"+this.currentDay;
+			this.currentMonth = (this.currentMonth > 9) ? this.currentMonth : "0"+this.currentMonth;
+			this.currentYear = (this.currentYear > 9) ? this.currentYear : "0"+this.currentYear;
+			
 			if(this.isDisplayTime) timeString = this.currentMonth + "/" + this.currentDay + "/" + this.currentYear + " " + timeString;
 			this.dateField.value = timeString;
 	}
@@ -333,6 +342,12 @@ UICalendar.prototype.setHour = function(object) {
 			this.currentDay = this.currentDate.getDate();
 			this.currentMonth = this.currentDate.getMonth() + 1;
 			this.currentYear = this.currentDate.getFullYear();
+			
+			// format date
+			this.currentDay = (this.currentDay > 9) ? this.currentDay : "0"+this.currentDay;
+			this.currentMonth = (this.currentMonth > 9) ? this.currentMonth : "0"+this.currentMonth;
+			this.currentYear = (this.currentYear > 9) ? this.currentYear : "0"+this.currentYear;
+			
 			if(this.isDisplayTime) timeString = this.currentMonth + "/" + this.currentDay + "/" + this.currentYear + " " + timeString;
 			this.dateField.value = timeString;
 	}
