@@ -1,8 +1,7 @@
 <%
   def rcontext = _ctx.getRequestContext() ;
-		rcontext.getJavascriptManager().importJavascript('eXo.portal.PortalDragDrop') ;
+	rcontext.getJavascriptManager().importJavascript('eXo.portal.PortalDragDrop') ;
 %>
-
 <div class="UIPortal" id="UIPortal-$uicomponent.id">
   <div class="META-DATA-BLOCK" style="display: none">
 	  <div class="id">$uicomponent.id</div>

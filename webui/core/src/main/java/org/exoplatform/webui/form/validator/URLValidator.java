@@ -35,7 +35,7 @@ public class URLValidator implements Validator {
 //    "^(ht|f)tp(s?)://(\\w+:\\w+@)?(("+ IP_REGEX +")|((www.)?(\\S+\\.){1,2}(\\w{2,5}))|([a-zA-Z][-a-zA-Z0-9]+))" +
 //    "(:\\d{1,5})?($|((/[-+%.\\w\\d ]+)*/?((\\.\\w+)?($|\\?([-.:+\\w\\d%/]+=[-.:+\\w\\d%/]+)(&[-.:+\\w\\d%/]+=[-.:+\\w\\d%/]+)*))?))" ;
   static public final String URL_REGEX = 
-    "^((ht|f)tp(s?)://)?"   //protocol 
+    "^(ht|f)tp(s?)://"   //protocol 
     + "(\\w+:\\w+@)?"      //username:password@
     + "(" + IP_REGEX       //ip 
     + "|([0-9a-z_!~*'()-]+\\.)*([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\\.[a-z]{2,6}"  //domain like www.exoplatform.org 
