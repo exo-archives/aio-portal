@@ -80,8 +80,6 @@ public class UIPortalApplication extends UIApplication {
   private String skin_ = "Default" ;
 
   private UserPortalConfig userPortalConfig_;
-  
-  private boolean isSessionOpen = false ;
 
   /**
    * The constructor of this class is used to build the tree of UI components that will be aggregated
@@ -139,14 +137,6 @@ public class UIPortalApplication extends UIApplication {
     String currentSkin = userPortalConfig_.getPortalConfig().getSkin();
     if(currentSkin != null && currentSkin.trim().length() > 0) skin_ = currentSkin;
     setOwner(context.getPortalOwner());
-  }
-
-  public boolean isSessionOpen() {
-    return isSessionOpen;
-  }
-
-  public void setSessionOpen(boolean isSessionOpen) {
-    this.isSessionOpen = isSessionOpen;
   }
 
   public Orientation getOrientation() {

@@ -2,7 +2,6 @@
     PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
            "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <%
-  import org.exoplatform.portal.application.PortalRequestContext ;
 	import org.exoplatform.webui.core.UIComponent;
 	import java.util.Iterator;
 		
@@ -63,8 +62,6 @@
       eXo.env.server.context = '<%=docBase%>' ;
       eXo.env.server.portalBaseURL = '<%=rcontext.getURLBuilder().getBaseURL()%>' ;
       eXo.env.client.skin = '$skin' ;
-      eXo.session.isOpen = $uicomponent.isSessionOpen ;
-      eXo.session.itvTime = ${((PortalRequestContext)rcontext).getRequest().getSession().getMaxInactiveInterval()} ;
     </script>
   </head>
 
@@ -114,7 +111,6 @@
       <%=rcontext.getJavascriptManager().getJavascript()%>
         eXo.core.Browser.onLoad();
       <%=rcontext.getJavascriptManager().getCustomizedOnLoadScript();%>
-      if(eXo.session.isOpen) eXo.session.itvInit() ;
     </script>
   </body>
 </html>
