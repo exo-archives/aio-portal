@@ -170,6 +170,13 @@ eXo.portal.UIControlWorkspace.showWorkspace = function() {
 			dropDownAnchors[i].style.visibility = "hidden";
 		}
 	}
+	//fix bug position of popup windows PORTAL-2690
+	var popupWindows = eXo.core.DOMUtil.findDescendantsByClass(document, "div", "UIPopupWindow") ;
+	for(var i = 0; i < popupWindows.length; i++) {
+		if(popupWindows[i].style.display != "none") {
+			eXo.webui.UIPopupWindow.show(popupWindows[i], popupWindows[i].isShowMask) ;
+		}
+	}
 	
 	/* -- END -- */
 	var params = [ {name: "objectId", value : cws.showControlWorkspace} ] ;

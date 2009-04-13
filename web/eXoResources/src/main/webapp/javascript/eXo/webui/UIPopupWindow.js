@@ -16,6 +16,8 @@ UIPopupWindow.prototype.init = function(popupId, isShow, isResizable, showCloseB
 	var portalApp = document.getElementById("UIPortalApplication") ;
 	if(popup == null) return;
 	popup.style.visibility = "hidden" ;
+	if(!isShowMask) isShowMask = false ;
+	popup.isShowMask = isShowMask ;
 	
 	//TODO Lambkin: this statement create a bug in select box component in Firefox
 	//this.superClass.init(popup) ;
