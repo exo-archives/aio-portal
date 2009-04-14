@@ -46,7 +46,7 @@ public class ResourceValidator implements Validator {
     label = label.trim();
     if(label.charAt(label.length() - 1) == ':') label = label.substring(0, label.length() - 1);
     String s = (String)uiInput.getValue();
-    if(Character.isDigit(s.charAt(0)) || s.charAt(0) == '-' || s.charAt(0) == '.' || s.charAt(0) == '_') {
+    if(!Character.isLetter(s.charAt(0))) {
       Object[] args = { label, uiInput.getBindingField() };
       throw new MessageException(new ApplicationMessage("FirstCharacterNameValidator.msg", args, ApplicationMessage.WARNING)) ;
     }    

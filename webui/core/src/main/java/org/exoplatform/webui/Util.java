@@ -29,6 +29,21 @@ public class Util {
    * The default parameters given to the constructor
    */
   static Class<?>[] CONSTRUCTOR_PARAMS = {InitParams.class} ; 
+  
+  /**
+   * Field must be start with character
+   */
+  public final static String FIRST_CHARACTER_NAME_VALIDATOR_REGEXP = "^[\\p{L}][\\p{ASCII}]+$" ;
+  
+  /**
+   * Only alpha, digit, underscore, dash and dot characters allowed (accept space)
+   */
+  public final static String RESOURCE_VALIDATOR_REGEXP = "^[\\p{L}][\\p{L}._\\- \\d]+$" ;
+  
+  /**
+   * Only alpha, digit, underscore, dash and dot characters allowed 
+   */
+  public final static String USER_NAME_RESOURCE_VALIDATOR_REGEXP = "^[\\p{L}][\\p{L}._\\- \\d]+$" ;
   /**
    * 
    * @param type The type of the object to create, given as a String
