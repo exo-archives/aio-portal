@@ -285,18 +285,15 @@ UICalendar.prototype.setSeconds = function(object) {
 			}
 //			this.currentHours = this.currentDate.getHours() ;
 //    	this.currentMinutes = this.currentDate.getMinutes() ;
+			
 			if(seconds.length < 2) seconds = "0" + seconds;
-			var timeString = this.makeTimeString(this.currentDate.getHours(), this.currentDate.getMinutes(), seconds);
 			this.currentDate.setSeconds(seconds);
 			this.currentDay = this.currentDate.getDate();
 			this.currentMonth = this.currentDate.getMonth() + 1;
 			this.currentYear = this.currentDate.getFullYear();
-			// format date
-			this.currentDay = (this.currentDay > 9) ? this.currentDay : "0"+this.currentDay;
-			this.currentMonth = (this.currentMonth > 9) ? this.currentMonth : "0"+this.currentMonth;
-			this.currentYear = (this.currentYear > 9) ? this.currentYear : "0"+this.currentYear;
-			if(this.isDisplayTime) timeString = this.currentMonth + "/" + this.currentDay + "/" + this.currentYear + " " + timeString;
-			this.dateField.value = timeString;
+	    	
+	    	var dateString = this.makeDateString(this.currentDay, this.currentMonth, this.currentYear,this.currentDate.getHours(),this.currentDate.getMinutes(),seconds);
+			this.dateField.value = dateString;
 	}
 	return;
 }
@@ -312,17 +309,12 @@ UICalendar.prototype.setMinus = function(object) {
 // 			this.currentSeconds = this.currentDate.getSeconds() ;
 			if(minus.length < 2) minus = "0" + minus;
 			this.currentDate.setMinutes(minus);
-			var timeString = this.makeTimeString(this.currentDate.getHours(), minus, this.currentDate.getSeconds());
 			this.currentDay = this.currentDate.getDate();
 			this.currentMonth = this.currentDate.getMonth() + 1;
 			this.currentYear = this.currentDate.getFullYear();
-			// format date
-			this.currentDay = (this.currentDay > 9) ? this.currentDay : "0"+this.currentDay;
-			this.currentMonth = (this.currentMonth > 9) ? this.currentMonth : "0"+this.currentMonth;
-			this.currentYear = (this.currentYear > 9) ? this.currentYear : "0"+this.currentYear;
 			
-			if(this.isDisplayTime) timeString = this.currentMonth + "/" + this.currentDay + "/" + this.currentYear + " " + timeString;
-			this.dateField.value = timeString;
+			var dateString = this.makeDateString(this.currentDay, this.currentMonth, this.currentYear,this.currentDate.getHours(), minus, this.currentDate.getSeconds());
+			this.dateField.value = dateString;
 	}
 	return;
 }
@@ -343,13 +335,8 @@ UICalendar.prototype.setHour = function(object) {
 			this.currentMonth = this.currentDate.getMonth() + 1;
 			this.currentYear = this.currentDate.getFullYear();
 			
-			// format date
-			this.currentDay = (this.currentDay > 9) ? this.currentDay : "0"+this.currentDay;
-			this.currentMonth = (this.currentMonth > 9) ? this.currentMonth : "0"+this.currentMonth;
-			this.currentYear = (this.currentYear > 9) ? this.currentYear : "0"+this.currentYear;
-			
-			if(this.isDisplayTime) timeString = this.currentMonth + "/" + this.currentDay + "/" + this.currentYear + " " + timeString;
-			this.dateField.value = timeString;
+			var dateString = this.makeDateString(this.currentDay, this.currentMonth, this.currentYear,hour, this.currentDate.getMinutes(), this.currentDate.getSeconds());
+			this.dateField.value = dateString;
 	}
 	return;
 }
@@ -362,6 +349,29 @@ UICalendar.prototype.makeTimeString = function(hour, minute, second, time) {
 	while(minute.length < 2) { minute = "0" + minute ; }
 	while(second.length < 2) { second = "0" + second ; }
 	return hour + ":" + minute + ":" + second;
+}
+
+UICalendar.prototype.makeDateString = function(day, month, year, hour, minute, second) {
+	if(typeof(hour) != "string") hour = hour.toString() ;
+	if(typeof(minute) != "string") minute = minute.toString() ;
+	if(typeof(second) != "year") second = second.toString() ;
+	while(hour.length < 2) { hour = "0" + hour ; }
+	while(minute.length < 2) { minute = "0" + minute ; }
+	while(second.length < 2) { second = "0" + second ; }
+	
+	day = (day > 9) ? day : "0"+day;
+	month = (month > 9) ? month : "0"+month;
+	year = (year > 9) ? year : "0"+year;
+			
+	var dateString = this.datePattern ;
+			
+	dateString = dateString.replace("dd",day);
+    dateString = dateString.replace("MM",month);
+    dateString = dateString.replace("yyyy",year);
+    dateString = dateString.replace("HH",hour);
+	dateString = dateString.replace("mm",minute);
+	dateString = dateString.replace("ss",second);
+	return dateString;
 }
 
 UICalendar.prototype.clearDate = function() {
