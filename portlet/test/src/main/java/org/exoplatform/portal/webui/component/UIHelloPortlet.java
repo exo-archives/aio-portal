@@ -73,7 +73,7 @@ public class UIHelloPortlet extends UIPortletApplication {
 //    UIContainer uiContainer = createUIComponent(UIContainer.class, "UIHelloContent", null); 
 //    uiContainer.addChild(UIHelloSelector.class, null, null);
 //    uiContainer.addChild(UIHelloWelcome.class, null, null);
-    addChild(UIHelloForm.class, null, null);
+//    uiContainer.addChild(UIHelloForm.class, null, null).setRendered(false);
 //    addChild(uiContainer);
 //    UIPopupWindow popup = addChild(UIPopupWindow.class, null, null);
 //    popup.setWindowSize(400, 300);

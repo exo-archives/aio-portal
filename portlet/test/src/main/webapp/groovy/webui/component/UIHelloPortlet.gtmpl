@@ -34,6 +34,6 @@
 	  	
 		</div>
 	</div>
-	<%uicomponent.renderChildren();%>
+	<%uicomponent.renderChild(UIPopupContainer.class);%>
 	<%uicomponent.renderPopupMessages(); %>
 </div>	
