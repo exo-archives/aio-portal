@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.exoplatform.webui.application.WebuiRequestContext;
 
@@ -156,6 +157,12 @@ public class UIFormDateTimeInput extends UIFormInputBase<String> {
     
     WebuiRequestContext requestContext = WebuiRequestContext.getCurrentInstance();
     formatPattern(requestContext.getLocale()) ;
+    ResourceBundle res = context.getApplicationResourceBundle() ;
+    String nextMonth = res.getString("UICalendar.NextMonth") ;
+    String preMonth = res.getString("UICalendar.PreMonth") ;
+    String nextYear = res.getString("UICalendar.NextYear") ;
+    String preYear = res.getString("UICalendar.PreYear") ;
+    
     String monthNames_ = ""; 
     for (String month : months_) {
       // remove empty element
@@ -176,6 +183,7 @@ public class UIFormDateTimeInput extends UIFormInputBase<String> {
     w.write("<input type='text' onfocus='eXo.webui.UICalendar.init(this,") ;
     w.write(String.valueOf(isDisplayTime_));
     w.write(",\"");
+    
     w.write( getDatePattern_() );
     w.write("\"");
     w.write(",\"");
@@ -184,11 +192,17 @@ public class UIFormDateTimeInput extends UIFormInputBase<String> {
     w.write(",\"");
     w.write( monthNames_ );
     w.write("\"");
+    w.write(",\""); w.write(nextMonth.toString()); w.write("\"");
+    w.write(",\""); w.write(preMonth.toString());w.write("\"");
+    w.write(",\""); w.write(nextYear.toString()); w.write("\"");
+    w.write(",\""); w.write(preYear.toString()); w.write("\"");
     w.write(");' onkeyup='eXo.webui.UICalendar.show();' name='") ;
     w.write(getName()) ; w.write('\'') ;
     if(value_ != null && value_.length() > 0) {      
-      w.write(" value='"); w.write(value_.toString()); w.write('\'');
+      w.write(" value='"); w.write(value_.toString()); w.write("';");
     }
+    
+    
     w.write(" onmousedown='event.cancelBubble = true' />") ;
   }
 }

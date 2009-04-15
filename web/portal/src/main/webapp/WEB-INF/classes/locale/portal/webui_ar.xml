@@ -2435,4 +2435,15 @@
 	<UIPopupWindow>
     <Close>Close Window</Close>
   </UIPopupWindow>
+  
+    ############################################################################
+  #		           org.exoplatform.webui.form         #
+  ############################################################################
+	
+	<UICalendar>
+	    <NextMonth>Next Month</NextMonth>
+	    <PreMonth>Previous Month</PreMonth>
+	    <NextYear>Next Year</NextYear>
+	    <PreYear>Previous Year</PreYear>
+  </UICalendar>	
 </bundle>
