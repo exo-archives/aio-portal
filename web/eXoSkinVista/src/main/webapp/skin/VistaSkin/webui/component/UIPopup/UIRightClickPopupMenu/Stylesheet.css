@@ -13,7 +13,7 @@
 	display: none;
 }
 	
-.UIRightClickPopupMenu .MenuItem .ItemIcon {
+.UIRightClickPopupMenu .ItemIcon {
   padding: 4px 0px 4px 30px; /* orientation=lt */
 	padding: 4px 30px 4px 0px; /* orientation=rt */
   width: auto;

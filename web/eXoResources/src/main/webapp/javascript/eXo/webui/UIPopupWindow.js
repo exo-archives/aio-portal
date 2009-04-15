@@ -121,6 +121,16 @@ UIPopupWindow.prototype.show = function(popup, isShowMask, middleBrowser) {
 			popup.style.top = "6px";
 		}
 		popup.style.left = Math.ceil((offsetParent.offsetWidth - popup.offsetWidth) / 2) + "px" ;
+		if(eXo.core.Browser.isIE6() && eXo.core.I18n.isRT()) {
+			var right = document.getElementById("UIWorkingWorkspace").style.marginRight ;
+			if(right && right.length > 0) {
+				right = parseInt(right) ;
+			}
+			var pos = Math.ceil((offsetParent.offsetWidth - popup.offsetWidth) / 2) ;
+			if(right > 0) pos += right ;
+			popup.style.right = pos + "px" ;
+			popup.style.left = "" ;
+		}
 	}
 	if (eXo.core.Browser.findPosY(popup) < 0) popup.style.top = scrollY + "px" ;
   popup.style.visibility = "visible" ;
