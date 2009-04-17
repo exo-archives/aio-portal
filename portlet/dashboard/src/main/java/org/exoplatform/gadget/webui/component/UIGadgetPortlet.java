@@ -18,14 +18,14 @@ package org.exoplatform.gadget.webui.component;
 
 import javax.portlet.PortletPreferences;
 
-import org.exoplatform.portal.webui.application.GadgetUtil;
+import org.exoplatform.portal.config.model.PortalConfig;
+import org.exoplatform.portal.webui.application.UIGadget;
+import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.application.portlet.PortletRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.core.UIPortletApplication;
 import org.exoplatform.webui.core.lifecycle.UIApplicationLifecycle;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by The eXo Platform SARL
@@ -39,28 +39,24 @@ import org.json.JSONObject;
 )
 public class UIGadgetPortlet extends UIPortletApplication {
   public UIGadgetPortlet() throws Exception {
-    addChild(UIGadgetViewMode.class, null, null);
+    UIGadget uiGadget = addChild(UIGadget.class, null, null);
+    uiGadget.setId(Integer.toString(uiGadget.hashCode()+1));
+    uiGadget.setUrl(getUrl());
+    uiGadget.setView("canvas");
+    uiGadget.setDecorator(false);
+    StringBuilder windowId = new StringBuilder(PortalConfig.PORTAL_TYPE);
+    windowId.append("#").append(Util.getUIPortal().getOwner());
+    windowId.append(":/gadgetportlet/sample/");
+    windowId.append(uiGadget.hashCode());
+    uiGadget.setApplicationInstanceId(windowId.toString());    
     addChild(UIGadgetEditMode.class, null, null);
   }
   
-  public String getUrl() {
+  static public String getUrl() {
     PortletRequestContext pcontext = (PortletRequestContext) WebuiRequestContext.getCurrentInstance();
     PortletPreferences pref = pcontext.getRequest().getPreferences();
     return pref.getValue("url", "http://www.google.com/ig/modules/horoscope.xml");
   }
-  
-  public String getMetadata() {
-    String metadata_ = GadgetUtil.fetchGagdetMetadata(getUrl());
-    try {
-      JSONObject jsonObj = new JSONObject(metadata_);
-      JSONObject obj = jsonObj.getJSONArray("gadgets").getJSONObject(0);
-      String token = GadgetUtil.createToken(getUrl(), new Long(hashCode()));
-      obj.put("secureToken", token);
-      metadata_ = jsonObj.toString();
-    } catch (JSONException e) {
-      e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-    }
-    return metadata_;
-  }
+
 }
 

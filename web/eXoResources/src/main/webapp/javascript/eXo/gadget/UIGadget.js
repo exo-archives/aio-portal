@@ -53,11 +53,11 @@ eXo.gadget.UIGadget = {
 
     init : function(uiGadget, inDesktop, metadata) {
         var portletFragment = eXo.core.DOMUtil.findAncestorByClass(uiGadget, "PORTLET-FRAGMENT");
+        var gadgetControl = eXo.core.DOMUtil.findFirstDescendantByClass(uiGadget, "div", "GadgetControl");
         if (portletFragment == null) {
             uiGadget.onmouseover = eXo.gadget.UIGadget.showGadgetControl;
             uiGadget.onmouseout = eXo.gadget.UIGadget.hideGadgetControl;
-        } else {
-            var gadgetControl = eXo.core.DOMUtil.findFirstDescendantByClass(uiGadget, "div", "GadgetControl");
+        } else if (gadgetControl) {
             gadgetControl.style.display = "block";
             var gadgetTitle = eXo.core.DOMUtil.findFirstDescendantByClass(gadgetControl, "div", "GadgetTitle") ;
             gadgetTitle.style.display = "block";

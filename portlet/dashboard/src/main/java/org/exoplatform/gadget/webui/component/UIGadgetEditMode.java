@@ -23,10 +23,12 @@ import java.util.List;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 
+import org.exoplatform.application.gadget.Gadget;
+import org.exoplatform.application.gadget.GadgetRegistryService;
 import org.exoplatform.application.registry.Application;
 import org.exoplatform.application.registry.ApplicationRegistryService;
 import org.exoplatform.portal.config.UserACL;
-import org.exoplatform.portal.config.model.PortalConfig;
+import org.exoplatform.portal.webui.application.GadgetUtil;
 import org.exoplatform.portal.webui.application.UIGadget;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webui.application.WebuiRequestContext;
@@ -106,14 +108,14 @@ public class UIGadgetEditMode extends UIForm {
         Object[]  args = { label } ;
         
         if (url == null || url.length() == 0) {
-          uiGadgetEditMode.getUIStringInput(FIELD_URL).setValue(uiPortlet.getUrl());
+          uiGadgetEditMode.getUIStringInput(FIELD_URL).setValue(UIGadgetPortlet.getUrl());
           uiApplication.addMessage(new ApplicationMessage("EmptyFieldValidator.msg.empty-input", 
                                                           args, ApplicationMessage.WARNING)) ;
           return;
         }
         url = url.trim() ;
         if(!url.matches(URLValidator.URL_REGEX)) {
-          uiGadgetEditMode.getUIStringInput(FIELD_URL).setValue(uiPortlet.getUrl());
+          uiGadgetEditMode.getUIStringInput(FIELD_URL).setValue(UIGadgetPortlet.getUrl());
           uiApplication.addMessage(new ApplicationMessage("URLValidator.msg.invalid-url", 
                                                           args, ApplicationMessage.WARNING)) ;
           return ;
@@ -123,33 +125,30 @@ public class UIGadgetEditMode extends UIForm {
           new URL(url);
           pref.setValue("url", url);
           pref.store();
+          UIGadget uiGadget = uiPortlet.getChild(UIGadget.class);
+          uiGadget.setUrl(url);
+          uiGadget.freeMetadata();
           uiGadgetEditMode.getUIStringInput(FIELD_URL).setValue(url) ;
           pcontext.setApplicationMode(PortletMode.VIEW);
         } catch (Exception e) {
-          uiGadgetEditMode.getUIStringInput(FIELD_URL).setValue(uiPortlet.getUrl());
+          uiGadgetEditMode.getUIStringInput(FIELD_URL).setValue(UIGadgetPortlet.getUrl());
         }
       } else {
         UIFormSelectBox gadgetSelector = uiGadgetEditMode.getUIFormSelectBox(GADGET_SELECTOR) ;
         String gadgetId = gadgetSelector.getValue() ;
-        
-        ApplicationRegistryService service = uiPortlet
-            .getApplicationComponent(ApplicationRegistryService.class) ;
-        Application application = service.getApplication(gadgetId) ;
-        if (application == null) {
+        GadgetRegistryService gadgetService = uiPortlet.getApplicationComponent(GadgetRegistryService.class);
+        Gadget gadget = gadgetService.getGadget(gadgetId);
+        if (gadget == null) {
           return ;
         }
-        StringBuilder windowId = new StringBuilder(PortalConfig.USER_TYPE) ;
-        windowId.append("#").append(pcontext.getRemoteUser()) ;
-        windowId.append(":/").append(
-            application.getApplicationGroup() + "/" + application.getApplicationName()).append('/') ;
-        UIGadget uiGadget = event.getSource().createUIComponent(pcontext, UIGadget.class, null, null) ;
-        uiGadget.setId(Integer.toString(uiGadget.hashCode()+1)) ;
-        windowId.append(uiGadget.hashCode()) ;
-        uiGadget.setApplicationInstanceId(windowId.toString()) ;
+        String localUrl = GadgetUtil.reproduceUrl(gadget.getUrl(), gadget.isLocal());
         PortletPreferences pref = pcontext.getRequest().getPreferences();
-        pref.setValue("url", uiGadget.getUrl()) ;
+        pref.setValue("url", localUrl) ;
         pref.store() ;
-        uiGadgetEditMode.getUIStringInput(FIELD_URL).setValue(uiGadget.getUrl()) ;
+        UIGadget uiGadget = uiPortlet.getChild(UIGadget.class);
+        uiGadget.setUrl(localUrl);
+        uiGadget.freeMetadata();
+        uiGadgetEditMode.getUIStringInput(FIELD_URL).setValue(localUrl) ;
         pcontext.setApplicationMode(PortletMode.VIEW) ;
         pcontext.addUIComponentToUpdateByAjax(uiPortlet) ;
       }
@@ -179,7 +178,7 @@ public class UIGadgetEditMode extends UIForm {
           if(app.getApplicationType().equals(org.exoplatform.web.application.Application.EXO_GAGGET_TYPE)) {
             for (String per : app.getAccessPermissions()) {
               if(acl.hasPermission(per)) {
-                gadgetItems.add(new SelectItemOption<String>(app.getDisplayName(), app.getId())) ;
+                gadgetItems.add(new SelectItemOption<String>(app.getDisplayName(), app.getApplicationName())) ;
                 break ;
               }
             }

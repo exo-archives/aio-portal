@@ -20,6 +20,7 @@
                                                                             + ", " + (isDebug ? 1 : 0) + ", " + (noCache ? 1 : 0) + ");")
 %>
 <div class="UIGadget" id="<%= uicomponent.getApplicationInstanceUniqueId() %>" style="left: $posX; top: $posY; z-Index: $zIndex; width: 320px" >
+	<% if(uicomponent.hasDecorator()) {%>
 	<div class="GadgetControl" style="visibility: visible;">
 		<div class="LeftControlBar">
 			<div class="RightControlBar">
@@ -54,4 +55,7 @@
 		</div>
 	</div>
 	<div class="UIMask" style="display: none; border:solid 1px red"><span></span></div>
+	<% } else { %>
+		<div id="$id" class="MCGadget"></div>
+	<% } %>
 </div>

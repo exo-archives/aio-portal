@@ -5,9 +5,6 @@
 .UIGadgetPortlet .UIGadgetEditMode{
 	padding: 50px 0;
 }
-.UIGadgetPortlet .UIGadgetViewMode {
-	height: 100%;
-}
 
 .UIGadgetPortlet .gadgets-gadget-content {
 	height: 100%;

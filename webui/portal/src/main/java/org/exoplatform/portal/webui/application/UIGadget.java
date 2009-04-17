@@ -52,6 +52,10 @@ import org.json.JSONException;
  */
 public class UIGadget extends UIComponent {
   
+  public static final String PREF_KEY = "_pref_gadget_";
+  public static final String PREF_NO_CACHE = "_pref_no_cache_";
+  public static final String PREF_DEBUG = "_pref_debug_";
+
   private String applicationInstanceId_ ;
   private String applicationOwnerType_ ;
   private String applicationOwnerId_ ;
@@ -64,10 +68,8 @@ public class UIGadget extends UIComponent {
   private String url_;
   private UserGadgetStorage userGadgetStorage = null;
   private GadgetRegistryService gadgetRegistryService  = null;
-  public static final String PREF_KEY = "_pref_gadget_";
-  public static final String PREF_NO_CACHE = "_pref_no_cache_";
-  public static final String PREF_DEBUG = "_pref_debug_";
   public String view = null;
+  private boolean decorator_ = true;
 
   /**
    * Initializes a newly created <code>UIGadget</code> object
@@ -189,6 +191,10 @@ public class UIGadget extends UIComponent {
     }
   }
 
+  public void freeMetadata() throws Exception {
+    metadata_ = null;
+  }
+  
   /**
    * Gets GadgetApplication by GadgedRegistryService
    * @return Gadget Application 
@@ -218,6 +224,18 @@ public class UIGadget extends UIComponent {
       url_ =  GadgetUtil.reproduceUrl(application.getUrl(), application.isLocal());
     }
     return url_;
+  }
+  
+  public void setUrl(String url) {
+    url_ = url;
+  }
+  
+  public boolean hasDecorator() {
+    return decorator_;
+  }
+  
+  public void setDecorator(boolean decorator) {
+    decorator_ = decorator;
   }
 
   private UserGadgetStorage getGadgetStorage() {
