@@ -1,10 +1,26 @@
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <groupId>org.exoplatform</groupId>
+    <artifactId>parent</artifactId>
+    <version>1.1.1</version>
+  </parent>
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.exoplatform.portal</groupId>
   <artifactId>config</artifactId>
-  <name>eXo Core Config</name>
+  <name>eXo Portal Config</name>
   <version>2.1.3-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <properties>
+     <exo.product.name>exo-portal</exo.product.name>
+     <exo.product.specification>2.1</exo.product.specification>
+  </properties>
+  <scm>
+    <connection>scm:svn:http://svn.exoplatform.org/svnroot/exoplatform/projects/portal/tags/2.1.3</connection>
+    <developerConnection>scm:svn:http://svn.exoplatform.org/svnroot/exoplatform/projects/portal/tags/2.1.3</developerConnection>
+    <url>http://fisheye.exoplatform.org/browse/projects/portal/tags/2.1.3</url>
+  </scm>
 
   <modules>
     <module>component/xml-parser</module>
