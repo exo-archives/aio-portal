@@ -108,11 +108,7 @@ public class TemplateService implements Startable {
     if(template != null)  return template ;   
     InputStream is = resolver.getInputStream(url);
     byte[]  bytes = null;
-    try{
-      bytes = IOUtil.getStreamContentAsBytes(is)  ;
-    }catch(Exception exp){
-      throw new NullPointerException("Cann't load groovy template in "+url);
-    }
+    bytes = IOUtil.getStreamContentAsBytes(is)  ;
     is.close();    
     
     String text =  new String(bytes) ;
