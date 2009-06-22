@@ -25,6 +25,7 @@ import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.core.UIApplication;
 import org.exoplatform.webui.form.UIFormInputWithActions;
 import org.exoplatform.webui.form.UIFormStringInput;
+import org.exoplatform.webui.form.UIFormUploadInput;
 import org.exoplatform.webui.form.validator.EmailAddressValidator;
 import org.exoplatform.webui.form.validator.ExpressionValidator;
 import org.exoplatform.webui.form.validator.MandatoryValidator;
@@ -71,7 +72,8 @@ public class UIAccountInputSet extends UIFormInputWithActions {
                    addValidator(ExpressionValidator.class, Util.RESOURCE_VALIDATOR_REGEXP, "ResourceValidator.msg.Invalid-char")) ;
     addUIFormInput(new UIFormStringInput("email", "email", null). 
                    addValidator(MandatoryValidator.class).
-                   addValidator(EmailAddressValidator.class));    
+                   addValidator(EmailAddressValidator.class));   
+    addUIFormInput(new UIFormUploadInput("test", null)) ;
   }
   
   public String getUserName(){ return getUIStringInput(USERNAME).getValue(); }
