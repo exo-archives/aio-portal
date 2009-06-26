@@ -32,6 +32,7 @@ import org.exoplatform.webui.form.UIForm;
 import org.exoplatform.webui.form.UIFormStringInput;
 import org.exoplatform.webui.form.validator.MandatoryValidator;
 import org.exoplatform.webui.form.validator.StringLengthValidator;
+import org.exoplatform.webui.form.validator.PasswordStringLengthValidator;
 /**
  * Created by The eXo Platform SARL
  * Author : tung.dang
@@ -57,11 +58,11 @@ public class UIAccountChangePass extends UIForm {
            addValidator(MandatoryValidator.class)) ;
     addUIFormInput(new UIFormStringInput("newpass", "password", null).
            setType(UIFormStringInput.PASSWORD_TYPE).
-           addValidator(StringLengthValidator.class, 6, 30).
+           addValidator(PasswordStringLengthValidator.class, 6, 30).
            addValidator(MandatoryValidator.class)) ;
     addUIFormInput(new UIFormStringInput("confirmnewpass", "password", null).
           setType(UIFormStringInput.PASSWORD_TYPE).
-          addValidator(StringLengthValidator.class, 6, 30).
+          addValidator(PasswordStringLengthValidator.class, 6, 30).
           addValidator(MandatoryValidator.class)) ;
   }
   
