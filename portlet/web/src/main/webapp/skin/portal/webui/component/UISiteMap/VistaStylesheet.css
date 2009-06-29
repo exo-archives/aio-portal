@@ -36,6 +36,8 @@
   padding-right: 20px; /* orientation=rt */
   overflow: hidden;
   display: block;
+  background-position: left; /* orientation=lt */
+	background-position: right; /* orientation=rt */
 }
 
 .UISitemap .SitemapItemBox .TitleBar a:hover {
