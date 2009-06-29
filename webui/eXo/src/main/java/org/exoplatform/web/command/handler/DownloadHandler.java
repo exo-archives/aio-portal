@@ -20,6 +20,7 @@ import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
 
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.ExoContainerContext;
@@ -49,8 +50,13 @@ public class DownloadHandler extends Command {
       res.getWriter().write("NO DOWNDLOAD RESOURCE CONTENT  OR YOU DO NOT HAVE THE RIGHT TO ACCESS THE CONTENT") ;
       return;
     }
+    String userAgent = req.getHeader("User-Agent");
     if(dresource.getDownloadName() != null ){
-      res.setHeader("Content-Disposition", "attachment;filename=\""+dresource.getDownloadName()+"\"");
+      if (userAgent != null && userAgent.contains("MSIE")) {
+        res.setHeader("Content-Disposition", "attachment;filename=\""+URLEncoder.encode(dresource.getDownloadName(), "UTF-8")+"\"");
+      } else {
+        res.setHeader("Content-Disposition", "attachment; filename*=utf-8''" + URLEncoder.encode(dresource.getDownloadName(), "UTF-8") + "");
+      }
     }
     res.setContentType(dresource.getResourceMimeType()) ;
     InputStream is = dresource.getInputStream() ;
