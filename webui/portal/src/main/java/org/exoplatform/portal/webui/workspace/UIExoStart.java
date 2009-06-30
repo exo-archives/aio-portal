@@ -21,6 +21,9 @@ import java.util.List;
 
 import javax.portlet.WindowState;
 
+import org.exoplatform.portal.config.UserACL;
+import org.exoplatform.container.ExoContainer;
+import org.exoplatform.container.ExoContainerContext;
 import org.exoplatform.portal.account.UIAccountSetting;
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.model.PageNavigation;
@@ -136,39 +139,49 @@ public class UIExoStart extends UIComponent {
   }
 
   static public class MenuItemAction extends MenuItem {
-    private String action ;
+    private String  action;
+
     private boolean useAjax = true;
 
-    public  MenuItemAction(String name) {
-      super(name, name + "Icon") ;
+    private boolean isUseAjax(){
+      ExoContainer exoContainer = ExoContainerContext.getCurrentContainer() ;
+      UserACL acl = (UserACL) exoContainer.getComponentInstanceOfType(UserACL.class) ;
+      return acl.isEXoStartAjax();
+    }
+    public MenuItemAction(String name) {
+      super(name, name + "Icon");
       this.action = name;
     }
 
-    public  MenuItemAction(String name, boolean useAjax) {
-      super(name, name + "Icon") ;
-      this.useAjax = useAjax;
+    public MenuItemAction(String name, boolean useAjax) {
+      super(name, name + "Icon");
+      this.useAjax = isUseAjax();
       this.action = name;
     }
 
-    public  MenuItemAction(String name, String icon) {
-      super(name, icon) ;
+    public MenuItemAction(String name, String icon) {
+      super(name, icon);
       this.action = name;
     }
 
-    public  MenuItemAction(String name, String icon, String action) {
-      super(name, icon) ;
-      this.action = action ;
+    public MenuItemAction(String name, String icon, String action) {
+      super(name, icon);
+      this.action = action;
     }
 
-    public  MenuItemAction(String name, String icon, String action, boolean useAjax) {
-      super(name, icon) ;
-      this.action = action ;
-      this.useAjax = useAjax ;
+    public MenuItemAction(String name, String icon, String action, boolean useAjax) {
+      super(name, icon);
+      this.action = action;
+      this.useAjax = isUseAjax();
     }
 
-    public String getAction() { return action ; }
+    public String getAction() {
+      return action;
+    }
 
-    public  boolean useAjax() {  return useAjax ; }
+    public boolean useAjax() {
+      return useAjax;
+    }
   }
 
   public <T extends UIComponent> void setUIControlWSWorkingComponent(Class<T> clazz) throws Exception {

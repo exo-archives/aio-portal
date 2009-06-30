@@ -34,6 +34,18 @@
       </value-param>
       
       <value-param>
+        <name>portal.administrator.groups</name>
+        <description>administrator</description>
+        <value>/platform/administrators</value>
+      </value-param>
+      
+      <value-param>
+        <name>portal.administrator.mstype</name>
+        <description>administrator</description>
+        <value>manager</value>
+      </value-param>
+      
+      <value-param>
         <name>portal.creator.groups</name>
         <description>groups with membership type have permission to manage portal</description>
         <value>*:/platform/administrators,*:/organization/management/executive-board</value>	    
@@ -53,6 +65,11 @@
         <name>access.control.workspace</name>
         <description>groups with memberships that have the right to access the User Control Workspace</description>
         <value>*:/platform/administrators,*:/organization/management/executive-board</value>	    
+      </value-param>
+	  <value-param>
+        <name>access.control.exostart</name>
+        <description>determine exostart use ajax or not use ajax</description>
+        <value>false</value>	    
       </value-param>
 			<values-param>
 				<name>mandatory.groups</name>

@@ -41,8 +41,11 @@ public class UserACL {
   private List<String> portalCreatorGroups_;
   private List<String> accessControlWorkspaceGroups_;
   private String navigationCreatorMembershipType_;
+  private String adminGroups;
+  private String adminMSType;
   private List<String> mandatoryGroups_;
   private PortalACLPlugin portalACLPlugin;
+  private boolean eXoStartAjax;
 
   public UserACL(InitParams params) throws Exception {
     ValueParam superUserParam = params.getValueParam("super.user");
@@ -53,7 +56,17 @@ public class UserACL {
     ValueParam accessControlWorkspaceParam = params.getValueParam("access.control.workspace");
     if(accessControlWorkspaceParam != null) accessControlWorkspace = accessControlWorkspaceParam.getValue();
     accessControlWorkspaceGroups_ = defragmentPermission(accessControlWorkspace);    
-
+	
+	// config exostart use ajax or not
+    ValueParam controlExoStart = params.getValueParam("access.control.exostart");
+    if (controlExoStart != null) {
+      if (controlExoStart.getValue().toUpperCase().equals("TRUE")) {
+        setEXoStartAjax(true);
+      } else {
+        setEXoStartAjax(false);
+      }
+    }
+	
     ValueParam guestGroupParam = params.getValueParam("guests.group") ;
     if(guestGroupParam != null) guestGroup_ = guestGroupParam.getValue() ;
     if(guestGroup_ == null || guestGroup_.trim().length() < 1) guestGroup_ = "/platform/guests" ; 
@@ -71,6 +84,14 @@ public class UserACL {
     ValuesParam mandatoryGroupsParam = params.getValuesParam("mandatory.groups");
     if(mandatoryGroupsParam != null) mandatoryGroups_ = mandatoryGroupsParam.getValues();
     else mandatoryGroups_ = new ArrayList<String>();
+    
+    // tam.nguyen get admin group value
+    ValueParam adminGroupsParam = params.getValueParam("portal.administrator.groups");
+    if(adminGroupsParam != null) setAdminGroups(adminGroupsParam.getValue());
+    
+    // tam.nguyen get administrator member type
+    ValueParam adminMSTypeParam = params.getValueParam("portal.administrator.mstype");
+    if(adminMSTypeParam != null) setAdminMSType(adminMSTypeParam.getValue());
   }
 
   private List<String> defragmentPermission(String permission) {
@@ -148,6 +169,14 @@ public class UserACL {
     return false;
   }
 
+  public void setEXoStartAjax(boolean eXoStartAjax) {
+    this.eXoStartAjax = eXoStartAjax;
+  }
+
+  public boolean isEXoStartAjax() {
+    return eXoStartAjax;
+  }
+	
   /**
    * @param remoteUser
    * @param expPerm
@@ -270,7 +299,23 @@ public class UserACL {
     return mandatoryGroups_;
   }
 
-  static public class Permission {
+  public void setAdminGroups(String adminGroups) {
+		this.adminGroups = adminGroups;
+	}
+
+	public String getAdminGroups() {
+		return adminGroups;
+	}
+
+	public void setAdminMSType(String adminMSType) {
+		this.adminMSType = adminMSType;
+	}
+
+	public String getAdminMSType() {
+		return adminMSType;
+	}
+
+	static public class Permission {
 
     private String name_ ;
 
@@ -299,7 +344,6 @@ public class UserACL {
       if(membership_ .length() == 0 || groupId_.length() == 0) return null;
       return membership_+":"+groupId_;
     }
-
     public String getMembership(){ return membership_; }
     public void setMembership(String membership) { membership_ = membership; }
 
