@@ -1,12 +1,11 @@
 /* --- DropDown Control Format --- */
 .UIDropDownControl {
 	margin-bottom: 2px;
-	position: relative ;
 	width: 100%;
 }
 
 .UIDropDownControl .UIDropDownAnchor {
-	width: 100%;
+	width: 236px;
 }
 
 .UIDropDownControl .UIDropDownTitle {

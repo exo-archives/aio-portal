@@ -24,6 +24,7 @@
   margin-right: 2px;	/* orientation=lt */
 	margin-left: 2px;	/* orientation=rt */
 	text-align: center;
+	width: 248px;
 }
 
 .UIControlWorkspace .CloseControlWorkspace {

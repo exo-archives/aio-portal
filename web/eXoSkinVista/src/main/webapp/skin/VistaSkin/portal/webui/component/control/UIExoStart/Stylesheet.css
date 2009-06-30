@@ -7,6 +7,7 @@
 
 .UIExoStart .StartBarContainer {
   height: 35px ;
+  width: 248px;
   background: url('background/ExoStart.png') repeat-x center -654px;
 }
 
