@@ -35,6 +35,8 @@ body
 #xEditingArea
 {
     border: #696969 1px solid;
+    padding: 1px;
+    padding-bottom: 0px;
 }
 
 .SourceField
