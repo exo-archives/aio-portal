@@ -16,6 +16,7 @@
  */
 package org.exoplatform.applicationregistry.webui.component;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.exoplatform.application.gadget.Gadget;
@@ -67,7 +68,7 @@ public class UIAddGadget extends UIForm {
       WebuiRequestContext context = event.getRequestContext() ;
       GadgetRegistryService service = uiForm.getApplicationComponent(GadgetRegistryService.class) ;
       String url = uiForm.getUIStringInput(FIELD_URL) .getValue();
-      String name = "gadget" + url.hashCode();
+      String name = "gadget" + url.hashCode() + Calendar.getInstance().hashCode();
       UIGadgetManagement uiManagement = uiForm.getParent() ;
       // check url exist
       boolean urlExist = checkUrlExist(uiManagement.getGadgets(), url);
