@@ -69,7 +69,7 @@
 	  <value-param>
         <name>access.control.exostart</name>
         <description>determine exostart use ajax or not use ajax</description>
-        <value>false</value>	    
+        <value>true</value>	    
       </value-param>
 			<values-param>
 				<name>mandatory.groups</name>
