@@ -24,6 +24,7 @@ import org.exoplatform.webui.Util;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.core.UIApplication;
 import org.exoplatform.webui.form.UIFormInputWithActions;
+import org.exoplatform.webui.form.UIFormMultiValueInputSet;
 import org.exoplatform.webui.form.UIFormStringInput;
 import org.exoplatform.webui.form.UIFormUploadInput;
 import org.exoplatform.webui.form.validator.EmailAddressValidator;
@@ -74,6 +75,14 @@ public class UIAccountInputSet extends UIFormInputWithActions {
     addUIFormInput(new UIFormStringInput("email", "email", null). 
                    addValidator(MandatoryValidator.class).
                    addValidator(EmailAddressValidator.class));   
+    UIFormMultiValueInputSet uiMulti ;
+    uiMulti = createUIComponent(UIFormMultiValueInputSet.class, null, null) ;
+    uiMulti.setId("aaa") ;
+    uiMulti.setName("ggg") ;
+    uiMulti.setType(UIFormStringInput.class) ;
+    uiMulti.addValidator(MandatoryValidator.class);
+    addUIFormInput(uiMulti) ;
+      
   }
   
   public String getUserName(){ return getUIStringInput(USERNAME).getValue(); }
