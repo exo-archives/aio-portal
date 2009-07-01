@@ -68,6 +68,10 @@
   height: 38px;   
 }
 
+.UIPage {
+  width: 99.8%;
+}
+
 .UIPage .UIRowContainer {
 	padding: 1px;
 }
