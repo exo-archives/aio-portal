@@ -75,13 +75,6 @@ public class UIAccountInputSet extends UIFormInputWithActions {
     addUIFormInput(new UIFormStringInput("email", "email", null). 
                    addValidator(MandatoryValidator.class).
                    addValidator(EmailAddressValidator.class));   
-    UIFormMultiValueInputSet uiMulti ;
-    uiMulti = createUIComponent(UIFormMultiValueInputSet.class, null, null) ;
-    uiMulti.setId("aaa") ;
-    uiMulti.setName("ggg") ;
-    uiMulti.setType(UIFormStringInput.class) ;
-    uiMulti.addValidator(MandatoryValidator.class);
-    addUIFormInput(uiMulti) ;
       
   }
   
