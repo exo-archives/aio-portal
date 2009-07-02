@@ -54,6 +54,10 @@
 	height: auto;
 }
 
+.UIMaskWorkspace .UIFormTabPane .UINodeIconSelector .OverflowContainer {
+	overflow:hidden;
+	width:auto;
+}
 /***********************************	UITabContent	************************************/
 .UIMaskWorkspace .UIFormTabPane {
 	padding: 10px;
