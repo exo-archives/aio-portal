@@ -70,6 +70,7 @@
 
 .UIPage {
   width: 99.8%;
+  *width: auto;
 }
 
 .UIPage .UIRowContainer {
