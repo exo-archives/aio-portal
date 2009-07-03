@@ -1,5 +1,8 @@
 <%
+  import org.exoplatform.commons.utils.ExpressionUtil;
+  
   def rcontext = _ctx.getRequestContext() ;
+  ResourceBundle res = rcontext.getApplicationResourceBundle() ;
 
 	String cssStyle = "";
 	String uiComponentWidth = uicomponent.getWidth();
@@ -31,7 +34,7 @@
 	              <div class="Title">
 		              <% 
 		                if(uicomponent.getTitle() != null) {
-		                  println(uicomponent.getTitle()) ;
+		                  println(ExpressionUtil.getExpressionValue(res, uicomponent.getTitle())) ;
 		                } else {
 		              %>
 		              <%=_ctx.appRes("UIContainer.title.Container")%>

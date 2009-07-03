@@ -1,8 +1,10 @@
 <%
  import org.exoplatform.web.application.JavascriptManager;
+ import org.exoplatform.commons.utils.ExpressionUtil;
 
   def rcontext = _ctx.getRequestContext() ;
   JavascriptManager jsmanager = rcontext.getJavascriptManager();
+  ResourceBundle res = rcontext.getApplicationResourceBundle() ;
   
   jsmanager.importJavascript('eXo.portal.PortalDragDrop');
 %>
@@ -26,7 +28,7 @@
 	              <div class="Title">
 	                <% 
 	                  if(uicomponent.getTitle() != null) {
-	                    println(uicomponent.getTitle()) ; 
+	                    println(ExpressionUtil.getExpressionValue(res, uicomponent.getTitle())) ; 
 	                  } else {
 	                %>
 	                    <%=_ctx.appRes("UIContainer.title.Container")%>
