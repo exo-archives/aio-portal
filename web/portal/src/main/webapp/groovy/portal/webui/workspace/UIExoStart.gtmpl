@@ -14,7 +14,12 @@
   String onclick = "eXo.portal.UIExoStartMenu.showStartMenu(event);" ;
   
   void renderSinglePageNode(PageNavigation nav, PageNode node) {
-    String  href = uicomponent.event("ChangePage",  nav.getId() + "::" + node.getUri()) ;
+    String  href = "" ;
+    if(uicomponent.isUseAjax()){
+  	  	  href = uicomponent.event("ChangePage",  nav.getId() + "::" + node.getUri()) ;
+  	  }  else {
+  	  	  href = node.getUri() ;
+  	  }
     String icon = node.getIcon();
     if(icon == null) icon = "DefaultPageIcon";
     String label = (node.resolvedLabel.length() > 60 ? node.resolvedLabel.substring(0, 57) + "..." : node.resolvedLabel); 
@@ -25,7 +30,12 @@
           	<div class="LabelText">
 		""";
 						if(node.pageReference != null) {
-				        print """<a href="#" onclick="$href" title="$node.resolvedLabel">$label</a>""";
+							if(uicomponent.isUseAjax()){
+						  	  	   print """<a href="#" onclick="$href" title="$node.resolvedLabel">$label</a>""";
+						  	  }  else {
+						  	  	   print """<a href="$href" title="$node.resolvedLabel">$label</a>""";
+						  	  }
+				       
 						} else {
 								print """<a href="#" title="$node.resolvedLabel">$label</a>""";
 						}
