@@ -4,13 +4,11 @@
     <parent>
         <groupId>org.exoplatform.portal</groupId>
         <artifactId>exo.portal.gadgets</artifactId>
-        <version>2.5.6-SNAPSHOT</version>
+        <version>2.6-SNAPSHOT</version>
     </parent>
 
     <artifactId>exo.portal.gadgets-server</artifactId>
-
     <packaging>war</packaging>
-
     <name>eXo Gadgets Web App</name>
     <description>Server war containing both the gadget rendering code code.</description>
 
@@ -19,39 +17,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.0</version>
+                <version>2.0.2</version>
                 <configuration>
                     <dependentWarExcludes>gadgets/**</dependentWarExcludes>
                     <dependentWarExcludes>WEB-INF/web**</dependentWarExcludes>
-                    <webResources>
-                        <resource>
-                            <!-- this is relative to the pom.xml directory -->
-                            <directory>${basedir}/../config</directory>
-                            <includes>
-                                <include>oauth.xml</include>
-                            </includes>
-                        </resource>
-                    </webResources>
                 </configuration>
             </plugin>
-
         </plugins>
-        <resources>
-            <resource>
-                <targetPath>containers/default</targetPath>
-                <directory>${basedir}/../config</directory>
-                <includes>
-                    <include>container.js</include>
-                </includes>
-            </resource>
-            <resource>
-                <targetPath>config</targetPath>
-                <directory>${basedir}/../config</directory>
-                <includes>
-                    <include>oauth.json</include>
-                </includes>
-            </resource>
-        </resources>
     </build>
 
     <!-- ====================================================================== -->
@@ -116,10 +88,13 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.google.code.google-collections</groupId>
-            <artifactId>google-collect</artifactId>
-            <version>snapshot-20080321</version>
-            <scope>provided</scope>
+		<!--<groupId>com.google.collections</groupId>
+		<artifactId>google-collections</artifactId>
+		<version>0.8</version> -->
+		<groupId>com.google.code.google-collections</groupId>
+ 		<artifactId>google-collect</artifactId>
+ 		<version>snapshot-20080321</version>
+		<scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.google.code.guice</groupId>
@@ -186,4 +161,5 @@
             <type>jar</type>
         </dependency-->
     </dependencies>
+    
 </project>
