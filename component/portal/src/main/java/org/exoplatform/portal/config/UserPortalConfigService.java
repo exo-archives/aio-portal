@@ -24,13 +24,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.exoplatform.commons.utils.LazyPageList;
+import org.apache.commons.logging.Log;
+import org.exoplatform.commons.utils.PageList;
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.ExoContainerContext;
 import org.exoplatform.container.component.ComponentPlugin;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.portal.config.model.Application;
 import org.exoplatform.portal.config.model.Container;
+import org.exoplatform.portal.config.model.Gadgets;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
@@ -40,7 +42,6 @@ import org.exoplatform.services.cache.ExoCache;
 import org.exoplatform.services.cache.ExpireKeyStartWithSelector;
 import org.exoplatform.services.listener.ListenerService;
 import org.exoplatform.services.log.ExoLogger;
-import org.exoplatform.services.log.Log;
 import org.exoplatform.services.organization.Group;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.portletcontainer.PortletContainerService;
@@ -49,28 +50,30 @@ import org.exoplatform.services.portletcontainer.pci.Input;
 import org.picocontainer.Startable;
 
 /**
- * Created by The eXo Platform SAS Apr 19, 2007 This service is used to load the
- * PortalConfig, Page config and Navigation config for a given user.
+ * Created by The eXo Platform SAS Apr 19, 2007
+ * 
+ * This service is used to load the PortalConfig, Page config and Navigation
+ * config for a given user.
  */
 public class UserPortalConfigService implements Startable {
 
 	public final static String CREATE_PAGE_EVENT = "UserPortalConfigService.page.onCreate"
-		.intern();
+			.intern();
 
 	public final static String REMOVE_PAGE_EVENT = "UserPortalConfigService.page.onRemove"
-		.intern();
+			.intern();
 
 	public final static String UPDATE_PAGE_EVENT = "UserPortalConfigService.page.onUpdate"
-		.intern();
+			.intern();
 
 	public final static String CREATE_NAVIGATION_EVENT = "UserPortalConfigService.navigation.onCreate"
-		.intern();
+			.intern();
 
 	public final static String REMOVE_NAVIGATION_EVENT = "UserPortalConfigService.navigation.onRemove"
-		.intern();
+			.intern();
 
 	public final static String UPDATE_NAVIGATION_EVENT = "UserPortalConfigService.navigation.onUpdate"
-		.intern();
+			.intern();
 
 	private DataStorage storage_;
 
@@ -80,19 +83,21 @@ public class UserPortalConfigService implements Startable {
 
 	private ListenerService listenerService;
 
-	protected ExoCache<String, PortalConfig> portalConfigCache_;
+	protected ExoCache portalConfigCache_;
 
-	protected ExoCache<String, Page> pageConfigCache_;
+	protected ExoCache pageConfigCache_;
 
-	protected ExoCache<String, PageNavigation> pageNavigationCache_;
+	protected ExoCache pageNavigationCache_;
+
+	protected ExoCache gadgetsCache_;
 
 	private NewPortalConfigListener newPortalConfigListener_;
 
 	private Log log = ExoLogger.getLogger("Portal:UserPortalConfigService");
 
 	/**
-	 *The constructor should create the DataStorage object and broadcast
-	 * "the UserPortalConfigService.onInit" event
+	 * The constructor should create the DataStorage object and broadcast "the
+	 * UserPortalConfigService.onInit" event
 	 */
 	public UserPortalConfigService(UserACL userACL, DataStorage storage,
 			CacheService cacheService, OrganizationService orgService,
@@ -107,6 +112,7 @@ public class UserPortalConfigService implements Startable {
 		pageConfigCache_ = cacheService.getCacheInstance(Page.class.getName());
 		pageNavigationCache_ = cacheService.getCacheInstance(PageNavigation.class
 				.getName());
+		gadgetsCache_ = cacheService.getCacheInstance(Gadgets.class.getName());
 	}
 
 	/**
@@ -121,13 +127,13 @@ public class UserPortalConfigService implements Startable {
 	 */
 	public UserPortalConfig getUserPortalConfig(String portalName,
 			String accessUser) throws Exception {
-		PortalConfig portal = portalConfigCache_.get(portalName);
+		PortalConfig portal = (PortalConfig) portalConfigCache_.get(portalName);
 		if (portal == null) {
 			portal = storage_.getPortalConfig(portalName);
 			if (portal != null)
 				portalConfigCache_.put(portalName, portal);
 		}
-		if (portal == null || !userACL_.hasPermission(portal))
+		if (portal == null || !userACL_.hasPermission(portal, accessUser))
 			return null;
 
 		List<PageNavigation> navigations = new ArrayList<PageNavigation>();
@@ -163,17 +169,19 @@ public class UserPortalConfigService implements Startable {
 				navigation = getPageNavigation(PortalConfig.GROUP_TYPE, groupId);
 				if (navigation == null)
 					continue;
-				navigation.setModifiable(userACL_.hasEditPermission(navigation));
+				navigation.setModifiable(userACL_.hasEditPermission(navigation,
+						accessUser));
 				navigations.add(navigation);
 			}
 		}
+		Gadgets userGadgets = getGadgets(PortalConfig.USER_TYPE + "::" + accessUser);
 		Collections.sort(navigations, new Comparator<PageNavigation>() {
 			public int compare(PageNavigation nav1, PageNavigation nav2) {
 				return nav1.getPriority() - nav2.getPriority();
 			}
 		});
 
-		return new UserPortalConfig(portal, navigations);
+		return new UserPortalConfig(portal, navigations, userGadgets);
 	}
 
 	public List<String> getMakableNavigations(String remoteUser) throws Exception {
@@ -198,7 +206,7 @@ public class UserPortalConfigService implements Startable {
 	}
 
 	/**
-	 * This method should create a the portal config, pages and nRavigation
+	 * This method should create a the portal config, pages and navigation
 	 * according to the template name
 	 * 
 	 * @param portalName
@@ -207,9 +215,9 @@ public class UserPortalConfigService implements Startable {
 	 * @throws Exception
 	 */
 	public void createUserPortalConfig(String portalName, String template)
-	throws Exception {
+			throws Exception {
 		NewPortalConfig portalConfig = newPortalConfigListener_
-		.getPortalConfig(PortalConfig.PORTAL_TYPE);
+				.getPortalConfig(PortalConfig.PORTAL_TYPE);
 		portalConfig.setTemplateOwner(template);
 		portalConfig.getPredefinedOwner().clear();
 		portalConfig.getPredefinedOwner().add(portalName);
@@ -225,16 +233,20 @@ public class UserPortalConfigService implements Startable {
 	 * @throws Exception
 	 */
 	public void removeUserPortalConfig(String portalName) throws Exception {
-		Query<Page> query = new Query<Page>(PortalConfig.PORTAL_TYPE, portalName,
-				null, null, Page.class);
-		LazyPageList pageList = storage_.find(query);
-
-		List<?> listPage = pageList.getAll();
-		int lenPage = listPage.size() - 1;
-		while (lenPage >= 0) {
-			Page page = (Page) listPage.get(lenPage);
-			remove(page);
-			lenPage--;
+		Query<Page> query = new Query<Page>(null, null, null, null, Page.class);
+		query.setOwnerType(PortalConfig.PORTAL_TYPE);
+		query.setOwnerId(portalName);
+		PageList pageList = storage_.find(query);
+		pageList.setPageSize(10);
+		int i = 1;
+		while (i <= pageList.getAvailablePage()) {
+			List<?> list = pageList.getPage(i);
+			Iterator<?> itr = list.iterator();
+			while (itr.hasNext()) {
+				Page page = (Page) itr.next();
+				remove(page);
+			}
+			i++;
 		}
 
 		PageNavigation navigation = storage_.getPageNavigation(
@@ -243,29 +255,21 @@ public class UserPortalConfigService implements Startable {
 			remove(navigation);
 
 		Query<PortletPreferences> portletPrefQuery = new Query<PortletPreferences>(
-				PortalConfig.PORTAL_TYPE, portalName, null, null,
-				PortletPreferences.class);
+				null, null, null, null, PortletPreferences.class);
+		portletPrefQuery.setOwnerType(PortalConfig.PORTAL_TYPE);
+		portletPrefQuery.setOwnerId(portalName);
 		pageList = storage_.find(portletPrefQuery);
-		List<?> list = pageList.getAll();
-		int len = list.size() - 1;
-		while (len >= 0) {
-			PortletPreferences portletPreferences = (PortletPreferences) list
-			.get(len);
-			storage_.remove(portletPreferences);
-			len--;
+		pageList.setPageSize(10);
+		i = 1;
+		while (i <= pageList.getAvailablePage()) {
+			List<?> list = pageList.getPage(i);
+			Iterator<?> itr = list.iterator();
+			while (itr.hasNext()) {
+				PortletPreferences portletPreferences = (PortletPreferences) itr.next();
+				storage_.remove(portletPreferences);
+			}
+			i++;
 		}
-		//		pageList.setPageSize(10);
-		//		i = 1;
-		//		while (i <= pageList.getAvailablePage()) {
-		//		List<?> list = pageList.getPage(i);
-		//		int len = list.size()-1;
-		//		while (len >= 0) {
-		//		PortletPreferences portletPreferences = (PortletPreferences) list.get(len);
-		//		storage_.remove(portletPreferences);
-		//		len--;
-		//		}
-		//		i++;
-		//		}
 
 		PortalConfig config = storage_.getPortalConfig(portalName);
 		portalConfigCache_.remove(config.getName());
@@ -281,18 +285,16 @@ public class UserPortalConfigService implements Startable {
 	 */
 	public void update(PortalConfig portal) throws Exception {
 		storage_.save(portal);
-		portalConfigCache_
-		.select(new ExpireKeyStartWithSelector<String, PortalConfig>(portal
-				.getName()));
+		portalConfigCache_.select(new ExpireKeyStartWithSelector(portal.getName()));
 	}
 
-	//****************************************************************************
-	// **********************
+	// **************************************************************************************************
 
 	/**
 	 * This method will load the page according to the pageId
 	 * 
-	 * Caller of this method should check the value of parsed parameter before invocation
+	 * Caller of this method should check the value of parsed parameter before
+	 * invocation
 	 * 
 	 * @param pageId
 	 * @return
@@ -304,7 +306,8 @@ public class UserPortalConfigService implements Startable {
 			return null;
 		Page page = (Page) pageConfigCache_.get(pageId);
 		if (page == null)
-			page = storage_.getPage(pageId);  //TODO: pageConfigCache_ needs to be updated
+			page = storage_.getPage(pageId);// TODO: pageConfigCache_ needs to be
+		                                  // updated
 		return page;
 	}
 
@@ -318,10 +321,11 @@ public class UserPortalConfigService implements Startable {
 	 */
 	public Page getPage(String pageId, String accessUser) throws Exception {
 		Page page = getPage(pageId);
-		if (page != null) { //Add a check on page value before put it into the cache
+		if (page != null) { // Add a check on page value before put it into the
+			                  // cache
 			pageConfigCache_.put(pageId, page);
-		}			
-		if (page == null || !userACL_.hasPermission(page)) {
+		}
+		if (page == null || !userACL_.hasPermission(page, accessUser)) {
 			return null;
 		}
 		return page;
@@ -360,13 +364,11 @@ public class UserPortalConfigService implements Startable {
 	 */
 	public void update(Page page) throws Exception {
 		storage_.save(page);
-		pageConfigCache_.select(new ExpireKeyStartWithSelector<String, Page>(page
-				.getPageId()));
+		pageConfigCache_.select(new ExpireKeyStartWithSelector(page.getPageId()));
 		listenerService.broadcast(UPDATE_PAGE_EVENT, this, page);
 	}
 
-	//****************************************************************************
-	// **********************
+	// **************************************************************************************************
 
 	public void create(PageNavigation navigation) throws Exception {
 		storage_.create(navigation);
@@ -382,9 +384,8 @@ public class UserPortalConfigService implements Startable {
 	 */
 	public void update(PageNavigation navigation) throws Exception {
 		storage_.save(navigation);
-		pageNavigationCache_
-		.select(new ExpireKeyStartWithSelector<String, PageNavigation>(
-				navigation.getOwner()));
+		pageNavigationCache_.select(new ExpireKeyStartWithSelector(navigation
+				.getOwner()));
 		listenerService.broadcast(UPDATE_NAVIGATION_EVENT, this, navigation);
 	}
 
@@ -401,11 +402,36 @@ public class UserPortalConfigService implements Startable {
 	}
 
 	public PageNavigation getPageNavigation(String ownerType, String id)
-	throws Exception {
-		PageNavigation navigation = pageNavigationCache_.get(ownerType + "::" + id);
+			throws Exception {
+		PageNavigation navigation = (PageNavigation) pageNavigationCache_
+				.get(ownerType + "::" + id);
 		if (navigation == null)
 			navigation = storage_.getPageNavigation(ownerType, id);
 		return navigation;
+	}
+
+	public void create(Gadgets gadgets) throws Exception {
+		storage_.create(gadgets);
+		gadgetsCache_.put(gadgets.getId(), gadgets);
+	}
+
+	public void update(Gadgets gadgets) throws Exception {
+		storage_.save(gadgets);
+		gadgetsCache_.select(new ExpireKeyStartWithSelector(gadgets.getId()));
+	}
+
+	public void remove(Gadgets gadgets) throws Exception {
+		storage_.remove(gadgets);
+		gadgetsCache_.remove(gadgets.getId());
+	}
+
+	public Gadgets getGadgets(String id) throws Exception {
+		Gadgets gadgets = (Gadgets) pageConfigCache_.get(id);
+		if (gadgets != null)
+			return gadgets;
+		gadgets = storage_.getGadgets(id);
+		gadgetsCache_.put(id, gadgets);
+		return gadgets;
 	}
 
 	/**
@@ -432,22 +458,21 @@ public class UserPortalConfigService implements Startable {
 
 	public Page renewPage(String pageId, String pageName, String ownerType,
 			String ownerId, javax.portlet.PortletPreferences portletPreferences)
-	throws Exception {
+			throws Exception {
 
 		Page page = storage_.getPage(pageId);
 		page.setName(pageName);
 		page.setPageId(ownerType + "::" + ownerId + "::" + pageName);
-		List<Application> apps = new ArrayList<Application>();
+		List<Application> apps = new ArrayList<Application>(5);
 		getApplications(apps, page);
 		for (Application ele : apps) {
 			String appType = ele.getApplicationType();
 			if (appType == null
 					|| org.exoplatform.web.application.Application.EXO_PORTLET_TYPE
-					.equals(appType)) {
+							.equals(appType)) {
 				javax.portlet.PortletPreferences mergedPreferences = getPreferences(ele);
-				if (portletPreferences != null) {
+				if (portletPreferences != null)
 					addPreferrences(mergedPreferences, portletPreferences);
-				}
 				renewInstanceId(ele, ownerType, ownerId);
 				setPreferences(ele, mergedPreferences);
 			} else {
@@ -480,13 +505,13 @@ public class UserPortalConfigService implements Startable {
 	}
 
 	private javax.portlet.PortletPreferences getPreferences(Application app)
-	throws Exception {
+			throws Exception {
 		ExoWindowID windowID = new ExoWindowID(app.getInstanceId());
 		Input input = new Input();
 		input.setInternalWindowID(windowID);
 		ExoContainer container = ExoContainerContext.getCurrentContainer();
 		PortletContainerService pcServ = (PortletContainerService) container
-		.getComponentInstanceOfType(PortletContainerService.class);
+				.getComponentInstanceOfType(PortletContainerService.class);
 		return pcServ.getPortletPreferences(input);
 	}
 
@@ -497,7 +522,7 @@ public class UserPortalConfigService implements Startable {
 		input.setInternalWindowID(windowID);
 		ExoContainer container = ExoContainerContext.getCurrentContainer();
 		PortletContainerService pcServ = (PortletContainerService) container
-		.getComponentInstanceOfType(PortletContainerService.class);
+				.getComponentInstanceOfType(PortletContainerService.class);
 		pcServ.setPortletPreferences(input, portletPreferences);
 	}
 
@@ -509,7 +534,7 @@ public class UserPortalConfigService implements Startable {
 	}
 
 	public Page createPageTemplate(String temp, String ownerType, String ownerId)
-	throws Exception {
+			throws Exception {
 		Page page = newPortalConfigListener_.createPageFromTemplate(temp);
 		page.setOwnerType(ownerType);
 		page.setOwnerId(ownerId);
@@ -527,21 +552,21 @@ public class UserPortalConfigService implements Startable {
 	private void makeInstanceId(Application app, String ownerType, String ownerId) {
 		StringBuilder builder = new StringBuilder(20);
 		builder.append(ownerType + "#" + ownerId + ":").append(app.getInstanceId())
-		.append("/" + builder.hashCode());
+				.append("/" + builder.hashCode());
 		app.setInstanceId(builder.toString());
 	}
 
 	private void createPortletPreferences(List<Application> apps, String temp)
-	throws Exception {
+			throws Exception {
 		List<PortletPreferences> preferencesSet = newPortalConfigListener_
-		.createPortletPreferencesFromTemplate(temp).getPortlets();
+				.createPortletPreferencesFromTemplate(temp).getPortlets();
 		if (preferencesSet == null || preferencesSet.size() < 1)
 			return;
 		for (Application ele : apps) {
 			String appType = ele.getApplicationType();
 			if (appType == null
 					|| org.exoplatform.web.application.Application.EXO_PORTLET_TYPE
-					.equals(appType)) {
+							.equals(appType)) {
 				savePortletPreferences(ele, preferencesSet);
 			}
 		}
@@ -551,7 +576,7 @@ public class UserPortalConfigService implements Startable {
 			List<PortletPreferences> preferencesSet) throws Exception {
 		ExoWindowID windowID = new ExoWindowID(app.getInstanceId());
 		String tmp = "/" + windowID.getPortletApplicationName() + "/"
-		+ windowID.getPortletName();
+				+ windowID.getPortletName();
 		for (PortletPreferences preferences : preferencesSet) {
 			if (tmp.equals(preferences.getWindowId())) {
 				String[] fragments = windowID.getOwner().split("#");
