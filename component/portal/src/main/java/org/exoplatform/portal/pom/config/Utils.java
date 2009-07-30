@@ -38,4 +38,20 @@ public class Utils {
     return s.split("|");
   }
 
+  public static String[] splitId(String id) {
+    int index1 = id.indexOf("::");
+    if (index1 == -1) {
+      throw new IllegalArgumentException("Invalid id: [" + id + "]");
+    }
+    int index2 = id.indexOf("::", index1 + 2);
+    if (index2 == -1) {
+      throw new IllegalArgumentException("Invalid id: [" + id + "]");
+    }
+    return new String[]{
+      id.substring(0, index1),
+      id.substring(index1 + 2, index2),
+      id.substring(index2 + 2)
+    };
+  }
+
 }

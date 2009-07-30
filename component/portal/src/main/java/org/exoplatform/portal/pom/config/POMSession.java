@@ -70,11 +70,10 @@ public class POMSession {
     }
   }
 
-  void save() {
+  public void save() {
     if (!isInTask) {
       throw new IllegalStateException();
     }
     model.save();
   }
-
 }

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  */
-package org.exoplatform.portal.pom.config;
+package org.exoplatform.portal.pom.config.tasks;
 
 import org.exoplatform.portal.model.api.workspace.Workspace;
 import org.exoplatform.portal.model.api.workspace.Portal;
@@ -24,6 +24,8 @@ import org.exoplatform.portal.config.model.PortalConfig;
 
 import static org.exoplatform.portal.pom.config.Utils.join;
 import static org.exoplatform.portal.pom.config.Utils.split;
+import org.exoplatform.portal.pom.config.AbstractPOMTask;
+import org.exoplatform.portal.pom.config.POMSession;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -77,7 +79,7 @@ public abstract class PortalConfigTask extends AbstractPOMTask {
       if (create) {
         portal = workspace.createSite(ObjectType.PORTAL, config.getName());
       } else {
-        portal = workspace.getSite(ObjectType.PORTAL, config.getName());;
+        portal = workspace.getSite(ObjectType.PORTAL, config.getName());
       }
       update(config, portal);
       session.save();
