@@ -24,7 +24,7 @@ import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.portal.model.api.workspace.Workspace;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
-import org.exoplatform.portal.model.api.workspace.Portal;
+import org.exoplatform.portal.model.api.workspace.Site;
 import org.exoplatform.portal.model.util.Attributes;
 import org.exoplatform.services.portletcontainer.pci.WindowID;
 import org.exoplatform.commons.utils.LazyPageList;
@@ -32,6 +32,9 @@ import org.exoplatform.commons.utils.LazyPageList;
 import javax.jcr.RepositoryException;
 import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicReference;
+
+import static org.exoplatform.portal.pom.config.Utils.join;
+import static org.exoplatform.portal.pom.config.Utils.split;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -46,69 +49,91 @@ public class POMDataStorage implements DataStorage {
     this.pomMgr = pomMgr;
   }
 
-  public PortalConfig getPortalConfig(final String portalName) throws Exception {
+  private <T extends AbstractPOMTask> T execute(T task) throws RepositoryException {
+    pomMgr.execute(task);
+    return task;
+  }
 
-    final AtomicReference<PortalConfig> ref = new AtomicReference<PortalConfig>();
+  public PortalConfig getPortalConfig(final String portalName) throws Exception {
+    return execute(new PortalConfigTask.Get(portalName)).getConfig();
+  }
+
+  public void create(final PortalConfig config) throws Exception {
+    execute(new PortalConfigTask.Persist(config, true));
+  }
+
+  public void save(PortalConfig config) throws Exception {
+    execute(new PortalConfigTask.Persist(config, false));
+  }
+
+  public void remove(final PortalConfig config) throws Exception {
+    execute(new PortalConfigTask.Remove(config.getName()));
+  }
+
+  private String[] getNames(String pageId) {
+    int index1 = pageId.indexOf("::");
+    if (index1 == -1) {
+      throw new IllegalArgumentException("Invalid page id: [" + pageId + "]");
+    }
+    int index2 = pageId.indexOf("::", index1 + 2);
+    if (index2 == -1) {
+      throw new IllegalArgumentException("Invalid page id: [" + pageId + "]");
+    }
+    return new String[]{
+      pageId.substring(0, index1),
+      pageId.substring(index1 + 2, index2),
+      pageId.substring(index2 + 2)
+    };
+  }
+
+  public Page getPage(final String pageId) throws Exception {
+
+    final String[] fragments = getNames(pageId);
+    final String ownerType = fragments[0];
+    final String ownerId = fragments[1];
+    final String name = fragments[2];
+
+    final ObjectType<? extends Site> siteType;
+    if (ownerType.equals(PortalConfig.PORTAL_TYPE)) {
+      siteType = ObjectType.PORTAL;
+    } else if (ownerType.equals(PortalConfig.GROUP_TYPE)) {
+      siteType = ObjectType.GROUP;
+    } else if (ownerType.equals(PortalConfig.USER_TYPE)) {
+      siteType = ObjectType.USER;
+    } else {
+      throw new IllegalArgumentException("Invalid owner type " + ownerType);
+    }
+
+    final AtomicReference<Page> ref = new AtomicReference<Page>();
 
     pomMgr.execute(new POMTask() {
       public void run(POMSession session) {
         Workspace workspace = session.getWorkspace();
-        Portal portal = workspace.getSite(ObjectType.PORTAL, portalName);
-        if (portal != null) {
-          Attributes attrs = portal.getAttributes();
-          PortalConfig config = new PortalConfig();
-          config.setName(portal.getName());
-          config.setLocale(attrs.getString("locale"));
-          config.setAccessPermissions(split(attrs.getString("accessPermissions")));
-          ref.set(config);
+        Site site = workspace.getSite(siteType, ownerId);
+        if (site != null) {
+          org.exoplatform.portal.model.api.workspace.Page root = site.getRootPage();
+          org.exoplatform.portal.model.api.workspace.Page page = root.getChild(name);
+          if (page != null) {
+            Attributes attrs = page.getAttributes();
+            Page bilto = new Page();
+            bilto.setId(pageId);
+            bilto.setOwnerId(ownerId);
+            bilto.setOwnerType(ownerType);
+            bilto.setName(name);
+            bilto.setTitle(attrs.getString("title"));
+            bilto.setShowMaxWindow(attrs.getBoolean("show-max-window"));
+            bilto.setCreator(attrs.getString("creator"));
+            bilto.setModifier(attrs.getString("modifier"));
+            bilto.setAccessPermissions(split(attrs.getString("access-permissions")));
+            bilto.setEditPermission(attrs.getString("edit-permission"));
+
+            // Need to do components
+          }
         }
       }
     });
 
     return ref.get();
-  }
-
-  private static String join(String... strings) {
-    StringBuilder sb = new StringBuilder();
-    for (int i = 0;i < strings.length;i++) {
-      Object o = strings[i];
-      if (i > 0) {
-        sb.append('|');
-      }
-      sb.append(o);
-    }
-    return sb.toString();
-  }
-
-  public String[] split(String s) {
-    return s.split("|");
-  }
-
-  public void create(final PortalConfig config) throws Exception {
-
-    pomMgr.execute(new POMTask() {
-      public void run(POMSession session) {
-        Workspace workspace = session.getWorkspace();
-        Portal portal = workspace.createSite(config.getName(), ObjectType.PORTAL);
-        Attributes attrs = portal.getAttributes();
-        attrs.setString("locale", config.getLocale());
-        attrs.setString("accessPermissions", join(config.getAccessPermissions()));
-        session.save();
-      }
-    });
-
-  }
-
-  public void save(PortalConfig config) throws Exception {
-    throw new UnsupportedOperationException();
-  }
-
-  public void remove(PortalConfig config) throws Exception {
-    throw new UnsupportedOperationException();
-  }
-
-  public Page getPage(String pageId) throws Exception {
-    throw new UnsupportedOperationException();
   }
 
   public void remove(Page page) throws Exception {
