@@ -155,6 +155,18 @@
     <key>org.exoplatform.services.jcr.ext.hierarchy.NodeHierarchyCreator</key>
     <type>org.exoplatform.services.jcr.ext.hierarchy.impl.NodeHierarchyCreatorImpl</type>
   </component>
+
+  <component>
+    <key>org.exoplatform.portal.pom.config.POMSessionManager</key>
+    <type>org.exoplatform.portal.pom.config.POMSessionManager</type>
+  </component>
+<!--
+  <component>
+    <key>org.exoplatform.portal.pom.config.POMDataStorage</key>
+    <type>org.exoplatform.portal.pom.config.POMDataStorage</type>
+  </component>
+-->
+
   <external-component-plugins>
     <target-component>org.exoplatform.services.jcr.RepositoryService</target-component>
     <component-plugin>

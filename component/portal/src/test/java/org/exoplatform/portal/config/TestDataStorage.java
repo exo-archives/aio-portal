@@ -25,6 +25,8 @@ import org.exoplatform.portal.application.Preference;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PortalConfig;
+import org.exoplatform.portal.pom.config.POMSessionManager;
+import org.exoplatform.portal.pom.config.POMDataStorage;
 import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
 import org.exoplatform.test.BasicTestCase;
 
@@ -49,6 +51,11 @@ public class TestDataStorage extends BasicTestCase {
     if (storage_ != null) return;
     PortalContainer container = PortalContainer.getInstance();
     storage_ = (DataStorage) container.getComponentInstanceOfType(DataStorage.class);
+
+    POMSessionManager mgr = (POMSessionManager)container.getComponentInstanceOfType(POMSessionManager.class);
+
+    storage_ = new POMDataStorage(mgr);
+
   }
 
   public void testPortalConfigCreate() throws Exception {
