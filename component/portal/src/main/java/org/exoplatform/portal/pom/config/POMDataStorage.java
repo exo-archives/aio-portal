@@ -25,7 +25,6 @@ import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.services.portletcontainer.pci.WindowID;
 import org.exoplatform.commons.utils.LazyPageList;
 
-import javax.jcr.RepositoryException;
 import java.util.Comparator;
 
 import org.exoplatform.portal.pom.config.tasks.PageTask;
@@ -44,7 +43,7 @@ public class POMDataStorage implements DataStorage {
     this.pomMgr = pomMgr;
   }
 
-  private <T extends AbstractPOMTask> T execute(T task) throws RepositoryException {
+  private <T extends AbstractPOMTask> T execute(T task) throws Exception {
     pomMgr.execute(task);
     return task;
   }
@@ -74,7 +73,7 @@ public class POMDataStorage implements DataStorage {
   }
 
   public void create(Page page) throws Exception {
-    throw new UnsupportedOperationException();
+    execute(new PageTask.Create(page));
   }
 
   public void save(Page page) throws Exception {

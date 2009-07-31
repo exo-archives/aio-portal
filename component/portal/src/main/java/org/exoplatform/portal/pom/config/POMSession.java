@@ -55,7 +55,7 @@ public class POMSession {
     return getModel().getWorkspace();
   }
 
-  public void execute(POMTask task) throws RepositoryException {
+  public <T extends Throwable> void execute(POMTask task) throws Exception {
     if (isInTask) {
       throw new IllegalStateException();
     }

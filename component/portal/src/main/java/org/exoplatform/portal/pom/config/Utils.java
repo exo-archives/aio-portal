@@ -23,6 +23,9 @@ package org.exoplatform.portal.pom.config;
 public class Utils {
 
   public static String join(String... strings) {
+    if (strings == null) {
+      return null;
+    }
     StringBuilder sb = new StringBuilder();
     for (int i = 0;i < strings.length;i++) {
       Object o = strings[i];
@@ -35,6 +38,9 @@ public class Utils {
   }
 
   public static String[] split(String s) {
+    if (s == null) {
+      return null;
+    }
     return s.split("|");
   }
 

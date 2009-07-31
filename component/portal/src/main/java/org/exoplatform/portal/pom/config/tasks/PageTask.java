@@ -22,7 +22,9 @@ import org.exoplatform.portal.model.api.workspace.ObjectType;
 import org.exoplatform.portal.model.util.Attributes;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PortalConfig;
+import static org.exoplatform.portal.pom.config.Utils.splitId;
 import static org.exoplatform.portal.pom.config.Utils.split;
+import static org.exoplatform.portal.pom.config.Utils.join;
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
 import org.exoplatform.portal.pom.config.POMSession;
 
@@ -48,7 +50,7 @@ public abstract class PageTask extends AbstractPOMTask {
   protected final ObjectType<? extends Site> siteType;
 
   protected PageTask(String pageId) {
-    String[] strings = split(pageId);
+    String[] strings = splitId(pageId);
 
     //
     String ownerType = strings[0];
@@ -75,6 +77,42 @@ public abstract class PageTask extends AbstractPOMTask {
     this.siteType = siteType;
   }
 
+  public static class Create extends PageTask {
+
+    /** . */
+    private final Page page;
+
+    public Create(Page page) {
+      super(page.getPageId());
+
+      //
+      this.page = page;
+    }
+
+    public void run(POMSession session) throws Exception {
+      Workspace workspace = session.getWorkspace();
+      Site site = workspace.getSite(siteType, ownerId);
+      if (site == null) {
+        throw new IllegalArgumentException("Cannot insert page " + pageId +
+          " as the corresponding portal " + ownerId + " with type " + siteType + " does not exist");
+      }
+      org.exoplatform.portal.model.api.workspace.Page page = site.getRootPage().addChild(name);
+      Attributes attrs = page.getAttributes();
+      attrs.setString("title", this.page.getTitle());
+      attrs.setBoolean("show-max-window", this.page.isShowMaxWindow());
+      attrs.setString("creator", this.page.getCreator());
+      attrs.setString("modifier", this.page.getModifier());
+      attrs.setString("access-permissions", join(this.page.getAccessPermissions()));
+      attrs.setString("edit-permission", this.page.getEditPermission());
+
+      // Need to do components
+
+
+      //
+      session.save();
+    }
+  }
+
   public static class Get extends PageTask {
 
     /** . */
@@ -89,8 +127,6 @@ public abstract class PageTask extends AbstractPOMTask {
     }
 
     public void run(POMSession session) {
-
-
       Workspace workspace = session.getWorkspace();
       Site site = workspace.getSite(siteType, ownerId);
       if (site != null) {
@@ -117,7 +153,5 @@ public abstract class PageTask extends AbstractPOMTask {
         }
       }
     }
-
   }
-
 }

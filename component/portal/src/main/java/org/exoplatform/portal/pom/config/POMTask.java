@@ -22,6 +22,6 @@ package org.exoplatform.portal.pom.config;
  */
 public interface POMTask {
   
-  void run(POMSession session);
+  void run(POMSession session) throws Exception;
 
 }

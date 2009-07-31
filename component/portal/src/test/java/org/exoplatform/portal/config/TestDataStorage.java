@@ -103,6 +103,13 @@ public class TestDataStorage extends BasicTestCase {
   }
 
   private void createPageConfig(String ownerType, String ownerId) throws Exception {
+
+    PortalConfig portal = new PortalConfig();
+    portal.setName("classic");
+    portal.setLocale("en");
+    portal.setAccessPermissions(new String[]{UserACL.EVERYONE});
+    storage_.create(portal);
+
   	Page page = new Page();
   	page.setName("testPage");
   	page.setOwnerId("classic");

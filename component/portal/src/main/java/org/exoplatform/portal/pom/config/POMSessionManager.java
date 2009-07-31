@@ -96,7 +96,7 @@ public class POMSessionManager {
     return current.get();
   }
 
-  public void execute(POMTask task) throws RepositoryException {
+  public void execute(POMTask task) throws Exception {
     POMSession pomSession = new POMSession(this);
     current.set(pomSession);
     try {
