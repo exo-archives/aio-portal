@@ -178,6 +178,8 @@ public class TestDataStorage extends BasicTestCase {
   }
 
   public void testNavigationCreate() throws Exception {
+    createPortal(testPortal);
+
   	PageNavigation pageNavi = new PageNavigation();
   	pageNavi.setOwnerId(testPortal);
   	pageNavi.setOwnerType("portal");
@@ -185,6 +187,8 @@ public class TestDataStorage extends BasicTestCase {
   }
 
   public void testNavigationSave() throws Exception {
+    createPortal(testPortal);
+
   	PageNavigation pageNavi = storage_.getPageNavigation("portal", testPortal);
   	assertNotNull(pageNavi);
  
@@ -197,6 +201,8 @@ public class TestDataStorage extends BasicTestCase {
   }
 
   public void testNavigationRemove() throws Exception {
+    createPortal(testPortal);
+
   	PageNavigation pageNavi = storage_.getPageNavigation("portal", testPortal);
   	assertNotNull(pageNavi);
   	

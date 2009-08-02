@@ -29,6 +29,7 @@ import java.util.Comparator;
 
 import org.exoplatform.portal.pom.config.tasks.PageTask;
 import org.exoplatform.portal.pom.config.tasks.PortalConfigTask;
+import org.exoplatform.portal.pom.config.tasks.PageNavigationTask;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -81,23 +82,23 @@ public class POMDataStorage implements DataStorage {
   }
 
   public PageNavigation getPageNavigation(String fullId) throws Exception {
-    throw new UnsupportedOperationException();
+    return execute(new PageNavigationTask.Load(fullId)).getPageNavigation();
   }
 
   public PageNavigation getPageNavigation(String ownerType, String id) throws Exception {
-    throw new UnsupportedOperationException();
+    return execute(new PageNavigationTask.Load(ownerType + "::" + id)).getPageNavigation();
   }
 
   public void save(PageNavigation navigation) throws Exception {
-    throw new UnsupportedOperationException();
+    execute(new PageNavigationTask.Save(navigation, true));
   }
 
   public void create(PageNavigation navigation) throws Exception {
-    throw new UnsupportedOperationException();
+    execute(new PageNavigationTask.Save(navigation, false));
   }
 
   public void remove(PageNavigation navigation) throws Exception {
-    throw new UnsupportedOperationException();
+    execute(new PageNavigationTask.Remove(navigation));
   }
 
   public void save(PortletPreferences portletPreferences) throws Exception {

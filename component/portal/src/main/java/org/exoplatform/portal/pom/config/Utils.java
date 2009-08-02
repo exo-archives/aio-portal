@@ -41,23 +41,26 @@ public class Utils {
     if (s == null) {
       return null;
     }
-    return s.split("|");
+    return split(s, "|");
   }
 
-  public static String[] splitId(String id) {
-    int index1 = id.indexOf("::");
-    if (index1 == -1) {
-      throw new IllegalArgumentException("Invalid id: [" + id + "]");
+  public static String[] split(String s, String separator) {
+    if (s == null) {
+      return null;
     }
-    int index2 = id.indexOf("::", index1 + 2);
-    if (index2 == -1) {
-      throw new IllegalArgumentException("Invalid id: [" + id + "]");
-    }
-    return new String[]{
-      id.substring(0, index1),
-      id.substring(index1 + 2, index2),
-      id.substring(index2 + 2)
-    };
+    return split(s, 0, 0, separator);
   }
 
+  private static String[] split(String s, int fromIndex, int index, String separator) {
+    int toIndex = s.indexOf(separator, fromIndex);
+    String[] chunks;
+    if (toIndex == -1) {
+      chunks = new String[index + 1];
+      toIndex = s.length();
+    } else {
+      chunks = split(s, toIndex + 2, index + 1, separator);
+    }
+    chunks[index] = s.substring(fromIndex, toIndex);
+    return chunks;
+  }
 }

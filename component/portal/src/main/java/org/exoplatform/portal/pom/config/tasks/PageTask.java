@@ -22,7 +22,6 @@ import org.exoplatform.portal.model.api.workspace.ObjectType;
 import org.exoplatform.portal.model.util.Attributes;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PortalConfig;
-import static org.exoplatform.portal.pom.config.Utils.splitId;
 import static org.exoplatform.portal.pom.config.Utils.split;
 import static org.exoplatform.portal.pom.config.Utils.join;
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
@@ -50,12 +49,17 @@ public abstract class PageTask extends AbstractPOMTask {
   protected final ObjectType<? extends Site> siteType;
 
   protected PageTask(String pageId) {
-    String[] strings = splitId(pageId);
+    String[] chunks = split(pageId, "::");
 
     //
-    String ownerType = strings[0];
-    String ownerId = strings[1];
-    String name = strings[2];
+    if (chunks.length != 3) {
+      throw new IllegalArgumentException("Wrong pageId format should be ownerType::ownerId:name was " + pageId);
+    }
+
+    //
+    String ownerType = chunks[0];
+    String ownerId = chunks[1];
+    String name = chunks[2];
 
     //
     ObjectType<? extends Site> siteType;
@@ -121,6 +125,8 @@ public abstract class PageTask extends AbstractPOMTask {
         throw new IllegalArgumentException("Cannot insert page " + pageId +
           " as the corresponding portal " + ownerId + " with type " + siteType + " does not exist");
       }
+
+      //
       org.exoplatform.portal.model.api.workspace.Page page = site.getRootPage().getChild(name);
       if (page != null) {
         if (!overwrite) {
@@ -129,6 +135,8 @@ public abstract class PageTask extends AbstractPOMTask {
           throw new IllegalArgumentException("The page " + name + " does not exist in site " + ownerType + " with id " + ownerId);
         }
       }
+
+      //
       page = site.getRootPage().addChild(name);
       Attributes attrs = page.getAttributes();
       attrs.setString("title", this.page.getTitle());

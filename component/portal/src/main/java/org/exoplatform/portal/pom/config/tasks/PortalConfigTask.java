@@ -80,7 +80,7 @@ public abstract class PortalConfigTask extends AbstractPOMTask {
           throw new IllegalArgumentException("Cannot create portal " + config.getName() + " that already exist");
         }
       } else {
-        portal = workspace.createSite(ObjectType.PORTAL, config.getName());
+        portal = workspace.addSite(ObjectType.PORTAL, config.getName());
       }
       update(config, portal);
     }
