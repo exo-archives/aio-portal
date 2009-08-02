@@ -49,15 +49,15 @@ public class POMDataStorage implements DataStorage {
   }
 
   public PortalConfig getPortalConfig(String portalName) throws Exception {
-    return execute(new PortalConfigTask.Get(portalName)).getConfig();
+    return execute(new PortalConfigTask.Load(portalName)).getConfig();
   }
 
   public void create(PortalConfig config) throws Exception {
-    execute(new PortalConfigTask.Persist(config, true));
+    execute(new PortalConfigTask.Save(config, false));
   }
 
   public void save(PortalConfig config) throws Exception {
-    execute(new PortalConfigTask.Persist(config, false));
+    execute(new PortalConfigTask.Save(config, true));
   }
 
   public void remove(PortalConfig config) throws Exception {
@@ -65,19 +65,19 @@ public class POMDataStorage implements DataStorage {
   }
 
   public Page getPage(String pageId) throws Exception {
-    return execute(new PageTask.Get(pageId)).getPage();
+    return execute(new PageTask.Load(pageId)).getPage();
   }
 
   public void remove(Page page) throws Exception {
-    throw new UnsupportedOperationException();
+    execute(new PageTask.Remove(page));
   }
 
   public void create(Page page) throws Exception {
-    execute(new PageTask.Create(page));
+    execute(new PageTask.Save(page, false));
   }
 
   public void save(Page page) throws Exception {
-    throw new UnsupportedOperationException();
+    execute(new PageTask.Save(page, true));
   }
 
   public PageNavigation getPageNavigation(String fullId) throws Exception {

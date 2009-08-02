@@ -55,15 +55,39 @@ public class TestDataStorage extends BasicTestCase {
     POMSessionManager mgr = (POMSessionManager)container.getComponentInstanceOfType(POMSessionManager.class);
 
     storage_ = new POMDataStorage(mgr);
+    this.mgr = mgr;
+  }
+
+  private POMSessionManager mgr;
+
+  protected void tearDown() throws Exception {
+
+    mgr.closeSession();
 
   }
 
+  private PortalConfig createPortal(String portalName) throws Exception {
+    PortalConfig portal = new PortalConfig();
+    portal.setName(portalName);
+    portal.setLocale("en");
+    portal.setAccessPermissions(new String[]{UserACL.EVERYONE});
+    storage_.create(portal);
+    return portal;
+  }
+
+  private Page createPage(String pageName) throws Exception {
+    Page page = new Page();
+    page.setName(pageName);
+    page.setOwnerId("classic");
+    page.setOwnerType("portal");
+    storage_.create(page);
+    return page;
+  }
+
   public void testPortalConfigCreate() throws Exception {
-  	PortalConfig portalConfig = new PortalConfig();
-  	portalConfig.setName(testPortal);
-  	portalConfig.setLocale("en");
-  	portalConfig.setAccessPermissions(new String[]{UserACL.EVERYONE});
-  	
+    PortalConfig portalConfig = createPortal("classic");
+
+    //
     PortalConfig returnConfig = storage_.getPortalConfig(portalConfig.getName());
     if (returnConfig != null)
       storage_.remove(returnConfig);
@@ -76,8 +100,7 @@ public class TestDataStorage extends BasicTestCase {
   }
 
   public void testPortalConfigSave() throws Exception {
-    PortalConfig portalConfig = storage_.getPortalConfig(testPortal);
-    
+    PortalConfig portalConfig = createPortal(testPortal);
     assertNotNull(portalConfig);
     
     String newLocale = "vietnam";
@@ -89,37 +112,30 @@ public class TestDataStorage extends BasicTestCase {
   }
 
   public void testPortalConfigRemove() throws Exception {
-    PortalConfig portalConfig = storage_.getPortalConfig(testPortal);
+    PortalConfig portalConfig = createPortal(testPortal);
     assertNotNull(portalConfig);
     
     storage_.remove(portalConfig);
     assertNull(storage_.getPortalConfig(testPortal));
   }
 
-  public void testPageConfigCreate() throws Exception {
+  public void testPortalPageConfigCreate() throws Exception {
     createPageConfig(PortalConfig.PORTAL_TYPE, "portalone");
-    createPageConfig(PortalConfig.USER_TYPE, "exoadmin");
+  }
+
+  public void testGroupPageConfigCreate() throws Exception {
     createPageConfig(PortalConfig.GROUP_TYPE, "portal/admin");
+  }
+
+  public void testUserPageConfigCreate() throws Exception {
+    createPageConfig(PortalConfig.USER_TYPE, "exoadmin");
   }
 
   private void createPageConfig(String ownerType, String ownerId) throws Exception {
 
-    PortalConfig portal = new PortalConfig();
-    portal.setName("classic");
-    portal.setLocale("en");
-    portal.setAccessPermissions(new String[]{UserACL.EVERYONE});
-    storage_.create(portal);
+    createPortal("classic");
 
-  	Page page = new Page();
-  	page.setName("testPage");
-  	page.setOwnerId("classic");
-  	page.setOwnerType("portal");
-
-  	try {
-  		storage_.create(page);
-  	} catch (Exception e) {
-  		page = storage_.getPage(page.getPageId());
-  	}
+  	Page page = createPage("testPage");
 
   	Page returnPage = storage_.getPage(page.getPageId());
   	assertNotNull(returnPage);
@@ -130,9 +146,14 @@ public class TestDataStorage extends BasicTestCase {
   }
 
   public void testPageConfigSave() throws Exception {
+    createPortal("classic");
+    createPage("testPage");
+
   	Page page = storage_.getPage(testPage);
   	assertNotNull(page);
   	
+    createPortal("customers");
+
   	page.setTitle("New Page Title");
   	page.setOwnerId("customers");
   	storage_.save(page);
@@ -146,7 +167,8 @@ public class TestDataStorage extends BasicTestCase {
   }
 
   public void testPageConfigRemove() throws Exception {
-  	Page page = storage_.getPage(testPage);
+    createPortal("classic");
+  	Page page = createPage("testPage");
   	assertNotNull(page);
   	
   	storage_.remove(page);

@@ -92,23 +92,35 @@ public class POMSessionManager {
     return repo.login(credentials);
   }
 
-  public static POMSession getLocalSession() {
+  public static POMSession getSession() {
     return current.get();
   }
 
-  public void execute(POMTask task) throws Exception {
-    POMSession pomSession = new POMSession(this);
-    current.set(pomSession);
-    try {
-      pomSession.execute(task);
+  public POMSession openSession() {
+    POMSession session = current.get();
+    if (session == null) {
+      session = new POMSession(this);
+      current.set(session);
     }
-    finally {
+    return session;
+  }
+
+  public boolean closeSession() {
+    POMSession session = current.get();
+    if (session == null) {
+      // Should warn
+      return false;
+    } else {
       current.set(null);
+      session.close();
+      return true;
     }
   }
 
-
-
+  public void execute(POMTask task) throws Exception {
+    POMSession session = openSession();
+    session.execute(task);
+  }
 
 
 }

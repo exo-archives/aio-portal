@@ -56,37 +56,37 @@ public abstract class PortalConfigTask extends AbstractPOMTask {
       } else {
         portal.destroy();
       }
-      session.save();
     }
   }
 
-  public static class Persist extends PortalConfigTask {
+  public static class Save extends PortalConfigTask {
 
     /** . */
     private final PortalConfig config;
 
     /** . */
-    private boolean create;
+    private boolean overwrite;
 
-    public Persist(PortalConfig config, boolean create) {
+    public Save(PortalConfig config, boolean overwrite) {
       this.config = config;
-      this.create = create;
+      this.overwrite = overwrite;
     }
 
     public void run(POMSession session) {
       Workspace workspace = session.getWorkspace();
-      Portal portal;
-      if (create) {
-        portal = workspace.createSite(ObjectType.PORTAL, config.getName());
+      Portal portal = workspace.getSite(ObjectType.PORTAL, config.getName());
+      if (portal != null) {
+        if (!overwrite) {
+          throw new IllegalArgumentException("Cannot create portal " + config.getName() + " that already exist");
+        }
       } else {
-        portal = workspace.getSite(ObjectType.PORTAL, config.getName());
+        portal = workspace.createSite(ObjectType.PORTAL, config.getName());
       }
       update(config, portal);
-      session.save();
     }
   }
 
-  public static class Get extends PortalConfigTask {
+  public static class Load extends PortalConfigTask {
 
     /** . */
     protected final String name;
@@ -94,7 +94,7 @@ public abstract class PortalConfigTask extends AbstractPOMTask {
     /** . */
     private PortalConfig config;
 
-    public Get(String name) {
+    public Load(String name) {
       this.name = name;
     }
 

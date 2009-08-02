@@ -65,15 +65,15 @@ public class POMSession {
       isInTask = true;
       task.run(this);
     } finally {
-      model.close();
       isInTask = false;
     }
   }
 
   public void save() {
-    if (!isInTask) {
-      throw new IllegalStateException();
-    }
     model.save();
+  }
+
+  void close() {
+    model.close();
   }
 }

@@ -77,16 +77,41 @@ public abstract class PageTask extends AbstractPOMTask {
     this.siteType = siteType;
   }
 
-  public static class Create extends PageTask {
+  public static class Remove extends PageTask {
+
+    public Remove(Page page) {
+      super(page.getPageId());
+    }
+
+    public void run(POMSession session) {
+      Workspace workspace = session.getWorkspace();
+      Site site = workspace.getSite(siteType, ownerId);
+      if (site == null) {
+        throw new IllegalArgumentException("Could not remove page " + name + "of non existing site of type " + ownerType + " with id " + ownerId);
+      } else {
+        org.exoplatform.portal.model.api.workspace.Page page = site.getRootPage().getChild(name);
+        if (page == null) {
+          throw new IllegalArgumentException("Could not remove non existing page " + name + "of site of type " + ownerType + " with id " + ownerId);
+        }
+        page.destroy();
+      }
+    }
+  }
+
+  public static class Save extends PageTask {
 
     /** . */
     private final Page page;
 
-    public Create(Page page) {
+    /** . */
+    private final boolean overwrite;
+
+    public Save(Page page, boolean overwrite) {
       super(page.getPageId());
 
       //
       this.page = page;
+      this.overwrite = overwrite;
     }
 
     public void run(POMSession session) throws Exception {
@@ -96,7 +121,15 @@ public abstract class PageTask extends AbstractPOMTask {
         throw new IllegalArgumentException("Cannot insert page " + pageId +
           " as the corresponding portal " + ownerId + " with type " + siteType + " does not exist");
       }
-      org.exoplatform.portal.model.api.workspace.Page page = site.getRootPage().addChild(name);
+      org.exoplatform.portal.model.api.workspace.Page page = site.getRootPage().getChild(name);
+      if (page != null) {
+        if (!overwrite) {
+          // Do nothing as the page may be referenced
+        } else {
+          throw new IllegalArgumentException("The page " + name + " does not exist in site " + ownerType + " with id " + ownerId);
+        }
+      }
+      page = site.getRootPage().addChild(name);
       Attributes attrs = page.getAttributes();
       attrs.setString("title", this.page.getTitle());
       attrs.setBoolean("show-max-window", this.page.isShowMaxWindow());
@@ -106,19 +139,15 @@ public abstract class PageTask extends AbstractPOMTask {
       attrs.setString("edit-permission", this.page.getEditPermission());
 
       // Need to do components
-
-
-      //
-      session.save();
     }
   }
 
-  public static class Get extends PageTask {
+  public static class Load extends PageTask {
 
     /** . */
     private Page page;
 
-    public Get(String pageId) {
+    public Load(String pageId) {
       super(pageId);
     }
 

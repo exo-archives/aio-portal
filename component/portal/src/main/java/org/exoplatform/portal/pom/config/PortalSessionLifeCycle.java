@@ -72,7 +72,7 @@ public class PortalSessionLifeCycle implements SessionLifeCycle {
   private ThreadLocal<Entry> current = new ThreadLocal<Entry>();
 
   public Session login() throws RepositoryException {
-    POMSession session = POMSessionManager.getLocalSession();
+    POMSession session = POMSessionManager.getSession();
 
     //
     Entry entry = current.get();
