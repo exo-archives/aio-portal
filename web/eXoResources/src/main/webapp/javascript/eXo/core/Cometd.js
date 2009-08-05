@@ -108,7 +108,7 @@ Cometd.prototype._deliver = function(message){
       this._multiClientsDetectCnt ++;
       //console.warn('Multiple clients detected and notify from server');
       if (this._multiClientsDetectCnt == 1) {
-        window.alert('You has multiple tab/window using Cometd!\nPlease keep only once.');
+        console.warn('You has multiple tab/window using Cometd!\nPlease keep only once.');
       }
     } else {
       this._multiClientsDetectCnt = 0;
