@@ -30,6 +30,7 @@ import java.util.Comparator;
 import org.exoplatform.portal.pom.config.tasks.PageTask;
 import org.exoplatform.portal.pom.config.tasks.PortalConfigTask;
 import org.exoplatform.portal.pom.config.tasks.PageNavigationTask;
+import org.exoplatform.portal.pom.config.tasks.PortletPreferencesTask;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -102,11 +103,11 @@ public class POMDataStorage implements DataStorage {
   }
 
   public void save(PortletPreferences portletPreferences) throws Exception {
-    throw new UnsupportedOperationException();
+    execute(new PortletPreferencesTask.Save(portletPreferences));
   }
 
   public PortletPreferences getPortletPreferences(WindowID windowID) throws Exception {
-    throw new UnsupportedOperationException();
+    return execute(new PortletPreferencesTask.Load(windowID.getPersistenceId())).getPreferences();
   }
 
   public void remove(PortletPreferences portletPreferences) throws Exception {

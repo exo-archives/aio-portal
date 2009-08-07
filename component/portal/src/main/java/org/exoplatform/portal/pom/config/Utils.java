@@ -16,11 +16,27 @@
  */
 package org.exoplatform.portal.pom.config;
 
+import org.exoplatform.portal.model.api.workspace.ObjectType;
+import org.exoplatform.portal.model.api.workspace.Site;
+import org.exoplatform.portal.config.model.PortalConfig;
+
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
  * @version $Revision$
  */
 public class Utils {
+
+  public static ObjectType<? extends Site> parseSiteType(String ownerType) {
+    if (ownerType.equals(PortalConfig.PORTAL_TYPE)) {
+      return ObjectType.PORTAL;
+    } else if (ownerType.equals(PortalConfig.GROUP_TYPE)) {
+      return ObjectType.GROUP;
+    } else if (ownerType.equals(PortalConfig.USER_TYPE)) {
+      return ObjectType.USER;
+    } else {
+      throw new IllegalArgumentException("Invalid owner type " + ownerType);
+    }
+  }
 
   public static String join(String... strings) {
     if (strings == null) {

@@ -213,6 +213,8 @@ public class TestDataStorage extends BasicTestCase {
   }
 
   public void testPortletPreferencesCreate() throws Exception {
+    createPortal("classic");
+
   	ArrayList<Preference> prefs = new ArrayList<Preference>();
   	for(int i = 0; i < 5; i++) {
   		Preference pref = new Preference();

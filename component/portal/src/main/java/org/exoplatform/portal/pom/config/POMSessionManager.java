@@ -17,6 +17,9 @@
 package org.exoplatform.portal.pom.config;
 
 import org.exoplatform.portal.model.impl.api.POMService;
+import org.exoplatform.portal.model.portlet.Preferences;
+import org.exoplatform.portal.model.spi.content.ContentProvider;
+import org.exoplatform.portal.model.spi.content.GetState;
 import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.jcr.core.ManageableRepository;
 import org.exoplatform.services.jcr.core.nodetype.ExtendedNodeTypeManager;
@@ -29,6 +32,7 @@ import javax.jcr.Repository;
 import javax.jcr.Credentials;
 import javax.jcr.nodetype.NoSuchNodeTypeException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -56,6 +60,16 @@ public class POMSessionManager {
     pomService.setOption(ChromatticBuilder.SESSION_PROVIDER_CLASSNAME, PortalSessionLifeCycle.class.getName());
     pomService.setOption(ChromatticBuilder.INSTRUMENTOR_CLASSNAME, InstrumentorImpl.class.getName());
     pomService.start();
+
+    // Register no op PC for now
+    pomService.getContentManagerRegistry().register(Preferences.CONTENT_TYPE, new ContentProvider() {
+      public GetState getState(String contentId) {
+        return null;
+      }
+      public Object combine(List states) {
+        throw new UnsupportedOperationException();
+      }
+    });
 
     //
     ExtendedNodeTypeManager nodeTypeMgr = repositoryService.getCurrentRepository().getNodeTypeManager();

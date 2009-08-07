@@ -19,6 +19,7 @@ package org.exoplatform.portal.pom.config.tasks;
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
 import org.exoplatform.portal.pom.config.POMSession;
 import static org.exoplatform.portal.pom.config.Utils.split;
+import static org.exoplatform.portal.pom.config.Utils.parseSiteType;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
 import org.exoplatform.portal.model.api.workspace.Site;
 import org.exoplatform.portal.model.api.workspace.Workspace;
@@ -53,28 +54,9 @@ public abstract class PageNavigationTask extends AbstractPOMTask {
     }
 
     //
-    String ownerType = chunks[0];
-    String ownerId = chunks[1];
-
-    //
-    ObjectType<? extends Site> siteType;
-    if (ownerType.equals(PortalConfig.PORTAL_TYPE)) {
-      siteType = ObjectType.PORTAL;
-    }
-    else if (ownerType.equals(PortalConfig.GROUP_TYPE)) {
-      siteType = ObjectType.GROUP;
-    }
-    else if (ownerType.equals(PortalConfig.USER_TYPE)) {
-      siteType = ObjectType.USER;
-    }
-    else {
-      throw new IllegalArgumentException("Invalid owner type " + ownerType);
-    }
-
-    //
-    this.ownerType = ownerType;
-    this.ownerId = ownerId;
-    this.siteType = siteType;
+    this.ownerType = chunks[0];
+    this.ownerId = chunks[1];
+    this.siteType = parseSiteType(ownerType);
     this.owner = owner;
   }
 

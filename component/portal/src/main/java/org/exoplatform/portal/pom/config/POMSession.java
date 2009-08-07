@@ -18,6 +18,7 @@ package org.exoplatform.portal.pom.config;
 
 import org.exoplatform.portal.model.impl.api.POM;
 import org.exoplatform.portal.model.api.workspace.Workspace;
+import org.exoplatform.portal.model.api.content.ContentManager;
 import org.exoplatform.services.jcr.config.RepositoryConfigurationException;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
 
@@ -53,6 +54,10 @@ public class POMSession {
 
   public Workspace getWorkspace() {
     return getModel().getWorkspace();
+  }
+
+  public ContentManager getContentManager() {
+    return getModel().getContentManager();
   }
 
   public <T extends Throwable> void execute(POMTask task) throws Exception {
