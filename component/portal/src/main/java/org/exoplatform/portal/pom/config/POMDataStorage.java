@@ -111,7 +111,7 @@ public class POMDataStorage implements DataStorage {
   }
 
   public void remove(PortletPreferences portletPreferences) throws Exception {
-    throw new UnsupportedOperationException();
+    execute(new PortletPreferencesTask.Remove(portletPreferences.getWindowId()));
   }
 
   public LazyPageList find(Query<?> q) throws Exception {

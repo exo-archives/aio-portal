@@ -160,8 +160,40 @@ public abstract class PortletPreferencesTask extends AbstractPOMTask {
             list.add(pref);
           }
           PortletPreferences prefs = new PortletPreferences();
+          prefs.setWindowId(windowId);
           prefs.setPreferences(list);
           this.prefs = prefs;
+        }
+      }
+    }
+  }
+
+  public static class Remove extends PortletPreferencesTask {
+
+    public Remove(String windowId) {
+      super(windowId);
+    }
+
+    public void run(POMSession session) throws Exception {
+      Workspace workspace = session.getWorkspace();
+      Site site = workspace.getSite(siteType, ownerId);
+      if (site == null) {
+        throw new IllegalArgumentException("Cannot save portlet preferences " + windowId +
+          " as the corresponding portal " + ownerId + " with type " + siteType + " does not exist");
+      }
+
+      //
+      Set<CustomizationContext> context = Collections.<CustomizationContext>singleton(site);
+
+      //
+      ContentManager contentManager = session.getContentManager();
+      Content<Preferences> content = contentManager.getContent(Preferences.CONTENT_TYPE, portletName, FetchCondition.PERSISTED);
+
+      //
+      if (content != null) {
+        Customization<Preferences> customization = content.getCustomization().getCustomization(context);
+        if (customization != null) {
+          customization.destroy();
         }
       }
     }
