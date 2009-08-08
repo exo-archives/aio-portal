@@ -26,6 +26,18 @@ import org.exoplatform.portal.config.model.PortalConfig;
  */
 public class Utils {
 
+  public static String getOwnerType(ObjectType<? extends Site> siteType) {
+    if (siteType == ObjectType.PORTAL) {
+      return PortalConfig.PORTAL_TYPE;
+    } else if (siteType == ObjectType.GROUP) {
+      return PortalConfig.GROUP_TYPE;
+    } else if (siteType == ObjectType.USER) {
+      return PortalConfig.USER_TYPE;
+    } else {
+      throw new IllegalArgumentException("Invalid site type " + siteType);
+    }
+  }
+
   public static ObjectType<? extends Site> parseSiteType(String ownerType) {
     if (ownerType.equals(PortalConfig.PORTAL_TYPE)) {
       return ObjectType.PORTAL;
@@ -38,7 +50,7 @@ public class Utils {
     }
   }
 
-  public static String join(String... strings) {
+  public static String join(String separator, String... strings) {
     if (strings == null) {
       return null;
     }
@@ -46,21 +58,14 @@ public class Utils {
     for (int i = 0;i < strings.length;i++) {
       Object o = strings[i];
       if (i > 0) {
-        sb.append('|');
+        sb.append(separator);
       }
       sb.append(o);
     }
     return sb.toString();
   }
 
-  public static String[] split(String s) {
-    if (s == null) {
-      return null;
-    }
-    return split(s, "|");
-  }
-
-  public static String[] split(String s, String separator) {
+  public static String[] split(String separator, String s) {
     if (s == null) {
       return null;
     }

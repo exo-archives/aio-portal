@@ -36,7 +36,7 @@ public abstract class PortalConfigTask extends AbstractPOMTask {
   protected static void update(PortalConfig config, Portal portal)  {
     Attributes attrs = portal.getAttributes();
     attrs.setString("locale", config.getLocale());
-    attrs.setString("access-permissions", join(config.getAccessPermissions()));
+    attrs.setString("access-permissions", join("|", config.getAccessPermissions()));
   }
 
   public static class Remove extends PortalConfigTask {
@@ -110,7 +110,7 @@ public abstract class PortalConfigTask extends AbstractPOMTask {
         PortalConfig config = new PortalConfig();
         config.setName(portal.getName());
         config.setLocale(attrs.getString("locale"));
-        config.setAccessPermissions(split(attrs.getString("access-permissions")));
+        config.setAccessPermissions(split("|", attrs.getString("access-permissions")));
 
         //
         this.config = config;

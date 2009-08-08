@@ -24,13 +24,21 @@ import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.services.portletcontainer.pci.WindowID;
 import org.exoplatform.commons.utils.LazyPageList;
+import org.exoplatform.commons.utils.ListAccess;
 
 import java.util.Comparator;
+import java.util.List;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Iterator;
 
 import org.exoplatform.portal.pom.config.tasks.PageTask;
 import org.exoplatform.portal.pom.config.tasks.PortalConfigTask;
 import org.exoplatform.portal.pom.config.tasks.PageNavigationTask;
 import org.exoplatform.portal.pom.config.tasks.PortletPreferencesTask;
+import org.exoplatform.portal.model.api.workspace.Workspace;
+import org.exoplatform.portal.model.api.workspace.Site;
+import org.exoplatform.portal.model.api.workspace.ObjectType;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -115,10 +123,64 @@ public class POMDataStorage implements DataStorage {
   }
 
   public LazyPageList find(Query<?> q) throws Exception {
-    throw new UnsupportedOperationException();
+    return find(q, null);
   }
 
+/*
+new Query<Page>(PortalConfig.GROUP_TYPE, groupId,  Page.class);
+new Query<Page>(PortalConfig.GROUP_TYPE, groupId,  Page.class);
+new Query<Page>(PortalConfig.USER_TYPE, userName, Page.class);
+new Query<Page>(PortalConfig.USER_TYPE, userName, Page.class);
+new Query<Page>(PortalConfig.PORTAL_TYPE, portalName, null, null, Page.class);
+new Query<Page>(null, null, null, null, Page.class);
+
+new Query<PortletPreferences>(PortalConfig.GROUP_TYPE, groupId, PortletPreferences.class);
+new Query<PortletPreferences>(PortalConfig.GROUP_TYPE, groupId, PortletPreferences.class);
+new Query<PortletPreferences>(PortalConfig.USER_TYPE, userName, PortletPreferences.class);
+new Query<PortletPreferences>(PortalConfig.PORTAL_TYPE, portalName, null, null, PortletPreferences.class);
+
+new Query<PageNavigation>(PortalConfig.GROUP_TYPE, null, PageNavigation.class);
+new Query<PageNavigation>(PortalConfig.GROUP_TYPE, null, PageNavigation.class);
+new Query<PageNavigation>(PortalConfig.GROUP_TYPE, null, PageNavigation.class);
+
+new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
+new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
+new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
+new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
+*/
+
   public LazyPageList find(Query<?> q, Comparator<?> sortComparator) throws Exception {
-    throw new UnsupportedOperationException();
+
+    if (Page.class.equals(q.getClassType())) {
+
+      POMSession session = pomMgr.openSession();
+      ObjectType<? extends Site> siteType = Utils.parseSiteType(q.getOwnerType());
+      String ownerId = q.getOwnerId();
+      Workspace workspace = session.getWorkspace();
+      Site site = workspace.getSite(siteType, ownerId);
+
+      final Collection<? extends org.exoplatform.portal.model.api.workspace.Page> bilto = site.getRootPage().getChildren();
+      ListAccess<Page> la = new ListAccess<Page>() {
+        public Page[] load(int index, int length) throws Exception, IllegalArgumentException {
+          Iterator<? extends org.exoplatform.portal.model.api.workspace.Page> iterator = bilto.iterator();
+          for (int i = 0;i < index;i++) {
+            iterator.next();
+          }
+          Page[] result = new Page[length];
+          for (int i = 0;i < length;i++) {
+            result[i] = PageTask.toPage(iterator.next());
+          }
+          return result;
+        }
+        public int getSize() throws Exception {
+          return bilto.size();
+        }
+      };
+
+      return new LazyPageList<Page>(la, 10);
+    } else {
+      throw new UnsupportedOperationException("Cannot query data with type " + q.getClassType());
+    }
+
   }
 }

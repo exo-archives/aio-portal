@@ -266,10 +266,12 @@ public class TestDataStorage extends BasicTestCase {
 
   @SuppressWarnings("unchecked")
   public void testFind() throws Exception {
-    Query<Page> query = new Query<Page>(null, null, Page.class);
-    List<Page> findedPages = storage_.find(query).getAll();
+    createPortal("classic");
+    createPage("testPage1");
+    createPage("testPage2");
 
-    findedPages = storage_.find(query).getAll();
-    assertTrue(findedPages.size() > 0);
+    Query<Page> query = new Query<Page>(PortalConfig.PORTAL_TYPE, "classic", Page.class);
+    List<Page> findedPages = storage_.find(query).getAll();
+    assertEquals(2, findedPages.size());
   }
 }

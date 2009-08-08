@@ -25,7 +25,6 @@ import org.exoplatform.portal.model.api.workspace.Site;
 import org.exoplatform.portal.model.api.workspace.Workspace;
 import org.exoplatform.portal.model.api.workspace.Navigation;
 import org.exoplatform.portal.model.util.Attributes;
-import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
 
@@ -48,7 +47,7 @@ public abstract class PageNavigationTask extends AbstractPOMTask {
   protected final ObjectType<? extends Site> siteType;
 
   protected PageNavigationTask(String owner) {
-    String[] chunks = split(owner, "::");
+    String[] chunks = split("::", owner);
     if (chunks.length != 2) {
       throw new IllegalArgumentException("Wrong owner format should be ownerType::ownerId was " + owner);
     }

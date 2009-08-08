@@ -21,9 +21,10 @@ import org.exoplatform.portal.model.api.workspace.Site;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
 import org.exoplatform.portal.model.util.Attributes;
 import org.exoplatform.portal.config.model.Page;
-import org.exoplatform.portal.config.model.PortalConfig;
 import static org.exoplatform.portal.pom.config.Utils.split;
 import static org.exoplatform.portal.pom.config.Utils.join;
+import static org.exoplatform.portal.pom.config.Utils.parseSiteType;
+import static org.exoplatform.portal.pom.config.Utils.getOwnerType;
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
 import org.exoplatform.portal.pom.config.POMSession;
 
@@ -49,7 +50,7 @@ public abstract class PageTask extends AbstractPOMTask {
   protected final ObjectType<? extends Site> siteType;
 
   protected PageTask(String pageId) {
-    String[] chunks = split(pageId, "::");
+    String[] chunks = split("::", pageId);
 
     //
     if (chunks.length != 3) {
@@ -62,23 +63,11 @@ public abstract class PageTask extends AbstractPOMTask {
     String name = chunks[2];
 
     //
-    ObjectType<? extends Site> siteType;
-    if (ownerType.equals(PortalConfig.PORTAL_TYPE)) {
-      siteType = ObjectType.PORTAL;
-    } else if (ownerType.equals(PortalConfig.GROUP_TYPE)) {
-      siteType = ObjectType.GROUP;
-    } else if (ownerType.equals(PortalConfig.USER_TYPE)) {
-      siteType = ObjectType.USER;
-    } else {
-      throw new IllegalArgumentException("Invalid owner type " + ownerType);
-    }
-
-    //
     this.pageId = pageId;
     this.ownerType = ownerType;
     this.ownerId = ownerId;
     this.name = name;
-    this.siteType = siteType;
+    this.siteType = parseSiteType(ownerType);
   }
 
   public static class Remove extends PageTask {
@@ -143,7 +132,7 @@ public abstract class PageTask extends AbstractPOMTask {
       attrs.setBoolean("show-max-window", this.page.isShowMaxWindow());
       attrs.setString("creator", this.page.getCreator());
       attrs.setString("modifier", this.page.getModifier());
-      attrs.setString("access-permissions", join(this.page.getAccessPermissions()));
+      attrs.setString("access-permissions", join("|", this.page.getAccessPermissions()));
       attrs.setString("edit-permission", this.page.getEditPermission());
 
       // Need to do components
@@ -170,18 +159,7 @@ public abstract class PageTask extends AbstractPOMTask {
         org.exoplatform.portal.model.api.workspace.Page root = site.getRootPage();
         org.exoplatform.portal.model.api.workspace.Page page = root.getChild(name);
         if (page != null) {
-          Attributes attrs = page.getAttributes();
-          Page bilto = new Page();
-          bilto.setId(pageId);
-          bilto.setOwnerId(ownerId);
-          bilto.setOwnerType(ownerType);
-          bilto.setName(name);
-          bilto.setTitle(attrs.getString("title"));
-          bilto.setShowMaxWindow(attrs.getBoolean("show-max-window"));
-          bilto.setCreator(attrs.getString("creator"));
-          bilto.setModifier(attrs.getString("modifier"));
-          bilto.setAccessPermissions(split(attrs.getString("access-permissions")));
-          bilto.setEditPermission(attrs.getString("edit-permission"));
+          Page bilto = toPage(page);
 
           // Need to do components
 
@@ -190,5 +168,30 @@ public abstract class PageTask extends AbstractPOMTask {
         }
       }
     }
+  }
+
+  public static Page toPage(org.exoplatform.portal.model.api.workspace.Page page) {
+    Site site = page.getSite();
+
+    //
+    String ownerType = getOwnerType(site.getObjectType());
+    String ownerId = site.getName();
+    String name = page.getName();
+    String pageId = join("::", ownerType, ownerId, name);
+
+    //
+    Attributes attrs = page.getAttributes();
+    Page bilto = new Page();
+    bilto.setId(pageId);
+    bilto.setOwnerId(ownerId);
+    bilto.setOwnerType(ownerType);
+    bilto.setName(name);
+    bilto.setTitle(attrs.getString("title"));
+    bilto.setShowMaxWindow(attrs.getBoolean("show-max-window"));
+    bilto.setCreator(attrs.getString("creator"));
+    bilto.setModifier(attrs.getString("modifier"));
+    bilto.setAccessPermissions(split("|", attrs.getString("access-permissions")));
+    bilto.setEditPermission(attrs.getString("edit-permission"));
+    return bilto;
   }
 }
