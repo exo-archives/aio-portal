@@ -21,6 +21,7 @@ import org.exoplatform.portal.model.portlet.Preferences;
 import org.exoplatform.portal.model.spi.content.ContentProvider;
 import org.exoplatform.portal.model.spi.content.GetState;
 import org.exoplatform.services.jcr.RepositoryService;
+import org.exoplatform.services.jcr.ext.registry.RegistryService;
 import org.exoplatform.services.jcr.core.ManageableRepository;
 import org.exoplatform.services.jcr.core.nodetype.ExtendedNodeTypeManager;
 import org.chromattic.api.ChromatticBuilder;
@@ -33,6 +34,7 @@ import javax.jcr.Credentials;
 import javax.jcr.nodetype.NoSuchNodeTypeException;
 import java.io.InputStream;
 import java.util.List;
+import java.lang.reflect.UndeclaredThrowableException;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -47,7 +49,7 @@ public class POMSessionManager {
   final RepositoryService repositoryService;
 
   /** . */
-  final POMService pomService;
+  private POMService pomService;
 
   /** . */
   final String repositoryName = "repository";
@@ -55,35 +57,12 @@ public class POMSessionManager {
   /** . */
   final String workspaceName = "pom";
 
-  public POMSessionManager(RepositoryService repositoryService) throws Exception {
-    POMService pomService = new POMService();
-    pomService.setOption(ChromatticBuilder.SESSION_PROVIDER_CLASSNAME, PortalSessionLifeCycle.class.getName());
-    pomService.setOption(ChromatticBuilder.INSTRUMENTOR_CLASSNAME, InstrumentorImpl.class.getName());
-    pomService.start();
-
-    // Register no op PC for now
-    pomService.getContentManagerRegistry().register(Preferences.CONTENT_TYPE, new ContentProvider() {
-      public GetState getState(String contentId) {
-        return null;
-      }
-      public Object combine(List states) {
-        throw new UnsupportedOperationException();
-      }
-    });
-
-    //
-    ExtendedNodeTypeManager nodeTypeMgr = repositoryService.getCurrentRepository().getNodeTypeManager();
-    try {
-      nodeTypeMgr.getNodeType("exo:workspace");
-    }
-    catch (NoSuchNodeTypeException e) {
-      InputStream in = POMService.class.getClassLoader().getResourceAsStream("conf/standalone/nodetypes.xml");
-      nodeTypeMgr.registerNodeTypes(in, ExtendedNodeTypeManager.IGNORE_IF_EXISTS);
-    }
-
+  public POMSessionManager(RegistryService service) throws Exception {
+    RepositoryService repositoryService = service.getRepositoryService();
+    
     //
     this.repositoryService = repositoryService;
-    this.pomService = pomService;
+    this.pomService = null;
   }
 
   public Session login() throws RepositoryException {
@@ -106,6 +85,47 @@ public class POMSessionManager {
     return repo.login(credentials);
   }
 
+  /*
+   * todo : use better than the synchronized block  
+   */
+  public synchronized POMService getPOMService() {
+    if (pomService == null) {
+      try {
+        POMService pomService = new POMService();
+        pomService.setOption(ChromatticBuilder.SESSION_PROVIDER_CLASSNAME, PortalSessionLifeCycle.class.getName());
+        pomService.setOption(ChromatticBuilder.INSTRUMENTOR_CLASSNAME, InstrumentorImpl.class.getName());
+        pomService.start();
+
+        // Register no op PC for now
+        pomService.getContentManagerRegistry().register(Preferences.CONTENT_TYPE, new ContentProvider() {
+          public GetState getState(String contentId) {
+            return null;
+          }
+          public Object combine(List states) {
+            throw new UnsupportedOperationException();
+          }
+        });
+
+        //
+        ExtendedNodeTypeManager nodeTypeMgr = repositoryService.getCurrentRepository().getNodeTypeManager();
+        try {
+          nodeTypeMgr.getNodeType("exo:workspace");
+        }
+        catch (NoSuchNodeTypeException e) {
+          InputStream in = POMService.class.getClassLoader().getResourceAsStream("conf/standalone/nodetypes.xml");
+          nodeTypeMgr.registerNodeTypes(in, ExtendedNodeTypeManager.IGNORE_IF_EXISTS);
+        }
+
+        //
+        this.pomService = pomService;
+      }
+      catch (Exception e) {
+        throw new UndeclaredThrowableException(e);
+      }
+    }
+    return pomService;
+  }
+
   public static POMSession getSession() {
     return current.get();
   }
@@ -120,13 +140,24 @@ public class POMSessionManager {
   }
 
   public boolean closeSession() {
+    return closeSession(false);
+  }
+
+  public boolean closeSession(boolean save) {
     POMSession session = current.get();
     if (session == null) {
       // Should warn
       return false;
     } else {
       current.set(null);
-      session.close();
+      try {
+        if (save) {
+          session.save();
+        }
+      }
+      finally {
+        session.close();
+      }
       return true;
     }
   }
@@ -135,6 +166,4 @@ public class POMSessionManager {
     POMSession session = openSession();
     session.execute(task);
   }
-
-
 }

@@ -27,9 +27,7 @@ import org.exoplatform.commons.utils.LazyPageList;
 import org.exoplatform.commons.utils.ListAccess;
 
 import java.util.Comparator;
-import java.util.List;
 import java.util.Collection;
-import java.util.Map;
 import java.util.Iterator;
 
 import org.exoplatform.portal.pom.config.tasks.PageTask;
@@ -58,8 +56,12 @@ public class POMDataStorage implements DataStorage {
     return task;
   }
 
+  public POMSessionManager getPOMSessionManager() {
+    return pomMgr;
+  }
+
   public PortalConfig getPortalConfig(String portalName) throws Exception {
-    return execute(new PortalConfigTask.Load(portalName)).getConfig();
+    return execute(new PortalConfigTask.Load(PortalConfig.PORTAL_TYPE, portalName)).getConfig();
   }
 
   public void create(PortalConfig config) throws Exception {
@@ -71,7 +73,7 @@ public class POMDataStorage implements DataStorage {
   }
 
   public void remove(PortalConfig config) throws Exception {
-    execute(new PortalConfigTask.Remove(config.getName()));
+    execute(new PortalConfigTask.Remove(config.getType(), config.getName()));
   }
 
   public Page getPage(String pageId) throws Exception {
@@ -83,11 +85,11 @@ public class POMDataStorage implements DataStorage {
   }
 
   public void create(Page page) throws Exception {
-    execute(new PageTask.Save(page, false));
+    execute(new PageTask.Save(page));
   }
 
   public void save(Page page) throws Exception {
-    execute(new PageTask.Save(page, true));
+    execute(new PageTask.Save(page));
   }
 
   public PageNavigation getPageNavigation(String fullId) throws Exception {
@@ -115,11 +117,11 @@ public class POMDataStorage implements DataStorage {
   }
 
   public PortletPreferences getPortletPreferences(WindowID windowID) throws Exception {
-    return execute(new PortletPreferencesTask.Load(windowID.getPersistenceId())).getPreferences();
+    return execute(new PortletPreferencesTask.Load(windowID)).getPreferences();
   }
 
   public void remove(PortletPreferences portletPreferences) throws Exception {
-    execute(new PortletPreferencesTask.Remove(portletPreferences.getWindowId()));
+    execute(new PortletPreferencesTask.Remove(portletPreferences));
   }
 
   public LazyPageList find(Query<?> q) throws Exception {
@@ -151,13 +153,13 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
 
   public LazyPageList find(Query<?> q, Comparator<?> sortComparator) throws Exception {
 
-    if (Page.class.equals(q.getClassType())) {
+    POMSession session = pomMgr.openSession();
+    ObjectType<? extends Site> siteType = Utils.parseSiteType(q.getOwnerType());
+    String ownerId = q.getOwnerId();
+    Workspace workspace = session.getWorkspace();
+    Site site = workspace.getSite(siteType, ownerId);
 
-      POMSession session = pomMgr.openSession();
-      ObjectType<? extends Site> siteType = Utils.parseSiteType(q.getOwnerType());
-      String ownerId = q.getOwnerId();
-      Workspace workspace = session.getWorkspace();
-      Site site = workspace.getSite(siteType, ownerId);
+    if (Page.class.equals(q.getClassType())) {
 
       final Collection<? extends org.exoplatform.portal.model.api.workspace.Page> bilto = site.getRootPage().getChildren();
       ListAccess<Page> la = new ListAccess<Page>() {
@@ -178,6 +180,18 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
       };
 
       return new LazyPageList<Page>(la, 10);
+    } else if (PortletPreferences.class.equals(q.getClassType())) {
+
+      // We return empty on purpose at it is used when preferences are deleted by the UserPortalConfigService
+      // and the prefs are deleted transitively when an entity is removed
+      return new LazyPageList<PortletPreferences>(new ListAccess<PortletPreferences>() {
+        public PortletPreferences[] load(int index, int length) throws Exception, IllegalArgumentException {
+          throw new AssertionError();
+        }
+        public int getSize() throws Exception {
+          return 0;
+        }
+      }, 10);
     } else {
       throw new UnsupportedOperationException("Cannot query data with type " + q.getClassType());
     }

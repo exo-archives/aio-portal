@@ -79,7 +79,7 @@ public class Utils {
       chunks = new String[index + 1];
       toIndex = s.length();
     } else {
-      chunks = split(s, toIndex + 2, index + 1, separator);
+      chunks = split(s, toIndex + separator.length(), index + 1, separator);
     }
     chunks[index] = s.substring(fromIndex, toIndex);
     return chunks;

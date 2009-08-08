@@ -17,13 +17,14 @@
 package org.exoplatform.portal.pom.config.tasks;
 
 import org.exoplatform.portal.model.api.workspace.Workspace;
-import org.exoplatform.portal.model.api.workspace.Portal;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
+import org.exoplatform.portal.model.api.workspace.Site;
 import org.exoplatform.portal.model.util.Attributes;
 import org.exoplatform.portal.config.model.PortalConfig;
 
 import static org.exoplatform.portal.pom.config.Utils.join;
 import static org.exoplatform.portal.pom.config.Utils.split;
+import static org.exoplatform.portal.pom.config.Utils.parseSiteType;
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
 import org.exoplatform.portal.pom.config.POMSession;
 
@@ -33,28 +34,36 @@ import org.exoplatform.portal.pom.config.POMSession;
  */
 public abstract class PortalConfigTask extends AbstractPOMTask {
 
-  protected static void update(PortalConfig config, Portal portal)  {
-    Attributes attrs = portal.getAttributes();
+  protected static void update(PortalConfig config, Site site)  {
+    Attributes attrs = site.getAttributes();
     attrs.setString("locale", config.getLocale());
     attrs.setString("access-permissions", join("|", config.getAccessPermissions()));
   }
 
+  /** . */
+  protected final String name;
+
+  /** . */
+  protected final ObjectType<? extends Site> type;
+
+  protected PortalConfigTask(String type, String name) {
+    this.type = parseSiteType(type);
+    this.name = name;
+  }
+
   public static class Remove extends PortalConfigTask {
 
-    /** . */
-    private final String name;
-
-    public Remove(String name) {
-      this.name = name;
+    public Remove(String type, String name) {
+      super(type, name);
     }
 
     public void run(POMSession session) {
       Workspace workspace = session.getWorkspace();
-      Portal portal = workspace.getSite(ObjectType.PORTAL, name);
-      if (portal == null) {
+      Site site = workspace.getSite(type, name);
+      if (site == null) {
         throw new NullPointerException("Could not remove non existing portal " + name);
       } else {
-        portal.destroy();
+        site.destroy();
       }
     }
   }
@@ -67,35 +76,37 @@ public abstract class PortalConfigTask extends AbstractPOMTask {
     /** . */
     private boolean overwrite;
 
+
+
     public Save(PortalConfig config, boolean overwrite) {
+      super(config.getType(), config.getName());
+
+      //
       this.config = config;
       this.overwrite = overwrite;
     }
 
     public void run(POMSession session) {
       Workspace workspace = session.getWorkspace();
-      Portal portal = workspace.getSite(ObjectType.PORTAL, config.getName());
-      if (portal != null) {
+      Site site = workspace.getSite(type, name);
+      if (site != null) {
         if (!overwrite) {
           throw new IllegalArgumentException("Cannot create portal " + config.getName() + " that already exist");
         }
       } else {
-        portal = workspace.addSite(ObjectType.PORTAL, config.getName());
+        site = workspace.addSite(type, config.getName());
       }
-      update(config, portal);
+      update(config, site);
     }
   }
 
   public static class Load extends PortalConfigTask {
 
     /** . */
-    protected final String name;
-
-    /** . */
     private PortalConfig config;
 
-    public Load(String name) {
-      this.name = name;
+    public Load(String type, String name) {
+      super(type, name);
     }
 
     public PortalConfig getConfig() {
@@ -104,11 +115,11 @@ public abstract class PortalConfigTask extends AbstractPOMTask {
 
     public void run(POMSession session) {
       Workspace workspace = session.getWorkspace();
-      Portal portal = workspace.getSite(ObjectType.PORTAL, name);
-      if (portal != null) {
-        Attributes attrs = portal.getAttributes();
+      Site site = workspace.getSite(type, name);
+      if (site != null) {
+        Attributes attrs = site.getAttributes();
         PortalConfig config = new PortalConfig();
-        config.setName(portal.getName());
+        config.setName(site.getName());
         config.setLocale(attrs.getString("locale"));
         config.setAccessPermissions(split("|", attrs.getString("access-permissions")));
 
@@ -117,5 +128,4 @@ public abstract class PortalConfigTask extends AbstractPOMTask {
       }
     }
   }
-
 }

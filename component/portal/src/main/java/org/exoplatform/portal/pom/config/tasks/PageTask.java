@@ -96,15 +96,11 @@ public abstract class PageTask extends AbstractPOMTask {
     /** . */
     private final Page page;
 
-    /** . */
-    private final boolean overwrite;
-
-    public Save(Page page, boolean overwrite) {
+    public Save(Page page) {
       super(page.getPageId());
 
       //
       this.page = page;
-      this.overwrite = overwrite;
     }
 
     public void run(POMSession session) throws Exception {
@@ -117,13 +113,6 @@ public abstract class PageTask extends AbstractPOMTask {
 
       //
       org.exoplatform.portal.model.api.workspace.Page page = site.getRootPage().getChild(name);
-      if (page != null) {
-        if (!overwrite) {
-          // Do nothing as the page may be referenced
-        } else {
-          throw new IllegalArgumentException("The page " + name + " does not exist in site " + ownerType + " with id " + ownerId);
-        }
-      }
 
       //
       page = site.getRootPage().addChild(name);

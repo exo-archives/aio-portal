@@ -17,6 +17,7 @@
 package org.exoplatform.portal.pom.config.tasks;
 
 import static org.exoplatform.portal.pom.config.Utils.parseSiteType;
+import static org.exoplatform.portal.pom.config.Utils.split;
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
 import org.exoplatform.portal.pom.config.POMSession;
 import org.exoplatform.portal.model.api.workspace.Site;
@@ -32,6 +33,7 @@ import org.exoplatform.portal.model.portlet.Preferences;
 import org.exoplatform.portal.model.portlet.PreferencesBuilder;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.portal.application.Preference;
+import org.exoplatform.services.portletcontainer.pci.WindowID;
 
 import java.util.Set;
 import java.util.Collections;
@@ -43,8 +45,16 @@ import java.util.ArrayList;
  */
 public abstract class PortletPreferencesTask extends AbstractPOMTask {
 
-  /** . */
-  protected final String windowId;
+/*
+
+WindowID:
+- persistenceId : portal#classic:/web/BannerPortlet/testPortletPreferences
+- owner : portal#classic
+- portletApplicationName : web
+- portletName: BannerPortlet
+- uniqueID : testPortletPreferences
+
+*/
 
   /** . */
   protected final ObjectType<? extends Site> siteType;
@@ -56,28 +66,25 @@ public abstract class PortletPreferencesTask extends AbstractPOMTask {
   protected final String ownerId;
 
   /** . */
-  protected final String portletName;
+  protected final String windowId;
 
-  protected PortletPreferencesTask(String windowId) {
-    int i1 = windowId.indexOf('#');
-    if (i1 == -1) {
-      throw new IllegalArgumentException("Wrong window id format" + windowId);
+  protected PortletPreferencesTask(WindowID windowID) {
+    String[] chunks = split("#", windowID.getOwner()) ;
+    if(chunks.length != 2) {
+      throw new IllegalArgumentException("Invalid WindowID: " + "[" + windowID + "]");
     }
-    String ownerType = windowId.substring(0, i1);
 
     //
-    int i2 = windowId.indexOf(':', i1 + 1);
-    if (i2 == -1) {
-      throw new IllegalArgumentException("Wrong window id format" + windowId);
-    }
-    String ownerId = windowId.substring(i1 + 1, i2);
-    String portletName = windowId.substring(i2 + 1);
+    this.ownerType = chunks[0];
+    this.siteType = parseSiteType(chunks[0]);
+    this.ownerId = chunks[1];
+    this.windowId = windowID.getPersistenceId();
+  }
 
-    //
-    this.windowId = windowId;
+  protected PortletPreferencesTask(String ownerType, String ownerId, String windowId) {
     this.ownerType = ownerType;
     this.ownerId = ownerId;
-    this.portletName = portletName;
+    this.windowId = windowId;
     this.siteType = parseSiteType(ownerType);
   }
 
@@ -87,7 +94,7 @@ public abstract class PortletPreferencesTask extends AbstractPOMTask {
     private final PortletPreferences prefs;
 
     public Save(PortletPreferences prefs) {
-      super(prefs.getWindowId());
+      super(prefs.getOwnerType(), prefs.getOwnerId(), prefs.getWindowId());
 
       //
       this.prefs = prefs;
@@ -106,7 +113,7 @@ public abstract class PortletPreferencesTask extends AbstractPOMTask {
 
       //
       ContentManager contentManager = session.getContentManager();
-      Content<Preferences> content = contentManager.getContent(Preferences.CONTENT_TYPE, portletName, FetchCondition.ALWAYS);
+      Content<Preferences> content = contentManager.getContent(Preferences.CONTENT_TYPE, windowId, FetchCondition.ALWAYS);
       Customization<Preferences> root = content.getCustomization();
       Customization<Preferences> customization = root.customize(CustomizationMode.CLONE, context);
 
@@ -124,7 +131,7 @@ public abstract class PortletPreferencesTask extends AbstractPOMTask {
     /** . */
     private PortletPreferences prefs;
 
-    public Load(String windowId) {
+    public Load(WindowID windowId) {
       super(windowId);
     }
 
@@ -145,7 +152,7 @@ public abstract class PortletPreferencesTask extends AbstractPOMTask {
 
       //
       ContentManager contentManager = session.getContentManager();
-      Content<Preferences> content = contentManager.getContent(Preferences.CONTENT_TYPE, portletName, FetchCondition.PERSISTED);
+      Content<Preferences> content = contentManager.getContent(Preferences.CONTENT_TYPE, windowId, FetchCondition.PERSISTED);
 
       //
       if (content != null) {
@@ -160,6 +167,8 @@ public abstract class PortletPreferencesTask extends AbstractPOMTask {
             list.add(pref);
           }
           PortletPreferences prefs = new PortletPreferences();
+          prefs.setOwnerId(ownerId);
+          prefs.setOwnerType(ownerType);
           prefs.setWindowId(windowId);
           prefs.setPreferences(list);
           this.prefs = prefs;
@@ -170,8 +179,8 @@ public abstract class PortletPreferencesTask extends AbstractPOMTask {
 
   public static class Remove extends PortletPreferencesTask {
 
-    public Remove(String windowId) {
-      super(windowId);
+    public Remove(PortletPreferences prefs) {
+      super(prefs.getOwnerType(), prefs.getOwnerId(), prefs.getWindowId());
     }
 
     public void run(POMSession session) throws Exception {
@@ -187,7 +196,7 @@ public abstract class PortletPreferencesTask extends AbstractPOMTask {
 
       //
       ContentManager contentManager = session.getContentManager();
-      Content<Preferences> content = contentManager.getContent(Preferences.CONTENT_TYPE, portletName, FetchCondition.PERSISTED);
+      Content<Preferences> content = contentManager.getContent(Preferences.CONTENT_TYPE, windowId, FetchCondition.PERSISTED);
 
       //
       if (content != null) {

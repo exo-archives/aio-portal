@@ -28,6 +28,8 @@ import org.exoplatform.portal.model.util.Attributes;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
 
+import java.util.Collection;
+
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
  * @version $Revision$
@@ -75,19 +77,17 @@ public abstract class PageNavigationTask extends AbstractPOMTask {
     public void run(POMSession session) throws Exception {
       Workspace workspace = session.getWorkspace();
       Site site = workspace.getSite(siteType, ownerId);
-      if (site == null) {
-        throw new IllegalArgumentException("Cannot load page navigation " + owner +
+      if (site != null) {
+        Navigation nav = site.getRootNavigation();
+        pageNav = loadPageNavigation(nav);
+      } else {
+        System.out.println("Cannot load page navigation " + owner +
           " as the corresponding portal " + ownerId + " with type " + siteType + " does not exist");
       }
-
-      //
-      Navigation nav = site.getRootNavigation();
-
-      //
-      pageNav = loadPageNavigation(nav);
     }
 
     private PageNavigation loadPageNavigation(Navigation nav) {
+      Collection<? extends Navigation> children = nav.getChildren();
       PageNavigation pageNav = new PageNavigation();
       pageNav.setOwnerId(ownerId);
       pageNav.setOwnerType(ownerType);
@@ -99,7 +99,7 @@ public abstract class PageNavigationTask extends AbstractPOMTask {
       if (priority != null) {
         pageNav.setPriority(priority);
       }
-      for (Navigation childNav : nav.getChildren()) {
+      for (Navigation childNav : children) {
         PageNode node = loadPageNode(childNav);
         pageNav.addNode(node);
       }
@@ -109,6 +109,7 @@ public abstract class PageNavigationTask extends AbstractPOMTask {
     private PageNode loadPageNode(Navigation nav) {
       PageNode node = new PageNode();
       Attributes attrs = nav.getAttributes();
+      node.setName(nav.getName());
       node.setLabel(attrs.getString("label"));
       node.setIcon(attrs.getString("icon"));
       node.setUri(attrs.getString("uri"));
@@ -202,7 +203,7 @@ public abstract class PageNavigationTask extends AbstractPOMTask {
           " as the corresponding portal " + ownerId + " with type " + siteType + " does not exist");
       }
 
-      // Delete node descendants
+      // Delete descendants
       Navigation nav = site.getRootNavigation();
       nav.getChildren().clear();
     }

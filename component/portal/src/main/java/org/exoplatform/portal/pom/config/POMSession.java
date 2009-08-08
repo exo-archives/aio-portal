@@ -19,11 +19,6 @@ package org.exoplatform.portal.pom.config;
 import org.exoplatform.portal.model.impl.api.POM;
 import org.exoplatform.portal.model.api.workspace.Workspace;
 import org.exoplatform.portal.model.api.content.ContentManager;
-import org.exoplatform.services.jcr.config.RepositoryConfigurationException;
-import org.exoplatform.services.jcr.ext.common.SessionProvider;
-
-import javax.jcr.Session;
-import javax.jcr.RepositoryException;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -47,7 +42,7 @@ public class POMSession {
 
   private POM getModel() {
     if (model == null) {
-      model = mgr.pomService.getModel();
+      model = mgr.getPOMService().getModel();
     }
     return model;
   }

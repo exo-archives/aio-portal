@@ -117,6 +117,7 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     Iterator<String> iter = owners.iterator();
     while (iter.hasNext()) {
       String owner = iter.next();
+      createPortalConfig(config, PortalConfig.USER_TYPE, owner);
       createPage(config, owner);
       createPageNavigation(config, owner);
     }
@@ -127,6 +128,7 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     Iterator<String> iter = owners.iterator();
     while (iter.hasNext()) {
       String owner = iter.next();
+      createPortalConfig(config, PortalConfig.GROUP_TYPE, owner);
       createPage(config, owner);
       createPageNavigation(config, owner);
       createPortletPreferences(config, owner);
@@ -138,14 +140,14 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     Iterator<String> iter = owners.iterator();
     while (iter.hasNext()) {
       String owner = iter.next();
-      createPortalConfig(config, owner);
+      createPortalConfig(config, PortalConfig.PORTAL_TYPE, owner);
       createPage(config, owner);
       createPageNavigation(config, owner);
       createPortletPreferences(config, owner);
     }
   }
 
-  private void createPortalConfig(NewPortalConfig config, String owner) throws Exception {
+  private void createPortalConfig(NewPortalConfig config, String type, String owner) throws Exception {
     String xml = null;
     
     // get path of xml file, check if path in template folder and if path not in
@@ -153,7 +155,7 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     boolean notTemplate = (config.getTemplateOwner() == null || config.getTemplateOwner()
                                                                       .trim()
                                                                       .length() < 1);
-    String path = getPathConfig(config, owner, "portal", notTemplate);
+    String path = getPathConfig(config, owner, type, notTemplate);
 
     // get xml content and parse xml content
     try {
@@ -164,6 +166,7 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
       }
       
     PortalConfig pconfig = fromXML(xml, PortalConfig.class);
+    pconfig.setType(type);
     pdcService_.create(pconfig);
     } catch (JiBXException e) {
       log.error(e.getMessage() + " file: " + path);
