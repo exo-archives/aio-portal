@@ -21,7 +21,6 @@ import org.exoplatform.portal.model.api.workspace.Site;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
 import org.exoplatform.portal.config.model.Page;
 import static org.exoplatform.portal.pom.config.Utils.split;
-import static org.exoplatform.portal.pom.config.Utils.parseSiteType;
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
 import org.exoplatform.portal.pom.config.POMSession;
 
@@ -64,7 +63,7 @@ public abstract class PageTask extends AbstractPOMTask {
     this.ownerType = ownerType;
     this.ownerId = ownerId;
     this.name = name;
-    this.siteType = parseSiteType(ownerType);
+    this.siteType = Mapper.parseSiteType(ownerType);
   }
 
   public static class Remove extends PageTask {

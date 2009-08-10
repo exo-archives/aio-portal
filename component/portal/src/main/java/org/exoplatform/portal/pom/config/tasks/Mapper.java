@@ -28,6 +28,8 @@ import org.exoplatform.portal.model.api.workspace.ui.UIWindow;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
 import org.exoplatform.portal.model.api.workspace.Site;
 import org.exoplatform.portal.model.api.workspace.Navigation;
+import org.exoplatform.portal.model.api.workspace.Workspace;
+import org.exoplatform.portal.model.api.workspace.navigation.PageLink;
 import org.exoplatform.portal.model.api.content.ContentManager;
 import org.exoplatform.portal.model.api.content.FetchCondition;
 import org.exoplatform.portal.model.api.content.Content;
@@ -35,7 +37,6 @@ import org.exoplatform.portal.model.util.Attributes;
 import org.exoplatform.portal.model.portlet.Preferences;
 import static org.exoplatform.portal.pom.config.Utils.join;
 import static org.exoplatform.portal.pom.config.Utils.split;
-import static org.exoplatform.portal.pom.config.Utils.getOwnerType;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -67,6 +68,18 @@ public class Mapper {
   }
 
   public static void save(PageNode node, Navigation nav) {
+    Workspace workspace = nav.getSite().getWorkspace();
+    String reference = node.getPageReference();
+    if (reference != null) {
+      String[] pageChunks = split("::", reference);
+      ObjectType<? extends Site> siteType = parseSiteType(pageChunks[0]);
+      Site site = workspace.getSite(siteType, pageChunks[1]);
+      org.exoplatform.portal.model.api.workspace.Page target = site.getRootPage().getChild(pageChunks[2]);
+      PageLink link = nav.link(ObjectType.PAGE_LINK);
+      link.setPage(target);
+    }
+
+    //
     Attributes attrs = nav.getAttributes();
     attrs.setString("uri", node.getUri());
     attrs.setString("label", node.getLabel());
@@ -205,6 +218,30 @@ public class Mapper {
   public static void save(Properties src, Attributes dst) {
     for (Map.Entry<String, String> property : src.entrySet()) {
       dst.setString(property.getKey(), property.getValue());
+    }
+  }
+
+  public static String getOwnerType(ObjectType<? extends Site> siteType) {
+    if (siteType == ObjectType.PORTAL) {
+      return PortalConfig.PORTAL_TYPE;
+    } else if (siteType == ObjectType.GROUP) {
+      return PortalConfig.GROUP_TYPE;
+    } else if (siteType == ObjectType.USER) {
+      return PortalConfig.USER_TYPE;
+    } else {
+      throw new IllegalArgumentException("Invalid site type " + siteType);
+    }
+  }
+
+  public static ObjectType<? extends Site> parseSiteType(String ownerType) {
+    if (ownerType.equals(PortalConfig.PORTAL_TYPE)) {
+      return ObjectType.PORTAL;
+    } else if (ownerType.equals(PortalConfig.GROUP_TYPE)) {
+      return ObjectType.GROUP;
+    } else if (ownerType.equals(PortalConfig.USER_TYPE)) {
+      return ObjectType.USER;
+    } else {
+      throw new IllegalArgumentException("Invalid owner type " + ownerType);
     }
   }
 }

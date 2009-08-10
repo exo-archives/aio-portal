@@ -26,30 +26,6 @@ import org.exoplatform.portal.config.model.PortalConfig;
  */
 public class Utils {
 
-  public static String getOwnerType(ObjectType<? extends Site> siteType) {
-    if (siteType == ObjectType.PORTAL) {
-      return PortalConfig.PORTAL_TYPE;
-    } else if (siteType == ObjectType.GROUP) {
-      return PortalConfig.GROUP_TYPE;
-    } else if (siteType == ObjectType.USER) {
-      return PortalConfig.USER_TYPE;
-    } else {
-      throw new IllegalArgumentException("Invalid site type " + siteType);
-    }
-  }
-
-  public static ObjectType<? extends Site> parseSiteType(String ownerType) {
-    if (ownerType.equals(PortalConfig.PORTAL_TYPE)) {
-      return ObjectType.PORTAL;
-    } else if (ownerType.equals(PortalConfig.GROUP_TYPE)) {
-      return ObjectType.GROUP;
-    } else if (ownerType.equals(PortalConfig.USER_TYPE)) {
-      return ObjectType.USER;
-    } else {
-      throw new IllegalArgumentException("Invalid owner type " + ownerType);
-    }
-  }
-
   public static String join(String separator, String... strings) {
     if (strings == null) {
       return null;

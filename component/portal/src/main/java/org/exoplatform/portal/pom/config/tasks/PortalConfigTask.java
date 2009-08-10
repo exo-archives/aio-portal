@@ -22,9 +22,7 @@ import org.exoplatform.portal.model.api.workspace.Site;
 import org.exoplatform.portal.model.util.Attributes;
 import org.exoplatform.portal.config.model.PortalConfig;
 
-import static org.exoplatform.portal.pom.config.Utils.join;
 import static org.exoplatform.portal.pom.config.Utils.split;
-import static org.exoplatform.portal.pom.config.Utils.parseSiteType;
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
 import org.exoplatform.portal.pom.config.POMSession;
 
@@ -41,7 +39,7 @@ public abstract class PortalConfigTask extends AbstractPOMTask {
   protected final ObjectType<? extends Site> type;
 
   protected PortalConfigTask(String type, String name) {
-    this.type = parseSiteType(type);
+    this.type = Mapper.parseSiteType(type);
     this.name = name;
   }
 

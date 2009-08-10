@@ -16,7 +16,6 @@
  */
 package org.exoplatform.portal.pom.config.tasks;
 
-import static org.exoplatform.portal.pom.config.Utils.parseSiteType;
 import static org.exoplatform.portal.pom.config.Utils.split;
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
 import org.exoplatform.portal.pom.config.POMSession;
@@ -79,7 +78,7 @@ WindowID:
 
     //
     this.ownerType = chunks[0];
-    this.siteType = parseSiteType(chunks[0]);
+    this.siteType = Mapper.parseSiteType(chunks[0]);
     this.ownerId = chunks[1];
     this.windowId = windowID.getPersistenceId();
     this.contentId = Mapper.parseContentId(windowId);
@@ -89,7 +88,7 @@ WindowID:
     this.ownerType = ownerType;
     this.ownerId = ownerId;
     this.windowId = windowId;
-    this.siteType = parseSiteType(ownerType);
+    this.siteType = Mapper.parseSiteType(ownerType);
     this.contentId = Mapper.parseContentId(windowId);
   }
 

@@ -19,7 +19,6 @@ package org.exoplatform.portal.pom.config.tasks;
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
 import org.exoplatform.portal.pom.config.POMSession;
 import static org.exoplatform.portal.pom.config.Utils.split;
-import static org.exoplatform.portal.pom.config.Utils.parseSiteType;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
 import org.exoplatform.portal.model.api.workspace.Site;
 import org.exoplatform.portal.model.api.workspace.Workspace;
@@ -57,7 +56,7 @@ public abstract class PageNavigationTask extends AbstractPOMTask {
     //
     this.ownerType = chunks[0];
     this.ownerId = chunks[1];
-    this.siteType = parseSiteType(ownerType);
+    this.siteType = Mapper.parseSiteType(ownerType);
     this.owner = owner;
   }
 

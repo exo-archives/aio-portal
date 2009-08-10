@@ -155,7 +155,7 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
   public LazyPageList find(Query<?> q, Comparator<?> sortComparator) throws Exception {
 
     final POMSession session = pomMgr.openSession();
-    ObjectType<? extends Site> siteType = Utils.parseSiteType(q.getOwnerType());
+    ObjectType<? extends Site> siteType = Mapper.parseSiteType(q.getOwnerType());
     String ownerId = q.getOwnerId();
     Workspace workspace = session.getWorkspace();
     Site site = workspace.getSite(siteType, ownerId);
