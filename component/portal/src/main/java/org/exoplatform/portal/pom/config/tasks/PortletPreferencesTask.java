@@ -68,6 +68,9 @@ WindowID:
   /** . */
   protected final String windowId;
 
+  /** . */
+  protected final String contentId;
+
   protected PortletPreferencesTask(WindowID windowID) {
     String[] chunks = split("#", windowID.getOwner()) ;
     if(chunks.length != 2) {
@@ -79,6 +82,7 @@ WindowID:
     this.siteType = parseSiteType(chunks[0]);
     this.ownerId = chunks[1];
     this.windowId = windowID.getPersistenceId();
+    this.contentId = parseContentId(windowId);
   }
 
   protected PortletPreferencesTask(String ownerType, String ownerId, String windowId) {
@@ -86,6 +90,7 @@ WindowID:
     this.ownerId = ownerId;
     this.windowId = windowId;
     this.siteType = parseSiteType(ownerType);
+    this.contentId = parseContentId(windowId);
   }
 
   public static class Save extends PortletPreferencesTask {
@@ -113,7 +118,7 @@ WindowID:
 
       //
       ContentManager contentManager = session.getContentManager();
-      Content<Preferences> content = contentManager.getContent(Preferences.CONTENT_TYPE, windowId, FetchCondition.ALWAYS);
+      Content<Preferences> content = contentManager.getContent(Preferences.CONTENT_TYPE, contentId, FetchCondition.ALWAYS);
       Customization<Preferences> root = content.getCustomization();
       Customization<Preferences> customization = root.customize(CustomizationMode.CLONE, context);
 
@@ -152,7 +157,7 @@ WindowID:
 
       //
       ContentManager contentManager = session.getContentManager();
-      Content<Preferences> content = contentManager.getContent(Preferences.CONTENT_TYPE, windowId, FetchCondition.PERSISTED);
+      Content<Preferences> content = contentManager.getContent(Preferences.CONTENT_TYPE, contentId, FetchCondition.PERSISTED);
 
       //
       if (content != null) {
@@ -196,7 +201,7 @@ WindowID:
 
       //
       ContentManager contentManager = session.getContentManager();
-      Content<Preferences> content = contentManager.getContent(Preferences.CONTENT_TYPE, windowId, FetchCondition.PERSISTED);
+      Content<Preferences> content = contentManager.getContent(Preferences.CONTENT_TYPE, contentId, FetchCondition.PERSISTED);
 
       //
       if (content != null) {
@@ -206,5 +211,10 @@ WindowID:
         }
       }
     }
+  }
+
+  private static String parseContentId(String windowId) {
+    String[] persistenceChunks = split(":/", windowId);
+    return persistenceChunks[persistenceChunks.length - 1];
   }
 }

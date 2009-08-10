@@ -116,15 +116,18 @@ public abstract class PageTask extends AbstractPOMTask {
 
       //
       page = site.getRootPage().addChild(name);
+
+      //
       Attributes attrs = page.getAttributes();
-      attrs.setString("title", this.page.getTitle());
       attrs.setBoolean("show-max-window", this.page.isShowMaxWindow());
       attrs.setString("creator", this.page.getCreator());
       attrs.setString("modifier", this.page.getModifier());
       attrs.setString("access-permissions", join("|", this.page.getAccessPermissions()));
       attrs.setString("edit-permission", this.page.getEditPermission());
 
-      // Need to do components
+      //
+      Mapper mapper = new Mapper(null);
+      mapper.save(this.page, page.getLayout());
     }
   }
 
