@@ -46,18 +46,16 @@ public class Mapper {
   }
 
   public void save(Container src, UIContainer dst) {
-
-    Attributes attrs = dst.getAttributes();
-
-    String title = src.getTitle();
-    attrs.setString("title", title);
-    attrs.setString("description", src.getDescription());
-    attrs.setString("decorator", src.getDecorator());
-    attrs.setString("width", src.getWidth());
-    attrs.setString("height", src.getHeight());
-    attrs.setString("factory-id", src.getFactoryId());
-    attrs.setString("icon", src.getIcon());
-    attrs.setString("access-permissions", join("|", src.getAccessPermissions()));
+    Attributes dstAttrs = dst.getAttributes();
+    dstAttrs.setString("title", src.getTitle());
+    dstAttrs.setString("icon", src.getIcon());
+    dstAttrs.setString("template", src.getTemplate());
+    dstAttrs.setString("access-permissions", join("|", src.getAccessPermissions()));
+    dstAttrs.setString("factory-id", src.getFactoryId());
+    dstAttrs.setString("decorator", src.getDecorator());
+    dstAttrs.setString("description", src.getDescription());
+    dstAttrs.setString("width", src.getWidth());
+    dstAttrs.setString("height", src.getHeight());
 
     //
     dst.getComponents().clear();
@@ -67,53 +65,12 @@ public class Mapper {
         if (srcChild instanceof Container) {
           Container srcChildContainer = (Container)srcChild;
           UIContainer dstChildContainer = dst.addComponent(ObjectType.CONTAINER, srcChildContainer.getName());
-
-          //
-          Attributes dstAttrs = dstChildContainer.getAttributes();
-          dstAttrs.setString("title", srcChildContainer.getTitle());
-          dstAttrs.setString("icon", srcChildContainer.getIcon());
-          dstAttrs.setString("template", srcChildContainer.getTemplate());
-          dstAttrs.setString("access-permissions", join("|", srcChildContainer.getAccessPermissions()));
-          dstAttrs.setString("factory-id", srcChildContainer.getFactoryId());
-          dstAttrs.setString("decorator", srcChildContainer.getDecorator());
-          dstAttrs.setString("description", srcChildContainer.getDescription());
-          dstAttrs.setString("width", srcChildContainer.getWidth());
-          dstAttrs.setString("height", srcChildContainer.getHeight());
-
-          //
           save(srcChildContainer, dstChildContainer);
         } else if (srcChild instanceof Application) {
-          Application srcChildApplication = (Application)srcChild;
-
-          // Generate an id if necessary
-          String id = srcChildApplication.getId();
-          if (id == null) {
-            id = UUID.randomUUID().toString();
-          }
+          Application application = (Application)srcChild;
+          String id = UUID.randomUUID().toString();
           UIWindow dstChildWindow = dst.addComponent(ObjectType.WINDOW, id);
-
-          //
-          Attributes dstAttrs = dstChildWindow.getAttributes();
-          dstAttrs.setString("type", srcChildApplication.getApplicationType());
-          dstAttrs.setString("theme", srcChildApplication.getTheme());
-          dstAttrs.setString("title", srcChildApplication.getTitle());
-          dstAttrs.setString("access-permissions", join("|", srcChildApplication.getAccessPermissions()));
-          dstAttrs.setBoolean("show-info-bar", srcChildApplication.getShowInfoBar());
-          dstAttrs.setBoolean("show-state", srcChildApplication.getShowApplicationState());
-          dstAttrs.setBoolean("show-mode", srcChildApplication.getShowApplicationMode());
-          dstAttrs.setString("description", srcChildApplication.getDescription());
-          dstAttrs.setString("icon", srcChildApplication.getIcon());
-          dstAttrs.setString("width", srcChildApplication.getWidth());
-          dstAttrs.setString("height", srcChildApplication.getHeight());
-          for (Map.Entry<String, String> property : srcChildApplication.getProperties().entrySet()) {
-            dstAttrs.setString(property.getKey(), property.getValue());
-          }
-
-          //
-          String instanceId = srcChildApplication.getInstanceId();
-          String contentId = parseContentId(instanceId);
-          Content content = contentManager.getContent(Preferences.CONTENT_TYPE, contentId, FetchCondition.ALWAYS);
-          dstChildWindow.setContent(content);
+          save(application, dstChildWindow);
         } else {
           throw new AssertionError("Was not expecting child " + srcChild);
         }
@@ -121,11 +78,36 @@ public class Mapper {
     }
   }
 
-  public Container load(UIContainer src) {
+  public void save(Application src, UIWindow dst) {
+    Attributes dstAttrs = dst.getAttributes();
+    dstAttrs.setString("type", src.getApplicationType());
+    dstAttrs.setString("theme", src.getTheme());
+    dstAttrs.setString("title", src.getTitle());
+    dstAttrs.setString("access-permissions", join("|", src.getAccessPermissions()));
+    dstAttrs.setBoolean("show-info-bar", src.getShowInfoBar());
+    dstAttrs.setBoolean("show-state", src.getShowApplicationState());
+    dstAttrs.setBoolean("show-mode", src.getShowApplicationMode());
+    dstAttrs.setString("description", src.getDescription());
+    dstAttrs.setString("icon", src.getIcon());
+    dstAttrs.setString("width", src.getWidth());
+    dstAttrs.setString("height", src.getHeight());
+    for (Map.Entry<String, String> property : src.getProperties().entrySet()) {
+      dstAttrs.setString(property.getKey(), property.getValue());
+    }
 
-
-    return null;
+    //
+    String instanceId = src.getInstanceId();
+    String contentId = parseContentId(instanceId);
+    Content content = contentManager.getContent(Preferences.CONTENT_TYPE, contentId, FetchCondition.ALWAYS);
+    dst.setContent(content);
   }
+
+/*
+  public void load(UIContainer src, Container container) {
+
+
+  }
+*/
 
   static String parseContentId(String windowId) {
     String[] persistenceChunks = org.exoplatform.portal.pom.config.Utils.split(":/", windowId);
