@@ -19,12 +19,9 @@ package org.exoplatform.portal.pom.config.tasks;
 import org.exoplatform.portal.model.api.workspace.Workspace;
 import org.exoplatform.portal.model.api.workspace.Site;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
-import org.exoplatform.portal.model.util.Attributes;
 import org.exoplatform.portal.config.model.Page;
 import static org.exoplatform.portal.pom.config.Utils.split;
-import static org.exoplatform.portal.pom.config.Utils.join;
 import static org.exoplatform.portal.pom.config.Utils.parseSiteType;
-import static org.exoplatform.portal.pom.config.Utils.getOwnerType;
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
 import org.exoplatform.portal.pom.config.POMSession;
 
@@ -145,39 +142,10 @@ public abstract class PageTask extends AbstractPOMTask {
         org.exoplatform.portal.model.api.workspace.Page root = site.getRootPage();
         org.exoplatform.portal.model.api.workspace.Page page = root.getChild(name);
         if (page != null) {
-          Page bilto = toPage(page);
-
-          // Need to do components
-
-          //
-          this.page = bilto;
+          Mapper mapper = new Mapper(session.getContentManager());
+          this.page = mapper.load(page);
         }
       }
     }
-  }
-
-  public static Page toPage(org.exoplatform.portal.model.api.workspace.Page page) {
-    Site site = page.getSite();
-
-    //
-    String ownerType = getOwnerType(site.getObjectType());
-    String ownerId = site.getName();
-    String name = page.getName();
-    String pageId = join("::", ownerType, ownerId, name);
-
-    //
-    Attributes attrs = page.getAttributes();
-    Page bilto = new Page();
-    bilto.setId(pageId);
-    bilto.setOwnerId(ownerId);
-    bilto.setOwnerType(ownerType);
-    bilto.setName(name);
-    bilto.setTitle(attrs.getString("title"));
-    bilto.setShowMaxWindow(attrs.getBoolean("show-max-window"));
-    bilto.setCreator(attrs.getString("creator"));
-    bilto.setModifier(attrs.getString("modifier"));
-    bilto.setAccessPermissions(split("|", attrs.getString("access-permissions")));
-    bilto.setEditPermission(attrs.getString("edit-permission"));
-    return bilto;
   }
 }

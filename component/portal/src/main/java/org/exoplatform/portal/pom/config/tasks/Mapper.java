@@ -22,12 +22,15 @@ import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.model.api.workspace.ui.UIContainer;
 import org.exoplatform.portal.model.api.workspace.ui.UIWindow;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
+import org.exoplatform.portal.model.api.workspace.Site;
 import org.exoplatform.portal.model.api.content.ContentManager;
 import org.exoplatform.portal.model.api.content.FetchCondition;
 import org.exoplatform.portal.model.api.content.Content;
 import org.exoplatform.portal.model.util.Attributes;
 import org.exoplatform.portal.model.portlet.Preferences;
 import static org.exoplatform.portal.pom.config.Utils.join;
+import static org.exoplatform.portal.pom.config.Utils.split;
+import static org.exoplatform.portal.pom.config.Utils.getOwnerType;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -44,6 +47,32 @@ public class Mapper {
 
   public Mapper(ContentManager contentManager) {
     this.contentManager = contentManager;
+  }
+
+  public Page load(org.exoplatform.portal.model.api.workspace.Page src) {
+
+    Site site = src.getSite();
+
+    String ownerType = getOwnerType(site.getObjectType());
+    String ownerId = site.getName();
+    String name = src.getName();
+    String pageId = join("::", ownerType, ownerId, name);
+
+    Attributes attrs = src.getAttributes();
+    Page dst = new Page();
+    dst.setId(pageId);
+    dst.setOwnerId(ownerId);
+    dst.setOwnerType(ownerType);
+    dst.setName(name);
+    dst.setTitle(attrs.getString("title"));
+    dst.setShowMaxWindow(attrs.getBoolean("show-max-window"));
+    dst.setCreator(attrs.getString("creator"));
+    dst.setModifier(attrs.getString("modifier"));
+    dst.setAccessPermissions(split("|", attrs.getString("access-permissions")));
+    dst.setEditPermission(attrs.getString("edit-permission"));
+
+    //
+    return dst;
   }
 
   public void save(Page src, org.exoplatform.portal.model.api.workspace.Page dst) {
