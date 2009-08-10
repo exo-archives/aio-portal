@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<page-set>  
+
+  <page>
+  	<page-id>portal::test::test</page-id>
+    <owner-type>portal</owner-type>
+    <owner-id>test</owner-id>
+    <name>test</name>
+    <title>Test Page</title>
+	  <access-permissions>Everyone</access-permissions>
+	  <edit-permission>*:/platform/administrators</edit-permission>
+    <container
+        template="container_1_template"
+        decorator="container_1_decorator"
+        width="container_1_width"
+        height="container_1_height">
+      <name>container_1</name>
+      <title>container_1_title</title>
+      <icon>container_1_icon</icon>
+      <access-permissions>container_1_access_permission</access-permissions>
+      <factory-id>container_1_factory_id</factory-id>
+      <description>container_1_description</description>
+    </container>
+    <application>
+      <instance-id>portal#test:/web/BannerPortlet/banner</instance-id>
+      <application-type>application_1_type</application-type>
+      <theme>application_1_theme</theme>
+      <title>application_1_title</title>
+      <access-permissions>application_1_access_permission</access-permissions>
+      <show-info-bar>true</show-info-bar>
+      <show-application-state>true</show-application-state>
+      <show-application-mode>true</show-application-mode>
+      <description>application_1_description</description>
+      <icon>application_1_icon</icon>
+      <width>application_1_width</width>
+      <height>application_1_height</height>
+      <properties>
+        <entry key="prop_key">application_1_prop_value</entry>
+      </properties>
+    </application>
+  </page>
+    
+</page-set>

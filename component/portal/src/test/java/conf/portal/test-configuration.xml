@@ -74,6 +74,9 @@
                   <value>
                     <string>classic</string>
                   </value>
+                  <value>
+                    <string>test</string>
+                  </value>
                 </collection>
               </field>
               <field name="ownerType">

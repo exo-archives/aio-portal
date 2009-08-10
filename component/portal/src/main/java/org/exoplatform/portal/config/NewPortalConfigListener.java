@@ -169,7 +169,7 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     pconfig.setType(type);
     pdcService_.create(pconfig);
     } catch (JiBXException e) {
-      log.error(e.getMessage() + " file: " + path);
+      log.error(e.getMessage() + " file: " + path, e);
     }
   }
 
@@ -198,7 +198,7 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
         pdcService_.create(page);
       }
     } catch (JiBXException e) {
-      log.error(e.getMessage() + " file: " + path);
+      log.error(e.getMessage() + " file: " + path, e);
     }
   }
 
@@ -226,7 +226,7 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
         pdcService_.save(navigation);
       }
     } catch (JiBXException e) {
-      log.error(e.getMessage() + " file: " + path);
+      log.error(e.getMessage() + " file: " + path, e);
     }
   }
 
@@ -254,7 +254,7 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
         pdcService_.save(portlet);
       }
     } catch (JiBXException e) {
-      log.error(e.getMessage() + " file: " + path);
+      log.error(e.getMessage() + " file: " + path, e);
     }
   }
 

@@ -82,7 +82,7 @@ WindowID:
     this.siteType = parseSiteType(chunks[0]);
     this.ownerId = chunks[1];
     this.windowId = windowID.getPersistenceId();
-    this.contentId = parseContentId(windowId);
+    this.contentId = Mapper.parseContentId(windowId);
   }
 
   protected PortletPreferencesTask(String ownerType, String ownerId, String windowId) {
@@ -90,7 +90,7 @@ WindowID:
     this.ownerId = ownerId;
     this.windowId = windowId;
     this.siteType = parseSiteType(ownerType);
-    this.contentId = parseContentId(windowId);
+    this.contentId = Mapper.parseContentId(windowId);
   }
 
   public static class Save extends PortletPreferencesTask {
@@ -211,10 +211,5 @@ WindowID:
         }
       }
     }
-  }
-
-  private static String parseContentId(String windowId) {
-    String[] persistenceChunks = split(":/", windowId);
-    return persistenceChunks[persistenceChunks.length - 1];
   }
 }

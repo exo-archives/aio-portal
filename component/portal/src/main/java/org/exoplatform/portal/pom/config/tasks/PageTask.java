@@ -126,7 +126,7 @@ public abstract class PageTask extends AbstractPOMTask {
       attrs.setString("edit-permission", this.page.getEditPermission());
 
       //
-      Mapper mapper = new Mapper(null);
+      Mapper mapper = new Mapper(session.getContentManager());
       mapper.save(this.page, page.getLayout());
     }
   }

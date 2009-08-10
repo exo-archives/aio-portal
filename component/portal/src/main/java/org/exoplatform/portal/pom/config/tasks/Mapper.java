@@ -30,6 +30,7 @@ import static org.exoplatform.portal.pom.config.Utils.join;
 
 import java.util.ArrayList;
 import java.util.UUID;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -48,7 +49,8 @@ public class Mapper {
 
     Attributes attrs = dst.getAttributes();
 
-    attrs.setString("title", src.getTitle());
+    String title = src.getTitle();
+    attrs.setString("title", title);
     attrs.setString("description", src.getDescription());
     attrs.setString("decorator", src.getDecorator());
     attrs.setString("width", src.getWidth());
@@ -65,19 +67,53 @@ public class Mapper {
         if (srcChild instanceof Container) {
           Container srcChildContainer = (Container)srcChild;
           UIContainer dstChildContainer = dst.addComponent(ObjectType.CONTAINER, srcChildContainer.getName());
+
+          //
+          Attributes dstAttrs = dstChildContainer.getAttributes();
+          dstAttrs.setString("title", srcChildContainer.getTitle());
+          dstAttrs.setString("icon", srcChildContainer.getIcon());
+          dstAttrs.setString("template", srcChildContainer.getTemplate());
+          dstAttrs.setString("access-permissions", join("|", srcChildContainer.getAccessPermissions()));
+          dstAttrs.setString("factory-id", srcChildContainer.getFactoryId());
+          dstAttrs.setString("decorator", srcChildContainer.getDecorator());
+          dstAttrs.setString("description", srcChildContainer.getDescription());
+          dstAttrs.setString("width", srcChildContainer.getWidth());
+          dstAttrs.setString("height", srcChildContainer.getHeight());
+
+          //
           save(srcChildContainer, dstChildContainer);
         } else if (srcChild instanceof Application) {
           Application srcChildApplication = (Application)srcChild;
-          String id = UUID.randomUUID().toString();
-//          UIWindow dstChildWindow = dst.addComponent(ObjectType.WINDOW, id);
 
-/*
+          // Generate an id if necessary
+          String id = srcChildApplication.getId();
+          if (id == null) {
+            id = UUID.randomUUID().toString();
+          }
+          UIWindow dstChildWindow = dst.addComponent(ObjectType.WINDOW, id);
+
+          //
+          Attributes dstAttrs = dstChildWindow.getAttributes();
+          dstAttrs.setString("type", srcChildApplication.getApplicationType());
+          dstAttrs.setString("theme", srcChildApplication.getTheme());
+          dstAttrs.setString("title", srcChildApplication.getTitle());
+          dstAttrs.setString("access-permissions", join("|", srcChildApplication.getAccessPermissions()));
+          dstAttrs.setBoolean("show-info-bar", srcChildApplication.getShowInfoBar());
+          dstAttrs.setBoolean("show-state", srcChildApplication.getShowApplicationState());
+          dstAttrs.setBoolean("show-mode", srcChildApplication.getShowApplicationMode());
+          dstAttrs.setString("description", srcChildApplication.getDescription());
+          dstAttrs.setString("icon", srcChildApplication.getIcon());
+          dstAttrs.setString("width", srcChildApplication.getWidth());
+          dstAttrs.setString("height", srcChildApplication.getHeight());
+          for (Map.Entry<String, String> property : srcChildApplication.getProperties().entrySet()) {
+            dstAttrs.setString(property.getKey(), property.getValue());
+          }
+
+          //
           String instanceId = srcChildApplication.getInstanceId();
-
-          Content content = contentManager.getContent(Preferences.CONTENT_TYPE, "", FetchCondition.ALWAYS);
+          String contentId = parseContentId(instanceId);
+          Content content = contentManager.getContent(Preferences.CONTENT_TYPE, contentId, FetchCondition.ALWAYS);
           dstChildWindow.setContent(content);
-*/
-//          save(srcChildApplication, dstChildWindow);
         } else {
           throw new AssertionError("Was not expecting child " + srcChild);
         }
@@ -85,8 +121,14 @@ public class Mapper {
     }
   }
 
-  public void save(Application src, UIWindow dst) {
+  public Container load(UIContainer src) {
 
+
+    return null;
   }
 
+  static String parseContentId(String windowId) {
+    String[] persistenceChunks = org.exoplatform.portal.pom.config.Utils.split(":/", windowId);
+    return persistenceChunks[persistenceChunks.length - 1];
+  }
 }
