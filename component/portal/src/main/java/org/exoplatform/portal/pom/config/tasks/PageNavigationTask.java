@@ -155,38 +155,9 @@ public abstract class PageNavigationTask extends AbstractPOMTask {
       nav.getChildren().clear();
 
       //
-      save(pageNav, nav);
+      new Mapper(session.getContentManager()).save(pageNav, nav);
     }
 
-    private void save(PageNavigation pageNav, Navigation nav) {
-      Attributes attrs = nav.getAttributes();
-      attrs.setInteger("priority", pageNav.getPriority());
-      attrs.setString("creator", pageNav.getCreator());
-      attrs.setString("modifier", pageNav.getModifier());
-      attrs.setString("description", pageNav.getDescription());
-      for (PageNode node : pageNav.getNodes()) {
-        Navigation childNav = nav.addChild(node.getName());
-        save(node, childNav);
-      }
-    }
-
-    private void save(PageNode node, Navigation nav) {
-      Attributes attrs = nav.getAttributes();
-      attrs.setString("label", node.getLabel());
-      attrs.setString("icon", node.getIcon());
-      attrs.setString("uri", node.getUri());
-      attrs.setDate("start-publication-date", node.getStartPublicationDate());
-      attrs.setDate("end-publication-date", node.getEndPublicationDate());
-      attrs.setBoolean("show-publication-date", node.isShowPublicationDate());
-      attrs.setBoolean("visible", node.isVisible());
-      attrs.setString("page-reference", node.getPageReference());
-      if (node.getChildren() != null) {
-        for (PageNode childNode : node.getChildren()) {
-          Navigation childNav = nav.addChild(node.getName());
-          save(childNode, childNav);
-        }
-      }
-    }
   }
 
   public static class Remove extends PageNavigationTask {

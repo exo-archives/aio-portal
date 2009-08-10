@@ -22,6 +22,8 @@ import org.exoplatform.portal.pom.config.POMSession;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
 import org.exoplatform.portal.model.api.workspace.Portal;
 import org.exoplatform.portal.model.api.workspace.Page;
+import org.exoplatform.portal.model.api.workspace.Navigation;
+import org.exoplatform.portal.model.api.workspace.NavigationLink;
 import org.exoplatform.portal.model.api.workspace.ui.UIContainer;
 import org.exoplatform.portal.model.api.workspace.ui.UIComponent;
 import org.exoplatform.portal.model.api.workspace.ui.UIWindow;
@@ -32,6 +34,10 @@ import org.exoplatform.test.BasicTestCase;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * Created by The eXo Platform SARL Author : Tung Pham thanhtungty@gmail.com Nov
@@ -65,6 +71,52 @@ public class TestSavedPOM extends BasicTestCase {
   protected void tearDown() throws Exception {
     mgr.closeSession();
     storage = null;
+  }
+
+  public void testNavigation() throws Exception {
+    POMSession session = mgr.openSession();
+    Portal portal = session.getWorkspace().getSite(ObjectType.PORTAL, "test");
+    assertNotNull(portal);
+
+    //
+    Navigation rootNavigation = portal.getRootNavigation();
+    assertNotNull(rootNavigation);
+
+    //
+    Attributes rootAttrs = rootNavigation.getAttributes();
+    assertEquals(1, (int)rootAttrs.getInteger("priority"));
+    assertEquals("navigation_creator", rootAttrs.getString("creator"));
+    assertEquals("navigation_modifier", rootAttrs.getString("modifier"));
+    assertEquals("navigation_description", rootAttrs.getString("description"));
+
+    //
+    Collection<? extends Navigation> childrenNavigations = rootNavigation.getChildren();
+    assertNotNull(childrenNavigations);
+    assertEquals(1, childrenNavigations.size());
+    Iterator<? extends Navigation> i = childrenNavigations.iterator();
+
+    //
+    assertTrue(i.hasNext());
+    Navigation nodeNavigation = i.next();
+    assertEquals(0, nodeNavigation.getChildren().size());
+    assertNotNull(nodeNavigation);
+    assertEquals("node_name", nodeNavigation.getName());
+    Attributes nodeAttrs = nodeNavigation.getAttributes();
+    assertEquals("node_uri", nodeAttrs.getString("uri"));
+    assertEquals("node_label", nodeAttrs.getString("label"));
+    assertEquals("node_icon", nodeAttrs.getString("icon"));
+    GregorianCalendar start = new GregorianCalendar(2000, 2, 21, 1, 33, 0);
+    start.setTimeZone(TimeZone.getTimeZone("UTC"));
+    assertEquals(start.getTime(), nodeAttrs.getDate("start-publication-date"));
+    GregorianCalendar end = new GregorianCalendar(2009, 2, 21, 1, 33, 0);
+    end.setTimeZone(TimeZone.getTimeZone("UTC"));
+    assertEquals(end.getTime(), nodeAttrs.getDate("end-publication-date"));
+    assertEquals(true, (boolean)nodeAttrs.getBoolean("show-publication-date"));
+    assertEquals(true, (boolean)nodeAttrs.getBoolean("visible"));
+
+    //
+    NavigationLink link = nodeNavigation.getLink();
+//    assertNotNull(link);
   }
 
   public void testPortal() throws Exception {

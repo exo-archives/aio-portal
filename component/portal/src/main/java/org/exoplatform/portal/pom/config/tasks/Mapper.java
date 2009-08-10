@@ -21,10 +21,13 @@ import org.exoplatform.portal.config.model.Application;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.config.model.Properties;
+import org.exoplatform.portal.config.model.PageNavigation;
+import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.model.api.workspace.ui.UIContainer;
 import org.exoplatform.portal.model.api.workspace.ui.UIWindow;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
 import org.exoplatform.portal.model.api.workspace.Site;
+import org.exoplatform.portal.model.api.workspace.Navigation;
 import org.exoplatform.portal.model.api.content.ContentManager;
 import org.exoplatform.portal.model.api.content.FetchCondition;
 import org.exoplatform.portal.model.api.content.Content;
@@ -51,6 +54,36 @@ public class Mapper {
     this.contentManager = contentManager;
   }
 
+  public static void save(PageNavigation pageNav, Navigation nav) {
+    Attributes attrs = nav.getAttributes();
+    attrs.setInteger("priority", pageNav.getPriority());
+    attrs.setString("creator", pageNav.getCreator());
+    attrs.setString("modifier", pageNav.getModifier());
+    attrs.setString("description", pageNav.getDescription());
+    for (PageNode node : pageNav.getNodes()) {
+      Navigation childNav = nav.addChild(node.getName());
+      save(node, childNav);
+    }
+  }
+
+  public static void save(PageNode node, Navigation nav) {
+    Attributes attrs = nav.getAttributes();
+    attrs.setString("uri", node.getUri());
+    attrs.setString("label", node.getLabel());
+    attrs.setString("icon", node.getIcon());
+    attrs.setDate("start-publication-date", node.getStartPublicationDate());
+    attrs.setDate("end-publication-date", node.getEndPublicationDate());
+    attrs.setBoolean("show-publication-date", node.isShowPublicationDate());
+    attrs.setBoolean("visible", node.isVisible());
+    attrs.setString("page-reference", node.getPageReference());
+    if (node.getChildren() != null) {
+      for (PageNode childNode : node.getChildren()) {
+        Navigation childNav = nav.addChild(node.getName());
+        save(childNode, childNav);
+      }
+    }
+  }
+
   public void save(PortalConfig src, Site dst) {
     Attributes attrs = dst.getAttributes();
     attrs.setString("locale", src.getLocale());
@@ -66,14 +99,13 @@ public class Mapper {
   }
 
   public Page load(org.exoplatform.portal.model.api.workspace.Page src) {
-
     Site site = src.getSite();
-
     String ownerType = getOwnerType(site.getObjectType());
     String ownerId = site.getName();
     String name = src.getName();
     String pageId = join("::", ownerType, ownerId, name);
 
+    //
     Attributes attrs = src.getAttributes();
     Page dst = new Page();
     dst.setId(pageId);
