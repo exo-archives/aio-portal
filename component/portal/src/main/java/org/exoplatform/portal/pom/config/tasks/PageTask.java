@@ -115,19 +115,13 @@ public abstract class PageTask extends AbstractPOMTask {
       org.exoplatform.portal.model.api.workspace.Page page = site.getRootPage().getChild(name);
 
       //
-      page = site.getRootPage().addChild(name);
-
-      //
-      Attributes attrs = page.getAttributes();
-      attrs.setBoolean("show-max-window", this.page.isShowMaxWindow());
-      attrs.setString("creator", this.page.getCreator());
-      attrs.setString("modifier", this.page.getModifier());
-      attrs.setString("access-permissions", join("|", this.page.getAccessPermissions()));
-      attrs.setString("edit-permission", this.page.getEditPermission());
+      if (page == null) {
+        page = site.getRootPage().addChild(name);
+      }
 
       //
       Mapper mapper = new Mapper(session.getContentManager());
-      mapper.save(this.page, page.getLayout());
+      mapper.save(this.page, page);
     }
   }
 

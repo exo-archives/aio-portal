@@ -18,6 +18,7 @@ package org.exoplatform.portal.pom.config.tasks;
 
 import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.Application;
+import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.model.api.workspace.ui.UIContainer;
 import org.exoplatform.portal.model.api.workspace.ui.UIWindow;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
@@ -43,6 +44,20 @@ public class Mapper {
 
   public Mapper(ContentManager contentManager) {
     this.contentManager = contentManager;
+  }
+
+  public void save(Page src, org.exoplatform.portal.model.api.workspace.Page dst) {
+    Attributes attrs = dst.getAttributes();
+    attrs.setString("title", src.getTitle());
+    attrs.setString("factory-id", src.getFactoryId());
+    attrs.setString("access-permissions", join("|", src.getAccessPermissions()));
+    attrs.setString("edit-permission", src.getEditPermission());
+    attrs.setBoolean("show-max-window", src.isShowMaxWindow());
+    attrs.setString("creator", src.getCreator());
+    attrs.setString("modifier", src.getModifier());
+    
+    //
+    save(src, dst.getLayout());
   }
 
   public void save(Container src, UIContainer dst) {
@@ -102,12 +117,10 @@ public class Mapper {
     dst.setContent(content);
   }
 
-/*
   public void load(UIContainer src, Container container) {
 
 
   }
-*/
 
   static String parseContentId(String windowId) {
     String[] persistenceChunks = org.exoplatform.portal.pom.config.Utils.split(":/", windowId);
