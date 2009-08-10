@@ -37,7 +37,7 @@ import java.util.Iterator;
  * Created by The eXo Platform SARL Author : Tung Pham thanhtungty@gmail.com Nov
  * 13, 2007
  */
-public class TestPOMDataStorage extends BasicTestCase {
+public class TestSavedPOM extends BasicTestCase {
 
   /** . */
   private UserPortalConfigService portalConfigService;
@@ -48,7 +48,7 @@ public class TestPOMDataStorage extends BasicTestCase {
   /** . */
   private POMSessionManager mgr;
 
-  public TestPOMDataStorage(String name) {
+  public TestSavedPOM(String name) {
     super(name);
   }
 
@@ -74,12 +74,23 @@ public class TestPOMDataStorage extends BasicTestCase {
     assertNotNull(testPortal);
     Page testRootPage = testPortal.getRootPage();
     assertNotNull(testRootPage);
+
+
     Page testPage = testRootPage.getChild("test");
     assertNotNull(testPage);
 
+    Attributes testPageAttrs = testPage.getAttributes();
+    assertEquals("test_title", testPageAttrs.getString("title"));
+    assertEquals("test_factory_id", testPageAttrs.getString("factory-id"));
+    assertEquals("test_access_permissions", testPageAttrs.getString("access-permissions"));
+    assertEquals("test_edit_permission", testPageAttrs.getString("edit-permission"));
+    assertEquals(true, (boolean)testPageAttrs.getBoolean("show-max-window"));
+    assertEquals("test_creator", testPageAttrs.getString("creator"));
+    assertEquals("test_modifier", testPageAttrs.getString("modifier"));
+
+    //
     UIContainer c = testPage.getLayout();
     assertNotNull(c);
-
     Collection<? extends UIComponent> t = c.getComponents();
     assertNotNull(t);
     assertEquals(2, t.size());
@@ -92,7 +103,7 @@ public class TestPOMDataStorage extends BasicTestCase {
     assertEquals("container_1_title", container1Attrs.getString("title"));
     assertEquals("container_1_icon", container1Attrs.getString("icon"));
     assertEquals("container_1_template", container1Attrs.getString("template"));
-    assertEquals("container_1_access_permission", container1Attrs.getString("access-permissions"));
+    assertEquals("container_1_access_permissions", container1Attrs.getString("access-permissions"));
     assertEquals("container_1_factory_id", container1Attrs.getString("factory-id"));
     assertEquals("container_1_decorator", container1Attrs.getString("decorator"));
     assertEquals("container_1_description", container1Attrs.getString("description"));
@@ -105,7 +116,7 @@ public class TestPOMDataStorage extends BasicTestCase {
     assertEquals("application_1_type", application1Attrs.getString("type"));
     assertEquals("application_1_theme", application1Attrs.getString("theme"));
     assertEquals("application_1_title", application1Attrs.getString("title"));
-    assertEquals("application_1_access_permission", application1Attrs.getString("access-permissions"));
+    assertEquals("application_1_access_permissions", application1Attrs.getString("access-permissions"));
     assertEquals(true, (boolean)application1Attrs.getBoolean("show-info-bar"));
     assertEquals(true, (boolean)application1Attrs.getBoolean("show-state"));
     assertEquals(true, (boolean)application1Attrs.getBoolean("show-mode"));
@@ -118,9 +129,10 @@ public class TestPOMDataStorage extends BasicTestCase {
     assertNotNull(content);
     assertEquals("application/portlet", content.getType().getMimeType());
     assertEquals("web/BannerPortlet/banner", content.getId());
-
-
   }
+
+
+
 
 
 }

@@ -34,6 +34,7 @@ import org.exoplatform.portal.pom.config.tasks.PageTask;
 import org.exoplatform.portal.pom.config.tasks.PortalConfigTask;
 import org.exoplatform.portal.pom.config.tasks.PageNavigationTask;
 import org.exoplatform.portal.pom.config.tasks.PortletPreferencesTask;
+import org.exoplatform.portal.pom.config.tasks.Mapper;
 import org.exoplatform.portal.model.api.workspace.Workspace;
 import org.exoplatform.portal.model.api.workspace.Site;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
@@ -153,7 +154,7 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
 
   public LazyPageList find(Query<?> q, Comparator<?> sortComparator) throws Exception {
 
-    POMSession session = pomMgr.openSession();
+    final POMSession session = pomMgr.openSession();
     ObjectType<? extends Site> siteType = Utils.parseSiteType(q.getOwnerType());
     String ownerId = q.getOwnerId();
     Workspace workspace = session.getWorkspace();
@@ -168,9 +169,10 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
           for (int i = 0;i < index;i++) {
             iterator.next();
           }
+          Mapper mapper = new Mapper(session.getContentManager());
           Page[] result = new Page[length];
           for (int i = 0;i < length;i++) {
-            result[i] = PageTask.toPage(iterator.next());
+            result[i] = mapper.load(iterator.next());
           }
           return result;
         }

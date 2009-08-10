@@ -6,9 +6,13 @@
     <owner-type>portal</owner-type>
     <owner-id>test</owner-id>
     <name>test</name>
-    <title>Test Page</title>
-	  <access-permissions>Everyone</access-permissions>
-	  <edit-permission>*:/platform/administrators</edit-permission>
+    <title>test_title</title>
+    <factory-id>test_factory_id</factory-id>
+	  <access-permissions>test_access_permissions</access-permissions>
+	  <edit-permission>test_edit_permission</edit-permission>
+    <show-max-window>true</show-max-window>
+    <creator>test_creator</creator>
+    <modifier>test_modifier</modifier>
     <container
         template="container_1_template"
         decorator="container_1_decorator"
@@ -17,7 +21,7 @@
       <name>container_1</name>
       <title>container_1_title</title>
       <icon>container_1_icon</icon>
-      <access-permissions>container_1_access_permission</access-permissions>
+      <access-permissions>container_1_access_permissions</access-permissions>
       <factory-id>container_1_factory_id</factory-id>
       <description>container_1_description</description>
     </container>
@@ -26,7 +30,7 @@
       <application-type>application_1_type</application-type>
       <theme>application_1_theme</theme>
       <title>application_1_title</title>
-      <access-permissions>application_1_access_permission</access-permissions>
+      <access-permissions>application_1_access_permissions</access-permissions>
       <show-info-bar>true</show-info-bar>
       <show-application-state>true</show-application-state>
       <show-application-mode>true</show-application-mode>
