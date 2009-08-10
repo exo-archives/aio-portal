@@ -142,7 +142,8 @@ public abstract class PageTask extends AbstractPOMTask {
         org.exoplatform.portal.model.api.workspace.Page page = root.getChild(name);
         if (page != null) {
           Mapper mapper = new Mapper(session.getContentManager());
-          this.page = mapper.load(page);
+          this.page = new Page();
+          mapper.load(page, this.page);
         }
       }
     }

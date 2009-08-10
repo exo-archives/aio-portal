@@ -172,7 +172,9 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
           Mapper mapper = new Mapper(session.getContentManager());
           Page[] result = new Page[length];
           for (int i = 0;i < length;i++) {
-            result[i] = mapper.load(iterator.next());
+            Page page = new Page();
+            mapper.load(iterator.next(), page);
+            result[i] = page;
           }
           return result;
         }

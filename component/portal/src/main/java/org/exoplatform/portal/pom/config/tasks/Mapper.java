@@ -25,6 +25,7 @@ import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.model.api.workspace.ui.UIContainer;
 import org.exoplatform.portal.model.api.workspace.ui.UIWindow;
+import org.exoplatform.portal.model.api.workspace.ui.UIComponent;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
 import org.exoplatform.portal.model.api.workspace.Site;
 import org.exoplatform.portal.model.api.workspace.Navigation;
@@ -34,6 +35,7 @@ import org.exoplatform.portal.model.api.content.ContentManager;
 import org.exoplatform.portal.model.api.content.FetchCondition;
 import org.exoplatform.portal.model.api.content.Content;
 import org.exoplatform.portal.model.util.Attributes;
+import org.exoplatform.portal.model.util.ValueType;
 import org.exoplatform.portal.model.portlet.Preferences;
 import static org.exoplatform.portal.pom.config.Utils.join;
 import static org.exoplatform.portal.pom.config.Utils.split;
@@ -41,6 +43,7 @@ import static org.exoplatform.portal.pom.config.Utils.split;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -111,7 +114,7 @@ public class Mapper {
     }
   }
 
-  public Page load(org.exoplatform.portal.model.api.workspace.Page src) {
+  public void load(org.exoplatform.portal.model.api.workspace.Page src, Page dst) {
     Site site = src.getSite();
     String ownerType = getOwnerType(site.getObjectType());
     String ownerId = site.getName();
@@ -120,7 +123,6 @@ public class Mapper {
 
     //
     Attributes attrs = src.getAttributes();
-    Page dst = new Page();
     dst.setId(pageId);
     dst.setOwnerId(ownerId);
     dst.setOwnerType(ownerType);
@@ -131,9 +133,71 @@ public class Mapper {
     dst.setModifier(attrs.getString("modifier"));
     dst.setAccessPermissions(split("|", attrs.getString("access-permissions")));
     dst.setEditPermission(attrs.getString("edit-permission"));
+    dst.setFactoryId(attrs.getString("factory-id"));
 
     //
-    return dst;
+    loadChildren(src.getLayout(), dst);
+  }
+
+  public void load(UIContainer src, Container dst) {
+    dst.setName(src.getName());
+    Attributes attrs = src.getAttributes();
+    dst.setTitle(attrs.getString("title"));
+    dst.setIcon(attrs.getString("icon"));
+    dst.setTemplate(attrs.getString("template"));
+    dst.setAccessPermissions(split("|", attrs.getString("access-permissions")));
+    dst.setFactoryId(attrs.getString("factory-id"));
+    dst.setDecorator(attrs.getString("decorator"));
+    dst.setDescription(attrs.getString("description"));
+    dst.setWidth(attrs.getString("width"));
+    dst.setHeight(attrs.getString("height"));
+
+    //
+    loadChildren(src, dst);
+  }
+
+  public void loadChildren(UIContainer src, Container dst) {
+    for (UIComponent component : src.getComponents()) {
+      if (component instanceof UIContainer) {
+        UIContainer srcContainer = (UIContainer)component;
+        Container dstContainer = new Container();
+        load(srcContainer, dstContainer);
+        dst.getChildren().add(dstContainer);
+      } else if (component instanceof UIWindow) {
+        UIWindow window = (UIWindow)component;
+        Application application = new Application();
+        load(window, application);
+        dst.getChildren().add(application);
+      } else {
+        throw new AssertionError();
+      }
+    }
+  }
+
+  public void load(UIWindow src, Application dst) {
+    Attributes attrs = src.getAttributes();
+    dst.setApplicationType(attrs.getString("type"));
+    dst.setTheme(attrs.getString("theme"));
+    dst.setTitle(attrs.getString("title"));
+    dst.setAccessPermissions(split("|", attrs.getString("access-permissions")));
+    dst.setShowInfoBar(attrs.getBoolean("show-info-bar"));
+    dst.setShowApplicationState(attrs.getBoolean("show-state"));
+    dst.setShowApplicationMode(attrs.getBoolean("show-mode"));
+    dst.setDescription(attrs.getString("description"));
+    dst.setIcon(attrs.getString("icon"));
+    dst.setWidth(attrs.getString("width"));
+    dst.setHeight(attrs.getString("height"));
+    load(attrs, dst.getProperties());
+
+    //
+    Content content = src.getContent();
+    if (content != null) {
+      Site site = src.getPage().getSite();
+      String instanceId = getOwnerType(site.getObjectType()) + "#" + site.getName() + ":/" + content.getId();
+      dst.setInstanceId(instanceId);
+    } else {
+      dst.setInstanceId(null);
+    }
   }
 
   public void save(Page src, org.exoplatform.portal.model.api.workspace.Page dst) {
@@ -147,7 +211,7 @@ public class Mapper {
     attrs.setString("modifier", src.getModifier());
     
     //
-    save(src, dst.getLayout());
+    saveChildren(src, dst.getLayout());
   }
 
   public void save(Container src, UIContainer dst) {
@@ -163,6 +227,10 @@ public class Mapper {
     dstAttrs.setString("height", src.getHeight());
 
     //
+    saveChildren(src, dst);
+  }
+
+  private void saveChildren(Container src, UIContainer dst) {
     dst.getComponents().clear();
     ArrayList<Object> srcChildren = src.getChildren();
     if (srcChildren != null) {
@@ -205,14 +273,18 @@ public class Mapper {
     dst.setContent(content);
   }
 
-  public void load(UIContainer src, Container container) {
-
-
-  }
-
   static String parseContentId(String windowId) {
     String[] persistenceChunks = org.exoplatform.portal.pom.config.Utils.split(":/", windowId);
     return persistenceChunks[persistenceChunks.length - 1];
+  }
+
+  public static void load(Attributes src, Properties dst) {
+    for (String name : src.getKeys()) {
+      Object value = src.getObject(name);
+      if (value instanceof String) {
+        dst.setProperty(name, (String)value);
+      }
+    }
   }
 
   public static void save(Properties src, Attributes dst) {
