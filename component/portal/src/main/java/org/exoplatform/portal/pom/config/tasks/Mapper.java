@@ -19,6 +19,8 @@ package org.exoplatform.portal.pom.config.tasks;
 import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.Application;
 import org.exoplatform.portal.config.model.Page;
+import org.exoplatform.portal.config.model.PortalConfig;
+import org.exoplatform.portal.config.model.Properties;
 import org.exoplatform.portal.model.api.workspace.ui.UIContainer;
 import org.exoplatform.portal.model.api.workspace.ui.UIWindow;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
@@ -47,6 +49,20 @@ public class Mapper {
 
   public Mapper(ContentManager contentManager) {
     this.contentManager = contentManager;
+  }
+
+  public void save(PortalConfig src, Site dst) {
+    Attributes attrs = dst.getAttributes();
+    attrs.setString("locale", src.getLocale());
+    attrs.setString("access-permissions", join("|", src.getAccessPermissions()));
+    attrs.setString("edit-permission", src.getEditPermission());
+    attrs.setString("skin", src.getSkin());
+    attrs.setString("title", src.getTitle());
+    attrs.setString("creator", src.getCreator());
+    attrs.setString("modifier", src.getModifier());
+    if (src.getProperties() != null) {
+      save(src.getProperties(), attrs);
+    }
   }
 
   public Page load(org.exoplatform.portal.model.api.workspace.Page src) {
@@ -123,21 +139,19 @@ public class Mapper {
   }
 
   public void save(Application src, UIWindow dst) {
-    Attributes dstAttrs = dst.getAttributes();
-    dstAttrs.setString("type", src.getApplicationType());
-    dstAttrs.setString("theme", src.getTheme());
-    dstAttrs.setString("title", src.getTitle());
-    dstAttrs.setString("access-permissions", join("|", src.getAccessPermissions()));
-    dstAttrs.setBoolean("show-info-bar", src.getShowInfoBar());
-    dstAttrs.setBoolean("show-state", src.getShowApplicationState());
-    dstAttrs.setBoolean("show-mode", src.getShowApplicationMode());
-    dstAttrs.setString("description", src.getDescription());
-    dstAttrs.setString("icon", src.getIcon());
-    dstAttrs.setString("width", src.getWidth());
-    dstAttrs.setString("height", src.getHeight());
-    for (Map.Entry<String, String> property : src.getProperties().entrySet()) {
-      dstAttrs.setString(property.getKey(), property.getValue());
-    }
+    Attributes attrs = dst.getAttributes();
+    attrs.setString("type", src.getApplicationType());
+    attrs.setString("theme", src.getTheme());
+    attrs.setString("title", src.getTitle());
+    attrs.setString("access-permissions", join("|", src.getAccessPermissions()));
+    attrs.setBoolean("show-info-bar", src.getShowInfoBar());
+    attrs.setBoolean("show-state", src.getShowApplicationState());
+    attrs.setBoolean("show-mode", src.getShowApplicationMode());
+    attrs.setString("description", src.getDescription());
+    attrs.setString("icon", src.getIcon());
+    attrs.setString("width", src.getWidth());
+    attrs.setString("height", src.getHeight());
+    save(src.getProperties(), attrs);
 
     //
     String instanceId = src.getInstanceId();
@@ -154,5 +168,11 @@ public class Mapper {
   static String parseContentId(String windowId) {
     String[] persistenceChunks = org.exoplatform.portal.pom.config.Utils.split(":/", windowId);
     return persistenceChunks[persistenceChunks.length - 1];
+  }
+
+  public static void save(Properties src, Attributes dst) {
+    for (Map.Entry<String, String> property : src.entrySet()) {
+      dst.setString(property.getKey(), property.getValue());
+    }
   }
 }

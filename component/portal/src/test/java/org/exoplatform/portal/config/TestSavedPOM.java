@@ -67,18 +67,40 @@ public class TestSavedPOM extends BasicTestCase {
     storage = null;
   }
 
-  public void testPage() throws Exception {
+  public void testPortal() throws Exception {
+    POMSession session = mgr.openSession();
+    Portal portal = session.getWorkspace().getSite(ObjectType.PORTAL, "test");
+    assertNotNull(portal);
 
+    assertEquals("test", portal.getName());
+    Attributes attrs = portal.getAttributes();
+    assertEquals("en", attrs.getString("locale"));
+    assertEquals("test_access_permissions", attrs.getString("access-permissions"));
+    assertEquals("test_edit_permission", attrs.getString("edit-permission"));
+    assertEquals("test_skin", attrs.getString("skin"));
+    assertEquals("test_title", attrs.getString("title"));
+    assertEquals("test_creator", attrs.getString("creator"));
+    assertEquals("test_modifier", attrs.getString("modifier"));
+    assertEquals("test_prop_value", attrs.getString("prop_key"));
+
+    //
+    mgr.closeSession();
+  }
+
+  public void testPage() throws Exception {
     POMSession session = mgr.openSession();
     Portal testPortal = session.getWorkspace().getSite(ObjectType.PORTAL, "test");
     assertNotNull(testPortal);
+
+    //
     Page testRootPage = testPortal.getRootPage();
     assertNotNull(testRootPage);
 
-
+    //
     Page testPage = testRootPage.getChild("test");
     assertNotNull(testPage);
 
+    //
     Attributes testPageAttrs = testPage.getAttributes();
     assertEquals("test_title", testPageAttrs.getString("title"));
     assertEquals("test_factory_id", testPageAttrs.getString("factory-id"));
@@ -125,10 +147,15 @@ public class TestSavedPOM extends BasicTestCase {
     assertEquals("application_1_width", application1Attrs.getString("width"));
     assertEquals("application_1_height", application1Attrs.getString("height"));
     assertEquals("application_1_prop_value", application1Attrs.getString("prop_key"));
+
+    //
     Content content = application1.getContent();
     assertNotNull(content);
     assertEquals("application/portlet", content.getType().getMimeType());
     assertEquals("web/BannerPortlet/banner", content.getId());
+
+    //
+    mgr.closeSession();
   }
 
 

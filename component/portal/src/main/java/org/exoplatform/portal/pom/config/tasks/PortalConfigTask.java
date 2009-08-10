@@ -34,12 +34,6 @@ import org.exoplatform.portal.pom.config.POMSession;
  */
 public abstract class PortalConfigTask extends AbstractPOMTask {
 
-  protected static void update(PortalConfig config, Site site)  {
-    Attributes attrs = site.getAttributes();
-    attrs.setString("locale", config.getLocale());
-    attrs.setString("access-permissions", join("|", config.getAccessPermissions()));
-  }
-
   /** . */
   protected final String name;
 
@@ -96,7 +90,7 @@ public abstract class PortalConfigTask extends AbstractPOMTask {
       } else {
         site = workspace.addSite(type, config.getName());
       }
-      update(config, site);
+      new Mapper(session.getContentManager()).save(config, site);
     }
   }
 

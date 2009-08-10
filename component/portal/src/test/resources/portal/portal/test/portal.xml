@@ -2,9 +2,16 @@
 <portal-config>
   <portal-name>test</portal-name>
   <locale>en</locale>
-  <access-permissions>Everyone</access-permissions>
-  <edit-permission>*:/platform/administrators</edit-permission>
-  <creator>root</creator>    
+  <access-permissions>test_access_permissions</access-permissions>
+  <edit-permission>test_edit_permission</edit-permission>
+  <skin>test_skin</skin>
+  <title>test_title</title>
+  <creator>test_creator</creator>
+  <modifier>test_modifier</modifier>
+  
+  <properties>
+    <entry key="prop_key">test_prop_value</entry>
+  </properties>
     
  	<portal-layout> 		
 		<application>
