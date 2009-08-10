@@ -116,7 +116,7 @@ public class TestSavedPOM extends BasicTestCase {
 
     //
     NavigationLink link = nodeNavigation.getLink();
-//    assertNotNull(link);
+    assertNotNull(link);
   }
 
   public void testPortal() throws Exception {
