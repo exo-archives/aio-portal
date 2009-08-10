@@ -22,7 +22,6 @@ import org.exoplatform.portal.model.api.workspace.Site;
 import org.exoplatform.portal.model.util.Attributes;
 import org.exoplatform.portal.config.model.PortalConfig;
 
-import static org.exoplatform.portal.pom.config.Utils.split;
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
 import org.exoplatform.portal.pom.config.POMSession;
 
@@ -111,9 +110,9 @@ public abstract class PortalConfigTask extends AbstractPOMTask {
       if (site != null) {
         Attributes attrs = site.getAttributes();
         PortalConfig config = new PortalConfig();
-        config.setName(site.getName());
-        config.setLocale(attrs.getString("locale"));
-        config.setAccessPermissions(split("|", attrs.getString("access-permissions")));
+
+        //
+        new Mapper(session.getContentManager()).load(site, config);
 
         //
         this.config = config;

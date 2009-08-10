@@ -18,13 +18,22 @@ package org.exoplatform.portal.config;
 
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.portal.pom.config.POMSessionManager;
+import org.exoplatform.portal.pom.config.POMSession;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.Application;
+import org.exoplatform.portal.config.model.PageNavigation;
+import org.exoplatform.portal.config.model.PageNode;
+import org.exoplatform.portal.config.model.PortalConfig;
+import org.exoplatform.portal.model.api.workspace.Portal;
+import org.exoplatform.portal.model.api.workspace.ObjectType;
+import org.exoplatform.portal.model.util.Attributes;
 import org.exoplatform.test.BasicTestCase;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * Created by The eXo Platform SARL Author : Tung Pham thanhtungty@gmail.com Nov
@@ -58,6 +67,51 @@ public class TestLoadedPOM extends BasicTestCase {
   protected void tearDown() throws Exception {
     mgr.closeSession();
     storage = null;
+  }
+
+  public void testNavigation() throws Exception {
+    PageNavigation nav = storage.getPageNavigation("portal::test");
+    assertNotNull(nav);
+
+    //
+    assertEquals(1, nav.getPriority());
+    assertEquals("navigation_creator", nav.getCreator());
+    assertEquals("navigation_modifier", nav.getModifier());
+    assertEquals("navigation_description", nav.getDescription());
+
+    //
+    assertEquals(1, nav.getNodes().size());
+
+    //
+    PageNode nodeNavigation = nav.getNodes().get(0);
+    assertEquals(0, nodeNavigation.getChildren().size());
+    assertEquals("node_name", nodeNavigation.getName());
+    assertEquals("node_uri", nodeNavigation.getUri());
+    assertEquals("node_label", nodeNavigation.getLabel());
+    assertEquals("node_icon", nodeNavigation.getIcon());
+    GregorianCalendar start = new GregorianCalendar(2000, 2, 21, 1, 33, 0);
+    start.setTimeZone(TimeZone.getTimeZone("UTC"));
+    assertEquals(start.getTime(), nodeNavigation.getStartPublicationDate());
+    GregorianCalendar end = new GregorianCalendar(2009, 2, 21, 1, 33, 0);
+    end.setTimeZone(TimeZone.getTimeZone("UTC"));
+    assertEquals(end.getTime(), nodeNavigation.getEndPublicationDate());
+    assertEquals(true, nodeNavigation.isShowPublicationDate());
+    assertEquals(true, nodeNavigation.isVisible());
+  }
+
+  public void testPortal() throws Exception {
+    PortalConfig portal = storage.getPortalConfig("test");
+    assertNotNull(portal);
+
+    assertEquals("test", portal.getName());
+    assertEquals("en", portal.getLocale());
+    assertTrue(Arrays.equals(new String[]{"test_access_permissions"}, portal.getAccessPermissions()));
+    assertEquals("test_edit_permission", portal.getEditPermission());
+    assertEquals("test_skin", portal.getSkin());
+    assertEquals("test_title", portal.getTitle());
+    assertEquals("test_creator", portal.getCreator());
+    assertEquals("test_modifier", portal.getModifier());
+    assertEquals("test_prop_value", portal.getProperty("prop_key"));
   }
 
   public void testPage() throws Exception {

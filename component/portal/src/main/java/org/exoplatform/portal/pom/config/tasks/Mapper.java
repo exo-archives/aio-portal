@@ -35,7 +35,6 @@ import org.exoplatform.portal.model.api.content.ContentManager;
 import org.exoplatform.portal.model.api.content.FetchCondition;
 import org.exoplatform.portal.model.api.content.Content;
 import org.exoplatform.portal.model.util.Attributes;
-import org.exoplatform.portal.model.util.ValueType;
 import org.exoplatform.portal.model.portlet.Preferences;
 import static org.exoplatform.portal.pom.config.Utils.join;
 import static org.exoplatform.portal.pom.config.Utils.split;
@@ -43,7 +42,10 @@ import static org.exoplatform.portal.pom.config.Utils.split;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.Map;
+import java.util.Collection;
 import java.util.Set;
+import java.util.HashSet;
+import java.util.Arrays;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -52,10 +54,63 @@ import java.util.Set;
 public class Mapper {
 
   /** . */
+  private static final Set<String> portalPropertiesBlackList = new HashSet<String>(Arrays.asList(
+    "locale", "access-permissions", "edit-permission", "skin", "title", "creator", "modifier"
+  ));
+
+  /** . */
+  private static final Set<String> windowPropertiesBlackList = new HashSet<String>(Arrays.asList(
+    "type", "theme", "title", "access-permissions", "show-info-bar", "show-state", "show-mode", "description",
+    "icon", "width", "height"
+  ));
+
+  /** . */
   private final ContentManager contentManager;
 
   public Mapper(ContentManager contentManager) {
     this.contentManager = contentManager;
+  }
+
+  public void load(Navigation src, PageNavigation dst) {
+    Site site = src.getSite();
+    String ownerType = getOwnerType(site.getObjectType());
+    String ownerId = site.getName();
+    dst.setOwnerId(ownerId);
+    dst.setOwnerType(ownerType);
+    Attributes attrs = src.getAttributes();
+    dst.setCreator(attrs.getString("creator"));
+    dst.setModifier(attrs.getString("modifier"));
+    dst.setDescription(attrs.getString("description"));
+    Integer priority = attrs.getInteger("priority");
+    if (priority != null) {
+      dst.setPriority(priority);
+    }
+    Collection<? extends Navigation> children = src.getChildren();
+    for (Navigation srcChild : children) {
+      PageNode dstChild = new PageNode();
+      load(srcChild, dstChild);
+      dst.addNode(dstChild);
+    }
+  }
+
+  private PageNode load(Navigation src, PageNode dst) {
+    Attributes attrs = src.getAttributes();
+    dst.setName(src.getName());
+    dst.setLabel(attrs.getString("label"));
+    dst.setIcon(attrs.getString("icon"));
+    dst.setUri(attrs.getString("uri"));
+    dst.setStartPublicationDate(attrs.getDate("start-publication-date"));
+    dst.setEndPublicationDate(attrs.getDate("end-publication-date"));
+    dst.setShowPublicationDate(attrs.getBoolean("show-publication-date"));
+    dst.setVisible(attrs.getBoolean("visible"));
+    dst.setPageReference(attrs.getString("page-reference"));
+    dst.setChildren(new ArrayList<PageNode>());
+    for (Navigation srcChild : src.getChildren()) {
+      PageNode dstChild = new PageNode();
+      load(srcChild, dstChild);
+      dst.getChildren().add(dstChild);
+    }
+    return dst;
   }
 
   public static void save(PageNavigation pageNav, Navigation nav) {
@@ -98,6 +153,21 @@ public class Mapper {
         save(childNode, childNav);
       }
     }
+  }
+
+  public void load(Site src, PortalConfig dst) {
+    dst.setName(src.getName());
+    Attributes attrs = src.getAttributes();
+    dst.setLocale(attrs.getString("locale"));
+    dst.setAccessPermissions(split("|", attrs.getString("access-permissions")));
+    dst.setEditPermission(attrs.getString("edit-permission"));
+    dst.setSkin(attrs.getString("skin"));
+    dst.setTitle(attrs.getString("title"));
+    dst.setCreator(attrs.getString("creator"));
+    dst.setModifier(attrs.getString("modifier"));
+    Properties properties = new Properties();
+    load(attrs, properties, portalPropertiesBlackList);
+    dst.setProperties(properties);
   }
 
   public void save(PortalConfig src, Site dst) {
@@ -187,7 +257,7 @@ public class Mapper {
     dst.setIcon(attrs.getString("icon"));
     dst.setWidth(attrs.getString("width"));
     dst.setHeight(attrs.getString("height"));
-    load(attrs, dst.getProperties());
+    load(attrs, dst.getProperties(), windowPropertiesBlackList);
 
     //
     Content content = src.getContent();
@@ -278,11 +348,13 @@ public class Mapper {
     return persistenceChunks[persistenceChunks.length - 1];
   }
 
-  public static void load(Attributes src, Properties dst) {
+  public static void load(Attributes src, Properties dst, Set<String> blackList) {
     for (String name : src.getKeys()) {
-      Object value = src.getObject(name);
-      if (value instanceof String) {
-        dst.setProperty(name, (String)value);
+      if (!blackList.contains(name)) {
+        Object value = src.getObject(name);
+        if (value instanceof String) {
+          dst.setProperty(name, (String)value);
+        }
       }
     }
   }

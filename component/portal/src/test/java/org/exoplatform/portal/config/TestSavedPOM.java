@@ -98,8 +98,8 @@ public class TestSavedPOM extends BasicTestCase {
     //
     assertTrue(i.hasNext());
     Navigation nodeNavigation = i.next();
-    assertEquals(0, nodeNavigation.getChildren().size());
     assertNotNull(nodeNavigation);
+    assertEquals(0, nodeNavigation.getChildren().size());
     assertEquals("node_name", nodeNavigation.getName());
     Attributes nodeAttrs = nodeNavigation.getAttributes();
     assertEquals("node_uri", nodeAttrs.getString("uri"));
