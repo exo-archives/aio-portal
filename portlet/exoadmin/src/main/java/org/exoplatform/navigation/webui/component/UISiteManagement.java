@@ -75,7 +75,8 @@ import org.exoplatform.webui.event.Event.Phase;
                      @EventConfig(listeners = UIPageNodeForm2.SaveActionListener.class ),
                      @EventConfig(listeners = UISiteManagement.BackActionListener.class, phase = Phase.DECODE),
                      @EventConfig(listeners = UIPageNodeForm2.SwitchPublicationDateActionListener.class, phase = Phase.DECODE ),
-                     @EventConfig(listeners = UIPageNodeForm2.ClearPageActionListener.class, phase = Phase.DECODE)
+                     @EventConfig(listeners = UIPageNodeForm2.ClearPageActionListener.class, phase = Phase.DECODE),
+                     @EventConfig(listeners = UIPageNodeForm2.CreatePageActionListener.class, phase = Phase.DECODE)
                    }
   )  
 })
@@ -227,7 +228,10 @@ public class UISiteManagement extends UIContainer {
       UIPopupWindow popUp = uicomp.getChild(UIPopupWindow.class);
       
       UINavigationManagement naviManager = popUp.createUIComponent(UINavigationManagement.class, null, null, popUp);
+      
       naviManager.setOwner(portalName);
+      naviManager.setOwnerType(PortalConfig.PORTAL_TYPE);
+      
       PageNavigation navi = service.getPageNavigation(PortalConfig.PORTAL_TYPE, portalName);
       uicomp.setSelectedNavigation(navi);
       UINavigationNodeSelector selector = naviManager.getChild(UINavigationNodeSelector.class);

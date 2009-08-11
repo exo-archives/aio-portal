@@ -335,6 +335,12 @@ public class UINavigationNodeSelector extends UIContainer {
       if (parent == null)
         parent = uiNodeSelector.getSelectedNavigation();
       uiNodeForm.setSelectedParent(parent);
+      
+      // set navigation owner, navigation type
+      UINavigationManagement nodeManager = uiNodeSelector.getParent();  
+      uiNodeForm.setOwner(nodeManager.getOwner());
+      uiNodeForm.setOwnerType(nodeManager.getOwnerType());
+      
       uiManagementPopup.setWindowSize(800, 500);
       event.getRequestContext().addUIComponentToUpdateByAjax(uiManagementPopup);
     }

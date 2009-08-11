@@ -68,7 +68,8 @@ import org.exoplatform.webui.event.Event.Phase;
                        @EventConfig(listeners = UIPageNodeForm2.SaveActionListener.class ),
                        @EventConfig(listeners = UIGroupNavigationManagement.BackActionListener.class, phase = Phase.DECODE),
                        @EventConfig(listeners = UIPageNodeForm2.SwitchPublicationDateActionListener.class, phase = Phase.DECODE ),
-                       @EventConfig(listeners = UIPageNodeForm2.ClearPageActionListener.class, phase = Phase.DECODE)
+                       @EventConfig(listeners = UIPageNodeForm2.ClearPageActionListener.class, phase = Phase.DECODE),
+                       @EventConfig(listeners = UIPageNodeForm2.CreatePageActionListener.class, phase = Phase.DECODE)
                      }
     )    
 })
@@ -198,6 +199,8 @@ public class UIGroupNavigationManagement extends UIContainer {
                                                                    null,
                                                                    popUp);
       pageManager.setOwner(navigation.getOwnerId());
+      pageManager.setOwnerType(navigation.getOwnerType());
+      
       UINavigationNodeSelector selector = pageManager.getChild(UINavigationNodeSelector.class);
       selector.loadNavigationByNavId(navId, uicomp.navigations);
       popUp.setUIComponent(pageManager);
