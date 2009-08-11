@@ -136,6 +136,11 @@ public class TestSavedPOM extends BasicTestCase {
     assertEquals("test_prop_value", attrs.getString("prop_key"));
 
     //
+    Page layout = portal.getRootNavigation().getTemplate();
+    assertNotNull(layout);
+    assertSame(portal.getRootPage().getChild("templates").getChild("default"), layout);
+
+    //
     mgr.closeSession();
   }
 

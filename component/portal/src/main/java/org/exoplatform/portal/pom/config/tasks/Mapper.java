@@ -23,9 +23,11 @@ import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.config.model.Properties;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
+import org.exoplatform.portal.config.model.PageBody;
 import org.exoplatform.portal.model.api.workspace.ui.UIContainer;
 import org.exoplatform.portal.model.api.workspace.ui.UIWindow;
 import org.exoplatform.portal.model.api.workspace.ui.UIComponent;
+import org.exoplatform.portal.model.api.workspace.ui.UIInsertion;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
 import org.exoplatform.portal.model.api.workspace.Site;
 import org.exoplatform.portal.model.api.workspace.Navigation;
@@ -259,6 +261,12 @@ public class Mapper {
     Properties properties = new Properties();
     load(attrs, properties, portalPropertiesBlackList);
     dst.setProperties(properties);
+
+    //
+    if (src.getObjectType() == ObjectType.PORTAL) {
+      org.exoplatform.portal.model.api.workspace.Page template = src.getRootNavigation().getTemplate();
+      load(template.getLayout(), dst.getPortalLayout());
+    }
   }
 
   public void save(PortalConfig src, Site dst) {
@@ -272,6 +280,16 @@ public class Mapper {
     attrs.setValue(MODIFIER, src.getModifier());
     if (src.getProperties() != null) {
       save(src.getProperties(), attrs);
+    }
+
+    //
+    if (dst.getObjectType() == ObjectType.PORTAL) {
+      org.exoplatform.portal.model.api.workspace.Page templates = dst.getRootPage().getChild("templates");
+      org.exoplatform.portal.model.api.workspace.Page template = templates.addChild("default");
+      save(src.getPortalLayout(), template.getLayout());
+
+      //
+      dst.getRootNavigation().setTemplate(template);
     }
   }
 
@@ -329,6 +347,8 @@ public class Mapper {
         Application application = new Application();
         load(window, application);
         dst.getChildren().add(application);
+      } else if (component instanceof UIInsertion) {
+        dst.getChildren().add(new PageBody());
       } else {
         throw new AssertionError();
       }
@@ -405,6 +425,9 @@ public class Mapper {
           String id = UUID.randomUUID().toString();
           UIWindow dstChildWindow = dst.addComponent(ObjectType.WINDOW, id);
           save(application, dstChildWindow);
+        } else if (srcChild instanceof PageBody) {
+          String id = UUID.randomUUID().toString();
+          dst.addComponent(ObjectType.INSERTION, id);
         } else {
           throw new AssertionError("Was not expecting child " + srcChild);
         }
