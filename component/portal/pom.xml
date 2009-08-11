@@ -2,7 +2,7 @@
   <parent>
     <groupId>org.exoplatform.portal</groupId>
     <artifactId>config</artifactId>
-    <version>2.6-dr1</version>
+    <version>mop</version>
   </parent>
   
   <modelVersion>4.0.0</modelVersion>
@@ -35,7 +35,7 @@
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.component.web</artifactId>
-      <version>2.6-dr1</version>
+      <version>mop</version>
     </dependency>
 
     <dependency>

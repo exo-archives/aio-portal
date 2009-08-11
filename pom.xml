@@ -10,7 +10,7 @@
   <groupId>org.exoplatform.portal</groupId>
   <artifactId>config</artifactId>
   <name>eXo Portal Config</name>
-  <version>2.6-dr1</version>
+  <version>mop</version>
   <packaging>pom</packaging>
 
 
