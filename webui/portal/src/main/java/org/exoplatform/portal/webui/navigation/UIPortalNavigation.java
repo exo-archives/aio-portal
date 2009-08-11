@@ -36,6 +36,7 @@ import org.exoplatform.webui.event.EventListener;
  */
 public class UIPortalNavigation extends UIComponent {
   private boolean useAJAX = true ;
+  private boolean showUserNavigation = true;
   protected PageNode selectedNode_ ;
   protected Object selectedParent_ ; 
 
@@ -44,10 +45,17 @@ public class UIPortalNavigation extends UIComponent {
   public void setUseAjax(boolean bl) { useAJAX = bl ; }
   public boolean isUseAjax() { return useAJAX ; }
   
+  public boolean isShowUserNavigation() { return showUserNavigation; }
+
+  public void setShowUserNavigation(boolean showUserNavigation) { this.showUserNavigation = showUserNavigation; }
+
   public List<PageNavigation> getNavigations() throws Exception {
     WebuiRequestContext context = WebuiRequestContext.getCurrentInstance() ;
     List<PageNavigation> result = new ArrayList<PageNavigation>();
-    for(PageNavigation nav: Util.getUIPortal().getNavigations()){
+    for(PageNavigation nav: Util.getUIPortal().getNavigations()) {
+      if (!showUserNavigation && nav.getOwnerType().equals("user")) {
+        continue;
+      }
       result.add(PageNavigationUtils.filter(nav, context.getRemoteUser() ));
     }
     return result;
