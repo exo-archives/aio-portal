@@ -150,7 +150,7 @@ public class TestUserPortalConfigService extends UserPortalServiceTestBase {
 		UserPortalConfig newUserPortalConfig = userPortalConfigSer_
 				.getUserPortalConfig(portalName, accessUser);
 		List<PageNavigation> newNavigations = newUserPortalConfig.getNavigations();
-		assertEquals(0, newNavigations.size());
+		assertEquals(1, newNavigations.size());
 		//		PageNavigation userNavigation = newNavigations.get(0) ;
 		//		assertEquals(accessUser, userNavigation.getOwnerId()) ;
 

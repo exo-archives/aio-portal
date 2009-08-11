@@ -38,7 +38,7 @@ public class Preference {
   public void setName(String name) { this.name = name; }
 
   
-  public List getValues() { return values; }
+  public List<String> getValues() { return values; }
   public void setValues(ArrayList<String> values) { this.values = values; }
   public void addValue(String value) { values.add(value) ;}
 

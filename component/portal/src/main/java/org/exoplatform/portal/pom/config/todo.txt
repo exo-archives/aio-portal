@@ -1,0 +1,8 @@
+- window preference cloning model unit testing
+- navigation layout
+- template composition
+- page property inheritance
+- find a way to leverage page inheritance
+- POM schema usage and initial structure
+
+- page type : container
