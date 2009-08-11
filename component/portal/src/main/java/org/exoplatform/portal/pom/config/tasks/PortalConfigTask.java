@@ -19,6 +19,7 @@ package org.exoplatform.portal.pom.config.tasks;
 import org.exoplatform.portal.model.api.workspace.Workspace;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
 import org.exoplatform.portal.model.api.workspace.Site;
+import org.exoplatform.portal.model.api.workspace.Page;
 import org.exoplatform.portal.model.util.Attributes;
 import org.exoplatform.portal.config.model.PortalConfig;
 
@@ -67,8 +68,6 @@ public abstract class PortalConfigTask extends AbstractPOMTask {
     /** . */
     private boolean overwrite;
 
-
-
     public Save(PortalConfig config, boolean overwrite) {
       super(config.getType(), config.getName());
 
@@ -86,6 +85,9 @@ public abstract class PortalConfigTask extends AbstractPOMTask {
         }
       } else {
         site = workspace.addSite(type, config.getName());
+        Page root = site.getRootPage();
+        root.addChild("pages");
+        root.addChild("templates");
       }
       new Mapper(session.getContentManager()).save(config, site);
     }

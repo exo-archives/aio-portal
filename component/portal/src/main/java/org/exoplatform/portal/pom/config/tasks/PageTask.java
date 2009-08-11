@@ -78,9 +78,11 @@ public abstract class PageTask extends AbstractPOMTask {
       if (site == null) {
         throw new IllegalArgumentException("Could not remove page " + name + "of non existing site of type " + ownerType + " with id " + ownerId);
       } else {
-        org.exoplatform.portal.model.api.workspace.Page page = site.getRootPage().getChild(name);
+        org.exoplatform.portal.model.api.workspace.Page root = site.getRootPage();
+        org.exoplatform.portal.model.api.workspace.Page pages = root.getChild("pages");
+        org.exoplatform.portal.model.api.workspace.Page page = pages.getChild(name);
         if (page == null) {
-          throw new IllegalArgumentException("Could not remove non existing page " + name + "of site of type " + ownerType + " with id " + ownerId);
+          throw new IllegalArgumentException("Could not remove non existing page " + name + " of site of type " + ownerType + " with id " + ownerId);
         }
         page.destroy();
       }
@@ -108,11 +110,13 @@ public abstract class PageTask extends AbstractPOMTask {
       }
 
       //
-      org.exoplatform.portal.model.api.workspace.Page page = site.getRootPage().getChild(name);
+      org.exoplatform.portal.model.api.workspace.Page root = site.getRootPage();
+      org.exoplatform.portal.model.api.workspace.Page pages = root.getChild("pages");
+      org.exoplatform.portal.model.api.workspace.Page page = pages.getChild(name);
 
       //
       if (page == null) {
-        page = site.getRootPage().addChild(name);
+        page = pages.addChild(name);
       }
 
       //
@@ -139,7 +143,8 @@ public abstract class PageTask extends AbstractPOMTask {
       Site site = workspace.getSite(siteType, ownerId);
       if (site != null) {
         org.exoplatform.portal.model.api.workspace.Page root = site.getRootPage();
-        org.exoplatform.portal.model.api.workspace.Page page = root.getChild(name);
+        org.exoplatform.portal.model.api.workspace.Page pages = root.getChild("pages");
+        org.exoplatform.portal.model.api.workspace.Page page = pages.getChild(name);
         if (page != null) {
           Mapper mapper = new Mapper(session.getContentManager());
           this.page = new Page();

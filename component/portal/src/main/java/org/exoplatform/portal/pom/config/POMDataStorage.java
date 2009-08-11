@@ -162,7 +162,7 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
 
     if (Page.class.equals(q.getClassType())) {
 
-      final Collection<? extends org.exoplatform.portal.model.api.workspace.Page> bilto = site.getRootPage().getChildren();
+      final Collection<? extends org.exoplatform.portal.model.api.workspace.Page> bilto = site.getRootPage().getChild("pages").getChildren();
       ListAccess<Page> la = new ListAccess<Page>() {
         public Page[] load(int index, int length) throws Exception, IllegalArgumentException {
           Iterator<? extends org.exoplatform.portal.model.api.workspace.Page> iterator = bilto.iterator();

@@ -149,7 +149,8 @@ public class TestSavedPOM extends BasicTestCase {
     assertNotNull(testRootPage);
 
     //
-    Page testPage = testRootPage.getChild("test");
+    Page pages = testRootPage.getChild("pages");
+    Page testPage = pages.getChild("test");
     assertNotNull(testPage);
 
     //
