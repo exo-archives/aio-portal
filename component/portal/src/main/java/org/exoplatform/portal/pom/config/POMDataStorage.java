@@ -38,6 +38,7 @@ import org.exoplatform.portal.pom.config.tasks.Mapper;
 import org.exoplatform.portal.model.api.workspace.Workspace;
 import org.exoplatform.portal.model.api.workspace.Site;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
+import org.exoplatform.portal.model.api.workspace.Portal;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -158,21 +159,40 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
 
   public LazyPageList find(Query<?> q, Comparator<?> sortComparator) throws Exception {
 
-    final POMSession session = pomMgr.openSession();
-    ObjectType<? extends Site> siteType = Mapper.parseSiteType(q.getOwnerType());
-    String ownerId = q.getOwnerId();
-    Workspace workspace = session.getWorkspace();
-    Site site = workspace.getSite(siteType, ownerId);
+    if (PortalConfig.class.equals(q.getClassType())) {
+      final POMSession session = pomMgr.openSession();
+      Workspace workspace = session.getWorkspace();
+      final Collection<? extends Portal> portals = workspace.getSites(ObjectType.PORTAL);
 
-    if (Page.class.equals(q.getClassType())) {
+      ListAccess<PortalConfig> la = new ListAccess<PortalConfig>() {
+        public PortalConfig[] load(int index, int length) throws Exception, IllegalArgumentException {
+          Iterator<? extends Portal> iterator = portals.iterator();
+          Mapper mapper = new Mapper(session.getContentManager());
+          PortalConfig[] result = new PortalConfig[length];
+          for (int i = 0;i < length;i++) {
+            PortalConfig config = new PortalConfig();
+            mapper.load(iterator.next(), config);
+            result[i] = config;
+          }
+          return result;
+        }
+        public int getSize() throws Exception {
+          return portals.size();
+        }
+      };
+      return new LazyPageList<PortalConfig>(la, 10);
+    } else if (Page.class.equals(q.getClassType())) {
+      final POMSession session = pomMgr.openSession();
+      ObjectType<? extends Site> siteType = Mapper.parseSiteType(q.getOwnerType());
+      String ownerId = q.getOwnerId();
+      Workspace workspace = session.getWorkspace();
+      Site site = workspace.getSite(siteType, ownerId);
 
+      //
       final Collection<? extends org.exoplatform.portal.model.api.workspace.Page> bilto = site.getRootPage().getChild("pages").getChildren();
       ListAccess<Page> la = new ListAccess<Page>() {
         public Page[] load(int index, int length) throws Exception, IllegalArgumentException {
           Iterator<? extends org.exoplatform.portal.model.api.workspace.Page> iterator = bilto.iterator();
-          for (int i = 0;i < index;i++) {
-            iterator.next();
-          }
           Mapper mapper = new Mapper(session.getContentManager());
           Page[] result = new Page[length];
           for (int i = 0;i < length;i++) {
