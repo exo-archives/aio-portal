@@ -16,13 +16,13 @@
  */
 package org.exoplatform.portal.pom.config.tasks;
 
-import org.exoplatform.portal.model.api.workspace.Workspace;
-import org.exoplatform.portal.model.api.workspace.Site;
-import org.exoplatform.portal.model.api.workspace.ObjectType;
 import org.exoplatform.portal.config.model.Page;
 import static org.exoplatform.portal.pom.config.Utils.split;
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
 import org.exoplatform.portal.pom.config.POMSession;
+import org.gatein.mop.api.workspace.Site;
+import org.gatein.mop.api.workspace.ObjectType;
+import org.gatein.mop.api.workspace.Workspace;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -78,9 +78,9 @@ public abstract class PageTask extends AbstractPOMTask {
       if (site == null) {
         throw new IllegalArgumentException("Could not remove page " + name + "of non existing site of type " + ownerType + " with id " + ownerId);
       } else {
-        org.exoplatform.portal.model.api.workspace.Page root = site.getRootPage();
-        org.exoplatform.portal.model.api.workspace.Page pages = root.getChild("pages");
-        org.exoplatform.portal.model.api.workspace.Page page = pages.getChild(name);
+        org.gatein.mop.api.workspace.Page root = site.getRootPage();
+        org.gatein.mop.api.workspace.Page pages = root.getChild("pages");
+        org.gatein.mop.api.workspace.Page page = pages.getChild(name);
         if (page == null) {
           throw new IllegalArgumentException("Could not remove non existing page " + name + " of site of type " + ownerType + " with id " + ownerId);
         }
@@ -110,9 +110,9 @@ public abstract class PageTask extends AbstractPOMTask {
       }
 
       //
-      org.exoplatform.portal.model.api.workspace.Page root = site.getRootPage();
-      org.exoplatform.portal.model.api.workspace.Page pages = root.getChild("pages");
-      org.exoplatform.portal.model.api.workspace.Page page = pages.getChild(name);
+      org.gatein.mop.api.workspace.Page root = site.getRootPage();
+      org.gatein.mop.api.workspace.Page pages = root.getChild("pages");
+      org.gatein.mop.api.workspace.Page page = pages.getChild(name);
 
       //
       if (page == null) {
@@ -142,9 +142,9 @@ public abstract class PageTask extends AbstractPOMTask {
       Workspace workspace = session.getWorkspace();
       Site site = workspace.getSite(siteType, ownerId);
       if (site != null) {
-        org.exoplatform.portal.model.api.workspace.Page root = site.getRootPage();
-        org.exoplatform.portal.model.api.workspace.Page pages = root.getChild("pages");
-        org.exoplatform.portal.model.api.workspace.Page page = pages.getChild(name);
+        org.gatein.mop.api.workspace.Page root = site.getRootPage();
+        org.gatein.mop.api.workspace.Page pages = root.getChild("pages");
+        org.gatein.mop.api.workspace.Page page = pages.getChild(name);
         if (page != null) {
           Mapper mapper = new Mapper(session.getContentManager());
           this.page = new Page();

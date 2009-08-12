@@ -24,24 +24,24 @@ import org.exoplatform.portal.config.model.Properties;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.config.model.PageBody;
-import org.exoplatform.portal.model.api.workspace.ui.UIContainer;
-import org.exoplatform.portal.model.api.workspace.ui.UIWindow;
-import org.exoplatform.portal.model.api.workspace.ui.UIComponent;
-import org.exoplatform.portal.model.api.workspace.ui.UIInsertion;
-import org.exoplatform.portal.model.api.workspace.ObjectType;
-import org.exoplatform.portal.model.api.workspace.Site;
-import org.exoplatform.portal.model.api.workspace.Navigation;
-import org.exoplatform.portal.model.api.workspace.Workspace;
-import org.exoplatform.portal.model.api.workspace.navigation.PageLink;
-import org.exoplatform.portal.model.api.content.ContentManager;
-import org.exoplatform.portal.model.api.content.FetchCondition;
-import org.exoplatform.portal.model.api.content.Content;
-import org.exoplatform.portal.model.util.Attributes;
-import org.exoplatform.portal.model.util.Key;
-import org.exoplatform.portal.model.util.ValueType;
-import org.exoplatform.portal.model.portlet.Preferences;
 import static org.exoplatform.portal.pom.config.Utils.join;
 import static org.exoplatform.portal.pom.config.Utils.split;
+import org.gatein.mop.api.content.ContentManager;
+import org.gatein.mop.api.content.Content;
+import org.gatein.mop.api.content.FetchCondition;
+import org.gatein.mop.api.Key;
+import org.gatein.mop.api.Attributes;
+import org.gatein.mop.api.ValueType;
+import org.gatein.mop.api.workspace.Navigation;
+import org.gatein.mop.api.workspace.Site;
+import org.gatein.mop.api.workspace.ObjectType;
+import org.gatein.mop.api.workspace.Workspace;
+import org.gatein.mop.api.workspace.ui.UIContainer;
+import org.gatein.mop.api.workspace.ui.UIComponent;
+import org.gatein.mop.api.workspace.ui.UIWindow;
+import org.gatein.mop.api.workspace.ui.UIInsertion;
+import org.gatein.mop.api.workspace.navigation.PageLink;
+import org.gatein.mop.core.portlet.Preferences;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -228,7 +228,7 @@ public class Mapper {
       String[] pageChunks = split("::", reference);
       ObjectType<? extends Site> siteType = parseSiteType(pageChunks[0]);
       Site site = workspace.getSite(siteType, pageChunks[1]);
-      org.exoplatform.portal.model.api.workspace.Page target = site.getRootPage().getChild(pageChunks[2]);
+      org.gatein.mop.api.workspace.Page target = site.getRootPage().getChild(pageChunks[2]);
       PageLink link = nav.link(ObjectType.PAGE_LINK);
       link.setPage(target);
     }
@@ -267,7 +267,7 @@ public class Mapper {
 
     //
     if (src.getObjectType() == ObjectType.PORTAL) {
-      org.exoplatform.portal.model.api.workspace.Page template = src.getRootNavigation().getTemplate();
+      org.gatein.mop.api.workspace.Page template = src.getRootNavigation().getTemplate();
       load(template.getLayout(), dst.getPortalLayout());
     }
   }
@@ -287,8 +287,8 @@ public class Mapper {
 
     //
     if (dst.getObjectType() == ObjectType.PORTAL) {
-      org.exoplatform.portal.model.api.workspace.Page templates = dst.getRootPage().getChild("templates");
-      org.exoplatform.portal.model.api.workspace.Page template = templates.addChild("default");
+      org.gatein.mop.api.workspace.Page templates = dst.getRootPage().getChild("templates");
+      org.gatein.mop.api.workspace.Page template = templates.addChild("default");
       save(src.getPortalLayout(), template.getLayout());
 
       //
@@ -296,7 +296,7 @@ public class Mapper {
     }
   }
 
-  public void load(org.exoplatform.portal.model.api.workspace.Page src, Page dst) {
+  public void load(org.gatein.mop.api.workspace.Page src, Page dst) {
     Site site = src.getSite();
     String ownerType = getOwnerType(site.getObjectType());
     String ownerId = site.getName();
@@ -384,7 +384,7 @@ public class Mapper {
     }
   }
 
-  public void save(Page src, org.exoplatform.portal.model.api.workspace.Page dst) {
+  public void save(Page src, org.gatein.mop.api.workspace.Page dst) {
     Attributes attrs = dst.getAttributes();
     attrs.setValue(TITLE, src.getTitle());
     attrs.setValue(FACTORY_ID, src.getFactoryId());

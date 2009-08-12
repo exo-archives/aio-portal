@@ -18,16 +18,12 @@ package org.exoplatform.portal.config;
 
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.portal.pom.config.POMSessionManager;
-import org.exoplatform.portal.pom.config.POMSession;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.Application;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.config.model.PortalConfig;
-import org.exoplatform.portal.model.api.workspace.Portal;
-import org.exoplatform.portal.model.api.workspace.ObjectType;
-import org.exoplatform.portal.model.util.Attributes;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.test.BasicTestCase;
 import org.exoplatform.services.portletcontainer.pci.ExoWindowID;

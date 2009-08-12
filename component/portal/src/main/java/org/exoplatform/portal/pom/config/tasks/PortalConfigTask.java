@@ -16,15 +16,15 @@
  */
 package org.exoplatform.portal.pom.config.tasks;
 
-import org.exoplatform.portal.model.api.workspace.Workspace;
-import org.exoplatform.portal.model.api.workspace.ObjectType;
-import org.exoplatform.portal.model.api.workspace.Site;
-import org.exoplatform.portal.model.api.workspace.Page;
-import org.exoplatform.portal.model.util.Attributes;
 import org.exoplatform.portal.config.model.PortalConfig;
 
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
 import org.exoplatform.portal.pom.config.POMSession;
+import org.gatein.mop.api.workspace.Site;
+import org.gatein.mop.api.workspace.ObjectType;
+import org.gatein.mop.api.workspace.Workspace;
+import org.gatein.mop.api.workspace.Page;
+import org.gatein.mop.api.Attributes;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>

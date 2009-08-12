@@ -19,11 +19,11 @@ package org.exoplatform.portal.pom.config.tasks;
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
 import org.exoplatform.portal.pom.config.POMSession;
 import static org.exoplatform.portal.pom.config.Utils.split;
-import org.exoplatform.portal.model.api.workspace.ObjectType;
-import org.exoplatform.portal.model.api.workspace.Site;
-import org.exoplatform.portal.model.api.workspace.Workspace;
-import org.exoplatform.portal.model.api.workspace.Navigation;
 import org.exoplatform.portal.config.model.PageNavigation;
+import org.gatein.mop.api.workspace.Site;
+import org.gatein.mop.api.workspace.ObjectType;
+import org.gatein.mop.api.workspace.Workspace;
+import org.gatein.mop.api.workspace.Navigation;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>

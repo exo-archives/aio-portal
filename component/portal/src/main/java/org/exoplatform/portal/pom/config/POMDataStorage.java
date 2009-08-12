@@ -35,10 +35,10 @@ import org.exoplatform.portal.pom.config.tasks.PortalConfigTask;
 import org.exoplatform.portal.pom.config.tasks.PageNavigationTask;
 import org.exoplatform.portal.pom.config.tasks.PortletPreferencesTask;
 import org.exoplatform.portal.pom.config.tasks.Mapper;
-import org.exoplatform.portal.model.api.workspace.Workspace;
-import org.exoplatform.portal.model.api.workspace.Site;
-import org.exoplatform.portal.model.api.workspace.ObjectType;
-import org.exoplatform.portal.model.api.workspace.Portal;
+import org.gatein.mop.api.workspace.Site;
+import org.gatein.mop.api.workspace.Workspace;
+import org.gatein.mop.api.workspace.ObjectType;
+import org.gatein.mop.api.workspace.Portal;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -189,10 +189,10 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
       Site site = workspace.getSite(siteType, ownerId);
 
       //
-      final Collection<? extends org.exoplatform.portal.model.api.workspace.Page> bilto = site.getRootPage().getChild("pages").getChildren();
+      final Collection<? extends org.gatein.mop.api.workspace.Page> bilto = site.getRootPage().getChild("pages").getChildren();
       ListAccess<Page> la = new ListAccess<Page>() {
         public Page[] load(int index, int length) throws Exception, IllegalArgumentException {
-          Iterator<? extends org.exoplatform.portal.model.api.workspace.Page> iterator = bilto.iterator();
+          Iterator<? extends org.gatein.mop.api.workspace.Page> iterator = bilto.iterator();
           Mapper mapper = new Mapper(session.getContentManager());
           Page[] result = new Page[length];
           for (int i = 0;i < length;i++) {

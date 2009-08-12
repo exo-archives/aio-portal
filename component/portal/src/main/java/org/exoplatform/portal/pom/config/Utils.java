@@ -16,10 +16,6 @@
  */
 package org.exoplatform.portal.pom.config;
 
-import org.exoplatform.portal.model.api.workspace.ObjectType;
-import org.exoplatform.portal.model.api.workspace.Site;
-import org.exoplatform.portal.config.model.PortalConfig;
-
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
  * @version $Revision$

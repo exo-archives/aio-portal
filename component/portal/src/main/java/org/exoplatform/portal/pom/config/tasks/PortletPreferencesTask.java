@@ -19,20 +19,20 @@ package org.exoplatform.portal.pom.config.tasks;
 import static org.exoplatform.portal.pom.config.Utils.split;
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
 import org.exoplatform.portal.pom.config.POMSession;
-import org.exoplatform.portal.model.api.workspace.Site;
-import org.exoplatform.portal.model.api.workspace.ObjectType;
-import org.exoplatform.portal.model.api.workspace.Workspace;
-import org.exoplatform.portal.model.api.content.ContentManager;
-import org.exoplatform.portal.model.api.content.Content;
-import org.exoplatform.portal.model.api.content.CustomizationContext;
-import org.exoplatform.portal.model.api.content.FetchCondition;
-import org.exoplatform.portal.model.api.content.Customization;
-import org.exoplatform.portal.model.api.content.customization.CustomizationMode;
-import org.exoplatform.portal.model.portlet.Preferences;
-import org.exoplatform.portal.model.portlet.PreferencesBuilder;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.portal.application.Preference;
 import org.exoplatform.services.portletcontainer.pci.WindowID;
+import org.gatein.mop.api.workspace.Site;
+import org.gatein.mop.api.workspace.ObjectType;
+import org.gatein.mop.api.workspace.Workspace;
+import org.gatein.mop.api.content.Customization;
+import org.gatein.mop.api.content.FetchCondition;
+import org.gatein.mop.api.content.Content;
+import org.gatein.mop.api.content.ContentManager;
+import org.gatein.mop.api.content.CustomizationContext;
+import org.gatein.mop.api.content.customization.CustomizationMode;
+import org.gatein.mop.core.portlet.Preferences;
+import org.gatein.mop.core.portlet.PreferencesBuilder;
 
 import java.util.Set;
 import java.util.Collections;
@@ -163,7 +163,7 @@ WindowID:
         Customization<Preferences> customization = content.getCustomization().getCustomization(context);
         if (customization != null) {
           ArrayList<Preference> list = new ArrayList<Preference>();
-          for (org.exoplatform.portal.model.portlet.Preference preference : customization.getState().getEntries()) {
+          for (org.gatein.mop.core.portlet.Preference preference : customization.getState().getEntries()) {
             Preference pref = new Preference();
             pref.setName(preference.getName());
             pref.setValues(new ArrayList<String>(preference.getValues()));

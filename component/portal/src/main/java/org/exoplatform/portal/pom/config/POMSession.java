@@ -16,9 +16,9 @@
  */
 package org.exoplatform.portal.pom.config;
 
-import org.exoplatform.portal.model.impl.api.POM;
-import org.exoplatform.portal.model.api.workspace.Workspace;
-import org.exoplatform.portal.model.api.content.ContentManager;
+import org.gatein.mop.core.impl.api.POM;
+import org.gatein.mop.api.workspace.Workspace;
+import org.gatein.mop.api.content.ContentManager;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>

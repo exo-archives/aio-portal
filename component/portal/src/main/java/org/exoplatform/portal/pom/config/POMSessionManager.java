@@ -16,15 +16,15 @@
  */
 package org.exoplatform.portal.pom.config;
 
-import org.exoplatform.portal.model.impl.api.POMService;
-import org.exoplatform.portal.model.portlet.Preferences;
-import org.exoplatform.portal.model.spi.content.ContentProvider;
-import org.exoplatform.portal.model.spi.content.GetState;
 import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.jcr.ext.registry.RegistryService;
 import org.exoplatform.services.jcr.core.ManageableRepository;
 import org.chromattic.api.ChromatticBuilder;
 import org.chromattic.apt.InstrumentorImpl;
+import org.gatein.mop.core.impl.api.POMService;
+import org.gatein.mop.core.portlet.Preferences;
+import org.gatein.mop.spi.content.ContentProvider;
+import org.gatein.mop.spi.content.GetState;
 
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
