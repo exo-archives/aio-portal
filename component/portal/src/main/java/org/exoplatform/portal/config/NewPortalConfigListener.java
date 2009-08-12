@@ -117,7 +117,7 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     Iterator<String> iter = owners.iterator();
     while (iter.hasNext()) {
       String owner = iter.next();
-      createPortalConfig(config, PortalConfig.USER_TYPE, owner);
+      // createPortalConfig(config, PortalConfig.USER_TYPE, owner);
       createPage(config, owner);
       createPageNavigation(config, owner);
     }
@@ -164,7 +164,7 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
       if (!notTemplate) {
         xml = StringUtils.replace(xml, "@owner@", owner);
       }
-      
+
     PortalConfig pconfig = fromXML(xml, PortalConfig.class);
     pconfig.setType(type);
     pdcService_.create(pconfig);

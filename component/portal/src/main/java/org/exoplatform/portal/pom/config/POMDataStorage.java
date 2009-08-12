@@ -65,6 +65,10 @@ public class POMDataStorage implements DataStorage {
     return execute(new PortalConfigTask.Load(PortalConfig.PORTAL_TYPE, portalName)).getConfig();
   }
 
+  public PortalConfig getPortalConfig(String ownerType, String portalName) throws Exception {
+    return execute(new PortalConfigTask.Load(ownerType, portalName)).getConfig();
+  }
+
   public void create(PortalConfig config) throws Exception {
     execute(new PortalConfigTask.Save(config, false));
   }

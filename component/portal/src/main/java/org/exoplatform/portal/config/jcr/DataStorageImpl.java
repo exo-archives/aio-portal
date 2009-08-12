@@ -67,6 +67,10 @@ public class DataStorageImpl implements DataStorage, Startable {
     this.listenerService = listenerService; 
   }
 
+  public PortalConfig getPortalConfig(String ownerType, String portalName) throws Exception {
+    throw new UnsupportedOperationException();
+  }
+
   public PortalConfig getPortalConfig(String portalName) throws Exception {
     String portalPath = getApplicationRegistryPath(PortalConfig.PORTAL_TYPE, portalName)
                         + "/"  + PORTAL_CONFIG_FILE_NAME;

@@ -23,7 +23,6 @@ import org.exoplatform.portal.model.spi.content.GetState;
 import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.jcr.ext.registry.RegistryService;
 import org.exoplatform.services.jcr.core.ManageableRepository;
-import org.exoplatform.services.jcr.core.nodetype.ExtendedNodeTypeManager;
 import org.chromattic.api.ChromatticBuilder;
 import org.chromattic.apt.InstrumentorImpl;
 
@@ -31,8 +30,6 @@ import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.Repository;
 import javax.jcr.Credentials;
-import javax.jcr.nodetype.NoSuchNodeTypeException;
-import java.io.InputStream;
 import java.util.List;
 import java.lang.reflect.UndeclaredThrowableException;
 
@@ -107,6 +104,7 @@ public class POMSessionManager {
         });
 
         //
+/*
         ExtendedNodeTypeManager nodeTypeMgr = repositoryService.getCurrentRepository().getNodeTypeManager();
         try {
           nodeTypeMgr.getNodeType("exo:workspace");
@@ -115,6 +113,7 @@ public class POMSessionManager {
           InputStream in = POMService.class.getClassLoader().getResourceAsStream("conf/standalone/nodetypes.xml");
           nodeTypeMgr.registerNodeTypes(in, ExtendedNodeTypeManager.IGNORE_IF_EXISTS);
         }
+*/
 
         //
         this.pomService = pomService;

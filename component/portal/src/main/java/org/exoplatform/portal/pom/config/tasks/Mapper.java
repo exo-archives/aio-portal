@@ -59,6 +59,9 @@ import java.util.Date;
 public class Mapper {
 
   /** . */
+  public static final Key<String> NAME = Key.create("name", ValueType.STRING);
+
+  /** . */
   public static final Key<Boolean> SHOW_MAX_WINDOW = Key.create("show-max-window", ValueType.BOOLEAN);
 
   /** . */
@@ -319,8 +322,8 @@ public class Mapper {
   }
 
   public void load(UIContainer src, Container dst) {
-    dst.setName(src.getName());
     Attributes attrs = src.getAttributes();
+    dst.setName(attrs.getValue(NAME));
     dst.setTitle(attrs.getValue(TITLE));
     dst.setIcon(attrs.getValue(ICON));
     dst.setTemplate(attrs.getValue(TEMPLATE));
@@ -406,6 +409,7 @@ public class Mapper {
     dstAttrs.setValue(DESCRIPTION, src.getDescription());
     dstAttrs.setValue(WIDTH, src.getWidth());
     dstAttrs.setValue(HEIGHT, src.getHeight());
+    dstAttrs.setValue(NAME, src.getName());
 
     //
     saveChildren(src, dst);
@@ -416,17 +420,17 @@ public class Mapper {
     ArrayList<Object> srcChildren = src.getChildren();
     if (srcChildren != null) {
       for (Object srcChild : srcChildren) {
+        // Perhaps use instead an ordinal ?????
+        String id = UUID.randomUUID().toString();
         if (srcChild instanceof Container) {
           Container srcChildContainer = (Container)srcChild;
-          UIContainer dstChildContainer = dst.addComponent(ObjectType.CONTAINER, srcChildContainer.getName());
+          UIContainer dstChildContainer = dst.addComponent(ObjectType.CONTAINER, id);
           save(srcChildContainer, dstChildContainer);
         } else if (srcChild instanceof Application) {
           Application application = (Application)srcChild;
-          String id = UUID.randomUUID().toString();
           UIWindow dstChildWindow = dst.addComponent(ObjectType.WINDOW, id);
           save(application, dstChildWindow);
         } else if (srcChild instanceof PageBody) {
-          String id = UUID.randomUUID().toString();
           dst.addComponent(ObjectType.INSERTION, id);
         } else {
           throw new AssertionError("Was not expecting child " + srcChild);

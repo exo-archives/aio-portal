@@ -88,9 +88,12 @@ public class UserPortalConfigListener extends UserEventListener {
     String userName = user.getUserName();
 
     // Need to insert the corresponding user site
-    PortalConfig cfg = new PortalConfig(PortalConfig.USER_TYPE);
-    cfg.setName(userName);
-    dataStorage.create(cfg);
+    PortalConfig cfg = dataStorage.getPortalConfig(PortalConfig.USER_TYPE, userName);
+    if (cfg == null) {
+      cfg = new PortalConfig(PortalConfig.USER_TYPE);
+      cfg.setName(userName);
+      dataStorage.create(cfg);
+    }
 
     PageNavigation navigation = dataStorage.getPageNavigation(PortalConfig.USER_TYPE, userName);
     if (navigation != null)

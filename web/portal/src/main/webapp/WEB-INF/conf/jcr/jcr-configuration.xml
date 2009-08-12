@@ -84,6 +84,7 @@
  		    <properties-param>
  		      <name>namespaces</name>
  		      <property name="dc" value="http://purl.org/dc/elements/1.1/"/>
+ 		      <property name="mop" value="http://www.gatein.org/jcr/mop/1.0/"/>
  		      </properties-param>
  		  </init-params>
  		</component-plugin>
@@ -97,6 +98,7 @@
  		      <description>Node types configuration file</description>
  		      <value>jar:/conf/ext-nodetypes-config.xml</value>
  		      <value>jar:/conf/organization-nodetypes.xml</value>
+ 		      <value>jar:/conf/standalone/nodetypes.xml</value>
  		    </values-param>
  		  </init-params>
  		</component-plugin>
