@@ -2,15 +2,15 @@
 <page-set>
   
   <page>
-  	<page-id>group::platform/users::dashboard</page-id>
+  	<page-id>group::/platform/users::dashboard</page-id>
   	<owner-type>group</owner-type>
-    <owner-id>platform/users</owner-id>
+    <owner-id>/platform/users</owner-id>
     <name>dashboard</name>
     <title>Dashboard</title>
     <access-permissions>*:/platform/users</access-permissions>
     <edit-permission>*:/platform/administrators</edit-permission>
     <application>
-      <instance-id>group#platform/users:/dashboard/DashboardPortlet/Dashboard</instance-id>
+      <instance-id>group#/platform/users:/dashboard/DashboardPortlet/Dashboard</instance-id>
       <title>Dashboard</title>
       <access-permissions>*:/platform/users</access-permissions>
       <show-info-bar>false</show-info-bar>
@@ -18,15 +18,15 @@
   </page>
   
   <page>
-  	<page-id>group::platform/users::webexplorer</page-id>
+  	<page-id>group::/platform/users::webexplorer</page-id>
   	<owner-type>group</owner-type>
-    <owner-id>platform/users</owner-id>
+    <owner-id>/platform/users</owner-id>
     <name>webexplorer</name>
     <title>Web Explorer</title>
     <access-permissions>*:/platform/users</access-permissions>
     <edit-permission>*:/platform/administrators</edit-permission>
     <application>
-      <instance-id>group#platform/users:/web/BrowserPortlet/WebExplorer</instance-id>
+      <instance-id>group#/platform/users:/web/BrowserPortlet/WebExplorer</instance-id>
       <title>Web Explorer</title>
       <access-permissions>*:/platform/users</access-permissions>
       <show-info-bar>false</show-info-bar>
@@ -34,15 +34,15 @@
   </page>               
        
   <page>
-  	<page-id>group::platform/users::mylink-blog</page-id>
+  	<page-id>group::/platform/users::mylink-blog</page-id>
   	<owner-type>group</owner-type>
-    <owner-id>platform/users</owner-id>
+    <owner-id>/platform/users</owner-id>
     <name>mylink-blog</name>
     <title>Blog</title>
     <access-permissions>*:/platform/users</access-permissions>
     <edit-permission>*:/platform/administrators</edit-permission>
     <application>
-      <instance-id>group#platform/users:/web/IFramePortlet/blog</instance-id>
+      <instance-id>group#/platform/users:/web/IFramePortlet/blog</instance-id>
       <title>Blog</title>
       <access-permissions>*:/platform/users</access-permissions>
       <show-info-bar>true</show-info-bar>
@@ -52,15 +52,15 @@
   </page>
   
   <page>
-  	<page-id>group::platform/users::mylink-google</page-id>
+  	<page-id>group::/platform/users::mylink-google</page-id>
   	<owner-type>group</owner-type>
-    <owner-id>platform/users</owner-id>
+    <owner-id>/platform/users</owner-id>
     <name>mylink-google</name>
     <title>Google</title>
     <access-permissions>*:/platform/users</access-permissions>
     <edit-permission>*:/platform/administrators</edit-permission>
     <application>
-      <instance-id>group#platform/users:/web/IFramePortlet/google</instance-id>
+      <instance-id>group#/platform/users:/web/IFramePortlet/google</instance-id>
       <title>Google</title>
       <access-permissions>*:/platform/users</access-permissions>
       <show-info-bar>false</show-info-bar>

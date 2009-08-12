@@ -3,8 +3,8 @@
 
 	<portlet-preferences>
     <owner-type>group</owner-type>
-    <owner-id>platform/guests</owner-id>
-    <window-id>group#platform/guests:/web/IFramePortlet/blog</window-id>
+    <owner-id>/platform/guests</owner-id>
+    <window-id>group#/platform/guests:/web/IFramePortlet/blog</window-id>
     <preference>
 	    <name>url</name>
 	    <value>http://blog.exoplatform.org</value>

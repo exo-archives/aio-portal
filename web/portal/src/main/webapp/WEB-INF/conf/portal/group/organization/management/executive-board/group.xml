@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <portal-config>
-  <portal-name>organization/management/executive-board</portal-name>
+  <portal-name>/organization/management/executive-board</portal-name>
   <locale>en</locale>
   <access-permissions>Everyone</access-permissions>
   <edit-permission>*:/platform/administrators</edit-permission>
