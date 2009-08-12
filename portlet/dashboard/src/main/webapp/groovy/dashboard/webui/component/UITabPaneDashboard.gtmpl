@@ -1,0 +1,23 @@
+***************************************
+*UITabDashboard| UITabDashboard|..... *
+***************************************
+
+<!--
+<% 
+	def startShowIndex=uicomponent.getStartShowIndex();
+	def endShowIndex=uicomponent.getEndShowIndex();
+	def tabNbs=uicomponent.getCurrentNumberOfTabs();
+%>
+
+<div id="$uicomponent.id">
+	<table>
+		<tr>
+			<% for(int i=0;i<tabNbs;i++){ %>
+				<td>
+					<% uicomponent.renderChild(i); %>
+				</td>
+			<% } %>
+		</tr>
+	</table>
+</div>
+-->

@@ -1,0 +1,19 @@
+TabDashboard with two part: label and delete icon
+
+******************************
+* Label          Delete Icon *
+******************************
+<!--
+<div id="$uicomponent.id">
+	<table>
+		<tr>
+			<td>
+				<div><a	href="<%= uicomponent.event("SelectTabDashboard"); %>"><%= uicomponent.getTabLabel(); %></a></div>
+			</td>
+			<td>
+				<a href="<%= uicomponent.event("DeleteTabDashboard"); %>">DEL</a>
+			</td>
+		</tr>
+	</table>	
+</div>
+-->

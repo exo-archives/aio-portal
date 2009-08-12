@@ -1,0 +1,25 @@
+Manager bar, currently contains only 'AddDashboard' button
+(We should add a 'switch range' button in the future, so need to put a table here)
+
+*******************************
+* AddDashboard   (SwitchRange)*
+*******************************
+
+<!--
+<div id="$uicomponent.id">
+	<table>
+		<tr>
+			<td>
+				<div>
+					<a href="<%= uicomponent.event("AddDashboard"); %>"><%= _ctx.appRes(uicomponent.getId()+".action.addNewDashboard"); %></a>
+				</div>
+			</td>
+			<td>
+				<div>
+					<a href="#">SwitchRange</a>
+				</div>
+			</td>
+		</tr>
+	</table>			
+</div>
+-->
