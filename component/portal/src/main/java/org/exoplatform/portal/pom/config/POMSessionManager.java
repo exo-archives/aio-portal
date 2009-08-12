@@ -125,23 +125,49 @@ public class POMSessionManager {
     return pomService;
   }
 
+  /**
+   * <p>Returns the session currently associated with the current thread of execution.</p>
+   *
+   * @return the current session
+   */
   public static POMSession getSession() {
     return current.get();
   }
 
+  /**
+   * <p>Open and returns a session to the model. When the current thread is already associated with a previously
+   * opened session the method will throw an <tt>IllegalStateException</tt>.</p>
+   *
+   * @return a session to the model.
+   */
   public POMSession openSession() {
     POMSession session = current.get();
     if (session == null) {
       session = new POMSession(this);
       current.set(session);
+    } else {
+      throw new IllegalStateException("A session is already opened.");
     }
     return session;
   }
 
+  /**
+   * <p>Closes the current session and discard the changes done during the session.</p>
+   *
+   * @return a boolean indicating if the session was closed
+   * @see #closeSession(boolean)
+   */
   public boolean closeSession() {
     return closeSession(false);
   }
 
+  /**
+   * <p>Closes the current session and optionally saves its content. If no session is associated
+   * then this method has no effects and returns false.</p>
+   *
+   * @param save if the session must be saved
+   * @return a boolean indicating if the session was closed
+   */
   public boolean closeSession(boolean save) {
     POMSession session = current.get();
     if (session == null) {
@@ -161,8 +187,24 @@ public class POMSessionManager {
     }
   }
 
+  /**
+   * <p>Execute the task with a session. The method attempts first to get a current session and if no such session
+   * is found then a session will be created for the scope of the method.</p>
+   *
+   * @param task the task to execute
+   * @throws Exception any exception thrown by the task
+   */
   public void execute(POMTask task) throws Exception {
-    POMSession session = openSession();
-    session.execute(task);
+    POMSession session = getSession();
+    if (session == null) {
+      session = openSession();
+      try {
+        session.execute(task);
+      } finally {
+        closeSession(true);
+      }
+    } else {
+      session.execute(task);
+    }
   }
 }

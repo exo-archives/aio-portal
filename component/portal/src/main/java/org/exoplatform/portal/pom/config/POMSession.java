@@ -70,10 +70,14 @@ public class POMSession {
   }
 
   public void save() {
-    model.save();
+    if (model != null) {
+      model.save();
+    }
   }
 
   void close() {
-    model.close();
+    if (model != null) {
+      model.close();
+    }
   }
 }

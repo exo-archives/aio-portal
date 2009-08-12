@@ -160,7 +160,7 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
   public LazyPageList find(Query<?> q, Comparator<?> sortComparator) throws Exception {
 
     if (PortalConfig.class.equals(q.getClassType())) {
-      final POMSession session = pomMgr.openSession();
+      final POMSession session = pomMgr.getSession();
       Workspace workspace = session.getWorkspace();
       final Collection<? extends Portal> portals = workspace.getSites(ObjectType.PORTAL);
 
@@ -182,7 +182,7 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
       };
       return new LazyPageList<PortalConfig>(la, 10);
     } else if (Page.class.equals(q.getClassType())) {
-      final POMSession session = pomMgr.openSession();
+      final POMSession session = pomMgr.getSession();
       ObjectType<? extends Site> siteType = Mapper.parseSiteType(q.getOwnerType());
       String ownerId = q.getOwnerId();
       Workspace workspace = session.getWorkspace();
