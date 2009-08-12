@@ -22,12 +22,6 @@
       <null>التصريح</null>
     </label>
   </UIPermissionForm>
-  <ApplicationRegistryWorkingArea>
-    <msg>
-      <nullCategory>!يجب إضافة فئة قبل إضافة المداخل</nullCategory>
-      <selectCategory>!يجب اختيار فئة قبل إضافة المداخل</selectCategory>
-    </msg>
-  </ApplicationRegistryWorkingArea>
   <UICategoryForm>
     <action>
       <Close>إغلاق</Close>
@@ -1128,32 +1122,7 @@
       <edit>معالج تحرير الصحف</edit>
     </title>
   </UIPageCreateDescription>
-  <UIPageEditWizard>
-    <label>
-      <step1>
-        <title>إختار من جديد عقدة الصفحة  وحرر اسم الصفحة</title>
-      </step1>
-      <step2>
-        <title>إختار من جديد تصميم قالب الصفحة</title>
-      </step2>
-      <step3>
-        <title>إعادة ترتيب وتصميم صفحة  واضف مداخل للصفحة</title>
-      </step3>
-      <pageCreateWizard>معالج تحرير الصفحة الحالية</pageCreateWizard>
-      <wizardSteps>خطوات المعالج</wizardSteps>
-      <step>خطوة</step>
-      <back>#{word.back}</back>
-      <next>#{word.next}</next>
-      <done>#{word.save}</done>
-      <abort>#{word.abort}</abort>
-    </label>
-    <msg>
-      <selectStep2>في المرة الأولى ، يجب أن تمر بالخطوة 2</selectStep2>
-      <notSelectedPageNavigation>عدم اختيار التصفح الصفحة</notSelectedPageNavigation>
-      <notSelectedPage>!عدم اختيار الصفحة</notSelectedPage>
-      <Invalid-editPermission>لم يتم العثور على هذه الصفحة أو لم يكن لديك الحق في تعديل</Invalid-editPermission>
-    </msg>
-  </UIPageEditWizard>
+  
   <UIPageTemplateOptions>
     <UIDropDown>
       <title>تشكيلات الصفحة</title>
