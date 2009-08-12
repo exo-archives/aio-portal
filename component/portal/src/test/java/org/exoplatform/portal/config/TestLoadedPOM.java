@@ -28,7 +28,9 @@ import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.model.api.workspace.Portal;
 import org.exoplatform.portal.model.api.workspace.ObjectType;
 import org.exoplatform.portal.model.util.Attributes;
+import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.test.BasicTestCase;
+import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
 
 import java.util.Arrays;
 import java.util.List;
@@ -67,6 +69,46 @@ public class TestLoadedPOM extends BasicTestCase {
   protected void tearDown() throws Exception {
     mgr.closeSession();
     storage = null;
+  }
+
+  public void testLegacyGroupWithNormalizedName() throws Exception {
+    PageNavigation nav = storage.getPageNavigation("group::/platform/guests");
+    assertNotNull(nav);
+    assertEquals("/platform/guests", nav.getOwnerId());
+    PageNode node = nav.getNodes().get(0);
+    assertEquals("group::/platform/guests::register", node.getPageReference());
+
+    Page page = storage.getPage("group::/platform/guests::register");
+    assertNotNull(page);
+    assertEquals("group::/platform/guests::register", page.getPageId());
+    assertEquals("/platform/guests", page.getOwnerId());
+    Application app = (Application)page.getChildren().get(0);
+    assertEquals("group#/platform/guests:/exoadmin/AccountPortlet/Account", app.getInstanceId());
+
+    PortletPreferences prefs = storage.getPortletPreferences(new ExoWindowID("group#/platform/guests:/web/IFramePortlet/blog"));
+    assertNotNull(prefs);
+    assertEquals("/platform/guests", prefs.getOwnerId());
+    assertEquals("group#/platform/guests:/web/IFramePortlet/blog", prefs.getWindowId());
+  }
+
+  public void testGroupWithNormalizedName() throws Exception {
+    PageNavigation nav = storage.getPageNavigation("group::/platform/users");
+    assertNotNull(nav);
+    assertEquals("/platform/users", nav.getOwnerId());
+    PageNode node = nav.getNodes().get(0);
+    assertEquals("group::/platform/users::dashboard", node.getPageReference());
+
+    Page page = storage.getPage("group::/platform/users::mylink-blog");
+    assertNotNull(page);
+    assertEquals("group::/platform/users::mylink-blog", page.getPageId());
+    assertEquals("/platform/users", page.getOwnerId());
+    Application app = (Application)page.getChildren().get(0);
+    assertEquals("group#/platform/users:/web/IFramePortlet/blog", app.getInstanceId());
+
+    PortletPreferences prefs = storage.getPortletPreferences(new ExoWindowID("group#/platform/users:/web/IFramePortlet/blog"));
+    assertNotNull(prefs);
+    assertEquals("/platform/users", prefs.getOwnerId());
+    assertEquals("group#/platform/users:/web/IFramePortlet/blog", prefs.getWindowId());
   }
 
   public void testNavigation() throws Exception {
