@@ -36,6 +36,7 @@ import org.gatein.mop.api.workspace.Navigation;
 import org.gatein.mop.api.workspace.Site;
 import org.gatein.mop.api.workspace.ObjectType;
 import org.gatein.mop.api.workspace.Workspace;
+import org.gatein.mop.api.workspace.NavigationLink;
 import org.gatein.mop.api.workspace.ui.UIContainer;
 import org.gatein.mop.api.workspace.ui.UIComponent;
 import org.gatein.mop.api.workspace.ui.UIWindow;
@@ -108,9 +109,6 @@ public class Mapper {
 
   /** . */
   public static final Key<Boolean> VISIBLE = Key.create("visible", ValueType.BOOLEAN);
-
-  /** . */
-  public static final Key<String> PAGE_REFERENCE = Key.create("page-reference", ValueType.STRING);
 
   /** . */
   public static final Key<String> TEMPLATE = Key.create("template", ValueType.STRING);
@@ -199,8 +197,22 @@ public class Mapper {
     dst.setEndPublicationDate(attrs.getValue(END_PUBLICATION_DATE));
     dst.setShowPublicationDate(attrs.getValue(SHOW_PUBLICATION_DATE));
     dst.setVisible(attrs.getValue(VISIBLE));
-    dst.setPageReference(attrs.getValue(PAGE_REFERENCE));
     dst.setChildren(new ArrayList<PageNode>());
+
+    //
+    NavigationLink link = src.getLink();
+    if (link instanceof PageLink) {
+      PageLink pageLink = (PageLink)link;
+      org.gatein.mop.api.workspace.Page target = pageLink.getPage();
+      if (target != null) {
+        Site site = target.getSite();
+        ObjectType<? extends Site> type = site.getObjectType();
+        String pageRef = getOwnerType(type) + "::" + site.getName() + "::" + target.getName();
+        dst.setPageReference(pageRef);
+      }
+    }
+
+    //
     for (Navigation srcChild : src.getChildren()) {
       PageNode dstChild = new PageNode();
       load(srcChild, dstChild);
@@ -228,7 +240,7 @@ public class Mapper {
       String[] pageChunks = split("::", reference);
       ObjectType<? extends Site> siteType = parseSiteType(pageChunks[0]);
       Site site = workspace.getSite(siteType, pageChunks[1]);
-      org.gatein.mop.api.workspace.Page target = site.getRootPage().getChild(pageChunks[2]);
+      org.gatein.mop.api.workspace.Page target = site.getRootPage().getChild("pages").getChild(pageChunks[2]);
       PageLink link = nav.link(ObjectType.PAGE_LINK);
       link.setPage(target);
     }
@@ -242,10 +254,9 @@ public class Mapper {
     attrs.setValue(END_PUBLICATION_DATE, node.getEndPublicationDate());
     attrs.setValue(SHOW_PUBLICATION_DATE, node.isShowPublicationDate());
     attrs.setValue(VISIBLE, node.isVisible());
-    attrs.setValue(PAGE_REFERENCE, node.getPageReference());
     if (node.getChildren() != null) {
       for (PageNode childNode : node.getChildren()) {
-        Navigation childNav = nav.addChild(node.getName());
+        Navigation childNav = nav.addChild(childNode.getName());
         save(childNode, childNav);
       }
     }
