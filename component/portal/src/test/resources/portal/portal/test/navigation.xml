@@ -19,5 +19,11 @@
       <visible>true</visible>
 	    <page-reference>portal::test::test</page-reference>
 	  </node>    
+    <node>
+      <uri>node_uri2</uri>
+      <name>node_name2</name>
+      <label>node_label2</label>
+      <page-reference>portal::test::test</page-reference>
+    </node>
   </page-nodes>
 </node-navigation>

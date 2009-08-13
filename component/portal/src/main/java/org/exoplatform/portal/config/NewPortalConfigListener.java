@@ -19,8 +19,6 @@ package org.exoplatform.portal.config;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -90,13 +88,22 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
       return;
     for (Object ele : configs) {
       NewPortalConfig portalConfig = (NewPortalConfig) ele;
-      if (portalConfig.getOwnerType().equals("user")) {
-        initUserTypeDB(portalConfig);
-      } else if (portalConfig.getOwnerType().equals(PortalConfig.GROUP_TYPE)) {
-        initGroupTypeDB(portalConfig);
-      } else {
-        initPortalTypeDB(portalConfig);
-      }
+      initPortalConfigDB(portalConfig);
+    }
+    for (Object ele : configs) {
+      NewPortalConfig portalConfig = (NewPortalConfig) ele;
+      initPageDB(portalConfig);
+    }
+    for (Object ele : configs) {
+      NewPortalConfig portalConfig = (NewPortalConfig) ele;
+      initPageNavigationDB(portalConfig);
+    }
+    for (Object ele : configs) {
+      NewPortalConfig portalConfig = (NewPortalConfig) ele;
+      initPortletPreferencesDB(portalConfig);
+    }
+    for (Object ele : configs) {
+      NewPortalConfig portalConfig = (NewPortalConfig) ele;
       portalConfig.getPredefinedOwner().clear();
     }
   }
@@ -115,38 +122,29 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     return pconfig != null;
   }
 
-  public void initUserTypeDB(NewPortalConfig config) throws Exception {
-    HashSet<String> owners = config.getPredefinedOwner();
-    Iterator<String> iter = owners.iterator();
-    while (iter.hasNext()) {
-      String owner = iter.next();
-      createPortalConfig(config, PortalConfig.USER_TYPE, owner);
+  public void initPortalConfigDB(NewPortalConfig config) throws Exception {
+    for (String owner : config.getPredefinedOwner()) {
+      createPortalConfig(config, owner);
+    }
+  }
+
+  public void initPageDB(NewPortalConfig config) throws Exception {
+    for (String owner : config.getPredefinedOwner()) {
       createPage(config, owner);
+    }
+  }
+
+  public void initPageNavigationDB(NewPortalConfig config) throws Exception {
+    for (String owner : config.getPredefinedOwner()) {
       createPageNavigation(config, owner);
     }
   }
 
-  public void initGroupTypeDB(NewPortalConfig config) throws Exception {
-    HashSet<String> owners = config.getPredefinedOwner();
-    Iterator<String> iter = owners.iterator();
-    while (iter.hasNext()) {
-      String owner = iter.next();
-      createPortalConfig(config, PortalConfig.GROUP_TYPE, owner);
-      createPage(config, owner);
-      createPageNavigation(config, owner);
-      createPortletPreferences(config, owner);
-    }
-  }
-
-  public void initPortalTypeDB(NewPortalConfig config) throws Exception {
-    HashSet<String> owners = config.getPredefinedOwner();
-    Iterator<String> iter = owners.iterator();
-    while (iter.hasNext()) {
-      String owner = iter.next();
-      createPortalConfig(config, PortalConfig.PORTAL_TYPE, owner);
-      createPage(config, owner);
-      createPageNavigation(config, owner);
-      createPortletPreferences(config, owner);
+  public void initPortletPreferencesDB(NewPortalConfig config) throws Exception {
+    for (String owner : config.getPredefinedOwner()) {
+      if  (!config.getOwnerType().equals(PortalConfig.USER_TYPE)) {
+        createPortletPreferences(config, owner);
+      }
     }
   }
 
@@ -226,13 +224,16 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     fixOwnerName((Container)page);
   }
 
-  private void createPortalConfig(NewPortalConfig config, String type, String owner) throws Exception {
+  private void createPortalConfig(NewPortalConfig config, String owner) throws Exception {
+    String type = config.getOwnerType();
+
+    //
     if (pdcService_.getPortalConfig(type, owner) != null) {
       return;
     }
 
 
-    String xml = null;
+    String xml;
     
     // get path of xml file, check if path in template folder and if path not in
     // template folder

@@ -118,7 +118,7 @@ public class TestLoadedPOM extends BasicTestCase {
     assertEquals("navigation_description", nav.getDescription());
 
     //
-    assertEquals(1, nav.getNodes().size());
+    assertEquals(2, nav.getNodes().size());
 
     //
     PageNode nodeNavigation = nav.getNodes().get(0);

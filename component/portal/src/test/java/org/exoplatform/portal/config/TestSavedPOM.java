@@ -89,7 +89,7 @@ public class TestSavedPOM extends BasicTestCase {
     //
     Collection<? extends Navigation> childrenNavigations = rootNavigation.getChildren();
     assertNotNull(childrenNavigations);
-    assertEquals(1, childrenNavigations.size());
+    assertEquals(2, childrenNavigations.size());
     Iterator<? extends Navigation> i = childrenNavigations.iterator();
 
     //
@@ -175,8 +175,8 @@ public class TestSavedPOM extends BasicTestCase {
 
     //
     UIContainer container1 = (UIContainer)it.next();
-    assertEquals("container_1", container1.getName());
     Attributes container1Attrs = container1.getAttributes();
+    assertEquals("container_1", container1Attrs.getString("name"));
     assertEquals("container_1_title", container1Attrs.getString("title"));
     assertEquals("container_1_icon", container1Attrs.getString("icon"));
     assertEquals("container_1_template", container1Attrs.getString("template"));

@@ -214,7 +214,7 @@ public class UserPortalConfigService implements Startable {
 		portalConfig.setTemplateOwner(template);
 		portalConfig.getPredefinedOwner().clear();
 		portalConfig.getPredefinedOwner().add(portalName);
-		newPortalConfigListener_.initPortalTypeDB(portalConfig);
+		newPortalConfigListener_.initPortalConfigDB(portalConfig);
 	}
 
 	/**
