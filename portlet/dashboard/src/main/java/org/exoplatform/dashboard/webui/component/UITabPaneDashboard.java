@@ -1,11 +1,7 @@
 package org.exoplatform.dashboard.webui.component;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import org.exoplatform.portal.config.UserACL;
 import org.exoplatform.portal.config.UserPortalConfigService;
+import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.webui.portal.PageNodeEvent;
@@ -13,9 +9,13 @@ import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
+import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.UIContainer;
+import org.exoplatform.webui.event.Event;
+import org.exoplatform.webui.event.EventListener;
 import org.exoplatform.webui.event.Event.Phase;
 
 /**
@@ -27,12 +27,18 @@ import org.exoplatform.webui.event.Event.Phase;
  *      Aug 10, 2009
  */
 @ComponentConfig(
-		template =  "app:/groovy/dashboard/webui/component/UITabPaneDashboard.gtmpl"
+		template =  "app:/groovy/dashboard/webui/component/UITabPaneDashboard.gtmpl",
+		events = {
+				@EventConfig(name = "SelectTab", listeners = UITabPaneDashboard.SelectTabActionListener.class),
+				@EventConfig(name = "DeleteTab", listeners = UITabPaneDashboard.DeleteTabActionListener.class)
+		}
 )
 public class UITabPaneDashboard extends UIContainer{
 	
-	private static Log logger=ExoLogger.getExoLogger(UITabPaneDashboard.class);
-	//private volatile int selectedIndex;//Declare volatile to avoid using synchronize on read/write method
+	private static Log logger = ExoLogger.getExoLogger(UITabPaneDashboard.class);
+	
+	private /*volatile*/ int selectedIndex;
+	
 	private int startShowIndex;
 	private int endShowIndex;
 	private int tabNbs;
@@ -41,117 +47,130 @@ public class UITabPaneDashboard extends UIContainer{
 	private PageNavigation pageNavigation;
 	private UIPortal uiPortal;
 	
-//	private UITabDashboard selectedTabDashboard;
-//	
-	private List<UIComponent> children;//Reference to the children, that facilitates removing UITabDashboard
-	
 	final private static int MAX_SHOWED_TAB_NUMBER=6;
+	final public static String PAGE_TEMPLATE = "dashboard";
 	
 	public UITabPaneDashboard()throws Exception{
-		configService=getApplicationComponent(UserPortalConfigService.class);
-		uiPortal=Util.getUIPortal();
-		pageNavigation=uiPortal.getSelectedNavigation();
-		//loadExistingTabs();
-		children=getChildren();
+		configService = getApplicationComponent(UserPortalConfigService.class);
+		uiPortal = Util.getUIPortal();
+		pageNavigation = uiPortal.getSelectedNavigation();
 	}
-	
-	private void loadExistingTabs(){
-		if(pageNavigation==null){
-			return;
-		}
-		ArrayList<PageNode> pageNodes=pageNavigation.getNodes();
-//		for(PageNode node : pageNodes){
-//			createNewTabDashboard(node.getLabel());
-//		}
+			
+	public int getSelectedIndex(){
+		return selectedIndex;
 	}
-	
-	private void initPageNavigation(){
-		UserACL userACL=getApplicationComponent(UserACL.class);
-	}
-	
-	//public void setSelectedIndex(int _selectedIndex){
-	//	selectedIndex=_selectedIndex;
-	//}
-	
-	//public int getSelectedIndex(){
-	//	return selectedIndex;
-	//}
 	
 	public int getCurrentNumberOfTabs(){
-		return tabNbs;
+		return pageNavigation.getNodes().size();
 	}
 	
 	public int getStartShowIndex(){
-		return startShowIndex;
+		return this.startShowIndex;
 	}
 	
 	public int getEndShowIndex(){
-		if(endShowIndex>0){
-			return endShowIndex;
+		if(this.endShowIndex > 0){
+			return this.endShowIndex;
 		}
 		else{
-			return Math.min(tabNbs, startShowIndex+MAX_SHOWED_TAB_NUMBER);
+			return Math.min(this.tabNbs, this.startShowIndex + MAX_SHOWED_TAB_NUMBER);
 		}
 	}
 	
-//	public UITabDashboard createNewTabDashboard(String tabLabel){
-//		UITabDashboard newTab=null;
-//		try{
-//			newTab=addChild(UITabDashboard.class, null, null);
-//		}catch(Exception ex){
-//			logger.info("Could not create new UITabDashboard ",ex);
-//			return null;
-//		}
-//		if(tabLabel!=null){
-//			newTab.setTabLabel(tabLabel);
-//		}
-//		else{
-//			newTab.setTabLabel("Tab_"+tabNbs);
-//		}
-//		newTab.createPageNode(configService,pageNavigation);
-//		tabNbs++;
-//		return newTab;
-//	}
-//	
-//	public UITabDashboard removeTabDashboard(String childId){
-//		UITabDashboard targetedDashboard=getTabDashboard(childId);
-//		if(targetedDashboard==null){
-//			logger.info("Could not find the tab dashboard specified by "+childId);
-//			return null;
-//		}
-//		logger.info("Remove the pageNode from node navigation");
-//		targetedDashboard.cleanData(configService, pageNavigation);
-//		logger.info("Remove the tab dashboard from tab pane");
-//		children.remove(targetedDashboard);
-//		tabNbs--;
-//		return targetedDashboard;
-//	}
-//	
-//	private UITabDashboard getTabDashboard(String tabId){
-//		Iterator<UIComponent> iterator=children.iterator();
-//		UIComponent re;
-//		while(iterator.hasNext()){
-//			re=iterator.next();
-//			if(re instanceof UITabDashboard && ((UITabDashboard)re).getTabLabel().equals(tabId)){
-//				return (UITabDashboard)re;
-//			}
-//		}
-//		return null;
-//	}	
-//	
 	public PageNavigation getPageNavigation(){
+		if(pageNavigation == null){
+			pageNavigation = uiPortal.getSelectedNavigation();
+		}
 		return pageNavigation;
 	}
-//	
-//	public void setSelectedTabDashboard(UITabDashboard uiTabDashboard){
-//		selectedTabDashboard=uiTabDashboard;
-//		String uri=pageNavigation.getId()+"::"+selectedTabDashboard.getPageNode().getUri();
-//		PageNodeEvent<UIPortal> pnevent=new PageNodeEvent<UIPortal>(uiPortal,PageNodeEvent.CHANGE_PAGE_NODE,uri);
-//		try{
-//			uiPortal.broadcast(pnevent, Phase.PROCESS);
-//		}catch(Exception ex){
-//			logger.info("Could not change page node",ex);
-//		}
-//	}
+		
+	//public PageNode getPageNode(int nodeIndex){
+		//TODO: Get pageNavigation directly from portal
+	//	return pageNavigation.getNodes().get(nodeIndex);
+	//}
 	
+	synchronized public void setSelectedIndex(int _selectedIndex){
+		selectedIndex = _selectedIndex;
+	}
+	
+	public boolean removePageNode(int nodeIndex){
+		try{
+			pageNavigation.getNodes().remove(nodeIndex);
+			configService.update(pageNavigation);
+			if(nodeIndex <= selectedIndex){
+				setSelectedIndex(Math.max(0,selectedIndex - 1));
+			}
+			return true;
+		}catch(Exception ex){
+			return false;
+		}
+	}
+	
+	public boolean createNewPageNode(String nodeName){
+		try{
+			if(nodeName == null){
+				nodeName = "Tab_"+getCurrentNumberOfTabs();
+			}
+			Page page = configService.createPageTemplate(UITabPaneDashboard.PAGE_TEMPLATE,pageNavigation.getOwnerType(),pageNavigation.getOwnerId());
+			page.setTitle(nodeName);
+			page.setName(nodeName);
+			
+			PageNode pageNode = new PageNode();
+			pageNode.setName(nodeName);
+			pageNode.setLabel(nodeName);
+	    pageNode.setUri(nodeName);
+			pageNode.setPageReference(page.getPageId());
+				
+			pageNavigation.addNode(pageNode);
+			configService.create(page);
+			configService.update(pageNavigation);
+			setSelectedIndex(pageNavigation.getNodes().size()-1);
+			
+			String uri = pageNavigation.getId() + "::" + pageNode.getUri();
+			PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal,PageNodeEvent.CHANGE_PAGE_NODE,uri);
+			uiPortal.broadcast(pnevent, Phase.PROCESS);
+			return true;
+		}catch(Exception ex){
+			logger.info("Could not create page template",ex);
+			return false;
+		}
+	}
+	
+	static public class SelectTabActionListener extends EventListener<UITabPaneDashboard>{
+		public void execute(Event<UITabPaneDashboard> event) throws Exception {
+			UITabPaneDashboard source = event.getSource();
+			PageNavigation pageNavigation = source.getPageNavigation();
+			WebuiRequestContext context = event.getRequestContext();
+			int selectedIndex = Integer.parseInt(context.getRequestParameter(UIComponent.OBJECTID));	
+			source.setSelectedIndex(selectedIndex);
+			PageNode pageNode = pageNavigation.getNodes().get(selectedIndex);
+			UIPortal uiPortal = Util.getUIPortal(); //Better with source.getUIPortal();
+			
+			String uri = pageNavigation.getId() + "::" + pageNode.getUri();
+			PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal,PageNodeEvent.CHANGE_PAGE_NODE,uri);
+			uiPortal.broadcast(pnevent, Phase.PROCESS);
+			
+			context.addUIComponentToUpdateByAjax(source);
+		}
+	}
+	
+	static public class DeleteTabActionListener extends EventListener<UITabPaneDashboard>{
+		public void execute(Event<UITabPaneDashboard> event) throws Exception {
+			UITabPaneDashboard source = event.getSource();
+			WebuiRequestContext context = event.getRequestContext();
+			int selectedIndex = Integer.parseInt(context.getRequestParameter(UIComponent.OBJECTID));	
+			if(source.removePageNode(selectedIndex)){
+				PageNavigation pageNavigation = source.getPageNavigation();
+				PageNode pageNode = pageNavigation.getNodes().get(source.getSelectedIndex());
+				UIPortal uiPortal = Util.getUIPortal(); //Better with source.getUIPortal();
+			
+				String uri = pageNavigation.getId() + "::" + pageNode.getUri();
+				PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal,PageNodeEvent.CHANGE_PAGE_NODE,uri);
+				uiPortal.broadcast(pnevent, Phase.PROCESS);
+				
+				context.addUIComponentToUpdateByAjax(source);
+			}
+		}
+	}
+		
 }

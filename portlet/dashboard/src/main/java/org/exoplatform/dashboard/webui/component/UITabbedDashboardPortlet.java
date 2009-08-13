@@ -13,15 +13,16 @@ import org.exoplatform.webui.core.lifecycle.UIApplicationLifecycle;
  *      Aug 10, 2009
  */
 @ComponentConfig(
-		lifecycle=UIApplicationLifecycle.class,
-		template="app:/groovy/dashboard/webui/component/UITabbedDashboardPortlet.gtmpl"
+		lifecycle = UIApplicationLifecycle.class,
+		template = "app:/groovy/dashboard/webui/component/UITabbedDashboardPortlet.gtmpl"
 )
 public class UITabbedDashboardPortlet extends UIPortletApplication {
 	public UITabbedDashboardPortlet()throws Exception{
-		UITabPaneDashboard tabPane=addChild(UITabPaneDashboard.class,null,null);
-		UITabPaneDashboardManager tabManager=addChild(UITabPaneDashboardManager.class,null,null);
+		UITabPaneDashboard tabPane = addChild(UITabPaneDashboard.class,null,"UITabPaneDashboard");
+		UITabPaneDashboardManager tabManager = addChild(UITabPaneDashboardManager.class,null,"UITabPaneDashboardManager");
 		tabPane.setRendered(true);
 		tabManager.setRendered(true);
 		tabManager.setAssociatedTabPane(tabPane);
+		setId("UITabbedDashboardPortlet");
 	}
 }

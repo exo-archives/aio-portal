@@ -1,24 +1,13 @@
-Portlet root uicomponent
-
-*******************************************************************
-*                                                                 *
-* UITabPaneDashboard                   |UITabPaneDashboardManager *
-*******************************************************************
-
-<!--
-<% 
-	def tabPane=uicomponent.getChild(0);
+<%
+  def tabPane=uicomponent.getChild(0);
 	def tabPaneManager=uicomponent.getChild(1);
 	def context=_ctx.getRequestContext(); 
 %>
 <div id="$uicomponent.id">
-	<div class="PortletContainer">
 		<table>
 			<tr>
-				<td><div id="$tabPane.id"><% tabPane.processRender(context); %></div></td>
-				<td><div id="$tabPaneManager.id"><% tabPaneManager.processRender(context); %></div></td>
+				<td><% tabPane.processRender(context); %></td>
+				<td><% tabPaneManager.processRender(context); %></td>
 			</tr>
 		</table>
-	</div>
 </div>
--->

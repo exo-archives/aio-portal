@@ -1,23 +1,104 @@
-***************************************
-*UITabDashboard| UITabDashboard|..... *
-***************************************
-
-<!--
-<% 
-	def startShowIndex=uicomponent.getStartShowIndex();
-	def endShowIndex=uicomponent.getEndShowIndex();
-	def tabNbs=uicomponent.getCurrentNumberOfTabs();
+<%
+	import java.util.ArrayList; 
+	import org.exoplatform.portal.config.model.PageNavigation;
+	import org.exoplatform.portal.config.model.PageNode;
+	
+	def selectedIndex = uicomponent.getSelectedIndex();
+	def leftAffectedIndex = selectedIndex-1;
+	def rightAffectedIndex = selectedIndex+1;
+	
+	PageNavigation pageNavigation = uicomponent.getPageNavigation();
+	ArrayList<PageNode> nodes = pageNavigation.getNodes();
+	def tabNbs = nodes.size();
+	PageNode node; 
 %>
 
 <div id="$uicomponent.id">
 	<table>
 		<tr>
 			<% for(int i=0;i<tabNbs;i++){ %>
-				<td>
-					<% uicomponent.renderChild(i); %>
-				</td>
+				<% 
+					node = nodes.get(i);
+					String param=""+i;
+					if(i==leftAffectedIndex){ 
+				%>
+						<td bgcolor="#00FF00">
+							<table>
+								<tr>
+									<td>
+										<div>
+											<a	href="<%= uicomponent.event("SelectTab",param); %>"	><%= node.getName(); %></a>
+										</div>
+									</td>
+									<td>
+										<div>
+											<a	href="<%= uicomponent.event("DeleteTab",param); %>"	>
+												<img class="CloseIcon" src="/eXoResources/skin/sharedImages/Blank.gif" alt="DEL" />
+											</a>
+										</div>
+									</td>
+								</tr>	
+							</table>
+						</td>
+					<% }else if(i==selectedIndex){ %>
+						<td bgcolor="#FF0000">
+							<table>
+								<tr>
+									<td>
+										<div>
+											<a	href="<%= uicomponent.event("SelectTab",param); %>"><%= node.getName(); %></a>
+										</div>
+									</td>
+									<td>
+										<div>
+											<a  href="<%= uicomponent.event("DeleteTab",param); %>">
+												<img class="CloseIcon" src="/eXoResources/skin/sharedImages/Blank.gif" alt="DEL" />
+											</a>
+										</div>
+									</td>
+								</tr>	
+							</table>
+						</td>
+					<%	}else if(i==rightAffectedIndex){%>
+						<td bgcolor="#0000FF">
+							<table>
+								<tr>
+									<td>
+										<div>
+											<a	href="<%= uicomponent.event("SelectTab",param); %>"><%= node.getName(); %></a>
+										</div>
+									</td>
+									<td>
+										<div>
+											<a	href="<%= uicomponent.event("DeleteTab",param); %>">
+												<img class="CloseIcon" src="/eXoResources/skin/sharedImages/Blank.gif" alt="DEL" />
+											</a>
+										</div>
+									</td>
+								</tr>	
+							</table>
+						</td>
+					<% }else{ %>
+						<td>
+							<table>
+								<tr>
+									<td>
+										<div>
+											<a	href="<%= uicomponent.event("SelectTab",param); %>"><%= node.getName(); %></a>
+										</div>
+									</td>
+									<td>
+										<div>
+											<a	href="<%= uicomponent.event("DeleteTab",param); %>">
+												<img class="CloseIcon" src="/eXoResources/skin/sharedImages/Blank.gif" alt="DEL" />
+											</a>
+										</div>
+									</td>
+								</tr>	
+							</table>
+						</td>
+					<% } %>	
 			<% } %>
 		</tr>
 	</table>
 </div>
--->
