@@ -29,6 +29,8 @@ import org.exoplatform.commons.utils.ListAccess;
 import java.util.Comparator;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import org.exoplatform.portal.pom.config.tasks.PageTask;
 import org.exoplatform.portal.pom.config.tasks.PortalConfigTask;
@@ -39,6 +41,11 @@ import org.gatein.mop.api.workspace.Site;
 import org.gatein.mop.api.workspace.Workspace;
 import org.gatein.mop.api.workspace.ObjectType;
 import org.gatein.mop.api.workspace.Portal;
+import org.gatein.mop.core.impl.api.POMFormatter;
+import org.chromattic.api.ChromatticSession;
+import org.chromattic.api.query.QueryLanguage;
+
+import javax.jcr.Node;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -183,27 +190,62 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
       return new LazyPageList<PortalConfig>(la, 10);
     } else if (Page.class.equals(q.getClassType())) {
       final POMSession session = pomMgr.getSession();
-      ObjectType<? extends Site> siteType = Mapper.parseSiteType(q.getOwnerType());
-      String ownerId = q.getOwnerId();
+
+      // That code should be moved to the MOP project somehow
+      ChromatticSession tmp = session.getChromatticSession();
       Workspace workspace = session.getWorkspace();
-      Site site = workspace.getSite(siteType, ownerId);
+      String id = tmp.getId(workspace);
+      Node workspaceNode = tmp.getJCRSession().getNodeByUUID(id);
+      String statement;
+      String ownerType = q.getOwnerType();
+      if (ownerType != null) {
+        try {
+          ObjectType<? extends Site> siteType = Mapper.parseSiteType(ownerType);
+          Node containerNode;
+          if (siteType == ObjectType.PORTAL) {
+            containerNode = workspaceNode.getNode("portals");
+          } else if (siteType == ObjectType.GROUP) {
+            containerNode = workspaceNode.getNode("groups");
+          } else {
+            containerNode = workspaceNode.getNode("users");
+          }
+          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + containerNode.getPath() + "/%/root/pages/%'";
+        }
+        catch (IllegalArgumentException e) {
+          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE ''";
+        }
+      } else {
+        String ownerId = q.getOwnerId();
+        if (ownerId != null) {
+          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspaceNode.getPath() + "/%/" + new POMFormatter().encodeNodeName(null, ownerId) + "/root/pages/%'";
+        } else {
+          statement = "SELECT * FROM mop:page";
+        }
+      }
 
       //
-      final Collection<? extends org.gatein.mop.api.workspace.Page> bilto = site.getRootPage().getChild("pages").getChildren();
+      org.chromattic.api.query.Query query = tmp.createQuery(QueryLanguage.SQL, statement);
+      Iterator<org.gatein.mop.api.workspace.Page> ite = query.execute(org.gatein.mop.api.workspace.Page.class);
+      final ArrayList<org.gatein.mop.api.workspace.Page> array = new ArrayList<org.gatein.mop.api.workspace.Page>();
+      while (ite.hasNext()) {
+        array.add(ite.next());
+      }
+
+      //
+      final Iterator<? extends org.gatein.mop.api.workspace.Page> it = array.iterator();
       ListAccess<Page> la = new ListAccess<Page>() {
         public Page[] load(int index, int length) throws Exception, IllegalArgumentException {
-          Iterator<? extends org.gatein.mop.api.workspace.Page> iterator = bilto.iterator();
           Mapper mapper = new Mapper(session.getContentManager());
           Page[] result = new Page[length];
           for (int i = 0;i < length;i++) {
             Page page = new Page();
-            mapper.load(iterator.next(), page);
+            mapper.load(it.next(), page);
             result[i] = page;
           }
           return result;
         }
         public int getSize() throws Exception {
-          return bilto.size();
+          return array.size();
         }
       };
 

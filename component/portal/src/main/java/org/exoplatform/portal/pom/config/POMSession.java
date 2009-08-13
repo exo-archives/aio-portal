@@ -19,6 +19,9 @@ package org.exoplatform.portal.pom.config;
 import org.gatein.mop.core.impl.api.POM;
 import org.gatein.mop.api.workspace.Workspace;
 import org.gatein.mop.api.content.ContentManager;
+import org.chromattic.api.ChromatticSession;
+
+import java.lang.reflect.Field;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -53,6 +56,19 @@ public class POMSession {
 
   public ContentManager getContentManager() {
     return getModel().getContentManager();
+  }
+
+  public ChromatticSession getChromatticSession() {
+    // todo : replace that
+    try {
+      POM m = getModel();
+      Field field = m.getClass().getDeclaredField("session");
+      field.setAccessible(true);
+      return (ChromatticSession)field.get(m);
+    }
+    catch (Exception e) {
+      throw new AssertionError(e);
+    }
   }
 
   public <T extends Throwable> void execute(POMTask task) throws Exception {
