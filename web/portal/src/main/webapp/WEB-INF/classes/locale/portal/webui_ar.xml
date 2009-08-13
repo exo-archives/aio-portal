@@ -1409,8 +1409,10 @@
       <deletePortlet>حذف مدخل</deletePortlet>
       <ResizeWindow>تغيير حجم النافذة</ResizeWindow>
       <DragControl>هذا المجال لجر هذا المدخل</DragControl>
-    </tooltip>
-    <errorPortlet>هذا المدخل واجه خطأ وأنه لا يمكن عرضها</errorPortlet>
+    </tooltip>UIPortlet.message.RuntimeError
+    <message>
+      <RuntimeError>هذا المدخل واجه خطأ وأنه لا يمكن عرضها</RuntimeError>
+    </message>
   </UIPortlet>
   <!--
   #############################################################################

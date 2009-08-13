@@ -164,7 +164,7 @@ public class UIPortletLifecycle extends Lifecycle {
         }
       }
     } catch (Throwable ex) {
-    	String message = context.getApplicationResourceBundle().getString("UIPortlet.errorPortlet");      
+    	String message = context.getApplicationResourceBundle().getString("UIPortlet.message.RuntimeError");      
         markup = Text.create(message);
         log.error("The portlet " + uiPortlet.getName() + " could not be loaded. Check if properly deployed.", ExceptionUtil.getRootCause(ex));
     }
