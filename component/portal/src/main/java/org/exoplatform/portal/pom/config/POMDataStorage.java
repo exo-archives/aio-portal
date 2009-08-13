@@ -219,7 +219,7 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
         if (ownerId != null) {
           statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspaceNode.getPath() + "/%/" + new POMFormatter().encodeNodeName(null, ownerId) + "/root/pages/%'";
         } else {
-          statement = "SELECT * FROM mop:page";
+          throw new UnsupportedOperationException("Julien : todo");
         }
       }
 
