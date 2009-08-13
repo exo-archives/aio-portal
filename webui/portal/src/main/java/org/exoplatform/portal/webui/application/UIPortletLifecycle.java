@@ -164,8 +164,9 @@ public class UIPortletLifecycle extends Lifecycle {
         }
       }
     } catch (Throwable ex) {
-      markup = Text.create("This portlet encountered an error and could not be displayed.");
-      log.error("The portlet " + uiPortlet.getName() + " could not be loaded. Check if properly deployed.", ExceptionUtil.getRootCause(ex));
+    	String message = context.getApplicationResourceBundle().getString("UIPortlet.errorPortlet");      
+        markup = Text.create(message);
+        log.error("The portlet " + uiPortlet.getName() + " could not be loaded. Check if properly deployed.", ExceptionUtil.getRootCause(ex));
     }
     if (output != null) {
       portletTitle = output.getTitle();
