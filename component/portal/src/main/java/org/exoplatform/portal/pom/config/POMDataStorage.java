@@ -209,7 +209,7 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
           } else {
             containerNode = workspaceNode.getNode("users");
           }
-          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + containerNode.getPath() + "/%/root/pages/%'";
+          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + containerNode.getPath() + "/%/root/pages/pages/pages/%'";
         }
         catch (IllegalArgumentException e) {
           statement = "SELECT * FROM mop:page WHERE jcr:path LIKE ''";
@@ -217,9 +217,14 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
       } else {
         String ownerId = q.getOwnerId();
         if (ownerId != null) {
-          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspaceNode.getPath() + "/%/" + new POMFormatter().encodeNodeName(null, ownerId) + "/root/pages/%'";
+          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspaceNode.getPath() + "/%/" + new POMFormatter().encodeNodeName(null, ownerId) + "/root/pages/pages/pages/%'";
         } else {
-          throw new UnsupportedOperationException("Julien : todo");
+          String title = q.getTitle();
+          if (title != null) {
+            throw new UnsupportedOperationException("Julien : todo");
+          } else {
+            statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspaceNode.getPath() + "/%/%/root/pages/pages/pages/%'";
+          }
         }
       }
 
