@@ -158,6 +158,11 @@ public class UIGroupMembershipForm extends UIForm {
     }  
   }
   
+  @Override
+  public void begin() throws Exception {
+  	// TODO Auto-generated method stub
+  	super.begin();
+  }
   static  public class SaveActionListener extends EventListener<UIGroupMembershipForm> {
     public void execute(Event<UIGroupMembershipForm> event) throws Exception {
       UIGroupMembershipForm uiForm = event.getSource() ;

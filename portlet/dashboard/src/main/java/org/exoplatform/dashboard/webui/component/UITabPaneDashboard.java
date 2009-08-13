@@ -41,8 +41,8 @@ public class UITabPaneDashboard extends UIContainer{
 	private PageNavigation pageNavigation;
 	private UIPortal uiPortal;
 	
-	private UITabDashboard selectedTabDashboard;
-	
+//	private UITabDashboard selectedTabDashboard;
+//	
 	private List<UIComponent> children;//Reference to the children, that facilitates removing UITabDashboard
 	
 	final private static int MAX_SHOWED_TAB_NUMBER=6;
@@ -60,9 +60,9 @@ public class UITabPaneDashboard extends UIContainer{
 			return;
 		}
 		ArrayList<PageNode> pageNodes=pageNavigation.getNodes();
-		for(PageNode node : pageNodes){
-			createNewTabDashboard(node.getLabel());
-		}
+//		for(PageNode node : pageNodes){
+//			createNewTabDashboard(node.getLabel());
+//		}
 	}
 	
 	private void initPageNavigation(){
@@ -94,64 +94,64 @@ public class UITabPaneDashboard extends UIContainer{
 		}
 	}
 	
-	public UITabDashboard createNewTabDashboard(String tabLabel){
-		UITabDashboard newTab=null;
-		try{
-			newTab=addChild(UITabDashboard.class, null, null);
-		}catch(Exception ex){
-			logger.info("Could not create new UITabDashboard ",ex);
-			return null;
-		}
-		if(tabLabel!=null){
-			newTab.setTabLabel(tabLabel);
-		}
-		else{
-			newTab.setTabLabel("Tab_"+tabNbs);
-		}
-		newTab.createPageNode(configService,pageNavigation);
-		tabNbs++;
-		return newTab;
-	}
-	
-	public UITabDashboard removeTabDashboard(String childId){
-		UITabDashboard targetedDashboard=getTabDashboard(childId);
-		if(targetedDashboard==null){
-			logger.info("Could not find the tab dashboard specified by "+childId);
-			return null;
-		}
-		logger.info("Remove the pageNode from node navigation");
-		targetedDashboard.cleanData(configService, pageNavigation);
-		logger.info("Remove the tab dashboard from tab pane");
-		children.remove(targetedDashboard);
-		tabNbs--;
-		return targetedDashboard;
-	}
-	
-	private UITabDashboard getTabDashboard(String tabId){
-		Iterator<UIComponent> iterator=children.iterator();
-		UIComponent re;
-		while(iterator.hasNext()){
-			re=iterator.next();
-			if(re instanceof UITabDashboard && ((UITabDashboard)re).getTabLabel().equals(tabId)){
-				return (UITabDashboard)re;
-			}
-		}
-		return null;
-	}	
-	
+//	public UITabDashboard createNewTabDashboard(String tabLabel){
+//		UITabDashboard newTab=null;
+//		try{
+//			newTab=addChild(UITabDashboard.class, null, null);
+//		}catch(Exception ex){
+//			logger.info("Could not create new UITabDashboard ",ex);
+//			return null;
+//		}
+//		if(tabLabel!=null){
+//			newTab.setTabLabel(tabLabel);
+//		}
+//		else{
+//			newTab.setTabLabel("Tab_"+tabNbs);
+//		}
+//		newTab.createPageNode(configService,pageNavigation);
+//		tabNbs++;
+//		return newTab;
+//	}
+//	
+//	public UITabDashboard removeTabDashboard(String childId){
+//		UITabDashboard targetedDashboard=getTabDashboard(childId);
+//		if(targetedDashboard==null){
+//			logger.info("Could not find the tab dashboard specified by "+childId);
+//			return null;
+//		}
+//		logger.info("Remove the pageNode from node navigation");
+//		targetedDashboard.cleanData(configService, pageNavigation);
+//		logger.info("Remove the tab dashboard from tab pane");
+//		children.remove(targetedDashboard);
+//		tabNbs--;
+//		return targetedDashboard;
+//	}
+//	
+//	private UITabDashboard getTabDashboard(String tabId){
+//		Iterator<UIComponent> iterator=children.iterator();
+//		UIComponent re;
+//		while(iterator.hasNext()){
+//			re=iterator.next();
+//			if(re instanceof UITabDashboard && ((UITabDashboard)re).getTabLabel().equals(tabId)){
+//				return (UITabDashboard)re;
+//			}
+//		}
+//		return null;
+//	}	
+//	
 	public PageNavigation getPageNavigation(){
 		return pageNavigation;
 	}
-	
-	public void setSelectedTabDashboard(UITabDashboard uiTabDashboard){
-		selectedTabDashboard=uiTabDashboard;
-		String uri=pageNavigation.getId()+"::"+selectedTabDashboard.getPageNode().getUri();
-		PageNodeEvent<UIPortal> pnevent=new PageNodeEvent<UIPortal>(uiPortal,PageNodeEvent.CHANGE_PAGE_NODE,uri);
-		try{
-			uiPortal.broadcast(pnevent, Phase.PROCESS);
-		}catch(Exception ex){
-			logger.info("Could not change page node",ex);
-		}
-	}
+//	
+//	public void setSelectedTabDashboard(UITabDashboard uiTabDashboard){
+//		selectedTabDashboard=uiTabDashboard;
+//		String uri=pageNavigation.getId()+"::"+selectedTabDashboard.getPageNode().getUri();
+//		PageNodeEvent<UIPortal> pnevent=new PageNodeEvent<UIPortal>(uiPortal,PageNodeEvent.CHANGE_PAGE_NODE,uri);
+//		try{
+//			uiPortal.broadcast(pnevent, Phase.PROCESS);
+//		}catch(Exception ex){
+//			logger.info("Could not change page node",ex);
+//		}
+//	}
 	
 }

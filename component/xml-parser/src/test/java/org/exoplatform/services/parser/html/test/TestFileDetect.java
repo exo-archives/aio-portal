@@ -70,10 +70,6 @@ public class TestFileDetect extends BasicTestCase {
 		}
 		
     assertNotNull(document);
-    assertEquals("ASCII", HTMLParser.getCharset());
-    System.out.println("\n\nCHARSET: " + HTMLParser.getCharset());
-
-    assertNull(document.getDoctype());
     assertNotNull(document.getRoot());
   }
 

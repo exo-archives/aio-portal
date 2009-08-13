@@ -47,12 +47,11 @@ public class UITabPaneDashboardManager extends UIContainer {
 		public void execute(Event<UITabPaneDashboardManager> event) throws Exception {
 			UITabPaneDashboardManager source=event.getSource();
 			UITabPaneDashboard tabPane=source.getAssociatedTabPane();
-			UITabDashboard newTab=tabPane.createNewTabDashboard(null);
-			if(newTab!=null){
-				WebuiRequestContext context=event.getRequestContext();
-				context.addUIComponentToUpdateByAjax(tabPane);
-				tabPane.setSelectedTabDashboard(newTab);
-			}
+//			if(newTab!=null){
+//				WebuiRequestContext context=event.getRequestContext();
+//				context.addUIComponentToUpdateByAjax(tabPane);
+//				tabPane.setSelectedTabDashboard(newTab);
+//			}
 		}
 	}
 	

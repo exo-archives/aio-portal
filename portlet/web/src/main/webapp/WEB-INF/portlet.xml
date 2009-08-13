@@ -137,7 +137,7 @@
       </preference>
       <preference>
         <name>showUserNavigation</name>
-        <value>true</value>
+        <value>false</value>
         <read-only>false</read-only>
       </preference>
     </portlet-preferences>
