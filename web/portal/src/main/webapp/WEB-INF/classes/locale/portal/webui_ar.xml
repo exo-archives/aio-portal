@@ -1324,6 +1324,9 @@
       <ResizeWindow>تغيير حجم النافذة</ResizeWindow>
       <DragControl>هذا المجال لجر هذا المدخل</DragControl>
     </tooltip>
+	<message>
+      <RuntimeError>هذا المدخل واجه خطأ وأنه لا يمكن عرضها</RuntimeError>
+    </message>
   </UIPortlet>
   <!--
   #############################################################################

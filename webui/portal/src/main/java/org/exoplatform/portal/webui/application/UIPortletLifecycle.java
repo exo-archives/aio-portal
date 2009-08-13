@@ -186,7 +186,9 @@ public class UIPortletLifecycle extends Lifecycle {
       // TODO tam.nguyen fix bug PORTAL-2660
       PortletExceptionHandleService portletExceptionService = (PortletExceptionHandleService) container.getComponentInstanceOfType(PortletExceptionHandleService.class);
       portletExceptionService.handle(ex);
-      markup = Text.create("This portlet encountered an error and could not be displayed.");
+	  //PORTAL-3242: localise message
+      String message = context.getApplicationResourceBundle().getString("UIPortlet.message.RuntimeError");      
+        markup = Text.create(message);
 //      log.error("The portlet " + uiPortlet.getName()
 //          + " could not be loaded. Check if properly deployed.", ExceptionUtil.getRootCause(ex));
     }
