@@ -277,7 +277,7 @@ public class Mapper {
     dst.setProperties(properties);
 
     //
-    if (src.getObjectType() == ObjectType.PORTAL) {
+    if (src.getObjectType() == ObjectType.PORTAL_SITE) {
       org.gatein.mop.api.workspace.Page template = src.getRootNavigation().getTemplate();
       load(template.getLayout(), dst.getPortalLayout());
     }
@@ -297,7 +297,7 @@ public class Mapper {
     }
 
     //
-    if (dst.getObjectType() == ObjectType.PORTAL) {
+    if (dst.getObjectType() == ObjectType.PORTAL_SITE) {
       org.gatein.mop.api.workspace.Page templates = dst.getRootPage().getChild("templates");
       org.gatein.mop.api.workspace.Page template = templates.addChild("default");
       save(src.getPortalLayout(), template.getLayout());
@@ -495,11 +495,11 @@ public class Mapper {
   }
 
   public static String getOwnerType(ObjectType<? extends Site> siteType) {
-    if (siteType == ObjectType.PORTAL) {
+    if (siteType == ObjectType.PORTAL_SITE) {
       return PortalConfig.PORTAL_TYPE;
-    } else if (siteType == ObjectType.GROUP) {
+    } else if (siteType == ObjectType.GROUP_SITE) {
       return PortalConfig.GROUP_TYPE;
-    } else if (siteType == ObjectType.USER) {
+    } else if (siteType == ObjectType.USER_SITE) {
       return PortalConfig.USER_TYPE;
     } else {
       throw new IllegalArgumentException("Invalid site type " + siteType);
@@ -508,11 +508,11 @@ public class Mapper {
 
   public static ObjectType<? extends Site> parseSiteType(String ownerType) {
     if (ownerType.equals(PortalConfig.PORTAL_TYPE)) {
-      return ObjectType.PORTAL;
+      return ObjectType.PORTAL_SITE;
     } else if (ownerType.equals(PortalConfig.GROUP_TYPE)) {
-      return ObjectType.GROUP;
+      return ObjectType.GROUP_SITE;
     } else if (ownerType.equals(PortalConfig.USER_TYPE)) {
-      return ObjectType.USER;
+      return ObjectType.USER_SITE;
     } else {
       throw new IllegalArgumentException("Invalid owner type " + ownerType);
     }

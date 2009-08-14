@@ -20,11 +20,11 @@ import org.exoplatform.container.PortalContainer;
 import org.exoplatform.portal.pom.config.POMSessionManager;
 import org.exoplatform.portal.pom.config.POMSession;
 import org.exoplatform.test.BasicTestCase;
-import org.gatein.mop.api.workspace.Portal;
 import org.gatein.mop.api.workspace.ObjectType;
 import org.gatein.mop.api.workspace.Navigation;
 import org.gatein.mop.api.workspace.NavigationLink;
 import org.gatein.mop.api.workspace.Page;
+import org.gatein.mop.api.workspace.Site;
 import org.gatein.mop.api.workspace.ui.UIContainer;
 import org.gatein.mop.api.workspace.ui.UIComponent;
 import org.gatein.mop.api.workspace.ui.UIWindow;
@@ -72,7 +72,7 @@ public class TestSavedPOM extends BasicTestCase {
 
   public void testNavigation() throws Exception {
     POMSession session = mgr.openSession();
-    Portal portal = session.getWorkspace().getSite(ObjectType.PORTAL, "test");
+    Site portal = session.getWorkspace().getSite(ObjectType.PORTAL_SITE, "test");
     assertNotNull(portal);
 
     //
@@ -118,7 +118,7 @@ public class TestSavedPOM extends BasicTestCase {
 
   public void testPortal() throws Exception {
     POMSession session = mgr.openSession();
-    Portal portal = session.getWorkspace().getSite(ObjectType.PORTAL, "test");
+    Site portal = session.getWorkspace().getSite(ObjectType.PORTAL_SITE, "test");
     assertNotNull(portal);
 
     assertEquals("test", portal.getName());
@@ -143,7 +143,7 @@ public class TestSavedPOM extends BasicTestCase {
 
   public void testPage() throws Exception {
     POMSession session = mgr.openSession();
-    Portal testPortal = session.getWorkspace().getSite(ObjectType.PORTAL, "test");
+    Site testPortal = session.getWorkspace().getSite(ObjectType.PORTAL_SITE, "test");
     assertNotNull(testPortal);
 
     //
