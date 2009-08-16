@@ -11,10 +11,11 @@
     <state-manager>org.exoplatform.portal.application.PortalStateManager</state-manager>
     
     <application-lifecycle-listeners>       
-      <listener>org.exoplatform.portal.application.PortalStatisticLifecycle</listener>       
+      <listener>org.exoplatform.portal.application.MOPSessionLifeCycle</listener>
+      <listener>org.exoplatform.portal.application.PortalStatisticLifecycle</listener>
       <listener>org.exoplatform.portal.application.PortalApplicationLifecycle</listener>
-      <listener>org.exoplatform.webui.application.MonitorApplicationLifecycle</listener>       
-    </application-lifecycle-listeners>     
+      <listener>org.exoplatform.webui.application.MonitorApplicationLifecycle</listener>
+    </application-lifecycle-listeners>
 
     <events>
       <event>

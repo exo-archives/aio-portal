@@ -35,6 +35,7 @@ import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.config.model.PortalConfig;
+import org.exoplatform.portal.pom.config.POMDataStorage;
 import org.exoplatform.services.cache.CacheService;
 import org.exoplatform.services.cache.ExoCache;
 import org.exoplatform.services.cache.ExpireKeyStartWithSelector;
@@ -213,7 +214,7 @@ public class UserPortalConfigService implements Startable {
 		portalConfig.setTemplateOwner(template);
 		portalConfig.getPredefinedOwner().clear();
 		portalConfig.getPredefinedOwner().add(portalName);
-		newPortalConfigListener_.initPortalTypeDB(portalConfig);
+		newPortalConfigListener_.initPortalConfigDB(portalConfig);
 	}
 
 	/**
@@ -575,8 +576,14 @@ public class UserPortalConfigService implements Startable {
 			if (newPortalConfigListener_ == null)
 				return;
 			newPortalConfigListener_.run();
+
+      //
+      if (storage_ instanceof POMDataStorage) {
+        ((POMDataStorage)storage_).getPOMSessionManager().closeSession(true);
+      }
+
 		} catch (Exception e) {
-			log.error(e);
+			log.error("", e);
 		}
 	}
 

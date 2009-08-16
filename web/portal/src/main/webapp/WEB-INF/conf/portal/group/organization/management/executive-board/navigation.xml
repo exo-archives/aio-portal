@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <node-navigation>
 	<owner-type>group</owner-type>
-  <owner-id>organization/management/executive-board</owner-id>
+  <owner-id>/organization/management/executive-board</owner-id>
   <priority>5</priority>
   
   <page-nodes>
@@ -14,14 +14,14 @@
 	      <uri>organization/newStaff</uri>
 	      <name>newStaff</name>
 	      <label>#{organization.newstaff}</label>
-	      <page-reference>group::organization/management/executive-board::newStaff</page-reference>
+	      <page-reference>group::/organization/management/executive-board::newStaff</page-reference>
     	</node>
     	
     	<node>
 	      <uri>organization/management</uri>
 	      <name>management</name>
 	      <label>#{organization.management}</label>
-	      <page-reference>group::organization/management/executive-board::management</page-reference>
+	      <page-reference>group::/organization/management/executive-board::management</page-reference>
     	</node>    	
     </node>
             

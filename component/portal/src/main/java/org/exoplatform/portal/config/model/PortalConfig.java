@@ -32,6 +32,9 @@ public class PortalConfig {
   
 	private String    name ;
 
+  /** Added for new POM . */
+  private String    type;
+
 	private String    locale ;
   
   private String[]  accessPermissions ;
@@ -51,8 +54,17 @@ public class PortalConfig {
   
   public PortalConfig() {
     portalLayout = new Container();
+    type = PORTAL_TYPE;
   }
   
+  public PortalConfig(String type) {
+    portalLayout = new Container();
+    this.type = type;
+  }
+
+  public String getType() { return type; }
+  public void   setType(String type) { this.type = type; }
+
   public String getName() { return name ; }
   public void   setName(String s) { name = s  ; } 
  

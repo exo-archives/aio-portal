@@ -19,8 +19,6 @@ package org.exoplatform.portal.config;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -35,6 +33,9 @@ import org.exoplatform.portal.application.PortletPreferences.PortletPreferencesS
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PortalConfig;
+import org.exoplatform.portal.config.model.Application;
+import org.exoplatform.portal.config.model.Container;
+import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.config.model.Page.PageSet;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
@@ -87,13 +88,22 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
       return;
     for (Object ele : configs) {
       NewPortalConfig portalConfig = (NewPortalConfig) ele;
-      if (portalConfig.getOwnerType().equals("user")) {
-        initUserTypeDB(portalConfig);
-      } else if (portalConfig.getOwnerType().equals(PortalConfig.GROUP_TYPE)) {
-        initGroupTypeDB(portalConfig);
-      } else {
-        initPortalTypeDB(portalConfig);
-      }
+      initPortalConfigDB(portalConfig);
+    }
+    for (Object ele : configs) {
+      NewPortalConfig portalConfig = (NewPortalConfig) ele;
+      initPageDB(portalConfig);
+    }
+    for (Object ele : configs) {
+      NewPortalConfig portalConfig = (NewPortalConfig) ele;
+      initPageNavigationDB(portalConfig);
+    }
+    for (Object ele : configs) {
+      NewPortalConfig portalConfig = (NewPortalConfig) ele;
+      initPortletPreferencesDB(portalConfig);
+    }
+    for (Object ele : configs) {
+      NewPortalConfig portalConfig = (NewPortalConfig) ele;
       portalConfig.getPredefinedOwner().clear();
     }
   }
@@ -112,48 +122,125 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     return pconfig != null;
   }
 
-  public void initUserTypeDB(NewPortalConfig config) throws Exception {
-    HashSet<String> owners = config.getPredefinedOwner();
-    Iterator<String> iter = owners.iterator();
-    while (iter.hasNext()) {
-      String owner = iter.next();
-      createPage(config, owner);
-      createPageNavigation(config, owner);
-    }
-  }
-
-  public void initGroupTypeDB(NewPortalConfig config) throws Exception {
-    HashSet<String> owners = config.getPredefinedOwner();
-    Iterator<String> iter = owners.iterator();
-    while (iter.hasNext()) {
-      String owner = iter.next();
-      createPage(config, owner);
-      createPageNavigation(config, owner);
-      createPortletPreferences(config, owner);
-    }
-  }
-
-  public void initPortalTypeDB(NewPortalConfig config) throws Exception {
-    HashSet<String> owners = config.getPredefinedOwner();
-    Iterator<String> iter = owners.iterator();
-    while (iter.hasNext()) {
-      String owner = iter.next();
+  public void initPortalConfigDB(NewPortalConfig config) throws Exception {
+    for (String owner : config.getPredefinedOwner()) {
       createPortalConfig(config, owner);
-      createPage(config, owner);
-      createPageNavigation(config, owner);
-      createPortletPreferences(config, owner);
     }
+  }
+
+  public void initPageDB(NewPortalConfig config) throws Exception {
+    for (String owner : config.getPredefinedOwner()) {
+      createPage(config, owner);
+    }
+  }
+
+  public void initPageNavigationDB(NewPortalConfig config) throws Exception {
+    for (String owner : config.getPredefinedOwner()) {
+      createPageNavigation(config, owner);
+    }
+  }
+
+  public void initPortletPreferencesDB(NewPortalConfig config) throws Exception {
+    for (String owner : config.getPredefinedOwner()) {
+      if  (!config.getOwnerType().equals(PortalConfig.USER_TYPE)) {
+        createPortletPreferences(config, owner);
+      }
+    }
+  }
+
+  private static String fixOwnerName(String type, String owner) {
+    if (type.equals(PortalConfig.GROUP_TYPE) && !owner.startsWith("/")) {
+      return "/" + owner;
+    } else {
+      return owner;
+    }
+  }
+
+  private static String fixOwnerName(String persistenceId) {
+    int pos1 = persistenceId.indexOf("#");
+    String type = persistenceId.substring(0, pos1);
+    int pos2 = persistenceId.indexOf(":", pos1 + 1);
+    String owner = persistenceId.substring(pos1 + 1, pos2);
+    String windowId = persistenceId.substring(pos2 + 1);
+    owner = fixOwnerName(type, owner);
+    return type + "#" + owner + ":" + windowId;
+  }
+
+  private static void fixOwnerName(PortalConfig config) {
+    config.setName(fixOwnerName(config.getType(), config.getName()));
+    fixOwnerName(config.getPortalLayout());
+  }
+
+  private static void fixOwnerName(Container container) {
+    for (Object o : container.getChildren()) {
+      if (o instanceof Container) {
+        fixOwnerName((Container)o);
+      } else if (o instanceof Application) {
+        fixOwnerName((Application)o);
+      }
+    }
+  }
+
+  private static void fixOwnerName(Application application) {
+    String instanceId = application.getInstanceId();
+    instanceId = fixOwnerName(instanceId);
+    application.setInstanceId(instanceId);
+  }
+
+  private static void fixOwnerName(PageNavigation pageNav) {
+    pageNav.setOwnerId(fixOwnerName(pageNav.getOwnerType(), pageNav.getOwnerId()));
+    for (PageNode pageNode : pageNav.getNodes()) {
+      fixOwnerName(pageNode);
+    }
+  }
+
+  private static void fixOwnerName(PageNode pageNode) {
+    if (pageNode.getPageReference() != null) {
+      String pageRef = pageNode.getPageReference();
+      int pos1 = pageRef.indexOf("::");
+      int pos2 = pageRef.indexOf("::", pos1 + 2);
+      String type = pageRef.substring(0, pos1);
+      String owner = pageRef.substring(pos1 + 2, pos2);
+      String name = pageRef.substring(pos2 + 2);
+      owner = fixOwnerName(type, owner);
+      pageRef = type + "::" + owner + "::" + name;
+      pageNode.setPageReference(pageRef);
+    }
+    if (pageNode.getChildren() != null) {
+      for (PageNode childPageNode : pageNode.getChildren()) {
+        fixOwnerName(childPageNode);
+      }
+    }
+  }
+
+  private static void fixOwnerName(PortletPreferences prefs) {
+    prefs.setOwnerId(fixOwnerName(prefs.getOwnerType(), prefs.getOwnerId()));
+    prefs.setWindowId(fixOwnerName(prefs.getWindowId()));
+  }
+
+  private static void fixOwnerName(Page page) {
+    page.setOwnerId(fixOwnerName(page.getOwnerType(), page.getOwnerId()));
+    page.setPageId(null);
+    fixOwnerName((Container)page);
   }
 
   private void createPortalConfig(NewPortalConfig config, String owner) throws Exception {
-    String xml = null;
+    String type = config.getOwnerType();
+
+    //
+    if (pdcService_.getPortalConfig(type, owner) != null) {
+      return;
+    }
+
+
+    String xml;
     
     // get path of xml file, check if path in template folder and if path not in
     // template folder
     boolean notTemplate = (config.getTemplateOwner() == null || config.getTemplateOwner()
                                                                       .trim()
                                                                       .length() < 1);
-    String path = getPathConfig(config, owner, "portal", notTemplate);
+    String path = getPathConfig(config, owner, type, notTemplate);
 
     // get xml content and parse xml content
     try {
@@ -162,11 +249,13 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
       if (!notTemplate) {
         xml = StringUtils.replace(xml, "@owner@", owner);
       }
-      
+
     PortalConfig pconfig = fromXML(xml, PortalConfig.class);
+    pconfig.setType(type);
+    fixOwnerName(pconfig);
     pdcService_.create(pconfig);
     } catch (JiBXException e) {
-      log.error(e.getMessage() + " file: " + path);
+      log.error(e.getMessage() + " file: " + path, e);
     }
   }
 
@@ -192,10 +281,11 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
       PageSet pageSet = fromXML(xml, PageSet.class);
       ArrayList<Page> list = pageSet.getPages();
       for (Page page : list) {
+        fixOwnerName(page);
         pdcService_.create(page);
       }
     } catch (JiBXException e) {
-      log.error(e.getMessage() + " file: " + path);
+      log.error(e.getMessage() + " file: " + path, e);
     }
   }
 
@@ -217,13 +307,14 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
         xml = StringUtils.replace(xml, "@owner@", owner);
       }
       PageNavigation navigation = fromXML(xml, PageNavigation.class);
+      fixOwnerName(navigation);
       if (pdcService_.getPageNavigation(navigation.getOwner()) == null) {
         pdcService_.create(navigation);
       } else {
         pdcService_.save(navigation);
       }
     } catch (JiBXException e) {
-      log.error(e.getMessage() + " file: " + path);
+      log.error(e.getMessage() + " file: " + path, e);
     }
   }
 
@@ -248,10 +339,11 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
       PortletPreferencesSet portletSet = fromXML(xml, PortletPreferencesSet.class);
       ArrayList<PortletPreferences> list = portletSet.getPortlets();
       for (PortletPreferences portlet : list) {
+        fixOwnerName(portlet);
         pdcService_.save(portlet);
       }
     } catch (JiBXException e) {
-      log.error(e.getMessage() + " file: " + path);
+      log.error(e.getMessage() + " file: " + path, e);
     }
   }
 

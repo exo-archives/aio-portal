@@ -57,6 +57,14 @@ public interface DataStorage {
   public PortalConfig getPortalConfig(String portalName) throws Exception ;
 
   /**
+   * This method should load the PortalConfig object from db according to the portalName
+   * @param portalName
+   * @return
+   * @throws Exception
+   */
+  public PortalConfig getPortalConfig(String ownerType, String portalName) throws Exception ;
+
+  /**
    * This method should remove the PortalConfig ,  all the Page that belong to the portal and the 
    * PageNavigation of the  portal from the database
    * @param config

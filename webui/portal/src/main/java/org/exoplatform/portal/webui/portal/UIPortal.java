@@ -48,6 +48,7 @@ import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.services.resources.LocaleConfig;
 import org.exoplatform.services.resources.LocaleConfigService;
+import org.exoplatform.services.resources.ResourceBundleManager;
 import org.exoplatform.web.login.InitiateLoginServlet;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
@@ -220,11 +221,10 @@ public class UIPortal extends UIContainer {
   
   @Deprecated
   public void refreshNavigation() {
-    LocaleConfig localeConfig = getApplicationComponent(LocaleConfigService.class).
-                                getLocaleConfig(locale) ;
+    ResourceBundleManager mgr = getApplicationComponent(ResourceBundleManager.class);
     for(PageNavigation nav : navigations) {
       if(nav.getOwnerType().equals(PortalConfig.USER_TYPE)) continue ;
-      ResourceBundle res = localeConfig.getNavigationResourceBundle(nav.getOwnerType(), nav.getOwnerId()) ;
+      ResourceBundle res = mgr.getNavigationResourceBundle(locale, nav.getOwnerType(), nav.getOwnerId()) ;
       for(PageNode node : nav.getNodes()) {
         resolveLabel(res, node) ;
       }
@@ -232,10 +232,10 @@ public class UIPortal extends UIContainer {
   }
   
   public void refreshNavigation(Locale locale) {
-    LocaleConfig localeConfig = getApplicationComponent(LocaleConfigService.class).getLocaleConfig(locale.getLanguage()) ;
+    ResourceBundleManager mgr = getApplicationComponent(ResourceBundleManager.class);
     for(PageNavigation nav : navigations) {
       if(nav.getOwnerType().equals(PortalConfig.USER_TYPE)) continue ;
-      ResourceBundle res = localeConfig.getNavigationResourceBundle(nav.getOwnerType(), nav.getOwnerId()) ;
+      ResourceBundle res = mgr.getNavigationResourceBundle(locale.getLanguage(), nav.getOwnerType(), nav.getOwnerId()) ;
       for(PageNode node : nav.getNodes()) {
         resolveLabel(res, node) ;
       }

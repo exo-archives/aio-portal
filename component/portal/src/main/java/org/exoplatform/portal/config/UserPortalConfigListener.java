@@ -86,6 +86,15 @@ public class UserPortalConfigListener extends UserEventListener {
     UserPortalConfigService portalConfigService = (UserPortalConfigService) container.getComponentInstanceOfType(UserPortalConfigService.class);
     DataStorage dataStorage = (DataStorage) container.getComponentInstanceOfType(DataStorage.class);
     String userName = user.getUserName();
+
+    // Need to insert the corresponding user site
+    PortalConfig cfg = dataStorage.getPortalConfig(PortalConfig.USER_TYPE, userName);
+    if (cfg == null) {
+      cfg = new PortalConfig(PortalConfig.USER_TYPE);
+      cfg.setName(userName);
+      dataStorage.create(cfg);
+    }
+
     PageNavigation navigation = dataStorage.getPageNavigation(PortalConfig.USER_TYPE, userName);
     if (navigation != null)
       return;
