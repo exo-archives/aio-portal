@@ -90,7 +90,7 @@ public class POMSession {
         statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/" + new POMFormatter().encodeNodeName(null, ownerId) + "/root/pages/pages/pages/%'";
       } else {
         if (title != null) {
-          throw new UnsupportedOperationException("Julien : todo");
+          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/%/root/pages/pages/pages/%' AND mop:title='" + title + "'";
         } else {
           statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/%/root/pages/pages/pages/%'";
         }

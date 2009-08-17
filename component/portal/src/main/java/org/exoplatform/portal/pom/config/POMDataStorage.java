@@ -37,6 +37,7 @@ import org.exoplatform.portal.pom.config.tasks.PortalConfigTask;
 import org.exoplatform.portal.pom.config.tasks.PageNavigationTask;
 import org.exoplatform.portal.pom.config.tasks.PortletPreferencesTask;
 import org.exoplatform.portal.pom.config.tasks.Mapper;
+import org.exoplatform.portal.pom.config.tasks.SearchTask;
 import org.gatein.mop.api.workspace.Site;
 import org.gatein.mop.api.workspace.Workspace;
 import org.gatein.mop.api.workspace.ObjectType;
@@ -131,114 +132,11 @@ public class POMDataStorage implements DataStorage {
     execute(new PortletPreferencesTask.Remove(portletPreferences));
   }
 
-  public LazyPageList find(Query<?> q) throws Exception {
+  public <T> LazyPageList<T> find(Query<T> q) throws Exception {
     return find(q, null);
   }
 
-/*
-new Query<Page>(PortalConfig.GROUP_TYPE, groupId,  Page.class);
-new Query<Page>(PortalConfig.GROUP_TYPE, groupId,  Page.class);
-new Query<Page>(PortalConfig.USER_TYPE, userName, Page.class);
-new Query<Page>(PortalConfig.USER_TYPE, userName, Page.class);
-new Query<Page>(PortalConfig.PORTAL_TYPE, portalName, null, null, Page.class);
-new Query<Page>(null, null, null, null, Page.class);
-
-new Query<PortletPreferences>(PortalConfig.GROUP_TYPE, groupId, PortletPreferences.class);
-new Query<PortletPreferences>(PortalConfig.GROUP_TYPE, groupId, PortletPreferences.class);
-new Query<PortletPreferences>(PortalConfig.USER_TYPE, userName, PortletPreferences.class);
-new Query<PortletPreferences>(PortalConfig.PORTAL_TYPE, portalName, null, null, PortletPreferences.class);
-
-new Query<PageNavigation>(PortalConfig.GROUP_TYPE, null, PageNavigation.class);
-new Query<PageNavigation>(PortalConfig.GROUP_TYPE, null, PageNavigation.class);
-new Query<PageNavigation>(PortalConfig.GROUP_TYPE, null, PageNavigation.class);
-
-new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
-new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
-new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
-new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
-*/
-
-  public LazyPageList find(Query<?> q, Comparator<?> sortComparator) throws Exception {
-
-    if (PortalConfig.class.equals(q.getClassType())) {
-      final POMSession session = pomMgr.getSession();
-      Workspace workspace = session.getWorkspace();
-      final Collection<? extends Site> portals = workspace.getSites(ObjectType.PORTAL_SITE);
-
-      ListAccess<PortalConfig> la = new ListAccess<PortalConfig>() {
-        public PortalConfig[] load(int index, int length) throws Exception, IllegalArgumentException {
-          Iterator<? extends Site> iterator = portals.iterator();
-          Mapper mapper = new Mapper(session.getContentManager());
-          PortalConfig[] result = new PortalConfig[length];
-          for (int i = 0;i < length;i++) {
-            PortalConfig config = new PortalConfig();
-            mapper.load(iterator.next(), config);
-            result[i] = config;
-          }
-          return result;
-        }
-        public int getSize() throws Exception {
-          return portals.size();
-        }
-      };
-      return new LazyPageList<PortalConfig>(la, 10);
-    } else if (Page.class.equals(q.getClassType())) {
-      final POMSession session = pomMgr.getSession();
-
-      Iterator<org.gatein.mop.api.workspace.Page> ite;
-      try {
-        String ownerType = q.getOwnerType();
-        ObjectType<? extends Site> siteType = null;
-        if (ownerType != null) {
-          siteType = Mapper.parseSiteType(ownerType);
-        }
-        ite = session.findPages(siteType, q.getOwnerId(), q.getTitle());
-
-      }
-      catch (IllegalArgumentException e) {
-        ite = Collections.<org.gatein.mop.api.workspace.Page>emptyList().iterator();
-      }
-
-      //
-      final ArrayList<org.gatein.mop.api.workspace.Page> array = new ArrayList<org.gatein.mop.api.workspace.Page>();
-      while (ite.hasNext()) {
-        array.add(ite.next());
-      }
-
-      //
-      final Iterator<? extends org.gatein.mop.api.workspace.Page> it = array.iterator();
-      ListAccess<Page> la = new ListAccess<Page>() {
-        public Page[] load(int index, int length) throws Exception, IllegalArgumentException {
-          Mapper mapper = new Mapper(session.getContentManager());
-          Page[] result = new Page[length];
-          for (int i = 0;i < length;i++) {
-            Page page = new Page();
-            mapper.load(it.next(), page);
-            result[i] = page;
-          }
-          return result;
-        }
-        public int getSize() throws Exception {
-          return array.size();
-        }
-      };
-
-      return new LazyPageList<Page>(la, 10);
-    } else if (PortletPreferences.class.equals(q.getClassType())) {
-
-      // We return empty on purpose at it is used when preferences are deleted by the UserPortalConfigService
-      // and the prefs are deleted transitively when an entity is removed
-      return new LazyPageList<PortletPreferences>(new ListAccess<PortletPreferences>() {
-        public PortletPreferences[] load(int index, int length) throws Exception, IllegalArgumentException {
-          throw new AssertionError();
-        }
-        public int getSize() throws Exception {
-          return 0;
-        }
-      }, 10);
-    } else {
-      throw new UnsupportedOperationException("Cannot query data with type " + q.getClassType());
-    }
-
+  public <T> LazyPageList<T> find(Query<T> q, Comparator<T> sortComparator) throws Exception {
+    return execute(new SearchTask<T>(q)).getResult();
   }
 }

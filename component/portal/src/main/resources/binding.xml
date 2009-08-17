@@ -47,6 +47,7 @@
   </mapping>
   
   <mapping name="page" label="page" class="org.exoplatform.portal.config.model.Page">
+    <structure name="page-id" usage="optional"/>
     <value name="owner-type" field="ownerType"/>
     <value name="owner-id" field="ownerId"/>
     <value name="name" field="name"/>

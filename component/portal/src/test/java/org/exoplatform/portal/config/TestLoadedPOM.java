@@ -27,6 +27,7 @@ import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.test.BasicTestCase;
 import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
+import org.exoplatform.commons.utils.LazyPageList;
 
 import java.util.Arrays;
 import java.util.List;
@@ -208,8 +209,10 @@ public class TestLoadedPOM extends BasicTestCase {
     assertEquals("portal#test:/web/BannerPortlet/banner", application1.getInstanceId());
   }
 
-
-
-
-
+  public void testPageSearch() throws Exception {
+    Query<Page> query = new Query<Page>(null, null, null, "Register", Page.class);
+    List<Page> list = storage.find(query).getAll();
+    assertEquals("Got three results instead of one " + list, 1, list.size());
+    assertEquals("group::/platform/guests::register", list.get(0).getPageId());
+  }
 }

@@ -104,5 +104,9 @@ public class Page extends Container {
     public ArrayList<Page> getPages() { return pages ; }
     public void setPages(ArrayList<Page> list) { pages = list ; }
   }
-  
+
+  @Override
+  public String toString() {
+    return "Page[ownerType=" + ownerType + ",ownerId=" + ownerId + ",name=" + name + "]";
+  }
 }

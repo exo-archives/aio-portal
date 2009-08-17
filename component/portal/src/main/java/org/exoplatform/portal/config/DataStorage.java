@@ -146,7 +146,7 @@ public interface DataStorage {
   
   public void remove(PortletPreferences portletPreferences) throws Exception ;
   
-  public  LazyPageList find(Query<?> q) throws Exception ;
+  public  <T> LazyPageList<T> find(Query<T> q) throws Exception ;
   
-  public  LazyPageList find(Query<?> q, Comparator<?> sortComparator) throws Exception ;  
+  public <T> LazyPageList<T> find(Query<T> q, Comparator<T> sortComparator) throws Exception ;
 }
