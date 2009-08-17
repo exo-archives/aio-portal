@@ -2,7 +2,6 @@
 <page-set>  
           
   <page>
-  	<page-id>group::/platform/administrators::newAccount</page-id>
   	<owner-type>group</owner-type>
     <owner-id>/platform/administrators</owner-id>
     <name>newAccount</name>
@@ -18,7 +17,6 @@
   </page>           
   
   <page>
-  	<page-id>group::/platform/administrators::communityManagement</page-id>
   	<owner-type>group</owner-type>
     <owner-id>/platform/administrators</owner-id>
     <name>communityManagement</name>
@@ -34,7 +32,6 @@
   </page>
   
   <page>
-  	<page-id>group::/platform/administrators::i18n</page-id>
   	<owner-type>group</owner-type>
     <owner-id>/platform/administrators</owner-id>
     <name>i18n</name>
@@ -50,7 +47,6 @@
   </page>           
 
   <page>
-  	<page-id>group::/platform/administrators::registry</page-id>
   	<owner-type>group</owner-type>
     <owner-id>/platform/administrators</owner-id>
     <name>registry</name>
@@ -66,7 +62,6 @@
   </page>
   
   <page>
-  	<page-id>group::/platform/administrators::pageManagement</page-id>
     <owner-type>group</owner-type>
     <owner-id>/platform/administrators</owner-id>
     <name>pageManagement</name>

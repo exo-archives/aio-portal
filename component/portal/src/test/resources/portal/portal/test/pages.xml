@@ -5,7 +5,7 @@
   	<page-id>portal::test::test</page-id>
     <owner-type>portal</owner-type>
     <owner-id>test</owner-id>
-    <name>test</name>
+    <name>test1</name>
     <title>test_title</title>
     <factory-id>test_factory_id</factory-id>
 	  <access-permissions>test_access_permissions</access-permissions>
@@ -44,4 +44,10 @@
     </application>
   </page>
     
+  <page>
+    <owner-type>portal</owner-type>
+    <owner-id>test</owner-id>
+    <name>test2</name>
+  </page>
+
 </page-set>

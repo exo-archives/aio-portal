@@ -334,7 +334,6 @@ public class UIPageNodeForm2 extends UIFormTabPane {
       UIFormStringInput uiPageTitle = uiInputSet.getChildById("pageTitle");
       
       Page page = new Page();    
-      page.setPageId(null);
       page.setOwnerType(uiForm.getOwnerType());
       page.setOwnerId(ownerId);
       page.setName(uiPageName.getValue());

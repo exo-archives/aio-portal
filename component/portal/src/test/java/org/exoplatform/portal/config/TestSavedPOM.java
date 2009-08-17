@@ -141,18 +141,21 @@ public class TestSavedPOM extends BasicTestCase {
     mgr.closeSession();
   }
 
+  public void testPageWithoutPageId() throws Exception {
+    POMSession session = mgr.openSession();
+    Site testPortal = session.getWorkspace().getSite(ObjectType.PORTAL_SITE, "test");
+    Page testRootPage = testPortal.getRootPage();
+    Page pages = testRootPage.getChild("pages");
+    Page testPage = pages.getChild("test2");
+    assertNotNull(testPage);
+  }
+
   public void testPage() throws Exception {
     POMSession session = mgr.openSession();
     Site testPortal = session.getWorkspace().getSite(ObjectType.PORTAL_SITE, "test");
-    assertNotNull(testPortal);
-
-    //
     Page testRootPage = testPortal.getRootPage();
-    assertNotNull(testRootPage);
-
-    //
     Page pages = testRootPage.getChild("pages");
-    Page testPage = pages.getChild("test");
+    Page testPage = pages.getChild("test1");
     assertNotNull(testPage);
 
     //

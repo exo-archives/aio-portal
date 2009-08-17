@@ -26,8 +26,6 @@ public class Page extends Container {
   final static public String DESKTOP_PAGE = "Desktop";
   final static public String DEFAULT_PAGE = "Default";
   
-  private String   pageId;
-  
   private String   ownerType;
   private String   ownerId;
   
@@ -67,12 +65,28 @@ public class Page extends Container {
   }
   
   public String getPageId() {
-    if(pageId == null) pageId = ownerType +"::"+ownerId+"::"+name;
-    return pageId; 
+    if (ownerType == null || ownerId == null || name == null) {
+      return null;
+    } else {
+      return ownerType +"::"+ownerId+"::"+name;
+    }
   }
   
   public void setPageId(String pageId) {
-    this.pageId = pageId;
+    if (pageId == null) {
+      ownerType = null;
+      ownerId = null;
+      name = null;
+    } else {
+      int i1 = pageId.indexOf("::");
+      int i2 = pageId.indexOf("::", i1 + 2);
+      String ownerType = pageId.substring(0, i1);
+      String ownerId = pageId.substring(i1 + 2, i2);
+      String name = pageId.substring(i2 + 2);
+      this.ownerType = ownerType;
+      this.ownerId = ownerId;
+      this.name = name;
+    }
   }
 
   public boolean isModifiable() { return modifiable ; }

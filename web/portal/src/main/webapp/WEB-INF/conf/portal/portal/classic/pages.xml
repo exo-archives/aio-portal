@@ -2,7 +2,6 @@
 <page-set>  
 
   <page>
-  	<page-id>portal::classic::homepage</page-id>
     <owner-type>portal</owner-type>
     <owner-id>classic</owner-id>
     <name>homepage</name>
@@ -20,7 +19,6 @@
   </page>    
     
   <page>
-  	<page-id>portal::classic::webexplorer</page-id>
     <owner-type>portal</owner-type>
     <owner-id>classic</owner-id>
     <name>webexplorer</name>
@@ -36,7 +34,6 @@
   </page>  
   
   <page>
-  	<page-id>portal::classic::groupnavigation</page-id>
     <owner-type>portal</owner-type>
     <owner-id>classic</owner-id>
     <name>groupnavigation</name>
@@ -52,7 +49,6 @@
   </page>
   
   <page>
-  	<page-id>portal::classic::portalnavigation</page-id>
     <owner-type>portal</owner-type>
     <owner-id>classic</owner-id>
     <name>portalnavigation</name>

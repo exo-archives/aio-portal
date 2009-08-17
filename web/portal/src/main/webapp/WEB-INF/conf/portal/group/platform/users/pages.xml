@@ -2,7 +2,6 @@
 <page-set>
   
   <page>
-  	<page-id>group::/platform/users::dashboard</page-id>
   	<owner-type>group</owner-type>
     <owner-id>/platform/users</owner-id>
     <name>dashboard</name>
@@ -24,7 +23,6 @@
   </page>
   
   <page>
-  	<page-id>group::/platform/users::webexplorer</page-id>
   	<owner-type>group</owner-type>
     <owner-id>/platform/users</owner-id>
     <name>webexplorer</name>
@@ -40,7 +38,6 @@
   </page>               
        
   <page>
-  	<page-id>group::/platform/users::mylink-blog</page-id>
   	<owner-type>group</owner-type>
     <owner-id>/platform/users</owner-id>
     <name>mylink-blog</name>
@@ -58,7 +55,6 @@
   </page>
   
   <page>
-  	<page-id>group::/platform/users::mylink-google</page-id>
   	<owner-type>group</owner-type>
     <owner-id>/platform/users</owner-id>
     <name>mylink-google</name>
@@ -76,7 +72,6 @@
   </page>
   
   <page>
-  	<page-id>group::/platform/users::mylink-facebook</page-id>
   	<owner-type>group</owner-type>
     <owner-id>/platform/users</owner-id>
     <name>mylink-facebook</name>
@@ -94,7 +89,6 @@
   </page>
   
   <page>
-  	<page-id>group::/platform/users::sitemap</page-id>
     <owner-type>group</owner-type>
     <owner-id>/platform/users</owner-id>
     <name>sitemap</name>

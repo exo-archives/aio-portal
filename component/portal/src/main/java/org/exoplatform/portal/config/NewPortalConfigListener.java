@@ -220,7 +220,6 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
 
   private static void fixOwnerName(Page page) {
     page.setOwnerId(fixOwnerName(page.getOwnerType(), page.getOwnerId()));
-    page.setPageId(null);
     fixOwnerName((Container)page);
   }
 

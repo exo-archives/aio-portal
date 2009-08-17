@@ -2,7 +2,6 @@
 <page-set>
     
   <page>
-  	<page-id>group::organization/management/executive-board::newStaff</page-id>
  		<owner-type>group</owner-type>
     <owner-id>/organization/management/executive-board</owner-id>
     <name>newStaff</name>
@@ -20,7 +19,6 @@
   </page>
   
   <page>
-  	<page-id>group::/organization/management/executive-board::management</page-id>
  		<owner-type>group</owner-type>
     <owner-id>organization/management/executive-board</owner-id>
     <name>management</name>

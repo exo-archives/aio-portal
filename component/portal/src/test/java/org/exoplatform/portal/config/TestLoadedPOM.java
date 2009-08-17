@@ -152,8 +152,17 @@ public class TestLoadedPOM extends BasicTestCase {
     assertEquals("test_prop_value", portal.getProperty("prop_key"));
   }
 
+  public void testPageWithoutPageId() throws Exception {
+    Page page = storage.getPage("portal::test::test2");
+    assertNotNull(page);
+    assertEquals("portal::test::test2", page.getPageId());
+    assertEquals("test", page.getOwnerId());
+    assertEquals("portal", page.getOwnerType());
+    assertEquals("test2", page.getName());
+  }
+
   public void testPage() throws Exception {
-    Page page = storage.getPage("portal::test::test");
+    Page page = storage.getPage("portal::test::test1");
     assertNotNull(page);
 
     //

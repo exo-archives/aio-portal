@@ -2,7 +2,6 @@
 <page-set>
 		 		
   <page>
-  	<page-id>group::/platform/guests::register</page-id>
     <owner-type>group</owner-type>
     <owner-id>/platform/guests</owner-id>
     <name>register</name>
@@ -18,7 +17,6 @@
   </page>          
     
   <page>
-  	<page-id>group::/platform/guests::sitemap</page-id>
     <owner-type>group</owner-type>
     <owner-id>/platform/guests</owner-id>
     <name>sitemap</name>
@@ -34,7 +32,6 @@
   </page>
   
   <page>
-  	<page-id>group::/platform/guests::link</page-id>
   	<owner-type>group</owner-type>
     <owner-id>/platform/guests</owner-id>
     <name>link</name>
