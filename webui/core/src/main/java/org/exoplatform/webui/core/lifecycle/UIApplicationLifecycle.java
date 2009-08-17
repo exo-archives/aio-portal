@@ -25,7 +25,7 @@ import org.exoplatform.webui.core.UIPortletApplication;
  *          nhudinhthuan@yahoo.com
  * Jun 1, 2006
  */
-public class UIApplicationLifecycle  extends Lifecycle {  
+public class UIApplicationLifecycle  extends Lifecycle<UIComponent> {  
 
   public void processDecode(UIComponent uicomponent , WebuiRequestContext context) throws Exception { 
     String componentId =  context.getRequestParameter(context.getUIComponentIdParameterName()) ;

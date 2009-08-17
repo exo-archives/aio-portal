@@ -45,7 +45,7 @@ import org.exoplatform.webui.event.Event;
 /**
  * Created by The eXo Platform SAS May 8, 2006
  */
-public class UIPortletLifecycle extends Lifecycle {
+public class UIPortletLifecycle extends Lifecycle<UIPortlet> {
 
   protected static Log log = ExoLogger.getLogger("portal:UIPortletLifecycle");
 
@@ -64,7 +64,7 @@ public class UIPortletLifecycle extends Lifecycle {
    * broadcasted and the portlet is added in the list of components to update
    * within the AJAX call
    */
-  public void processAction(UIComponent uicomponent, WebuiRequestContext context) throws Exception {
+  public void processAction(UIPortlet uicomponent, WebuiRequestContext context) throws Exception {
     String action = context.getRequestParameter(PortalRequestContext.UI_COMPONENT_ACTION);
     if (action != null) {
       Event<UIComponent> event = uicomponent.createEvent(action, Event.Phase.PROCESS, context);
@@ -137,8 +137,7 @@ public class UIPortletLifecycle extends Lifecycle {
    * one, just write in the buffer the content returned by the portlet container
    * 4) If not AJAX, then merge the content with the UIPortlet.gtmpl
    */
-  public void processRender(UIComponent uicomponent, WebuiRequestContext context) throws Exception {
-    UIPortlet uiPortlet = (UIPortlet) uicomponent;
+  public void processRender(UIPortlet uicomponent, WebuiRequestContext context) throws Exception {
     PortalRequestContext prcontext = (PortalRequestContext) context;
     ExoContainer container = prcontext.getApplication().getApplicationServiceContainer();
     // UIPortal uiPortal = Util.getUIPortal();
@@ -149,7 +148,7 @@ public class UIPortletLifecycle extends Lifecycle {
     // service.getUserProfileHandler().findUserProfileByName(uiPortal.getOwner());
     RenderInput input = new RenderInput();
     String baseUrl = new StringBuilder(prcontext.getRequestURI()).append("?"
-        + PortalRequestContext.UI_COMPONENT_ID).append("=").append(uiPortlet.getId()).toString();
+        + PortalRequestContext.UI_COMPONENT_ID).append("=").append(uicomponent.getId()).toString();
     input.setBaseURL(baseUrl);
     input.setEscapeXml(true);
     // if (userProfile != null)
@@ -158,20 +157,20 @@ public class UIPortletLifecycle extends Lifecycle {
     Map<String, String> emptyMap = Collections.emptyMap();
     input.setUserAttributes(emptyMap);
 
-    input.setPortletMode(uiPortlet.getCurrentPortletMode());
-    input.setWindowState(uiPortlet.getCurrentWindowState());
+    input.setPortletMode(uicomponent.getCurrentPortletMode());
+    input.setWindowState(uicomponent.getCurrentWindowState());
     input.setMarkup("text/html");
-    input.setTitle(uiPortlet.getTitle());
-    input.setInternalWindowID(uiPortlet.getExoWindowID());
-    input.setRenderParameters(getRenderParameterMap(uiPortlet));
-    input.setPublicParamNames(uiPortlet.getPublicRenderParamNames());
+    input.setTitle(uicomponent.getTitle());
+    input.setInternalWindowID(uicomponent.getExoWindowID());
+    input.setRenderParameters(getRenderParameterMap(uicomponent));
+    input.setPublicParamNames(uicomponent.getPublicRenderParamNames());
     RenderOutput output = null;
     Text markup = null;
     String portletTitle = null;
     try {
-      if (uiPortlet.getCurrentWindowState() != WindowState.MINIMIZED) {
-        String appStatus = uiPortlet.getProperties().get("appStatus");
-        if ("Window".equals(uiPortlet.getPortletStyle())
+      if (uicomponent.getCurrentWindowState() != WindowState.MINIMIZED) {
+        String appStatus = uicomponent.getProperties().get("appStatus");
+        if ("Window".equals(uicomponent.getPortletStyle())
             && !("SHOW".equals(appStatus) || "HIDE".equals(appStatus))) {
           markup = Text.create("<span></span>");
         } else {
@@ -208,13 +207,13 @@ public class UIPortletLifecycle extends Lifecycle {
       ApplicationResourceResolver resolver = app.getResourceResolver();
       WebuiBindingContext bcontext = new WebuiBindingContext(resolver,
                                                              context.getWriter(),
-                                                             uiPortlet,
+                                                             uicomponent,
                                                              prcontext);
-      bcontext.put("uicomponent", uiPortlet);
+      bcontext.put("uicomponent", uicomponent);
       bcontext.put("portletContent", markup);
       bcontext.put("portletTitle", portletTitle);
       try {
-        renderTemplate(uiPortlet.getTemplate(), bcontext);
+        renderTemplate(uicomponent.getTemplate(), bcontext);
       } catch (Throwable ex) {
       }
     }

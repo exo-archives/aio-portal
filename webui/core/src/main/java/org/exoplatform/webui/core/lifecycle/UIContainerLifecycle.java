@@ -23,12 +23,11 @@ import org.exoplatform.webui.core.UIContainer;
 /**
  * Jul 10, 2006
  */
-public class UIContainerLifecycle extends Lifecycle {
+public class UIContainerLifecycle extends Lifecycle<UIContainer> {
   
-  public void processRender(UIComponent uicomponent , WebuiRequestContext context) throws Exception {
+  public void processRender(UIContainer uicomponent , WebuiRequestContext context) throws Exception {
     context.getWriter().append("<div class=\"").append(uicomponent.getId()).append("\" id=\"").append(uicomponent.getId()).append("\">");
-    UIContainer uiContainer = (UIContainer) uicomponent;
-    uiContainer.renderChildren(context);
+    uicomponent.renderChildren(context);
     context.getWriter().append("</div>");
   }
 }

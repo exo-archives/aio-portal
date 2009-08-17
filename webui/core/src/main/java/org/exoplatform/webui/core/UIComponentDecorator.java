@@ -69,9 +69,9 @@ public class UIComponentDecorator extends UIComponent {
     uicomponent_.processRender((WebuiRequestContext)WebuiRequestContext.getCurrentInstance()) ;
   }
   
-  static public class UIComponentDecoratorLifecycle extends Lifecycle {
-    @SuppressWarnings("unused")
-    public void processRender(UIComponent uicomponent , WebuiRequestContext context) throws Exception {
+  static public class UIComponentDecoratorLifecycle extends Lifecycle<UIComponent> {
+
+  	public void processRender(UIComponent uicomponent , WebuiRequestContext context) throws Exception {
       UIComponentDecorator uiContainer = (UIComponentDecorator) uicomponent;      
       if(uiContainer.uicomponent_ != null) {
         uiContainer.uicomponent_.processRender(context) ;
