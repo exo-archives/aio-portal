@@ -1,11 +1,27 @@
-<%import org.exoplatform.portal.config.model.PageNode;%>	
+<%
+	import org.exoplatform.webui.core.UIPortletApplication;
+	import org.exoplatform.portal.config.model.PageNode;
+	import org.exoplatform.portal.application.PortalRequestContext;
+	import org.exoplatform.portal.webui.util.Util;
+%>	
 <%
 	def navigations = uicomponent.getNavigations();
-	public void renderNextLevelNode(nav, children, int intLevel) {
+	PortalRequestContext pcontext = Util.getPortalRequestContext();	
+	def String portalURI = pcontext.getPortalURI();
+	
+	UIPortletApplication siteMapPortlet = uicomponent.getParent();
+	def useAJAX = siteMapPortlet.isUseAjax();
+	
+	public void renderNextLevelNode(nav, children, int intLevel, String portalUri, boolean useAjax) {
 		if(intLevel > 4) return;
 		
 		for(PageNode node in children) {
-			String actionLink = uicomponent.event("SelectNode", nav.getId() + "::" + node.getUri());
+			String actionLink;
+			if(useAjax){
+				actionLink = uicomponent.event("SelectNode", nav.getId() + "::" + node.getUri());
+			}else{	
+				actionLink = portalUri + node.getUri();
+			}	
 			String iconType = node.getIcon();
 			if(iconType == null) {
 				iconType = "DefaultPageIcon";
@@ -46,7 +62,7 @@
 				</div>
 			""";
 			if (node.getChildren() != null) {
-				renderNextLevelNode(nav, node.getChildren(), intLevel + 1);
+				renderNextLevelNode(nav, node.getChildren(), intLevel + 1, portalUri, useAjax);
 			}
 		}
 	}
@@ -66,7 +82,11 @@
 							if(even)cssfloat = "left";
 							else cssfloat = "right";
 							String blockFloat = "LeftBlock";
-							actionLink = uicomponent.event("SelectNode", nav.getId() + "::" + node.getUri());
+							if(useAJAX){
+								actionLink = uicomponent.event("SelectNode", nav.getId() + "::" + node.getUri());
+							}else{
+								actionLink = portalURI + node.getUri();
+							}	
 							
 							String label = node.resolvedLabel;
 							String title = "";
@@ -100,7 +120,7 @@
 							<div class="NestedSitemapItemBox">
 								<div class="SitemapItemBoxSelector">
 									<div class="ItemContainer">
-									 <% renderNextLevelNode(nav, node.getChildren(), 1); %>
+									 <% renderNextLevelNode(nav, node.getChildren(), 1, portalURI, useAJAX); %>
 									</div>
 								</div>
 							</div> 													

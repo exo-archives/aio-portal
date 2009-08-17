@@ -16,7 +16,12 @@
  */
 package org.exoplatform.portal.webui.component;
 
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+
 import org.exoplatform.portal.webui.navigation.UIPortalNavigation;
+import org.exoplatform.webui.application.WebuiRequestContext;
+import org.exoplatform.webui.application.portlet.PortletRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.ComponentConfigs;
 import org.exoplatform.webui.config.annotation.EventConfig;
@@ -46,4 +51,10 @@ public class UISitemapPortlet extends UIPortletApplication {
     addChild(UIPortalNavigation.class, "UISiteMap", null) ;
   }
 
+  public boolean isUseAjax(){
+  	PortletRequestContext context = (PortletRequestContext)WebuiRequestContext.getCurrentInstance() ;
+    PortletRequest prequest = context.getRequest() ;
+    PortletPreferences prefers = prequest.getPreferences() ;
+    return Boolean.valueOf(prefers.getValue("useAJAX", "true"));
+  }
 }
