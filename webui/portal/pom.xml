@@ -1,4 +1,4 @@
-pomspo<project> 
+<project> 
   <parent>
     <groupId>org.exoplatform.portal</groupId>
     <artifactId>config</artifactId>
