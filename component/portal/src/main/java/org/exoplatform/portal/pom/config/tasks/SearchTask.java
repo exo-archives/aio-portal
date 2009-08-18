@@ -21,12 +21,15 @@ import org.exoplatform.portal.pom.config.POMSession;
 import org.exoplatform.portal.config.Query;
 import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.config.model.Page;
+import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.commons.utils.ListAccess;
 import org.exoplatform.commons.utils.LazyPageList;
 import org.gatein.mop.api.workspace.Workspace;
 import org.gatein.mop.api.workspace.Site;
 import org.gatein.mop.api.workspace.ObjectType;
+import org.gatein.mop.api.workspace.WorkspaceObject;
+import org.gatein.mop.api.workspace.Navigation;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -37,7 +40,7 @@ import java.util.ArrayList;
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
  * @version $Revision$
  */
-public class SearchTask<T> extends AbstractPOMTask {
+public abstract class SearchTask<T> extends AbstractPOMTask {
 
 /*
 new Query<Page>(PortalConfig.GROUP_TYPE, groupId,  Page.class);
@@ -63,10 +66,10 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
 */
 
   /** . */
-  private final Query<T> q;
+  protected final Query<T> q;
 
   /** . */
-  private LazyPageList<T> result;
+  protected LazyPageList<T> result;
 
   public SearchTask(Query<T> query) {
     this.q = query;
@@ -76,8 +79,131 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
     return result;
   }
 
-  public void run(final POMSession session) throws Exception {
-    if (PortalConfig.class.equals(q.getClassType())) {
+  public abstract static class FindSiteObject<W extends WorkspaceObject, T> extends SearchTask<T> {
+
+    public FindSiteObject(Query<T> query) {
+      super(query);
+    }
+
+    public void run(final POMSession session) throws Exception {
+      Iterator<W> ite;
+      try {
+        String ownerType = q.getOwnerType();
+        ObjectType<? extends Site> siteType = null;
+        if (ownerType != null) {
+          siteType = Mapper.parseSiteType(ownerType);
+        }
+        ite = findW(session, siteType, q.getOwnerId(), q.getTitle());
+
+      }
+      catch (IllegalArgumentException e) {
+        ite = Collections.<W>emptyList().iterator();
+      }
+
+      //
+      final ArrayList<W> array = new ArrayList<W>();
+      while (ite.hasNext()) {
+        array.add(ite.next());
+      }
+
+      //
+      final Iterator<W> it = array.iterator();
+      ListAccess<T> la = new ListAccess<T>() {
+        public T[] load(int index, int length) throws Exception, IllegalArgumentException {
+          T[] result = createT(length);
+          for (int i = 0;i < length;i++) {
+            T t = loadT(session, it.next());
+            result[i] = t;
+          }
+          return result;
+        }
+        public int getSize() throws Exception {
+          return array.size();
+        }
+      };
+
+      result = new LazyPageList<T>(la, 10);
+    }
+
+    protected abstract Iterator<W> findW(POMSession session, ObjectType<? extends Site> siteType, String ownerId, String title);
+
+    protected abstract T[] createT(int length);
+
+    protected abstract T loadT(POMSession session, W w);
+
+  }
+
+  public static class FindPage extends FindSiteObject<org.gatein.mop.api.workspace.Page, Page> {
+
+    public FindPage(Query<Page> pageQuery) {
+      super(pageQuery);
+    }
+
+    protected Iterator<org.gatein.mop.api.workspace.Page> findW(POMSession session, ObjectType<? extends Site> siteType, String ownerId, String title) {
+      return session.findObjects(ObjectType.PAGE , siteType, q.getOwnerId(), q.getTitle());
+    }
+
+    protected Page[] createT(int length) {
+      return new Page[length];
+    }
+
+    protected Page loadT(POMSession session, org.gatein.mop.api.workspace.Page w) {
+      Mapper mapper = new Mapper(session.getContentManager());
+      Page t = new Page();
+      mapper.load(w, t);
+      return t;
+    }
+  }
+
+  public static class FindNavigation extends FindSiteObject<Navigation, PageNavigation> {
+
+    public FindNavigation(Query<PageNavigation> pageQuery) {
+      super(pageQuery);
+    }
+
+    protected Iterator<Navigation> findW(POMSession session, ObjectType<? extends Site> siteType, String ownerId, String title) {
+      return session.findObjects(ObjectType.NAVIGATION , siteType, q.getOwnerId(), q.getTitle());
+    }
+
+    protected PageNavigation[] createT(int length) {
+      return new PageNavigation[length];
+    }
+
+    protected PageNavigation loadT(POMSession session, Navigation w) {
+      Mapper mapper = new Mapper(session.getContentManager());
+      PageNavigation t = new PageNavigation();
+      mapper.load(w, t);
+      return t;
+    }
+  }
+
+  public static class FindPortletPreferences extends SearchTask<PortletPreferences> {
+
+    public FindPortletPreferences(Query<PortletPreferences> portletPreferencesQuery) {
+      super(portletPreferencesQuery);
+    }
+
+    public void run(final POMSession session) throws Exception {
+      // We return empty on purpose at it is used when preferences are deleted by the UserPortalConfigService
+      // and the prefs are deleted transitively when an entity is removed
+      result = new LazyPageList<PortletPreferences>(new ListAccess<PortletPreferences>() {
+        public PortletPreferences[] load(int index, int length) throws Exception, IllegalArgumentException {
+          throw new AssertionError();
+        }
+        public int getSize() throws Exception {
+          return 0;
+        }
+      }, 10);
+    }
+  }
+
+  public static class FindSite extends SearchTask<PortalConfig> {
+
+    public FindSite(Query<PortalConfig> siteQuery) {
+      super(siteQuery);
+    }
+
+    public void run(final POMSession session) throws Exception {
       Workspace workspace = session.getWorkspace();
       final Collection<? extends Site> portals = workspace.getSites(ObjectType.PORTAL_SITE);
 
@@ -97,62 +223,7 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
           return portals.size();
         }
       };
-      result = (LazyPageList<T>)new LazyPageList<PortalConfig>(la, 10);
-    } else if (Page.class.equals(q.getClassType())) {
-
-      Iterator<org.gatein.mop.api.workspace.Page> ite;
-      try {
-        String ownerType = q.getOwnerType();
-        ObjectType<? extends Site> siteType = null;
-        if (ownerType != null) {
-          siteType = Mapper.parseSiteType(ownerType);
-        }
-        ite = session.findPages(siteType, q.getOwnerId(), q.getTitle());
-
-      }
-      catch (IllegalArgumentException e) {
-        ite = Collections.<org.gatein.mop.api.workspace.Page>emptyList().iterator();
-      }
-
-      //
-      final ArrayList<org.gatein.mop.api.workspace.Page> array = new ArrayList<org.gatein.mop.api.workspace.Page>();
-      while (ite.hasNext()) {
-        array.add(ite.next());
-      }
-
-      //
-      final Iterator<? extends org.gatein.mop.api.workspace.Page> it = array.iterator();
-      ListAccess<Page> la = new ListAccess<Page>() {
-        public Page[] load(int index, int length) throws Exception, IllegalArgumentException {
-          Mapper mapper = new Mapper(session.getContentManager());
-          Page[] result = new Page[length];
-          for (int i = 0;i < length;i++) {
-            Page page = new Page();
-            mapper.load(it.next(), page);
-            result[i] = page;
-          }
-          return result;
-        }
-        public int getSize() throws Exception {
-          return array.size();
-        }
-      };
-
-      result = (LazyPageList<T>)new LazyPageList<Page>(la, 10);
-    } else if (PortletPreferences.class.equals(q.getClassType())) {
-
-      // We return empty on purpose at it is used when preferences are deleted by the UserPortalConfigService
-      // and the prefs are deleted transitively when an entity is removed
-      result = (LazyPageList<T>)new LazyPageList<PortletPreferences>(new ListAccess<PortletPreferences>() {
-        public PortletPreferences[] load(int index, int length) throws Exception, IllegalArgumentException {
-          throw new AssertionError();
-        }
-        public int getSize() throws Exception {
-          return 0;
-        }
-      }, 10);
-    } else {
-      throw new UnsupportedOperationException("Cannot query data with type " + q.getClassType());
+      result = new LazyPageList<PortalConfig>(la, 10);
     }
   }
 }

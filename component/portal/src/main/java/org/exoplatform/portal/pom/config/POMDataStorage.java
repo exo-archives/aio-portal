@@ -24,23 +24,14 @@ import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.services.portletcontainer.pci.WindowID;
 import org.exoplatform.commons.utils.LazyPageList;
-import org.exoplatform.commons.utils.ListAccess;
 
 import java.util.Comparator;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.ArrayList;
-import java.util.Collections;
 
 import org.exoplatform.portal.pom.config.tasks.PageTask;
 import org.exoplatform.portal.pom.config.tasks.PortalConfigTask;
 import org.exoplatform.portal.pom.config.tasks.PageNavigationTask;
 import org.exoplatform.portal.pom.config.tasks.PortletPreferencesTask;
-import org.exoplatform.portal.pom.config.tasks.Mapper;
 import org.exoplatform.portal.pom.config.tasks.SearchTask;
-import org.gatein.mop.api.workspace.Site;
-import org.gatein.mop.api.workspace.Workspace;
-import org.gatein.mop.api.workspace.ObjectType;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -137,6 +128,16 @@ public class POMDataStorage implements DataStorage {
   }
 
   public <T> LazyPageList<T> find(Query<T> q, Comparator<T> sortComparator) throws Exception {
-    return execute(new SearchTask<T>(q)).getResult();
+    if (Page.class.equals(q.getClassType())) {
+      return (LazyPageList<T>)execute(new SearchTask.FindPage((Query<Page>)q)).getResult();
+    } else if (PageNavigation.class.equals(q.getClassType())) {
+      return (LazyPageList<T>)execute(new SearchTask.FindNavigation((Query<PageNavigation>)q)).getResult();
+    } else if (PortletPreferences.class.equals(q.getClassType())) {
+      return (LazyPageList<T>)execute(new SearchTask.FindPortletPreferences((Query<PortletPreferences>)q)).getResult();
+    } else if (PortalConfig.class.equals(q.getClassType())) {
+      return (LazyPageList<T>)execute(new SearchTask.FindSite((Query<PortalConfig>)q)).getResult();
+    } else {
+      throw new UnsupportedOperationException();
+    }
   }
 }

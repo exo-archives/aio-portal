@@ -33,6 +33,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * Created by The eXo Platform SARL Author : Tung Pham thanhtungty@gmail.com Nov
@@ -209,10 +211,27 @@ public class TestLoadedPOM extends BasicTestCase {
     assertEquals("portal#test:/web/BannerPortlet/banner", application1.getInstanceId());
   }
 
-  public void testPageSearch() throws Exception {
+  public void testFindPageByTitle() throws Exception {
     Query<Page> query = new Query<Page>(null, null, null, "Register", Page.class);
     List<Page> list = storage.find(query).getAll();
-    assertEquals("Got three results instead of one " + list, 1, list.size());
+    assertEquals("Expected one result instead of " + list, 1, list.size());
     assertEquals("group::/platform/guests::register", list.get(0).getPageId());
+  }
+
+  public void testFindNavigation() throws Exception {
+    Query<PageNavigation> query = new Query<PageNavigation>("group", null, null, null, PageNavigation.class);
+    List<PageNavigation> list = storage.find(query).getAll();
+    assertEquals("Expected 4 results instead of " + list, 4, list.size());
+    Set<String> names = new HashSet<String>();
+    for (PageNavigation navigation : list) {
+      assertEquals("group", navigation.getOwnerType());
+      names.add(navigation.getOwnerId());
+    }
+    HashSet<String> expectedNames = new HashSet<String>(Arrays.asList(
+      "/platform/administrators",
+      "/platform/guests",
+      "/platform/users",
+      "/organization/management/executive-board"));
+    assertEquals(expectedNames, names);
   }
 }

@@ -21,7 +21,6 @@ import org.gatein.mop.core.impl.api.POMFormatter;
 import org.gatein.mop.api.workspace.Workspace;
 import org.gatein.mop.api.workspace.WorkspaceObject;
 import org.gatein.mop.api.workspace.ObjectType;
-import org.gatein.mop.api.workspace.Page;
 import org.gatein.mop.api.workspace.Site;
 import org.gatein.mop.api.content.ContentManager;
 
@@ -66,7 +65,12 @@ public class POMSession {
     return model.findObject(ownerType, statement);
   }
 
-  public Iterator<Page> findPages(ObjectType<? extends Site> siteType, String ownerId, String title) {
+  public <O extends WorkspaceObject> Iterator<O> findObjects(
+    ObjectType<O> type,
+    ObjectType<? extends Site> siteType,
+    String ownerId,
+    String title) {
+
     Workspace workspace = getWorkspace();
     String workspacePath = model.getPath(workspace);
     String statement;
@@ -80,25 +84,45 @@ public class POMSession {
         } else {
           pathPrefix = workspacePath + "/usersites";
         }
-        statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + pathPrefix + "/%/root/pages/pages/pages/%'";
+        if (type == ObjectType.PAGE) {
+          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + pathPrefix + "/%/root/pages/pages/pages/%'";
+        } else {
+          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + pathPrefix + "/%/navigation'";
+        }
       }
       catch (IllegalArgumentException e) {
-        statement = "SELECT * FROM mop:page WHERE jcr:path LIKE ''";
+        if (type == ObjectType.PAGE) {
+          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE ''";
+        } else {
+          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE ''";
+        }
       }
     } else {
       if (ownerId != null) {
-        statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/" + new POMFormatter().encodeNodeName(null, ownerId) + "/root/pages/pages/pages/%'";
+        if (type == ObjectType.PAGE) {
+          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/" + new POMFormatter().encodeNodeName(null, ownerId) + "/root/pages/pages/pages/%'";
+        } else {
+          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + workspacePath + "/%/" + new POMFormatter().encodeNodeName(null, ownerId) + "/navigation'";
+        }
       } else {
         if (title != null) {
-          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/%/root/pages/pages/pages/%' AND mop:title='" + title + "'";
+          if (type == ObjectType.PAGE) {
+            statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/%/root/pages/pages/pages/%' AND mop:title='" + title + "'";
+          } else {
+            throw new UnsupportedOperationException();
+          }
         } else {
-          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/%/root/pages/pages/pages/%'";
+          if (type == ObjectType.PAGE) {
+            statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/%/root/pages/pages/pages/%'";
+          } else {
+            statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + workspacePath + "/%/%/navigation'";
+          }
         }
       }
     }
 
     //
-    return model.findObject(ObjectType.PAGE, statement);
+    return model.findObject(type, statement);
   }
 
   public void execute(POMTask task) throws Exception {
