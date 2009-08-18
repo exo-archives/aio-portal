@@ -126,6 +126,33 @@
 			</div>
 		""";
 	}
+	
+	void renderDashboards(){
+		PageNavigation userNavigation = uicomponent.getCurrentUserNavigation();
+		if(userNavigation == null){
+			return;
+		}
+		
+		nodes = userNavigation.getNodes();
+		int size = nodes.size();
+		if(size < 1){
+			return;
+		}
+		String clazz = "";
+		
+		print """
+			<div style="position: absolute; display:none" class="MenuItemContainer">
+				<div class="SubBlock">
+		""";
+					for(int i = 0; i < size; i++) {
+						renderPageNode( nodes.get(i), i%2 == 0);
+					}
+		print """
+				</div>
+			</div>
+		""" ;
+	}
+	
 %> 
 <div class="UIUserToolbarPortlet" id="$uicomponent.id">
 	<div class="UIHorizontalTabs">
@@ -133,8 +160,9 @@
 
 			<div class="UITab NormalToolbarTab">
 				<div class="NormalNavigationTab">
-					<a class="DashboardIcon TBIcon" href="#">Dashboard</a>
+					<a class="DashboardIcon TBIcon" href="<%= Util.getPortalRequestContext().getPortalURI() + "usernavigation" %>">Dashboard</a>
 				</div>
+				<% renderDashboards(); %>
 			</div>
 
 			<div class="UITab NormalToolbarTab">

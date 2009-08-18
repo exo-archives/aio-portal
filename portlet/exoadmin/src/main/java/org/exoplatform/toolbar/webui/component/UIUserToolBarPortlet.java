@@ -94,4 +94,9 @@ public class UIUserToolBarPortlet extends UIPortletApplication {
     return null;
   }
   
+  public PageNavigation getCurrentUserNavigation(){
+  	String remoteUser = Util.getPortalRequestContext().getRemoteUser();
+  	return getPageNavigation(PortalConfig.USER_TYPE + "::" + remoteUser);
+  }
+  
 }

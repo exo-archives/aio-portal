@@ -1,9 +1,12 @@
 package org.exoplatform.dashboard.webui.component;
 
+import java.util.List;
+
 import org.exoplatform.portal.config.UserPortalConfigService;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
+import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.webui.portal.PageNodeEvent;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.util.Util;
@@ -53,8 +56,21 @@ public class UITabPaneDashboard extends UIContainer{
 	public UITabPaneDashboard()throws Exception{
 		configService = getApplicationComponent(UserPortalConfigService.class);
 		uiPortal = Util.getUIPortal();
-		pageNavigation = uiPortal.getSelectedNavigation();
+		initPageNavigation();
 	}
+	
+	private void initPageNavigation(){
+		String remoteUser = Util.getPortalRequestContext().getRemoteUser();
+		pageNavigation = getPageNavigation(PortalConfig.USER_TYPE + "::" + remoteUser);
+	}
+	
+	private PageNavigation getPageNavigation(String owner){
+    List<PageNavigation> allNavigations = uiPortal.getNavigations();
+    for(PageNavigation nav: allNavigations){
+      if(nav.getOwner().equals(owner)) return nav;
+    }
+    return null;
+  }
 			
 	public int getSelectedIndex(){
 		return selectedIndex;
@@ -79,16 +95,11 @@ public class UITabPaneDashboard extends UIContainer{
 	
 	public PageNavigation getPageNavigation(){
 		if(pageNavigation == null){
-			pageNavigation = uiPortal.getSelectedNavigation();
+			initPageNavigation();
 		}
 		return pageNavigation;
 	}
 		
-	//public PageNode getPageNode(int nodeIndex){
-		//TODO: Get pageNavigation directly from portal
-	//	return pageNavigation.getNodes().get(nodeIndex);
-	//}
-	
 	synchronized public void setSelectedIndex(int _selectedIndex){
 		selectedIndex = _selectedIndex;
 	}

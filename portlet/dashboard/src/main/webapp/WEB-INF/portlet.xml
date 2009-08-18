@@ -84,7 +84,7 @@
   		<portlet-mode>help</portlet-mode>
   	</supports>
   	<supported-locale>en</supported-locale>
-  	<!--<resource-bundle></resource-bundle>-->
+  	<resource-bundle>locale.portlet.dashboard.TabbedDashboardPortlet</resource-bundle>
   	<portlet-info>
   		<title>Tabbed Dashboard Portlet</title>
   		<short-title>Tabbed Dashboard</short-title>

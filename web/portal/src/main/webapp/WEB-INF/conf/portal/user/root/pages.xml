@@ -1,2 +1,67 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<page-set />
+<page-set>
+  
+  <page>
+  	<owner-type>user</owner-type>
+    <owner-id>root</owner-id>
+    <name>sales</name>
+    <title>Sales BI</title>
+    <access-permissions>*:/platform/users</access-permissions>
+    <edit-permission>*:/platform/administrators</edit-permission>
+    <application>
+    	<instance-id>group#/platform/users:/dashboard/TabbedDashboardPortlet/TabbedDashboard</instance-id>
+    	<title>Tabbed Dashboard</title>
+    	<access-permissions>*:/platform/users</access-permissions>
+    	<show-info-bar>false</show-info-bar>
+    </application>
+    <application>
+      <instance-id>group#/platform/users:/dashboard/DashboardPortlet/Dashboard</instance-id>
+      <title>Dashboard</title>
+      <access-permissions>*:/platform/users</access-permissions>
+      <show-info-bar>false</show-info-bar>
+    </application>   
+  </page>
+  
+  <page>
+  	<owner-type>user</owner-type>
+    <owner-id>root</owner-id>
+    <name>scrum</name>
+    <title>Scrum</title>
+    <access-permissions>*:/platform/users</access-permissions>
+    <edit-permission>*:/platform/administrators</edit-permission>
+    <application>
+    	<instance-id>group#/platform/users:/dashboard/TabbedDashboardPortlet/TabbedDashboard</instance-id>
+    	<title>Tabbed Dashboard</title>
+    	<access-permissions>*:/platform/users</access-permissions>
+    	<show-info-bar>false</show-info-bar>
+    </application>
+    <application>
+      <instance-id>group#/platform/users:/dashboard/DashboardPortlet/Dashboard</instance-id>
+      <title>Dashboard</title>
+      <access-permissions>*:/platform/users</access-permissions>
+      <show-info-bar>false</show-info-bar>
+    </application>   
+  </page>
+  
+  <page>
+  	<owner-type>user</owner-type>
+    <owner-id>root</owner-id>
+    <name>development</name>
+    <title>Development</title>
+    <access-permissions>*:/platform/users</access-permissions>
+    <edit-permission>*:/platform/administrators</edit-permission>
+    <application>
+    	<instance-id>group#/platform/users:/dashboard/TabbedDashboardPortlet/TabbedDashboard</instance-id>
+    	<title>Tabbed Dashboard</title>
+    	<access-permissions>*:/platform/users</access-permissions>
+    	<show-info-bar>false</show-info-bar>
+    </application>
+    <application>
+      <instance-id>group#/platform/users:/dashboard/DashboardPortlet/Dashboard</instance-id>
+      <title>Dashboard</title>
+      <access-permissions>*:/platform/users</access-permissions>
+      <show-info-bar>false</show-info-bar>
+    </application>   
+  </page>
+ </page-set>
+

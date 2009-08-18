@@ -3,12 +3,12 @@
 		<tr>
 			<td>
 				<div>
-					<a href="<%= uicomponent.event("AddDashboard"); %>"><%= _ctx.appRes(uicomponent.getId()+".action.addNewDashboard"); %></a>
+					<a href="<%= uicomponent.event("AddDashboard"); %>"><span><%= _ctx.appRes(uicomponent.getId() + ".action.addNewDashboard"); %></span></a>
 				</div>
 			</td>
 			<td>
 				<div>
-					<a href="#">SwitchRange</a>
+					<a href="#"><span><%= _ctx.appRes(uicomponent.getId() + ".action.switchShowRange"); %></span></a>
 				</div>
 			</td>
 		</tr>
