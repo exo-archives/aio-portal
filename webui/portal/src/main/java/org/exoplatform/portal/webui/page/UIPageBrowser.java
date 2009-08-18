@@ -129,12 +129,10 @@ public class UIPageBrowser extends UISearch {
     if (lastQuery_ == null) {
       lastQuery_ = new Query<Page>(null, null, null, null, Page.class);
     }
-    LazyPageList pagelist = null;
+    LazyPageList<Page> pagelist = null;
     try {
-      pagelist = service.find(lastQuery_, new Comparator<Object>() {
-        public int compare(Object obj1, Object obj2) {
-          Page page1 = (Page) obj1;
-          Page page2 = (Page) obj2;
+      pagelist = service.find(lastQuery_, new Comparator<Page>() {
+        public int compare(Page page1, Page page2) {
           return page1.getName().compareTo(page2.getName());
         }
       });
