@@ -250,6 +250,28 @@ public class UIPortal extends UIContainer {
     }
   }
   
+  public void updatePortletByWindowId(String windowId) throws Exception {
+    List<UIPortlet> portletInstancesInPage = new ArrayList<UIPortlet>();
+    findComponentOfType(portletInstancesInPage, UIPortlet.class);
+    
+    for (UIPortlet portlet : portletInstancesInPage) {
+      if (portlet.getExoWindowID().equals(windowId)) {
+        Util.getPortalRequestContext().addUIComponentToUpdateByAjax(portlet);
+      }
+    }
+  }
+  
+  public void updatePortletsByName(String portletName) throws Exception {
+    List<UIPortlet> portletInstancesInPage = new ArrayList<UIPortlet>();
+    findComponentOfType(portletInstancesInPage, UIPortlet.class);
+    
+    for (UIPortlet portlet : portletInstancesInPage) {
+      if (portlet.getExoWindowID().getPortletName().equals(portletName)) {
+        Util.getPortalRequestContext().addUIComponentToUpdateByAjax(portlet);
+      }
+    }
+  } 
+  
   static  public class LogoutActionListener extends EventListener<UIComponent> {
     public void execute(Event<UIComponent> event) throws Exception {
       PortalRequestContext prContext = Util.getPortalRequestContext();
