@@ -33,7 +33,9 @@ import org.exoplatform.webui.event.Event.Phase;
 		template =  "app:/groovy/dashboard/webui/component/UITabPaneDashboard.gtmpl",
 		events = {
 				@EventConfig(name = "SelectTab", listeners = UITabPaneDashboard.SelectTabActionListener.class),
-				@EventConfig(name = "DeleteTab", listeners = UITabPaneDashboard.DeleteTabActionListener.class)
+				@EventConfig(name = "DeleteTab", listeners = UITabPaneDashboard.DeleteTabActionListener.class),
+				@EventConfig(name = "AddDashboard", listeners = UITabPaneDashboard.AddDashboardActionListener.class),
+				@EventConfig(name = "SwitchShowedTabRange", listeners = UITabPaneDashboard.SwitchShowedTabRangeActionListener.class)
 		}
 )
 public class UITabPaneDashboard extends UIContainer{
@@ -183,5 +185,21 @@ public class UITabPaneDashboard extends UIContainer{
 			}
 		}
 	}
+	
+	static public class AddDashboardActionListener extends EventListener<UITabPaneDashboard>{
+		public void execute(Event<UITabPaneDashboard> event) throws Exception {
+			UITabPaneDashboard tabPane = event.getSource();
+			if(tabPane.createNewPageNode(null)){
+				WebuiRequestContext context = event.getRequestContext();
+				context.addUIComponentToUpdateByAjax(tabPane);
+			}
+		}
+	}
+	
+	static public class SwitchShowedTabRangeActionListener extends EventListener<UITabPaneDashboard>{
+		public void execute(Event<UITabPaneDashboard> event) throws Exception {
+		}
+	}
+
 		
 }

@@ -1,13 +1,3 @@
-<%
-  def tabPane=uicomponent.getChild(0);
-	def tabPaneManager=uicomponent.getChild(1);
-	def context=_ctx.getRequestContext(); 
-%>
 <div id="$uicomponent.id">
-		<table>
-			<tr>
-				<td><% tabPane.processRender(context); %></td>
-				<td><% tabPaneManager.processRender(context); %></td>
-			</tr>
-		</table>
+	<% uicomponent.renderChildren(); %>
 </div>

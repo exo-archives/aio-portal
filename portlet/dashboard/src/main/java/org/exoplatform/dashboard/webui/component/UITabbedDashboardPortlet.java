@@ -18,11 +18,7 @@ import org.exoplatform.webui.core.lifecycle.UIApplicationLifecycle;
 )
 public class UITabbedDashboardPortlet extends UIPortletApplication {
 	public UITabbedDashboardPortlet()throws Exception{
-		UITabPaneDashboard tabPane = addChild(UITabPaneDashboard.class,null,"UITabPaneDashboard");
-		UITabPaneDashboardManager tabManager = addChild(UITabPaneDashboardManager.class,null,"UITabPaneDashboardManager");
-		tabPane.setRendered(true);
-		tabManager.setRendered(true);
-		tabManager.setAssociatedTabPane(tabPane);
+		addChild(UITabPaneDashboard.class,null,"UITabPaneDashboard");
 		setId("UITabbedDashboardPortlet");
 	}
 }

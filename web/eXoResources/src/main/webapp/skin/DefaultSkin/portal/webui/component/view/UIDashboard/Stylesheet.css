@@ -1,4 +1,12 @@
-.UIDashboardPortlet {	
+
+.UIWindow .UIDashboardPortlet {
+	margin: 0px;
+}
+
+.UIDashboardPortlet {
+	background: #f4f3f3;
+	border: 1px solid #b7b7b7;
+	border-top: none;
 	height: 100%;
 }
 
@@ -8,10 +16,6 @@
 }
 
 .UIDashboard {
-	border: 1px solid #b7b7b7;
-	margin: 5px;
-	background: white url('background/BgRepeat.gif') repeat-y top left; /* orientation=lt */
-	background: white url('background/BgRepeat-rt.gif') repeat-y top right; /* orientation=rt */
 	height: 100%;
 }
 
@@ -35,6 +39,31 @@
 	background: white;
 	padding: 10px;
 }
+
+.UITabPaneDashboard .UIHorizontalTabs .TabsContainer {
+	background: url('/eXoResources/skin/DefaultSkin/webui/component/UIPopup/UIPopupWindow/background/CenterHorizontalTabs.gif') repeat-x bottom;
+	height: 26px;
+	padding: 0 2px;
+}
+
+.UITabPaneDashboard .UIHorizontalTabs .UITab .Lable {
+}
+
+.UITabPaneDashboard .UIHorizontalTabs .UITab .CloseIcon {
+	background: url('background/IconClose.gif') no-repeat center;
+	width: 16px; height: 16px;
+	cursor: pointer;
+	margin: 3px 0px 0px 30px;
+}
+
+.UITabPaneDashboard .UIHorizontalTabs .AddDashboard {
+	background: url('background/AddDashboard.gif') no-repeat bottom;
+	width: 32px; height: 24px;
+	float: left;
+	cursor: pointer;
+	margin-top: 1px;
+}
+
 
 /*----------------------UIGadgetsSelectorForm-------------------*/
 
@@ -187,6 +216,12 @@
 
 /*----------------------UIGadgetsContainer-------------------*/
 
+.UIDashboard .UIGadget {
+	background: #fbfafa;
+	border: 1px dashed #ababab;
+	padding: 5px 0px;
+}
+
 .UIDashboard .UIGadget .GadgetControl {
 	float: none;
 	padding: 0px;
@@ -194,17 +229,17 @@
 }
 
 .UIDashboard .UIGadget .GadgetControl .LeftControlBar {
-	background: url('background/Dashboard.gif') no-repeat left -51px;
+	background: none;
 	padding: 0px 0px 0px 3px;
 }
 
 .UIDashboard .UIGadget .GadgetControl .RightControlBar {
-	background: url('background/Dashboard.gif') no-repeat right -51px;
+	background: none;
 	padding: 0px 3px 0px 0px;
 }
 
 .UIDashboard .UIGadget .GadgetControl .CenterControlBar {
-	background: url('background/Dashboard.gif') repeat-x center -73px;
+	background: none;
 	height: 22px;
 	line-height: 22px;
 }
@@ -219,7 +254,6 @@
 
 .UIDashboard .UIGadget .MLGadget {
 	background: none;
-	border: 1px solid #81a7c6;
 	border-top: none;
 }
 
@@ -234,12 +268,11 @@
 /*------------------UIDashboardContainer----------------*/
 
 .UIDashboardContainer {
-	background: white;
 	height: 100%;
 }
 
 .UIDashboard .UIDashboardContainer .GadgetTitle {
-	width: 223px;	
+	width: 203px;	
 }
 
 .UIDashboardContainer .GadgetContainer {
