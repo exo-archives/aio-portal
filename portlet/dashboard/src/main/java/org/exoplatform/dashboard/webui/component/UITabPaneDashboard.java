@@ -33,7 +33,7 @@ import org.exoplatform.webui.event.Event.Phase;
 		template =  "app:/groovy/dashboard/webui/component/UITabPaneDashboard.gtmpl",
 		events = {
 				@EventConfig(name = "SelectTab", listeners = UITabPaneDashboard.SelectTabActionListener.class),
-				@EventConfig(name = "DeleteTab", listeners = UITabPaneDashboard.DeleteTabActionListener.class),
+				@EventConfig(confirm = UITabPaneDashboard.DELETE_DASHBOARD_CONFIRM_PROMPT, name = "DeleteTab", listeners = UITabPaneDashboard.DeleteTabActionListener.class),
 				@EventConfig(name = "AddDashboard", listeners = UITabPaneDashboard.AddDashboardActionListener.class),
 				@EventConfig(name = "SwitchShowedTabRange", listeners = UITabPaneDashboard.SwitchShowedTabRangeActionListener.class)
 		}
@@ -54,6 +54,7 @@ public class UITabPaneDashboard extends UIContainer{
 	
 	final private static int MAX_SHOWED_TAB_NUMBER=6;
 	final public static String PAGE_TEMPLATE = "dashboard";
+	final public static String DELETE_DASHBOARD_CONFIRM_PROMPT = "Really want to remove this dashboard?";
 	
 	public UITabPaneDashboard()throws Exception{
 		configService = getApplicationComponent(UserPortalConfigService.class);
