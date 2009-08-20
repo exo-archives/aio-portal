@@ -103,6 +103,12 @@
                     <string>platform/guests</string>
                   </value>
                   <value>
+                    <string>platform/test/legacy</string>
+                  </value>
+                  <value>
+                    <string>platform/test/normalized</string>
+                  </value>
+                  <value>
                     <string>organization/management/executive-board</string>
                   </value>
                 </collection>

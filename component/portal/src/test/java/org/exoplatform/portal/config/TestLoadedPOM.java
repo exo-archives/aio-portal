@@ -71,43 +71,43 @@ public class TestLoadedPOM extends BasicTestCase {
   }
 
   public void testLegacyGroupWithNormalizedName() throws Exception {
-    PageNavigation nav = storage.getPageNavigation("group::/platform/guests");
+    PageNavigation nav = storage.getPageNavigation("group::/platform/test/legacy");
     assertNotNull(nav);
-    assertEquals("/platform/guests", nav.getOwnerId());
+    assertEquals("/platform/test/legacy", nav.getOwnerId());
     PageNode node = nav.getNodes().get(0);
-    assertEquals("group::/platform/guests::register", node.getPageReference());
+    assertEquals("group::/platform/test/legacy::register", node.getPageReference());
 
-    Page page = storage.getPage("group::/platform/guests::register");
+    Page page = storage.getPage("group::/platform/test/legacy::register");
     assertNotNull(page);
-    assertEquals("group::/platform/guests::register", page.getPageId());
-    assertEquals("/platform/guests", page.getOwnerId());
+    assertEquals("group::/platform/test/legacy::register", page.getPageId());
+    assertEquals("/platform/test/legacy", page.getOwnerId());
     Application app = (Application)page.getChildren().get(0);
-    assertEquals("group#/platform/guests:/exoadmin/AccountPortlet/Account", app.getInstanceId());
+    assertEquals("group#/platform/test/legacy:/exoadmin/AccountPortlet/Account", app.getInstanceId());
 
-    PortletPreferences prefs = storage.getPortletPreferences(new ExoWindowID("group#/platform/guests:/web/IFramePortlet/blog"));
+    PortletPreferences prefs = storage.getPortletPreferences(new ExoWindowID("group#/platform/test/legacy:/web/IFramePortlet/blog"));
     assertNotNull(prefs);
-    assertEquals("/platform/guests", prefs.getOwnerId());
-    assertEquals("group#/platform/guests:/web/IFramePortlet/blog", prefs.getWindowId());
+    assertEquals("/platform/test/legacy", prefs.getOwnerId());
+    assertEquals("group#/platform/test/legacy:/web/IFramePortlet/blog", prefs.getWindowId());
   }
 
   public void testGroupWithNormalizedName() throws Exception {
-    PageNavigation nav = storage.getPageNavigation("group::/platform/users");
+    PageNavigation nav = storage.getPageNavigation("group::/platform/test/normalized");
     assertNotNull(nav);
-    assertEquals("/platform/users", nav.getOwnerId());
+    assertEquals("/platform/test/normalized", nav.getOwnerId());
     PageNode node = nav.getNodes().get(0);
-    assertEquals("group::/platform/users::dashboard", node.getPageReference());
+    assertEquals("group::/platform/test/normalized::register", node.getPageReference());
 
-    Page page = storage.getPage("group::/platform/users::mylink-blog");
+    Page page = storage.getPage("group::/platform/test/normalized::register");
     assertNotNull(page);
-    assertEquals("group::/platform/users::mylink-blog", page.getPageId());
-    assertEquals("/platform/users", page.getOwnerId());
+    assertEquals("group::/platform/test/normalized::register", page.getPageId());
+    assertEquals("/platform/test/normalized", page.getOwnerId());
     Application app = (Application)page.getChildren().get(0);
-    assertEquals("group#/platform/users:/web/IFramePortlet/blog", app.getInstanceId());
+    assertEquals("group#/platform/test/normalized:/exoadmin/AccountPortlet/Account", app.getInstanceId());
 
-    PortletPreferences prefs = storage.getPortletPreferences(new ExoWindowID("group#/platform/users:/web/IFramePortlet/blog"));
+    PortletPreferences prefs = storage.getPortletPreferences(new ExoWindowID("group#/platform/test/normalized:/web/IFramePortlet/blog"));
     assertNotNull(prefs);
-    assertEquals("/platform/users", prefs.getOwnerId());
-    assertEquals("group#/platform/users:/web/IFramePortlet/blog", prefs.getWindowId());
+    assertEquals("/platform/test/normalized", prefs.getOwnerId());
+    assertEquals("group#/platform/test/normalized:/web/IFramePortlet/blog", prefs.getWindowId());
   }
 
   public void testNavigation() throws Exception {
@@ -212,22 +212,30 @@ public class TestLoadedPOM extends BasicTestCase {
   }
 
   public void testFindPageByTitle() throws Exception {
-    Query<Page> query = new Query<Page>(null, null, null, "Register", Page.class);
+    Query<Page> query = new Query<Page>(null, null, null, "TestTitle", Page.class);
     List<Page> list = storage.find(query).getAll();
-    assertEquals("Expected one result instead of " + list, 1, list.size());
-    assertEquals("group::/platform/guests::register", list.get(0).getPageId());
+    assertEquals("Expected two result instead of " + list, 2, list.size());
+    Set<String> ids = new HashSet<String>(Arrays.asList(
+      list.get(0).getPageId(),
+      list.get(1).getPageId()));
+    HashSet<String> expectedIds = new HashSet<String>(Arrays.asList(
+      "group::/platform/test/legacy::register",
+      "group::/platform/test/normalized::register"));
+    assertEquals(expectedIds, ids);
   }
 
   public void testFindNavigation() throws Exception {
     Query<PageNavigation> query = new Query<PageNavigation>("group", null, null, null, PageNavigation.class);
     List<PageNavigation> list = storage.find(query).getAll();
-    assertEquals("Expected 4 results instead of " + list, 4, list.size());
+    assertEquals("Expected 6 results instead of " + list, 6, list.size());
     Set<String> names = new HashSet<String>();
     for (PageNavigation navigation : list) {
       assertEquals("group", navigation.getOwnerType());
       names.add(navigation.getOwnerId());
     }
     HashSet<String> expectedNames = new HashSet<String>(Arrays.asList(
+      "/platform/test/legacy",
+      "/platform/test/normalized",
       "/platform/administrators",
       "/platform/guests",
       "/platform/users",

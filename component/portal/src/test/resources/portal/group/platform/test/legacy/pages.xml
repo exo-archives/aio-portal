@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<page-set>
+		 		
+  <page>
+  	<page-id>group::platform/test/legacy::bilto</page-id>
+    <owner-type>group</owner-type>
+    <owner-id>platform/test/legacy</owner-id>
+    <name>register</name>
+    <title>TestTitle</title>
+	  <access-permissions>*:/platform/test/legacy</access-permissions>
+	  <edit-permission>*:/platform/administrators</edit-permission>    
+    <application>
+      <instance-id>group#platform/test/legacy:/exoadmin/AccountPortlet/Account</instance-id>
+      <title>New Account</title>
+      <show-info-bar>false</show-info-bar>      
+    </application>  
+  </page>          
+    
+</page-set>
+
