@@ -12,6 +12,8 @@
 	jsmanager.addCustomizedOnLoadScript('eXo.portal.UIAdminToolbar.onLoad("' + uicomponent.id + '");');
 	
 	def groupNavigations = uicomponent.getGroupNavigations();
+	def currentUserNavigation = uicomponent.getCurrentUserNavigation();
+ 	def portalURI = Util.getPortalRequestContext().getPortalURI();
  
 	void renderGroupPageNavigation(PageNavigation navigation) {
 		nodes = navigation.getNodes() ;
@@ -159,26 +161,40 @@
 <div class="UIUserToolbarPortlet" id="$uicomponent.id">
 	<div class="UIHorizontalTabs">
 		<div class="TabsContainer" style="position: relative">
-
+			
+			<% 
+				String defaultDashboardPage;				
+				if(currentUserNavigation.getNodes() ==null || currentUserNavigation.getNodes().size() < 1){ 
+					defaultDashboardPage = "Tab_0";
+			%>
+						<div class="UITab NormalToolbarTab">
+							<div class="NormalNavigationTab">
+								<a class="DashboardIcon TBIcon" href="<%= uicomponent.url("AddDefaultDashboard", defaultDashboardPage); %>">Dashboard</a>
+							</div>
+						</div>
+			<% 
+				}else{
+					defaultDashboardPage = currentUserNavigation.getNodes().get(0).getName();	
+			%>
+						<div class="UITab NormalToolbarTab">
+								<div class="NormalNavigationTab">
+										<a class="DashboardIcon TBIcon" href="<%= portalURI + defaultDashboardPage %>">Dashboard</a>
+								</div>
+								<% renderDashboards(); %>
+						</div>
+			<% } %>
 			<div class="UITab NormalToolbarTab">
 				<div class="NormalNavigationTab">
-					<a class="DashboardIcon TBIcon" href="<%= Util.getPortalRequestContext().getPortalURI() + "usernavigation" %>">Dashboard</a>
-				</div>
-				<% renderDashboards(); %>
-			</div>
-
-			<div class="UITab NormalToolbarTab">
-				<div class="NormalNavigationTab">
-					<a class="SitesIcon TBIcon" href="<% print Util.getPortalRequestContext().getPortalURI() + "portalnavigation" %>">
-						Site
-					</a>
+							<a class="SitesIcon TBIcon" href="<%= portalURI + "portalnavigation" %>">
+									Site
+							</a>
 				</div>
 				<% renderPortalNavigations() %>
 			</div>
 
 			<div class="UITab NormalToolbarTab">
 				<div class="NormalNavigationTab">
-					<a class="SitesIcon TBIcon" href="<% print Util.getPortalRequestContext().getPortalURI() + "groupnavigation" %>">Group</a>
+							<a class="SitesIcon TBIcon" href="<%= portalURI + "groupnavigation" %>">Group</a>
 				</div>
 				<% if (!groupNavigations.isEmpty()) { %>
 				<div style="position: absolute; display:none" class="MenuItemContainer">

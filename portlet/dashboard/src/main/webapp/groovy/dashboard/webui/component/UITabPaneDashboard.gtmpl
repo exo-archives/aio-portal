@@ -2,32 +2,37 @@
 	import java.util.ArrayList; 
 	import org.exoplatform.portal.config.model.PageNavigation;
 	import org.exoplatform.portal.config.model.PageNode;
-	
-	def selectedIndex = uicomponent.getSelectedIndex();
-	
+	import org.exoplatform.portal.webui.util.Util;
+	import org.exoplatform.portal.webui.portal.UIPortal;
+	import org.exoplatform.portal.application.PortalRequestContext;
+
 	PageNavigation pageNavigation = uicomponent.getPageNavigation();
 	ArrayList<PageNode> nodes = pageNavigation.getNodes();
 	def tabNbs = nodes.size();
+
+	PortalRequestContext pcontext = Util.getPortalRequestContext();	
+	def String portalURI = pcontext.getPortalURI();
+
+	PageNode selectedNode = Util.getUIPortal().getSelectedNode();
 	PageNode node; 
-	
 	
 %>
 
 <div id="$uicomponent.id" class="UITabPaneDashboard">
 		<div class="UIHorizontalTabs">
 				<div class="TabsContainer">
-						<% for(int i=0;i<tabNbs;i++){ 
+						<% for(int i = 0;i < tabNbs;i++){ 
 							 		node = nodes.get(i);
 									String param=""+i;
-									if(i == selectedIndex){ 
+									if(node.getUri().equals(selectedNode.getUri())){ 
 		  						%>
 										<div class="UITab GrayTabStyle">
 												<div class="SelectedTab">
 														<div class="LeftTab">
 																<div class="RightTab">
 																		<div class="MiddleTab">
-																				<a	href="<%= uicomponent.event("SelectTab",param); %>"><span><%= node.getResolvedLabel(); %></span></a>
-																				<a  href="<%= uicomponent.event("DeleteTab",param); %>">
+																				<a	href="<%= portalURI + node.getName(); %>"><span><%= node.getResolvedLabel(); %></span></a>
+																				<a  href="<%= uicomponent.url("DeleteTab",param); %>">
 																					<img class="CloseIcon" src="/eXoResources/skin/sharedImages/Blank.gif" alt="DEL" />
 																				</a>	
 																		</div>
@@ -41,8 +46,8 @@
 														<div class="LeftTab">
 																<div class="RightTab">
 																		<div class="MiddleTab">
-																				<a	href="<%= uicomponent.event("SelectTab",param); %>"><span><%= node.getResolvedLabel(); %></span></a>
-																				<a  href="<%= uicomponent.event("DeleteTab",param); %>">
+																				<a	href="<%= portalURI + node.getName(); %>"><span><%= node.getResolvedLabel(); %></span></a>
+																				<a  href="<%= uicomponent.url("DeleteTab",param); %>">
 																					<img class="CloseIcon" src="/eXoResources/skin/sharedImages/Blank.gif" alt="DEL" />
 																				</a>	
 																		</div>
@@ -52,7 +57,7 @@
 										</div>
 									<%} %>	
 						<% } %>
-										<a  href="<%= uicomponent.event("AddDashboard"); %>" >
+										<a  href="<%= uicomponent.url("AddDashboard"); %>" >
 												<div class="AddDashboard"><span></span></div>				
 										</a>		
 				</div>
