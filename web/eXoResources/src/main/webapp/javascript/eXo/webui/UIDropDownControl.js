@@ -1,8 +1,9 @@
 function UIDropDownControl() {} ;
 
-UIDropDownControl.prototype.init = function(id) {
+UIDropDownControl.prototype.init = function(id, limitHeight) {
 	//var popup = document.getElementById(id) ;
 	//return popup;
+	this.limitHeight = limitHeight;
 };
 
 UIDropDownControl.prototype.selectItem = function(method, id, selectedIndex) {
@@ -29,9 +30,10 @@ UIDropDownControl.prototype.show = function(obj, evt) {
 			var bottomCont = DOMUtil.findNextElementByTagName(middleCont, "div") ;
 			topCont.style.display = "block" ;
 			bottomCont.style.display = "block" ;
-			var visibleHeight = Browser.getBrowserHeight() - Browser.findPosY(middleCont) - 40 ;
+			var visibleHeight = this.limitHeight;
+			if(!visibleHeight || visibleHeight == 0) visibleHeight = Browser.getBrowserHeight() - Browser.findPosY(middleCont);
 			var scrollHeight = middleCont.scrollHeight ;
-			if(scrollHeight > visibleHeight) {
+			if(scrollHeight > (visibleHeight -40)) {
 				topCont.style.display = "block" ;
 				bottomCont.style.display = "block" ;
 				middleCont.style.height = visibleHeight - topCont.offsetHeight - bottomCont.offsetHeight + "px" ;

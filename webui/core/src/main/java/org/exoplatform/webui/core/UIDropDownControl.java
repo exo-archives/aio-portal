@@ -44,6 +44,11 @@ public class UIDropDownControl extends UIComponent {
    */
   private int selectedItemIndex_ = 0;
   
+  /**
+   * The limit height in pixels
+   */
+  private int limitHeight = 200;
+  
   public UIDropDownControl() throws Exception {
     options_ = new ArrayList<SelectItemOption<String>>() ;
   }
@@ -76,6 +81,15 @@ public class UIDropDownControl extends UIComponent {
   
   public void setAction(String act) { action_ = act ; }
   public String getAction() {return action_ ; }
+  
+  public void setLimitHeight(int limit) {
+    if(limit < 0) return;
+    limitHeight = limit;
+  }
+  
+  public int getLimitHeight() {
+    return limitHeight;
+  }
   
   public List<SelectItemOption<String>> getOptions() { return options_ ; }
   
