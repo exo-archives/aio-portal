@@ -43,10 +43,7 @@ public class UIMainActionListener {
 			UIWorkingWorkspace uiWorkingWS = uiApp
 					.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
 			uiWorkingWS.setRenderedChild(UIPortalToolPanel.class);
-			UIPortalComposer uiPortalComposer = uiWorkingWS.addChild(
-					UIPortalComposer.class, "UIPageEditor", null);
-			UIPortal uiPortal = uiWorkingWS.getChild(UIPortal.class);
-			uiPortalComposer.setOwnerPortalName(uiPortal.getName());
+			uiWorkingWS.addChild(UIPortalComposer.class, "UIPageEditor", null);
 			UIPortalToolPanel uiToolPanel = uiWorkingWS
 					.getChild(UIPortalToolPanel.class);
 			uiToolPanel.setShowMaskLayer(false);
@@ -66,7 +63,6 @@ public class UIMainActionListener {
       uiWorkingWS.setRenderedChild(UIPortalToolPanel.class);
       UIPortalComposer portalComposer = uiWorkingWS.addChild(UIPortalComposer.class, "UIPageEditor", null);
       portalComposer.setRendered(false);
-      portalComposer.setOwnerPortalName(uiWorkingWS.getChild(UIPortal.class).getName());
       UIPortalToolPanel uiToolPanel = uiWorkingWS.getChild(UIPortalToolPanel.class);
       uiToolPanel.setShowMaskLayer(false);
       uiToolPanel.setWorkingComponent(UIPageCreationWizard.class, null);
@@ -93,10 +89,9 @@ public class UIMainActionListener {
 					.getRequestContext();
 			UIWorkingWorkspace uiWorkingWS = uiApp
 					.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+			uiWorkingWS.setBackupUIPortal(null);
 			uiApp.setModeState(UIPortalApplication.APP_BLOCK_EDIT_MODE);
-			UIPortalComposer uiPortalComposer = uiWorkingWS.addChild(
-					UIPortalComposer.class, null, null);
-			uiPortalComposer.setOwnerPortalName(uiPortal.getName());
+			uiWorkingWS.addChild(UIPortalComposer.class, null, null);
 			pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
 			pcontext.setFullRender(true);
 		}

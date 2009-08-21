@@ -4,18 +4,48 @@
   <page>
     <owner-type>portal</owner-type>
     <owner-id>@owner@</owner-id>
-    <name>sitemap</name>
-    <title>Site Map</title>
+    <name>homepage</name>
+    <title>Home Page</title>
 	  <access-permissions>Everyone</access-permissions>
 	  <edit-permission>*:/platform/administrators</edit-permission>
     <application>
-      <instance-id>portal#@owner@:/web/SiteMapPortlet/sitemapportlet</instance-id>
-      <title>Site Map portlet</title>
+      <instance-id>portal#@owner@:/web/HomePagePortlet/homepageportlet</instance-id>
+      <title>Home Page portlet</title>
       <access-permissions>Everyone</access-permissions>
-      <show-info-bar>true</show-info-bar>
-      <show-application-state>true</show-application-state>
-      <show-application-mode>true</show-application-mode>
+      <show-info-bar>false</show-info-bar>
+      <show-application-state>false</show-application-state>
+      <show-application-mode>false</show-application-mode>
     </application>
+  </page>    
+    
+  <page>
+    <owner-type>portal</owner-type>
+    <owner-id>@owner@</owner-id>
+    <name>groupnavigation</name>
+    <title>Group Navigation</title>
+	  <access-permissions>*:/platform/users</access-permissions>
+	  <edit-permission>*:/platform/administrators</edit-permission>    
+    <application>
+      <instance-id>group#organization/managerment/executive-board:/exoadmin/GroupNavigationPortlet/GroupNavigation</instance-id>
+      <title>Group Navigation</title>
+      <access-permissions>Everyone</access-permissions>
+      <show-info-bar>false</show-info-bar>
+    </application>  
+  </page>
+  
+  <page>
+    <owner-type>portal</owner-type>
+    <owner-id>@owner@</owner-id>
+    <name>portalnavigation</name>
+    <title>Portal Navigation</title>
+	  <access-permissions>*:/platform/users</access-permissions>
+	  <edit-permission>*:/platform/administrators</edit-permission>    
+    <application>
+      <instance-id>group#organization/managerment/executive-board:/exoadmin/PortalNavigationPortlet/PortalNavigation</instance-id>
+      <title>Portal Navigation</title>
+      <access-permissions>Everyone</access-permissions>
+      <show-info-bar>false</show-info-bar>
+    </application>  
   </page>
   
 </page-set>

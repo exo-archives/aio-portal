@@ -32,9 +32,6 @@ import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.config.model.PortalProperties;
 import org.exoplatform.portal.skin.SkinService;
-import org.exoplatform.portal.webui.application.UIPortlet;
-import org.exoplatform.portal.webui.application.UIPortletActionListener;
-import org.exoplatform.portal.webui.page.UIPageBody;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
@@ -51,7 +48,6 @@ import org.exoplatform.webui.config.annotation.ComponentConfigs;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.config.annotation.ParamConfig;
 import org.exoplatform.webui.core.UIApplication;
-import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.lifecycle.UIFormLifecycle;
 import org.exoplatform.webui.core.model.SelectItemCategory;
 import org.exoplatform.webui.core.model.SelectItemOption;
@@ -255,13 +251,6 @@ public class UIPortalForm extends UIFormTabPane {
       UIMaskWorkspace uiMaskWS = uiPortalApp.getChildById(UIPortalApplication.UI_MASK_WS_ID) ;
       uiMaskWS.setUIComponent(null);
       pcontext.addUIComponentToUpdateByAjax(uiMaskWS) ;      
-      UIPortalBrowser uiPortalBrowser = uiPortalApp.findFirstComponentOfType(UIPortalBrowser.class);
-      //hoa.phamvu: in some case, the create portal action is call out side portal browser
-      if(uiPortalBrowser != null) {
-        uiPortalBrowser.loadPortalConfigs();
-        pcontext.addUIComponentToUpdateByAjax(uiPortalBrowser);
-        return;
-      }      
       
       UIPortal uiPortal = uiPortalApp.findFirstComponentOfType(UIPortal.class);
       uiPortal.updatePortletsByName("PortalNavigationPortlet");

@@ -16,10 +16,7 @@
  */
 package org.exoplatform.portal.webui.portal;
 
-import java.net.URLEncoder;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.UserPortalConfig;
@@ -39,7 +36,6 @@ import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.webui.workspace.UIPortalToolPanel;
 import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
-import org.exoplatform.portal.webui.workspace.pool.UIPortalPool;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.UserProfile;
 import org.exoplatform.services.resources.LocaleConfig;
@@ -95,7 +91,6 @@ public class UIPortalComposer extends UIContainer {
   
   private boolean isEditted = false;
   private boolean isCollapse = false;
-	private String ownerPortalName;
 
 	public UIPortalComposer() throws Exception {
 		UITabPane uiTabPane = addChild(UITabPane.class, "UIPortalComposerTab", null);
@@ -125,23 +120,16 @@ public class UIPortalComposer extends UIContainer {
 		this.isCollapse = isCollapse;
 	}
 
-	public void setOwnerPortalName(String _ownerPortalName) {
-		ownerPortalName = _ownerPortalName;
-	}
-
-	public String getOwnerPortalName() {
-		return ownerPortalName;
-	}
-
 	public void save() throws Exception {
-		UIPortal uiPortal = Util.getUIPortal();
-		UIPortalApplication uiPortalApp = getAncestorOfType(UIPortalApplication.class);
+		PortalRequestContext prContext = Util.getPortalRequestContext();
+		UIPortalApplication uiPortalApp = (UIPortalApplication) prContext.getUIApplication();
+		UIWorkingWorkspace uiWorkingWS = uiPortalApp.findFirstComponentOfType(UIWorkingWorkspace.class);
+		UIPortal uiPortal = uiWorkingWS.getChild(UIPortal.class);
 
 		PortalConfig portalConfig = PortalDataMapper.toPortal(uiPortal);
 		UserPortalConfigService configService = getApplicationComponent(UserPortalConfigService.class);
 		configService.update(portalConfig);
 		uiPortalApp.getUserPortalConfig().setPortal(portalConfig);
-		PortalRequestContext prContext = Util.getPortalRequestContext();
 		String remoteUser = prContext.getRemoteUser();
 		String ownerUser = prContext.getPortalOwner();
 		UserPortalConfig userPortalConfig = configService.getUserPortalConfig(
@@ -166,13 +154,16 @@ public class UIPortalComposer extends UIContainer {
 				.findUserProfileByName(remoteUser);
 		String userLanguage = userProfile.getUserInfoMap().get("user.language");
 		String browserLanguage = prContext.getRequest().getLocale().getLanguage();
-		if (!portalAppLanguage.equals(userLanguage)
-				&& !portalAppLanguage.equals(browserLanguage)) {
-			uiPortalApp.setLocale(localeConfig.getLocale());
-			uiPortal.refreshNavigation(localeConfig.getLocale());
+		
+		//in case: edit current portal, set skin and language for uiPortalApp
+		if(uiWorkingWS.getBackupUIPortal() == null) {
+			if (!portalAppLanguage.equals(userLanguage)
+					&& !portalAppLanguage.equals(browserLanguage)) {
+				uiPortalApp.setLocale(localeConfig.getLocale());
+				uiPortal.refreshNavigation(localeConfig.getLocale());
+			}
+			uiPortalApp.setSkin(uiPortal.getSkin());
 		}
-		// ----------------------------------------------------------------------------------------------------
-		uiPortalApp.setSkin(uiPortal.getSkin());
 		prContext.refreshResourceBundle();
 		SkinService skinService = getApplicationComponent(SkinService.class);
 		skinService.invalidatePortalSkinCache(uiPortal.getName(), uiPortal
@@ -233,48 +224,55 @@ public class UIPortalComposer extends UIContainer {
 
 	static public class AbortActionListener extends
 			EventListener<UIPortalComposer> {
-
 		public void execute(Event<UIPortalComposer> event) throws Exception {
-			UIPortalApplication uiPortalApp = Util.getUIPortalApplication();
-			UIWorkingWorkspace uiWorkingWS = uiPortalApp
-					.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
-
 			PortalRequestContext prContext = Util.getPortalRequestContext();
-			UserPortalConfigService configService = uiPortalApp
-					.getApplicationComponent(UserPortalConfigService.class);
-			configService.update(uiPortalApp.getUserPortalConfig().getPortalConfig());
+			UIPortalApplication uiPortalApp = (UIPortalApplication) prContext.getUIApplication();
+			UIWorkingWorkspace uiWorkingWS = uiPortalApp
+			.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+//			UserPortalConfigService configService = uiPortalApp
+//					.getApplicationComponent(UserPortalConfigService.class);
+//			configService.update(uiPortalApp.getUserPortalConfig().getPortalConfig());
 			uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
 
-			String remoteUser = prContext.getRemoteUser();
+//			String remoteUser = prContext.getRemoteUser();
 			// String ownerUser = prContext.getPortalOwner();
-			String ownerUser = event.getSource().getOwnerPortalName();
-			UserPortalConfig userPortalConfig = configService.getUserPortalConfig(
-					ownerUser, remoteUser);
+//			String ownerUser = event.getSource().getOwnerPortalName();
+//			UserPortalConfig userPortalConfig = configService.getUserPortalConfig(
+//					ownerUser, remoteUser);
 
-			if (userPortalConfig == null) {
-				HttpServletRequest request = prContext.getRequest();
-				String portalName = URLEncoder.encode(Util.getUIPortal().getName(),
-						"UTF-8");
-				String redirect = request.getContextPath() + "/public/" + portalName
-						+ "/";
-				prContext.getResponse().sendRedirect(redirect);
-			}
+//			if (userPortalConfig == null) {
+//				HttpServletRequest request = prContext.getRequest();
+//				String portalName = URLEncoder.encode(Util.getUIPortal().getName(),
+//						"UTF-8");
+//				String redirect = request.getContextPath() + "/public/" + portalName
+//						+ "/";
+//				prContext.getResponse().sendRedirect(redirect);
+//			}
 
-			UIPortal uiPortal = uiWorkingWS.createUIComponent(prContext,
-					UIPortal.class, null, null);
-			PortalDataMapper.toUIPortal(uiPortal, userPortalConfig);
+//			UIPortal uiPortal = uiWorkingWS.createUIComponent(prContext,
+//					UIPortal.class, null, null);
+//			PortalDataMapper.toUIPortal(uiPortal, userPortalConfig);
 
-			UIPortal oldUIPortal = uiWorkingWS.getChild(UIPortal.class);
-			String uri = (oldUIPortal.getSelectedNode() != null ? oldUIPortal
-					.getSelectedNode().getUri() : null);
-			uiWorkingWS.setBackupUIPortal(oldUIPortal);
-			uiWorkingWS.replaceChild(oldUIPortal.getId(), uiPortal);
+//			UIPortal oldUIPortal = uiWorkingWS.getChild(UIPortal.class);
+//			String uri = (oldUIPortal.getSelectedNode() != null ? oldUIPortal
+//					.getSelectedNode().getUri() : null);
+//			uiWorkingWS.setBackupUIPortal(oldUIPortal);
+//			uiWorkingWS.replaceChild(oldUIPortal.getId(), uiPortal);
+			UIPortal uiPortal = Util.getUIPortal();
+			UIPortal backupPortal = uiWorkingWS.getBackupUIPortal();
+
+			if(backupPortal != null) uiWorkingWS.replaceChild(uiPortal.getId(), backupPortal);
+			uiPortal = uiWorkingWS.getChild(UIPortal.class);
+			uiWorkingWS.setBackupUIPortal(null);
+			
 			uiWorkingWS.setRenderedChild(UIPortal.class) ;
 			uiWorkingWS.removeChild(UIPortalComposer.class);
-			PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal, 
-					PageNodeEvent.CHANGE_PAGE_NODE, uri) ;
-			uiPortal.broadcast(pnevent, Event.Phase.PROCESS) ;  
-			uiPortalApp.getUIPortalPool().resetDefaultUIPortal();
+			
+			String uri = (uiPortal.getSelectedNode() != null) 
+					? uiPortal.getSelectedNode().getUri() : null;
+			PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(
+					uiPortal,PageNodeEvent.CHANGE_PAGE_NODE, uri) ;
+			uiPortal.broadcast(pnevent, Event.Phase.PROCESS) ;
 		}
 
 	}
@@ -287,24 +285,31 @@ public class UIPortalComposer extends UIContainer {
 			uiComposer.save();
 
 			PortalRequestContext prContext = Util.getPortalRequestContext();
-			UserPortalConfigService configService = uiComposer
-					.getApplicationComponent(UserPortalConfigService.class);
+//			UserPortalConfigService configService = uiComposer
+//					.getApplicationComponent(UserPortalConfigService.class);
 			// UserPortalConfig userPortalConfig =
 			// configService.getUserPortalConfig(prContext.getPortalOwner(),
 			// prContext.getRemoteUser());
-			UserPortalConfig userPortalConfig = configService.getUserPortalConfig(
-					uiComposer.getOwnerPortalName(), prContext.getRemoteUser());
-			if (userPortalConfig == null) {
-				HttpServletRequest request = prContext.getRequest();
-				String portalName = URLEncoder.encode(Util.getUIPortal().getName(),
-						"UTF-8");
-				String redirect = request.getContextPath() + "/public/" + portalName
-						+ "/";
-				prContext.getResponse().sendRedirect(redirect);
-			}
+//			UserPortalConfig userPortalConfig = configService.getUserPortalConfig(
+//					uiComposer.getOwnerPortalName(), prContext.getRemoteUser());
+//			if (userPortalConfig == null) {
+//				HttpServletRequest request = prContext.getRequest();
+//				String portalName = URLEncoder.encode(Util.getUIPortal().getName(),
+//						"UTF-8");
+//				String redirect = request.getContextPath() + "/public/" + portalName
+//						+ "/";
+//				prContext.getResponse().sendRedirect(redirect);
+//			}
 
-			UIPortal uiPortal = Util.getUIPortal();
-			UIPortalApplication uiPortalApp = Util.getUIPortalApplication();
+			UIPortalApplication uiPortalApp = (UIPortalApplication) prContext.getUIApplication();
+			UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+			UIPortal uiPortal = uiWorkingWS.findFirstComponentOfType(UIPortal.class);
+			UIPortal backupPortal = uiWorkingWS.getBackupUIPortal();
+			
+			if(backupPortal != null) uiWorkingWS.replaceChild(uiPortal.getId(), backupPortal);
+			uiWorkingWS.setBackupUIPortal(null);			
+			uiPortal = uiWorkingWS.getChild(UIPortal.class);
+			
 			if (PortalProperties.SESSION_ALWAYS.equals(uiPortal.getSessionAlive()))
 				uiPortalApp.setSessionOpen(true);
 			else
@@ -313,9 +318,8 @@ public class UIPortalComposer extends UIContainer {
 			PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal,
 					PageNodeEvent.CHANGE_PAGE_NODE,
 					(uiPortal.getSelectedNode() != null ? uiPortal.getSelectedNode()
-							.getUri() : null));
+					                                    .getUri() : null));
 			uiPortal.broadcast(pnevent, Event.Phase.PROCESS);
-      uiPortalApp.getUIPortalPool().resetDefaultUIPortal();
 		}
 
 	}
