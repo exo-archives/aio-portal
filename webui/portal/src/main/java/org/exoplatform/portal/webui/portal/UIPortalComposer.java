@@ -191,7 +191,7 @@ public class UIPortalComposer extends UIContainer {
 		}
 		JavascriptManager jsManager = Util.getPortalRequestContext()
 				.getJavascriptManager();
-		jsManager.addJavascript("eXo.portal.portalMode=" + portalMode);
+		jsManager.addJavascript("eXo.portal.portalMode=" + portalMode + ";");
 	}
 
 	public void processRender(WebuiRequestContext context) throws Exception {

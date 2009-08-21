@@ -36,6 +36,7 @@ import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.webui.workspace.UIPortalToolPanel;
+import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.Query;
 import org.exoplatform.services.organization.User;
@@ -163,7 +164,7 @@ public class UIPortalComponentActionListener {
       UIPortalComposer portalComposer = uiApp.findFirstComponentOfType(UIPortalComposer.class);
 
       if(newComponent){
-        portalComposer.updateWorkspaceComponent();
+        pcontext.addUIComponentToUpdateByAjax(uiApp.getChild(UIWorkingWorkspace.class));
         pcontext.setFullRender(true);
       }
 
