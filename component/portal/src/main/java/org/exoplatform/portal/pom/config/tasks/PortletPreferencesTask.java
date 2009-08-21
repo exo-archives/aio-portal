@@ -16,7 +16,6 @@
  */
 package org.exoplatform.portal.pom.config.tasks;
 
-import static org.exoplatform.portal.pom.config.Utils.split;
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
 import org.exoplatform.portal.pom.config.POMSession;
 import org.exoplatform.portal.application.PortletPreferences;
@@ -25,17 +24,11 @@ import org.exoplatform.services.portletcontainer.pci.WindowID;
 import org.gatein.mop.api.workspace.Site;
 import org.gatein.mop.api.workspace.ObjectType;
 import org.gatein.mop.api.workspace.Workspace;
+import org.gatein.mop.api.workspace.ui.UIWindow;
 import org.gatein.mop.api.content.Customization;
-import org.gatein.mop.api.content.FetchCondition;
-import org.gatein.mop.api.content.Content;
-import org.gatein.mop.api.content.ContentManager;
-import org.gatein.mop.api.content.CustomizationContext;
-import org.gatein.mop.api.content.customization.CustomizationMode;
-import org.gatein.mop.core.portlet.Preferences;
-import org.gatein.mop.core.portlet.PreferencesBuilder;
+import org.gatein.mop.core.content.portlet.Preferences;
+import org.gatein.mop.core.content.portlet.PreferencesBuilder;
 
-import java.util.Set;
-import java.util.Collections;
 import java.util.ArrayList;
 
 /**
@@ -65,14 +58,20 @@ WindowID:
   protected final String ownerId;
 
   /** . */
-  protected final String windowId;
+  protected final String applicationName;
 
   /** . */
-  protected final String contentId;
+  protected final String portletName;
+
+  /** . */
+  protected final String instanceName;
+
+  /** . */
+  protected final String windowId;
 
   protected PortletPreferencesTask(WindowID windowID) {
-    String[] chunks = split("#", windowID.getOwner()) ;
-    if(chunks.length != 2) {
+    String[] chunks = Mapper.parseWindowId(windowID.getPersistenceId()) ;
+    if(chunks.length != 5) {
       throw new IllegalArgumentException("Invalid WindowID: " + "[" + windowID + "]");
     }
 
@@ -80,16 +79,26 @@ WindowID:
     this.ownerType = chunks[0];
     this.siteType = Mapper.parseSiteType(chunks[0]);
     this.ownerId = chunks[1];
+    this.applicationName = chunks[2];
+    this.portletName = chunks[3];
+    this.instanceName = chunks[4];
     this.windowId = windowID.getPersistenceId();
-    this.contentId = Mapper.parseContentId(windowId);
   }
 
-  protected PortletPreferencesTask(String ownerType, String ownerId, String windowId) {
-    this.ownerType = ownerType;
-    this.ownerId = ownerId;
+  protected PortletPreferencesTask(String windowId) {
+    String[] chunks = Mapper.parseWindowId(windowId) ;
+    if(chunks.length != 5) {
+      throw new IllegalArgumentException("Invalid WindowID: " + "[" + windowId + "]");
+    }
+
+    //
+    this.ownerType = chunks[0];
+    this.siteType = Mapper.parseSiteType(chunks[0]);
+    this.ownerId = chunks[1];
+    this.applicationName = chunks[2];
+    this.portletName = chunks[3];
+    this.instanceName = chunks[4];
     this.windowId = windowId;
-    this.siteType = Mapper.parseSiteType(ownerType);
-    this.contentId = Mapper.parseContentId(windowId);
   }
 
   public static class Save extends PortletPreferencesTask {
@@ -98,7 +107,7 @@ WindowID:
     private final PortletPreferences prefs;
 
     public Save(PortletPreferences prefs) {
-      super(prefs.getOwnerType(), prefs.getOwnerId(), prefs.getWindowId());
+      super(prefs.getWindowId());
 
       //
       this.prefs = prefs;
@@ -106,27 +115,28 @@ WindowID:
 
     public void run(POMSession session) throws Exception {
       Workspace workspace = session.getWorkspace();
-      Site site = workspace.getSite(siteType, ownerId);
-      if (site == null) {
-        throw new IllegalArgumentException("Cannot save portlet preferences " + windowId +
-          " as the corresponding portal " + ownerId + " with type " + siteType + " does not exist");
+
+      Customization customization = null;
+      if (instanceName.startsWith("@")) {
+        UIWindow window = workspace.getObject(ObjectType.WINDOW, instanceName.substring(1));
+        customization = window.getCustomization();
+      } else {
+        Site site = workspace.getSite(siteType, ownerId);
+        if (site != null) {
+          customization = site.customize(instanceName, Preferences.CONTENT_TYPE, applicationName + "/" + portletName, new PreferencesBuilder().build());
+        }
       }
 
       //
-      Set<CustomizationContext> context = Collections.<CustomizationContext>singleton(site);
-
-      //
-      ContentManager contentManager = session.getContentManager();
-      Content<Preferences> content = contentManager.getContent(Preferences.CONTENT_TYPE, contentId, FetchCondition.ALWAYS);
-      Customization<Preferences> root = content.getCustomization();
-      Customization<Preferences> customization = root.customize(CustomizationMode.CLONE, context);
-
-      //
-      PreferencesBuilder builder = new PreferencesBuilder();
-      for (Preference pref : prefs.getPreferences()) {
-        builder.add(pref.getName(), pref.getValues(), pref.isReadOnly());
+      if (customization != null) {
+        PreferencesBuilder builder = new PreferencesBuilder();
+        for (Preference pref : prefs.getPreferences()) {
+          builder.add(pref.getName(), pref.getValues(), pref.isReadOnly());
+        }
+        customization.setState(builder.build());
+      } else {
+        session.addPortletPreferences(prefs);
       }
-      customization.setState(builder.build());
     }
   }
 
@@ -147,36 +157,35 @@ WindowID:
       Workspace workspace = session.getWorkspace();
       Site site = workspace.getSite(siteType, ownerId);
       if (site == null) {
-        throw new IllegalArgumentException("Cannot save portlet preferences " + windowId +
+        throw new IllegalArgumentException("Cannot load portlet preferences " + windowId +
           " as the corresponding portal " + ownerId + " with type " + siteType + " does not exist");
       }
 
       //
-      Set<CustomizationContext> context = Collections.<CustomizationContext>singleton(site);
+      Customization<Preferences> customization = null;
+      if (instanceName.startsWith("@")) {
+        UIWindow window = workspace.getObject(ObjectType.WINDOW, instanceName.substring(1));
+        customization = (Customization<Preferences>)window.getCustomization();
+      } else {
+        customization = (Customization<Preferences>)site.getCustomization(instanceName);
+      }
 
       //
-      ContentManager contentManager = session.getContentManager();
-      Content<Preferences> content = contentManager.getContent(Preferences.CONTENT_TYPE, contentId, FetchCondition.PERSISTED);
-
-      //
-      if (content != null) {
-        Customization<Preferences> customization = content.getCustomization().getCustomization(context);
-        if (customization != null) {
-          ArrayList<Preference> list = new ArrayList<Preference>();
-          for (org.gatein.mop.core.portlet.Preference preference : customization.getState().getEntries()) {
-            Preference pref = new Preference();
-            pref.setName(preference.getName());
-            pref.setValues(new ArrayList<String>(preference.getValues()));
-            pref.setReadOnly(preference.isReadOnly());
-            list.add(pref);
-          }
-          PortletPreferences prefs = new PortletPreferences();
-          prefs.setOwnerId(ownerId);
-          prefs.setOwnerType(ownerType);
-          prefs.setWindowId(windowId);
-          prefs.setPreferences(list);
-          this.prefs = prefs;
+      if (customization != null) {
+        ArrayList<Preference> list = new ArrayList<Preference>();
+        for (org.gatein.mop.core.content.portlet.Preference preference : customization.getState().getEntries()) {
+          Preference pref = new Preference();
+          pref.setName(preference.getName());
+          pref.setValues(new ArrayList<String>(preference.getValues()));
+          pref.setReadOnly(preference.isReadOnly());
+          list.add(pref);
         }
+        PortletPreferences prefs = new PortletPreferences();
+        prefs.setOwnerId(ownerId);
+        prefs.setOwnerType(ownerType);
+        prefs.setWindowId(windowId);
+        prefs.setPreferences(list);
+        this.prefs = prefs;
       }
     }
   }
@@ -184,30 +193,29 @@ WindowID:
   public static class Remove extends PortletPreferencesTask {
 
     public Remove(PortletPreferences prefs) {
-      super(prefs.getOwnerType(), prefs.getOwnerId(), prefs.getWindowId());
+      super(prefs.getWindowId());
     }
 
     public void run(POMSession session) throws Exception {
       Workspace workspace = session.getWorkspace();
       Site site = workspace.getSite(siteType, ownerId);
       if (site == null) {
-        throw new IllegalArgumentException("Cannot save portlet preferences " + windowId +
+        throw new IllegalArgumentException("Cannot remove portlet preferences " + windowId +
           " as the corresponding portal " + ownerId + " with type " + siteType + " does not exist");
       }
 
       //
-      Set<CustomizationContext> context = Collections.<CustomizationContext>singleton(site);
+      Customization customization;
+      if (instanceName.startsWith("@")) {
+        UIWindow window = workspace.getObject(ObjectType.WINDOW, instanceName.substring(1));
+        customization = window.getCustomization();
+      } else {
+        customization = site.getCustomization(instanceName);
+      }
 
       //
-      ContentManager contentManager = session.getContentManager();
-      Content<Preferences> content = contentManager.getContent(Preferences.CONTENT_TYPE, contentId, FetchCondition.PERSISTED);
-
-      //
-      if (content != null) {
-        Customization<Preferences> customization = content.getCustomization().getCustomization(context);
-        if (customization != null) {
-          customization.destroy();
-        }
+      if (customization != null) {
+        customization.destroy();
       }
     }
   }

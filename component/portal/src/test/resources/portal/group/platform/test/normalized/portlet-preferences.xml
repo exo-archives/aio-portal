@@ -4,7 +4,7 @@
 	<portlet-preferences>
     <owner-type>group</owner-type>
     <owner-id>/platform/test/normalized</owner-id>
-    <window-id>group#/platform/test/normalized:/web/IFramePortlet/blog</window-id>
+    <window-id>group#/platform/test/normalized:/exoadmin/AccountPortlet/Account</window-id>
     <preference>
 	    <name>url</name>
 	    <value>http://blog.exoplatform.org</value>

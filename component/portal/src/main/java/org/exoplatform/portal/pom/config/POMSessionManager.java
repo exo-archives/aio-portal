@@ -21,8 +21,8 @@ import org.exoplatform.services.jcr.ext.registry.RegistryService;
 import org.exoplatform.services.jcr.core.ManageableRepository;
 import org.chromattic.api.ChromatticBuilder;
 import org.chromattic.apt.InstrumentorImpl;
-import org.gatein.mop.core.impl.api.POMService;
-import org.gatein.mop.core.portlet.Preferences;
+import org.gatein.mop.core.api.MOPService;
+import org.gatein.mop.core.content.portlet.Preferences;
 import org.gatein.mop.spi.content.ContentProvider;
 import org.gatein.mop.spi.content.GetState;
 
@@ -46,7 +46,7 @@ public class POMSessionManager {
   final RepositoryService repositoryService;
 
   /** . */
-  private POMService pomService;
+  private MOPService pomService;
 
   /** . */
   final String repositoryName = "repository";
@@ -85,10 +85,10 @@ public class POMSessionManager {
   /*
    * todo : use better than the synchronized block  
    */
-  public synchronized POMService getPOMService() {
+  public synchronized MOPService getPOMService() {
     if (pomService == null) {
       try {
-        POMService pomService = new POMService();
+        MOPService pomService = new MOPService();
         pomService.setOption(ChromatticBuilder.SESSION_PROVIDER_CLASSNAME, PortalSessionLifeCycle.class.getName());
         pomService.setOption(ChromatticBuilder.INSTRUMENTOR_CLASSNAME, InstrumentorImpl.class.getName());
         pomService.start();

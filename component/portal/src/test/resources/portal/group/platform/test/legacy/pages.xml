@@ -10,7 +10,7 @@
 	  <access-permissions>*:/platform/test/legacy</access-permissions>
 	  <edit-permission>*:/platform/administrators</edit-permission>    
     <application>
-      <instance-id>group#platform/test/legacy:/exoadmin/AccountPortlet/Account</instance-id>
+      <instance-id>group#platform/test/legacy:/web/IFramePortlet/blog</instance-id>
       <title>New Account</title>
       <show-info-bar>false</show-info-bar>      
     </application>  

@@ -120,7 +120,7 @@ public abstract class PageTask extends AbstractPOMTask {
       }
 
       //
-      Mapper mapper = new Mapper(session.getContentManager());
+      Mapper mapper = new Mapper(session);
       mapper.save(this.page, page);
     }
   }
@@ -146,7 +146,7 @@ public abstract class PageTask extends AbstractPOMTask {
         org.gatein.mop.api.workspace.Page pages = root.getChild("pages");
         org.gatein.mop.api.workspace.Page page = pages.getChild(name);
         if (page != null) {
-          Mapper mapper = new Mapper(session.getContentManager());
+          Mapper mapper = new Mapper(session);
           this.page = new Page();
           mapper.load(page, this.page);
         }

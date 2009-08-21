@@ -18,6 +18,7 @@ package org.exoplatform.portal.config;
 
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.portal.pom.config.POMSessionManager;
+import org.exoplatform.portal.pom.config.tasks.Mapper;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.Application;
@@ -25,6 +26,7 @@ import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.application.PortletPreferences;
+import org.exoplatform.portal.application.Preference;
 import org.exoplatform.test.BasicTestCase;
 import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
 import org.exoplatform.commons.utils.LazyPageList;
@@ -35,6 +37,7 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.ArrayList;
 
 /**
  * Created by The eXo Platform SARL Author : Tung Pham thanhtungty@gmail.com Nov
@@ -82,7 +85,7 @@ public class TestLoadedPOM extends BasicTestCase {
     assertEquals("group::/platform/test/legacy::register", page.getPageId());
     assertEquals("/platform/test/legacy", page.getOwnerId());
     Application app = (Application)page.getChildren().get(0);
-    assertEquals("group#/platform/test/legacy:/exoadmin/AccountPortlet/Account", app.getInstanceId());
+    assertEquals("group#/platform/test/legacy:/web/IFramePortlet/blog", app.getInstanceId());
 
     PortletPreferences prefs = storage.getPortletPreferences(new ExoWindowID("group#/platform/test/legacy:/web/IFramePortlet/blog"));
     assertNotNull(prefs);
@@ -104,10 +107,10 @@ public class TestLoadedPOM extends BasicTestCase {
     Application app = (Application)page.getChildren().get(0);
     assertEquals("group#/platform/test/normalized:/exoadmin/AccountPortlet/Account", app.getInstanceId());
 
-    PortletPreferences prefs = storage.getPortletPreferences(new ExoWindowID("group#/platform/test/normalized:/web/IFramePortlet/blog"));
+    PortletPreferences prefs = storage.getPortletPreferences(new ExoWindowID("group#/platform/test/normalized:/exoadmin/AccountPortlet/Account"));
     assertNotNull(prefs);
     assertEquals("/platform/test/normalized", prefs.getOwnerId());
-    assertEquals("group#/platform/test/normalized:/web/IFramePortlet/blog", prefs.getWindowId());
+    assertEquals("group#/platform/test/normalized:/exoadmin/AccountPortlet/Account", prefs.getWindowId());
   }
 
   public void testNavigation() throws Exception {
@@ -241,5 +244,86 @@ public class TestLoadedPOM extends BasicTestCase {
       "/platform/users",
       "/organization/management/executive-board"));
     assertEquals(expectedNames, names);
+  }
+
+  public void testAnonymousPreference() throws Exception {
+    Page page = storage.getPage("portal::test::test3");
+    Application app = (Application)page.getChildren().get(0);
+    String instanceId = app.getInstanceId();
+
+    // Check instance id
+    String[] chunks = Mapper.parseWindowId(instanceId);
+    assertEquals("portal", chunks[0]);
+    assertEquals("test", chunks[1]);
+    assertEquals("web", chunks[2]);
+    assertEquals("BannerPortlet", chunks[3]);
+    assertTrue(chunks[4].startsWith("@"));
+
+    // Check initial state
+    PortletPreferences prefs = storage.getPortletPreferences(new ExoWindowID(instanceId));
+    assertEquals(0, prefs.getPreferences().size());
+
+    // Save state
+    Preference pref = new Preference();
+    pref.setName("foo");
+    pref.setValues(new ArrayList<String>(Arrays.asList("foo1")));
+    pref.setReadOnly(false);
+    prefs.getPreferences().add(pref);
+    storage.save(prefs);
+
+    // Now save the page
+    storage.save(page);
+
+    // Check we have the same instance id
+    page = storage.getPage(page.getPageId());
+    app = (Application)page.getChildren().get(0);
+//    assertEquals(instanceId, app.getInstanceId());
+
+    // Now check state
+    prefs = storage.getPortletPreferences(new ExoWindowID(app.getInstanceId()));
+    assertEquals(1, prefs.getPreferences().size());
+    assertEquals("foo", prefs.getPreferences().get(0).getName());
+    assertEquals(1, prefs.getPreferences().get(0).getValues().size());
+    assertEquals("foo1", prefs.getPreferences().get(0).getValues().get(0));
+  }
+
+  public void testSitePreferences() throws Exception {
+    Page page = storage.getPage("portal::test::test4");
+    Application app = (Application)page.getChildren().get(0);
+    String instanceId = app.getInstanceId();
+
+    // Check instance id
+    String[] chunks = Mapper.parseWindowId(instanceId);
+    assertEquals("portal", chunks[0]);
+    assertEquals("test", chunks[1]);
+    assertEquals("web", chunks[2]);
+    assertEquals("BannerPortlet", chunks[3]);
+    assertEquals("banner", chunks[4]);
+
+    // Check initial state
+    PortletPreferences prefs = storage.getPortletPreferences(new ExoWindowID(instanceId));
+    assertEquals(1, prefs.getPreferences().size());
+    assertEquals("template", prefs.getPreferences().get(0).getName());
+    assertEquals(1, prefs.getPreferences().get(0).getValues().size());
+    assertEquals("par:/groovy/groovy/webui/component/UIBannerPortlet.gtmpl", prefs.getPreferences().get(0).getValues().get(0));
+
+    // Save state
+    prefs.getPreferences().get(0).setValues(new ArrayList<String>(Arrays.asList("foo")));
+    storage.save(prefs);
+
+    // Now save the page
+    storage.save(page);
+
+    // Check we have the same instance id
+    page = storage.getPage(page.getPageId());
+    app = (Application)page.getChildren().get(0);
+    assertEquals(instanceId, app.getInstanceId());
+
+    // Now check state
+    prefs = storage.getPortletPreferences(new ExoWindowID(instanceId));
+    assertEquals(1, prefs.getPreferences().size());
+    assertEquals("template", prefs.getPreferences().get(0).getName());
+    assertEquals(1, prefs.getPreferences().get(0).getValues().size());
+    assertEquals("foo", prefs.getPreferences().get(0).getValues().get(0));
   }
 }

@@ -20,11 +20,11 @@ import org.exoplatform.portal.config.model.PortalConfig;
 
 import org.exoplatform.portal.pom.config.AbstractPOMTask;
 import org.exoplatform.portal.pom.config.POMSession;
+import org.exoplatform.portal.application.PortletPreferences;
 import org.gatein.mop.api.workspace.Site;
 import org.gatein.mop.api.workspace.ObjectType;
 import org.gatein.mop.api.workspace.Workspace;
 import org.gatein.mop.api.workspace.Page;
-import org.gatein.mop.api.Attributes;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -76,7 +76,7 @@ public abstract class PortalConfigTask extends AbstractPOMTask {
       this.overwrite = overwrite;
     }
 
-    public void run(POMSession session) {
+    public void run(POMSession session) throws Exception {
       Workspace workspace = session.getWorkspace();
       Site site = workspace.getSite(type, name);
       if (site != null) {
@@ -88,8 +88,13 @@ public abstract class PortalConfigTask extends AbstractPOMTask {
         Page root = site.getRootPage();
         root.addChild("pages");
         root.addChild("templates");
+
+        // Add pending preferences
+        for (PortletPreferences prefs : session.getPortletPreferences(site)) {
+          new PortletPreferencesTask.Save(prefs).run(session);
+        }
       }
-      new Mapper(session.getContentManager()).save(config, site);
+      new Mapper(session).save(config, site);
     }
   }
 
@@ -110,11 +115,10 @@ public abstract class PortalConfigTask extends AbstractPOMTask {
       Workspace workspace = session.getWorkspace();
       Site site = workspace.getSite(type, name);
       if (site != null) {
-        Attributes attrs = site.getAttributes();
         PortalConfig config = new PortalConfig();
 
         //
-        new Mapper(session.getContentManager()).load(site, config);
+        new Mapper(session).load(site, config);
 
         //
         this.config = config;

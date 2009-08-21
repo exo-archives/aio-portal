@@ -22,14 +22,14 @@ import org.exoplatform.portal.pom.config.POMSession;
 import org.exoplatform.test.BasicTestCase;
 import org.gatein.mop.api.workspace.ObjectType;
 import org.gatein.mop.api.workspace.Navigation;
-import org.gatein.mop.api.workspace.NavigationLink;
+import org.gatein.mop.api.workspace.link.Link;
 import org.gatein.mop.api.workspace.Page;
 import org.gatein.mop.api.workspace.Site;
 import org.gatein.mop.api.workspace.ui.UIContainer;
 import org.gatein.mop.api.workspace.ui.UIComponent;
 import org.gatein.mop.api.workspace.ui.UIWindow;
 import org.gatein.mop.api.Attributes;
-import org.gatein.mop.api.content.Content;
+import org.gatein.mop.api.content.Customization;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -112,7 +112,7 @@ public class TestSavedPOM extends BasicTestCase {
     assertEquals(true, (boolean)nodeAttrs.getBoolean("visible"));
 
     //
-    NavigationLink link = nodeNavigation.getLink();
+    Link link = nodeNavigation.getLink();
     assertNotNull(link);
   }
 
@@ -169,9 +169,9 @@ public class TestSavedPOM extends BasicTestCase {
     assertEquals("test_modifier", testPageAttrs.getString("modifier"));
 
     //
-    UIContainer c = testPage.getLayout();
+    UIContainer c = testPage.getRootComponent();
     assertNotNull(c);
-    Collection<? extends UIComponent> t = c.getComponents();
+    Collection<? extends UIComponent> t = c.getChildren();
     assertNotNull(t);
     assertEquals(2, t.size());
     Iterator<? extends UIComponent> it =  t.iterator();
@@ -207,10 +207,11 @@ public class TestSavedPOM extends BasicTestCase {
     assertEquals("application_1_prop_value", application1Attrs.getString("prop_key"));
 
     //
-    Content content = application1.getContent();
-    assertNotNull(content);
-    assertEquals("application/portlet", content.getType().getMimeType());
-    assertEquals("web/BannerPortlet/banner", content.getId());
+    Customization<?> customization = application1.getCustomization();
+    assertNotNull(customization);
+    assertEquals("application/portlet", customization.getType().getMimeType());
+    assertEquals("web/BannerPortlet", customization.getContentId());
+    assertEquals("banner", customization.getName());
 
     //
     mgr.closeSession();

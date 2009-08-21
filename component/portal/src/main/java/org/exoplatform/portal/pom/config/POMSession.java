@@ -16,15 +16,21 @@
  */
 package org.exoplatform.portal.pom.config;
 
-import org.gatein.mop.core.impl.api.POM;
-import org.gatein.mop.core.impl.api.POMFormatter;
 import org.gatein.mop.api.workspace.Workspace;
 import org.gatein.mop.api.workspace.WorkspaceObject;
 import org.gatein.mop.api.workspace.ObjectType;
 import org.gatein.mop.api.workspace.Site;
-import org.gatein.mop.api.content.ContentManager;
+import org.gatein.mop.api.Model;
+import org.gatein.mop.core.api.ModelImpl;
+import org.gatein.mop.core.api.MOPFormatter;
+import org.exoplatform.portal.application.PortletPreferences;
+import org.exoplatform.portal.pom.config.tasks.Mapper;
 
 import java.util.Iterator;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -36,17 +42,20 @@ public class POMSession {
   final POMSessionManager mgr;
 
   /** . */
-  private POM model;
+  private ModelImpl model;
 
   /** . */
   private boolean isInTask;
+
+  /** Hack. */
+  private final Map<String, PortletPreferences> pendingPrefs = new HashMap<String, PortletPreferences>();
 
   public POMSession(POMSessionManager mgr) {
     this.mgr = mgr;
     this.isInTask = false;
   }
 
-  private POM getModel() {
+  private Model getModel() {
     if (model == null) {
       model = mgr.getPOMService().getModel();
     }
@@ -57,12 +66,29 @@ public class POMSession {
     return getModel().getWorkspace();
   }
 
-  public ContentManager getContentManager() {
-    return getModel().getContentManager();
-  }
-
   public <O extends WorkspaceObject> Iterator<O> findObject(ObjectType<O> ownerType, String statement) {
     return model.findObject(ownerType, statement);
+  }
+
+  public void addPortletPreferences(PortletPreferences prefs) {
+    pendingPrefs.put(prefs.getWindowId(), prefs);
+  }
+
+  public PortletPreferences getPortletPreferences(String id) {
+    return pendingPrefs.get(id);
+  }
+
+  public Set<PortletPreferences> getPortletPreferences(Site site) {
+    Set<PortletPreferences> prefs = new HashSet<PortletPreferences>();
+    for (Iterator<Map.Entry<String, PortletPreferences>> i = pendingPrefs.entrySet().iterator();i.hasNext();) {
+      Map.Entry<String, PortletPreferences> entry = i.next();
+      String prefix = Mapper.getOwnerType(site.getObjectType()) + "#" + site.getName() + ":/";
+      if (entry.getKey().startsWith(prefix)) {
+        prefs.add(entry.getValue());
+        i.remove();
+      }
+    }
+    return prefs;
   }
 
   public <O extends WorkspaceObject> Iterator<O> findObjects(
@@ -100,9 +126,9 @@ public class POMSession {
     } else {
       if (ownerId != null) {
         if (type == ObjectType.PAGE) {
-          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/" + new POMFormatter().encodeNodeName(null, ownerId) + "/root/pages/pages/pages/%'";
+          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/" + new MOPFormatter().encodeNodeName(null, ownerId) + "/root/pages/pages/pages/%'";
         } else {
-          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + workspacePath + "/%/" + new POMFormatter().encodeNodeName(null, ownerId) + "/navigation'";
+          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + workspacePath + "/%/" + new MOPFormatter().encodeNodeName(null, ownerId) + "/navigation'";
         }
       } else {
         if (title != null) {

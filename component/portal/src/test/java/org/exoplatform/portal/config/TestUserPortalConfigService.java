@@ -194,7 +194,7 @@ public class TestUserPortalConfigService extends UserPortalServiceTestBase {
 
 	public void testPageGet() throws Exception {
 		this.prepareOrganizationData();
-		String pageId = "group::platform/administrators::newAccount";
+		String pageId = "group::/platform/administrators::newAccount";
 		Page page = userPortalConfigSer_.getPage(pageId);
 		assertNotNull(page);
 		assertEquals(pageId, page.getPageId());

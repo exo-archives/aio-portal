@@ -26,6 +26,8 @@ import org.exoplatform.services.portletcontainer.pci.WindowID;
 import org.exoplatform.commons.utils.LazyPageList;
 
 import java.util.Comparator;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.exoplatform.portal.pom.config.tasks.PageTask;
 import org.exoplatform.portal.pom.config.tasks.PortalConfigTask;
@@ -64,7 +66,7 @@ public class POMDataStorage implements DataStorage {
   }
 
   public void create(PortalConfig config) throws Exception {
-    execute(new PortalConfigTask.Save(config, false));
+    execute(new PortalConfigTask.Save(config, true));
   }
 
   public void save(PortalConfig config) throws Exception {

@@ -41,7 +41,7 @@
 	  <access-permissions>*:/platform/users</access-permissions>
 	  <edit-permission>*:/platform/administrators</edit-permission>    
     <application>
-      <instance-id>group#organization/managerment/executive-board:/exoadmin/GroupNavigationPortlet/GroupNavigation</instance-id>
+      <instance-id>group#organization/management/executive-board:/exoadmin/GroupNavigationPortlet/GroupNavigation</instance-id>
       <title>Group Navigation</title>
       <access-permissions>Everyone</access-permissions>
       <show-info-bar>false</show-info-bar>
@@ -56,7 +56,7 @@
 	  <access-permissions>*:/platform/users</access-permissions>
 	  <edit-permission>*:/platform/administrators</edit-permission>    
     <application>
-      <instance-id>group#organization/managerment/executive-board:/exoadmin/PortalNavigationPortlet/PortalNavigation</instance-id>
+      <instance-id>group#organization/management/executive-board:/exoadmin/PortalNavigationPortlet/PortalNavigation</instance-id>
       <title>Portal Navigation</title>
       <access-permissions>Everyone</access-permissions>
       <show-info-bar>false</show-info-bar>

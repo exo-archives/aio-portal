@@ -75,7 +75,7 @@ public abstract class PageNavigationTask extends AbstractPOMTask {
       if (site != null) {
         Navigation nav = site.getRootNavigation();
         pageNav = new PageNavigation();
-        new Mapper(session.getContentManager()).load(nav, this.pageNav);
+        new Mapper(session).load(nav, this.pageNav);
       } else {
         System.out.println("Cannot load page navigation " + owner +
           " as the corresponding portal " + ownerId + " with type " + siteType + " does not exist");
@@ -112,7 +112,7 @@ public abstract class PageNavigationTask extends AbstractPOMTask {
       nav.getChildren().clear();
 
       //
-      new Mapper(session.getContentManager()).save(pageNav, nav);
+      new Mapper(session).save(pageNav, nav);
     }
 
   }

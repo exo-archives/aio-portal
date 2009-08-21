@@ -50,4 +50,22 @@
     <name>test2</name>
   </page>
 
+  <page>
+    <owner-type>portal</owner-type>
+    <owner-id>test</owner-id>
+    <name>test3</name>
+    <application>
+      <instance-id>portal#notexisting:/web/BannerPortlet/banner</instance-id>
+    </application>
+  </page>
+
+  <page>
+    <owner-type>portal</owner-type>
+    <owner-id>test</owner-id>
+    <name>test4</name>
+    <application>
+      <instance-id>portal#test:/web/BannerPortlet/banner</instance-id>
+    </application>
+  </page>
+
 </page-set>

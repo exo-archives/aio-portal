@@ -37,6 +37,7 @@ import org.exoplatform.portal.config.model.Application;
 import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.config.model.Page.PageSet;
+import org.exoplatform.portal.pom.config.POMDataStorage;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.jibx.runtime.BindingDirectory;
@@ -88,6 +89,10 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
       return;
     for (Object ele : configs) {
       NewPortalConfig portalConfig = (NewPortalConfig) ele;
+      initPortletPreferencesDB(portalConfig);
+    }
+    for (Object ele : configs) {
+      NewPortalConfig portalConfig = (NewPortalConfig) ele;
       initPortalConfigDB(portalConfig);
     }
     for (Object ele : configs) {
@@ -97,10 +102,6 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     for (Object ele : configs) {
       NewPortalConfig portalConfig = (NewPortalConfig) ele;
       initPageNavigationDB(portalConfig);
-    }
-    for (Object ele : configs) {
-      NewPortalConfig portalConfig = (NewPortalConfig) ele;
-      initPortletPreferencesDB(portalConfig);
     }
     for (Object ele : configs) {
       NewPortalConfig portalConfig = (NewPortalConfig) ele;

@@ -148,7 +148,7 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
     }
 
     protected Page loadT(POMSession session, org.gatein.mop.api.workspace.Page w) {
-      Mapper mapper = new Mapper(session.getContentManager());
+      Mapper mapper = new Mapper(session);
       Page t = new Page();
       mapper.load(w, t);
       return t;
@@ -170,7 +170,7 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
     }
 
     protected PageNavigation loadT(POMSession session, Navigation w) {
-      Mapper mapper = new Mapper(session.getContentManager());
+      Mapper mapper = new Mapper(session);
       PageNavigation t = new PageNavigation();
       mapper.load(w, t);
       return t;
@@ -210,7 +210,7 @@ new Query<PortalConfig>(null, null, null, null, PortalConfig.class);
       ListAccess<PortalConfig> la = new ListAccess<PortalConfig>() {
         public PortalConfig[] load(int index, int length) throws Exception, IllegalArgumentException {
           Iterator<? extends Site> iterator = portals.iterator();
-          Mapper mapper = new Mapper(session.getContentManager());
+          Mapper mapper = new Mapper(session);
           PortalConfig[] result = new PortalConfig[length];
           for (int i = 0;i < length;i++) {
             PortalConfig config = new PortalConfig();

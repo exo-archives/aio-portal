@@ -26,9 +26,8 @@ import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.config.model.PageBody;
 import static org.exoplatform.portal.pom.config.Utils.join;
 import static org.exoplatform.portal.pom.config.Utils.split;
-import org.gatein.mop.api.content.ContentManager;
-import org.gatein.mop.api.content.Content;
-import org.gatein.mop.api.content.FetchCondition;
+import org.exoplatform.portal.pom.config.POMSession;
+import org.gatein.mop.api.content.Customization;
 import org.gatein.mop.api.Key;
 import org.gatein.mop.api.Attributes;
 import org.gatein.mop.api.ValueType;
@@ -36,13 +35,14 @@ import org.gatein.mop.api.workspace.Navigation;
 import org.gatein.mop.api.workspace.Site;
 import org.gatein.mop.api.workspace.ObjectType;
 import org.gatein.mop.api.workspace.Workspace;
-import org.gatein.mop.api.workspace.NavigationLink;
+import org.gatein.mop.api.workspace.link.Link;
+import org.gatein.mop.api.workspace.link.PageLink;
 import org.gatein.mop.api.workspace.ui.UIContainer;
 import org.gatein.mop.api.workspace.ui.UIComponent;
 import org.gatein.mop.api.workspace.ui.UIWindow;
-import org.gatein.mop.api.workspace.ui.UIInsertion;
-import org.gatein.mop.api.workspace.navigation.PageLink;
-import org.gatein.mop.core.portlet.Preferences;
+import org.gatein.mop.api.workspace.ui.UIBody;
+import org.gatein.mop.core.content.portlet.Preferences;
+import org.gatein.mop.core.content.portlet.PreferencesBuilder;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -52,6 +52,8 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Collections;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -159,10 +161,10 @@ public class Mapper {
   ));
 
   /** . */
-  private final ContentManager contentManager;
+  private final POMSession session;
 
-  public Mapper(ContentManager contentManager) {
-    this.contentManager = contentManager;
+  public Mapper(POMSession session) {
+    this.session = session;
   }
 
   public void load(Navigation src, PageNavigation dst) {
@@ -200,7 +202,7 @@ public class Mapper {
     dst.setChildren(new ArrayList<PageNode>());
 
     //
-    NavigationLink link = src.getLink();
+    Link link = src.getLink();
     if (link instanceof PageLink) {
       PageLink pageLink = (PageLink)link;
       org.gatein.mop.api.workspace.Page target = pageLink.getPage();
@@ -241,7 +243,7 @@ public class Mapper {
       ObjectType<? extends Site> siteType = parseSiteType(pageChunks[0]);
       Site site = workspace.getSite(siteType, pageChunks[1]);
       org.gatein.mop.api.workspace.Page target = site.getRootPage().getChild("pages").getChild(pageChunks[2]);
-      PageLink link = nav.link(ObjectType.PAGE_LINK);
+      PageLink link = nav.linkTo(ObjectType.PAGE_LINK);
       link.setPage(target);
     }
 
@@ -279,7 +281,7 @@ public class Mapper {
     //
     if (src.getObjectType() == ObjectType.PORTAL_SITE) {
       org.gatein.mop.api.workspace.Page template = src.getRootNavigation().getTemplate();
-      load(template.getLayout(), dst.getPortalLayout());
+      load(template.getRootComponent(), dst.getPortalLayout());
     }
   }
 
@@ -300,7 +302,9 @@ public class Mapper {
     if (dst.getObjectType() == ObjectType.PORTAL_SITE) {
       org.gatein.mop.api.workspace.Page templates = dst.getRootPage().getChild("templates");
       org.gatein.mop.api.workspace.Page template = templates.addChild("default");
-      save(src.getPortalLayout(), template.getLayout());
+
+      //
+      save(src.getPortalLayout(), template.getRootComponent(), Collections.<String, Preferences>emptyMap());
 
       //
       dst.getRootNavigation().setTemplate(template);
@@ -329,7 +333,7 @@ public class Mapper {
     dst.setFactoryId(attrs.getValue(FACTORY_ID));
 
     //
-    loadChildren(src.getLayout(), dst);
+    loadChildren(src.getRootComponent(), dst);
   }
 
   public void load(UIContainer src, Container dst) {
@@ -350,7 +354,7 @@ public class Mapper {
   }
 
   public void loadChildren(UIContainer src, Container dst) {
-    for (UIComponent component : src.getComponents()) {
+    for (UIComponent component : src.getChildren()) {
       if (component instanceof UIContainer) {
         UIContainer srcContainer = (UIContainer)component;
         Container dstContainer = new Container();
@@ -361,7 +365,7 @@ public class Mapper {
         Application application = new Application();
         load(window, application);
         dst.getChildren().add(application);
-      } else if (component instanceof UIInsertion) {
+      } else if (component instanceof UIBody) {
         dst.getChildren().add(new PageBody());
       } else {
         throw new AssertionError();
@@ -385,13 +389,35 @@ public class Mapper {
     load(attrs, dst.getProperties(), windowPropertiesBlackList);
 
     //
-    Content content = src.getContent();
-    if (content != null) {
-      Site site = src.getPage().getSite();
-      String instanceId = getOwnerType(site.getObjectType()) + "#" + site.getName() + ":/" + content.getId();
-      dst.setInstanceId(instanceId);
-    } else {
-      dst.setInstanceId(null);
+    Customization<?> customization = src.getCustomization();
+    Site site = src.getPage().getSite();
+    String ownerType = getOwnerType(site.getObjectType());
+    String ownerId = site.getName();
+    String contentId = customization.getContentId();
+    String instanceName = customization.getName() != null ? customization.getName() : "@" +src.getObjectId();
+
+    //
+    String instanceId = ownerType + "#" + ownerId + ":/" + contentId + "/" + instanceName;
+    dst.setInstanceId(instanceId);
+  }
+
+  private static Map<String, Preferences> collectPreferences(UIContainer container) {
+    Map<String, Preferences> preferencesMap = new HashMap<String, Preferences>();
+    collectPrefs(container, preferencesMap);
+    return preferencesMap;
+  }
+
+  private static void collectPrefs(UIContainer container, Map<String, Preferences> preferencesMap) {
+    for (UIComponent component : container.getChildren()) {
+      if (component instanceof UIContainer) {
+        collectPrefs((UIContainer)component, preferencesMap);
+      } else if (component instanceof UIWindow) {
+        UIWindow window = (UIWindow)component;
+        Preferences preferences = (Preferences)window.getCustomization().getState();
+        if (preferences.getEntries().size() > 0) {
+          preferencesMap.put(window.getObjectId(), preferences);
+        }
+      }
     }
   }
 
@@ -404,12 +430,15 @@ public class Mapper {
     attrs.setValue(SHOW_MAX_WINDOW, src.isShowMaxWindow());
     attrs.setValue(CREATOR, src.getCreator());
     attrs.setValue(MODIFIER, src.getModifier());
-    
+
     //
-    saveChildren(src, dst.getLayout());
+    Map<String, Preferences> preferencesMap = collectPreferences(dst.getRootComponent());
+
+    //
+    saveChildren(src, dst.getRootComponent(), preferencesMap);
   }
 
-  public void save(Container src, UIContainer dst) {
+  public void save(Container src, UIContainer dst, Map<String, Preferences> preferencesMap) {
     Attributes dstAttrs = dst.getAttributes();
     dstAttrs.setValue(TITLE, src.getTitle());
     dstAttrs.setValue(ICON, src.getIcon());
@@ -423,11 +452,14 @@ public class Mapper {
     dstAttrs.setValue(NAME, src.getName());
 
     //
-    saveChildren(src, dst);
+    saveChildren(src, dst, preferencesMap);
   }
 
-  private void saveChildren(Container src, UIContainer dst) {
-    dst.getComponents().clear();
+  private void saveChildren(Container src, UIContainer dst, Map<String, Preferences> preferencesMap) {
+    // Erase all children
+    dst.getChildren().clear();
+
+    // Create new children
     ArrayList<Object> srcChildren = src.getChildren();
     if (srcChildren != null) {
       for (Object srcChild : srcChildren) {
@@ -435,14 +467,14 @@ public class Mapper {
         String id = UUID.randomUUID().toString();
         if (srcChild instanceof Container) {
           Container srcChildContainer = (Container)srcChild;
-          UIContainer dstChildContainer = dst.addComponent(ObjectType.CONTAINER, id);
-          save(srcChildContainer, dstChildContainer);
+          UIContainer dstChildContainer = dst.addChild(ObjectType.CONTAINER, id);
+          save(srcChildContainer, dstChildContainer, preferencesMap);
         } else if (srcChild instanceof Application) {
           Application application = (Application)srcChild;
-          UIWindow dstChildWindow = dst.addComponent(ObjectType.WINDOW, id);
-          save(application, dstChildWindow);
+          UIWindow dstChildWindow = dst.addChild(ObjectType.WINDOW, id);
+          save(application, dstChildWindow, preferencesMap);
         } else if (srcChild instanceof PageBody) {
-          dst.addComponent(ObjectType.INSERTION, id);
+          dst.addChild(ObjectType.BODY, id);
         } else {
           throw new AssertionError("Was not expecting child " + srcChild);
         }
@@ -450,7 +482,7 @@ public class Mapper {
     }
   }
 
-  public void save(Application src, UIWindow dst) {
+  public void save(Application src, UIWindow dst, Map<String, Preferences> preferencesMap) {
     Attributes attrs = dst.getAttributes();
     attrs.setValue(TYPE, src.getApplicationType());
     attrs.setValue(THEME, src.getTheme());
@@ -467,14 +499,54 @@ public class Mapper {
 
     //
     String instanceId = src.getInstanceId();
-    String contentId = parseContentId(instanceId);
-    Content content = contentManager.getContent(Preferences.CONTENT_TYPE, contentId, FetchCondition.ALWAYS);
-    dst.setContent(content);
+    String[] chunks = parseWindowId(instanceId);
+
+    //
+    if (chunks[4].startsWith("@")) {
+      String id = chunks[4].substring(1);
+      Preferences prefs = preferencesMap.get(id);
+      if (prefs != null) {
+        dst.customize(Preferences.CONTENT_TYPE, chunks[2] + "/" + chunks[3], prefs);
+      } else {
+        dst.customize(Preferences.CONTENT_TYPE, chunks[2] + "/" + chunks[3], new PreferencesBuilder().build());
+      }
+    } else {
+      ObjectType siteType = parseSiteType(chunks[0]);
+      Site site = session.getWorkspace().getSite(siteType, chunks[1]);
+
+      //
+      Customization<?> customization = null;
+      if (site == null) {
+        System.out.println("Could not configure window because corresponding site does not exist " + site);
+      } else {
+        customization = site.getCustomization(chunks[4]);
+      }
+
+      //
+      if (customization != null) {
+        dst.customize(customization);
+      } else {
+        System.out.println("Could not configure the window " + dst.getName() + " with portlet " + instanceId +
+          " that is not available");
+        dst.customize(Preferences.CONTENT_TYPE, chunks[2] + "/" + chunks[3], new PreferencesBuilder().build());
+      }
+    }
   }
 
-  static String parseContentId(String windowId) {
-    String[] persistenceChunks = org.exoplatform.portal.pom.config.Utils.split(":/", windowId);
-    return persistenceChunks[persistenceChunks.length - 1];
+  public static String[] parseWindowId(String windowId) {
+    int i0 = windowId.indexOf("#");
+    int i1 = windowId.indexOf(":/", i0 + 1);
+    String ownerType = windowId.substring(0, i0);
+    String ownerId = windowId.substring(i0 + 1, i1);
+    String persistenceid = windowId.substring(i1 + 2);
+    String[] persistenceChunks = split("/", persistenceid);
+    return new String[]{
+      ownerType,
+      ownerId,
+      persistenceChunks[0],
+      persistenceChunks[1],
+      persistenceChunks[2]
+    };
   }
 
   public static void load(Attributes src, Properties dst, Set<String> blackList) {

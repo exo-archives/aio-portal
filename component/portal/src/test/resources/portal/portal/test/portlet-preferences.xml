@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <portlet-preferences-set>
+
   <portlet-preferences>
     <owner-type>portal</owner-type>
     <owner-id>test</owner-id>
@@ -25,7 +26,7 @@
   <portlet-preferences>
     <owner-type>portal</owner-type>
     <owner-id>test</owner-id>
-    <window-id>portal#teset:/web/GroovyPortlet/groovyportlet</window-id>
+    <window-id>portal#test:/web/GroovyPortlet/groovyportlet</window-id>
     <preference>
       <name>template</name>
       <value>par:/groovy/groovy/webui/component/UIGroovyPortlet.gtmpl</value>
