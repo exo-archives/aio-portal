@@ -29,6 +29,7 @@ import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.portal.application.Preference;
 import org.exoplatform.test.BasicTestCase;
 import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
+import org.exoplatform.services.portletcontainer.pci.model.ExoPortletPreferences;
 import org.exoplatform.commons.utils.LazyPageList;
 
 import java.util.Arrays;
@@ -261,9 +262,12 @@ public class TestLoadedPOM extends BasicTestCase {
 
     // Check initial state
     PortletPreferences prefs = storage.getPortletPreferences(new ExoWindowID(instanceId));
-    assertEquals(0, prefs.getPreferences().size());
+    assertNull(prefs);
 
     // Save state
+    prefs = new PortletPreferences();
+    prefs.setWindowId(instanceId);
+    prefs.setPreferences(new ArrayList<Preference>());
     Preference pref = new Preference();
     pref.setName("foo");
     pref.setValues(new ArrayList<String>(Arrays.asList("foo1")));

@@ -111,9 +111,9 @@ public class POMSession {
           pathPrefix = workspacePath + "/usersites";
         }
         if (type == ObjectType.PAGE) {
-          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + pathPrefix + "/%/root/pages/pages/pages/%'";
+          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + pathPrefix + "/%/rootpage/children/pages/children/%'";
         } else {
-          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + pathPrefix + "/%/navigation'";
+          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + pathPrefix + "/%/rootnavigation'";
         }
       }
       catch (IllegalArgumentException e) {
@@ -126,22 +126,22 @@ public class POMSession {
     } else {
       if (ownerId != null) {
         if (type == ObjectType.PAGE) {
-          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/" + new MOPFormatter().encodeNodeName(null, ownerId) + "/root/pages/pages/pages/%'";
+          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/" + new MOPFormatter().encodeNodeName(null, ownerId) + "/rootpage/chldren/pages/children/%'";
         } else {
-          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + workspacePath + "/%/" + new MOPFormatter().encodeNodeName(null, ownerId) + "/navigation'";
+          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + workspacePath + "/%/" + new MOPFormatter().encodeNodeName(null, ownerId) + "/rootnavigation'";
         }
       } else {
         if (title != null) {
           if (type == ObjectType.PAGE) {
-            statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/%/root/pages/pages/pages/%' AND mop:title='" + title + "'";
+            statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/%/rootpage/children/pages/children/%' AND mop:title='" + title + "'";
           } else {
             throw new UnsupportedOperationException();
           }
         } else {
           if (type == ObjectType.PAGE) {
-            statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/%/root/pages/pages/pages/%'";
+            statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/%/rootpage/children/pages/children/%'";
           } else {
-            statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + workspacePath + "/%/%/navigation'";
+            statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + workspacePath + "/%/%/rootnavigation'";
           }
         }
       }

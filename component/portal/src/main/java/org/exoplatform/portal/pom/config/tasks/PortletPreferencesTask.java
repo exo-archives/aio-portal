@@ -172,20 +172,23 @@ WindowID:
 
       //
       if (customization != null) {
-        ArrayList<Preference> list = new ArrayList<Preference>();
-        for (org.gatein.mop.core.content.portlet.Preference preference : customization.getState().getEntries()) {
-          Preference pref = new Preference();
-          pref.setName(preference.getName());
-          pref.setValues(new ArrayList<String>(preference.getValues()));
-          pref.setReadOnly(preference.isReadOnly());
-          list.add(pref);
+        Preferences state = customization.getState();
+        if (state != null) {
+          ArrayList<Preference> list = new ArrayList<Preference>();
+          for (org.gatein.mop.core.content.portlet.Preference preference : state.getEntries()) {
+            Preference pref = new Preference();
+            pref.setName(preference.getName());
+            pref.setValues(new ArrayList<String>(preference.getValues()));
+            pref.setReadOnly(preference.isReadOnly());
+            list.add(pref);
+          }
+          PortletPreferences prefs = new PortletPreferences();
+          prefs.setOwnerId(ownerId);
+          prefs.setOwnerType(ownerType);
+          prefs.setWindowId(windowId);
+          prefs.setPreferences(list);
+          this.prefs = prefs;
         }
-        PortletPreferences prefs = new PortletPreferences();
-        prefs.setOwnerId(ownerId);
-        prefs.setOwnerType(ownerType);
-        prefs.setWindowId(windowId);
-        prefs.setPreferences(list);
-        this.prefs = prefs;
       }
     }
   }

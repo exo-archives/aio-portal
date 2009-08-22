@@ -508,7 +508,7 @@ public class Mapper {
       if (prefs != null) {
         dst.customize(Preferences.CONTENT_TYPE, chunks[2] + "/" + chunks[3], prefs);
       } else {
-        dst.customize(Preferences.CONTENT_TYPE, chunks[2] + "/" + chunks[3], new PreferencesBuilder().build());
+        dst.customize(Preferences.CONTENT_TYPE, chunks[2] + "/" + chunks[3], null);
       }
     } else {
       ObjectType siteType = parseSiteType(chunks[0]);
@@ -528,7 +528,10 @@ public class Mapper {
       } else {
         System.out.println("Could not configure the window " + dst.getName() + " with portlet " + instanceId +
           " that is not available");
-        dst.customize(Preferences.CONTENT_TYPE, chunks[2] + "/" + chunks[3], new PreferencesBuilder().build());
+        // We set null on purpose, this way, the PortletPreferencesTask.Load will return null
+        // to the caller that will use the default portlet prefs
+        // this behavior is for the eXo PC, when JBoss PC is integrated we need to revise that option
+        dst.customize(Preferences.CONTENT_TYPE, chunks[2] + "/" + chunks[3], null);
       }
     }
   }
