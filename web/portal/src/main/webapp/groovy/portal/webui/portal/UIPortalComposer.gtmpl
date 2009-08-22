@@ -12,8 +12,10 @@
 			<div class="TCPortalComposer">
 				<div class="OverflowContainer">
 					<div class="ExpandIcon" onclick="eXo.portal.UIPortal.toggleComposer(this)"><span></span></div>
+						<% if(uicomponent.isShowControl) { %>
 						<a class="CloseButton" title="<%=_ctx.appRes(popupId + ".action.Abort")%>" href="<%=uicomponent.url("Abort")%>"><span></span></a>
 						<a class="<%= isEditted ? "EdittedSaveButton" : "SaveButton" %>" title="<%=_ctx.appRes(popupId + ".action.Finish")%>" href="<%=uicomponent.url("Finish")%>"><span></span></a>
+						<% } %>
 					<div class="PopupTitle"><%=_ctx.appRes(popupId + ".title."+ popupId)%></div>
 				</div>
 			</div>

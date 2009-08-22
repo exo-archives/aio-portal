@@ -91,6 +91,7 @@ public class UIPortalComposer extends UIContainer {
   
   private boolean isEditted = false;
   private boolean isCollapse = false;
+  private boolean isShowControl = true;
 
 	public UIPortalComposer() throws Exception {
 		UITabPane uiTabPane = addChild(UITabPane.class, "UIPortalComposerTab", null);
@@ -112,13 +113,13 @@ public class UIPortalComposer extends UIContainer {
 	public boolean isEditted() { return isEditted; }
 	public void setEditted(boolean b) { isEditted = b; }
 
-	public boolean isCollapse() {
-		return isCollapse;
-	}
-
+	public boolean isCollapse() {return isCollapse;}
 	public void setCollapse(boolean isCollapse) {
 		this.isCollapse = isCollapse;
 	}
+	
+	public boolean isShowControl() { return isShowControl; }
+	public void setShowControl(boolean state) {isShowControl = state;}
 
 	public void save() throws Exception {
 		PortalRequestContext prContext = Util.getPortalRequestContext();

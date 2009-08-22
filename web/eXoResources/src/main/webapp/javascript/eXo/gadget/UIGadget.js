@@ -1,20 +1,20 @@
 
 eXo.gadget.UIGadget = {
-    createGadget : function(url, id, metadata, userPref, view, isdev, debug, nocache, hostName) {
-        //eXo = eXo || {};
-        window.gadgets = window.gadgets || {};
-        eXo.gadgets = window.gadgets;
-        //window.gadgets = eXo.gadget.Gadgets;
-        if (!eXo.gadgets || !eXo.gadgets.rpc) {
-            eXo.core.Loader.register('rpc', '1.0.0',true, 0, hostName + '/js/rpc.js?c=1');
-            eXo.core.Loader.register('eXo.gadgets.Gadgets', '/eXoResources/javascript/eXo/gadget/Gadgets.js');
-            eXo.core.Loader.register('eXo.gadgets.ExoBasedUserPrefStore', '/eXoResources/javascript/eXo/gadget/ExoBasedUserPrefStore.js');
-        }
-        eXo.core.Loader.init("rpc","eXo.gadgets.Gadgets","eXo.gadgets.ExoBasedUserPrefStore", 
-            eXo.gadget.UIGadget.createCallback, null, arguments);
-    },
+	createGadget : function(url, id, metadata, userPref, view, hostName, isdev, debug, nocache) {
+		//eXo = eXo || {};
+		window.gadgets = window.gadgets || {};
+		eXo.gadgets = window.gadgets;
+		//window.gadgets = eXo.gadget.Gadgets;
+		if (!eXo.gadgets || !eXo.gadgets.rpc) {
+			eXo.core.Loader.register('rpc', '1.0.0',true, 0, hostName + '/js/rpc.js?c=1');
+			eXo.core.Loader.register('eXo.gadgets.Gadgets', '/eXoResources/javascript/eXo/gadget/Gadgets.js');
+			eXo.core.Loader.register('eXo.gadgets.ExoBasedUserPrefStore', '/eXoResources/javascript/eXo/gadget/ExoBasedUserPrefStore.js');
+		}
+		eXo.core.Loader.init("rpc","eXo.gadgets.Gadgets","eXo.gadgets.ExoBasedUserPrefStore", 
+		eXo.gadget.UIGadget.createCallback, null, arguments);
+	},
     
-    createCallback : function(url, id, metadata, userPref, view, isdev, debug, nocache, hostName) {
+    createCallback : function(url, id, metadata, userPref, view, hostName, isdev, debug, nocache) {
         //TODO: dang.tung - set language for gadget
         //-----------------------------------------
         var language = eXo.core.I18n.getLanguage();

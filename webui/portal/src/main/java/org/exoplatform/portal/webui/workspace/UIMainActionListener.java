@@ -63,6 +63,7 @@ public class UIMainActionListener {
       uiWorkingWS.setRenderedChild(UIPortalToolPanel.class);
       UIPortalComposer portalComposer = uiWorkingWS.addChild(UIPortalComposer.class, "UIPageEditor", null);
       portalComposer.setRendered(false);
+      portalComposer.setShowControl(false);
       UIPortalToolPanel uiToolPanel = uiWorkingWS.getChild(UIPortalToolPanel.class);
       uiToolPanel.setShowMaskLayer(false);
       uiToolPanel.setWorkingComponent(UIPageCreationWizard.class, null);

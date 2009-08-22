@@ -19,12 +19,15 @@ package org.exoplatform.portal.webui.portal;
 import java.util.Date;
 import java.util.List;
 
+import javax.portlet.PortletPreferences;
+
 import org.exoplatform.commons.utils.PageList;
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.UserACL;
 import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.webui.application.UIApplicationList;
+import org.exoplatform.portal.webui.application.UIGadget;
 import org.exoplatform.portal.webui.application.UIPortlet;
 import org.exoplatform.portal.webui.container.UIContainerList;
 import org.exoplatform.portal.webui.login.UILogin;
@@ -40,6 +43,10 @@ import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.Query;
 import org.exoplatform.services.organization.User;
+import org.exoplatform.services.portletcontainer.PortletContainerService;
+import org.exoplatform.services.portletcontainer.pci.Input;
+import org.exoplatform.services.portletcontainer.pci.model.ExoPortletPreferences;
+import org.exoplatform.web.application.Application;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.UIContainer;
@@ -164,7 +171,7 @@ public class UIPortalComponentActionListener {
       UIPortalComposer portalComposer = uiApp.findFirstComponentOfType(UIPortalComposer.class);
 
       if(newComponent){
-        pcontext.addUIComponentToUpdateByAjax(uiApp.getChild(UIWorkingWorkspace.class));
+        portalComposer.updateWorkspaceComponent();
         pcontext.setFullRender(true);
       }
 
@@ -201,8 +208,14 @@ public class UIPortalComponentActionListener {
           uiContainer.setAccessPermissions(accessPers);
           uiSource = uiContainer;
         } else {
-          org.exoplatform.application.registry.Application portlet = null;
-          portlet = uiApp.findFirstComponentOfType(UIApplicationList.class).getPortlet(sourceId);
+          org.exoplatform.application.registry.Application app = null;
+          UIApplicationList appList = uiApp.findFirstComponentOfType(UIApplicationList.class); 
+          app = appList.getApplication(sourceId);
+          
+          boolean isGadget = app.getApplicationType().equals(Application.EXO_GAGGET_TYPE);
+          org.exoplatform.application.registry.Application portlet = isGadget
+          	? appList.getApplication("dashboard/GadgetPortlet"): app;
+          
           UIPortlet uiPortlet = uiTarget.createUIComponent(UIPortlet.class, null, null);
           if (portlet.getDisplayName() != null) {
             uiPortlet.setTitle(portlet.getDisplayName());
@@ -231,6 +244,24 @@ public class UIPortalComponentActionListener {
           uiPortlet.setWindowId(windowId.toString());
           uiPortlet.setShowEditControl(true);
           uiSource = uiPortlet;
+          if(app.getApplicationType().equals(Application.EXO_GAGGET_TYPE)) {
+          	windowId = new StringBuilder(PortalConfig.PORTAL_TYPE) ;
+            windowId.append("#").append(pcontext.getRemoteUser()) ;
+            windowId.append(":/").append(
+                app.getApplicationGroup() + "/" + app.getApplicationName()).append('/') ;
+            UIGadget uiGadget = uiApp.createUIComponent(pcontext, UIGadget.class, null, null) ;
+            uiGadget.setId(Integer.toString(uiGadget.hashCode())) ;
+            windowId.append(uiGadget.hashCode()) ;
+            uiGadget.setApplicationInstanceId(windowId.toString()) ;
+            
+            //save preference for portlet
+            Input input = new Input();
+            input.setInternalWindowID(uiPortlet.getExoWindowID());
+            PortletContainerService preferences = uiApp.getApplicationComponent(PortletContainerService.class);
+            PortletPreferences pref = new ExoPortletPreferences();
+            pref.setValue("url", uiGadget.getUrl()) ;
+            preferences.setPortletPreferences(input, pref);
+          }
         }
         List<UIComponent> children = uiTarget.getChildren();
         uiSource.setParent(uiTarget);
