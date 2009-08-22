@@ -162,6 +162,27 @@
 	<div class="UIHorizontalTabs">
 		<div class="TabsContainer" style="position: relative">
 			
+			<div class="UITab NormalToolbarTab">
+				<div class="NormalNavigationTab">
+							<a class="SitesIcon TBIcon" href="<%= portalURI + "portalnavigation" %>">
+									Site
+							</a>
+				</div>
+				<% renderPortalNavigations() %>
+			</div>
+			
+			<div class="UITab NormalToolbarTab">
+				<div class="NormalNavigationTab">
+							<a class="SitesIcon TBIcon" href="<%= portalURI + "groupnavigation" %>">Group</a>
+				</div>
+				<% if (!groupNavigations.isEmpty()) { %>
+				<div style="position: absolute; display:none" class="MenuItemContainer">
+				<% for(navigation in groupNavigations) {
+						renderGroupPageNavigation(navigation);
+				} %>
+				</div>
+				<% } %>
+			</div>
 			<% 
 				String defaultDashboardPage;				
 				if(currentUserNavigation.getNodes() ==null || currentUserNavigation.getNodes().size() < 1){ 
@@ -183,27 +204,6 @@
 								<% renderDashboards(); %>
 						</div>
 			<% } %>
-			<div class="UITab NormalToolbarTab">
-				<div class="NormalNavigationTab">
-							<a class="SitesIcon TBIcon" href="<%= portalURI + "portalnavigation" %>">
-									Site
-							</a>
-				</div>
-				<% renderPortalNavigations() %>
-			</div>
-
-			<div class="UITab NormalToolbarTab">
-				<div class="NormalNavigationTab">
-							<a class="SitesIcon TBIcon" href="<%= portalURI + "groupnavigation" %>">Group</a>
-				</div>
-				<% if (!groupNavigations.isEmpty()) { %>
-				<div style="position: absolute; display:none" class="MenuItemContainer">
-				<% for(navigation in groupNavigations) {
-						renderGroupPageNavigation(navigation);
-				} %>
-				</div>
-				<% } %>
-			</div>
 			
 		</div>
 	</div>

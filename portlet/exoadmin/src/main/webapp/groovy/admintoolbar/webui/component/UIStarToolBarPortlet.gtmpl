@@ -7,6 +7,7 @@
 	jsmanager.importJavascript('eXo.portal.UIAdminToolbar');
 	jsmanager.addCustomizedOnLoadScript('eXo.portal.UIAdminToolbar.onLoad("' + uicomponent.id + '");');
 	String changeLanguageAction = "if(document.getElementById('UIMaskWorkspace')) ajaxGet(eXo.env.server.createPortalURL('UIPortal', 'ChangeLanguage', true));";
+	String accountSetting = "if(document.getElementById('UIMaskWorkspace')) ajaxGet(eXo.env.server.createPortalURL('UIPortal', 'AccountSettings', true));";
 	String changeSkinAction = "if(document.getElementById('UIMaskWorkspace')) ajaxGet(eXo.env.server.createPortalURL('UIPortal', 'ChangeSkin', true));";
 %>
 <div class="UIStarToolBarPortlet" id="$uicomponent.id">
@@ -20,6 +21,9 @@
 					</div>
 					<div class="MenuItem EvenItem" onclick="$changeSkinAction">
 						<a href="#" class="ItemIcon SiteIcon"><%=_ctx.appRes("UIStarToolbarPortlet.item.ChangeSkin")%></a>
+					</div>
+					<div class="MenuItem OddItem" onclick="$accountSetting">
+						<a href="#" class="ItemIcon SiteIcon"><%=_ctx.appRes("UIStarToolbarPortlet.item.AccountSetting")%></a>
 					</div>
 					<div class="MenuItem OddItem" onclick="eXo.portal.logout();">
 						<a href="#" class="ItemIcon SiteIcon"><%=_ctx.appRes("UIStarToolbarPortlet.item.Logout")%></a>
