@@ -90,7 +90,7 @@ public class UISiteManagement extends UIContainer {
   private PageNavigation       selectedNavigation;
   
   public UISiteManagement() throws Exception {  
-    UIPopupWindow editNavigation = addChild(UIPopupWindow.class, null, "EditPortalNavigation");
+    UIPopupWindow editNavigation = addChild(UIPopupWindow.class, null, null);
     editNavigation.setWindowSize(400, 400);
     //loadPortalConfigs();
   }

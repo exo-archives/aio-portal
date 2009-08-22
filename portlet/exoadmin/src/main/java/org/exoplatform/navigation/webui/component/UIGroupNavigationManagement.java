@@ -86,7 +86,7 @@ public class UIGroupNavigationManagement extends UIContainer {
                                             "UIGroupNavigationGrid",
                                             virtualList.getGenerateId());
     virtualList.setUIComponent(repeater);
-    UIPopupWindow editNavigation = addChild(UIPopupWindow.class, null, "EditGroupNavigation");
+    UIPopupWindow editNavigation = addChild(UIPopupWindow.class, null, null);
   }
 
   public void loadNavigations() throws Exception {
@@ -202,6 +202,9 @@ public class UIGroupNavigationManagement extends UIContainer {
       pageManager.setOwnerType(navigation.getOwnerType());
       
       UINavigationNodeSelector selector = pageManager.getChild(UINavigationNodeSelector.class);
+      ArrayList<PageNavigation> list = new ArrayList<PageNavigation>();
+      list.add(navigation);
+      selector.initNavigations(list);
       selector.loadNavigationByNavId(navId, uicomp.navigations);
       popUp.setUIComponent(pageManager);
       popUp.setWindowSize(400, 400);

@@ -174,8 +174,13 @@ public class UINavigationNodeSelector extends UIContainer {
     for (PageNavigation nav : navigations) {
       if (nav.getOwnerType().equals(PortalConfig.USER_TYPE))
         continue;
+      String ownerId = nav.getOwnerId();
+      if (nav.getOwnerType().equals(PortalConfig.GROUP_TYPE)) {
+        // Remove the trailing '/' for a group
+        ownerId = ownerId.substring(1);
+      }
       ResourceBundle res = localeConfig.getNavigationResourceBundle(nav.getOwnerType(),
-                                                                    nav.getOwnerId());
+                                                                    ownerId);
       for (PageNode node : nav.getNodes()) {
         resolveLabel(res, node);
       }

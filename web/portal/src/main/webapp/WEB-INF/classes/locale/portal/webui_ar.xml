@@ -661,7 +661,7 @@
   #              org.exoplatform.portal.component.customization.UIPageSelector#
   #############################################################################
   -->
-  <UIPageSelector>
+  <UIPageSelector2>
     <header>
       <name>اسم</name>
       <id>تعريفة الصفحة</id>
@@ -671,13 +671,14 @@
     </header>
     <label>
       <clearPage>حذف محتويات الصفحة</clearPage>
+      <createPage>Create Page</createPage>
       <searchandSelectPage>بحث واختيار الصفحة</searchandSelectPage>
       <currentSelectedPage>معلومات الصفحة المختارة الحالية</currentSelectedPage>
       <title>العنوان</title>
       <name>#{word.name}</name>
       <accessGroups>الدخول للمجموعة</accessGroups>
     </label>
-  </UIPageSelector>
+  </UIPageSelector2>
   <UIPageBrowser>
     <msg>
       <NoPermission>!ليس لديك تصريح للحصول على هذه الصفحة</NoPermission>
@@ -830,7 +831,7 @@
   #              org.exoplatform.portal.component.customization.UIPageNodeForm#
   #############################################################################
   -->
-  <UIPageNodeForm>
+  <UIPageNodeForm2>
     <title>إضافة / تحرير عقدة الصفحة</title>
     <msg>
       <SameName>!هذه العقدة في القائمة ، من فضلك ادخل واحدة آخرى</SameName>
@@ -856,18 +857,21 @@
       <startPublicationDate>:بداية تاريخ النشر</startPublicationDate>
       <endPublicationDate>نهاية تاريخ النشر</endPublicationDate>
     </label>
-    <tab>
-      <label>
-        <PageNodeSetting>وضع عقدة الصفحة</PageNodeSetting>
-        <Icon>#{word.icon}</Icon>
-        <UIPageSelector>اختيار الصفحة</UIPageSelector>
-      </label>
-    </tab>
     <Icon>
       <title>
         <SetDefault>احصل على الافتراضي</SetDefault>
       </title>
     </Icon>
+  </UIPageNodeForm2>
+  
+  <UIPageNodeForm>
+    <tab>
+      <label>
+        <PageNodeSetting>وضع عقدة الصفحة</PageNodeSetting>
+        <Icon>#{word.icon}</Icon>
+        <UIPageSelector2>اختيار الصفحة</UIPageSelector2>
+      </label>
+    </tab>
   </UIPageNodeForm>
 
   <UIPageBrowse>
@@ -1487,6 +1491,11 @@
       <UIApplicationTree>شجرة الخدمات</UIApplicationTree>
     </title>
   </UIControWSPopupWindow>
+  <EditGroup>
+  	<title>
+      <UIPageNavigationForm>Add Navigation</UIPageNavigationForm>
+    </title>
+  </EditGroup>
   <!--
   ############################################################################
   #         org.exoplatform.portal.component.widget.UILogged                 #
@@ -2208,6 +2217,11 @@
   -->
   <UIPopupWindow>
     <Close>Close Window</Close>
+    <title>
+    	<UIPageNodeForm2>ADD/EDIT PAGE NODE</UIPageNodeForm2>
+    	<UINavigationManagement>Navigation Management</UINavigationManagement>
+    	<UIPageNavigationForm>Page Navigation Form</UIPageNavigationForm>
+    </title>
   </UIPopupWindow>
   <!--
   #############################################################################
