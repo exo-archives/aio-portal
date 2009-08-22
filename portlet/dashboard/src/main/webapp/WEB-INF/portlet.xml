@@ -34,7 +34,7 @@
 			</preference>
 			<preference>
 				<name>template</name>
-				<value>two-columns</value>
+				<value>three-columns</value>
 			</preference>
 		</portlet-preferences>
 		<security-role-ref>

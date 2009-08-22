@@ -9,38 +9,40 @@
 		  <access-permissions>*:/platform/administrators; *:/organization/management/executive-board</access-permissions>
 			<container id="StarToolBarPortelt" template="system:/groovy/portal/webui/container/UIContainer.gtmpl">
 			  <application>
-			    <instance-id>portal#classic:/exoadmin/StarToolbarPortlet/starportlet</instance-id>
+			    <instance-id>/exoadmin/StarToolbarPortlet/starportlet</instance-id>
 		      <access-permissions>Everyone</access-permissions>
 			    <show-info-bar>false</show-info-bar>
 			  </application>			
 			</container>
 			<container id="UserToolBarPortlet" template="system:/groovy/portal/webui/container/UIContainer.gtmpl">
 			  <application>
-			    <instance-id>portal#classic:/exoadmin/UserToolbarPortlet/userportlet</instance-id>
+			    <instance-id>/exoadmin/UserToolbarPortlet/userportlet</instance-id>
 		      <access-permissions>Everyone</access-permissions>
 			    <show-info-bar>false</show-info-bar>
 			  </application>			
 			</container>
 			<container id="AdminToolBarPortlet" template="system:/groovy/portal/webui/container/UIContainer.gtmpl">
 			  <application>
-			    <instance-id>portal#classic:/exoadmin/AdminToolbarPortlet/adminportlet</instance-id>
+			    <instance-id>/exoadmin/AdminToolbarPortlet/adminportlet</instance-id>
 		      <access-permissions>Everyone</access-permissions>
 			    <show-info-bar>false</show-info-bar>
 			  </application>
 			</container>
 		</container>
-  
+ 
   <application>
     	<instance-id>/dashboard/TabbedDashboardPortlet/TabbedDashboard</instance-id>
     	<title>Tabbed Dashboard</title>
     	<!--<access-permissions>*:/platform/users</access-permissions>-->
     	<show-info-bar>false</show-info-bar>
     	<show-application-state>true</show-application-state>
-  </application>  	
+  </application>  
+
 	<application>
 	  <instance-id>/dashboard/DashboardPortlet</instance-id>
 	  <title>Dashboard</title>
 	  <show-info-bar>false</show-info-bar>
 	  <show-application-state>true</show-application-state>      
 	</application>
+
 </page>
