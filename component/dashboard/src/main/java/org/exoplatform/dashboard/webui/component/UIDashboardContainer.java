@@ -132,7 +132,8 @@ public class UIDashboardContainer extends org.exoplatform.webui.core.UIContainer
     PortalLayoutService service = getApplicationComponent(PortalLayoutService.class);
     DashboardParent parent = (DashboardParent)((UIComponent)getParent()).getParent();
 
-    Container container = service.getContainer(ROOT_CONTAINER  + "-" + windowId, parent.getDashboardOwner());
+    //Container container = service.getContainer(ROOT_CONTAINER  + "-" + windowId, parent.getDashboardOwner());
+    Container container = service.getContainer(ROOT_CONTAINER  + "-" + windowId.substring(1), parent.getDashboardOwner());
     UIContainer uiRoot = getChild(UIContainer.class);
 
     toUIContainer(uiRoot, container);
@@ -393,12 +394,13 @@ public class UIDashboardContainer extends org.exoplatform.webui.core.UIContainer
   private void initData() throws Exception {
     PortalLayoutService service = getApplicationComponent(PortalLayoutService.class);
     DashboardParent parent = (DashboardParent)((UIComponent)getParent()).getParent();
-    String id = ROOT_CONTAINER + "-" + windowId;
+    //String id = ROOT_CONTAINER + "-" + windowId;
+    String id = ROOT_CONTAINER + "-" + windowId.substring(1);
     if (service.getContainer(id, parent.getDashboardOwner()) != null) { return; }
     if(containerTemplate == null) containerTemplate = "three-columns" ;
     service.create(id, containerTemplate, parent.getDashboardOwner());
   }
-  
+    
   /**
    * Saves all <tt>UIComponent</tt> of this <tt>UIDashboardContainer</tt> to database 
    * @throws Exception
