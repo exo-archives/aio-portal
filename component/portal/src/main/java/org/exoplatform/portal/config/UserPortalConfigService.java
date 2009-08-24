@@ -191,8 +191,6 @@ public class UserPortalConfigService implements Startable {
 			while (iterator.hasNext()) {
 				Group m = (Group) iterator.next();
 				String groupId = m.getId().trim();
-				if (groupId.charAt(0) == '/')
-					groupId = groupId.substring(1);
 				list.add(groupId);
 			}
 		}
