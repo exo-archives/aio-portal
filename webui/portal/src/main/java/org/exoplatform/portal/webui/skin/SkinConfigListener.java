@@ -22,64 +22,39 @@ import groovy.lang.GroovyShell;
 
 import java.io.InputStream;
 
-import javax.portlet.PortletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.ExoContainerContext;
 import org.exoplatform.container.component.BaseComponentPlugin;
-import org.exoplatform.services.portletcontainer.PortletLifecycleListener;
-import org.exoplatform.services.portletcontainer.pci.model.PortletApp;
+import org.gatein.wci.WebAppEvent;
+import org.gatein.wci.WebAppListener;
 /**
  * Created by The eXo Platform SAS
  * Jan 19, 2007  
  */
-public class SkinConfigListener extends BaseComponentPlugin 
-  implements PortletLifecycleListener,  ServletContextListener {
 
-  public void contextInitialized(ServletContextEvent event) {
-    preDeploy(null, null, event.getServletContext()) ;
-  }
+public class SkinConfigListener extends BaseComponentPlugin implements WebAppListener
+{
 
-  public void contextDestroyed(ServletContextEvent arg0) {
+	public void onEvent(WebAppEvent event) {
+		try {
+			ServletContext scontext = event.getWebApp().getServletContext();
+			InputStream is = scontext.getResourceAsStream("/WEB-INF/conf/script/groovy/SkinConfigScript.groovy") ;
+			if(is == null)  return ;
 
-  }
-  
-  public void preDeploy(String appName, PortletApp portletApp, ServletContext scontext) {
-    try {
-      InputStream is = scontext.getResourceAsStream("/WEB-INF/conf/script/groovy/SkinConfigScript.groovy") ;
-      if(is == null)  return ;
-      
-      Binding binding = new Binding();
-      ExoContainer rootContainer = ExoContainerContext.getTopContainer();
-      org.exoplatform.portal.skin.SkinService skinService = 
-        (org.exoplatform.portal.skin.SkinService)rootContainer.getComponentInstanceOfType(org.exoplatform.portal.skin.SkinService.class);
-      binding.setVariable("SkinService", skinService) ;
-      binding.setVariable("ServletContext", scontext) ;      
-      GroovyShell shell = new GroovyShell(binding);
-      shell.evaluate(is);
-      is.close() ;
-    } catch (Exception ex) {
-      ex.printStackTrace() ;
-    }
-  }
-
-  public void postDeploy(String appName, PortletApp portletApp, ServletContext scontext) {
-
-  }
-
-  public void preInit(PortletConfig arg0) { }
-
-  public void postInit(PortletConfig arg0) { }
-
-  public void preDestroy() {  }
-
-  public void postDestroy() { }
-
-  public void preUndeploy(String appName, PortletApp portletApp, ServletContext scontext) {
-  }
-
-  public void postUndeploy(String appName, PortletApp portletApp, ServletContext arg2) {   }
+			Binding binding = new Binding();
+			ExoContainer rootContainer = ExoContainerContext.getTopContainer();
+			org.exoplatform.portal.skin.SkinService skinService = 
+				(org.exoplatform.portal.skin.SkinService)rootContainer.getComponentInstanceOfType(org.exoplatform.portal.skin.SkinService.class);
+			binding.setVariable("SkinService", skinService) ;
+			binding.setVariable("ServletContext", scontext) ;      
+			GroovyShell shell = new GroovyShell(binding);
+			shell.evaluate(is);
+			is.close() ;
+		} catch (Exception ex) {
+			ex.printStackTrace() ;
+		}
+	}
+	
 }

@@ -16,11 +16,15 @@
  */
 package org.exoplatform.portal.webui.application;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.WindowState;
+import javax.servlet.http.Cookie;
 
 import org.exoplatform.services.log.Log;
 import org.exoplatform.Constants;
@@ -41,6 +45,24 @@ import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.lifecycle.Lifecycle;
 import org.exoplatform.webui.core.lifecycle.WebuiBindingContext;
 import org.exoplatform.webui.event.Event;
+import org.gatein.pc.api.Mode;
+import org.gatein.common.net.media.MediaType;
+import org.gatein.common.util.MarkupInfo;
+import org.gatein.common.util.MultiValuedPropertyMap;
+import org.gatein.pc.api.PortletContext;
+import org.gatein.pc.api.PortletInvoker;
+import org.gatein.pc.api.invocation.RenderInvocation;
+import org.gatein.pc.api.invocation.SimplePortletInvocationContext;
+import org.gatein.pc.api.invocation.response.FragmentResponse;
+import org.gatein.pc.api.invocation.response.PortletInvocationResponse;
+import org.gatein.pc.impl.spi.AbstractClientContext;
+import org.gatein.pc.impl.spi.AbstractInstanceContext;
+import org.gatein.pc.impl.spi.AbstractPortalContext;
+import org.gatein.pc.impl.spi.AbstractSecurityContext;
+import org.gatein.pc.impl.spi.AbstractServerContext;
+import org.gatein.pc.impl.spi.AbstractUserContext;
+import org.gatein.pc.impl.spi.AbstractWindowContext;
+import org.w3c.dom.Element;
 
 /**
  * Created by The eXo Platform SAS May 8, 2006
@@ -141,58 +163,76 @@ public class UIPortletLifecycle extends Lifecycle {
     UIPortlet uiPortlet = (UIPortlet) uicomponent;
     PortalRequestContext prcontext = (PortalRequestContext) context;
     ExoContainer container = prcontext.getApplication().getApplicationServiceContainer();
-    // UIPortal uiPortal = Util.getUIPortal();
-    PortletContainerService portletContainer = (PortletContainerService) container.getComponentInstanceOfType(PortletContainerService.class);
-    // OrganizationService service =
-    // uiPortlet.getApplicationComponent(OrganizationService.class);
-    // UserProfile userProfile =
-    // service.getUserProfileHandler().findUserProfileByName(uiPortal.getOwner());
-    RenderInput input = new RenderInput();
-    String baseUrl = new StringBuilder(prcontext.getRequestURI()).append("?"
-        + PortalRequestContext.UI_COMPONENT_ID).append("=").append(uiPortlet.getId()).toString();
-    input.setBaseURL(baseUrl);
-    input.setEscapeXml(true);
-    // if (userProfile != null)
-    // input.setUserAttributes(userProfile.getUserInfoMap());
-    // else input.setUserAttributes(new HashMap<String, String>());
-    Map<String, String> emptyMap = Collections.emptyMap();
-    input.setUserAttributes(emptyMap);
+    
+    PortletInvoker portletInvoker = (PortletInvoker)container.getComponentInstanceOfType(PortletInvoker.class);
+    
+    MediaType mediaType = MediaType.create("text/html");
+    String charset = "UTF-8";
+    MarkupInfo markupInfo = new MarkupInfo(mediaType, charset);
+    
+    String baseURL = new StringBuilder(prcontext.getRequestURI()).append("?"
+	        + PortalRequestContext.UI_COMPONENT_ID).append("=").append(uiPortlet.getId()).toString();
+    
+    SimplePortletInvocationContext portletInvocationContext = new SimplePortletInvocationContext(markupInfo, baseURL, prcontext.getResponse());
+        
+    FragmentResponse fragmentResponse = null;
+    
+    try
+    {
+    RenderInvocation renderInvocation = new RenderInvocation(portletInvocationContext);
+    
+    PortletContext portletContext = PortletContext.createPortletContext("/" + uiPortlet.getExoWindowID().getPortletApplicationName() + "." + uiPortlet.getExoWindowID().getPortletName());
+    
+    List<Cookie> requestCookies = new ArrayList<Cookie>();
+    for (Cookie cookie : prcontext.getRequest().getCookies())
+    {
+    	requestCookies.add(cookie);
+    }
+    
+    renderInvocation.setClientContext(new AbstractClientContext(prcontext.getRequest(), requestCookies));
+    renderInvocation.setServerContext(new AbstractServerContext(prcontext.getRequest(), prcontext.getResponse()));
+    renderInvocation.setInstanceContext(new AbstractInstanceContext(portletContext.getId()));
+    renderInvocation.setUserContext(new AbstractUserContext(prcontext.getRequest()));
+    renderInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getExoWindowID().toString()));
+    renderInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));
+    renderInvocation.setSecurityContext(new AbstractSecurityContext(prcontext.getRequest()));
+    renderInvocation.setTarget(portletContext);
 
-    input.setPortletMode(uiPortlet.getCurrentPortletMode());
-    input.setWindowState(uiPortlet.getCurrentWindowState());
-    input.setMarkup("text/html");
-    input.setTitle(uiPortlet.getTitle());
-    input.setInternalWindowID(uiPortlet.getExoWindowID());
-    input.setRenderParameters(getRenderParameterMap(uiPortlet));
-    input.setPublicParamNames(uiPortlet.getPublicRenderParamNames());
-    RenderOutput output = null;
+    renderInvocation.setMode(Mode.create(uiPortlet.getCurrentPortletMode().toString()));
+    renderInvocation.setWindowState(org.gatein.pc.api.WindowState.create(uiPortlet.getCurrentWindowState().toString()));
+    
+    PortletInvocationResponse piResponse =  portletInvoker.invoke(renderInvocation);
+    
+    fragmentResponse = (FragmentResponse)piResponse;
+    
+    }
+    catch (Exception e)
+    {
+    	e.printStackTrace();
+    }
+    
     Text markup = null;
     String portletTitle = null;
-    try {
-      if (uiPortlet.getCurrentWindowState() != WindowState.MINIMIZED) {
-        String appStatus = uiPortlet.getProperties().get("appStatus");
-        if ("Window".equals(uiPortlet.getPortletStyle())
-            && !("SHOW".equals(appStatus) || "HIDE".equals(appStatus))) {
-          markup = Text.create("<span></span>");
-        } else {
-          int portalMode = Util.getUIPortalApplication().getModeState();
-          if(portalMode % 2 == 0) {
-            output = portletContainer.render(prcontext.getRequest(), prcontext.getResponse(), input);
-            markup = output.getMarkup();
-          }
-        }
-      }
-    } catch (PortletContainerException ex) {
-      // TODO tam.nguyen fix bug PORTAL-2660
-      PortletExceptionHandleService portletExceptionService = (PortletExceptionHandleService) container.getComponentInstanceOfType(PortletExceptionHandleService.class);
-      portletExceptionService.handle(ex);
-      markup = Text.create("This portlet encountered an error and could not be displayed.");
-//      log.error("The portlet " + uiPortlet.getName()
-//          + " could not be loaded. Check if properly deployed.", ExceptionUtil.getRootCause(ex));
-    }
-    if (output != null) {
-      portletTitle = output.getTitle();
-      prcontext.setHeaders(output.getHeaderProperties());
+    if (fragmentResponse != null)
+    {
+    	markup = Text.create(fragmentResponse.getContent());
+    	portletTitle = fragmentResponse.getTitle();
+    	
+    	if (fragmentResponse.getProperties() != null)
+    	{
+    		MultiValuedPropertyMap<Element> hMap = fragmentResponse.getProperties().getMarkupHeaders();
+    		if (hMap != null)
+    		{
+    			Map<String, String> headers = new HashMap<String, String>();
+    			Set<String> keys = hMap.keySet();
+    		}
+    	}
+    	
+    	//TODO: (mwringe )setup headers
+    	Map<String, String> headers = new HashMap<String, String>();
+//    	fragmentResponse.getProperties().getMarkupHeaders();	
+    	prcontext.setHeaders(headers);
+    	
     }
     if (portletTitle == null)
       portletTitle = "Portlet";

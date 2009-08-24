@@ -1,5 +1,5 @@
 <Context path="/portal" docBase="../../../eXoProjects/portal/trunk/web/portal/src/main/webapp" 
-  debug="0" reloadable="true" crossContext="true">
+  debug="0" reloadable="true" crossContext="true" priviledge="true">
 
   <Logger className="org.apache.catalina.logger.SystemOutLogger"
     prefix="localhost_portal_log." suffix=".txt"

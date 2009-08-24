@@ -34,6 +34,12 @@
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.component.portal</artifactId>
       <version>2.6-int-SNAPSHOT</version>
-    </dependency>    
+    </dependency>
+    
+    <dependency>
+      <groupId>org.gatein.pc</groupId>
+      <artifactId>pc-api</artifactId>
+      <version>${org.gatein.pc.version}</version>
+    </dependency>
   </dependencies>
 </project>

@@ -1,4 +1,4 @@
-<Context path='/portal' docBase='portal' debug='0' reloadable='true' crossContext='true'> 
+<Context path='/portal' docBase='portal' debug='0' reloadable='true' crossContext='true' privileged='true'> 
   <Logger className='org.apache.catalina.logger.SystemOutLogger' 
           prefix='localhost_portal_log.' suffix='.txt' timestamp='true'/> 
   <Manager className='org.apache.catalina.session.PersistentManager' saveOnRestart='false'/> 

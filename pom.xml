@@ -13,7 +13,15 @@
   <version>2.6-int-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-
+  <repositories>
+    <repository>
+      <id>repository.exo</id>
+      <name>eXo Maven repository</name>
+      <url>http://maven2.exoplatform.org/rest/maven2</url>
+      <layout>default</layout>
+    </repository>
+  </repositories>
+  
   <properties>
      <exo.product.name>exo-portal</exo.product.name>
      <exo.product.specification>2.6</exo.product.specification>
@@ -177,7 +185,8 @@
     	<org.exoplatform.ws.version>2.0.2</org.exoplatform.ws.version>
         <org.exoplatform.jcr.version>1.11.2</org.exoplatform.jcr.version>
         <org.exoplatform.pc.version>2.1.2</org.exoplatform.pc.version>
-	<org.shindig.version>SNAPSHOT-r790473</org.shindig.version>
+        <org.shindig.version>SNAPSHOT-r790473</org.shindig.version>
+        <org.gatein.pc.version>trunk-SNAPSHOT</org.gatein.pc.version>
       </properties>
     </profile>
   </profiles>

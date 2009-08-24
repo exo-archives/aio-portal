@@ -17,6 +17,7 @@
 package org.exoplatform.portal.webui.application;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -42,13 +43,20 @@ import org.exoplatform.portal.webui.portal.UIPortalComponentActionListener.Delet
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.services.log.ExoLogger;
-import org.exoplatform.services.portletcontainer.PortletContainerService;
+//TODO: replace the ExoWindowId class with the portlet api one
 import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
-import org.exoplatform.services.portletcontainer.pci.PortletData;
-import org.exoplatform.services.portletcontainer.pci.model.Supports;
+import org.exoplatform.web.command.handler.GetApplicationHandler;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.event.Event.Phase;
+import org.gatein.common.net.media.MediaType;
+import org.gatein.pc.api.Portlet;
+import org.gatein.pc.api.PortletContext;
+import org.gatein.pc.api.PortletInvoker;
+import org.gatein.pc.api.PortletInvokerException;
+import org.gatein.pc.api.info.EventInfo;
+import org.gatein.pc.api.info.ModeInfo;
+import org.gatein.pc.api.info.ParameterInfo;
 
 /**
  * May 19, 2006
@@ -178,29 +186,47 @@ public class UIPortlet extends UIApplication {
     supportedPublicParams_ = supportedPublicRenderParameters;
   }
   
-  public  List<String> getSupportModes() { 
+  public  List<String> getSupportModes() {
     if (supportModes_ != null) return supportModes_;
-    PortletContainerService portletContainer =  getApplicationComponent(PortletContainerService.class);
-    String  portletId = exoWindowId_.getPortletApplicationName() + Constants.PORTLET_META_DATA_ENCODER + exoWindowId_.getPortletName();   
-    PortletData portletData = portletContainer.getAllPortletMetaData().get(portletId);
-    List<String> supportModes = new ArrayList<String>() ;
-    if(portletData == null) return supportModes ;
-    List<Supports> sukepportsList = portletData.getSupports() ;
-    for (int i = 0; i < sukepportsList.size(); i++) {
-      Supports supports = sukepportsList.get(i) ;
-      String mimeType = supports.getMimeType() ;
-      if ("text/html".equals(mimeType)) {
-        List<String> modes = supports.getPortletMode() ;
-        for (int j =0 ; j < modes.size() ; j++) {
-          supportModes.add(modes.get(j).toLowerCase()) ;
-        }
-        break ;
-      }
+    
+    //TODO: (mwringe) figure out how to handle the portlet id properly
+    String portletId = "/" + exoWindowId_.getPortletApplicationName() + "." + exoWindowId_.getPortletName();
+    List<String> supportModes = new ArrayList<String>();
+    
+    PortletInvoker portletInvoker = getApplicationComponent(PortletInvoker.class);
+
+    PortletContext pContext = PortletContext.createPortletContext(portletId);
+
+    Portlet portlet = null;
+	try {
+		portlet = portletInvoker.getPortlet(pContext);
+	} catch (IllegalArgumentException e) {
+		e.printStackTrace();
+	} catch (PortletInvokerException e) {
+		e.printStackTrace();
+	}
+	
+	// if we couldn't get the portlet that just return an empty modes list
+	if (portlet == null) {
+		return supportModes;
+	}
+	
+    Set<ModeInfo> modes =portlet.getInfo().getCapabilities().getModes(MediaType.create("text/html"));
+    Iterator<ModeInfo> modeIter = modes.iterator();
+    while (modeIter.hasNext())
+    {
+    	ModeInfo info = modeIter.next();
+    	supportModes.add(info.getModeName());
     }
+		    
     if(supportModes.size() > 0) supportModes.remove("view");
     setSupportModes(supportModes);
+    
+    System.out.println("--- SUPPORT MODES : " + supportModes);
+    
     return supportModes;
   }
+  
   public void setSupportModes(List<String> supportModes) { supportModes_ = supportModes; }
   
   /**
@@ -209,12 +235,34 @@ public class UIPortlet extends UIApplication {
    */
   public boolean supportsProcessingEvent(QName name) {
 	  if(supportedProcessingEvents_ == null) {
-      PortletContainerService portletContainer =  getApplicationComponent(PortletContainerService.class);
-      String  portletId = exoWindowId_.getPortletApplicationName() + Constants.PORTLET_META_DATA_ENCODER + exoWindowId_.getPortletName();   
-      PortletData portletData = portletContainer.getAllPortletMetaData().get(portletId);
-      supportedProcessingEvents_ = portletData.getSupportedProcessingEvent();
-	  }
-	  if(supportedProcessingEvents_ == null) return false;
+
+		  PortletInvoker portletInvoker = getApplicationComponent(PortletInvoker.class);
+		  String portletId = "/" + exoWindowId_.getPortletApplicationName() + "." + exoWindowId_.getPortletName();
+
+		  PortletContext pContext = PortletContext.createPortletContext(portletId);
+
+		  Portlet portlet = null;
+		  try {
+			  portlet = portletInvoker.getPortlet(pContext);
+		  } catch (IllegalArgumentException e) {
+			  e.printStackTrace();
+		  } catch (PortletInvokerException e) {
+			  e.printStackTrace();
+		  }
+
+		  if (portlet == null)
+		  {
+			  log.info("Could not find portlet with ID : " + portletId);
+			  return false;
+		  }
+		  
+		  Map<QName, EventInfo> consumedEvents = (Map<QName, EventInfo>)portlet.getInfo().getEventing().getConsumedEvents();
+		  
+		  if (consumedEvents == null) return false; 
+		  
+		  supportedProcessingEvents_ = new ArrayList<QName>(consumedEvents.keySet());  		  
+	  }	  
+	  	  
 	  for (Iterator<QName> iter = supportedProcessingEvents_.iterator(); iter.hasNext();) {
 	    QName eventName = iter.next();
 	    if(eventName.equals(name)) {
@@ -222,6 +270,7 @@ public class UIPortlet extends UIApplication {
 		    return true;
 	    }
 	  }
+	  log.info("The portlet " + windowId + " doesn't support the event : " + name);
 	  return false;
   }
   
@@ -231,12 +280,38 @@ public class UIPortlet extends UIApplication {
    */
   public boolean supportsPublicParam(String supportedPublicParam) {
 	  if(supportedPublicParams_ == null) {
-      PortletContainerService portletContainer =  getApplicationComponent(PortletContainerService.class);
-      String  portletId = exoWindowId_.getPortletApplicationName() + Constants.PORTLET_META_DATA_ENCODER + exoWindowId_.getPortletName();   
-      PortletData portletData = portletContainer.getAllPortletMetaData().get(portletId);
-      supportedPublicParams_ = portletData.getSupportedPublicRenderParameter();
-	  }	
-	  if(supportedPublicParams_ == null) return false;
+		  
+		  PortletInvoker portletInvoker = getApplicationComponent(PortletInvoker.class);
+		  String portletId = "/" + exoWindowId_.getPortletApplicationName() + "." + exoWindowId_.getPortletName();
+
+		  PortletContext pContext = PortletContext.createPortletContext(portletId);
+
+		  Portlet portlet = null;
+		  try {
+			  portlet = portletInvoker.getPortlet(pContext);
+		  } catch (IllegalArgumentException e) {
+			  e.printStackTrace();
+		  } catch (PortletInvokerException e) {
+			  e.printStackTrace();
+		  }
+
+		  if (portlet == null)
+		  {
+			  log.info("Could not find portlet with ID : " + portletId);
+			  return false;
+		  }
+		  
+		  Collection<ParameterInfo> parameters = (Collection<ParameterInfo>) portlet.getInfo().getNavigation().getPublicParameters();
+		  
+		  supportedPublicParams_ = new ArrayList<String>();
+		  
+		  for (Iterator<ParameterInfo> iter = parameters.iterator(); iter.hasNext();) {
+			  ParameterInfo parameter = iter.next();
+			  supportedPublicParams_.add(parameter.getId());
+		  }
+		  
+	  }
+
 	  for (Iterator<String> iter = supportedPublicParams_.iterator(); iter.hasNext();) {
 	    String publicParam = iter.next();
 	    if(publicParam.equals(supportedPublicParam)) {

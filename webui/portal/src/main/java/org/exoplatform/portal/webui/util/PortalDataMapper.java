@@ -18,6 +18,7 @@ package org.exoplatform.portal.webui.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.exoplatform.Constants;
 import org.exoplatform.portal.config.UserPortalConfig;
@@ -40,6 +41,13 @@ import org.exoplatform.services.portletcontainer.pci.model.Supports;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.core.UIComponent;
 
+import org.gatein.common.net.media.MediaType;
+import org.gatein.pc.api.PortletInvoker;
+import org.gatein.pc.api.Portlet;
+import org.gatein.pc.api.PortletContext;
+import org.gatein.pc.api.PortletInvoker;
+import org.gatein.pc.api.info.ModeInfo;
+import org.gatein.pc.api.info.PortletInfo;
 /**
  * Created by The eXo Platform SAS May 4, 2007 TODO: Rename this to
  * PortalDataModelMapper
@@ -213,44 +221,37 @@ public class PortalDataMapper {
     if (model.getAccessPermissions() != null)
       uiPortlet.setAccessPermissions(model.getAccessPermissions());
     uiPortlet.setModifiable(model.isModifiable());
-    PortletContainerService portletContainer = uiPortlet.getApplicationComponent(PortletContainerService.class);
-    ExoWindowID windowId = uiPortlet.getExoWindowID();
-    String portletId = windowId.getPortletApplicationName() + Constants.PORTLET_META_DATA_ENCODER
-        + windowId.getPortletName();
-    PortletData portletData = (PortletData) portletContainer.getAllPortletMetaData().get(portletId);
-    if (portletData == null)
-      return;
-
+    ExoWindowID windowId = uiPortlet.getExoWindowID();    
+    
+    PortletInvoker portletInvoker = (PortletInvoker)uiPortlet.getApplicationComponent(PortletInvoker.class);
+    String pId = "/" + windowId.getPortletApplicationName() + "." + windowId.getPortletName();
+    PortletContext portletContext = PortletContext.createPortletContext(pId);
+    Portlet portlet = portletInvoker.getPortlet(portletContext);
+    if (portlet == null || portlet.getInfo() == null) return;
+    
+    PortletInfo portletInfo = portlet.getInfo();
+    
     /*
      * Define which portlet modes the portlet supports and hence should be shown
      * in the portlet info bar
      */
-    List<?> supportsList = portletData.getSupports();
-    List<String> supportModes = new ArrayList<String>();
-    for (int i = 0; i < supportsList.size(); i++) {
-      Supports supports = (Supports) supportsList.get(i);
-      String mimeType = supports.getMimeType();
-      if ("text/html".equals(mimeType)) {
-        List<?> modes = supports.getPortletMode();
-        for (int j = 0; j < modes.size(); j++) {
-          String mode = (String) modes.get(j);
-          mode = mode.toLowerCase();
-          // check role admin
-          if ("config".equals(mode)) {
-            // if(adminRole)
-            supportModes.add(mode);
-          } else {
-            supportModes.add(mode);
-          }
-        }
-        break;
-      }
+    Set<ModeInfo> modes = portletInfo.getCapabilities().getModes(MediaType.create("text/html"));
+    List<String> supportModes = new ArrayList<String>() ;
+    for (ModeInfo modeInfo : modes)
+    {
+    	String modeName = modeInfo.getModeName().toLowerCase();
+    	if ("config".equals(modeInfo.getModeName()))
+    	{
+    		supportModes.add(modeName);
+    	} else {
+    		supportModes.add(modeName);
+    	}    	
     }
-    if (supportModes.size() > 1)
-      supportModes.remove("view");
-    uiPortlet.setSupportModes(supportModes);
+    
+    if(supportModes.size() > 1) supportModes.remove("view");
+    uiPortlet.setSupportModes(supportModes);    
   }
-
+  
   static public void toUIContainer(UIContainer uiContainer, Container model) throws Exception {
     uiContainer.setId(model.getId());
     uiContainer.setWidth(model.getWidth());

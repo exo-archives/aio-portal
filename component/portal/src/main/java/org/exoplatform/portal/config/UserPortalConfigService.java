@@ -47,6 +47,10 @@ import org.exoplatform.services.portletcontainer.PortletContainerService;
 import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
 import org.exoplatform.services.portletcontainer.pci.Input;
 import org.picocontainer.Startable;
+import org.gatein.pc.api.PortletContext;
+import org.gatein.pc.api.PortletInvoker;
+import org.gatein.pc.api.info.PreferencesInfo;
+
 
 /**
  * Created by The eXo Platform SAS Apr 19, 2007 This service is used to load the
@@ -487,6 +491,11 @@ public class UserPortalConfigService implements Startable {
 		ExoContainer container = ExoContainerContext.getCurrentContainer();
 		PortletContainerService pcServ = (PortletContainerService) container
 		.getComponentInstanceOfType(PortletContainerService.class);
+		
+		PortletInvoker portletInvoker = (PortletInvoker) container.getComponentInstance(PortletInvoker.class);
+	    PortletContext portletContext = null;
+		PreferencesInfo prefInfos = portletInvoker.getPortlet(portletContext).getInfo().getPreferences();
+
 		return pcServ.getPortletPreferences(input);
 	}
 

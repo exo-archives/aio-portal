@@ -22,66 +22,41 @@ import groovy.lang.GroovyShell;
 
 import java.io.InputStream;
 
-import javax.portlet.PortletConfig;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.ExoContainerContext;
 import org.exoplatform.container.component.BaseComponentPlugin;
-import org.exoplatform.services.portletcontainer.PortletLifecycleListener;
-import org.exoplatform.services.portletcontainer.pci.model.PortletApp;
 import org.exoplatform.web.application.javascript.JavascriptConfigService;
+import org.gatein.wci.WebAppEvent;
+import org.gatein.wci.WebAppListener;
 /**
  * Created by The eXo Platform SAS
  * Jan 19, 2007  
  */
 
-public class JavascriptListener extends BaseComponentPlugin 
-  implements PortletLifecycleListener,  ServletContextListener {
+public class JavascriptListener extends BaseComponentPlugin implements WebAppListener
+{
 
-  public void contextInitialized(ServletContextEvent event) {
-    preDeploy(null, null, event.getServletContext()) ;
-  }
+	public void onEvent(WebAppEvent event) {
+		try {
+			ServletContext scontext = event.getWebApp().getServletContext();
 
-  public void contextDestroyed(ServletContextEvent arg0) {
+			InputStream is = scontext.getResourceAsStream("/WEB-INF/conf/script/groovy/JavascriptScript.groovy") ;
+			if(is == null)  return ;
 
-  }
-  
-  public void preDeploy(String appName, PortletApp portletApp, ServletContext scontext) {
-    try {
-      InputStream is = scontext.getResourceAsStream("/WEB-INF/conf/script/groovy/JavascriptScript.groovy") ;
-      if(is == null)  return ;
-      
-      Binding binding = new Binding();
-      ExoContainer container = ExoContainerContext.getCurrentContainer();
-      JavascriptConfigService javascriptService = 
-        (JavascriptConfigService) container.getComponentInstanceOfType(JavascriptConfigService.class);
-      binding.setVariable("JavascriptService", javascriptService) ;
-      binding.setVariable("ServletContext", scontext) ;      
-      GroovyShell shell = new GroovyShell(binding);
-      shell.evaluate(is);
-      is.close() ;
-    } catch (Exception ex) {
-      ex.printStackTrace() ;
-    }
-  }
+			Binding binding = new Binding();
+			ExoContainer container = ExoContainerContext.getCurrentContainer();
+			JavascriptConfigService javascriptService = 
+				(JavascriptConfigService) container.getComponentInstanceOfType(JavascriptConfigService.class);
+			binding.setVariable("JavascriptService", javascriptService) ;
+			binding.setVariable("ServletContext", scontext) ;      
+			GroovyShell shell = new GroovyShell(binding);
+			shell.evaluate(is);
+			is.close() ;
+		} catch (Exception ex) {
+			ex.printStackTrace() ;
+		}
+	}
 
-  public void postDeploy(String appName, PortletApp portletApp, ServletContext scontext) {
-
-  }
-
-  public void preInit(PortletConfig arg0) { }
-
-  public void postInit(PortletConfig arg0) { }
-
-  public void preDestroy() {  }
-
-  public void postDestroy() { }
-
-  public void preUndeploy(String appName, PortletApp portletApp, ServletContext scontext) {
-  }
-
-  public void postUndeploy(String appName, PortletApp portletApp, ServletContext arg2) {   }
 }

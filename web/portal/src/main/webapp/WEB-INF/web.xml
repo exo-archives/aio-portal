@@ -130,7 +130,20 @@
 	  </init-param>
 	  <load-on-startup>1</load-on-startup> 
 	</servlet>
-  
+ 
+   <!-- Sets up the Tomcat web module -->
+   <servlet>
+      <servlet-name>ContainerServlet</servlet-name>
+      <servlet-class>org.gatein.wci.impl.tomcat.TC6ContainerServlet</servlet-class>
+      <load-on-startup>0</load-on-startup>
+   </servlet>
+   <!-- Sets up the JBoss Portlet Container stack -->
+   <servlet>
+      <servlet-name>exoint</servlet-name>
+      <servlet-class>org.gatein.pc.exo.ExoKernelIntegration</servlet-class>
+      <load-on-startup>0</load-on-startup>
+   </servlet>
+ 
   <servlet>
     <servlet-name>RestServer</servlet-name>
     <description>eXo - Platform REST Server</description>

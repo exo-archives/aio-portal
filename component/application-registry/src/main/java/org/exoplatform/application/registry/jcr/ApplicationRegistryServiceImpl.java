@@ -10,8 +10,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
@@ -38,11 +37,11 @@ import org.exoplatform.services.jcr.ext.registry.RegistryService;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.organization.MembershipHandler;
 import org.exoplatform.services.organization.OrganizationService;
-import org.exoplatform.services.portletcontainer.PortletContainerService;
-import org.exoplatform.services.portletcontainer.pci.PortletData;
-import org.exoplatform.services.portletcontainer.pci.model.Description;
-import org.exoplatform.services.portletcontainer.pci.model.DisplayName;
 import org.exoplatform.web.application.gadget.GadgetApplication;
+import org.gatein.common.i18n.LocalizedString;
+import org.gatein.pc.api.Portlet;
+import org.gatein.pc.api.PortletInvoker;
+import org.gatein.pc.api.info.MetaInfo;
 import org.picocontainer.Startable;
 
 /**
@@ -287,18 +286,21 @@ public class ApplicationRegistryServiceImpl implements ApplicationRegistryServic
   }
 
   public void importAllPortlets() throws Exception {
+	
     ExoContainer manager  = ExoContainerContext.getCurrentContainer();
-    PortletContainerService pcService =
-      (PortletContainerService) manager.getComponentInstanceOfType(PortletContainerService.class) ;
-    Map<String, PortletData> allPortletMetaData = pcService.getAllPortletMetaData();
-    Iterator<Entry<String, PortletData>> iterator = allPortletMetaData.entrySet().iterator();
     
-    while(iterator.hasNext()) {
-      Entry<String, PortletData> entry = iterator.next();
-      String portletHandle = entry.getKey();
-      String categoryName = portletHandle.split("/")[0];
-      String portletName = portletHandle.split("/")[1];
-      
+    PortletInvoker portletInvoker = (PortletInvoker)manager.getComponentInstance(PortletInvoker.class);
+    Set<Portlet> portlets = portletInvoker.getPortlets();
+    
+    Iterator<Portlet> iterator = portlets.iterator();
+    while(iterator.hasNext())
+    {
+    	Portlet portlet = iterator.next();
+    	String portletID = portlet.getContext().getId().substring(1);
+    	
+    	String categoryName = portletID.split("\\.")[0];
+    	String portletName = portletID.split("\\.")[1];
+    	      
       ApplicationCategory category = null;
 
       category = getApplicationCategory(categoryName);
@@ -310,20 +312,24 @@ public class ApplicationRegistryServiceImpl implements ApplicationRegistryServic
       }
 
       Application app = getApplication(categoryName + "/" + portletName) ;
-      if(app != null) continue ; 
-      PortletData portlet = entry.getValue() ;
+      if(app != null) continue; 
+      LocalizedString descriptionLS = portlet.getInfo().getMeta().getMetaValue(MetaInfo.DESCRIPTION);
+      LocalizedString displayNameLS = portlet.getInfo().getMeta().getMetaValue(MetaInfo.DISPLAY_NAME);
+      
+      getLocalizedStringValue(descriptionLS, portletName);
+      
       app = new Application();
       app.setApplicationName(portletName);
       app.setApplicationGroup(categoryName);
       app.setCategoryName(categoryName);
       app.setApplicationType(org.exoplatform.web.application.Application.EXO_PORTLET_TYPE);
-      app.setDisplayName(getDisplayNameValue(portlet.getDisplayName(), portletName)) ;
-      app.setDescription(getDescriptionValue(portlet.getDescription(), portletName));
+      app.setDisplayName(getLocalizedStringValue(displayNameLS, portletName));
+      app.setDescription(getLocalizedStringValue(descriptionLS, portletName));
       save(category, app);
     }
   }
 
-  public void remove(Application app) throws Exception {
+public void remove(Application app) throws Exception {
     String applicationPath = getCategoryPath(app.getCategoryName())
                              + "/" + APPLICATIONS + "/" + app.getApplicationName() ;
     SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
@@ -456,14 +462,13 @@ public class ApplicationRegistryServiceImpl implements ApplicationRegistryServic
     return returnApplication ;
   }
   
-  private String getDisplayNameValue(List<DisplayName> list, String defaultValue) {
-    if(list == null || list.isEmpty()) return defaultValue;
-    return list.get(0).getDisplayName();
+  private String getLocalizedStringValue(LocalizedString localizedString, String portletName) {
+	if (localizedString == null || localizedString.getDefaultString() == null) {
+	 return portletName;
+	}
+	else {
+	 return localizedString.getDefaultString();
+	}
   }
   
-  private String getDescriptionValue(List<Description> list, String defaultValue) {
-    if(list == null || list.isEmpty()) return defaultValue;
-    return list.get(0).getDescription();
-  }
-
 }
