@@ -113,14 +113,14 @@ public class POMSession {
         if (type == ObjectType.PAGE) {
           statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + pathPrefix + "/%/rootpage/children/pages/children/%'";
         } else {
-          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + pathPrefix + "/%/rootnavigation' AND mop:priority IS NOT NULL";
+          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + pathPrefix + "/%/rootnavigation/children/default'";
         }
       }
       catch (IllegalArgumentException e) {
         if (type == ObjectType.PAGE) {
           statement = "SELECT * FROM mop:page WHERE jcr:path LIKE ''";
         } else {
-          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '' AND mop:priority IS NOT NULL";
+          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE ''";
         }
       }
     } else {
@@ -128,7 +128,7 @@ public class POMSession {
         if (type == ObjectType.PAGE) {
           statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/" + new MOPFormatter().encodeNodeName(null, ownerId) + "/rootpage/chldren/pages/children/%'";
         } else {
-          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + workspacePath + "/%/" + new MOPFormatter().encodeNodeName(null, ownerId) + "/rootnavigation' AND mop:priority IS NOT NULL";
+          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + workspacePath + "/%/" + new MOPFormatter().encodeNodeName(null, ownerId) + "/rootnavigation/children/default'";
         }
       } else {
         if (title != null) {
@@ -141,7 +141,7 @@ public class POMSession {
           if (type == ObjectType.PAGE) {
             statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/%/rootpage/children/pages/children/%'";
           } else {
-            statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + workspacePath + "/%/%/rootnavigation' AND mop:priority IS NOT NULL";
+            statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + workspacePath + "/%/%/rootnavigation/children/default'";
           }
         }
       }

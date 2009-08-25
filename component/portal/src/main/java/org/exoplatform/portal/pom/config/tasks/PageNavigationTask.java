@@ -74,10 +74,11 @@ public abstract class PageNavigationTask extends AbstractPOMTask {
       Site site = workspace.getSite(siteType, ownerId);
       if (site != null) {
         Navigation nav = site.getRootNavigation();
-        //if (nav.getAttributes().getValue(Mapper.PRIORITY) != null) {
+        Navigation defaultNav = nav.getChild("default");
+        if (defaultNav != null) {
           pageNav = new PageNavigation();
-          new Mapper(session).load(nav, this.pageNav);
-        //}
+          new Mapper(session).load(defaultNav, this.pageNav);
+        }
       } else {
         System.out.println("Cannot load page navigation " + owner +
           " as the corresponding portal " + ownerId + " with type " + siteType + " does not exist");
@@ -111,10 +112,18 @@ public abstract class PageNavigationTask extends AbstractPOMTask {
 
       // Delete node descendants first
       Navigation nav = site.getRootNavigation();
-      nav.getChildren().clear();
 
       //
-      new Mapper(session).save(pageNav, nav);
+      Navigation defaultNav = nav.getChild("default");
+      if (defaultNav != null) {
+        defaultNav.destroy();
+      }
+
+      //
+      defaultNav = nav.addChild("default");
+
+      //
+      new Mapper(session).save(pageNav, defaultNav);
     }
 
   }
@@ -135,7 +144,12 @@ public abstract class PageNavigationTask extends AbstractPOMTask {
 
       // Delete descendants
       Navigation nav = site.getRootNavigation();
-      nav.getChildren().clear();
+
+      //
+      Navigation defaultNav = nav.getChild("default");
+      if (defaultNav != null) {
+        defaultNav.destroy();
+      }
     }
   }
 }
