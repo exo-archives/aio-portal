@@ -185,7 +185,8 @@ public class UIPageNavigationForm extends UIForm {
       pageNav.setModifiable(true);
       pageNav.setCreator(pcontext.getRemoteUser());
       pageNav.setOwnerId(uiOwnerId.getValue());
-      UIPortalApplication uiPortalApp = uiForm.getAncestorOfType(UIPortalApplication.class);
+      //UIPortalApplication uiPortalApp = uiForm.getAncestorOfType(UIPortalApplication.class);      
+      UIPortalApplication uiPortalApp = Util.getUIPortal().getAncestorOfType(UIPortalApplication.class);        
 
       // ensure this navigation is not exist
       DataStorage dataService = uiForm.getApplicationComponent(DataStorage.class);
