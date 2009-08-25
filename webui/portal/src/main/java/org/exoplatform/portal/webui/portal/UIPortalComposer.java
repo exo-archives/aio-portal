@@ -29,7 +29,9 @@ import org.exoplatform.portal.webui.application.UIApplicationList;
 import org.exoplatform.portal.webui.application.UIPortlet;
 import org.exoplatform.portal.webui.container.UIContainerList;
 import org.exoplatform.portal.webui.page.UIPage;
+import org.exoplatform.portal.webui.page.UIPageCreationWizard;
 import org.exoplatform.portal.webui.page.UIPageForm;
+import org.exoplatform.portal.webui.page.UIPagePreview;
 import org.exoplatform.portal.webui.util.PortalDataMapper;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
@@ -410,7 +412,18 @@ public class UIPortalComposer extends UIContainer {
 					.getChildById(UIPortalApplication.UI_MASK_WS_ID);
 			UIPageForm uiPageForm = uiPortalApp.createUIComponent(UIPageForm.class,
 					null, null);
-			uiPageForm.setValues((UIPage) uiToolPanel.getUIComponent());
+			
+			UIComponent uiPage = uiToolPanel.getUIComponent();
+			if( uiPage instanceof UIPage){
+				uiPageForm.setValues((UIPage)uiPage);
+			}
+			else{
+				UIPageCreationWizard pageCreationWizard = (UIPageCreationWizard)uiToolPanel.getUIComponent();
+				UIPagePreview pagePreview = pageCreationWizard.getChild(UIPagePreview.class);
+				uiPage = pagePreview.getUIComponent();
+				uiPageForm.setValues((UIPage)uiPage);
+			}
+			//uiPageForm.setValues((UIPage) uiToolPanel.getUIComponent());
 			uiMaskWS.setUIComponent(uiPageForm);
 			event.getRequestContext().addUIComponentToUpdateByAjax(uiMaskWS);
 		}
