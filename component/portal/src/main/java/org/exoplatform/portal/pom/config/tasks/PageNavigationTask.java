@@ -74,10 +74,10 @@ public abstract class PageNavigationTask extends AbstractPOMTask {
       Site site = workspace.getSite(siteType, ownerId);
       if (site != null) {
         Navigation nav = site.getRootNavigation();
-        if (nav.getAttributes().getValue(Mapper.PRIORITY) != null) {
+        //if (nav.getAttributes().getValue(Mapper.PRIORITY) != null) {
           pageNav = new PageNavigation();
           new Mapper(session).load(nav, this.pageNav);
-        }
+        //}
       } else {
         System.out.println("Cannot load page navigation " + owner +
           " as the corresponding portal " + ownerId + " with type " + siteType + " does not exist");
