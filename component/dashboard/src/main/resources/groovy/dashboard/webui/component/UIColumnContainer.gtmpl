@@ -1,8 +1,10 @@
 <div class="UIColumns" id="$uicomponent.id">
 <%
+  def childrenNbs = uicomponent.getChildren().size();
+  def childWidth = (100 / childrenNbs) + "%";
 	for(uichild in uicomponent.getChildren()){ 
 %>
-	<div class="UIColumn" id="<%= uichild.getId() %>" >
+	<div class="UIColumn" id="<%= uichild.getId() %>" style="width:<%= childWidth %>" >
 		<%
 			uicomponent.renderUIComponent(uichild) ;
 		%>
