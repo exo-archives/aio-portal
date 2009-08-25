@@ -80,14 +80,17 @@ public class TestSavedPOM extends BasicTestCase {
     assertNotNull(rootNavigation);
 
     //
-    Attributes rootAttrs = rootNavigation.getAttributes();
-    assertEquals(1, (int)rootAttrs.getInteger("priority"));
-    assertEquals("navigation_creator", rootAttrs.getString("creator"));
-    assertEquals("navigation_modifier", rootAttrs.getString("modifier"));
-    assertEquals("navigation_description", rootAttrs.getString("description"));
+    Navigation defaultNav = rootNavigation.getChild("default");
 
     //
-    Collection<? extends Navigation> childrenNavigations = rootNavigation.getChildren();
+    Attributes defaultAttrs = defaultNav.getAttributes();
+    assertEquals(1, (int)defaultAttrs.getInteger("priority"));
+    assertEquals("navigation_creator", defaultAttrs.getString("creator"));
+    assertEquals("navigation_modifier", defaultAttrs.getString("modifier"));
+    assertEquals("navigation_description", defaultAttrs.getString("description"));
+
+    //
+    Collection<? extends Navigation> childrenNavigations = defaultNav.getChildren();
     assertNotNull(childrenNavigations);
     assertEquals(2, childrenNavigations.size());
     Iterator<? extends Navigation> i = childrenNavigations.iterator();

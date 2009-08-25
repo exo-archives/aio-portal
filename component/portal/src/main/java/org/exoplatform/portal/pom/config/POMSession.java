@@ -97,23 +97,35 @@ public class POMSession {
     String ownerId,
     String title) {
 
+    //
+    String ownerIdChunk = ownerId != null ? new MOPFormatter().encodeNodeName(null, ownerId) : "%";
+
+    //
+    String ownerTypeChunk;
+    if (siteType != null) {
+      if (siteType == ObjectType.PORTAL_SITE) {
+        ownerTypeChunk = "portalsites";
+      } else if (siteType == ObjectType.GROUP_SITE) {
+        ownerTypeChunk = "groupsites";
+      } else {
+        ownerTypeChunk = "usersites";
+      }
+    } else {
+      ownerTypeChunk = "%";
+    }
+
+    //
     Workspace workspace = getWorkspace();
-    String workspacePath = model.getPath(workspace);
+    String workspaceChunk = model.getPath(workspace);
+
+    //
     String statement;
     if (siteType != null) {
       try {
-        String pathPrefix;
-        if (siteType == ObjectType.PORTAL_SITE) {
-          pathPrefix = workspacePath + "/portalsites";
-        } else if (siteType == ObjectType.GROUP_SITE) {
-          pathPrefix = workspacePath + "/groupsites";
-        } else {
-          pathPrefix = workspacePath + "/usersites";
-        }
         if (type == ObjectType.PAGE) {
-          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + pathPrefix + "/%/rootpage/children/pages/children/%'";
+          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspaceChunk + "/" + ownerTypeChunk + "/" + ownerIdChunk + "/rootpage/children/pages/children/%'";
         } else {
-          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + pathPrefix + "/%/rootnavigation/children/default'";
+          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + workspaceChunk + "/" + ownerTypeChunk + "/" + ownerIdChunk + "/rootnavigation/children/default'";
         }
       }
       catch (IllegalArgumentException e) {
@@ -124,25 +136,17 @@ public class POMSession {
         }
       }
     } else {
-      if (ownerId != null) {
+      if (title != null) {
         if (type == ObjectType.PAGE) {
-          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/" + new MOPFormatter().encodeNodeName(null, ownerId) + "/rootpage/chldren/pages/children/%'";
+          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspaceChunk + "/" + ownerTypeChunk + "/" + ownerIdChunk + "/rootpage/children/pages/children/%' AND mop:title='" + title + "'";
         } else {
-          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + workspacePath + "/%/" + new MOPFormatter().encodeNodeName(null, ownerId) + "/rootnavigation/children/default'";
+          throw new UnsupportedOperationException();
         }
       } else {
-        if (title != null) {
-          if (type == ObjectType.PAGE) {
-            statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/%/rootpage/children/pages/children/%' AND mop:title='" + title + "'";
-          } else {
-            throw new UnsupportedOperationException();
-          }
+        if (type == ObjectType.PAGE) {
+          statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspaceChunk + "/" + ownerTypeChunk + "/" + ownerIdChunk + "/rootpage/children/pages/children/%'";
         } else {
-          if (type == ObjectType.PAGE) {
-            statement = "SELECT * FROM mop:page WHERE jcr:path LIKE '" + workspacePath + "/%/%/rootpage/children/pages/children/%'";
-          } else {
-            statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + workspacePath + "/%/%/rootnavigation/children/default'";
-          }
+          statement = "SELECT * FROM mop:navigation WHERE jcr:path LIKE '" + workspaceChunk + "/" + ownerTypeChunk + "/" + ownerIdChunk + "/rootnavigation/children/default'";
         }
       }
     }

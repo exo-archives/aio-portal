@@ -29,8 +29,6 @@ import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.portal.application.Preference;
 import org.exoplatform.test.BasicTestCase;
 import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
-import org.exoplatform.services.portletcontainer.pci.model.ExoPortletPreferences;
-import org.exoplatform.commons.utils.LazyPageList;
 
 import java.util.Arrays;
 import java.util.List;
@@ -244,6 +242,25 @@ public class TestLoadedPOM extends BasicTestCase {
       "/platform/guests",
       "/platform/users",
       "/organization/management/executive-board"));
+    assertEquals(expectedNames, names);
+  }
+
+  public void testFindPageByName() throws Exception {
+    Query<Page> query = new Query<Page>("portal", "test", null, null, Page.class);
+    List<Page> list = storage.find(query).getAll();
+    assertEquals("Expected 1 results instead of " + list, 4, list.size());
+    Set<String> names = new HashSet<String>();
+    for (Page page : list) {
+      assertEquals("portal", page.getOwnerType());
+      assertEquals("test", page.getOwnerId());
+      names.add(page.getName());
+    }
+    HashSet<String> expectedNames = new HashSet<String>(Arrays.asList(
+      "test1",
+      "test2",
+      "test3",
+      "test4"
+    ));
     assertEquals(expectedNames, names);
   }
 

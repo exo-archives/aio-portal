@@ -142,4 +142,8 @@ public class PortalConfig {
     public void setPortalConfigs(ArrayList<PortalConfig> list) { portalConfigs = list ; }
   }
 
+  @Override
+  public String toString() {
+    return "PortalConfig[name=" + name + ",type=" + type + "]";
+  }
 }
