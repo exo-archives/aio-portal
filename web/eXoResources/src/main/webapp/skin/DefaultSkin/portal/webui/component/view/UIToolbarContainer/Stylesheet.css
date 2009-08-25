@@ -22,14 +22,14 @@
 	padding: 0px;
 }
 
-.UIToolbarContainer {
-	position: relative;
+.UIToolbarContainer .UITableColumnContainer {
+	margin: 0px;
 }
 
 .UIToolbarContainer .NormalContainerBlock .ToolbarContainer {	
 	background: url('icons/IconToolBar.gif') repeat-x scroll 0 0;	
 	height: 32px;
-}
+	}
 
 .UIToolbarContainer .ToolbarContainer a {
 	display: block;

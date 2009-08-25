@@ -14,10 +14,6 @@
 	padding: 0px;
 }
 
-.UIToolbarContainer {
-	position: relative;
-}
-
 .ToolbarContainer {	
 	background: url('icons/IconToolBar.gif') repeat-x scroll 0 0;	
 	height: 32px;

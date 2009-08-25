@@ -262,14 +262,26 @@ public class UIPortalComposer extends UIContainer {
 			UIPortal uiPortal = Util.getUIPortal();
 			UIPortal backupPortal = uiWorkingWS.getBackupUIPortal();
 
+			String uri = null;
 			if(backupPortal != null) uiWorkingWS.replaceChild(uiPortal.getId(), backupPortal);
+			else {
+				UserPortalConfigService configService = uiPortalApp
+						.getApplicationComponent(UserPortalConfigService.class);
+				String remoteUser = prContext.getRemoteUser();
+				String ownerUser = prContext.getPortalOwner();
+				uri = (uiPortal.getSelectedNode() != null) ? uiPortal.getSelectedNode().getUri() : null;
+				UserPortalConfig userPortalConfig = configService.getUserPortalConfig(ownerUser, remoteUser);
+				UIPortal newPortal = uiWorkingWS.createUIComponent(UIPortal.class, null, null);
+				PortalDataMapper.toUIPortal(newPortal, userPortalConfig);
+				uiWorkingWS.replaceChild(uiPortal.getId(), newPortal);
+			}
 			uiPortal = uiWorkingWS.getChild(UIPortal.class);
 			uiWorkingWS.setBackupUIPortal(null);
 			
 			uiWorkingWS.setRenderedChild(UIPortal.class) ;
 			uiWorkingWS.removeChild(UIPortalComposer.class);
 			
-			String uri = (uiPortal.getSelectedNode() != null) 
+			if(uri == null) uri = (uiPortal.getSelectedNode() != null) 
 					? uiPortal.getSelectedNode().getUri() : null;
 			PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(
 					uiPortal,PageNodeEvent.CHANGE_PAGE_NODE, uri) ;
