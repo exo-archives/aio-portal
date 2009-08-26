@@ -67,18 +67,17 @@
 }
 
 .UIHorizontalTabs .UITab .HighlightNavigationTab .LeftTab {
-	line-height: 33px; 
-	background: url('background/NavigationTab.gif') repeat-x left -66px;
+	line-height: 32px; 
 	padding-left: 2px;
 }
 
 .UIHorizontalTabs .UITab .HighlightNavigationTab .RightTab {
-	line-height: 33px; 
+	line-height: 32px; 
 	padding-right: 2px;
 }
 
 .UIHorizontalTabs .UITab .HighlightNavigationTab .MiddleTab {
-	line-height: 33px; 
+	line-height: 32px; 
 	text-align: center;
 	padding: 2px 8px 0;
 }
@@ -103,32 +102,34 @@
 /*###############-Selected Navigation Tab-################*/
 
 .UIHorizontalTabs .UITab .SelectedNavigationTab {
-	line-height: 33px; 
-	margin-left: 1px; 
+	line-height: 26px; 
+	margin: 6px 8px 0px 0px; 
 }
 
 .UIHorizontalTabs .UITab .SelectedNavigationTab .LeftTab {
-	line-height: 33px; 
-	background: url('background/NavigationTab.gif') no-repeat left top;
-	padding-left: 4px;
+	line-height: 21px; 
+	background: url('background/LeftNavigationTab.gif') no-repeat left top;
+	padding-left: 3px;
 }
 
 .UIHorizontalTabs .UITab .SelectedNavigationTab .RightTab {
-	line-height: 33px; 
-	background: url('background/NavigationTab.gif') no-repeat right top;
-	padding-right: 4px;
+	line-height: 21px; 
+	background: url('background/RightNavigationTab.gif') no-repeat right top;
+	padding-right: 3px;
 }
 
 .UIHorizontalTabs .UITab .SelectedNavigationTab .MiddleTab {
-	line-height: 33px;
-	background: url('background/NavigationTab.gif') repeat-x left -33px;
+	line-height: 21px;
+	background: url('background/MiddleNavigationTab.gif') repeat-x;
 	text-align: center;
 	padding: 0 8px;
 }
 
 .UIHorizontalTabs .UITab .SelectedNavigationTab .TabIcon {
 	color: #f57a00;
-	line-height: 33px;
+	line-height: 21px;
+	height: 26px;
+	background: url('background/CenterNavigationTab.gif') no-repeat center;
 }
 
 .UIHorizontalTabs .UITab .SelectedNavigationTab a {

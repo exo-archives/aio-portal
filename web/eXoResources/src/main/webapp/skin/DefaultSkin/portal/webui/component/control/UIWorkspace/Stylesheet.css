@@ -105,6 +105,11 @@
  */
 }
 
+.UIWorkingWorkspace .UIPortal {
+	width: 980px;
+	margin: auto;
+}
+
 .MaskLayer {
 	background: black;
 	text-align: center;
