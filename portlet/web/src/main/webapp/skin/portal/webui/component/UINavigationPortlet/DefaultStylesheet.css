@@ -7,6 +7,8 @@
 
 .UINavigationPortlet {
   !position: relative;
+  background: #b6b6b6;
+  padding: 0px 8px;
 }
 	
 .UINavigationPortlet .UINavigationBar {
@@ -23,12 +25,25 @@
 }
 
 .UINavigationPortlet .UINavigationBar .LeftNavigationBar {
-	line-height: 33px;
-	background: url('DefaultSkin/background/Navigation.gif') repeat-x top center;
+	line-height: 32px;
+	background: url('DefaultSkin/background/LeftNavigation.gif') no-repeat left;
 	padding-left: 3px; /* orientation=lt */
 	padding-right: 3px; /* orientation=rt */
-	border-top: 1px solid white;
 	!background-position: center 1px;
+}
+
+.UINavigationPortlet .UINavigationBar .RightNavigationBar {
+	line-height: 32px;
+	background: url('DefaultSkin/background/RightNavigation.gif') no-repeat right;
+	padding-right: 3px; /* orientation=lt */
+	padding-left: 3px; /* orientation=rt */
+	!background-position: center 1px;
+}
+
+.UINavigationPortlet .UINavigationBar .MiddleNavigationBar {
+	line-height: 32px;
+	background: url('DefaultSkin/background/MiddleNavigation.gif') repeat-x;
+	padding: 0px 8px 0px 8px; 
 }
 
 .UINavigationPortlet .UITab a.TabLabel {
