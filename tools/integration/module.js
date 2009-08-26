@@ -43,7 +43,6 @@ function getModule(params) {
     addDependency(new Project("org.gatein.pc", "pc-api", "jar", "trunk-SNAPSHOT")).
         addDependency(new Project("org.gatein.pc", "pc-exo-integration", "jar", "trunk-SNAPSHOT")).
         addDependency(new Project("org.gatein.pc", "pc-pc", "jar", "trunk-SNAPSHOT")).
-        addDependency(new Project("org.gatein.pc", "pc-portal", "jar", "trunk-SNAPSHOT")).
         addDependency(new Project("org.gatein.pc", "pc-mc", "jar", "trunk-SNAPSHOT")).
         addDependency(new Project("org.gatein.pc", "pc-controller", "jar", "trunk-SNAPSHOT")).
         addDependency(new Project("org.gatein.pc", "pc-federation", "jar", "trunk-SNAPSHOT")).
