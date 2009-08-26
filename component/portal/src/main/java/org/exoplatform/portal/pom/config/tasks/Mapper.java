@@ -62,6 +62,9 @@ import java.util.Collections;
 public class Mapper {
 
   /** . */
+  public static final Key<String> ID = Key.create("id", ValueType.STRING);
+  
+  /** . */
   public static final Key<String> NAME = Key.create("name", ValueType.STRING);
 
   /** . */
@@ -338,6 +341,7 @@ public class Mapper {
 
   public void load(UIContainer src, Container dst) {
     Attributes attrs = src.getAttributes();
+    dst.setId(attrs.getValue(ID));
     dst.setName(attrs.getValue(NAME));
     dst.setTitle(attrs.getValue(TITLE));
     dst.setIcon(attrs.getValue(ICON));
@@ -440,6 +444,7 @@ public class Mapper {
 
   public void save(Container src, UIContainer dst, Map<String, Preferences> preferencesMap) {
     Attributes dstAttrs = dst.getAttributes();
+    dstAttrs.setValue(ID, src.getId());
     dstAttrs.setValue(TITLE, src.getTitle());
     dstAttrs.setValue(ICON, src.getIcon());
     dstAttrs.setValue(TEMPLATE, src.getTemplate());

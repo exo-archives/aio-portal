@@ -38,9 +38,12 @@
 					<div id="$uicomponent.id">		
 						<div class="UITableColumnContainer" style="margin: 0px auto; $style">
 							<div class="TRContainer" style="zoom: 100%;">
-								<% for(uiChild in uicomponent.getChildren()) { %>
+								<%  int i = 1;
+										for(uiChild in uicomponent.getChildren()) {%>
 									<div class="${uiChild.id}TDContainer FloatLeft"><% uicomponent.renderUIComponent(uiChild) %></div>
-								<% } %>
+								<%	i++;
+										} 
+								%>
 								<div class="ClearLeft" style="width: 0px; height: 0px;"><span></span></div>
 						 </div>
 						</div>
