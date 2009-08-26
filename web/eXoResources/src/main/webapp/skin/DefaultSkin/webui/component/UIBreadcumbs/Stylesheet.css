@@ -17,7 +17,8 @@
 }
 
 .UIBreadcumbs a.Selected {
-	color: black;
+	color: #777777;
+	font-weight: bold;
 }
 
 .UIBreadcumbs .HomeIcon {
@@ -28,7 +29,7 @@
 }
 
 .UIBreadcumbs .LeftBreadcumbsBar {
-	background: url('background/BreadcumbBG.gif') repeat-x left top;
+	background-color: #e9e9e9;
 }
 
 .UIBreadcumbs .RightBreadcumbsBar {
