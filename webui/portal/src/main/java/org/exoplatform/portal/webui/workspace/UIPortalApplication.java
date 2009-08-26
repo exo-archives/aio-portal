@@ -283,9 +283,8 @@ public class UIPortalApplication extends UIApplication {
   }
 
   private SkinConfig getPortletSkinConfig(UIPortlet portlet) {
-    String module = portlet.getExoWindowID().getPortletApplicationName() + "/"
-        + portlet.getExoWindowID().getPortletName();
-    return getSkin(module);
+	String portletId =  portlet.getPortletContext().getId();
+    return getSkin(portletId);
   }
 
   /**
@@ -396,7 +395,7 @@ public class UIPortalApplication extends UIApplication {
       if (!context.getFullRender()) {
         for (UIPortlet uiPortlet : uiPortlets) {
           if (log.isDebugEnabled())
-            log.debug("AJAX call: Need to refresh the Portlet " + uiPortlet.getWindowId());
+            log.debug("AJAX call: Need to refresh the Portlet " + uiPortlet.getPortletContext().getId());
 
           w.write("<div class=\"PortletResponse\" style=\"display: none\">");
           w.append("<div class=\"PortletResponsePortletId\">"
@@ -443,9 +442,8 @@ public class UIPortalApplication extends UIApplication {
     List<SkinConfig> skins = new ArrayList<SkinConfig>();
     SkinService skinService = getApplicationComponent(SkinService.class);
     for (UIPortlet uiPortlet : uiportlets) {
-      String module = uiPortlet.getExoWindowID().getPortletApplicationName() + "/"
-          + uiPortlet.getExoWindowID().getPortletName();
-      SkinConfig skinConfig = skinService.getSkin(module, skin_);
+      String portletId = uiPortlet.getPortletContext().getId();
+      SkinConfig skinConfig = skinService.getSkin(portletId, skin_);
       if (skinConfig != null)
         skins.add(skinConfig);
     }

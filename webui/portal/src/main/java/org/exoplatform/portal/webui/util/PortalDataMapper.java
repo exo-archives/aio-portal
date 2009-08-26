@@ -220,12 +220,10 @@ public class PortalDataMapper {
     uiPortlet.setTheme(model.getTheme());
     if (model.getAccessPermissions() != null)
       uiPortlet.setAccessPermissions(model.getAccessPermissions());
-    uiPortlet.setModifiable(model.isModifiable());
-    ExoWindowID windowId = uiPortlet.getExoWindowID();    
+    uiPortlet.setModifiable(model.isModifiable());    
     
     PortletInvoker portletInvoker = (PortletInvoker)uiPortlet.getApplicationComponent(PortletInvoker.class);
-    String pId = "/" + windowId.getPortletApplicationName() + "." + windowId.getPortletName();
-    PortletContext portletContext = PortletContext.createPortletContext(pId);
+    PortletContext portletContext = uiPortlet.getPortletContext();
     Portlet portlet = portletInvoker.getPortlet(portletContext);
     if (portlet == null || portlet.getInfo() == null) return;
     

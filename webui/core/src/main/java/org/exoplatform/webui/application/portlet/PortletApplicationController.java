@@ -132,10 +132,14 @@ public class PortletApplicationController extends GenericPortlet {
         ExoContainerContext.setCurrentContainer(container);
         WebAppController controller = 
           (WebAppController)container.getComponentInstanceOfType(WebAppController.class);
-        PortletApplication application = controller.getApplication(applicationId_);
-        if(application != null) {
-          application.onDestroy();
-          controller.removeApplication(applicationId_);
+        //TODO: figure out what is happening with the controller not existing during shutdown
+        if (controller != null)
+        {
+        	PortletApplication application = controller.getApplication(applicationId_);
+        	if(application != null) {
+        		application.onDestroy();
+        		controller.removeApplication(applicationId_);
+        	}
         }
       }
     } catch(Exception ex) {

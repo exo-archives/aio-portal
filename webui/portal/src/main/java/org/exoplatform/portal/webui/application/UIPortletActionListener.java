@@ -37,7 +37,12 @@ import javax.xml.namespace.QName;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.Constants;
 import org.exoplatform.container.ExoContainer;
+import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
+import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.application.PortalRequestContext;
+import org.exoplatform.portal.application.PortletPreferences;
+import org.exoplatform.portal.application.jcr.PortalPortletContext;
+import org.exoplatform.portal.application.jcr.PortalPortletInstanceContext;
 import org.exoplatform.portal.webui.page.UIPage;
 import org.exoplatform.portal.webui.page.UIPageBody;
 import org.exoplatform.portal.webui.portal.UIPortal;
@@ -69,7 +74,6 @@ import org.gatein.pc.api.invocation.response.PortletInvocationResponse;
 import org.gatein.pc.api.invocation.response.UpdateNavigationalStateResponse;
 import org.gatein.pc.api.spi.PortletInvocationContext;
 import org.gatein.pc.impl.spi.AbstractClientContext;
-import org.gatein.pc.impl.spi.AbstractInstanceContext;
 import org.gatein.pc.impl.spi.AbstractPortalContext;
 import org.gatein.pc.impl.spi.AbstractRequestContext;
 import org.gatein.pc.impl.spi.AbstractSecurityContext;
@@ -121,10 +125,15 @@ public class UIPortletActionListener {
       String baseURL = new StringBuilder(prcontext.getRequestURI()).append("?"
   	        + PortalRequestContext.UI_COMPONENT_ID).append("=").append(uiPortlet.getId()).toString();
       
-      PortletInvocationContext pic = new SimplePortletInvocationContext(markupInfo, baseURL, prcontext.getResponse());
+      PortletInvocationContext pic = new SimplePortletInvocationContext(markupInfo, baseURL, prcontext.getRequest(), prcontext.getResponse());
       ActionInvocation actionInvocation = new ActionInvocation(pic);
       
-      PortletContext portletContext = PortletContext.createPortletContext("/" + uiPortlet.getExoWindowID().getPortletApplicationName() + "." + uiPortlet.getExoWindowID().getPortletName());
+      PortletContext portletContext = uiPortlet.getPortletContext();
+      DataStorage dataStorage = (DataStorage)uiPortlet.getApplicationComponent(DataStorage.class);
+      
+      ExoWindowID exoWindowID = uiPortlet.getExoWindowID();
+      PortletPreferences preferences = dataStorage.getPortletPreferences(exoWindowID);
+      PortletContext preferencesPortletContext = PortalPortletContext.createPortalPortletContext(portletContext, preferences);
 
       List<Cookie> requestCookies = new ArrayList<Cookie>();
       for (Cookie cookie : prcontext.getRequest().getCookies())
@@ -134,15 +143,13 @@ public class UIPortletActionListener {
       
       actionInvocation.setClientContext(new AbstractClientContext(prcontext.getRequest(), requestCookies));
       actionInvocation.setServerContext(new AbstractServerContext(prcontext.getRequest(), prcontext.getResponse()));
-      actionInvocation.setInstanceContext(new AbstractInstanceContext(portletContext.getId()));
+      actionInvocation.setInstanceContext(new PortalPortletInstanceContext(portletContext.getId(), exoWindowID));//(new AbstractInstanceContext(portletContext.getId()));
       actionInvocation.setUserContext(new AbstractUserContext(prcontext.getRequest()));
-      actionInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getExoWindowID().toString()));
+      actionInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getWindowId()));
       actionInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));
       actionInvocation.setSecurityContext(new AbstractSecurityContext(prcontext.getRequest()));
-      actionInvocation.setTarget(portletContext);
+      actionInvocation.setTarget(preferencesPortletContext);
       
-      // TODO: (mwringe) figure out a better way to set this up
-      // we need to do this to expose certain properties
       ParametersStateString interactionState = ParametersStateString.create(allParams);
       actionInvocation.setInteractionState(interactionState);
       actionInvocation.setPublicNavigationalState(allParams);
@@ -307,7 +314,7 @@ public class UIPortletActionListener {
       EventListener<UIPortlet> {
     public void execute(Event<UIPortlet> event) throws Exception {
       UIPortlet uiPortlet = event.getSource();
-      log.info("Serve Resource for portlet: " + uiPortlet.getWindowId());
+      log.info("Serve Resource for portlet: " + uiPortlet.getPortletContext().getId());
       try {
         ExoContainer container = event.getRequestContext().getApplication()
             .getApplicationServiceContainer();
@@ -329,11 +336,15 @@ public class UIPortletActionListener {
         String baseURL = new StringBuilder(context.getRequestURI()).append("?"
       	        + PortalRequestContext.UI_COMPONENT_ID).append("=").append(uiPortlet.getId()).toString();
           
-        PortletInvocationContext pic = new SimplePortletInvocationContext(markupInfo, baseURL, context.getResponse());
+        PortletInvocationContext pic = new SimplePortletInvocationContext(markupInfo, baseURL, context.getRequest(), context.getResponse());
 
         ResourceInvocation resourceInvocation = new ResourceInvocation(pic);
         
-        PortletContext portletContext = PortletContext.createPortletContext("/" + uiPortlet.getExoWindowID().getPortletApplicationName() + "." + uiPortlet.getExoWindowID().getPortletName());
+        PortletContext portletContext = uiPortlet.getPortletContext();
+        DataStorage dataStorage = (DataStorage)uiPortlet.getApplicationComponent(DataStorage.class);
+        ExoWindowID exoWindowID = new ExoWindowID(uiPortlet.getWindowId());
+        PortletPreferences preferences = dataStorage.getPortletPreferences(exoWindowID);
+        PortletContext preferencesPortletContext = PortalPortletContext.createPortalPortletContext(portletContext, preferences);
         
         List<Cookie> requestCookies = new ArrayList<Cookie>();
         for (Cookie cookie : context.getRequest().getCookies())
@@ -342,13 +353,13 @@ public class UIPortletActionListener {
         }
         resourceInvocation.setClientContext(new AbstractClientContext(context.getRequest(), requestCookies));
         resourceInvocation.setServerContext(new AbstractServerContext(context.getRequest(), context.getResponse()));
-        resourceInvocation.setInstanceContext(new AbstractInstanceContext(portletContext.getId()));
+        resourceInvocation.setInstanceContext(new PortalPortletInstanceContext(portletContext.getId(), exoWindowID));//AbstractInstanceContext(portletContext.getId()));
         resourceInvocation.setUserContext(new AbstractUserContext(context.getRequest()));
-        resourceInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getExoWindowID().toString()));
+        resourceInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getWindowId()));
         resourceInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));
         resourceInvocation.setSecurityContext(new AbstractSecurityContext(context.getRequest()));
         resourceInvocation.setRequestContext(new AbstractRequestContext(context.getRequest()));
-        resourceInvocation.setTarget(portletContext);
+        resourceInvocation.setTarget(preferencesPortletContext);
                 
         resourceInvocation.setMode(Mode.create(uiPortlet.getCurrentPortletMode().toString()));
         resourceInvocation.setWindowState(org.gatein.pc.api.WindowState.create(uiPortlet.getCurrentWindowState().toString()));
@@ -367,7 +378,7 @@ public class UIPortletActionListener {
         String contentType = piResponse.getContentType();
 
         log.info("Try to get a resource of type: " + contentType
-            + " for the portlet: " + uiPortlet.getWindowId());
+            + " for the portlet: " + uiPortlet.getPortletContext().getId());
         if (contentType.startsWith("text")) {
         	context.getWriter().write(piResponse.getContent());
         } else {
@@ -379,7 +390,7 @@ public class UIPortletActionListener {
 
       } catch (Exception e) {
         log.error("Problem while serving resource for the portlet: "
-            + uiPortlet.getWindowId(), e);
+            + uiPortlet.getPortletContext().getId(), e);
       } finally {
         /**
          * The resource method does not need to go through the render phase
@@ -463,10 +474,9 @@ public class UIPortletActionListener {
             .hasNext();) {
           UIPortlet uiPortletInPage = (UIPortlet) iterator.next();
           if (uiPortletInPage.supportsProcessingEvent(eventName)
-              && !eventsWrapper.isInvokedTooManyTimes(uiPortletInPage
-                  .getWindowId())) {
+              && !eventsWrapper.isInvokedTooManyTimes(uiPortletInPage.getPortletContext().getId())) {
             List<javax.portlet.Event> newEvents = processEvent(uiPortletInPage, nativeEvent);
-            eventsWrapper.increaseCounter(uiPortletInPage.getWindowId());
+            eventsWrapper.increaseCounter(uiPortletInPage.getPortletContext().getId());
             if (context.useAjax()) {
               log
                   .info("Events were generated inside the scope of an AJAX call, hence will only refresh the targeted portlets");
@@ -478,7 +488,7 @@ public class UIPortletActionListener {
               context.setFullRender(true);
             }
             if (newEvents != null && !newEvents.isEmpty()) {
-              log.info("The portlet: " + uiPortletInPage.getWindowId()
+              log.info("The portlet: " + uiPortletInPage.getPortletContext().getId()
                   + " processEvent() method has generated new events itself");
               events.addAll(newEvents);
               uiPortlet.createEvent("ProcessEvents", Phase.PROCESS, context)
@@ -500,7 +510,7 @@ public class UIPortletActionListener {
    */
   public static List<javax.portlet.Event> processEvent(UIPortlet uiPortlet, javax.portlet.Event event) {
     log.info("Process Event: " + event.getName() + " for portlet: "
-        + uiPortlet.getWindowId());
+        + uiPortlet.getPortletContext().getId());
     try {
       PortalRequestContext context = (PortalRequestContext) WebuiRequestContext
           .getCurrentInstance();
@@ -515,10 +525,14 @@ public class UIPortletActionListener {
       String baseURL = new StringBuilder(context.getRequestURI()).append("?"
   	        + PortalRequestContext.UI_COMPONENT_ID).append("=").append(uiPortlet.getId()).toString();
       
-      PortletInvocationContext pic = new SimplePortletInvocationContext(markupInfo, baseURL, context.getResponse());
+      PortletInvocationContext pic = new SimplePortletInvocationContext(markupInfo, baseURL,context.getRequest(), context.getResponse());
       EventInvocation eventInvocation = new EventInvocation(pic);
       
-      PortletContext portletContext = PortletContext.createPortletContext("/" + uiPortlet.getExoWindowID().getPortletApplicationName() + "." + uiPortlet.getExoWindowID().getPortletName());
+      PortletContext portletContext = uiPortlet.getPortletContext();
+      DataStorage dataStorage = (DataStorage)uiPortlet.getApplicationComponent(DataStorage.class);
+      ExoWindowID exoWindowID = new ExoWindowID(uiPortlet.getWindowId());
+      PortletPreferences preferences = dataStorage.getPortletPreferences(exoWindowID);
+      PortletContext preferencesPortletContext = PortalPortletContext.createPortalPortletContext(portletContext, preferences);
       
       List<Cookie> requestCookies = new ArrayList<Cookie>();
       for (Cookie cookie : context.getRequest().getCookies())
@@ -527,12 +541,12 @@ public class UIPortletActionListener {
       }
       eventInvocation.setClientContext(new AbstractClientContext(context.getRequest(), requestCookies));
       eventInvocation.setServerContext(new AbstractServerContext(context.getRequest(), context.getResponse()));
-      eventInvocation.setInstanceContext(new AbstractInstanceContext(portletContext.getId()));
+      eventInvocation.setInstanceContext(new PortalPortletInstanceContext(portletContext.getId(), exoWindowID));//AbstractInstanceContext(portletContext.getId()));
       eventInvocation.setUserContext(new AbstractUserContext(context.getRequest()));
-      eventInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getExoWindowID().toString()));
+      eventInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getWindowId()));
       eventInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));
       eventInvocation.setSecurityContext(new AbstractSecurityContext(context.getRequest()));
-      eventInvocation.setTarget(portletContext);
+      eventInvocation.setTarget(preferencesPortletContext);
       
       eventInvocation.setMode(Mode.create(uiPortlet.getCurrentPortletMode().toString()));
       eventInvocation.setWindowState(org.gatein.pc.api.WindowState.create(uiPortlet.getCurrentWindowState().toString()));
@@ -598,7 +612,7 @@ public class UIPortletActionListener {
       return events;
     } catch (Exception e) {
       log.error("Problem while processesing event for the portlet: "
-          + uiPortlet.getWindowId(), e);
+          + uiPortlet.getPortletContext().getId(), e);
     }
     return null;
   }
@@ -714,7 +728,7 @@ public class UIPortletActionListener {
       //TODO TrongTT: We should use only parameter for change PortletMode
       if(portletMode == null) portletMode = event.getRequestContext().getRequestParameter(UIComponent.OBJECTID);
       
-      log.info("Change portlet mode of " + uiPortlet.getWindowId() + " to "
+      log.info("Change portlet mode of " + uiPortlet.getPortletContext().getId() + " to "
           + portletMode);
       if (portletMode.equals(PortletMode.HELP.toString())) {
         uiPortlet.setCurrentPortletMode(PortletMode.HELP);

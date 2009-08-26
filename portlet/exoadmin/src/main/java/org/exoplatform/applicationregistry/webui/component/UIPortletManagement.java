@@ -21,16 +21,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
 
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.ExoContainerContext;
-import org.exoplatform.services.portletcontainer.PortletContainerService;
-import org.exoplatform.services.portletcontainer.pci.PortletData;
-import org.exoplatform.services.portletcontainer.pci.model.Description;
-import org.exoplatform.services.portletcontainer.pci.model.DisplayName;
-import org.exoplatform.services.portletcontainer.pci.model.ExoPortletPreferences;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
@@ -38,6 +32,12 @@ import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.UIContainer;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
+import org.gatein.common.i18n.LocalizedString;
+import org.gatein.pc.api.Portlet;
+import org.gatein.pc.api.PortletInvoker;
+import org.gatein.pc.api.info.MetaInfo;
+import org.gatein.pc.api.info.PortletInfo;
+import org.gatein.pc.api.info.PreferencesInfo;
 
 /**
  * Created by The eXo Platform SAS
@@ -70,22 +70,28 @@ public class UIPortletManagement extends UIContainer {
   private void initWebApps(String type) throws Exception {
     webApps = new ArrayList<WebApp>(5) ;
     ExoContainer manager  = ExoContainerContext.getCurrentContainer();
-    PortletContainerService pcService =
-      (PortletContainerService) manager.getComponentInstanceOfType(PortletContainerService.class) ;
-    Map<String, PortletData> allData = pcService.getAllPortletMetaData((type.equals(LOCAL)) ? true : false);
-    if(allData == null || allData.isEmpty()) return;
-    Iterator<Entry<String, PortletData>> itr = allData.entrySet().iterator();
-    while(itr.hasNext()) {
-      Entry<String, PortletData> entry = itr.next();
-      String fullName = entry.getKey();
-      String appName = fullName.split("/")[0];
-      WebApp webApp = getWebApp(appName);
-      if(webApp == null) {
-        webApp = new WebApp(appName);
-        webApps.add(webApp);
-      }
-      webApp.addPortlet(new PortletExtra(fullName, type, entry.getValue()));
+    
+    PortletInvoker portletInvoker = (PortletInvoker)manager.getComponentInstance(PortletInvoker.class);
+    Set<Portlet> portlets = portletInvoker.getPortlets();
+    if (portlets == null || portlets.isEmpty()) return;
+    Iterator<Portlet> iterator = portlets.iterator();
+    while (iterator.hasNext())
+    {
+    	Portlet portlet = iterator.next();
+    	if (!portlet.isRemote())
+    	{
+    		String portletName = portlet.getInfo().getName();
+    		String appName = portlet.getInfo().getApplicationName();
+    		WebApp webApp = getWebApp(appName);
+    		if (webApp == null) {
+    			webApp = new WebApp(appName);
+    			webApps.add(webApp);
+    		}
+            String portletId = appName + "/" + portletName;
+    		webApp.addPortlet(new PortletExtra(portletId, type, portlet.getInfo()));
+    	}
     }
+    
     Collections.sort(webApps, new WebAppComparator());
     for(WebApp ele : webApps) {
       Collections.sort(ele.getPortlets(), new PortletComparator());
@@ -173,15 +179,15 @@ public class UIPortletManagement extends UIContainer {
     private String name_;
     private String group_;
     private String type_;
-    private PortletData portletData_;
+    private PortletInfo portletInfo_;
     
-    public PortletExtra(String id, String type, PortletData data) {
+    public PortletExtra(String id, String type, PortletInfo info) {
       id_ = id;
       String [] fragments = id.split("/");
       group_ = fragments[0];
       name_ = fragments[1];
       type_ = type;
-      portletData_ = data;
+      portletInfo_ = info;
     }
     
     public String getId() { return id_; }
@@ -192,22 +198,22 @@ public class UIPortletManagement extends UIContainer {
     
     public String getType() { return type_; }
     
-    public PortletData getPortletData() { return portletData_; }
+    //public PortletData getPortletData() { return portletData_; }
     
     public String getDisplayName() {
-      List<DisplayName> displaNames = portletData_.getDisplayName();
-      if(displaNames == null || displaNames.isEmpty()) return name_;
-      return displaNames.get(0).getDisplayName();    
+      LocalizedString displayName = portletInfo_.getMeta().getMetaValue(MetaInfo.DISPLAY_NAME);
+      if (displayName == null || displayName.getDefaultString() == null) return name_;
+      return displayName.getDefaultString();   
     }
     
     public String getDescription() {
-      List<Description> des = portletData_.getDescription();
-      if(des == null || des.isEmpty()) return name_;
-      return des.get(0).getDescription();
+      LocalizedString description = portletInfo_.getMeta().getMetaValue(MetaInfo.DESCRIPTION);
+      if (description == null || description.getDefaultString() == null) return name_;
+      return description.getDefaultString();
     }
     
-    public ExoPortletPreferences getPortletPreferences() {
-      return portletData_.getPortletPreferences();
+    public PreferencesInfo getPortletPreferences() {
+      return portletInfo_.getPreferences();
     }
     
   }

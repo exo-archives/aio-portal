@@ -296,10 +296,9 @@ public class ApplicationRegistryServiceImpl implements ApplicationRegistryServic
     while(iterator.hasNext())
     {
     	Portlet portlet = iterator.next();
-    	String portletID = portlet.getContext().getId().substring(1);
-    	
-    	String categoryName = portletID.split("\\.")[0];
-    	String portletName = portletID.split("\\.")[1];
+    	String portletID = portlet.getContext().getId();
+    	String categoryName = portletID.split("/")[0];
+    	String portletName = portletID.split("/")[1];
     	      
       ApplicationCategory category = null;
 

@@ -96,14 +96,37 @@ public class UIPortlet extends UIApplication {
   private List<String> supportedPublicParams_;
   private boolean portletInPortal_ = true;  
   
+  private PortletContext portletContext;
+  
+  public void setPortletContext(PortletContext portletContext)
+  {
+	 this.portletContext = portletContext;
+  }
+  
+  public PortletContext getPortletContext()
+  {
+     return portletContext;  
+  }
+  
   public String getId()  { return exoWindowId_.getUniqueID() ; }
   
   public String getWindowId() { return windowId ; }
   public void   setWindowId(String s) {
     windowId = s ;
     exoWindowId_ = new ExoWindowID(windowId) ;
+    
+    int ownerIndex = s.indexOf(":/");
+    String owner = s.substring(0, ownerIndex);
+    String portletId = s.substring(ownerIndex + ":/".length());
+    String[] portletIdComponents = portletId.split("/");
+    
+    String portletAppName = portletIdComponents[0];
+    String portletName = portletIdComponents[1];
+    String uniqueId = portletIdComponents[2];
+    
+    portletContext = PortletContext.createPortletContext(portletAppName + "/" + portletName);
   }
-  
+    
   public String getPortletStyle() {  return  portletStyle ; }
   public void   setPortletStyle(String s) { portletStyle = s ;}
   
@@ -189,17 +212,13 @@ public class UIPortlet extends UIApplication {
   public  List<String> getSupportModes() {
     if (supportModes_ != null) return supportModes_;
     
-    //TODO: (mwringe) figure out how to handle the portlet id properly
-    String portletId = "/" + exoWindowId_.getPortletApplicationName() + "." + exoWindowId_.getPortletName();
     List<String> supportModes = new ArrayList<String>();
     
     PortletInvoker portletInvoker = getApplicationComponent(PortletInvoker.class);
 
-    PortletContext pContext = PortletContext.createPortletContext(portletId);
-
     Portlet portlet = null;
 	try {
-		portlet = portletInvoker.getPortlet(pContext);
+		portlet = portletInvoker.getPortlet(portletContext);
 	} catch (IllegalArgumentException e) {
 		e.printStackTrace();
 	} catch (PortletInvokerException e) {
@@ -237,13 +256,10 @@ public class UIPortlet extends UIApplication {
 	  if(supportedProcessingEvents_ == null) {
 
 		  PortletInvoker portletInvoker = getApplicationComponent(PortletInvoker.class);
-		  String portletId = "/" + exoWindowId_.getPortletApplicationName() + "." + exoWindowId_.getPortletName();
-
-		  PortletContext pContext = PortletContext.createPortletContext(portletId);
 
 		  Portlet portlet = null;
 		  try {
-			  portlet = portletInvoker.getPortlet(pContext);
+			  portlet = portletInvoker.getPortlet(portletContext);
 		  } catch (IllegalArgumentException e) {
 			  e.printStackTrace();
 		  } catch (PortletInvokerException e) {
@@ -252,7 +268,7 @@ public class UIPortlet extends UIApplication {
 
 		  if (portlet == null)
 		  {
-			  log.info("Could not find portlet with ID : " + portletId);
+			  log.info("Could not find portlet with ID : " + portletContext.getId());
 			  return false;
 		  }
 		  
@@ -282,13 +298,10 @@ public class UIPortlet extends UIApplication {
 	  if(supportedPublicParams_ == null) {
 		  
 		  PortletInvoker portletInvoker = getApplicationComponent(PortletInvoker.class);
-		  String portletId = "/" + exoWindowId_.getPortletApplicationName() + "." + exoWindowId_.getPortletName();
-
-		  PortletContext pContext = PortletContext.createPortletContext(portletId);
-
+		  
 		  Portlet portlet = null;
 		  try {
-			  portlet = portletInvoker.getPortlet(pContext);
+			  portlet = portletInvoker.getPortlet(portletContext);
 		  } catch (IllegalArgumentException e) {
 			  e.printStackTrace();
 		  } catch (PortletInvokerException e) {
@@ -297,7 +310,7 @@ public class UIPortlet extends UIApplication {
 
 		  if (portlet == null)
 		  {
-			  log.info("Could not find portlet with ID : " + portletId);
+			  log.info("Could not find portlet with ID : " + portletContext.getId());
 			  return false;
 		  }
 		  

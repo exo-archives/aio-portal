@@ -22,8 +22,9 @@ import java.util.List;
 import org.exoplatform.application.gadget.Gadget;
 import org.exoplatform.application.registry.Application;
 import org.exoplatform.application.registry.ApplicationCategory;
-import org.exoplatform.services.portletcontainer.pci.model.Description;
-import org.exoplatform.services.portletcontainer.pci.model.DisplayName;
+//import org.exoplatform.services.portletcontainer.pci.model.Description;
+//import org.exoplatform.services.portletcontainer.pci.model.DisplayName;
+import org.gatein.common.i18n.LocalizedString;
 
 /**
  * Created by The eXo Platform SAS
@@ -33,14 +34,13 @@ import org.exoplatform.services.portletcontainer.pci.model.DisplayName;
  */
 public class Util {
   
-  static final public String getDisplayNameValue(List<DisplayName> list, String defaultValue) {
-    if(list == null || list.isEmpty()) return defaultValue;
-    return list.get(0).getDisplayName();
-  }
-  
-  static final public String getDescriptionValue(List<Description> list, String defaultValue) {
-    if(list == null || list.isEmpty()) return defaultValue;
-    return list.get(0).getDescription();
+  static final public String getLocalizedStringValue(LocalizedString localizedString, String defaultValue) {
+    if (localizedString == null || localizedString.getDefaultString() == null) {
+	  return defaultValue;
+    }
+	else {
+	  return localizedString.getDefaultString();
+	}
   }
   
   static public class CategoryComparator implements Comparator<ApplicationCategory> {

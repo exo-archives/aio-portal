@@ -19,9 +19,8 @@ package org.exoplatform.applicationregistry.webui.component;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.Map.Entry;
+import java.util.Set;
 
 import org.exoplatform.application.gadget.Gadget;
 import org.exoplatform.application.gadget.GadgetRegistryService;
@@ -32,8 +31,6 @@ import org.exoplatform.applicationregistry.webui.Util;
 import org.exoplatform.commons.utils.LazyPageList;
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.ExoContainerContext;
-import org.exoplatform.services.portletcontainer.PortletContainerService;
-import org.exoplatform.services.portletcontainer.pci.PortletData;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.web.application.gadget.GadgetApplication;
 import org.exoplatform.webui.application.WebuiRequestContext;
@@ -54,6 +51,10 @@ import org.exoplatform.webui.form.UIFormSelectBox;
 import org.exoplatform.webui.form.UIFormStringInput;
 import org.exoplatform.webui.form.UIFormTableInputSet;
 import org.exoplatform.webui.form.validator.StringLengthValidator;
+import org.gatein.common.i18n.LocalizedString;
+import org.gatein.pc.api.Portlet;
+import org.gatein.pc.api.PortletInvoker;
+import org.gatein.pc.api.info.MetaInfo;
 
 /**
  * Created by The eXo Platform SAS
@@ -141,26 +142,31 @@ public class UIAddApplicationForm extends UIForm {
     List<Application> list = new ArrayList<Application>(10) ;
     if(org.exoplatform.web.application.Application.EXO_PORTLET_TYPE.equals(type)) {
       ExoContainer manager  = ExoContainerContext.getCurrentContainer();
-      PortletContainerService pcService =
-        (PortletContainerService) manager.getComponentInstanceOfType(PortletContainerService.class) ;
-      Map<String, PortletData> allPortletMetaData = pcService.getAllPortletMetaData();
-       Iterator<Entry<String, PortletData>> iterator = allPortletMetaData.entrySet().iterator();
-
-      while(iterator.hasNext()) {
-        Entry<String, PortletData> entry = iterator.next() ;
-        String fullName = entry.getKey();
-        String categoryName = fullName.split("/")[0];
-        String portletName = fullName.split("/")[1];
-        PortletData portlet = entry.getValue();
-        Application app = new Application();
-        app.setApplicationName(portletName);
-        app.setApplicationGroup(categoryName);
-        app.setApplicationType(org.exoplatform.web.application.Application.EXO_PORTLET_TYPE);
-        app.setDisplayName(Util.getDisplayNameValue(portlet.getDisplayName(), portletName)) ;
-        app.setDescription(Util.getDescriptionValue(portlet.getDescription(), portletName));
-        app.setAccessPermissions(new ArrayList<String>());
-        list.add(app) ;
+      
+      PortletInvoker portletInvoker = (PortletInvoker)manager.getComponentInstance(PortletInvoker.class);
+      Set<Portlet> portlets = portletInvoker.getPortlets();
+      Iterator<Portlet> iterator = portlets.iterator();
+      while (iterator.hasNext())
+      {
+    	  Portlet portlet = iterator.next();
+    	  String portletID = portlet.getContext().getId();
+    	  String categoryName = portletID.split("/")[0];
+    	  String portletName = portletID.split("/")[1];
+    	  
+    	  LocalizedString descriptionLS = portlet.getInfo().getMeta().getMetaValue(MetaInfo.DESCRIPTION);
+          LocalizedString displayNameLS = portlet.getInfo().getMeta().getMetaValue(MetaInfo.DISPLAY_NAME);
+          
+    	  Application app = new Application();
+          app.setApplicationName(portletName);
+          app.setApplicationGroup(categoryName);
+          app.setApplicationType(org.exoplatform.web.application.Application.EXO_PORTLET_TYPE);
+          app.setDisplayName(Util.getLocalizedStringValue(displayNameLS, portletName));
+          app.setDescription(Util.getLocalizedStringValue(descriptionLS, portletName));
+          app.setAccessPermissions(new ArrayList<String>());
+          list.add(app) ;
       }
+      
+
     } else if(org.exoplatform.web.application.Application.EXO_GAGGET_TYPE.equals(type)) {
       GadgetRegistryService gadgetService = getApplicationComponent(GadgetRegistryService.class) ;
       Iterator<Gadget> iterator = gadgetService.getAllGadgets().iterator() ;
