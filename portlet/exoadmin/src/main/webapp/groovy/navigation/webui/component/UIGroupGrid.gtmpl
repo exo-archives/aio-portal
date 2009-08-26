@@ -9,7 +9,7 @@
 <div id="$uicomponent.id">   
 	<%   	 
 	for(groupName in listGroupNames) { 
-			addLink = parent.event("AddNavigation", java.net.URLEncoder.encode("/" + groupName));
+			addLink = parent.event("AddNavigation", java.net.URLEncoder.encode(groupName));
 			if(even) rowClass = "EvenRow" ;
     	else rowClass =  "OddRow" ; 
     	even = !even ;
