@@ -236,7 +236,8 @@ eXo.gadget.UIGadget = {
                 href += "&portal:type=action&uicomponent=" + uicomp;
                 href += "&op=DeleteGadget";
                 href += "&objectId=" + gadgetId + "&ajaxRequest=true";
-                ajaxGet(href);
+                DOMUtil.removeElement(uiGadget);
+                ajaxAsyncGetRequest(href);
             }
 
         } else {
