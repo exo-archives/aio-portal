@@ -8,6 +8,8 @@
 
 .UIBreadcumbs {
 	line-height: 25px;
+	background: #b6b6b6;
+	padding: 0 8px;
 }
 
 .UIBreadcumbs a {
