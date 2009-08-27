@@ -25,12 +25,15 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.exoplatform.portal.application.PortalRequestContext;
+import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.UserPortalConfig;
+import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.skin.Skin;
 import org.exoplatform.portal.skin.SkinConfig;
 import org.exoplatform.portal.skin.SkinService;
 import org.exoplatform.portal.skin.SkinURL;
 import org.exoplatform.portal.webui.application.UIPortlet;
+import org.exoplatform.portal.webui.page.UISiteBody;
 import org.exoplatform.portal.webui.portal.PageNodeEvent;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.util.PortalDataMapper;
@@ -256,7 +259,7 @@ public class UIPortalApplication extends UIApplication {
     // Determine portlets visible on the page
     List<UIPortlet> uiportlets = new ArrayList<UIPortlet>();
     UIWorkingWorkspace uiWorkingWS = getChildById(UI_WORKING_WS_ID);
-    UIPortal uiPortal = uiWorkingWS.getChild(UIPortal.class);
+    UIPortal uiPortal = uiWorkingWS.findFirstComponentOfType(UIPortal.class);
     uiPortal.findComponentOfType(uiportlets, UIPortlet.class);
     UIPortalToolPanel toolPanel = uiWorkingWS.getChild(UIPortalToolPanel.class);
     if (toolPanel != null && toolPanel.isRendered()) {
@@ -296,10 +299,20 @@ public class UIPortalApplication extends UIApplication {
     UIWorkingWorkspace uiWorkingWorkspace = addChild(UIWorkingWorkspace.class,
                                                      UIPortalApplication.UI_WORKING_WS_ID,
                                                      null);
+    DataStorage dataStorage = getApplicationComponent(DataStorage.class);
+    Container container = dataStorage.getSharedLayout();
     UIPortal uiPortal = createUIComponent(UIPortal.class, null, null);
     PortalDataMapper.toUIPortal(uiPortal, userPortalConfig_);
-    uiWorkingWorkspace.addChild(uiPortal);
-    
+    if(container != null) {
+    	org.exoplatform.portal.webui.container.UIContainer uiContainer = createUIComponent(org.exoplatform.portal.webui.container.UIContainer.class, null, null);
+    	PortalDataMapper.toUIContainer(uiContainer, container);
+    	UISiteBody uiSiteBody = uiContainer.findFirstComponentOfType(UISiteBody.class);
+    	uiSiteBody.setUIComponent(uiPortal);
+    	uiContainer.setRendered(true);
+    	uiWorkingWorkspace.addChild(uiContainer);
+    } else {
+    	uiWorkingWorkspace.addChild(uiPortal);
+    }
     uiWorkingWorkspace.addChild(UIPortalToolPanel.class, null, null).setRendered(false);
     addChild(UIMaskWorkspace.class, UIPortalApplication.UI_MASK_WS_ID, null);
   }

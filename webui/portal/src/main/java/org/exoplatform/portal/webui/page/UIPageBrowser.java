@@ -376,7 +376,7 @@ public class UIPageBrowser extends UISearch {
       findAllPortlet(uiPortlets, uiPage);
       ArrayList<Object> applications = new ArrayList<Object>();
       for (UIPortlet uiPortlet : uiPortlets) {
-        applications.add(PortalDataMapper.toPortletModel(uiPortlet));
+        applications.add(PortalDataMapper.buildModelObject(uiPortlet));
       }
 
       if (Page.DESKTOP_PAGE.equals(uiPage.getFactoryId())
@@ -400,7 +400,7 @@ public class UIPageBrowser extends UISearch {
         return;
       ArrayList<Object> children = new ArrayList<Object>();
       for (UIComponent child : uiChildren) {
-        Object component = PortalDataMapper.buildChild(child);
+        Object component = PortalDataMapper.buildModelObject(child);
         if (component != null)
           children.add(component);
       }

@@ -359,4 +359,5 @@
   <import>jar:/conf/portal/common-configuration.xml</import>
   <import>jar:/conf/portal/database-configuration.xml</import>
   <import>jar:/conf/portal/jcr-configuration.xml</import>
+	<import>jar:/conf/portal/organization-configuration.xml</import>
 </configuration>

@@ -104,7 +104,7 @@ public class UIDesktopPage extends UIPage {
       uiGadget.getProperties().put(UIApplication.zIndex, zIndex) ;
       
       if(!uiPage.isModifiable()) return;
-      Page page = PortalDataMapper.toPageModel(uiPage);
+      Page page = PortalDataMapper.buildModelObject(uiPage);
       UserPortalConfigService configService = uiPage.getApplicationComponent(UserPortalConfigService.class);
       if(page.getChildren() == null) page.setChildren(new ArrayList<Object>());
       configService.update(page);

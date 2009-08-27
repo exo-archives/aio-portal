@@ -415,9 +415,10 @@ public class UIDashboardContainer extends org.exoplatform.webui.core.UIContainer
 
     DashboardParent parent = (DashboardParent)((UIComponent)getParent()).getParent();
 
-    service.save(PortalDataMapper.toContainer(uiRoot), parent.getDashboardOwner());
+    service.save((Container)PortalDataMapper.buildModelObject(uiRoot), parent.getDashboardOwner());
   }
   
+  //TODO trong.tran : Use PortalDataMapper instead of
   private void toUIContainer(UIContainer uiContainer, Container model) throws Exception {
     uiContainer.setId(model.getId());
     uiContainer.setWidth(model.getWidth());

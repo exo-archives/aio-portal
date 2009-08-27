@@ -88,7 +88,7 @@ public class UIPageCreationWizard extends UIPageWizard {
     PageNode selectedNode = uiNodeSelector.getSelectedPageNode();
     PageNavigation pageNav = uiNodeSelector.getSelectedNavigation();
 
-    Page page = PortalDataMapper.toPageModel(uiPage);
+    Page page = PortalDataMapper.buildModelObject(uiPage);
     PageNode pageNode = uiPageInfo.getPageNode();
     pageNode.setPageReference(page.getPageId());
     if (selectedNode != null) {

@@ -25,6 +25,7 @@ import org.exoplatform.commons.utils.LazyPageList;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.Query;
+import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PortalConfig;
@@ -54,7 +55,6 @@ public class DataStorageImpl implements DataStorage, Startable {
   
   final private static String PORTAL_CONFIG_FILE_NAME = "portal-xml" ;
   final private static String NAVIGATION_CONFIG_FILE_NAME = "navigation-xml" ;
-  final private static String GADGETS_CONFIG_FILE_NAME = "gadgets-xml" ; //TODO: dang.tung
   final private static String PAGE_SET_NODE = "pages" ;
   final private static String PORTLET_PREFERENCES_SET_NODE = "portletPreferences" ;
 
@@ -374,5 +374,9 @@ public class DataStorageImpl implements DataStorage, Startable {
     
     return path ;
   }
+
+	public Container getSharedLayout() throws Exception {
+		throw new UnsupportedOperationException();
+	}
   
 }

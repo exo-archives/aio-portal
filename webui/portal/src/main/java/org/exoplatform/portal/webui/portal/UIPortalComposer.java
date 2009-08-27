@@ -129,7 +129,7 @@ public class UIPortalComposer extends UIContainer {
 		UIWorkingWorkspace uiWorkingWS = uiPortalApp.findFirstComponentOfType(UIWorkingWorkspace.class);
 		UIPortal uiPortal = uiWorkingWS.getChild(UIPortal.class);
 
-		PortalConfig portalConfig = PortalDataMapper.toPortal(uiPortal);
+		PortalConfig portalConfig = PortalDataMapper.buildModelObject(uiPortal);
 		UserPortalConfigService configService = getApplicationComponent(UserPortalConfigService.class);
 		configService.update(portalConfig);
 		uiPortalApp.getUserPortalConfig().setPortal(portalConfig);
@@ -457,7 +457,7 @@ public class UIPortalComposer extends UIContainer {
 			UIPortalToolPanel uiToolPanel = uiWorkingWS
 					.getChild(UIPortalToolPanel.class);
 			UIPage uiPage = (UIPage) uiToolPanel.getUIComponent();
-			Page page = PortalDataMapper.toPageModel(uiPage);
+			Page page = PortalDataMapper.buildModelObject(uiPage);
 			UserPortalConfigService portalConfigService = uiWorkingWS
 					.getApplicationComponent(UserPortalConfigService.class);
 			portalConfigService.update(page);

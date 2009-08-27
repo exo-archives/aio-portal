@@ -26,13 +26,14 @@ import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageBody;
 import org.exoplatform.portal.config.model.PortalConfig;
+import org.exoplatform.portal.config.model.SiteBody;
 import org.exoplatform.portal.webui.application.UIGadget;
 import org.exoplatform.portal.webui.application.UIPortlet;
 import org.exoplatform.portal.webui.container.UIContainer;
 import org.exoplatform.portal.webui.page.UIPage;
 import org.exoplatform.portal.webui.page.UIPageBody;
+import org.exoplatform.portal.webui.page.UISiteBody;
 import org.exoplatform.portal.webui.portal.UIPortal;
-import org.exoplatform.portal.webui.portal.UIPortalComponent;
 import org.exoplatform.services.portletcontainer.PortletContainerService;
 import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
 import org.exoplatform.services.portletcontainer.pci.PortletData;
@@ -47,14 +48,15 @@ import org.exoplatform.webui.core.UIComponent;
 public class PortalDataMapper {
 
   @SuppressWarnings("unchecked")
-  static final public <T> T buildChild(UIComponent uiComponent) {
+	public static final <T> T buildModelObject(UIComponent uiComponent) {
     Object model = null;
-    if (uiComponent instanceof UIPageBody) {
-      model = toPageBodyModel((UIPageBody) uiComponent);
-    }/*
-      * else if(uiComponent instanceof UIWidget){ model =
-      * toWidget((UIWidget)uiComponent); }
-      */else if (uiComponent instanceof UIPortlet) {
+    if (uiComponent instanceof UIPortal) {
+      model = toPortal((UIPortal) uiComponent);
+    } else if (uiComponent instanceof UIPageBody) {
+      model = new PageBody();
+    } else if (uiComponent instanceof UIPage) {
+      model = toPageModel((UIPage) uiComponent);
+    } else if (uiComponent instanceof UIPortlet) {
       model = toPortletModel((UIPortlet) uiComponent);
     } else if (uiComponent instanceof UIContainer) {
       model = toContainer((UIContainer) uiComponent);
@@ -63,18 +65,8 @@ public class PortalDataMapper {
     }
     return (T) model;
   }
-
-  //  
-  // static final public Application toWidget(UIWidget uiWidget) {
-  // Application model = new Application();
-  // model.setApplicationType(org.exoplatform.web.application.Application.EXO_WIDGET_TYPE);
-  // model.setInstanceId(uiWidget.getApplicationInstanceId());
-  // model.setId(uiWidget.getId());
-  // model.setProperties(uiWidget.getProperties());
-  // return model;
-  // }
-  //  
-  static final public Application toGadget(UIGadget uiGadget) {
+  
+  private static final Application toGadget(UIGadget uiGadget) {
     Application model = new Application();
     model.setApplicationType(org.exoplatform.web.application.Application.EXO_GAGGET_TYPE);
     model.setInstanceId(uiGadget.getApplicationInstanceId());
@@ -83,7 +75,7 @@ public class PortalDataMapper {
     return model;
   }
 
-  static private void toContainer(Container model, UIContainer uiContainer) {
+  private static void toContainer(Container model, UIContainer uiContainer) {
     model.setId(uiContainer.getId());
     model.setName(uiContainer.getName());
     model.setTitle(uiContainer.getTitle());
@@ -100,14 +92,14 @@ public class PortalDataMapper {
       return;
     ArrayList<Object> children = new ArrayList<Object>();
     for (UIComponent child : uiChildren) {
-      Object component = buildChild(child);
+      Object component = buildModelObject(child);
       if (component != null)
         children.add(component);
     }
     model.setChildren(children);
   }
 
-  static final public Application toPortletModel(UIPortlet uiPortlet) {
+  private static final Application toPortletModel(UIPortlet uiPortlet) {
     Application model = new Application();
     model.setInstanceId(uiPortlet.getWindowId().toString());
     model.setApplicationType(uiPortlet.getFactoryId());
@@ -127,13 +119,13 @@ public class PortalDataMapper {
     return model;
   }
 
-  static final public Container toContainer(UIContainer uiContainer) {
+  static final private Container toContainer(UIContainer uiContainer) {
     Container model = new Container();
     toContainer(model, uiContainer);
     return model;
   }
 
-  static final public Page toPageModel(UIPage uiPage) {
+  static final private Page toPageModel(UIPage uiPage) {
     Page model = new Page();
     toContainer(model, uiPage);
     model.setCreator(uiPage.getCreator());
@@ -151,12 +143,11 @@ public class PortalDataMapper {
     return model;
   }
 
-  static final public PortalConfig toPortal(UIPortal uiPortal) {
+  static final private PortalConfig toPortal(UIPortal uiPortal) {
     PortalConfig model = new PortalConfig();
     model.setName(uiPortal.getName());
     model.setCreator(uiPortal.getCreator());
     model.setModifier(uiPortal.getModifier());
-    // model.setFactoryId(uiPortal.getFactoryId());
     model.setAccessPermissions(uiPortal.getAccessPermissions());
     model.setEditPermission(uiPortal.getEditPermission());
     model.setLocale(uiPortal.getLocale());
@@ -170,17 +161,12 @@ public class PortalDataMapper {
       return model;
     ArrayList<Object> newChildren = new ArrayList<Object>();
     for (UIComponent child : children) {
-      Object component = buildChild(child);
+      Object component = buildModelObject(child);
       if (component != null)
         newChildren.add(component);
     }
     model.getPortalLayout().setChildren(newChildren);
     return model;
-  }
-
-  @SuppressWarnings("unused")
-  static final public PageBody toPageBodyModel(UIPageBody uiPageBody) {
-    return new PageBody();
   }
 
   static public void toUIGadget(UIGadget uiGadget, Application model) throws Exception {
@@ -268,9 +254,7 @@ public class PortalDataMapper {
     if (children == null)
       return;
     for (Object child : children) {
-      UIComponent uiComp = buildChild(uiContainer, child);
-      if (uiComp != null)
-        uiContainer.addChild(uiComp);
+      buildUIContainer(uiContainer, child);
     }
   }
 
@@ -317,49 +301,41 @@ public class PortalDataMapper {
     List<Object> children = model.getPortalLayout().getChildren();
     if (children != null) {
       for (Object child : children) {
-        UIComponent uiComp = buildChild(uiPortal, child);
-        if (uiComp != null)
-          uiPortal.addChild(uiComp);
+        buildUIContainer(uiPortal, child);
       }
     }
     uiPortal.setNavigation(userPortalConfig.getNavigations());
   }
 
-  @SuppressWarnings("unchecked")
-  static private <T extends UIComponent> T buildChild(UIPortalComponent uiParent, Object model) throws Exception {
+  static private void buildUIContainer(UIContainer uiContainer, Object model) throws Exception {
     UIComponent uiComponent = null;
     WebuiRequestContext context = Util.getPortalRequestContext();
-    if (model instanceof PageBody) {
-      UIPageBody uiPageBody = uiParent.createUIComponent(context, UIPageBody.class, null, null);
-      uiComponent = uiPageBody;
+    if (model instanceof SiteBody) {
+    	uiComponent = uiContainer.createUIComponent(context, UISiteBody.class, null, null);
+    } else if (model instanceof PageBody) {
+    	uiComponent = uiContainer.createUIComponent(context, UIPageBody.class, null, null);
     } else if (model instanceof Application) {
       Application application = (Application) model;
-      String factoryId = application.getApplicationType();
-      if (factoryId == null
-          || factoryId.equals(org.exoplatform.web.application.Application.EXO_PORTLET_TYPE)) {
-        UIPortlet uiPortlet = uiParent.createUIComponent(context, UIPortlet.class, null, null);
+      String applicationType = application.getApplicationType();
+      if (applicationType == null
+          || applicationType.equals(org.exoplatform.web.application.Application.EXO_PORTLET_TYPE)) {
+        UIPortlet uiPortlet = uiContainer.createUIComponent(context, UIPortlet.class, null, null);
         toUIPortlet(uiPortlet, application);
         uiComponent = uiPortlet;
-      }/*
-        * elseif(factoryId.equals(org.exoplatform.web.application.Application.
-        * EXO_WIDGET_TYPE)) { UIWidget uiWidget =
-        * uiParent.createUIComponent(context, UIWidget.class, null, null);
-        * toUIWidget(uiWidget, application) ; uiComponent = uiWidget ; }
-        */else if (factoryId.equals(org.exoplatform.web.application.Application.EXO_GAGGET_TYPE)) {
-        UIGadget uiGadget = uiParent.createUIComponent(context, UIGadget.class, null, null);
+      } else if (applicationType.equals(org.exoplatform.web.application.Application.EXO_GAGGET_TYPE)) {
+        UIGadget uiGadget = uiContainer.createUIComponent(context, UIGadget.class, null, null);
         toUIGadget(uiGadget, application);
         uiComponent = uiGadget;
       }
     } else if (model instanceof Container) {
       Container container = (Container) model;
-      UIContainer uiContainer = uiParent.createUIComponent(context,
+      UIContainer uiTempContainer = uiContainer.createUIComponent(context,
                                                            UIContainer.class,
                                                            container.getFactoryId(),
                                                            null);
-      toUIContainer(uiContainer, (Container) model);
-      uiComponent = uiContainer;
+      toUIContainer(uiTempContainer, (Container) model);
+      uiComponent = uiTempContainer;
     }
-    return (T) uiComponent;
+    uiContainer.addChild(uiComponent);
   }
-
 }

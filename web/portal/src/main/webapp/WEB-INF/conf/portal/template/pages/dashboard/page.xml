@@ -4,32 +4,7 @@
   <owner-id></owner-id>
   <name></name>
   <show-max-window>true</show-max-window>
-  
-  <container template="system:/groovy/portal/webui/container/UIToolbarContainer.gtmpl">
-		  <access-permissions>*:/platform/administrators; *:/organization/management/executive-board</access-permissions>
-			<container id="StarToolBarPortelt" template="system:/groovy/portal/webui/container/UIContainer.gtmpl">
-			  <application>
-			    <instance-id>/exoadmin/StarToolbarPortlet/starportlet</instance-id>
-		      <access-permissions>Everyone</access-permissions>
-			    <show-info-bar>false</show-info-bar>
-			  </application>			
-			</container>
-			<container id="UserToolBarPortlet" template="system:/groovy/portal/webui/container/UIContainer.gtmpl">
-			  <application>
-			    <instance-id>/exoadmin/UserToolbarPortlet/userportlet</instance-id>
-		      <access-permissions>Everyone</access-permissions>
-			    <show-info-bar>false</show-info-bar>
-			  </application>			
-			</container>
-			<container id="AdminToolBarPortlet" template="system:/groovy/portal/webui/container/UIContainer.gtmpl">
-			  <application>
-			    <instance-id>/exoadmin/AdminToolbarPortlet/adminportlet</instance-id>
-		      <access-permissions>Everyone</access-permissions>
-			    <show-info-bar>false</show-info-bar>
-			  </application>
-			</container>
-		</container>
- 
+	
   <application>
     	<instance-id>/dashboard/TabbedDashboardPortlet/TabbedDashboard</instance-id>
     	<title>Tabbed Dashboard</title>

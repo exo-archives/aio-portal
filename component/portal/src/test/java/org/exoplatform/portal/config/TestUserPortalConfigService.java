@@ -23,7 +23,6 @@ import java.util.List;
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
-import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.services.organization.OrganizationService;
 import org.jibx.runtime.BindingDirectory;
@@ -93,7 +92,6 @@ public class TestUserPortalConfigService extends UserPortalServiceTestBase {
 		assertEquals("en", oldPortalConfig.getLocale());
 		assertEquals(1, oldPortalConfig.getAccessPermissions().length);
 		assertEquals("Everyone", oldPortalConfig.getAccessPermissions()[0]);
-		assertEquals(2, oldUserPortalConfig.getNavigations().size());
 
 		String newLocate = "vi";
 		oldPortalConfig.setLocale(newLocate);
@@ -106,7 +104,6 @@ public class TestUserPortalConfigService extends UserPortalServiceTestBase {
 		assertEquals(newLocate, newPortalConfig.getLocale());
 		assertEquals(1, newPortalConfig.getAccessPermissions().length);
 		assertEquals("Everyone", newPortalConfig.getAccessPermissions()[0]);
-		assertEquals(2, newUserPortalConfig.getNavigations().size());
 	}
 
 	public void testNavigationUpdate() throws Exception {
@@ -136,61 +133,22 @@ public class TestUserPortalConfigService extends UserPortalServiceTestBase {
 
 	public void testNavigationRemove() throws Exception {
 		String portalName = "classic";
-		String accessUser = "exoadmin";
+		String accessUser = "john";
 
 		UserPortalConfig oldUserPortalConfig = userPortalConfigSer_
 				.getUserPortalConfig(portalName, accessUser);
 		List<PageNavigation> oldNavigations = oldUserPortalConfig.getNavigations();
-		assertEquals(1, oldNavigations.size());
+		assertEquals(5, oldNavigations.size());
 
 		// Remove navigation of the portal
-		PageNavigation portalNavigation = oldNavigations.get(0);
+		PageNavigation portalNavigation = oldNavigations.get(1);
 		userPortalConfigSer_.remove(portalNavigation);
 
 		UserPortalConfig newUserPortalConfig = userPortalConfigSer_
 				.getUserPortalConfig(portalName, accessUser);
 		List<PageNavigation> newNavigations = newUserPortalConfig.getNavigations();
-		assertEquals(1, newNavigations.size());
-		//		PageNavigation userNavigation = newNavigations.get(0) ;
-		//		assertEquals(accessUser, userNavigation.getOwnerId()) ;
-
-		//		// Remove remain navigation
-		//		service_.remove(userNavigation) ;
-		//		newUserPortalConfig = service_.getUserPortalConfig(portalName, accessUser) ;
-		//		assertEquals(0, newUserPortalConfig.getNavigations().size()) ;
+		assertEquals(4, newNavigations.size());
 	}
-
-	//	public void testPageCreate() throws Exception {
-	//	String accessUser = "exoadmin" ; 
-	//	String[] sitePortalPageNames = {"homepage", "register", "sitemap", "test"} ;
-
-	//	List<Page> pages = new ArrayList<Page>() ;
-	//	for (String pageName : sitePortalPageNames) {
-	//	String sitePortalPageId = "portal::classic::" + pageName ;
-	//	Page page = service_.getPage(sitePortalPageId, accessUser) ;
-	//	if (page != null) pages.add(page) ;
-	//	}
-	//	assertEquals(1, pages.size()) ;
-
-	//	// Add new page to Site portal
-	//	String pageSetFile = "testpages.xml" ;
-	//	PageSet pageSet = loadObject(PageSet.class, pageSetFile) ;
-	//	List<Page> addPages = pageSet.getPages() ;
-	//	assertTrue(addPages.size() == 1);
-	//	for (Page p : addPages) {
-	//	service_.create(p) ;
-	//	}
-	//	int totalPage = pages.size() + addPages.size() ;
-
-	//	pages = new ArrayList<Page>() ;
-	//	for (String pageName : sitePortalPageNames) {
-	//	String sitePortalPageId = "portal::classic::" + pageName ;
-	//	Page page = service_.getPage(sitePortalPageId, accessUser) ;
-	//	if (page != null) pages.add(page) ;
-	//	}
-
-	//	assertEquals(totalPage, pages.size()) ;
-	//	}
 
 	public void testPageGet() throws Exception {
 		this.prepareOrganizationData();

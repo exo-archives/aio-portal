@@ -9,12 +9,6 @@
     <access-permissions>*:/platform/users</access-permissions>
     <edit-permission>*:/platform/administrators</edit-permission>
     <application>
-    	<instance-id>group#/platform/users:/dashboard/TabbedDashboardPortlet/TabbedDashboard</instance-id>
-    	<title>Tabbed Dashboard</title>
-    	<access-permissions>*:/platform/users</access-permissions>
-    	<show-info-bar>false</show-info-bar>
-    </application>
-    <application>
       <instance-id>group#/platform/users:/dashboard/DashboardPortlet/Dashboard</instance-id>
       <title>Dashboard</title>
       <access-permissions>*:/platform/users</access-permissions>

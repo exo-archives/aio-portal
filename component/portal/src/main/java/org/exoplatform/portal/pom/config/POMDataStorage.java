@@ -18,13 +18,17 @@ package org.exoplatform.portal.pom.config;
 
 import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.Query;
+import org.exoplatform.portal.config.model.Application;
+import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
+import org.exoplatform.portal.config.model.SiteBody;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.services.portletcontainer.pci.WindowID;
 import org.exoplatform.commons.utils.LazyPageList;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -141,5 +145,48 @@ public class POMDataStorage implements DataStorage {
     } else {
       throw new UnsupportedOperationException();
     }
+  }
+  
+  public Container getSharedLayout() {
+    Container sharedLayout = new Container();
+    sharedLayout.setTemplate("system:/groovy/portal/webui/container/UIContainer.gtmpl");
+    Container toolbarContainer = new Container();
+    toolbarContainer.setTemplate("system:/groovy/portal/webui/container/UIToolbarContainer.gtmpl");
+    toolbarContainer.setAccessPermissions(new String[]{"*:/platform/administrators; *:/organization/management/executive-board"});
+    
+    Container starToolBarPortletContainer = new Container();
+    starToolBarPortletContainer.setId("StarToolBarPortlet");
+    starToolBarPortletContainer.setTemplate("system:/groovy/portal/webui/container/UIContainer.gtmpl");
+    Application starToolBarPortletApplication = new Application();
+    starToolBarPortletApplication.setInstanceId("portal#classic:/exoadmin/StarToolbarPortlet/starportlet");
+    starToolBarPortletApplication.setAccessPermissions(new String[] {"Everyone"});
+    starToolBarPortletApplication.setShowInfoBar(false);
+    starToolBarPortletContainer.getChildren().add(starToolBarPortletApplication);
+    toolbarContainer.getChildren().add(starToolBarPortletContainer);
+    
+    Container userToolBarPortletContainer = new Container();
+    userToolBarPortletContainer.setId("UserToolBarPortlet");
+    userToolBarPortletContainer.setTemplate("system:/groovy/portal/webui/container/UIContainer.gtmpl");
+    Application userToolBarPortletApplication = new Application();
+    userToolBarPortletApplication.setInstanceId("portal#classic:/exoadmin/UserToolbarPortlet/userportlet");
+    userToolBarPortletApplication.setAccessPermissions(new String[] {"Everyone"});
+    userToolBarPortletApplication.setShowInfoBar(false);
+    userToolBarPortletContainer.getChildren().add(userToolBarPortletApplication);
+    toolbarContainer.getChildren().add(userToolBarPortletContainer);
+    
+    Container adminToolBarPortletContainer = new Container();
+    adminToolBarPortletContainer.setId("AdminToolBarPortlet");
+    adminToolBarPortletContainer.setTemplate("system:/groovy/portal/webui/container/UIContainer.gtmpl");
+    Application adminToolBarPortletApplication = new Application();
+    adminToolBarPortletApplication.setInstanceId("portal#classic:/exoadmin/AdminToolbarPortlet/adminportlet");
+    adminToolBarPortletApplication.setAccessPermissions(new String[] {"Everyone"});
+    adminToolBarPortletApplication.setShowInfoBar(false);
+    adminToolBarPortletContainer.getChildren().add(adminToolBarPortletApplication);
+    toolbarContainer.getChildren().add(adminToolBarPortletContainer);
+    
+    ArrayList<Object> children = sharedLayout.getChildren();
+    children.add(toolbarContainer);
+    children.add(new SiteBody());
+    return sharedLayout;
   }
 }

@@ -20,6 +20,7 @@ import java.util.Comparator;
 
 import org.exoplatform.commons.utils.LazyPageList;
 import org.exoplatform.portal.application.PortletPreferences;
+import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PortalConfig;
@@ -149,4 +150,6 @@ public interface DataStorage {
   public  <T> LazyPageList<T> find(Query<T> q) throws Exception ;
   
   public <T> LazyPageList<T> find(Query<T> q, Comparator<T> sortComparator) throws Exception ;
+  
+  public Container getSharedLayout() throws Exception ;
 }

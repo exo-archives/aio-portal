@@ -46,8 +46,6 @@ import org.exoplatform.portal.webui.portal.UIPortalComponentActionListener.ShowL
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
-import org.exoplatform.services.resources.LocaleConfig;
-import org.exoplatform.services.resources.LocaleConfigService;
 import org.exoplatform.services.resources.ResourceBundleManager;
 import org.exoplatform.web.login.InitiateLoginServlet;
 import org.exoplatform.webui.application.WebuiRequestContext;
