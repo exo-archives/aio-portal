@@ -19,7 +19,6 @@ package org.exoplatform.portal.webui.application;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -30,17 +29,16 @@ import javax.servlet.http.Cookie;
 import org.exoplatform.commons.utils.ExceptionUtil;
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.application.PortletPreferences;
-import org.exoplatform.portal.application.jcr.PortalPortletContext;
+import org.exoplatform.portal.application.Preference;
 import org.exoplatform.portal.application.jcr.PortalPortletInstanceContext;
-import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.skin.SkinService;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
+import org.exoplatform.portal.pc.ExoPortletState;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
-import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.ComponentConfigs;
@@ -62,20 +60,14 @@ import org.exoplatform.webui.form.validator.MandatoryValidator;
 import org.exoplatform.webui.form.validator.StringLengthValidator;
 import org.exoplatform.webui.organization.UIListPermissionSelector;
 import org.exoplatform.webui.organization.UIListPermissionSelector.EmptyIteratorValidator;
-import org.gatein.common.net.media.MediaType;
-import org.gatein.common.util.MarkupInfo;
 import org.gatein.pc.api.Mode;
-import org.gatein.pc.api.Portlet;
 import org.gatein.pc.api.PortletContext;
 import org.gatein.pc.api.PortletInvoker;
-import org.gatein.pc.api.info.PreferenceInfo;
-import org.gatein.pc.api.info.PreferencesInfo;
+import org.gatein.pc.api.StatefulPortletContext;
 import org.gatein.pc.api.invocation.RenderInvocation;
-import org.gatein.pc.api.invocation.SimplePortletInvocationContext;
 import org.gatein.pc.api.invocation.response.FragmentResponse;
 import org.gatein.pc.api.state.PropertyChange;
 import org.gatein.pc.impl.spi.AbstractClientContext;
-import org.gatein.pc.impl.spi.AbstractInstanceContext;
 import org.gatein.pc.impl.spi.AbstractPortalContext;
 import org.gatein.pc.impl.spi.AbstractSecurityContext;
 import org.gatein.pc.impl.spi.AbstractServerContext;
@@ -165,27 +157,10 @@ public class UIPortletForm extends UIFormTabPane {
     try {
       PortalRequestContext prcontext = (PortalRequestContext) WebuiRequestContext.getCurrentInstance();
       prcontext.setFullRender(true);
-      String baseUrl = new StringBuilder(prcontext.getRequestURI()).append(
-          "?" + PortalRequestContext.UI_COMPONENT_ID).append("=").append(
-          uiPortlet_.getId()).toString();
-      
-      //
-      PortletInvoker portletInvoker = (PortletInvoker)getApplicationComponent(PortletInvoker.class);
-      PortletContext portletContext = uiPortlet_.getPortletContext();
-      
-      DataStorage dataStorage = (DataStorage)getApplicationComponent(DataStorage.class);
-      ExoWindowID exoWindowID = new ExoWindowID(uiPortlet_.getWindowId());
-      PortletPreferences preferences = dataStorage.getPortletPreferences(exoWindowID);
-      PortletContext preferencesPortletContext = PortalPortletContext.createPortalPortletContext(portletContext, preferences);
-      
-      String baseURL = new StringBuilder(prcontext.getRequestURI()).append("?"
-  	        + PortalRequestContext.UI_COMPONENT_ID).append("=").append(uiPortlet_.getId()).toString();
-     
-      MediaType mediaType = MediaType.create("text/html");
-      String charset = "UTF-8";
-      MarkupInfo markupInfo = new MarkupInfo(mediaType, charset);
-      
-      SimplePortletInvocationContext portletInvocationContext = new SimplePortletInvocationContext(markupInfo, baseURL,prcontext.getRequest(), prcontext.getResponse());
+      PortletInvoker portletInvoker = getApplicationComponent(PortletInvoker.class);
+      StatefulPortletContext<ExoPortletState> portletContext = uiPortlet_.getPortletContext();
+
+      ExoPortletInvocationContext portletInvocationContext = new ExoPortletInvocationContext(prcontext, uiPortlet_);
       
       List<Cookie> requestCookies = new ArrayList<Cookie>();
       for (Cookie cookie : prcontext.getRequest().getCookies())
@@ -196,12 +171,12 @@ public class UIPortletForm extends UIFormTabPane {
       RenderInvocation renderInvocation = new RenderInvocation(portletInvocationContext);
       renderInvocation.setClientContext(new AbstractClientContext(prcontext.getRequest(), requestCookies));
       renderInvocation.setServerContext(new AbstractServerContext(prcontext.getRequest(), prcontext.getResponse()));
-      renderInvocation.setInstanceContext(new PortalPortletInstanceContext(portletContext.getId(), exoWindowID));//AbstractInstanceContext(portletContext.getId()));
+      renderInvocation.setInstanceContext(new PortalPortletInstanceContext(portletContext.getState().getPortletId(), uiPortlet_.getExoWindowID()));
       renderInvocation.setUserContext(new AbstractUserContext(prcontext.getRequest()));
       renderInvocation.setWindowContext(new AbstractWindowContext(uiPortlet_.getWindowId()));
       renderInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));
       renderInvocation.setSecurityContext(new AbstractSecurityContext(prcontext.getRequest()));
-      renderInvocation.setTarget(preferencesPortletContext);//(portletContext);
+      renderInvocation.setTarget(portletContext);
       
       renderInvocation.setMode(Mode.create(uiPortlet_.getCurrentPortletMode().toString()));
       renderInvocation.setWindowState(org.gatein.pc.api.WindowState.create(uiPortlet_.getCurrentWindowState().toString()));
@@ -233,29 +208,20 @@ public class UIPortletForm extends UIFormTabPane {
     if (hasEditMode()) {
       uiPortlet.setCurrentPortletMode(PortletMode.EDIT);
     } else {
-      
-      PortletInvoker portletInvoker = (PortletInvoker)getApplicationComponent(PortletInvoker.class);
-      PortletContext portletContext = uiPortlet_.getPortletContext();
-      Portlet portlet = portletInvoker.getPortlet(portletContext);
-      PreferencesInfo prefInfos = portlet.getInfo().getPreferences();
 
-      if (prefInfos != null) {      
-      //if (preferences != null) {
+      //
+
+      PortletPreferences pp = uiPortlet.getPreferences();
+
+      if (pp != null) {
         UIFormInputSet uiPortletPrefSet = getChildById(FIELD_PORTLET_PREF);
         uiPortletPrefSet.getChildren().clear();
-        //Enumeration<String> prefNames = preferences.getNames();
-        Iterator<String> prefIter = prefInfos.getKeys().iterator();
-        while (prefIter.hasNext()) {
-        	String name = prefIter.next();
-        	PreferenceInfo prefInfo = prefInfos.getPreference(name);
-        	if (!prefInfo.isReadOnly())
+        for (Preference pref : pp.getPreferences()) {
+        	if (!pref.isReadOnly())
         	{
-        		for(String value : prefInfo.getDefaultValue())
-        		{
-        			UIFormStringInput templateStringInput = new UIFormStringInput(name, null, value);
-        			templateStringInput.setLabel(res.getString("UIPortletForm.tab.label.Template"));
-        			uiPortletPrefSet.addUIFormInput(templateStringInput);
-        		}
+            UIFormStringInput templateStringInput = new UIFormStringInput(pref.getName(), null, (String)pref.getValues().get(0));
+            templateStringInput.setLabel(res.getString("UIPortletForm.tab.label.Template"));
+            uiPortletPrefSet.addUIFormInput(templateStringInput);
         	}
         	
         }
@@ -276,11 +242,11 @@ public class UIPortletForm extends UIFormTabPane {
     if (uiFormInputs.size() < 1) { return; }
     
     //
-    PortletInvoker portletInvoker = (PortletInvoker)getApplicationComponent(PortletInvoker.class);
+    PortletInvoker portletInvoker = getApplicationComponent(PortletInvoker.class);
     PortletContext portletContext = uiPortlet_.getPortletContext();
-    
-    Portlet portlet = portletInvoker.getPortlet(portletContext);
-    
+
+    //
+
     PropertyChange[] propertyChanges = new PropertyChange[uiFormInputs.size()];
     ArrayList<PropertyChange> foo = new ArrayList<PropertyChange>();
     
@@ -290,9 +256,12 @@ public class UIPortletForm extends UIFormTabPane {
     	String value = uiFormInputs.get(i).getValue();
     	propertyChanges[i] = PropertyChange.newUpdate(name, value);
     }
-    
-    portletInvoker.setProperties(portletContext, propertyChanges);
-    
+
+    // Get marshalled version
+    StatefulPortletContext<ExoPortletState> updatedCtx = (StatefulPortletContext<ExoPortletState>)portletInvoker.setProperties(portletContext, propertyChanges);
+
+    // Now save it
+    uiPortlet_.save(updatedCtx.getState());
   }
   
   

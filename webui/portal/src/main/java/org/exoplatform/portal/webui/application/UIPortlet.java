@@ -30,7 +30,6 @@ import javax.portlet.WindowState;
 import javax.xml.namespace.QName;
 
 import org.exoplatform.services.log.Log;
-import org.exoplatform.Constants;
 import org.exoplatform.portal.webui.application.UIPortletActionListener.ChangePortletModeActionListener;
 import org.exoplatform.portal.webui.application.UIPortletActionListener.ChangeWindowStateActionListener;
 import org.exoplatform.portal.webui.application.UIPortletActionListener.EditPortletActionListener;
@@ -42,10 +41,15 @@ import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.portal.UIPortalComponentActionListener.DeleteComponentActionListener;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
+import org.exoplatform.portal.config.DataStorage;
+import org.exoplatform.portal.application.PortletPreferences;
+import org.exoplatform.portal.application.Preference;
+import org.exoplatform.portal.pc.ExoPortletState;
+import org.exoplatform.portal.pc.ExoPortletStateType;
 import org.exoplatform.services.log.ExoLogger;
 //TODO: replace the ExoWindowId class with the portlet api one
 import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
-import org.exoplatform.web.command.handler.GetApplicationHandler;
+import org.exoplatform.services.portletcontainer.pci.model.ExoPortletPreferences;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.event.Event.Phase;
@@ -54,6 +58,7 @@ import org.gatein.pc.api.Portlet;
 import org.gatein.pc.api.PortletContext;
 import org.gatein.pc.api.PortletInvoker;
 import org.gatein.pc.api.PortletInvokerException;
+import org.gatein.pc.api.StatefulPortletContext;
 import org.gatein.pc.api.info.EventInfo;
 import org.gatein.pc.api.info.ModeInfo;
 import org.gatein.pc.api.info.ParameterInfo;
@@ -96,35 +101,71 @@ public class UIPortlet extends UIApplication {
   private List<String> supportedPublicParams_;
   private boolean portletInPortal_ = true;  
   
-  private PortletContext portletContext;
-  
-  public void setPortletContext(PortletContext portletContext)
+  private PortletContext producerOfferedPortletContext;
+
+  public PortletContext getProducerOfferedPortletContext()
   {
-	 this.portletContext = portletContext;
+     return producerOfferedPortletContext;
   }
-  
-  public PortletContext getPortletContext()
+
+  public PortletPreferences getPreferences() throws Exception {
+    DataStorage dataStorage = getApplicationComponent(DataStorage.class);
+    return dataStorage.getPortletPreferences(exoWindowId_);
+  }
+
+  public StatefulPortletContext<ExoPortletState> getPortletContext() throws Exception
   {
-     return portletContext;  
+     PortletPreferences pp = getPreferences();
+     ArrayList<Preference> prefs = pp != null ? pp.getPreferences() : null;
+     ExoPortletState map = new ExoPortletState(producerOfferedPortletContext.getId());
+     if (prefs != null) {
+        for (Preference pref : prefs) {
+           map.getState().put(pref.getName(), pref.getValues());
+        }
+     }
+     return StatefulPortletContext.create("_dumbvalue", ExoPortletStateType.getInstance(), map);
   }
-  
+
+  public void save(ExoPortletState state) throws Exception {
+    ArrayList<Preference> prefs = new ArrayList<Preference>();
+    for(Map.Entry<String, List<String>> entry : state.getState().entrySet()) {
+      Preference pref = new Preference();
+      pref.setName(entry.getKey());
+      pref.setValues(new ArrayList<String>(entry.getValue()));
+      prefs.add(pref);
+    }
+
+    //
+    PortletPreferences pp = new PortletPreferences();
+    String[] fragments = exoWindowId_.getOwner().split("#") ;
+    pp.setOwnerType(fragments[0]);
+    pp.setOwnerId(fragments[1]);
+    pp.setWindowId(exoWindowId_.getPersistenceId()); // Yeah makes totally sense
+    pp.setPreferences(prefs);
+
+    //
+    DataStorage dataStorage = getApplicationComponent(DataStorage.class);
+    dataStorage.save(pp);
+  }
+
   public String getId()  { return exoWindowId_.getUniqueID() ; }
   
   public String getWindowId() { return windowId ; }
   public void   setWindowId(String s) {
     windowId = s ;
     exoWindowId_ = new ExoWindowID(windowId) ;
-    
+
     int ownerIndex = s.indexOf(":/");
     String owner = s.substring(0, ownerIndex);
     String portletId = s.substring(ownerIndex + ":/".length());
     String[] portletIdComponents = portletId.split("/");
-    
+
     String portletAppName = portletIdComponents[0];
     String portletName = portletIdComponents[1];
     String uniqueId = portletIdComponents[2];
-    
-    portletContext = PortletContext.createPortletContext(portletAppName + "/" + portletName);
+
+    //
+    producerOfferedPortletContext = PortletContext.createPortletContext(portletAppName + "/" + portletName);
   }
     
   public String getPortletStyle() {  return  portletStyle ; }
@@ -218,7 +259,7 @@ public class UIPortlet extends UIApplication {
 
     Portlet portlet = null;
 	try {
-		portlet = portletInvoker.getPortlet(portletContext);
+		portlet = portletInvoker.getPortlet(producerOfferedPortletContext);
 	} catch (IllegalArgumentException e) {
 		e.printStackTrace();
 	} catch (PortletInvokerException e) {
@@ -259,7 +300,7 @@ public class UIPortlet extends UIApplication {
 
 		  Portlet portlet = null;
 		  try {
-			  portlet = portletInvoker.getPortlet(portletContext);
+			  portlet = portletInvoker.getPortlet(producerOfferedPortletContext);
 		  } catch (IllegalArgumentException e) {
 			  e.printStackTrace();
 		  } catch (PortletInvokerException e) {
@@ -268,7 +309,7 @@ public class UIPortlet extends UIApplication {
 
 		  if (portlet == null)
 		  {
-			  log.info("Could not find portlet with ID : " + portletContext.getId());
+			  log.info("Could not find portlet with ID : " + producerOfferedPortletContext.getId());
 			  return false;
 		  }
 		  
@@ -301,7 +342,7 @@ public class UIPortlet extends UIApplication {
 		  
 		  Portlet portlet = null;
 		  try {
-			  portlet = portletInvoker.getPortlet(portletContext);
+			  portlet = portletInvoker.getPortlet(producerOfferedPortletContext);
 		  } catch (IllegalArgumentException e) {
 			  e.printStackTrace();
 		  } catch (PortletInvokerException e) {
@@ -310,7 +351,7 @@ public class UIPortlet extends UIApplication {
 
 		  if (portlet == null)
 		  {
-			  log.info("Could not find portlet with ID : " + portletContext.getId());
+			  log.info("Could not find portlet with ID : " + producerOfferedPortletContext.getId());
 			  return false;
 		  }
 		  
@@ -373,6 +414,6 @@ public class UIPortlet extends UIApplication {
     }    
     return publicParamsMap;   
   }
-  
-  
+
+
 }

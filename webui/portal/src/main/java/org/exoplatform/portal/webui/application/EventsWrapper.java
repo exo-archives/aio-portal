@@ -53,23 +53,23 @@ public class EventsWrapper {
 	return counters;
   }
 
-  public void increaseCounter(String portletId) {
+  public void increaseCounter(UIPortlet portlet) {
 	for (Iterator iter = counters.iterator(); iter.hasNext();) {
 	  CounterWrapper counter = (CounterWrapper) iter.next();
-	  if (portletId.equals(counter.portletId)) {
+	  if (portlet.getWindowId().equals(counter.portletId)) {
 		counter.counter++;
 		return;
 	  }
 	}
-	counters.add(new CounterWrapper(portletId));
+	counters.add(new CounterWrapper(portlet.getWindowId()));
   }
 
-  public boolean isInvokedTooManyTimes(String windowId) {
+  public boolean isInvokedTooManyTimes(UIPortlet portlet) {
 	for (Iterator iter = counters.iterator(); iter.hasNext();) {
 	  CounterWrapper counter = (CounterWrapper) iter.next();
-	  if (windowId.equals(counter.portletId)) {
+	  if (portlet.getWindowId().equals(counter.portletId)) {
 		if (counter.counter + 1 > THRESHOLD) {
-		  log.info("Portlet " + windowId + " has already been invokated "
+		  log.info("Portlet " + portlet.getWindowId() + " has already been invokated "
 			  + THRESHOLD
 			  + " times and will not be more to avoid infinite cycles");
 		  return true;

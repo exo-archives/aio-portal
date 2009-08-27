@@ -9,6 +9,7 @@ import org.exoplatform.container.ExoContainerContext;
 import org.exoplatform.portal.application.PortletPreferences;
 //import org.exoplatform.portal.application.Preference;
 import org.exoplatform.portal.config.DataStorage;
+import org.exoplatform.portal.pc.ExoPortletStateType;
 import org.exoplatform.services.portletcontainer.pci.WindowID;
 import org.exoplatform.services.portletcontainer.pci.model.ExoPortletPreferences;
 import org.exoplatform.services.portletcontainer.pci.model.Preference;
@@ -78,6 +79,7 @@ public class PortalPortletInstanceContext implements InstanceContext
 	         case PORTLET_MODIFIED_EVENT:
 	            modifiedContext = event.getPortletContext();
 	            
+/*
 	            ExoContainer container = ExoContainerContext.getCurrentContainer();
 	            DataStorage dataStorage = (DataStorage)container.getComponentInstance(DataStorage.class);
 	            
@@ -128,8 +130,10 @@ public class PortalPortletInstanceContext implements InstanceContext
 	            		}
 	            	}
 	            }
-	            	            
 	            break;
+*/
+
+             throw new UnsupportedOperationException("TODO");
 	      }
 	   }
 
@@ -143,7 +147,7 @@ public class PortalPortletInstanceContext implements InstanceContext
 	      return modifiedContext;
 	   }
 
-	   public PortletStateType<?> getStateType() {
-		  return PortalPortletContext.HASHSTATETYPE;
+	   public ExoPortletStateType getStateType() {
+		  return ExoPortletStateType.getInstance();
 	   }
 	}

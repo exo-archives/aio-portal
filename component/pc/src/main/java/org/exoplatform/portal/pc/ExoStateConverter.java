@@ -24,11 +24,6 @@ import org.gatein.pc.api.PortletStateType;
 import org.gatein.pc.api.state.PropertyMap;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.ArrayList;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -37,92 +32,43 @@ import java.util.ArrayList;
 public class ExoStateConverter implements StateConverter {
 
   public <S extends Serializable> S marshall(PortletStateType<S> stateType, PortletState state)
-        throws StateConversionException, IllegalArgumentException
-  {
-     if (stateType.getJavaType().equals(HashMap.class))
-     {
-        Object map = marshall(state);
-        return (S)map;
-     }
-     else
-     {
-        throw new UnsupportedOperationException();
-     }
+    throws StateConversionException, IllegalArgumentException {
+    if (stateType.getJavaType().equals(ExoPortletState.class)) {
+      ExoPortletState map = marshall(state);
+      return (S)map;
+    }
+    else {
+      throw new UnsupportedOperationException();
+    }
   }
 
-  public HashMap marshall(PortletState state)
-  {
-     if (state == null)
-     {
-        throw new IllegalArgumentException("No null state");
-     }
-
-     HashMap map = new HashMap();
-     Iterator<String> iKeys = state.getProperties().keySet().iterator();
-     while (iKeys.hasNext())
-     {
-        String key = iKeys.next();
-        List<String> propList = state.getProperties().getProperty(key);
-
-        map.put(key, propList.toArray());
-     }
-
-     map.put("portletID", state.getPortletId());
-
-     return map;
+  public ExoPortletState marshall(PortletState state) {
+    if (state == null) {
+      throw new IllegalArgumentException("No null state");
+    }
+    ExoPortletState map = new ExoPortletState(state.getPortletId());
+    map.getState().putAll(state.getProperties());
+    return map;
   }
 
   public <S extends Serializable> PortletState unmarshall(PortletStateType<S> stateType, S marshalledState)
-        throws StateConversionException, IllegalArgumentException
-  {
-     if (stateType.getJavaType().equals(HashMap.class))
-     {
-        HashMap map = (HashMap)marshalledState;
-        return unmarshall(map);
-     }
-     else
-     {
-        throw new UnsupportedOperationException();
-     }
+    throws StateConversionException, IllegalArgumentException {
+    if (stateType.getJavaType().equals(ExoPortletState.class)) {
+      ExoPortletState map = (ExoPortletState)marshalledState;
+      return unmarshall(map);
+    }
+    else {
+      throw new UnsupportedOperationException();
+    }
   }
 
-  public PortletState unmarshall(Map marshalledState)
-  {
-     if (marshalledState == null)
-     {
-        throw new IllegalArgumentException("No null map");
-     }
-
-     PropertyMap properties = new SimplePropertyMap(marshalledState.size());
-
-
-     Iterator<String> iKeys = marshalledState.keySet().iterator();
-     while (iKeys.hasNext())
-     {
-        String key = iKeys.next();
-        if (key != "portletID")
-        {
-           Object mapValue = marshalledState.get(key);
-
-           if (mapValue instanceof Object[])
-           {
-              Object[] values = (Object[])mapValue;
-
-              List valueList = new ArrayList<String>();
-              for (Object value: values)
-              {
-                 if (value instanceof String)
-                    valueList.add((String)value);
-              }
-
-              properties.put(key, valueList);
-           }
-        }
-     }
-
-     String portletID = (String) marshalledState.get("portletID");
-
-     return new PortletState(portletID, properties);
+  public PortletState unmarshall(ExoPortletState marshalledState) {
+    if (marshalledState == null) {
+      throw new IllegalArgumentException("No null map");
+    }
+    PropertyMap properties = new SimplePropertyMap(marshalledState.getState());
+    String portletID = marshalledState.getPortletId();
+    return new PortletState(portletID, properties);
   }
 
 }

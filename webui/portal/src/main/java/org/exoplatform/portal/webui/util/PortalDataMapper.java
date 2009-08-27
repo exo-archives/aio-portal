@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.exoplatform.Constants;
 import org.exoplatform.portal.config.UserPortalConfig;
 import org.exoplatform.portal.config.model.Application;
 import org.exoplatform.portal.config.model.Container;
@@ -34,10 +33,6 @@ import org.exoplatform.portal.webui.page.UIPage;
 import org.exoplatform.portal.webui.page.UIPageBody;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.portal.UIPortalComponent;
-import org.exoplatform.services.portletcontainer.PortletContainerService;
-import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
-import org.exoplatform.services.portletcontainer.pci.PortletData;
-import org.exoplatform.services.portletcontainer.pci.model.Supports;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.core.UIComponent;
 
@@ -45,7 +40,6 @@ import org.gatein.common.net.media.MediaType;
 import org.gatein.pc.api.PortletInvoker;
 import org.gatein.pc.api.Portlet;
 import org.gatein.pc.api.PortletContext;
-import org.gatein.pc.api.PortletInvoker;
 import org.gatein.pc.api.info.ModeInfo;
 import org.gatein.pc.api.info.PortletInfo;
 /**
@@ -222,8 +216,8 @@ public class PortalDataMapper {
       uiPortlet.setAccessPermissions(model.getAccessPermissions());
     uiPortlet.setModifiable(model.isModifiable());    
     
-    PortletInvoker portletInvoker = (PortletInvoker)uiPortlet.getApplicationComponent(PortletInvoker.class);
-    PortletContext portletContext = uiPortlet.getPortletContext();
+    PortletInvoker portletInvoker = uiPortlet.getApplicationComponent(PortletInvoker.class);
+    PortletContext portletContext = uiPortlet.getProducerOfferedPortletContext();
     Portlet portlet = portletInvoker.getPortlet(portletContext);
     if (portlet == null || portlet.getInfo() == null) return;
     

@@ -30,13 +30,10 @@ import org.exoplatform.Constants;
 import org.exoplatform.commons.utils.Text;
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.portal.application.PortalRequestContext;
-import org.exoplatform.portal.application.PortletPreferences;
-import org.exoplatform.portal.application.jcr.PortalPortletContext;
 import org.exoplatform.portal.application.jcr.PortalPortletInstanceContext;
-import org.exoplatform.portal.config.DataStorage;
+import org.exoplatform.portal.pc.ExoPortletState;
 import org.exoplatform.resolver.ApplicationResourceResolver;
 import org.exoplatform.services.log.ExoLogger;
-import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
 import org.exoplatform.webui.application.WebuiApplication;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.core.UIComponent;
@@ -44,12 +41,10 @@ import org.exoplatform.webui.core.lifecycle.Lifecycle;
 import org.exoplatform.webui.core.lifecycle.WebuiBindingContext;
 import org.exoplatform.webui.event.Event;
 import org.gatein.pc.api.Mode;
-import org.gatein.common.net.media.MediaType;
-import org.gatein.common.util.MarkupInfo;
 import org.gatein.common.util.MultiValuedPropertyMap;
-import org.gatein.pc.api.PortletContext;
 import org.gatein.pc.api.PortletInvoker;
 import org.gatein.pc.api.StateString;
+import org.gatein.pc.api.StatefulPortletContext;
 import org.gatein.pc.api.invocation.RenderInvocation;
 import org.gatein.pc.api.invocation.response.FragmentResponse;
 import org.gatein.pc.api.invocation.response.PortletInvocationResponse;
@@ -172,15 +167,7 @@ public class UIPortletLifecycle extends Lifecycle {
     {
     RenderInvocation renderInvocation = new RenderInvocation(portletInvocationContext);
     
-    PortletContext portletContext = uiPortlet.getPortletContext();
-    
-    DataStorage dataStorage = (DataStorage)container.getComponentInstance(DataStorage.class);
-    
-    ExoWindowID exoWindowID = new ExoWindowID(uiPortlet.getWindowId());
-    
-    PortletPreferences preferences = dataStorage.getPortletPreferences(exoWindowID);
-
-    PortletContext preferencesPortletContext = PortalPortletContext.createPortalPortletContext(portletContext, preferences);
+    StatefulPortletContext<ExoPortletState> preferencesPortletContext = uiPortlet.getPortletContext();
     
     List<Cookie> requestCookies = new ArrayList<Cookie>();
     for (Cookie cookie : prcontext.getRequest().getCookies())
@@ -190,7 +177,7 @@ public class UIPortletLifecycle extends Lifecycle {
     
     renderInvocation.setClientContext(new AbstractClientContext(prcontext.getRequest(), requestCookies));
     renderInvocation.setServerContext(new AbstractServerContext(prcontext.getRequest(), prcontext.getResponse()));
-    renderInvocation.setInstanceContext(new PortalPortletInstanceContext(portletContext.getId(), exoWindowID));//AbstractInstanceContext(portletContext.getId()));
+    renderInvocation.setInstanceContext(new PortalPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), uiPortlet.getExoWindowID()));
     renderInvocation.setUserContext(new AbstractUserContext(prcontext.getRequest()));
     renderInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getWindowId()));
     renderInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));

@@ -37,11 +37,7 @@ import javax.xml.namespace.QName;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.Constants;
 import org.exoplatform.container.ExoContainer;
-import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
-import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.application.PortalRequestContext;
-import org.exoplatform.portal.application.PortletPreferences;
-import org.exoplatform.portal.application.jcr.PortalPortletContext;
 import org.exoplatform.portal.application.jcr.PortalPortletInstanceContext;
 import org.exoplatform.portal.webui.page.UIPage;
 import org.exoplatform.portal.webui.page.UIPageBody;
@@ -50,6 +46,7 @@ import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
+import org.exoplatform.portal.pc.ExoPortletState;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.UserProfile;
@@ -62,17 +59,15 @@ import org.gatein.pc.api.Mode;
 import org.gatein.common.net.media.MediaType;
 import org.gatein.common.util.MarkupInfo;
 import org.gatein.pc.api.ParametersStateString;
-import org.gatein.pc.api.PortletContext;
 import org.gatein.pc.api.PortletInvoker;
 import org.gatein.pc.api.StateString;
+import org.gatein.pc.api.StatefulPortletContext;
 import org.gatein.pc.api.invocation.ActionInvocation;
 import org.gatein.pc.api.invocation.EventInvocation;
 import org.gatein.pc.api.invocation.ResourceInvocation;
-import org.gatein.pc.api.invocation.SimplePortletInvocationContext;
 import org.gatein.pc.api.invocation.response.ContentResponse;
 import org.gatein.pc.api.invocation.response.PortletInvocationResponse;
 import org.gatein.pc.api.invocation.response.UpdateNavigationalStateResponse;
-import org.gatein.pc.api.spi.PortletInvocationContext;
 import org.gatein.pc.impl.spi.AbstractClientContext;
 import org.gatein.pc.impl.spi.AbstractPortalContext;
 import org.gatein.pc.impl.spi.AbstractRequestContext;
@@ -116,24 +111,12 @@ public class UIPortletActionListener {
       allParams.putAll(prcontext.getRequest().getParameterMap());
       
       //
-      PortletInvoker portletInvoker = (PortletInvoker)uiPortlet.getApplicationComponent(PortletInvoker.class);
+      PortletInvoker portletInvoker = uiPortlet.getApplicationComponent(PortletInvoker.class);
 
-      MediaType mediaType = MediaType.create("text/html");
-      String charset = "UTF-8";
-      MarkupInfo markupInfo = new MarkupInfo(mediaType, charset);
-      
-      String baseURL = new StringBuilder(prcontext.getRequestURI()).append("?"
-  	        + PortalRequestContext.UI_COMPONENT_ID).append("=").append(uiPortlet.getId()).toString();
-      
-      PortletInvocationContext pic = new SimplePortletInvocationContext(markupInfo, baseURL, prcontext.getRequest(), prcontext.getResponse());
+      ExoPortletInvocationContext pic = new ExoPortletInvocationContext(prcontext, uiPortlet);
       ActionInvocation actionInvocation = new ActionInvocation(pic);
-      
-      PortletContext portletContext = uiPortlet.getPortletContext();
-      DataStorage dataStorage = (DataStorage)uiPortlet.getApplicationComponent(DataStorage.class);
-      
-      ExoWindowID exoWindowID = uiPortlet.getExoWindowID();
-      PortletPreferences preferences = dataStorage.getPortletPreferences(exoWindowID);
-      PortletContext preferencesPortletContext = PortalPortletContext.createPortalPortletContext(portletContext, preferences);
+
+      StatefulPortletContext<ExoPortletState> preferencesPortletContext = uiPortlet.getPortletContext();
 
       List<Cookie> requestCookies = new ArrayList<Cookie>();
       for (Cookie cookie : prcontext.getRequest().getCookies())
@@ -143,7 +126,7 @@ public class UIPortletActionListener {
       
       actionInvocation.setClientContext(new AbstractClientContext(prcontext.getRequest(), requestCookies));
       actionInvocation.setServerContext(new AbstractServerContext(prcontext.getRequest(), prcontext.getResponse()));
-      actionInvocation.setInstanceContext(new PortalPortletInstanceContext(portletContext.getId(), exoWindowID));//(new AbstractInstanceContext(portletContext.getId()));
+      actionInvocation.setInstanceContext(new PortalPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), uiPortlet.getExoWindowID()));
       actionInvocation.setUserContext(new AbstractUserContext(prcontext.getRequest()));
       actionInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getWindowId()));
       actionInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));
@@ -314,7 +297,7 @@ public class UIPortletActionListener {
       EventListener<UIPortlet> {
     public void execute(Event<UIPortlet> event) throws Exception {
       UIPortlet uiPortlet = event.getSource();
-      log.info("Serve Resource for portlet: " + uiPortlet.getPortletContext().getId());
+      log.info("Serve Resource for portlet: " + uiPortlet.getPortletContext());
       try {
         ExoContainer container = event.getRequestContext().getApplication()
             .getApplicationServiceContainer();
@@ -336,15 +319,11 @@ public class UIPortletActionListener {
         String baseURL = new StringBuilder(context.getRequestURI()).append("?"
       	        + PortalRequestContext.UI_COMPONENT_ID).append("=").append(uiPortlet.getId()).toString();
           
-        PortletInvocationContext pic = new SimplePortletInvocationContext(markupInfo, baseURL, context.getRequest(), context.getResponse());
+        ExoPortletInvocationContext pic = new ExoPortletInvocationContext(context, uiPortlet);
 
         ResourceInvocation resourceInvocation = new ResourceInvocation(pic);
         
-        PortletContext portletContext = uiPortlet.getPortletContext();
-        DataStorage dataStorage = (DataStorage)uiPortlet.getApplicationComponent(DataStorage.class);
-        ExoWindowID exoWindowID = new ExoWindowID(uiPortlet.getWindowId());
-        PortletPreferences preferences = dataStorage.getPortletPreferences(exoWindowID);
-        PortletContext preferencesPortletContext = PortalPortletContext.createPortalPortletContext(portletContext, preferences);
+        StatefulPortletContext<ExoPortletState> preferencesPortletContext = uiPortlet.getPortletContext();
         
         List<Cookie> requestCookies = new ArrayList<Cookie>();
         for (Cookie cookie : context.getRequest().getCookies())
@@ -353,7 +332,7 @@ public class UIPortletActionListener {
         }
         resourceInvocation.setClientContext(new AbstractClientContext(context.getRequest(), requestCookies));
         resourceInvocation.setServerContext(new AbstractServerContext(context.getRequest(), context.getResponse()));
-        resourceInvocation.setInstanceContext(new PortalPortletInstanceContext(portletContext.getId(), exoWindowID));//AbstractInstanceContext(portletContext.getId()));
+        resourceInvocation.setInstanceContext(new PortalPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), uiPortlet.getExoWindowID()));
         resourceInvocation.setUserContext(new AbstractUserContext(context.getRequest()));
         resourceInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getWindowId()));
         resourceInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));
@@ -378,7 +357,7 @@ public class UIPortletActionListener {
         String contentType = piResponse.getContentType();
 
         log.info("Try to get a resource of type: " + contentType
-            + " for the portlet: " + uiPortlet.getPortletContext().getId());
+            + " for the portlet: " + uiPortlet.getPortletContext());
         if (contentType.startsWith("text")) {
         	context.getWriter().write(piResponse.getContent());
         } else {
@@ -474,9 +453,9 @@ public class UIPortletActionListener {
             .hasNext();) {
           UIPortlet uiPortletInPage = (UIPortlet) iterator.next();
           if (uiPortletInPage.supportsProcessingEvent(eventName)
-              && !eventsWrapper.isInvokedTooManyTimes(uiPortletInPage.getPortletContext().getId())) {
+              && !eventsWrapper.isInvokedTooManyTimes(uiPortletInPage)) {
             List<javax.portlet.Event> newEvents = processEvent(uiPortletInPage, nativeEvent);
-            eventsWrapper.increaseCounter(uiPortletInPage.getPortletContext().getId());
+            eventsWrapper.increaseCounter(uiPortletInPage);
             if (context.useAjax()) {
               log
                   .info("Events were generated inside the scope of an AJAX call, hence will only refresh the targeted portlets");
@@ -510,29 +489,18 @@ public class UIPortletActionListener {
    */
   public static List<javax.portlet.Event> processEvent(UIPortlet uiPortlet, javax.portlet.Event event) {
     log.info("Process Event: " + event.getName() + " for portlet: "
-        + uiPortlet.getPortletContext().getId());
+        + uiPortlet.getProducerOfferedPortletContext().getId());
     try {
       PortalRequestContext context = (PortalRequestContext) WebuiRequestContext
           .getCurrentInstance();
 
       //
-      PortletInvoker portletInvoker = (PortletInvoker)uiPortlet.getApplicationComponent(PortletInvoker.class);
+      PortletInvoker portletInvoker = uiPortlet.getApplicationComponent(PortletInvoker.class);
 
-      MediaType mediaType = MediaType.create("text/html");
-      String charset = "UTF-8";
-      MarkupInfo markupInfo = new MarkupInfo(mediaType, charset);
-      
-      String baseURL = new StringBuilder(context.getRequestURI()).append("?"
-  	        + PortalRequestContext.UI_COMPONENT_ID).append("=").append(uiPortlet.getId()).toString();
-      
-      PortletInvocationContext pic = new SimplePortletInvocationContext(markupInfo, baseURL,context.getRequest(), context.getResponse());
+      ExoPortletInvocationContext pic = new ExoPortletInvocationContext(context, uiPortlet);
       EventInvocation eventInvocation = new EventInvocation(pic);
       
-      PortletContext portletContext = uiPortlet.getPortletContext();
-      DataStorage dataStorage = (DataStorage)uiPortlet.getApplicationComponent(DataStorage.class);
-      ExoWindowID exoWindowID = new ExoWindowID(uiPortlet.getWindowId());
-      PortletPreferences preferences = dataStorage.getPortletPreferences(exoWindowID);
-      PortletContext preferencesPortletContext = PortalPortletContext.createPortalPortletContext(portletContext, preferences);
+      StatefulPortletContext<ExoPortletState> preferencesPortletContext = uiPortlet.getPortletContext();
       
       List<Cookie> requestCookies = new ArrayList<Cookie>();
       for (Cookie cookie : context.getRequest().getCookies())
@@ -541,7 +509,7 @@ public class UIPortletActionListener {
       }
       eventInvocation.setClientContext(new AbstractClientContext(context.getRequest(), requestCookies));
       eventInvocation.setServerContext(new AbstractServerContext(context.getRequest(), context.getResponse()));
-      eventInvocation.setInstanceContext(new PortalPortletInstanceContext(portletContext.getId(), exoWindowID));//AbstractInstanceContext(portletContext.getId()));
+      eventInvocation.setInstanceContext(new PortalPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), uiPortlet.getExoWindowID()));
       eventInvocation.setUserContext(new AbstractUserContext(context.getRequest()));
       eventInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getWindowId()));
       eventInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));
@@ -612,7 +580,7 @@ public class UIPortletActionListener {
       return events;
     } catch (Exception e) {
       log.error("Problem while processesing event for the portlet: "
-          + uiPortlet.getPortletContext().getId(), e);
+          + uiPortlet.getProducerOfferedPortletContext().getId(), e);
     }
     return null;
   }
