@@ -28,7 +28,6 @@ import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.ExoContainerContext;
 import org.exoplatform.container.component.ComponentRequestLifecycle;
 import org.exoplatform.services.log.ExoLogger;
-import org.exoplatform.services.portletcontainer.helper.WindowInfosContainer;
 import org.exoplatform.web.application.Application;
 import org.exoplatform.web.command.CommandHandler;
 /**
@@ -119,11 +118,8 @@ public class WebAppController {
         for(ComponentRequestLifecycle component : components) {
           component.startRequest(portalContainer);
         }
-        WindowInfosContainer.createInstance(portalContainer, req.getSession().getId(), req.getRemoteUser());
-        
         handler.execute(this, req, res) ;
       } finally {
-        WindowInfosContainer.setInstance(null);
         for(ComponentRequestLifecycle component : components) {
           try {
             component.endRequest(portalContainer);

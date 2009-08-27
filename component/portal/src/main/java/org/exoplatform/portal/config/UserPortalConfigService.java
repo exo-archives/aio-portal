@@ -25,8 +25,6 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.exoplatform.commons.utils.LazyPageList;
-import org.exoplatform.container.ExoContainer;
-import org.exoplatform.container.ExoContainerContext;
 import org.exoplatform.container.component.ComponentPlugin;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.portal.config.model.Application;
@@ -43,13 +41,8 @@ import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.organization.Group;
 import org.exoplatform.services.organization.OrganizationService;
-import org.exoplatform.services.portletcontainer.PortletContainerService;
 import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
-import org.exoplatform.services.portletcontainer.pci.Input;
 import org.picocontainer.Startable;
-import org.gatein.pc.api.PortletContext;
-import org.gatein.pc.api.PortletInvoker;
-import org.gatein.pc.api.info.PreferencesInfo;
 
 
 /**
@@ -485,22 +478,26 @@ public class UserPortalConfigService implements Startable {
 
 	private javax.portlet.PortletPreferences getPreferences(Application app)
 	throws Exception {
+/*
 		ExoWindowID windowID = new ExoWindowID(app.getInstanceId());
 		Input input = new Input();
 		input.setInternalWindowID(windowID);
 		ExoContainer container = ExoContainerContext.getCurrentContainer();
 		PortletContainerService pcServ = (PortletContainerService) container
 		.getComponentInstanceOfType(PortletContainerService.class);
-		
+
 		PortletInvoker portletInvoker = (PortletInvoker) container.getComponentInstance(PortletInvoker.class);
 	    PortletContext portletContext = null;
 		PreferencesInfo prefInfos = portletInvoker.getPortlet(portletContext).getInfo().getPreferences();
 
 		return pcServ.getPortletPreferences(input);
+*/
+    throw new UnsupportedOperationException("fixme");
 	}
 
 	private void setPreferences(Application portlet,
 			javax.portlet.PortletPreferences portletPreferences) throws Exception {
+/*
 		ExoWindowID windowID = new ExoWindowID(portlet.getInstanceId());
 		Input input = new Input();
 		input.setInternalWindowID(windowID);
@@ -508,6 +505,8 @@ public class UserPortalConfigService implements Startable {
 		PortletContainerService pcServ = (PortletContainerService) container
 		.getComponentInstanceOfType(PortletContainerService.class);
 		pcServ.setPortletPreferences(input, portletPreferences);
+*/
+    throw new UnsupportedOperationException("fixme");
 	}
 
 	private void renewInstanceId(Application app, String ownerType, String ownerId) {

@@ -25,12 +25,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.exoplatform.portletcontainer</groupId>
-      <artifactId>exo.pc.component.core</artifactId>
-      <version>${org.exoplatform.pc.version}</version>
-    </dependency>
-
-    <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.component.portal</artifactId>
       <version>2.6-int-SNAPSHOT</version>

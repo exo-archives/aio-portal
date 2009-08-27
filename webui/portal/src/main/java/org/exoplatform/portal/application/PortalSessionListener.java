@@ -23,7 +23,6 @@ import org.exoplatform.services.log.Log;
 import org.exoplatform.container.PortalContainer;
 import org.exoplatform.container.RootContainer;
 import org.exoplatform.services.log.ExoLogger;
-import org.exoplatform.services.portletcontainer.helper.WindowInfosContainer;
 import org.exoplatform.web.WebAppController;
 
 /**
@@ -70,7 +69,6 @@ public class PortalSessionListener implements HttpSessionListener {
       PortalApplication portalApp =  controller.getApplication(PortalApplication.PORTAL_APPLICATION_ID) ;
       portalApp.getStateManager().expire(event.getSession().getId(), portalApp) ;
       
-      WindowInfosContainer.removeInstance(portalContainer, event.getSession().getId());
     } catch(Exception ex) {
       log.error("Error while destroying a portal session",ex);
     } finally {

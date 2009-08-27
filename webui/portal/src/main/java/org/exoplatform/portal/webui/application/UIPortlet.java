@@ -49,7 +49,6 @@ import org.exoplatform.portal.pc.ExoPortletStateType;
 import org.exoplatform.services.log.ExoLogger;
 //TODO: replace the ExoWindowId class with the portlet api one
 import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
-import org.exoplatform.services.portletcontainer.pci.model.ExoPortletPreferences;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.event.Event.Phase;
