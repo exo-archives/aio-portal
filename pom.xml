@@ -18,9 +18,44 @@
       <id>repository.exo</id>
       <name>eXo Maven repository</name>
       <url>http://maven2.exoplatform.org/rest/maven2</url>
-      <layout>default</layout>
+    </repository>
+    <repository>
+      <id>repository.jboss.org</id>
+      <url>http://repository.jboss.org/maven2</url>
+    </repository>
+    <repository>
+      <id>snapshots.jboss.org</id>
+      <url>http://snapshots.jboss.org/maven2</url>
+      <releases>
+         <enabled>false</enabled>
+      </releases>
+      <snapshots>
+         <enabled>true</enabled>
+      </snapshots>
     </repository>
   </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>repository.exo</id>
+      <name>eXo Maven repository</name>
+      <url>http://maven2.exoplatform.org/rest/maven2</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>repository.jboss.org</id>
+      <url>http://repository.jboss.org/maven2</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>snapshots.jboss.org</id>
+      <url>http://snapshots.jboss.org/maven2</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+  
   
   <properties>
      <exo.product.name>exo-portal</exo.product.name>
