@@ -70,9 +70,10 @@
 }
 
 .UIPage .UIRowContainer {
-	padding: 1px;
+
 }
 
 .UIPage .VIEW-PAGE {
-	padding: 0px;
+	padding:0px 8px 8px 8px;
+	background: #b6b6b6;
 }
