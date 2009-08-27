@@ -27,7 +27,6 @@ import org.gatein.pc.federation.impl.FederatingPortletInvokerService;
 import org.gatein.pc.PortletInvokerInterceptor;
 import org.gatein.pc.impl.state.producer.PortletStatePersistenceManagerService;
 import org.gatein.pc.impl.state.StateManagementPolicyService;
-import org.gatein.pc.impl.state.MapStateConverter;
 import org.gatein.pc.mc.PortletApplicationDeployer;
 import org.gatein.pc.state.producer.ProducerPortletInvoker;
 import org.gatein.pc.state.producer.PortletStatePersistenceManager;
@@ -66,7 +65,7 @@ public class ExoKernelIntegration extends HttpServlet {
      producerStateManagementPolicy.setPersistLocally(false);
 
      // The producer state converter
-     StateConverter producerStateConverter = new MapStateConverter();//StateConverterV0();
+     StateConverter producerStateConverter = new ExoStateConverter();//StateConverterV0();
 
      // The portlet container invoker
      ContainerPortletInvoker containerPortletInvoker = new ContainerPortletInvoker();
