@@ -49,6 +49,7 @@ import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.core.UIApplication;
 import org.exoplatform.webui.core.UIComponent;
+import org.exoplatform.webui.core.UIComponentDecorator;
 import org.exoplatform.webui.core.UIContainer;
 import org.exoplatform.webui.event.Event;
 
@@ -78,6 +79,8 @@ public class UIPortalApplication extends UIApplication {
   private Orientation        orientation_      = Orientation.LT;
 
   final static public String UI_WORKING_WS_ID  = "UIWorkingWorkspace";
+  
+  final static public String UI_VIEW_WS_ID  = "UIViewWS";
 
   final static public String UI_MASK_WS_ID     = "UIMaskWorkspace";
 
@@ -299,6 +302,8 @@ public class UIPortalApplication extends UIApplication {
     UIWorkingWorkspace uiWorkingWorkspace = addChild(UIWorkingWorkspace.class,
                                                      UIPortalApplication.UI_WORKING_WS_ID,
                                                      null);
+    UIComponentDecorator uiViewWS = uiWorkingWorkspace.addChild(UIComponentDecorator.class, null, UI_VIEW_WS_ID);
+    
     DataStorage dataStorage = getApplicationComponent(DataStorage.class);
     Container container = dataStorage.getSharedLayout();
     UIPortal uiPortal = createUIComponent(UIPortal.class, null, null);
@@ -309,9 +314,9 @@ public class UIPortalApplication extends UIApplication {
     	UISiteBody uiSiteBody = uiContainer.findFirstComponentOfType(UISiteBody.class);
     	uiSiteBody.setUIComponent(uiPortal);
     	uiContainer.setRendered(true);
-    	uiWorkingWorkspace.addChild(uiContainer);
+    	uiViewWS.setUIComponent(uiContainer);
     } else {
-    	uiWorkingWorkspace.addChild(uiPortal);
+    	uiViewWS.setUIComponent(uiPortal);
     }
     uiWorkingWorkspace.addChild(UIPortalToolPanel.class, null, null).setRendered(false);
     addChild(UIMaskWorkspace.class, UIPortalApplication.UI_MASK_WS_ID, null);

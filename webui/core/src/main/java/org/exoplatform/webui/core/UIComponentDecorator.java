@@ -69,13 +69,14 @@ public class UIComponentDecorator extends UIComponent {
     uicomponent_.processRender((WebuiRequestContext)WebuiRequestContext.getCurrentInstance()) ;
   }
   
-  static public class UIComponentDecoratorLifecycle extends Lifecycle<UIComponent> {
+  static public class UIComponentDecoratorLifecycle extends Lifecycle<UIComponentDecorator> {
 
-  	public void processRender(UIComponent uicomponent , WebuiRequestContext context) throws Exception {
-      UIComponentDecorator uiContainer = (UIComponentDecorator) uicomponent;      
-      if(uiContainer.uicomponent_ != null) {
-        uiContainer.uicomponent_.processRender(context) ;
+  	public void processRender(UIComponentDecorator uicomponent , WebuiRequestContext context) throws Exception {
+      context.getWriter().append("<div class=\"").append(uicomponent.getId()).append("\" id=\"").append(uicomponent.getId()).append("\">");
+      if(uicomponent.uicomponent_ != null) {
+        uicomponent.uicomponent_.processRender(context) ;
       }
+      context.getWriter().append("</div>");
     }
   }
 } 

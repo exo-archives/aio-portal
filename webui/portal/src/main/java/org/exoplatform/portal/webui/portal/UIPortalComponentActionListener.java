@@ -175,9 +175,10 @@ public class UIPortalComponentActionListener {
         pcontext.setFullRender(true);
       }
 
-      UIComponent uiWorking = uiApp.findFirstComponentOfType(UIPortal.class);
+      UIWorkingWorkspace uiWorkingWS = uiApp.getChild(UIWorkingWorkspace.class);
+      UIComponent uiWorking = uiWorkingWS.getChild(UIPortalToolPanel.class);
       if (!uiWorking.isRendered())
-        uiWorking = uiApp.findFirstComponentOfType(UIPortalToolPanel.class);
+      	uiWorking = uiApp.findFirstComponentOfType(UIPortal.class);
 
       String sourceId = pcontext.getRequestParameter("srcID");
       UIComponent uiSource = uiWorking.findComponentById(sourceId);

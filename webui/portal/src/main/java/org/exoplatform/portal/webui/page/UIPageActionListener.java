@@ -69,9 +69,8 @@ public class UIPageActionListener {
       }
       UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
       PortalRequestContext pcontext = Util.getPortalRequestContext();     
-      pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);      
-//      uiPortal.setRenderSibbling(UIPortal.class);
-      uiPortal.setRendered(true);
+      pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);   
+      uiWorkingWS.setRenderedChild(UIPortalApplication.UI_VIEW_WS_ID);
       pcontext.setFullRender(true);
       
       String currentUri = (uiPortal.getSelectedNode() == null) ? null: uiPortal.getSelectedNode().getUri() ;
