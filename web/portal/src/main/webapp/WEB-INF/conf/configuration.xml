@@ -13,6 +13,7 @@
 
   <import>war:/conf/organization/jcr-configuration.xml</import>
 
+  <!--JBoss Identity IDM integration - uncomment instead of jcr-configuration to enable -->
   <!--<import>war:/conf/organization/idm-configuration.xml</import>    -->
 
   <!-- <import>war:/conf/jdbc-configuration.xml</import> -->
