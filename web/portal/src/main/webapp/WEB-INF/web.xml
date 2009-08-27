@@ -140,7 +140,7 @@
    <!-- Sets up the JBoss Portlet Container stack -->
    <servlet>
       <servlet-name>exoint</servlet-name>
-      <servlet-class>org.gatein.pc.exo.ExoKernelIntegration</servlet-class>
+      <servlet-class>org.exoplatform.portal.pc.ExoKernelIntegration</servlet-class>
       <load-on-startup>0</load-on-startup>
    </servlet>
  

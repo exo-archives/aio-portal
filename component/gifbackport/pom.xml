@@ -10,6 +10,7 @@
   <packaging>jar</packaging>
   <version>2.6-int-SNAPSHOT</version>
   <name>eXo javax.imageio GIF plugin backport</name>
+  <url>http://www.exoplatform.org</url>
   <description>eXo GIF plugin backport</description>
   
   <dependencies>

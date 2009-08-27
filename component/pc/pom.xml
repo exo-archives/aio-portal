@@ -8,6 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>exo.portal.component.pc</artifactId>
   <packaging>jar</packaging>
+  <version>2.6-int-SNAPSHOT</version>
   <name>GateIn PC integration</name>
   <url>http://www.exoplatform.org</url>
   <description>GateIn Portlet Container integration</description>
