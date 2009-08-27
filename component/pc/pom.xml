@@ -19,6 +19,26 @@
       <artifactId>pc-api</artifactId>
       <version>${org.gatein.pc.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.gatein.pc</groupId>
+      <artifactId>pc-pc</artifactId>
+      <version>${org.gatein.pc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.gatein.pc</groupId>
+      <artifactId>pc-mc</artifactId>
+      <version>${org.gatein.pc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.gatein.pc</groupId>
+      <artifactId>pc-federation</artifactId>
+      <version>${org.gatein.pc.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.kernel</groupId>
+      <artifactId>exo.kernel.container</artifactId>
+      <version>${org.exoplatform.kernel.version}</version>
+    </dependency>
 
   </dependencies>
   
