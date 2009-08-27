@@ -16,11 +16,10 @@
  */
 package org.exoplatform.portal.config.serialize;
 
-import org.exoplatform.portal.config.model.Properties;
-
 import java.util.Iterator;
 import java.util.Map;
 
+import org.exoplatform.portal.config.model.Properties;
 import org.jibx.runtime.IAliasable;
 import org.jibx.runtime.IMarshaller;
 import org.jibx.runtime.IMarshallingContext;
@@ -57,9 +56,6 @@ public class JibxPropertiesMapper implements IMarshaller, IUnmarshaller, IAliasa
     marshallIndex = index;
     marshallName = name;
   }
-
-  @SuppressWarnings("unused")
-  public boolean isExtension(String index) { return false; }
 
   @SuppressWarnings("unused")
   public boolean isExtension(int index) { return false; }
