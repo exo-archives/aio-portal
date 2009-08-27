@@ -132,15 +132,10 @@
 	</servlet>
  
    <!-- Sets up the Tomcat web module -->
+   <!-- julien : that should be somehow only for tomcat, so in a tomcat integration war only -->
    <servlet>
       <servlet-name>ContainerServlet</servlet-name>
       <servlet-class>org.gatein.wci.impl.tomcat.TC6ContainerServlet</servlet-class>
-      <load-on-startup>0</load-on-startup>
-   </servlet>
-   <!-- Sets up the JBoss Portlet Container stack -->
-   <servlet>
-      <servlet-name>exoint</servlet-name>
-      <servlet-class>org.exoplatform.portal.pc.ExoKernelIntegration</servlet-class>
       <load-on-startup>0</load-on-startup>
    </servlet>
  

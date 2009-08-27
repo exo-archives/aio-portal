@@ -17,7 +17,7 @@
 package org.exoplatform.portal.pc;
 
 import org.exoplatform.container.ExoContainer;
-import org.exoplatform.container.ExoContainerContext;
+import org.exoplatform.container.RootContainer;
 import org.gatein.wci.ServletContainer;
 import org.gatein.pc.api.PortletInvoker;
 import org.gatein.pc.container.ContainerPortletDispatcher;
@@ -40,20 +40,19 @@ import org.gatein.pc.aspects.portlet.ProducerCacheInterceptor;
 import org.gatein.pc.aspects.portlet.ContextDispatcherInterceptor;
 import org.gatein.pc.aspects.portlet.SecureTransportInterceptor;
 import org.gatein.pc.aspects.portlet.ValveInterceptor;
-
-import javax.servlet.http.HttpServlet;
+import org.picocontainer.Startable;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
  * @version $Revision$
  */
-public class ExoKernelIntegration extends HttpServlet {
+public class ExoKernelIntegration implements Startable {
 
   protected PortletApplicationDeployer portletApplicationRegistry;
 
-  public void init()
+  public void start()
   {
-     ExoContainer container = ExoContainerContext.getCurrentContainer();
+     ExoContainer container = RootContainer.getInstance();
 
      // The producer persistence manager
      PortletStatePersistenceManagerService producerPersistenceManager = new PortletStatePersistenceManagerService();
@@ -134,7 +133,7 @@ public class ExoKernelIntegration extends HttpServlet {
   }
 
 
-  public void destroy()
+  public void stop()
   {
      if (portletApplicationRegistry != null)
      {
