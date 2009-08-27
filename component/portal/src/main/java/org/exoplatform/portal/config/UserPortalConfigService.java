@@ -208,12 +208,18 @@ public class UserPortalConfigService implements Startable {
 	 */
 	public void createUserPortalConfig(String portalName, String template)
 	throws Exception {
-		NewPortalConfig portalConfig = newPortalConfigListener_
-		.getPortalConfig(PortalConfig.PORTAL_TYPE);
+		NewPortalConfig portalConfig = newPortalConfigListener_.getPortalConfig(PortalConfig.PORTAL_TYPE);
+
+    //
 		portalConfig.setTemplateOwner(template);
 		portalConfig.getPredefinedOwner().clear();
 		portalConfig.getPredefinedOwner().add(portalName);
-		newPortalConfigListener_.initPortalConfigDB(portalConfig);
+
+    //
+    newPortalConfigListener_.initPortletPreferencesDB(portalConfig);
+    newPortalConfigListener_.initPortalConfigDB(portalConfig);
+    newPortalConfigListener_.initPageDB(portalConfig);
+    newPortalConfigListener_.initPageNavigationDB(portalConfig);
 	}
 
 	/**
