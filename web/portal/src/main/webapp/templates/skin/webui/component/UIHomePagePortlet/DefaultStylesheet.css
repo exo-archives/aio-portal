@@ -41,7 +41,7 @@
 
 
 .UIHomePagePortlet .TRContainer .VersionIcon {
-	background: url("DefaultSkin/background/VersionIcon.gif") no-repeat left ;
+	background: url("DefaultSkin/background/HomePagePortlet.gif") no-repeat left -978px;
 	height: 65px;
 	width: 50px;
 	margin: 0 auto;
@@ -49,7 +49,7 @@
 }
 
 .UIHomePagePortlet .TRContainer .DownloadIcon {
-	background: url("DefaultSkin/background/DownLoadIcon.gif") no-repeat left ;
+	background: url("DefaultSkin/background/HomePagePortlet.gif") no-repeat left -1098px;
 	height: 65px;
 	width: 65px;
 	margin: 8px auto;
@@ -57,7 +57,7 @@
 }
 
 .UIHomePagePortlet .TRContainer .ContactIcon {
-	background: url("DefaultSkin/background/ContackIcon.gif") no-repeat left ;
+	background: url("DefaultSkin/background/HomePagePortlet.gif") no-repeat left -1209px;
 	height: 70px;
 	width: 50px;
 	margin: 0 auto;
@@ -227,19 +227,4 @@ _html .UIHomePagePortlet .HomePortletContent .RightAccountsContainer {
 
 .UIHomePagePortlet .ClearBoth {
 	clear: both; 
-}
-
-.BottomDecoratorHome .BottomDecoratorLeft{
-	background: url('DefaultSkin/background/BottomDecoratorLeft.gif') no-repeat left;
-	padding-left: 7px;
-}
-
-.BottomDecoratorHome .BottomDecoratorRight{
-	background: url('DefaultSkin/background/BottomDecoratorRight.gif') no-repeat right;
-	padding-right: 7px;
-}
-
-.BottomDecoratorHome .BottomDecoratorMiddle{
-	background: white;
-	height: 7px;
 }
