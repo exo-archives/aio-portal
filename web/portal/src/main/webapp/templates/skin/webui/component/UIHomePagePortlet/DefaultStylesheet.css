@@ -163,7 +163,7 @@ _html .UIHomePagePortlet .HomePortletContent .RightAccountsContainer {
 	width: 120px;
 	float: left; /* orientation=lt */
 	float: right; /* orientation=rt */
-	padding: 0px 35px 0px 0px; /* orientation=lt */
+	padding: 0px 34px 0px 0px; /* orientation=lt */
 	padding: 0px 0px 0px 34px; /* orientation=rt */
 }
 
