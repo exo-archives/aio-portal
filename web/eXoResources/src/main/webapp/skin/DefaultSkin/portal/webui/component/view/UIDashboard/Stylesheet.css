@@ -40,7 +40,7 @@
 	padding: 10px;
 }
 
-UITabPaneDashboard .UIHorizontalTabs .TabsContainer {
+.UITabPaneDashboard .UIHorizontalTabs .TabsContainer {
 	background: url('/eXoResources/skin/DefaultSkin/webui/component/UIPopup/UIPopupWindow/background/CenterHorizontalTabs.gif') repeat-x bottom;
 	height: 26px;
 	padding: 0 2px;

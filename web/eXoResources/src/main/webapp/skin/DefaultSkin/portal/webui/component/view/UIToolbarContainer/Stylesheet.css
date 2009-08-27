@@ -34,18 +34,19 @@
 .UIToolbarContainer .NormalContainerBlock .ToolbarContainer {	
 	background: url('background/ToolbarContainer.gif') repeat-x left -32px;	
 	height: 32px;
-	}
+	border-left: 1px solid white;
+	border-right: 1px solid white;
+}
 
 .UIToolbarContainer .ToolbarContainer a {
 	display: block;
-	padding-left: 30px; /* orientation=lt */
-	padding-right: 30px; /* orientation=rt */
+	padding-left: 35px; /* orientation=lt */
+	padding-right: 35px; /* orientation=rt */
 	white-space: nowrap;
 }
 
-
-.UIToolbarContainer a:hover {
-	color: white;
+.UIToolbarContainer .ToolbarContainer .UIHorizontalTabs .UITab a:hover {
+	color: #058ee6;
 }
 
 .UIToolbarContainer .UIHorizontalTabs .TabsContainer {
@@ -119,7 +120,6 @@
 	border-bottom: 1px dashed white;
 	width: 98.5%;
 }
-
 
 .UIToolbarContainer .MenuItem .MenuItemHover {
 	background-color: #a4a4a4;

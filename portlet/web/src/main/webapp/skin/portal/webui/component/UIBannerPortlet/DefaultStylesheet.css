@@ -1,5 +1,5 @@
 #banner {
-	border-top: 1px solid white;
+	border-top: 1px solid #b5b6b6;
 }	
 
 .UIBannerPortlet {
@@ -7,8 +7,7 @@
 }
 
 .UIBannerPortlet .LeftBanner {
-	background: #b6b6b6;
-	border-top: 1px solid #a8a7ac;
+	border-top: 1px solid #b5b6b6;
 	padding-left: 10px;
 }
 
@@ -27,7 +26,6 @@
 }
 
 .UIBannerPortlet .RightLoginContainer {
-	
 }
 
 .UIBannerPortlet .MiddleLoginContainer {

@@ -159,7 +159,7 @@
 		<div class="TabsContainer" style="position: relative">
 			
 			<div class="UITab NormalToolbarTab">
-				<div class="NormalNavigationTab">
+				<div class="">
 							<a class="SitesIcon TBIcon" href="<%= portalURI + "portalnavigation" %>">
 									Site
 							</a>
@@ -168,7 +168,7 @@
 			</div>
 			
 			<div class="UITab NormalToolbarTab">
-				<div class="NormalNavigationTab">
+				<div class="">
 							<a class="SitesIcon TBIcon" href="<%= portalURI + "groupnavigation" %>">Group</a>
 				</div>
 				<% if (!groupNavigations.isEmpty()) { %>
@@ -185,7 +185,7 @@
 					defaultDashboardPage = "Tab_0";
 			%>
 						<div class="UITab NormalToolbarTab">
-							<div class="NormalNavigationTab">
+							<div class="">
 								<a class="DashboardIcon TBIcon" href="<%= uicomponent.url("AddDefaultDashboard", defaultDashboardPage); %>">Dashboard</a>
 							</div>
 						</div>
@@ -194,7 +194,7 @@
 					defaultDashboardPage = currentUserNavigation.getNodes().get(0).getName();	
 			%>
 						<div class="UITab NormalToolbarTab">
-								<div class="NormalNavigationTab">
+								<div class="">
 										<a class="DashboardIcon TBIcon" href="<%= portalURI + defaultDashboardPage %>">Dashboard</a>
 								</div>
 								<% renderDashboards(); %>
