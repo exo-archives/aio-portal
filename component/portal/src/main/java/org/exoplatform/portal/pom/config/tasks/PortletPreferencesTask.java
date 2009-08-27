@@ -65,31 +65,36 @@ WindowID:
   protected final String ownerId;
 
   /** . */
-  protected final String windowId;
+  protected final String applicationName;
 
   /** . */
-  protected final String contentId;
+  protected final String portletName;
+
+  /** . */
+  protected final String uniqueId;
 
   protected PortletPreferencesTask(WindowID windowID) {
-    String[] chunks = split("#", windowID.getOwner()) ;
-    if(chunks.length != 2) {
-      throw new IllegalArgumentException("Invalid WindowID: " + "[" + windowID + "]");
-    }
+    String[] chunks = Mapper.parsePersistenceId(windowID.getPersistenceId());
 
     //
     this.ownerType = chunks[0];
     this.siteType = Mapper.parseSiteType(chunks[0]);
     this.ownerId = chunks[1];
-    this.windowId = windowID.getPersistenceId();
-    this.contentId = Mapper.parseContentId(windowId);
+    this.applicationName = chunks[2];
+    this.portletName = chunks[3];
+    this.uniqueId = chunks[4];
   }
 
   protected PortletPreferencesTask(String ownerType, String ownerId, String windowId) {
+    String[] windowIdChunks = Mapper.parseWindowId(windowId);
+
+    //
     this.ownerType = ownerType;
     this.ownerId = ownerId;
-    this.windowId = windowId;
     this.siteType = Mapper.parseSiteType(ownerType);
-    this.contentId = Mapper.parseContentId(windowId);
+    this.applicationName = windowIdChunks[0];
+    this.portletName = windowIdChunks[1];
+    this.uniqueId = windowIdChunks[2];
   }
 
   public static class Save extends PortletPreferencesTask {
@@ -108,7 +113,7 @@ WindowID:
       Workspace workspace = session.getWorkspace();
       Site site = workspace.getSite(siteType, ownerId);
       if (site == null) {
-        throw new IllegalArgumentException("Cannot save portlet preferences " + windowId +
+        throw new IllegalArgumentException("Cannot save portlet preferences " + applicationName + "/" + portletName + "/" + uniqueId +
           " as the corresponding portal " + ownerId + " with type " + siteType + " does not exist");
       }
 
@@ -147,7 +152,7 @@ WindowID:
       Workspace workspace = session.getWorkspace();
       Site site = workspace.getSite(siteType, ownerId);
       if (site == null) {
-        throw new IllegalArgumentException("Cannot save portlet preferences " + windowId +
+        throw new IllegalArgumentException("Cannot save portlet preferences " + applicationName + "/" + portletName + "/" + uniqueId +
           " as the corresponding portal " + ownerId + " with type " + siteType + " does not exist");
       }
 
@@ -191,7 +196,7 @@ WindowID:
       Workspace workspace = session.getWorkspace();
       Site site = workspace.getSite(siteType, ownerId);
       if (site == null) {
-        throw new IllegalArgumentException("Cannot save portlet preferences " + windowId +
+        throw new IllegalArgumentException("Cannot save portlet preferences " + applicationName + "/" + portletName + "/" + uniqueId +
           " as the corresponding portal " + ownerId + " with type " + siteType + " does not exist");
       }
 

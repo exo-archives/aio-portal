@@ -472,9 +472,21 @@ public class Mapper {
     dst.setContent(content);
   }
 
-  static String parseContentId(String windowId) {
-    String[] persistenceChunks = org.exoplatform.portal.pom.config.Utils.split(":/", windowId);
-    return persistenceChunks[persistenceChunks.length - 1];
+  static String[] parsePersistenceId(String persistenceId) {
+    String[] chunks = split(":/", persistenceId);
+    String[] ownerChunks = split("#", chunks[0]);
+    String[] windowIdChunks = split("/", chunks[1]);
+    return new String[] {
+      ownerChunks[0],
+      ownerChunks[1],
+      windowIdChunks[0],
+      windowIdChunks[1],
+      windowIdChunks[2]
+    };
+  }
+
+  static String[] parseWindowId(String persistenceId) {
+    return split("/", persistenceId);
   }
 
   public static void load(Attributes src, Properties dst, Set<String> blackList) {
