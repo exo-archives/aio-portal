@@ -418,8 +418,10 @@ public class Mapper {
       } else if (component instanceof UIWindow) {
         UIWindow window = (UIWindow)component;
         Preferences preferences = (Preferences)window.getCustomization().getState();
-        if (preferences.getEntries().size() > 0) {
-          preferencesMap.put(window.getObjectId(), preferences);
+        if (preferences != null) {
+          if (preferences.getEntries().size() > 0) {
+            preferencesMap.put(window.getObjectId(), preferences);
+          }
         }
       }
     }

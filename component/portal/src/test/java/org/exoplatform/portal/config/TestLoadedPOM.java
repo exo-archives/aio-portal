@@ -264,6 +264,31 @@ public class TestLoadedPOM extends BasicTestCase {
     assertEquals(expectedNames, names);
   }
 
+  public void testAnonymousPreferencesSavePage() throws Exception {
+    Page page = storage.getPage("portal::test::test3");
+
+    // Save it again
+    storage.save(page);
+
+    //
+    page = storage.getPage("portal::test::test3");
+
+    //
+    Application app = (Application)page.getChildren().get(0);
+    String instanceId = app.getInstanceId();
+
+    // Check instance id
+    String[] chunks = Mapper.parseWindowId(instanceId);
+    assertEquals("portal", chunks[0]);
+    assertEquals("test", chunks[1]);
+    assertEquals("web", chunks[2]);
+    assertEquals("BannerPortlet", chunks[3]);
+    assertTrue(chunks[4].startsWith("@"));
+
+    // Check state
+    assertNull(storage.getPortletPreferences(new ExoWindowID(instanceId)));
+  }
+
   public void testAnonymousPreference() throws Exception {
     Page page = storage.getPage("portal::test::test3");
     Application app = (Application)page.getChildren().get(0);
@@ -278,11 +303,10 @@ public class TestLoadedPOM extends BasicTestCase {
     assertTrue(chunks[4].startsWith("@"));
 
     // Check initial state
-    PortletPreferences prefs = storage.getPortletPreferences(new ExoWindowID(instanceId));
-    assertNull(prefs);
+    assertNull(storage.getPortletPreferences(new ExoWindowID(instanceId)));
 
     // Save state
-    prefs = new PortletPreferences();
+    PortletPreferences prefs = new PortletPreferences();
     prefs.setWindowId(instanceId);
     prefs.setPreferences(new ArrayList<Preference>());
     Preference pref = new Preference();

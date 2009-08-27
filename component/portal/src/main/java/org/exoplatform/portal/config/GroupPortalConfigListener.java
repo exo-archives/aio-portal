@@ -87,7 +87,12 @@ public class GroupPortalConfigListener extends GroupEventListener {
     DataStorage dataStorage = (DataStorage) container.getComponentInstanceOfType(DataStorage.class);
     String groupId = group.getId();
 
-    //
+    // Bug in hibernate org service implementation
+    if (groupId == null) {
+      groupId = "/" + group.getGroupName();
+    }
+
+    // Bug in JCR org service implementation
     if ("/administrators".equals(groupId)) {
       groupId = "/platform/administrators";
     } else if ("/users".equals(groupId)) {
