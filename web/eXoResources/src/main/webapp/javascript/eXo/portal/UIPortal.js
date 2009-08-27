@@ -76,7 +76,7 @@ UIPortal.prototype.blockOnMouseOver = function(event, portlet, isOver) {
 		if(DOMUtil.hasClass(portlet, "UIPortlet")) {
 			newLayer.style.width = width + "px";
 			newLayer.style.height = height + "px";
-			eXo.portal.UIPortal.showEditBlock(component);
+			eXo.portal.UIPortal.showEditBlock(component, eXo.core.I18n.isRT());
 		} else {
 			newLayer.parentNode.style.width = width + "px";
 			var normalBlock = DOMUtil.findFirstChildByClass(portlet, "div", "NormalContainerBlock");
@@ -92,7 +92,7 @@ UIPortal.prototype.blockOnMouseOver = function(event, portlet, isOver) {
 	}
 };
 
-UIPortal.prototype.showEditBlock = function(component) {
+UIPortal.prototype.showEditBlock = function(component, isRTL) {
 	var DOMUtil = eXo.core.DOMUtil;
 	var editBlock = DOMUtil.findFirstChildByClass(component, "div", "EDITION-BLOCK");
 	var newLayer = DOMUtil.findFirstDescendantByClass(editBlock, "div", "NewLayer");
@@ -100,7 +100,8 @@ UIPortal.prototype.showEditBlock = function(component) {
 	var compLeft = eXo.core.Browser.findPosX(component);
 	var controlBlock = DOMUtil.findFirstDescendantByClass(editBlock, "div", "CONTROL-BLOCK");
 	newLayer.style.top = compTop + "px";
-	controlBlock.style.left = newLayer.style.left = compLeft + "px";
+	if(isRTL) controlBlock.style.right = newLayer.style.right = eXo.core.Browser.getBrowserWidth()-compLeft-component.offsetWidth + "px";
+	else controlBlock.style.left = newLayer.style.left = compLeft + "px";
 	controlBlock.style.top = compTop - 6 + "px";	
 };
 
