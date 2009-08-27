@@ -145,7 +145,7 @@
         <configuration>
           <skip>${exo.test.skip}</skip>
           <forkMode>pertest</forkMode><!--once , pertest -->
-          <testFailureIgnore>>${exo.test.failure.ignore}</testFailureIgnore>
+          <testFailureIgnore>${exo.test.failure.ignore}</testFailureIgnore>
           <classesDirectory>${exo.test.classesdirectory}</classesDirectory>
           <includes>
             <include>**/${exo.test.includes}.java</include>
