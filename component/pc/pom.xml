@@ -4,7 +4,7 @@
     <artifactId>config</artifactId>
     <version>2.6-int-SNAPSHOT</version>
   </parent>
-  
+
   <modelVersion>4.0.0</modelVersion>
   <artifactId>exo.portal.component.pc</artifactId>
   <packaging>jar</packaging>

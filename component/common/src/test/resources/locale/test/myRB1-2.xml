@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<bundle>
+	<my>
+		<!-- Key 1 -->
+		<key1>My Default Value In English v2</key1>
+	</my>
+</bundle>

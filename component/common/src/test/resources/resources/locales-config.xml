@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<locales-config>
+
+  <locale-config>
+    <locale>en</locale>
+    <output-encoding>UTF-8</output-encoding>
+    <input-encoding>UTF-8</input-encoding>
+    <description>Default configuration for english locale</description>
+  </locale-config>
+
+  <locale-config>
+    <locale>fr</locale>
+    <output-encoding>UTF-8</output-encoding>
+    <input-encoding>UTF-8</input-encoding>
+    <description>Default configuration for the french locale</description>
+  </locale-config>
+
+	<locale-config>
+		<locale>ar</locale>
+		<output-encoding>UTF-8</output-encoding>
+		<input-encoding>UTF-8</input-encoding>
+		<description>Default configuration for the arabic locale</description>
+		<orientation>rt</orientation>
+	</locale-config>
+
+  <locale-config>
+    <locale>vi</locale>
+    <output-encoding>UTF-8</output-encoding>
+    <input-encoding>UTF-8</input-encoding>
+    <description>Default configuration for the vietnam locale</description>
+    <orientation>lt</orientation>
+  </locale-config>
+</locales-config>
