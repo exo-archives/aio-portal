@@ -25,23 +25,19 @@
 }
 
 .UINavigationPortlet .UINavigationBar .LeftNavigationBar {
-	line-height: 32px;
 	background: url('DefaultSkin/background/LeftNavigation.gif') no-repeat left;
 	padding-left: 3px; /* orientation=lt */
 	padding-right: 3px; /* orientation=rt */
-	!background-position: center 1px;
 }
 
 .UINavigationPortlet .UINavigationBar .RightNavigationBar {
-	line-height: 32px;
 	background: url('DefaultSkin/background/RightNavigation.gif') no-repeat right;
 	padding-right: 3px; /* orientation=lt */
 	padding-left: 3px; /* orientation=rt */
-	!background-position: center 1px;
 }
 
 .UINavigationPortlet .UINavigationBar .MiddleNavigationBar {
-	line-height: 32px;
+	height: 32px;
 	background: url('DefaultSkin/background/MiddleNavigation.gif') repeat-x;
 	padding: 0px 8px 0px 8px; 
 }
@@ -57,15 +53,16 @@
 .UINavigationPortlet .MenuItemContainer {
 	white-space: nowrap;
 	border: solid #b7b7b7 1px;
-	background: #f3f3f3;
 	text-align: left; /* orientation=lt */
 	text-align: right; /* orientation=rt */
 }
 
 .UINavigationPortlet .MenuItemContainer .MenuItemDecorator {
 	border: 1px solid #fcfcfc;
-	background: #f3f3f3;
+	background: white;
 	padding-bottom: 6px;
+	opacity: 0.9;
+  filter: alpha(opacity=90);
 }
 
 .UINavigationPortlet .MenuItemContainer .MenuItem {
