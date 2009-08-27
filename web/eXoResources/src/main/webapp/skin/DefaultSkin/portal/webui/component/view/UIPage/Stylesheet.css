@@ -77,3 +77,18 @@
 	padding:0px 8px 8px 8px;
 	background: #b6b6b6;
 }
+
+.BottomDecoratorHome .BottomDecoratorLeft{
+	background: url('background/BottomDecoratorHome.gif') no-repeat left;
+	padding-left: 7px;
+}
+
+.BottomDecoratorHome .BottomDecoratorRight{
+	background: url('background/BottomDecoratorHome.gif') no-repeat right;
+	padding-right: 7px;
+}
+
+.BottomDecoratorHome .BottomDecoratorMiddle{
+	background: white;
+	height: 7px;
+}
