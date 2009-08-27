@@ -42,6 +42,7 @@
     <module>component/web</module>
     <module>component/scripting</module>
     <module>component/dashboard</module>
+    <module>component/identity</module>
     <module>gadgets</module>
 	
     <module>webui/core</module>
