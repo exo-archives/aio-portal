@@ -4,7 +4,8 @@
 }
 
 .UIHomePagePortlet {	
-	margin: 0px 5px 5px 5px;
+	background: white;
+	padding: 8px;
 }
 
 .UIHomePagePortlet .TRContainer .PortletDecoration {	
@@ -26,7 +27,9 @@
 }
 
 .UIHomePagePortlet .TRContainer .GuideText {
-	margin: 0 13px;
+	margin: 0 10px;
+	text-align: left;
+	color: #777777;
 }
 
 .UIHomePagePortlet .TRContainer .DotLine {
@@ -36,70 +39,31 @@
 	margin: 7px auto;
 }
 
-.UIHomePagePortlet .TRContainer .DownloadButtonLeft {
-	background: url("DefaultSkin/background/HomePagePortlet.gif") no-repeat left -1632px;
-	padding-left: 8px;
-	margin: 0 30px;
-	cursor: pointer;
-}
-
-.UIHomePagePortlet .TRContainer .DownloadButtonRight {
-	background: url("DefaultSkin/background/HomePagePortlet.gif") no-repeat right -1498px;
-	padding-right: 8px;
-}
-
-.UIHomePagePortlet .TRContainer .DownloadButtonMiddle {
-	background: url("DefaultSkin/background/HomePagePortlet.gif") repeat-x center -998px;
-	height: 90.5px;
-	padding-top: 12px;
-	_height: 92.5px;
-}
-
-.UIHomePagePortlet .TRContainer .DropdownDownloadButton {
-	background: url("DefaultSkin/background/HomePagePortlet.gif") no-repeat left -1746px;
-	height: 22px;
-	width: 31px;
-	margin: 0 auto;
-}
-
-.UIHomePagePortlet .TRContainer .DownloadTextOnButton {
-	text-align: center;
-	margin-top: 20px;
-}
 
 .UIHomePagePortlet .TRContainer .VersionIcon {
-	background: url("DefaultSkin/background/HomePagePortlet.gif") no-repeat left -1117px;
-	height: 45px;
+	background: url("DefaultSkin/background/VersionIcon.gif") no-repeat left ;
+	height: 65px;
 	width: 50px;
 	margin: 0 auto;
 	cursor: pointer;
 }
 
-.UIHomePagePortlet .TRContainer .ButtonLeft {
-	background: url("DefaultSkin/background/HomePagePortlet.gif") no-repeat left -1188px;
-	padding-left: 18px;
-	margin: 0 30px;
+.UIHomePagePortlet .TRContainer .DownloadIcon {
+	background: url("DefaultSkin/background/DownLoadIcon.gif") no-repeat left ;
+	height: 65px;
+	width: 65px;
+	margin: 8px auto;
 	cursor: pointer;
 }
 
-.UIHomePagePortlet .TRContainer .ButtonRight {
-	background: url("DefaultSkin/background/HomePagePortlet.gif") no-repeat right -1274px;
-	padding-right: 16px;
+.UIHomePagePortlet .TRContainer .ContactIcon {
+	background: url("DefaultSkin/background/ContackIcon.gif") no-repeat left ;
+	height: 70px;
+	width: 50px;
+	margin: 0 auto;
+	cursor: pointer;
 }
 
-.UIHomePagePortlet .TRContainer .ButtonMiddle {
-	background: url("DefaultSkin/background/HomePagePortlet.gif") repeat-x center -1375px;
-	height: 66.5px;
-	_height: 68.5px;
-}
-
-.UIHomePagePortlet .TRContainer .TextOnButton {
-	color: white;
-	font-size: 15px;
-	font-weight: bold;
-	line-height: 40px;
-	text-align: center;
-}
 
 .UIHomePagePortlet  .TLContainer {
 	border: 1px solid #ffffff;
@@ -108,18 +72,16 @@
 }
 
 .UIHomePagePortlet .TLContainer .PortletDecoration {	
-	border: 1px solid #c6c6c6;
 	background: #fff;
 }
 
 .UIHomePagePortlet .HomePortletAdBackround {	
-	background: #fff url('DefaultSkin/background/BgRepeat.jpg') repeat-x top;
-	margin: 8px 8px 0px 8px;
+	background: #fff url('DefaultSkin/background/BgRepeat.gif') repeat-x top;
 }
 
 .UIHomePagePortlet .AdImageLeft {
-	background: url('DefaultSkin/background/RightHome.jpg') no-repeat right top; /* orientation=lt */
-	background: url('DefaultSkin/background/RightHome.jpg') no-repeat -3px -323px; /* orientation=rt */
+	background: url('DefaultSkin/background/RightHome.jpg') no-repeat left top; /* orientation=lt */
+	background: url('DefaultSkin/background/RightHome.jpg') no-repeat right -255px; /* orientation=rt */
 }
 
 *html .UIHomePagePortlet .AdImageLeft {
@@ -129,21 +91,22 @@
 	
 	text-align: right; /* orientation=lt */
 	text-align: left; /* orientation=rt */
-	height: 289px; 
-	padding: 0px 30px 0px 0px; /* orientation=lt */
-	padding: 0px 0px 0px 30px; /* orientation=rt */
+	height: 255px; 
+	padding: 0px 10px 0px 0px; /* orientation=lt */
+	padding: 0px 0px 0px 10px; /* orientation=rt */
 	letter-spacing: 1px;
 }
 
 .UIHomePagePortlet .AdImageLeft .EmptyBlock {
-	height: 190px;
+	height: 170px;
 }
 
 .UIHomePagePortlet .AdImageLeft .ProductSlogan {
-	font-size: 36px; 
-	font-weight: bold;
 	font-family: arial;
-	color: #fff;
+	color: #666666;
+	float: right;
+	font-size: 9px;
+	width: 500px;
 }
 
 .UIHomePagePortlet .AdImageLeft .ProductIntro {
@@ -153,9 +116,7 @@
 }
 
 .UIHomePagePortlet .HomePortletContent {
-	margin: 8px 8px 7px 8px;
-	_margin: 8px 8px 11px 8px;
-	_margin: 8px 8px 11px 2px;/* orientation=rt */
+	margin-top: 8px;
 }
 
 .UIHomePagePortlet .HomePortletContent .LeftAccountsContainer {
@@ -202,8 +163,8 @@ _html .UIHomePagePortlet .HomePortletContent .RightAccountsContainer {
 	width: 120px;
 	float: left; /* orientation=lt */
 	float: right; /* orientation=rt */
-	padding: 0px 90px 0px 0px; /* orientation=lt */
-	padding: 0px 0px 0px 90px; /* orientation=rt */
+	padding: 0px 35px 0px 0px; /* orientation=lt */
+	padding: 0px 0px 0px 34px; /* orientation=rt */
 }
 
 .UIHomePagePortlet .HomePortletContent .AdministratorUser {
@@ -258,11 +219,27 @@ _html .UIHomePagePortlet .HomePortletContent .RightAccountsContainer {
 }
 
 .UIHomePagePortlet .HomePortletContent .AccountTitle {
-	font-size: 16px;
+	font-size: 12px;
 	color: #454e56;
 	line-height: 40px;
+	font-weight: bold;
 }
 
 .UIHomePagePortlet .ClearBoth {
 	clear: both; 
+}
+
+.BottomDecoratorHome .BottomDecoratorLeft{
+	background: url('DefaultSkin/background/BottomDecoratorLeft.gif') no-repeat left;
+	padding-left: 7px;
+}
+
+.BottomDecoratorHome .BottomDecoratorRight{
+	background: url('DefaultSkin/background/BottomDecoratorRight.gif') no-repeat right;
+	padding-right: 7px;
+}
+
+.BottomDecoratorHome .BottomDecoratorMiddle{
+	background: white;
+	height: 7px;
 }
