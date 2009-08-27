@@ -19,7 +19,6 @@ package org.exoplatform.portal.webui.application;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -29,7 +28,6 @@ import java.util.Set;
 import javax.portlet.PortletMode;
 import javax.portlet.ResourceURL;
 import javax.portlet.WindowState;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.namespace.QName;
@@ -45,35 +43,20 @@ import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
-import org.exoplatform.portal.pc.ExoPortletState;
 import org.exoplatform.services.log.ExoLogger;
-import org.exoplatform.services.organization.OrganizationService;
-import org.exoplatform.services.organization.UserProfile;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
 import org.exoplatform.webui.event.Event.Phase;
-import org.gatein.pc.api.Mode;
-import org.gatein.common.net.media.MediaType;
-import org.gatein.common.util.MarkupInfo;
-import org.gatein.pc.api.ParametersStateString;
 import org.gatein.pc.api.PortletInvoker;
 import org.gatein.pc.api.StateString;
-import org.gatein.pc.api.StatefulPortletContext;
 import org.gatein.pc.api.invocation.ActionInvocation;
 import org.gatein.pc.api.invocation.EventInvocation;
 import org.gatein.pc.api.invocation.ResourceInvocation;
 import org.gatein.pc.api.invocation.response.ContentResponse;
 import org.gatein.pc.api.invocation.response.PortletInvocationResponse;
 import org.gatein.pc.api.invocation.response.UpdateNavigationalStateResponse;
-import org.gatein.pc.impl.spi.AbstractClientContext;
-import org.gatein.pc.impl.spi.AbstractPortalContext;
-import org.gatein.pc.impl.spi.AbstractRequestContext;
-import org.gatein.pc.impl.spi.AbstractSecurityContext;
-import org.gatein.pc.impl.spi.AbstractServerContext;
-import org.gatein.pc.impl.spi.AbstractUserContext;
-import org.gatein.pc.impl.spi.AbstractWindowContext;
 
 /**
  * May 29, 2006
@@ -101,44 +84,12 @@ public class UIPortletActionListener {
     public void execute(Event<UIPortlet> event) throws Exception {
       UIPortlet uiPortlet = event.getSource();
       PortalRequestContext prcontext = (PortalRequestContext) event.getRequestContext();
-      UIPortalApplication uiPortalApp = uiPortlet.getAncestorOfType(UIPortalApplication.class);
-      OrganizationService service = uiPortlet
-          .getApplicationComponent(OrganizationService.class);
-      UserProfile userProfile = service.getUserProfileHandler()
-          .findUserProfileByName(uiPortalApp.getOwner());
-      HashMap allParams = new HashMap();
-      allParams.putAll(prcontext.getRequest().getParameterMap());
-      
+
+      //
+      ActionInvocation actionInvocation = uiPortlet.create(ActionInvocation.class, prcontext);
+
       //
       PortletInvoker portletInvoker = uiPortlet.getApplicationComponent(PortletInvoker.class);
-
-      ExoPortletInvocationContext pic = new ExoPortletInvocationContext(prcontext, uiPortlet);
-      ActionInvocation actionInvocation = new ActionInvocation(pic);
-
-      StatefulPortletContext<ExoPortletState> preferencesPortletContext = uiPortlet.getPortletContext();
-
-      List<Cookie> requestCookies = new ArrayList<Cookie>();
-      for (Cookie cookie : prcontext.getRequest().getCookies())
-      {
-      	requestCookies.add(cookie);
-      }
-      
-      actionInvocation.setClientContext(new AbstractClientContext(prcontext.getRequest(), requestCookies));
-      actionInvocation.setServerContext(new AbstractServerContext(prcontext.getRequest(), prcontext.getResponse()));
-      actionInvocation.setInstanceContext(new ExoPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), uiPortlet.getExoWindowID()));
-      actionInvocation.setUserContext(new AbstractUserContext(prcontext.getRequest()));
-      actionInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getWindowId()));
-      actionInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));
-      actionInvocation.setSecurityContext(new AbstractSecurityContext(prcontext.getRequest()));
-      actionInvocation.setTarget(preferencesPortletContext);
-      
-      ParametersStateString interactionState = ParametersStateString.create(allParams);
-      actionInvocation.setInteractionState(interactionState);
-      actionInvocation.setPublicNavigationalState(allParams);
-      
-      actionInvocation.setMode(Mode.create(uiPortlet.getCurrentPortletMode().toString()));
-      actionInvocation.setWindowState(org.gatein.pc.api.WindowState.create(uiPortlet.getCurrentWindowState().toString()));
-      
       PortletInvocationResponse portletResponse = portletInvoker.invoke(actionInvocation);
       
       System.out.println("ACTIONRESPONSE : " + portletResponse);
@@ -309,39 +260,10 @@ public class UIPortletActionListener {
             .getParameter(Constants.RESOURCE_ID_PARAMETER);
 
         //
-        PortletInvoker portletInvoker = (PortletInvoker)container.getComponentInstance(PortletInvoker.class);
-        
-        MediaType mediaType = MediaType.create("text/html");
-        String charset = "UTF-8";
-        MarkupInfo markupInfo = new MarkupInfo(mediaType, charset);
-        
-        String baseURL = new StringBuilder(context.getRequestURI()).append("?"
-      	        + PortalRequestContext.UI_COMPONENT_ID).append("=").append(uiPortlet.getId()).toString();
-          
-        ExoPortletInvocationContext pic = new ExoPortletInvocationContext(context, uiPortlet);
+        ResourceInvocation resourceInvocation = uiPortlet.create(ResourceInvocation.class, context);
 
-        ResourceInvocation resourceInvocation = new ResourceInvocation(pic);
-        
-        StatefulPortletContext<ExoPortletState> preferencesPortletContext = uiPortlet.getPortletContext();
-        
-        List<Cookie> requestCookies = new ArrayList<Cookie>();
-        for (Cookie cookie : context.getRequest().getCookies())
-        {
-        	requestCookies.add(cookie);
-        }
-        resourceInvocation.setClientContext(new AbstractClientContext(context.getRequest(), requestCookies));
-        resourceInvocation.setServerContext(new AbstractServerContext(context.getRequest(), context.getResponse()));
-        resourceInvocation.setInstanceContext(new ExoPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), uiPortlet.getExoWindowID()));
-        resourceInvocation.setUserContext(new AbstractUserContext(context.getRequest()));
-        resourceInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getWindowId()));
-        resourceInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));
-        resourceInvocation.setSecurityContext(new AbstractSecurityContext(context.getRequest()));
-        resourceInvocation.setRequestContext(new AbstractRequestContext(context.getRequest()));
-        resourceInvocation.setTarget(preferencesPortletContext);
-                
-        resourceInvocation.setMode(Mode.create(uiPortlet.getCurrentPortletMode().toString()));
-        resourceInvocation.setWindowState(org.gatein.pc.api.WindowState.create(uiPortlet.getCurrentWindowState().toString()));
-        
+        //
+        PortletInvoker portletInvoker = (PortletInvoker)container.getComponentInstance(PortletInvoker.class);
         ContentResponse piResponse = (ContentResponse)portletInvoker.invoke(resourceInvocation);
         
         //
@@ -494,32 +416,14 @@ public class UIPortletActionListener {
           .getCurrentInstance();
 
       //
-      PortletInvoker portletInvoker = uiPortlet.getApplicationComponent(PortletInvoker.class);
-
-      ExoPortletInvocationContext pic = new ExoPortletInvocationContext(context, uiPortlet);
-      EventInvocation eventInvocation = new EventInvocation(pic);
+      EventInvocation eventInvocation = uiPortlet.create(EventInvocation.class, context);
       
-      StatefulPortletContext<ExoPortletState> preferencesPortletContext = uiPortlet.getPortletContext();
-      
-      List<Cookie> requestCookies = new ArrayList<Cookie>();
-      for (Cookie cookie : context.getRequest().getCookies())
-      {
-      	requestCookies.add(cookie);
-      }
-      eventInvocation.setClientContext(new AbstractClientContext(context.getRequest(), requestCookies));
-      eventInvocation.setServerContext(new AbstractServerContext(context.getRequest(), context.getResponse()));
-      eventInvocation.setInstanceContext(new ExoPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), uiPortlet.getExoWindowID()));
-      eventInvocation.setUserContext(new AbstractUserContext(context.getRequest()));
-      eventInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getWindowId()));
-      eventInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));
-      eventInvocation.setSecurityContext(new AbstractSecurityContext(context.getRequest()));
-      eventInvocation.setTarget(preferencesPortletContext);
-      
-      eventInvocation.setMode(Mode.create(uiPortlet.getCurrentPortletMode().toString()));
-      eventInvocation.setWindowState(org.gatein.pc.api.WindowState.create(uiPortlet.getCurrentWindowState().toString()));
+      //
       eventInvocation.setName(event.getQName());
       eventInvocation.setPayload(event.getValue());
-      
+
+      //
+      PortletInvoker portletInvoker = uiPortlet.getApplicationComponent(PortletInvoker.class);
       PortletInvocationResponse piResponse = portletInvoker.invoke(eventInvocation);
       
       UpdateNavigationalStateResponse navResponse = (UpdateNavigationalStateResponse) piResponse;

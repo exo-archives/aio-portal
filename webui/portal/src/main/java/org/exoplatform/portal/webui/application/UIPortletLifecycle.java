@@ -16,21 +16,15 @@
  */
 package org.exoplatform.portal.webui.application;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import javax.servlet.http.Cookie;
 
 import org.exoplatform.services.log.Log;
 import org.exoplatform.Constants;
 import org.exoplatform.commons.utils.Text;
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.portal.application.PortalRequestContext;
-import org.exoplatform.portal.pc.ExoPortletState;
 import org.exoplatform.resolver.ApplicationResourceResolver;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.webui.application.WebuiApplication;
@@ -39,20 +33,11 @@ import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.lifecycle.Lifecycle;
 import org.exoplatform.webui.core.lifecycle.WebuiBindingContext;
 import org.exoplatform.webui.event.Event;
-import org.gatein.pc.api.Mode;
 import org.gatein.common.util.MultiValuedPropertyMap;
 import org.gatein.pc.api.PortletInvoker;
-import org.gatein.pc.api.StateString;
-import org.gatein.pc.api.StatefulPortletContext;
 import org.gatein.pc.api.invocation.RenderInvocation;
 import org.gatein.pc.api.invocation.response.FragmentResponse;
 import org.gatein.pc.api.invocation.response.PortletInvocationResponse;
-import org.gatein.pc.impl.spi.AbstractClientContext;
-import org.gatein.pc.impl.spi.AbstractPortalContext;
-import org.gatein.pc.impl.spi.AbstractSecurityContext;
-import org.gatein.pc.impl.spi.AbstractServerContext;
-import org.gatein.pc.impl.spi.AbstractUserContext;
-import org.gatein.pc.impl.spi.AbstractWindowContext;
 import org.w3c.dom.Element;
 
 /**
@@ -158,41 +143,15 @@ public class UIPortletLifecycle extends Lifecycle {
     PortletInvoker portletInvoker = (PortletInvoker)container.getComponentInstanceOfType(PortletInvoker.class);
     
     //
-    ExoPortletInvocationContext portletInvocationContext = new ExoPortletInvocationContext(prcontext, uiPortlet);
-        
     FragmentResponse fragmentResponse = null;
     
     try
     {
-    RenderInvocation renderInvocation = new RenderInvocation(portletInvocationContext);
-    
-    StatefulPortletContext<ExoPortletState> preferencesPortletContext = uiPortlet.getPortletContext();
-    
-    List<Cookie> requestCookies = new ArrayList<Cookie>();
-    for (Cookie cookie : prcontext.getRequest().getCookies())
-    {
-    	requestCookies.add(cookie);
-    }
-    
-    renderInvocation.setClientContext(new AbstractClientContext(prcontext.getRequest(), requestCookies));
-    renderInvocation.setServerContext(new AbstractServerContext(prcontext.getRequest(), prcontext.getResponse()));
-    renderInvocation.setInstanceContext(new ExoPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), uiPortlet.getExoWindowID()));
-    renderInvocation.setUserContext(new AbstractUserContext(prcontext.getRequest()));
-    renderInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getWindowId()));
-    renderInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));
-    renderInvocation.setSecurityContext(new AbstractSecurityContext(prcontext.getRequest()));
-    renderInvocation.setTarget(preferencesPortletContext);
+      RenderInvocation renderInvocation = uiPortlet.create(RenderInvocation.class, prcontext);
 
-    renderInvocation.setMode(Mode.create(uiPortlet.getCurrentPortletMode().toString()));
-    renderInvocation.setWindowState(org.gatein.pc.api.WindowState.create(uiPortlet.getCurrentWindowState().toString()));
-    
-    String stateString = StateString.encodeAsOpaqueValue(getRenderParameterMap(uiPortlet));
-    StateString navigationalState = StateString.create(stateString); 
-    renderInvocation.setNavigationalState(navigationalState);
-    
-    PortletInvocationResponse piResponse =  portletInvoker.invoke(renderInvocation);
-    
-    fragmentResponse = (FragmentResponse)piResponse;
+      //
+      PortletInvocationResponse piResponse =  portletInvoker.invoke(renderInvocation);
+      fragmentResponse = (FragmentResponse)piResponse;
     
     }
     catch (Exception e)
@@ -250,27 +209,4 @@ public class UIPortletLifecycle extends Lifecycle {
     } catch (Throwable ex) {
     }
   }
-
-  /**
-   * This method returns all the parameters supported by the targeted portlets,
-   * both the private and public ones
-   */
-  private Map<String, String[]> getRenderParameterMap(UIPortlet uiPortlet) {
-    Map<String, String[]> renderParams = uiPortlet.getRenderParametersMap();
-
-    if (renderParams == null) {
-      renderParams = new HashMap<String, String[]>();
-      uiPortlet.setRenderParametersMap(renderParams);
-    }
-
-    /*
-     * handle public params to only get the one supported by the targeted
-     * portlet
-     */
-    Map<String, String[]> allParams = new HashMap<String, String[]>(renderParams);
-    allParams.putAll(uiPortlet.getPublicParameters());
-
-    return allParams;
-  }
-
 }

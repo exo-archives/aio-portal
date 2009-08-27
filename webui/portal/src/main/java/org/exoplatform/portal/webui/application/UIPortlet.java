@@ -23,11 +23,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Collections;
 import java.util.Map.Entry;
 
 import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 import javax.xml.namespace.QName;
+import javax.servlet.http.Cookie;
 
 import org.exoplatform.services.log.Log;
 import org.exoplatform.portal.webui.application.UIPortletActionListener.ChangePortletModeActionListener;
@@ -44,11 +46,14 @@ import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.portal.application.Preference;
+import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.pc.ExoPortletState;
 import org.exoplatform.portal.pc.ExoPortletStateType;
 import org.exoplatform.services.log.ExoLogger;
 //TODO: replace the ExoWindowId class with the portlet api one
 import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
+import org.exoplatform.services.organization.OrganizationService;
+import org.exoplatform.services.organization.UserProfile;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.event.Event.Phase;
@@ -58,9 +63,24 @@ import org.gatein.pc.api.PortletContext;
 import org.gatein.pc.api.PortletInvoker;
 import org.gatein.pc.api.PortletInvokerException;
 import org.gatein.pc.api.StatefulPortletContext;
+import org.gatein.pc.api.StateString;
+import org.gatein.pc.api.Mode;
+import org.gatein.pc.api.ParametersStateString;
+import org.gatein.pc.api.invocation.PortletInvocation;
+import org.gatein.pc.api.invocation.ActionInvocation;
+import org.gatein.pc.api.invocation.ResourceInvocation;
+import org.gatein.pc.api.invocation.EventInvocation;
+import org.gatein.pc.api.invocation.RenderInvocation;
 import org.gatein.pc.api.info.EventInfo;
 import org.gatein.pc.api.info.ModeInfo;
 import org.gatein.pc.api.info.ParameterInfo;
+import org.gatein.pc.impl.spi.AbstractRequestContext;
+import org.gatein.pc.impl.spi.AbstractClientContext;
+import org.gatein.pc.impl.spi.AbstractServerContext;
+import org.gatein.pc.impl.spi.AbstractUserContext;
+import org.gatein.pc.impl.spi.AbstractWindowContext;
+import org.gatein.pc.impl.spi.AbstractPortalContext;
+import org.gatein.pc.impl.spi.AbstractSecurityContext;
 
 /**
  * May 19, 2006
@@ -414,5 +434,105 @@ public class UIPortlet extends UIApplication {
     return publicParamsMap;   
   }
 
+  // This is code for integration with PC
 
+  /**
+   * Create the correct portlet invocation that will target the portlet represented by this UI component.
+   *
+   * @param type the invocation type
+   * @param prc the portal request context
+   * @param <I> the invocation type
+   * @return the portlet invocation
+   * @throws Exception any exception
+   */
+  public <I extends PortletInvocation> I create(Class<I> type, PortalRequestContext prc) throws Exception {
+    ExoPortletInvocationContext pic = new ExoPortletInvocationContext(prc, this);
+
+    //
+    I invocation;
+    if (type.equals(ActionInvocation.class)) {
+      HashMap<String, String[]> allParams = new HashMap<String, String[]>();
+      allParams.putAll(prc.getRequest().getParameterMap());
+      ParametersStateString interactionState = ParametersStateString.create(allParams);
+      ActionInvocation actionInvocation = new ActionInvocation(pic);
+      actionInvocation.setInteractionState(interactionState);
+      actionInvocation.setPublicNavigationalState(allParams);
+      actionInvocation.setMode(Mode.create(getCurrentPortletMode().toString()));
+      actionInvocation.setWindowState(org.gatein.pc.api.WindowState.create(getCurrentWindowState().toString()));
+      invocation = (I)actionInvocation;
+    } else if (type.equals(ResourceInvocation.class)) {
+      ResourceInvocation resourceInvocation = new ResourceInvocation(pic);
+      resourceInvocation.setMode(Mode.create(getCurrentPortletMode().toString()));
+      resourceInvocation.setWindowState(org.gatein.pc.api.WindowState.create(getCurrentWindowState().toString()));
+      resourceInvocation.setRequestContext(new AbstractRequestContext(prc.getRequest()));
+      invocation = (I)resourceInvocation;
+    } else if (type.equals(EventInvocation.class)) {
+      EventInvocation eventInvocation = new EventInvocation(pic);
+      eventInvocation.setMode(Mode.create(getCurrentPortletMode().toString()));
+      eventInvocation.setWindowState(org.gatein.pc.api.WindowState.create(getCurrentWindowState().toString()));
+      invocation = (I)eventInvocation;
+    } else if (type.equals(RenderInvocation.class)) {
+      String stateString = StateString.encodeAsOpaqueValue(getRenderParameterMap(this));
+      StateString navigationalState = StateString.create(stateString);
+      RenderInvocation renderInvocation = new RenderInvocation(pic);
+      renderInvocation.setMode(Mode.create(getCurrentPortletMode().toString()));
+      renderInvocation.setWindowState(org.gatein.pc.api.WindowState.create(getCurrentWindowState().toString()));
+      renderInvocation.setNavigationalState(navigationalState);
+      invocation = (I)renderInvocation;
+    } else {
+      throw new AssertionError();
+    }
+
+    //
+    List<Cookie> requestCookies = new ArrayList<Cookie>();
+    for (Cookie cookie : prc.getRequest().getCookies()) {
+      requestCookies.add(cookie);
+    }
+
+    //
+    StatefulPortletContext<ExoPortletState> preferencesPortletContext = getPortletContext();
+
+    // todo : wire user profile
+    // Create an ExoUserContext in component.pc package
+    OrganizationService service = getApplicationComponent(OrganizationService.class);
+    UIPortalApplication uiPortalApp = getAncestorOfType(UIPortalApplication.class);
+    UserProfile userProfile = service.getUserProfileHandler().findUserProfileByName(uiPortalApp.getOwner());
+
+    //
+    invocation.setClientContext(new AbstractClientContext(prc.getRequest(), requestCookies));
+    invocation.setServerContext(new AbstractServerContext(prc.getRequest(), prc.getResponse()));
+    invocation.setInstanceContext(new ExoPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), getExoWindowID()));
+    invocation.setUserContext(new AbstractUserContext(prc.getRequest()));
+    invocation.setWindowContext(new ExoWindowContext(exoWindowId_));
+    invocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));
+    invocation.setSecurityContext(new AbstractSecurityContext(prc.getRequest()));
+
+    //
+    invocation.setTarget(preferencesPortletContext);
+
+    //
+    return invocation;
+  }
+
+  /**
+   * This method returns all the parameters supported by the targeted portlets,
+   * both the private and public ones
+   */
+  private Map<String, String[]> getRenderParameterMap(UIPortlet uiPortlet) {
+    Map<String, String[]> renderParams = uiPortlet.getRenderParametersMap();
+
+    if (renderParams == null) {
+      renderParams = new HashMap<String, String[]>();
+      uiPortlet.setRenderParametersMap(renderParams);
+    }
+
+    /*
+     * handle public params to only get the one supported by the targeted
+     * portlet
+     */
+    Map<String, String[]> allParams = new HashMap<String, String[]>(renderParams);
+    allParams.putAll(uiPortlet.getPublicParameters());
+
+    return allParams;
+  }
 }
