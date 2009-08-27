@@ -15,11 +15,6 @@
   </component>
 
   <component>
-   <key>org.exoplatform.services.portletcontainer.persistence.PortletPreferencesPersister</key>
-   <type>org.exoplatform.portal.application.jcr.PortletPreferencesPersisterImpl</type>
-  </component>  
-  
-  <component>
     <key>org.exoplatform.portal.config.DataStorage</key>
     <type>org.exoplatform.portal.config.jcr.DataStorageImpl</type>     
   </component>

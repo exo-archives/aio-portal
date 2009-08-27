@@ -38,7 +38,6 @@ import org.exoplatform.services.log.Log;
 import org.exoplatform.Constants;
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.portal.application.PortalRequestContext;
-import org.exoplatform.portal.application.jcr.PortalPortletInstanceContext;
 import org.exoplatform.portal.webui.page.UIPage;
 import org.exoplatform.portal.webui.page.UIPageBody;
 import org.exoplatform.portal.webui.portal.UIPortal;
@@ -126,7 +125,7 @@ public class UIPortletActionListener {
       
       actionInvocation.setClientContext(new AbstractClientContext(prcontext.getRequest(), requestCookies));
       actionInvocation.setServerContext(new AbstractServerContext(prcontext.getRequest(), prcontext.getResponse()));
-      actionInvocation.setInstanceContext(new PortalPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), uiPortlet.getExoWindowID()));
+      actionInvocation.setInstanceContext(new ExoPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), uiPortlet.getExoWindowID()));
       actionInvocation.setUserContext(new AbstractUserContext(prcontext.getRequest()));
       actionInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getWindowId()));
       actionInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));
@@ -332,7 +331,7 @@ public class UIPortletActionListener {
         }
         resourceInvocation.setClientContext(new AbstractClientContext(context.getRequest(), requestCookies));
         resourceInvocation.setServerContext(new AbstractServerContext(context.getRequest(), context.getResponse()));
-        resourceInvocation.setInstanceContext(new PortalPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), uiPortlet.getExoWindowID()));
+        resourceInvocation.setInstanceContext(new ExoPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), uiPortlet.getExoWindowID()));
         resourceInvocation.setUserContext(new AbstractUserContext(context.getRequest()));
         resourceInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getWindowId()));
         resourceInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));
@@ -509,7 +508,7 @@ public class UIPortletActionListener {
       }
       eventInvocation.setClientContext(new AbstractClientContext(context.getRequest(), requestCookies));
       eventInvocation.setServerContext(new AbstractServerContext(context.getRequest(), context.getResponse()));
-      eventInvocation.setInstanceContext(new PortalPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), uiPortlet.getExoWindowID()));
+      eventInvocation.setInstanceContext(new ExoPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), uiPortlet.getExoWindowID()));
       eventInvocation.setUserContext(new AbstractUserContext(context.getRequest()));
       eventInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getWindowId()));
       eventInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));

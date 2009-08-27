@@ -30,7 +30,6 @@ import org.exoplatform.Constants;
 import org.exoplatform.commons.utils.Text;
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.portal.application.PortalRequestContext;
-import org.exoplatform.portal.application.jcr.PortalPortletInstanceContext;
 import org.exoplatform.portal.pc.ExoPortletState;
 import org.exoplatform.resolver.ApplicationResourceResolver;
 import org.exoplatform.services.log.ExoLogger;
@@ -177,7 +176,7 @@ public class UIPortletLifecycle extends Lifecycle {
     
     renderInvocation.setClientContext(new AbstractClientContext(prcontext.getRequest(), requestCookies));
     renderInvocation.setServerContext(new AbstractServerContext(prcontext.getRequest(), prcontext.getResponse()));
-    renderInvocation.setInstanceContext(new PortalPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), uiPortlet.getExoWindowID()));
+    renderInvocation.setInstanceContext(new ExoPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), uiPortlet.getExoWindowID()));
     renderInvocation.setUserContext(new AbstractUserContext(prcontext.getRequest()));
     renderInvocation.setWindowContext(new AbstractWindowContext(uiPortlet.getWindowId()));
     renderInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));

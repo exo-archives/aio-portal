@@ -30,7 +30,6 @@ import org.exoplatform.commons.utils.ExceptionUtil;
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.portal.application.Preference;
-import org.exoplatform.portal.application.jcr.PortalPortletInstanceContext;
 import org.exoplatform.portal.skin.SkinService;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
@@ -171,7 +170,7 @@ public class UIPortletForm extends UIFormTabPane {
       RenderInvocation renderInvocation = new RenderInvocation(portletInvocationContext);
       renderInvocation.setClientContext(new AbstractClientContext(prcontext.getRequest(), requestCookies));
       renderInvocation.setServerContext(new AbstractServerContext(prcontext.getRequest(), prcontext.getResponse()));
-      renderInvocation.setInstanceContext(new PortalPortletInstanceContext(portletContext.getState().getPortletId(), uiPortlet_.getExoWindowID()));
+      renderInvocation.setInstanceContext(new ExoPortletInstanceContext(portletContext.getState().getPortletId(), uiPortlet_.getExoWindowID()));
       renderInvocation.setUserContext(new AbstractUserContext(prcontext.getRequest()));
       renderInvocation.setWindowContext(new AbstractWindowContext(uiPortlet_.getWindowId()));
       renderInvocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));
