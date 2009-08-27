@@ -34,6 +34,7 @@
   </scm> 
 
   <modules>
+    <module>component/pc</module>
     <module>component/xml-parser</module>
     <module>component/resources</module>
     <module>component/gifbackport</module>

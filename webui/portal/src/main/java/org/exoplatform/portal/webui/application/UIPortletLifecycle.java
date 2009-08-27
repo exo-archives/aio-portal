@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.portlet.WindowState;
 import javax.servlet.http.Cookie;
 
 import org.exoplatform.services.log.Log;
@@ -32,19 +31,12 @@ import org.exoplatform.commons.utils.Text;
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.application.PortletPreferences;
-import org.exoplatform.portal.application.Preference;
 import org.exoplatform.portal.application.jcr.PortalPortletContext;
 import org.exoplatform.portal.application.jcr.PortalPortletInstanceContext;
 import org.exoplatform.portal.config.DataStorage;
-import org.exoplatform.portal.portlet.PortletExceptionHandleService;
-import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.resolver.ApplicationResourceResolver;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
-import org.exoplatform.services.portletcontainer.PortletContainerException;
-import org.exoplatform.services.portletcontainer.PortletContainerService;
-import org.exoplatform.services.portletcontainer.pci.RenderInput;
-import org.exoplatform.services.portletcontainer.pci.RenderOutput;
 import org.exoplatform.webui.application.WebuiApplication;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.core.UIComponent;
@@ -59,11 +51,9 @@ import org.gatein.pc.api.PortletContext;
 import org.gatein.pc.api.PortletInvoker;
 import org.gatein.pc.api.StateString;
 import org.gatein.pc.api.invocation.RenderInvocation;
-import org.gatein.pc.api.invocation.SimplePortletInvocationContext;
 import org.gatein.pc.api.invocation.response.FragmentResponse;
 import org.gatein.pc.api.invocation.response.PortletInvocationResponse;
 import org.gatein.pc.impl.spi.AbstractClientContext;
-import org.gatein.pc.impl.spi.AbstractInstanceContext;
 import org.gatein.pc.impl.spi.AbstractPortalContext;
 import org.gatein.pc.impl.spi.AbstractSecurityContext;
 import org.gatein.pc.impl.spi.AbstractServerContext;
@@ -173,14 +163,8 @@ public class UIPortletLifecycle extends Lifecycle {
     
     PortletInvoker portletInvoker = (PortletInvoker)container.getComponentInstanceOfType(PortletInvoker.class);
     
-    MediaType mediaType = MediaType.create("text/html");
-    String charset = "UTF-8";
-    MarkupInfo markupInfo = new MarkupInfo(mediaType, charset);
-    
-    String baseURL = new StringBuilder(prcontext.getRequestURI()).append("?"
-	        + PortalRequestContext.UI_COMPONENT_ID).append("=").append(uiPortlet.getId()).toString();
-    
-    SimplePortletInvocationContext portletInvocationContext = new SimplePortletInvocationContext(markupInfo, baseURL, prcontext.getRequest(), prcontext.getResponse());
+    //
+    ExoPortletInvocationContext portletInvocationContext = new ExoPortletInvocationContext(prcontext, uiPortlet);
         
     FragmentResponse fragmentResponse = null;
     
