@@ -16,16 +16,16 @@
 			<div class="UITab" style="width: 62px">
 				<div class="NormalNavigationTab"></div>
 				<div class="MenuItemContainer" style="position: absolute; display:none;">
-					<div class="MenuItem OddItem" onclick="$changeLanguageAction">
+					<div class="MenuItem" onclick="$changeLanguageAction">
 						<a href="#" class="ItemIcon SiteIcon"><%=_ctx.appRes("UIStarToolbarPortlet.item.ChangeLanguage")%></a>
 					</div>
-					<div class="MenuItem EvenItem" onclick="$changeSkinAction">
+					<div class="MenuItem" onclick="$changeSkinAction">
 						<a href="#" class="ItemIcon SiteIcon"><%=_ctx.appRes("UIStarToolbarPortlet.item.ChangeSkin")%></a>
 					</div>
-					<div class="MenuItem OddItem" onclick="$accountSetting">
+					<div class="MenuItem" onclick="$accountSetting">
 						<a href="#" class="ItemIcon SiteIcon"><%=_ctx.appRes("UIStarToolbarPortlet.item.AccountSetting")%></a>
 					</div>
-					<div class="MenuItem OddItem" onclick="eXo.portal.logout();">
+					<div class="MenuItem" onclick="eXo.portal.logout();">
 						<a href="#" class="ItemIcon SiteIcon"><%=_ctx.appRes("UIStarToolbarPortlet.item.Logout")%></a>
 					</div>
 				</div>

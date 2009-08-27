@@ -41,14 +41,11 @@
 		if(icon == null) icon = "DefaultPageIcon";
 		boolean toolong = (node.resolvedLabel.length() > 60);
 		String label = ( toolong ? node.resolvedLabel.substring(0, 57) + "..." : node.resolvedLabel);
-		String itemClass;
-		if(flag) itemClass =	"OddItem";
-		else itemClass =	"EvenItem";
 		String title = "";
 		if(toolong) title = "title='$node.resolvedLabel'";
 		else title = "";
 		print """
-			<div class="MenuItem $itemClass">
+			<div class="MenuItem">
 				<div class="$clazz">
 		""";
 						if(node.pageReference != null) {
@@ -95,9 +92,8 @@
 				if(isCurrent) clazz = "class='ArrowIcon'";
 				else clazz = "";
 				href = uicomponent.getPortalURI(portal);
-				String itemClass = (i % 2 == 0) ? "OddItem" : "EvenItem";
 				print """
-					<div class="MenuItem $itemClass">
+					<div class="MenuItem">
 						<div $clazz>						
 							<a href="$href" class="ItemIcon SiteIcon">$portal</a>
 						</div>
