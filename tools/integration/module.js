@@ -24,7 +24,7 @@ function getModule(params) {
 
   module.component.xmlParser = 
     new Project("org.exoplatform.portal", "exo.portal.component.xml-parser", "jar", module.version).
-    addDependency(new Project("commons-httpclient", "commons-httpclient", "jar", "3.0")).
+    //addDependency(new Project("commons-httpclient", "commons-httpclient", "jar", "3.0")).
     addDependency(new Project("commons-codec", "commons-codec", "jar", "1.3"));
       
   module.component.scripting =
@@ -121,9 +121,9 @@ function getModule(params) {
 		addDependency(new Project("com.google.code.guice", "guice", "jar", "2.0")).
 		addDependency(new Project("commons-lang", "commons-lang", "jar", "2.4")).
 		addDependency(new Project("rome", "rome", "jar", "0.9")).
-		addDependency(new Project("org.hamcrest", "hamcrest-all", "jar", "1.1")).
-		addDependency(new Project("nu.validator.htmlparser", "htmlparser", "jar", "1.0.7")).
-		addDependency(new Project("jaxen", "jaxen", "jar", "1.1.1")).
+		//addDependency(new Project("org.hamcrest", "hamcrest-all", "jar", "1.1")).
+		//addDependency(new Project("nu.validator.htmlparser", "htmlparser", "jar", "1.0.7")).
+		//addDependency(new Project("jaxen", "jaxen", "jar", "1.1.1")).
 		addDependency(new Project("joda-time", "joda-time", "jar", "1.6")).
 		addDependency(new Project("org.json", "json", "jar", "20070829")).
 		addDependency(new Project("org.apache.shindig", "shindig-common", "jar", "SNAPSHOT-r790473")).
@@ -135,12 +135,12 @@ function getModule(params) {
 		addDependency(new Project("commons-httpclient", "commons-httpclient", "jar", "3.1")).
 		addDependency(new Project("commons-collections", "commons-collections", "jar", "3.2.1")).
 		addDependency(new Project("net.sf.ehcache", "ehcache", "jar", "1.6.0")).
-		addDependency(new Project("net.sf.jsr107cache", "jsr107cache", "jar", "1.0")).
+		//addDependency(new Project("net.sf.jsr107cache", "jsr107cache", "jar", "1.0")).
 		addDependency(new Project("xml-apis", "xml-apis", "jar", "1.3.04")).
-		addDependency(new Project("org.codehaus.woodstox", "wstx-asl", "jar", "3.2.1")).
+		//addDependency(new Project("org.codehaus.woodstox", "wstx-asl", "jar", "3.2.1")).
 		addDependency(new Project("com.ibm.icu", "icu4j", "jar", "3.8")).
 		addDependency(new Project("net.sourceforge.nekohtml", "nekohtml", "jar", "1.9.9")).
-		addDependency(new Project("backport-util-concurrent", "backport-util-concurrent", "jar", "3.1")).
+		//addDependency(new Project("backport-util-concurrent", "backport-util-concurrent", "jar", "3.1")).
 		addDependency(new Project("xerces", "xercesImpl", "jar", "2.9.1")).
 		addDependency(new Project("com.thoughtworks.xstream", "xstream", "jar", "1.3.1")).
 		addDependency(new Project("caja", "caja", "jar", "r3375")).
