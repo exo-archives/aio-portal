@@ -26,7 +26,6 @@
       <module>build</module>
       <module>common</module>
       <module>mc</module>
-      <module>portal</module>
    </modules>
 
    <reporting>
