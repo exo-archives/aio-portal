@@ -217,11 +217,18 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
+        <org.exoplatform.kernel.version>2.2.Alpha3</org.exoplatform.kernel.version>
+        <org.exoplatform.core.version>2.3.Alpha4</org.exoplatform.core.version>
+    	<org.exoplatform.ws.version>2.1.Alpha4</org.exoplatform.ws.version>
+        <org.exoplatform.jcr.version>1.12.Alpha4</org.exoplatform.jcr.version>
+        <org.jibx.version>1.2.1</org.jibx.version>
+      <!--
         <org.exoplatform.kernel.version>2.1.2</org.exoplatform.kernel.version>
         <org.exoplatform.core.version>2.2.2</org.exoplatform.core.version>
     	<org.exoplatform.ws.version>2.0.2</org.exoplatform.ws.version>
         <org.exoplatform.jcr.version>1.11.2</org.exoplatform.jcr.version>
-        <org.exoplatform.pc.version>2.1.2</org.exoplatform.pc.version>
+        <org.jibx.version>1.1.6a</org.jibx.version>
+      -->
         <org.shindig.version>SNAPSHOT-r790473</org.shindig.version>
         <org.gatein.pc.version>trunk-SNAPSHOT</org.gatein.pc.version>
       </properties>

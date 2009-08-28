@@ -58,6 +58,9 @@ public class JibxPropertiesMapper implements IMarshaller, IUnmarshaller, IAliasa
   }
 
   @SuppressWarnings("unused")
+  public boolean isExtension(String index) { return false; }
+
+  @SuppressWarnings("unused")
   public boolean isExtension(int index) { return false; }
 
   public void marshal(Object obj, IMarshallingContext ictx) throws JiBXException {
