@@ -210,6 +210,7 @@ public class UISiteManagement extends UIContainer {
 			}
 			
 			portalApp.setModeState(UIPortalApplication.APP_BLOCK_EDIT_MODE);
+			uiWorkingWS.setRenderedChild(UIPortalApplication.UI_EDIT_WS_ID);
       
       prContext.addUIComponentToUpdateByAjax(uiWorkingWS);
       prContext.setFullRender(true);

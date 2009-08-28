@@ -43,6 +43,7 @@ import org.exoplatform.portal.webui.page.UIDesktopPage;
 import org.exoplatform.portal.webui.page.UIPage;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.portal.UIPortalComponent;
+import org.exoplatform.portal.webui.workspace.UIEditInlineWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.webui.workspace.UIPortalToolPanel;
 import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
@@ -205,9 +206,11 @@ public class Util {
 
   static public void showComponentLayoutMode(Class clazz) throws Exception  {
     if(clazz == null) return;
-    UIPortal uiPortal = getUIPortal();
+    UIPortalApplication portalApp = getUIPortalApplication();
+    UIEditInlineWorkspace uiEditWS = portalApp.findFirstComponentOfType(UIEditInlineWorkspace.class);
+    UIPortal uiPortal = (UIPortal) uiEditWS.getUIComponent();
     UIContainer uiParent  = null;
-    if(uiPortal.isRendered()){
+    if(uiPortal != null){
       uiPortal.setMaximizedUIComponent(null);
       uiParent = uiPortal;
     } else{
@@ -229,9 +232,11 @@ public class Util {
   
   static public void showComponentEditInViewMode(Class clazz) throws Exception  {
     if(clazz == null) return;
-    UIPortal uiPortal = getUIPortal();
+    UIPortalApplication portalApp = getUIPortalApplication();
+    UIEditInlineWorkspace uiEditWS = portalApp.findFirstComponentOfType(UIEditInlineWorkspace.class);
+    UIPortal uiPortal = (UIPortal) uiEditWS.getUIComponent();
     UIContainer uiParent  = null;
-    if(uiPortal.isRendered()){
+    if(uiPortal != null){
       uiPortal.setMaximizedUIComponent(null);
       uiParent = uiPortal;
     } else{
