@@ -13,8 +13,9 @@
 }
 
 .UIFooterPortlet .CopyrightInfo {
-	color: #395c88;
 	text-align: center;
 	line-height: 30px;
 	height: 30px;
+	color:#5A5A5A;
+	font-weight:bold;
 }
