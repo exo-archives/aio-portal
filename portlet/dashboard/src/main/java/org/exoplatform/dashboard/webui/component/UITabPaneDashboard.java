@@ -34,7 +34,8 @@ import org.exoplatform.webui.event.EventListener;
 		events = {
 				@EventConfig(confirm = UITabPaneDashboard.DELETE_DASHBOARD_CONFIRM_PROMPT, name = "DeleteTab", listeners = UITabPaneDashboard.DeleteTabActionListener.class),
 				@EventConfig(name = "AddDashboard", listeners = UITabPaneDashboard.AddDashboardActionListener.class),
-				@EventConfig(name = "SwitchShowedTabRange", listeners = UITabPaneDashboard.SwitchShowedTabRangeActionListener.class)
+				@EventConfig(name = "SwitchShowedTabRange", listeners = UITabPaneDashboard.SwitchShowedTabRangeActionListener.class),
+				@EventConfig(name = "RenameTabLabel", listeners = UITabPaneDashboard.RenameTabLabelActionListener.class)
 		}
 )
 public class UITabPaneDashboard extends UIContainer{
@@ -65,11 +66,11 @@ public class UITabPaneDashboard extends UIContainer{
 	}
 	
 	private PageNavigation getPageNavigation(String owner){
-    List<PageNavigation> allNavigations = uiPortal.getNavigations();
-    for(PageNavigation nav: allNavigations){
-      if(nav.getOwner().equals(owner)) return nav;
-    }
-    return null;
+		List<PageNavigation> allNavigations = uiPortal.getNavigations();
+		for(PageNavigation nav: allNavigations){
+			if(nav.getOwner().equals(owner)) return nav;
+		}
+		return null;
   }
 	
 	public int getCurrentNumberOfTabs(){
@@ -138,7 +139,7 @@ public class UITabPaneDashboard extends UIContainer{
 			PageNode pageNode = new PageNode();
 			pageNode.setName(nodeName);
 			pageNode.setLabel(nodeName);
-	    pageNode.setUri(nodeName);
+			pageNode.setUri(nodeName);
 			pageNode.setPageReference(page.getPageId());
 				
 			pageNavigation.addNode(pageNode);
@@ -150,6 +151,27 @@ public class UITabPaneDashboard extends UIContainer{
 			return nodeName;
 		}catch(Exception ex){
 			logger.info("Could not create page template",ex);
+			return null;
+		}
+	}
+	
+	public String renamePageNode(int nodeIndex, String newNodeLabel){
+		try{
+			ArrayList<PageNode> nodes = pageNavigation.getNodes();
+			PageNode renamedNode = nodes.get(nodeIndex);
+			if(renamedNode == null){
+				return null;
+			}
+			
+			renamedNode.setLabel(newNodeLabel);
+		
+			String newNodeName = newNodeLabel.toLowerCase().replace(' ','_');
+			renamedNode.setName(newNodeName);
+			renamedNode.setUri(newNodeName);
+			
+			configService.update(pageNavigation);
+			return newNodeName;
+		}catch(Exception ex){
 			return null;
 		}
 	}
@@ -182,6 +204,33 @@ public class UITabPaneDashboard extends UIContainer{
 		public void execute(Event<UITabPaneDashboard> event) throws Exception {
 		}
 	}
-
+	
+	static public class RenameTabLabelActionListener extends EventListener<UITabPaneDashboard>{
 		
+		final public static String RENAMED_TAB_LABEL_PARAMETER = "newTabLabel";
+		
+		public void execute(Event<UITabPaneDashboard> event) throws Exception {
+			UITabPaneDashboard tabPane = event.getSource();
+			WebuiRequestContext context = event.getRequestContext();
+			int nodeIndex = Integer.parseInt(context.getRequestParameter(UIComponent.OBJECTID));
+			String newTabLabel = context.getRequestParameter(RENAMED_TAB_LABEL_PARAMETER);
+			String newNodeName = tabPane.renamePageNode(nodeIndex, newTabLabel);
+			if(newNodeName != null){
+				PortalRequestContext prContext = Util.getPortalRequestContext();
+				prContext.getResponse().sendRedirect(prContext.getPortalURI() + newNodeName);
+			}
+		}
+	}
+	
+	static public class PermuteTabActionListener extends EventListener<UITabPaneDashboard>{
+		
+		final public static String TARGETED_TAB_PARAMETER = "targetedTab";
+		
+		public void execute(Event<UITabPaneDashboard> event) throws Exception {
+			UITabPaneDashboard tabPane = event.getSource();
+			WebuiRequestContext context = event.getRequestContext();
+			int dragedTabIndex = Integer.parseInt(context.getRequestParameter(UIComponent.OBJECTID));
+			int targetedTabIndex = Integer.parseInt(context.getRequestParameter(TARGETED_TAB_PARAMETER));
+		}
+	}
 }
