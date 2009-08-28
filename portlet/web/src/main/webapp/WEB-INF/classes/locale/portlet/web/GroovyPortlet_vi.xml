@@ -21,5 +21,11 @@
       <Save>Lưu</Save>
     </action>
   </UIIFrameEditMode>
+  
+  <UIGroovyPortlet>
+    <action>
+      <changeLanguage>Thay ngôn ngữ</changeLanguage>
+    </action>
+  </UIGroovyPortlet>
 </bundle>
 
