@@ -11,8 +11,8 @@
     
     String url = uicomponent.url("LoadNext") + "&ajaxRequest=true&component_generate_id=" + uicomponent.generateId; 
 %>
-<div id="$uicomponent.id" rel="$uicomponent.generateId"
-            style="overflow:auto;height:100px;" onscroll="eXo.webui.UIVirtualList.scrollMove(this,'$url');">    
+<div id="$uicomponent.id" rel="$uicomponent.generateId" style="overflow:auto;" 
+    onscroll="eXo.webui.UIVirtualList.scrollMove(this,'$url');">    
     <div style="display:none;"></div>
     <div><% uicomponent.renderChildren();%></div>
     <% 

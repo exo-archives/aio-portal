@@ -2,6 +2,7 @@ function UIVirtualList() {
 	this.componentMark = "rel";
 	this.finishLoadMark = "finish";
 	this.storeMark = "store";
+	this.initMark = "initiated";
 }
 
 UIVirtualList.prototype.init = function(generateId) {
@@ -9,8 +10,23 @@ UIVirtualList.prototype.init = function(generateId) {
   if (uicomponent == null) return;
   var children = eXo.core.DOMUtil.getChildrenByTagName(uicomponent,"div");
   var appendFragment = children[1];
-  var initHeight = appendFragment.offsetHeight - 100;
-  uicomponent.style.height = initHeight + "px";  
+  //var initHeight = appendFragment.offsetHeight - 100;
+  uicomponent.style.height = 300 + "px";
+  
+  var childrenHeight = 0;
+  for (var i=0; i<children.length;i++) {
+  	childrenHeight += children[i].offsetHeight;  	
+  }
+  
+  if (childrenHeight <= uicomponent.offsetHeight) {
+  	var gap = uicomponent.offsetHeight - childrenHeight + 50;
+  	var element = appendFragment.childNodes[appendFragment.childNodes.length - 1];
+  	element.style.height = (element.offsetHeight + gap) +"px";
+  	uicomponent.scrollTop = uicomponent.scrollTop + gap;
+  } else {  	
+  	uicomponent.setAttribute(this.initMark,"true");
+  	uicomponent.scrollTop = 0;   	
+  }
 }
 
 UIVirtualList.prototype.scrollMove = function(uicomponent, url) {
@@ -71,6 +87,10 @@ UIVirtualList.prototype.updateList = function(generateId) {
   	var firstSec = virtualList.innerHTML.substring(0, index);
   	var secondSec = virtualList.innerHTML.substring(index);  	
   	virtualList.innerHTML = firstSec + loadedContent + secondSec;
+  }
+  
+  if (uicomponent.getAttribute(this.initMark) != "true") {
+  	this.init(generateId);
   }
 }
 
