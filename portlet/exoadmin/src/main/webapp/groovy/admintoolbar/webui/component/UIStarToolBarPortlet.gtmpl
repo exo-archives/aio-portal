@@ -17,16 +17,16 @@
 				<div class=""></div>
 				<div class="MenuItemContainer" style="position: absolute; display:none;">
 					<div class="MenuItem" onclick="$changeLanguageAction">
-						<a href="#" class="ItemIcon SiteIcon"><%=_ctx.appRes("UIStarToolbarPortlet.item.ChangeLanguage")%></a>
+						<a href="#" class="ChangeLanguageIcon"><%=_ctx.appRes("UIStarToolbarPortlet.item.ChangeLanguage")%></a>
 					</div>
 					<div class="MenuItem" onclick="$changeSkinAction">
-						<a href="#" class="ItemIcon SiteIcon"><%=_ctx.appRes("UIStarToolbarPortlet.item.ChangeSkin")%></a>
+						<a href="#" class="ChangeSkinIcon"><%=_ctx.appRes("UIStarToolbarPortlet.item.ChangeSkin")%></a>
 					</div>
 					<div class="MenuItem" onclick="$accountSetting">
-						<a href="#" class="ItemIcon SiteIcon"><%=_ctx.appRes("UIStarToolbarPortlet.item.AccountSetting")%></a>
+						<a href="#" class="AccountSettingIcon"><%=_ctx.appRes("UIStarToolbarPortlet.item.AccountSetting")%></a>
 					</div>
 					<div class="MenuItem" onclick="eXo.portal.logout();">
-						<a href="#" class="ItemIcon SiteIcon"><%=_ctx.appRes("UIStarToolbarPortlet.item.Logout")%></a>
+						<a href="#" class="SignOutIcon"><%=_ctx.appRes("UIStarToolbarPortlet.item.Logout")%></a>
 					</div>
 				</div>
 			</div>
