@@ -162,6 +162,7 @@ public class UserPortalConfigService implements Startable {
 			while (iterator.hasNext()) {
 				Group m = (Group) iterator.next();
 				String groupId = m.getId().trim();
+				if(groupId.equals(userACL_.getGuestsGroup())) continue;
 				navigation = getPageNavigation(PortalConfig.GROUP_TYPE, groupId);
 				if (navigation == null)
 					continue;
