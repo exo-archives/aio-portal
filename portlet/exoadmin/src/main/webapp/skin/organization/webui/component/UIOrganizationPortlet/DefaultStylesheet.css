@@ -1,14 +1,8 @@
 .UIWindow .UIOrganizationPortlet {	
-	border: none;
-	margin: 0px auto;
-	padding: 0px;
 	overflow: visible;
 }
 
 .UIOrganizationPortlet {
-	background: white;
-	border: 1px solid #b7b7b7;
-	margin: 5px 12px;
 	overflow: auto;
 }
 
@@ -25,7 +19,6 @@
 	width: auto;
 	margin: auto;
 }
-
 
 .UIOrganizationPortlet .UIToolbar .LargeToolbar	{
 	width: 100%;

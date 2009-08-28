@@ -1,15 +1,10 @@
 @import url(UILoginForm/DefaultStylesheet.css);
 	
 .UIWindow .UIAccountPortlet {
-	margin: 0px;
-	border: none;
 	overflow: visible;
 }
 
 .UIAccountPortlet {
-	background: white;
-	border: 1px solid #b7b7b7;
-	margin: 5px;
 	padding: 10px 30px;
 	overflow: auto;
 }
