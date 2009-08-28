@@ -14,6 +14,7 @@
     This web.xml file is mandatory in each .par archive file.
 	</description>	
 
+<!--
   <listener>
     <listener-class>org.exoplatform.services.portletcontainer.impl.servlet.PortletApplicationListener</listener-class>
   </listener>
@@ -27,5 +28,6 @@
     <servlet-name>PortletWrapper</servlet-name>
     <url-pattern>/PortletWrapper</url-pattern>
   </servlet-mapping>
+-->
 
 </web-app>

@@ -16,23 +16,23 @@
   <dependencies>
 
     <dependency>
-      <groupId>org.gatein.pc</groupId>
-      <artifactId>pc-api</artifactId>
+      <groupId>org.jboss.portal.portlet</groupId>
+      <artifactId>portlet-api</artifactId>
       <version>${org.gatein.pc.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.gatein.pc</groupId>
-      <artifactId>pc-pc</artifactId>
+      <groupId>org.jboss.portal.portlet</groupId>
+      <artifactId>portlet-portlet</artifactId>
       <version>${org.gatein.pc.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.gatein.pc</groupId>
-      <artifactId>pc-mc</artifactId>
+      <groupId>org.jboss.portal.portlet</groupId>
+      <artifactId>portlet-mc</artifactId>
       <version>${org.gatein.pc.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.gatein.pc</groupId>
-      <artifactId>pc-federation</artifactId>
+      <groupId>org.jboss.portal.portlet</groupId>
+      <artifactId>portlet-federation</artifactId>
       <version>${org.gatein.pc.version}</version>
     </dependency>
     <dependency>

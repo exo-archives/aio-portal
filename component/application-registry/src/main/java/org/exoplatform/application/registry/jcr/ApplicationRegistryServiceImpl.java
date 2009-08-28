@@ -38,10 +38,10 @@ import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.organization.MembershipHandler;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.web.application.gadget.GadgetApplication;
-import org.gatein.common.i18n.LocalizedString;
-import org.gatein.pc.api.Portlet;
-import org.gatein.pc.api.PortletInvoker;
-import org.gatein.pc.api.info.MetaInfo;
+import org.jboss.portal.common.i18n.LocalizedString;
+import org.jboss.portal.portlet.api.Portlet;
+import org.jboss.portal.portlet.api.PortletInvoker;
+import org.jboss.portal.portlet.api.info.MetaInfo;
 import org.picocontainer.Startable;
 
 /**

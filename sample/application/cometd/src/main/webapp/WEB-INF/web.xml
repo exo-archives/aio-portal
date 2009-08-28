@@ -8,6 +8,7 @@
   <display-name>CometdDemo</display-name>
   <description>test portlet CometdDemo</description>
 
+<!--
   <listener>
     <listener-class>org.exoplatform.services.portletcontainer.impl.servlet.PortletApplicationListener</listener-class>
   </listener>
@@ -21,6 +22,7 @@
     <servlet-name>PortletWrapper</servlet-name>
     <url-pattern>/PortletWrapper</url-pattern>
   </servlet-mapping>
+-->
 
   <security-role>
     <role-name>auth-user</role-name>

@@ -16,15 +16,15 @@
  */
 package org.exoplatform.portal.webui.application;
 
-import org.gatein.pc.api.spi.PortletInvocationContext;
-import org.gatein.pc.api.ContainerURL;
-import org.gatein.pc.api.URLFormat;
-import org.gatein.pc.api.RenderURL;
-import org.gatein.pc.api.ResourceURL;
-import org.gatein.pc.api.ActionURL;
-import org.gatein.pc.api.StateString;
-import org.gatein.common.util.MarkupInfo;
-import org.gatein.common.net.media.MediaType;
+import org.jboss.portal.portlet.api.spi.PortletInvocationContext;
+import org.jboss.portal.portlet.api.ContainerURL;
+import org.jboss.portal.portlet.api.URLFormat;
+import org.jboss.portal.portlet.api.RenderURL;
+import org.jboss.portal.portlet.api.ResourceURL;
+import org.jboss.portal.portlet.api.ActionURL;
+import org.jboss.portal.portlet.api.StateString;
+import org.jboss.portal.common.util.MarkupInfo;
+import org.jboss.portal.common.net.media.MediaType;
 import org.exoplatform.portal.application.PortalRequestContext;
 
 import javax.servlet.http.HttpServletResponse;

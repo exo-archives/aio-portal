@@ -16,12 +16,12 @@
  */
 package org.exoplatform.portal.pc;
 
-import org.gatein.pc.state.StateConverter;
-import org.gatein.pc.state.StateConversionException;
-import org.gatein.pc.state.SimplePropertyMap;
-import org.gatein.pc.state.producer.PortletState;
-import org.gatein.pc.api.PortletStateType;
-import org.gatein.pc.api.state.PropertyMap;
+import org.jboss.portal.portlet.state.StateConverter;
+import org.jboss.portal.portlet.state.StateConversionException;
+import org.jboss.portal.portlet.state.SimplePropertyMap;
+import org.jboss.portal.portlet.state.producer.PortletState;
+import org.jboss.portal.portlet.api.PortletStateType;
+import org.jboss.portal.portlet.api.state.PropertyMap;
 
 import java.io.Serializable;
 
@@ -46,7 +46,7 @@ public class ExoStateConverter implements StateConverter {
     if (state == null) {
       throw new IllegalArgumentException("No null state");
     }
-    ExoPortletState map = new ExoPortletState(state.getPortletId());
+    ExoPortletState map = new ExoPortletState("local." + state.getPortletId());
     map.getState().putAll(state.getProperties());
     return map;
   }
@@ -67,7 +67,7 @@ public class ExoStateConverter implements StateConverter {
       throw new IllegalArgumentException("No null map");
     }
     PropertyMap properties = new SimplePropertyMap(marshalledState.getState());
-    String portletID = marshalledState.getPortletId();
+    String portletID = marshalledState.getPortletId().substring("local.".length());
     return new PortletState(portletID, properties);
   }
 

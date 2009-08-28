@@ -18,28 +18,29 @@ package org.exoplatform.portal.pc;
 
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.RootContainer;
-import org.gatein.wci.ServletContainer;
-import org.gatein.pc.api.PortletInvoker;
-import org.gatein.pc.container.ContainerPortletDispatcher;
-import org.gatein.pc.container.ContainerPortletInvoker;
-import org.gatein.pc.federation.FederatingPortletInvoker;
-import org.gatein.pc.federation.impl.FederatingPortletInvokerService;
-import org.gatein.pc.PortletInvokerInterceptor;
-import org.gatein.pc.impl.state.producer.PortletStatePersistenceManagerService;
-import org.gatein.pc.impl.state.StateManagementPolicyService;
-import org.gatein.pc.mc.PortletApplicationDeployer;
-import org.gatein.pc.state.producer.ProducerPortletInvoker;
-import org.gatein.pc.state.producer.PortletStatePersistenceManager;
-import org.gatein.pc.state.StateConverter;
-import org.gatein.pc.aspects.portlet.ConsumerCacheInterceptor;
-import org.gatein.pc.aspects.portlet.PortletCustomizationInterceptor;
-import org.gatein.pc.aspects.portlet.EventPayloadInterceptor;
-import org.gatein.pc.aspects.portlet.RequestAttributeConversationInterceptor;
-import org.gatein.pc.aspects.portlet.CCPPInterceptor;
-import org.gatein.pc.aspects.portlet.ProducerCacheInterceptor;
-import org.gatein.pc.aspects.portlet.ContextDispatcherInterceptor;
-import org.gatein.pc.aspects.portlet.SecureTransportInterceptor;
-import org.gatein.pc.aspects.portlet.ValveInterceptor;
+import org.jboss.portal.web.ServletContainer;
+import org.jboss.portal.web.impl.DefaultServletContainerFactory;
+import org.jboss.portal.portlet.api.PortletInvoker;
+import org.jboss.portal.portlet.container.ContainerPortletDispatcher;
+import org.jboss.portal.portlet.container.ContainerPortletInvoker;
+import org.jboss.portal.portlet.federation.FederatingPortletInvoker;
+import org.jboss.portal.portlet.federation.impl.FederatingPortletInvokerService;
+import org.jboss.portal.portlet.PortletInvokerInterceptor;
+import org.jboss.portal.portlet.impl.state.producer.PortletStatePersistenceManagerService;
+import org.jboss.portal.portlet.impl.state.StateManagementPolicyService;
+import org.jboss.portal.portlet.mc.PortletApplicationDeployer;
+import org.jboss.portal.portlet.state.producer.ProducerPortletInvoker;
+import org.jboss.portal.portlet.state.producer.PortletStatePersistenceManager;
+import org.jboss.portal.portlet.state.StateConverter;
+import org.jboss.portal.portlet.aspects.portlet.ConsumerCacheInterceptor;
+import org.jboss.portal.portlet.aspects.portlet.PortletCustomizationInterceptor;
+import org.jboss.portal.portlet.aspects.portlet.EventPayloadInterceptor;
+import org.jboss.portal.portlet.aspects.portlet.RequestAttributeConversationInterceptor;
+import org.jboss.portal.portlet.aspects.portlet.CCPPInterceptor;
+import org.jboss.portal.portlet.aspects.portlet.ProducerCacheInterceptor;
+import org.jboss.portal.portlet.aspects.portlet.ContextDispatcherInterceptor;
+import org.jboss.portal.portlet.aspects.portlet.SecureTransportInterceptor;
+import org.jboss.portal.portlet.aspects.portlet.ValveInterceptor;
 import org.picocontainer.Startable;
 
 /**
@@ -95,8 +96,8 @@ public class ExoKernelIntegration implements Startable {
 
      // inject ServletContainer in objects that need it
      ServletContainer servletContainer = (ServletContainer)container.getComponentInstance(ServletContainer.class);
-     portletApplicationRegistry.setServletContainer(servletContainer);
-     contextDispatcherInterceptor.setServletContainer(servletContainer);
+     portletApplicationRegistry.setServletContainerFactory(DefaultServletContainerFactory.getInstance());
+     contextDispatcherInterceptor.setServletContainerFactory(DefaultServletContainerFactory.getInstance());
 
      // The portlet container invoker continued
      containerPortletInvoker.setNext(valveInterceptor);

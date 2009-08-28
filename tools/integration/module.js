@@ -48,15 +48,14 @@ function getModule(params) {
   module.component.portal  =
     new Project("org.exoplatform.portal", "exo.portal.component.portal", "jar", module.version).
     addDependency(module.component.web).
-    addDependency(new Project("org.gatein.pc", "pc-api", "jar", "trunk-SNAPSHOT")).
-        addDependency(new Project("org.gatein.pc", "pc-exo-integration", "jar", "trunk-SNAPSHOT")).
-        addDependency(new Project("org.gatein.pc", "pc-pc", "jar", "trunk-SNAPSHOT")).
-        addDependency(new Project("org.gatein.pc", "pc-mc", "jar", "trunk-SNAPSHOT")).
-        addDependency(new Project("org.gatein.pc", "pc-controller", "jar", "trunk-SNAPSHOT")).
-        addDependency(new Project("org.gatein.pc", "pc-federation", "jar", "trunk-SNAPSHOT")).
-        addDependency(new Project("org.gatein.wci", "wci-wci", "jar", "trunk-SNAPSHOT")).
-        addDependency(new Project("org.gatein.wci", "wci-exo-integration", "jar", "trunk-SNAPSHOT")).
-        addDependency(new Project("org.gatein.common", "common-common", "jar", "trunk-SNAPSHOT")).
+    addDependency(new Project("org.jboss.portal.portlet", "portlet-api", "jar", "2.0.8")).
+        addDependency(new Project("org.jboss.portal.portlet", "portlet-portlet", "jar", "2.0.8")).
+        addDependency(new Project("org.jboss.portal.portlet", "portlet-mc", "jar", "2.0.8")).
+        addDependency(new Project("org.jboss.portal.portlet", "portlet-controller", "jar", "2.0.8")).
+        addDependency(new Project("org.jboss.portal.portlet", "portlet-federation", "jar", "2.0.8")).
+        addDependency(new Project("org.jboss.portal.web", "web-web", "jar", "1.2.3")).
+        addDependency(new Project("org.jboss.portal.common", "common-common", "jar", "1.2.3")).
+        addDependency(new Project("org.jboss.portal.common", "common-portal", "jar", "1.2.3")).
         addDependency(new Project("log4j", "log4j", "jar", "1.2.14")).
         addDependency(new Project("org.jboss", "jbossxb", "jar", "2.0.0.GA")).
         addDependency(new Project("org.jboss.logging", "jboss-logging-spi", "jar", "2.0.5.GA")).

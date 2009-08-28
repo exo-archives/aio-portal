@@ -28,8 +28,10 @@ import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.ExoContainerContext;
 import org.exoplatform.container.component.BaseComponentPlugin;
 import org.exoplatform.web.application.javascript.JavascriptConfigService;
-import org.gatein.wci.WebAppEvent;
-import org.gatein.wci.WebAppListener;
+import org.jboss.portal.web.WebAppEvent;
+import org.jboss.portal.web.WebAppListener;
+import org.jboss.portal.web.impl.DefaultServletContainerFactory;
+
 /**
  * Created by The eXo Platform SAS
  * Jan 19, 2007  
@@ -38,7 +40,11 @@ import org.gatein.wci.WebAppListener;
 public class JavascriptListener extends BaseComponentPlugin implements WebAppListener
 {
 
-	public void onEvent(WebAppEvent event) {
+  public JavascriptListener() {
+    DefaultServletContainerFactory.getInstance().getServletContainer().addWebAppListener(this);
+  }
+
+  public void onEvent(WebAppEvent event) {
 		try {
 			ServletContext scontext = event.getWebApp().getServletContext();
 

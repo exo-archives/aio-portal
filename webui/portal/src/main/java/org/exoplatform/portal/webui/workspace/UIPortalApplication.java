@@ -283,7 +283,7 @@ public class UIPortalApplication extends UIApplication {
   }
 
   private SkinConfig getPortletSkinConfig(UIPortlet portlet) {
-	String portletId =  portlet.getProducerOfferedPortletContext().getId();
+	String portletId =  portlet.getSkinId();
     return getSkin(portletId);
   }
 

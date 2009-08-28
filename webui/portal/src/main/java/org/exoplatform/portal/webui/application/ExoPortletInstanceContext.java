@@ -16,10 +16,10 @@
  */
 package org.exoplatform.portal.webui.application;
 
-import org.gatein.pc.api.spi.InstanceContext;
-import org.gatein.pc.api.state.AccessMode;
-import org.gatein.pc.api.PortletContext;
-import org.gatein.pc.api.StateEvent;
+import org.jboss.portal.portlet.api.spi.InstanceContext;
+import org.jboss.portal.portlet.api.state.AccessMode;
+import org.jboss.portal.portlet.api.PortletContext;
+import org.jboss.portal.portlet.api.StateEvent;
 import org.exoplatform.services.portletcontainer.pci.WindowID;
 import org.exoplatform.portal.pc.ExoPortletStateType;
 

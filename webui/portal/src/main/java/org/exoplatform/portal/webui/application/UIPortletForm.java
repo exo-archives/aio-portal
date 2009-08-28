@@ -59,19 +59,19 @@ import org.exoplatform.webui.form.validator.MandatoryValidator;
 import org.exoplatform.webui.form.validator.StringLengthValidator;
 import org.exoplatform.webui.organization.UIListPermissionSelector;
 import org.exoplatform.webui.organization.UIListPermissionSelector.EmptyIteratorValidator;
-import org.gatein.pc.api.Mode;
-import org.gatein.pc.api.PortletContext;
-import org.gatein.pc.api.PortletInvoker;
-import org.gatein.pc.api.StatefulPortletContext;
-import org.gatein.pc.api.invocation.RenderInvocation;
-import org.gatein.pc.api.invocation.response.FragmentResponse;
-import org.gatein.pc.api.state.PropertyChange;
-import org.gatein.pc.impl.spi.AbstractClientContext;
-import org.gatein.pc.impl.spi.AbstractPortalContext;
-import org.gatein.pc.impl.spi.AbstractSecurityContext;
-import org.gatein.pc.impl.spi.AbstractServerContext;
-import org.gatein.pc.impl.spi.AbstractUserContext;
-import org.gatein.pc.impl.spi.AbstractWindowContext;
+import org.jboss.portal.Mode;
+import org.jboss.portal.portlet.api.PortletContext;
+import org.jboss.portal.portlet.api.PortletInvoker;
+import org.jboss.portal.portlet.api.StatefulPortletContext;
+import org.jboss.portal.portlet.api.invocation.RenderInvocation;
+import org.jboss.portal.portlet.api.invocation.response.FragmentResponse;
+import org.jboss.portal.portlet.api.state.PropertyChange;
+import org.jboss.portal.portlet.impl.spi.AbstractClientContext;
+import org.jboss.portal.portlet.impl.spi.AbstractPortalContext;
+import org.jboss.portal.portlet.impl.spi.AbstractSecurityContext;
+import org.jboss.portal.portlet.impl.spi.AbstractServerContext;
+import org.jboss.portal.portlet.impl.spi.AbstractUserContext;
+import org.jboss.portal.portlet.impl.spi.AbstractWindowContext;
 /**
  * Author : Nhu Dinh Thuan
  *          nhudinhthuan@yahoo.com
@@ -178,7 +178,7 @@ public class UIPortletForm extends UIFormTabPane {
       renderInvocation.setTarget(portletContext);
       
       renderInvocation.setMode(Mode.create(uiPortlet_.getCurrentPortletMode().toString()));
-      renderInvocation.setWindowState(org.gatein.pc.api.WindowState.create(uiPortlet_.getCurrentWindowState().toString()));
+      renderInvocation.setWindowState(org.jboss.portal.WindowState.create(uiPortlet_.getCurrentWindowState().toString()));
       
       FragmentResponse fragmentResponse = (FragmentResponse) portletInvoker.invoke(renderInvocation);
       

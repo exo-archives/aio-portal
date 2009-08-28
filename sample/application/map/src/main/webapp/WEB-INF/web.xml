@@ -7,6 +7,7 @@
 <web-app>
   <display-name>Map Portlet</display-name>
 
+<!--
   <listener>
     <listener-class>org.exoplatform.services.portletcontainer.impl.servlet.PortletApplicationListener</listener-class>
   </listener>
@@ -19,4 +20,5 @@
     <servlet-name>PortletWrapper</servlet-name>
     <url-pattern>/PortletWrapper</url-pattern>
   </servlet-mapping>
+-->
 </web-app>

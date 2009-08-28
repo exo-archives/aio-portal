@@ -57,30 +57,29 @@ import org.exoplatform.services.organization.UserProfile;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.event.Event.Phase;
-import org.gatein.common.net.media.MediaType;
-import org.gatein.pc.api.Portlet;
-import org.gatein.pc.api.PortletContext;
-import org.gatein.pc.api.PortletInvoker;
-import org.gatein.pc.api.PortletInvokerException;
-import org.gatein.pc.api.StatefulPortletContext;
-import org.gatein.pc.api.StateString;
-import org.gatein.pc.api.Mode;
-import org.gatein.pc.api.ParametersStateString;
-import org.gatein.pc.api.invocation.PortletInvocation;
-import org.gatein.pc.api.invocation.ActionInvocation;
-import org.gatein.pc.api.invocation.ResourceInvocation;
-import org.gatein.pc.api.invocation.EventInvocation;
-import org.gatein.pc.api.invocation.RenderInvocation;
-import org.gatein.pc.api.info.EventInfo;
-import org.gatein.pc.api.info.ModeInfo;
-import org.gatein.pc.api.info.ParameterInfo;
-import org.gatein.pc.impl.spi.AbstractRequestContext;
-import org.gatein.pc.impl.spi.AbstractClientContext;
-import org.gatein.pc.impl.spi.AbstractServerContext;
-import org.gatein.pc.impl.spi.AbstractUserContext;
-import org.gatein.pc.impl.spi.AbstractWindowContext;
-import org.gatein.pc.impl.spi.AbstractPortalContext;
-import org.gatein.pc.impl.spi.AbstractSecurityContext;
+import org.jboss.portal.common.net.media.MediaType;
+import org.jboss.portal.portlet.api.Portlet;
+import org.jboss.portal.portlet.api.PortletContext;
+import org.jboss.portal.portlet.api.PortletInvoker;
+import org.jboss.portal.portlet.api.PortletInvokerException;
+import org.jboss.portal.portlet.api.StatefulPortletContext;
+import org.jboss.portal.portlet.api.StateString;
+import org.jboss.portal.Mode;
+import org.jboss.portal.portlet.api.ParametersStateString;
+import org.jboss.portal.portlet.api.invocation.PortletInvocation;
+import org.jboss.portal.portlet.api.invocation.ActionInvocation;
+import org.jboss.portal.portlet.api.invocation.ResourceInvocation;
+import org.jboss.portal.portlet.api.invocation.EventInvocation;
+import org.jboss.portal.portlet.api.invocation.RenderInvocation;
+import org.jboss.portal.portlet.api.info.EventInfo;
+import org.jboss.portal.portlet.api.info.ModeInfo;
+import org.jboss.portal.portlet.api.info.ParameterInfo;
+import org.jboss.portal.portlet.impl.spi.AbstractRequestContext;
+import org.jboss.portal.portlet.impl.spi.AbstractClientContext;
+import org.jboss.portal.portlet.impl.spi.AbstractServerContext;
+import org.jboss.portal.portlet.impl.spi.AbstractUserContext;
+import org.jboss.portal.portlet.impl.spi.AbstractPortalContext;
+import org.jboss.portal.portlet.impl.spi.AbstractSecurityContext;
 
 /**
  * May 19, 2006
@@ -106,6 +105,8 @@ public class UIPortlet extends UIApplication {
   static final public String DEFAULT_THEME = "Default:DefaultTheme::Vista:VistaTheme::Mac:MacTheme" ;
   private String windowId ;
   private String portletStyle ;
+
+  private String skinId;
 
   private boolean  showPortletMode = true ;
   
@@ -142,7 +143,7 @@ public class UIPortlet extends UIApplication {
            map.getState().put(pref.getName(), pref.getValues());
         }
      }
-     return StatefulPortletContext.create("_dumbvalue", ExoPortletStateType.getInstance(), map);
+     return StatefulPortletContext.create("local._dumbvalue", ExoPortletStateType.getInstance(), map);
   }
 
   public void save(ExoPortletState state) throws Exception {
@@ -167,6 +168,10 @@ public class UIPortlet extends UIApplication {
     dataStorage.save(pp);
   }
 
+  public String getSkinId() {
+    return skinId;
+  }
+
   public String getId()  { return exoWindowId_.getUniqueID() ; }
   
   public String getWindowId() { return windowId ; }
@@ -184,7 +189,8 @@ public class UIPortlet extends UIApplication {
     String uniqueId = portletIdComponents[2];
 
     //
-    producerOfferedPortletContext = PortletContext.createPortletContext(portletAppName + "/" + portletName);
+    skinId = portletAppName + "/" + portletName;
+    producerOfferedPortletContext = PortletContext.createPortletContext("local./" + portletAppName + "." + portletName);
   }
     
   public String getPortletStyle() {  return  portletStyle ; }
@@ -458,25 +464,25 @@ public class UIPortlet extends UIApplication {
       actionInvocation.setInteractionState(interactionState);
       actionInvocation.setPublicNavigationalState(allParams);
       actionInvocation.setMode(Mode.create(getCurrentPortletMode().toString()));
-      actionInvocation.setWindowState(org.gatein.pc.api.WindowState.create(getCurrentWindowState().toString()));
+      actionInvocation.setWindowState(org.jboss.portal.WindowState.create(getCurrentWindowState().toString()));
       invocation = (I)actionInvocation;
     } else if (type.equals(ResourceInvocation.class)) {
       ResourceInvocation resourceInvocation = new ResourceInvocation(pic);
       resourceInvocation.setMode(Mode.create(getCurrentPortletMode().toString()));
-      resourceInvocation.setWindowState(org.gatein.pc.api.WindowState.create(getCurrentWindowState().toString()));
+      resourceInvocation.setWindowState(org.jboss.portal.WindowState.create(getCurrentWindowState().toString()));
       resourceInvocation.setRequestContext(new AbstractRequestContext(prc.getRequest()));
       invocation = (I)resourceInvocation;
     } else if (type.equals(EventInvocation.class)) {
       EventInvocation eventInvocation = new EventInvocation(pic);
       eventInvocation.setMode(Mode.create(getCurrentPortletMode().toString()));
-      eventInvocation.setWindowState(org.gatein.pc.api.WindowState.create(getCurrentWindowState().toString()));
+      eventInvocation.setWindowState(org.jboss.portal.WindowState.create(getCurrentWindowState().toString()));
       invocation = (I)eventInvocation;
     } else if (type.equals(RenderInvocation.class)) {
       String stateString = StateString.encodeAsOpaqueValue(getRenderParameterMap(this));
       StateString navigationalState = StateString.create(stateString);
       RenderInvocation renderInvocation = new RenderInvocation(pic);
       renderInvocation.setMode(Mode.create(getCurrentPortletMode().toString()));
-      renderInvocation.setWindowState(org.gatein.pc.api.WindowState.create(getCurrentWindowState().toString()));
+      renderInvocation.setWindowState(org.jboss.portal.WindowState.create(getCurrentWindowState().toString()));
       renderInvocation.setNavigationalState(navigationalState);
       invocation = (I)renderInvocation;
     } else {
