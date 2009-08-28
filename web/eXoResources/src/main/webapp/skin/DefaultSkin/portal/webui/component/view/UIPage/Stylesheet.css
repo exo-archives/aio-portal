@@ -95,11 +95,6 @@
 	padding: 0px;
 }
 
-.UIPage .VIEW-PAGE {
-	padding:0px 8px 8px 8px;
-	background: #b6b6b6;
-}
-
 .BottomDecoratorHome .BottomDecoratorLeft{
 	background: url('background/BottomDecoratorHome.gif') no-repeat left;
 	padding-left: 7px;
