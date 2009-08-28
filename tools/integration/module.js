@@ -5,7 +5,6 @@ function getModule(params) {
 
   var kernel = params.kernel;
   var core = params.core;
-  var eXoPortletContainer = params.eXoPortletContainer;
   var jcr = params.eXoJcr;
   var ws = params.ws;
   var module = new Module();
@@ -23,8 +22,11 @@ function getModule(params) {
     new Project("org.exoplatform.portal", "exo.portal.component.gifbackport", "jar", module.version) ;
 
   module.component.pc = 
-    new Project("org.exoplatform.portal", "exo.portal.component.pc", "jar", module.version) ;
-
+    new Project("org.exoplatform.portal", "exo.portal.component.pc", "jar", module.version).
+    addDependency(new Project("javax.portlet", "portlet-api", "jar", "2.0")).
+    addDependency(new Project("javax.ccpp", "ccpp", "jar", "1.0")).
+    addDependency(new Project("javax.xml.bind", "jaxb-api", "jar", "2.1"));
+ 
   module.component.xmlParser = 
     new Project("org.exoplatform.portal", "exo.portal.component.xml-parser", "jar", module.version).
     //addDependency(new Project("commons-httpclient", "commons-httpclient", "jar", "3.0")).
@@ -95,9 +97,9 @@ function getModule(params) {
 
 //  	addDependency(ws.frameworks.cometd).
 
-    addDependency(jcr.services.jcr).
+    addDependency(jcr.services.jcr);
 
-    addDependency(eXoPortletContainer.services.jsr168jsr286) ;
+//    addDependency(eXoPortletContainer.services.jsr168jsr286) ;
 //    addDependency(eXoPortletContainer.web.wsrp) ;
 
   module.portlet = {};
