@@ -34,7 +34,9 @@
 														<div class="LeftTab">
 																<div class="RightTab">
 																		<div class="MiddleTab">
-																				<% String ondblclick = "eXo.webui.UITabbedDashboard.showEditLabelInput(this," + i + ")"; %>
+																				<% 
+																					String ondblclick = "eXo.webui.UITabbedDashboard.showEditLabelInput(this," + i + ",\"" + node.getResolvedLabel() + "\")"; 
+																				%>
 																				<span ondblclick='$ondblclick'><%= node.getResolvedLabel(); %></span>
 																				<a  href="<%= uicomponent.url("DeleteTab",param); %>">
 																					<img class="CloseIcon" src="/eXoResources/skin/sharedImages/Blank.gif" alt="DEL" />

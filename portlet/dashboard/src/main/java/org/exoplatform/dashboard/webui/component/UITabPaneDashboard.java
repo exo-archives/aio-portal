@@ -35,7 +35,8 @@ import org.exoplatform.webui.event.EventListener;
 				@EventConfig(confirm = UITabPaneDashboard.DELETE_DASHBOARD_CONFIRM_PROMPT, name = "DeleteTab", listeners = UITabPaneDashboard.DeleteTabActionListener.class),
 				@EventConfig(name = "AddDashboard", listeners = UITabPaneDashboard.AddDashboardActionListener.class),
 				@EventConfig(name = "SwitchShowedTabRange", listeners = UITabPaneDashboard.SwitchShowedTabRangeActionListener.class),
-				@EventConfig(name = "RenameTabLabel", listeners = UITabPaneDashboard.RenameTabLabelActionListener.class)
+				@EventConfig(name = "RenameTabLabel", listeners = UITabPaneDashboard.RenameTabLabelActionListener.class),
+				@EventConfig(name = "PermuteTab", listeners = UITabPaneDashboard.PermuteTabActionListener.class)
 		}
 )
 public class UITabPaneDashboard extends UIContainer{
@@ -159,7 +160,7 @@ public class UITabPaneDashboard extends UIContainer{
 		try{
 			ArrayList<PageNode> nodes = pageNavigation.getNodes();
 			PageNode renamedNode = nodes.get(nodeIndex);
-			if(renamedNode == null){
+			if(renamedNode == null || newNodeLabel.length() == 0){
 				return null;
 			}
 			
@@ -176,12 +177,40 @@ public class UITabPaneDashboard extends UIContainer{
 		}
 	}
 	
+	/**
+	 * Exchange two nodes under user navigation
+	 * 
+	 * @param firstIndex
+	 * @param secondIndex
+	 * @return
+	 */
+	public boolean permutePageNode(int firstIndex, int secondIndex){
+		if(firstIndex == secondIndex){
+			return false;
+		}
+		
+		try{
+			ArrayList<PageNode> nodes = pageNavigation.getNodes();
+			PageNode firstNode = nodes.get(firstIndex);
+			PageNode secondNode = nodes.get(secondIndex);
+			nodes.set(firstIndex, secondNode);
+			nodes.set(secondIndex, firstNode);
+			
+			configService.update(pageNavigation);
+			return true;
+		}catch(Exception ex){
+			return false;
+		}
+	}
+	
 	static public class DeleteTabActionListener extends EventListener<UITabPaneDashboard>{
 		public void execute(Event<UITabPaneDashboard> event) throws Exception {
 			UITabPaneDashboard source = event.getSource();
 			WebuiRequestContext context = event.getRequestContext();
 			int removedNodeIndex = Integer.parseInt(context.getRequestParameter(UIComponent.OBJECTID));	
 			PageNode selectedNode = source.removePageNode(removedNodeIndex);
+			
+			//If the node is removed successfully, then redirect to the node specified by tab on the left
 			if(selectedNode != null){
 				PortalRequestContext prContext = Util.getPortalRequestContext();
 				prContext.getResponse().sendRedirect(prContext.getPortalURI() + selectedNode.getName());
@@ -193,6 +222,8 @@ public class UITabPaneDashboard extends UIContainer{
 		public void execute(Event<UITabPaneDashboard> event) throws Exception {
 			UITabPaneDashboard tabPane = event.getSource();
 			String newNodeName = tabPane.createNewPageNode(null);
+			
+			//If new node is created with success, then redirect to it
 			if(newNodeName != null){
 				PortalRequestContext prContext = Util.getPortalRequestContext();
 				prContext.getResponse().sendRedirect(prContext.getPortalURI() + newNodeName);
@@ -215,6 +246,8 @@ public class UITabPaneDashboard extends UIContainer{
 			int nodeIndex = Integer.parseInt(context.getRequestParameter(UIComponent.OBJECTID));
 			String newTabLabel = context.getRequestParameter(RENAMED_TAB_LABEL_PARAMETER);
 			String newNodeName = tabPane.renamePageNode(nodeIndex, newTabLabel);
+			
+			//If page node is renamed with success, then redirect to new URL
 			if(newNodeName != null){
 				PortalRequestContext prContext = Util.getPortalRequestContext();
 				prContext.getResponse().sendRedirect(prContext.getPortalURI() + newNodeName);
@@ -229,8 +262,13 @@ public class UITabPaneDashboard extends UIContainer{
 		public void execute(Event<UITabPaneDashboard> event) throws Exception {
 			UITabPaneDashboard tabPane = event.getSource();
 			WebuiRequestContext context = event.getRequestContext();
-			int dragedTabIndex = Integer.parseInt(context.getRequestParameter(UIComponent.OBJECTID));
+			int dragingTabIndex = Integer.parseInt(context.getRequestParameter(UIComponent.OBJECTID));
 			int targetedTabIndex = Integer.parseInt(context.getRequestParameter(TARGETED_TAB_PARAMETER));
+			
+			//If two nodes are permuted, then update the tab pane
+			if(tabPane.permutePageNode(dragingTabIndex, targetedTabIndex)){
+				context.addUIComponentToUpdateByAjax(tabPane);
+			}
 		}
 	}
 }
