@@ -29,7 +29,7 @@
 
    <portlet>
       <portlet-name>PortletA</portlet-name>
-      <portlet-class>org.jboss.portal.unit.basictests.PortletA</portlet-class>
+      <portlet-class>org.gatein.pc.test.unit.basictests.PortletA</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -40,7 +40,7 @@
 
    <portlet>
       <portlet-name>PortletB</portlet-name>
-      <portlet-class>org.jboss.portal.unit.basictests.PortletB</portlet-class>
+      <portlet-class>org.gatein.pc.test.unit.basictests.PortletB</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>

@@ -30,7 +30,7 @@
 
     <portlet>
       <portlet-name>UniversalTestPortletA</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP1</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP1</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>

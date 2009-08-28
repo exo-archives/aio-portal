@@ -35,7 +35,7 @@
    </listener>
    <servlet>
       <servlet-name>PortalServlet</servlet-name>
-      <servlet-class>org.jboss.portal.portlet.test.tck.TCKServlet</servlet-class>
+      <servlet-class>org.gatein.pc.test.tck.TCKServlet</servlet-class>
    </servlet>
    <servlet-mapping>
       <servlet-name>PortalServlet</servlet-name>

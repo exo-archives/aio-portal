@@ -49,14 +49,14 @@ import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
 import org.exoplatform.webui.event.Event.Phase;
-import org.jboss.portal.portlet.api.PortletInvoker;
-import org.jboss.portal.portlet.api.StateString;
-import org.jboss.portal.portlet.api.invocation.ActionInvocation;
-import org.jboss.portal.portlet.api.invocation.EventInvocation;
-import org.jboss.portal.portlet.api.invocation.ResourceInvocation;
-import org.jboss.portal.portlet.api.invocation.response.ContentResponse;
-import org.jboss.portal.portlet.api.invocation.response.PortletInvocationResponse;
-import org.jboss.portal.portlet.api.invocation.response.UpdateNavigationalStateResponse;
+import org.gatein.pc.api.PortletInvoker;
+import org.gatein.pc.api.StateString;
+import org.gatein.pc.api.invocation.ActionInvocation;
+import org.gatein.pc.api.invocation.EventInvocation;
+import org.gatein.pc.api.invocation.ResourceInvocation;
+import org.gatein.pc.api.invocation.response.ContentResponse;
+import org.gatein.pc.api.invocation.response.PortletInvocationResponse;
+import org.gatein.pc.api.invocation.response.UpdateNavigationalStateResponse;
 
 /**
  * May 29, 2006

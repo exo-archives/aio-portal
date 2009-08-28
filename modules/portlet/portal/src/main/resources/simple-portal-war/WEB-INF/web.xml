@@ -32,11 +32,11 @@
    </context-param>
    <filter>
       <filter-name>ErrorHandlingFilter</filter-name>
-      <filter-class>org.jboss.portal.portlet.portal.ErrorHandlingFilter</filter-class>
+      <filter-class>org.gatein.pc.portal.ErrorHandlingFilter</filter-class>
    </filter>
    <filter>
       <filter-name>ControllerFilter</filter-name>
-      <filter-class>org.jboss.portal.portlet.portal.jsp.ControllerFilter</filter-class>
+      <filter-class>org.gatein.pc.portal.jsp.ControllerFilter</filter-class>
    </filter>
    <filter-mapping>
       <filter-name>ErrorHandlingFilter</filter-name>

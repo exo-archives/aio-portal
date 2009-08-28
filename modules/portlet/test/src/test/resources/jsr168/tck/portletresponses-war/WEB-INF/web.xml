@@ -28,17 +28,17 @@
 <web-app>
 
    <listener>
-      <listener-class>org.jboss.portal.unit.PortletTestSuite</listener-class>
+      <listener-class>org.gatein.pc.test.unit.PortletTestSuite</listener-class>
    </listener>
 
    <servlet>
       <servlet-name>UniversalServletA</servlet-name>
-      <servlet-class>org.jboss.portal.test.portlet.framework.UTS1</servlet-class>
+      <servlet-class>org.gatein.pc.test.portlet.framework.UTS1</servlet-class>
    </servlet>
 
    <servlet>
       <servlet-name>UniversalServletB</servlet-name>
-      <servlet-class>org.jboss.portal.test.portlet.framework.UTS2</servlet-class>
+      <servlet-class>org.gatein.pc.test.portlet.framework.UTS2</servlet-class>
    </servlet>
 
    <servlet-mapping>

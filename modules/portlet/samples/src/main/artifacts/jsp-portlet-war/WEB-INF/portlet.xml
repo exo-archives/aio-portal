@@ -31,7 +31,7 @@
       <description>Simple JSP portlet</description>
       <portlet-name>JSPPortlet</portlet-name>
       <display-name>JSP Portlet</display-name>
-      <portlet-class>org.jboss.portal.portlet.samples.jsp.JSPPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.samples.jsp.JSPPortlet</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
          <portlet-mode>VIEW</portlet-mode>

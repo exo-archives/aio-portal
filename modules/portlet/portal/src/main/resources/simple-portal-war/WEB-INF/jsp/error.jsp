@@ -7,7 +7,7 @@
          <div class="header-layer full-width">
             <div class="title two-third-width float-left">
                <h2>
-                  ${requestScope['org.jboss.portal.portlet.portal.error.portlet_name']} ${requestScope['org.jboss.portal.portlet.portal.error.status'] == 'not_found' ? ' not found' : ''}
+                  ${requestScope['org.gatein.pc.portal.error.portlet_name']} ${requestScope['org.gatein.pc.portal.error.status'] == 'not_found' ? ' not found' : ''}
                </h2>
             </div>
          </div>
@@ -17,33 +17,33 @@
       <div class="error-container">
          <ul>
             <li>
-               <span>Error status:</span> ${requestScope['org.jboss.portal.portlet.portal.error.status']}
+               <span>Error status:</span> ${requestScope['org.gatein.pc.portal.error.status']}
             </li>
             <li>
-               <span>Portlet name:</span> ${requestScope['org.jboss.portal.portlet.portal.error.portlet_name']}
+               <span>Portlet name:</span> ${requestScope['org.gatein.pc.portal.error.portlet_name']}
             </li>
             <li>
-               <span>Portlet application name:</span> ${requestScope['org.jboss.portal.portlet.portal.error.application_name']}
+               <span>Portlet application name:</span> ${requestScope['org.gatein.pc.portal.error.application_name']}
             </li>
             <li>
-               <span>Exception:</span> ${!empty requestScope['org.jboss.portal.portlet.portal.error.cause'] ? requestScope['org.jboss.portal.portlet.portal.error.cause'] : 'Error cause unavailable'}
+               <span>Exception:</span> ${!empty requestScope['org.gatein.pc.portal.error.cause'] ? requestScope['org.gatein.pc.portal.error.cause'] : 'Error cause unavailable'}
                <%
-                  if (request.getAttribute("org.jboss.portal.portlet.portal.error.cause") != null)
+                  if (request.getAttribute("org.gatein.pc.portal.error.cause") != null)
                   {
                %>
                <a class="option" href="#exception-stack-trace"
-                  title="${requestScope['org.jboss.portal.portlet.portal.error.cause']}"
-                  rel="shadowbox;width=900;height=400">${!empty requestScope['org.jboss.portal.portlet.portal.error.cause'] ? 'View Stack Trace' : ''}</a>
+                  title="${requestScope['org.gatein.pc.portal.error.cause']}"
+                  rel="shadowbox;width=900;height=400">${!empty requestScope['org.gatein.pc.portal.error.cause'] ? 'View Stack Trace' : ''}</a>
 
                <div id="exception-stack-trace" class="hidden">
                   <div class="exception">
-                     <%=Exceptions.toHTML((Throwable)request.getAttribute("org.jboss.portal.portlet.portal.error.cause"))%>
+                     <%=Exceptions.toHTML((Throwable)request.getAttribute("org.gatein.pc.portal.error.cause"))%>
                   </div>
                </div>
                <%}%>
             </li>
             <li>
-               <span>Window id:</span> ${requestScope['org.jboss.portal.portlet.portal.error.window_id']}
+               <span>Window id:</span> ${requestScope['org.gatein.pc.portal.error.window_id']}
             </li>
          </ul>
       </div>

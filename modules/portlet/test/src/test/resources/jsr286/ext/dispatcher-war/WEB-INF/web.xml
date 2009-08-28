@@ -30,7 +30,7 @@
 
    <filter>
       <filter-name>IncludeURLPatternFilter</filter-name>
-      <filter-class>org.jboss.portal.test.portlet.jsr286.ext.dispatcher.ServletFilter</filter-class>
+      <filter-class>org.gatein.pc.test.portlet.jsr286.ext.dispatcher.ServletFilter</filter-class>
       <init-param>
          <param-name>id</param-name>
          <param-value>INCLUDE_URL_PATTERN_FILTER</param-value>
@@ -39,7 +39,7 @@
 
    <filter>
       <filter-name>IncludeNamedFilter</filter-name>
-      <filter-class>org.jboss.portal.test.portlet.jsr286.ext.dispatcher.ServletFilter</filter-class>
+      <filter-class>org.gatein.pc.test.portlet.jsr286.ext.dispatcher.ServletFilter</filter-class>
       <init-param>
          <param-name>id</param-name>
          <param-value>INCLUDE_NAMED_FILTER</param-value>
@@ -48,7 +48,7 @@
 
    <filter>
       <filter-name>RequestURLPatternFilter</filter-name>
-      <filter-class>org.jboss.portal.test.portlet.jsr286.ext.dispatcher.ServletFilter</filter-class>
+      <filter-class>org.gatein.pc.test.portlet.jsr286.ext.dispatcher.ServletFilter</filter-class>
       <init-param>
          <param-name>id</param-name>
          <param-value>REQUEST_URL_PATTERN_FILTER</param-value>
@@ -57,7 +57,7 @@
 
    <filter>
       <filter-name>RequestNamedFilter</filter-name>
-      <filter-class>org.jboss.portal.test.portlet.jsr286.ext.dispatcher.ServletFilter</filter-class>
+      <filter-class>org.gatein.pc.test.portlet.jsr286.ext.dispatcher.ServletFilter</filter-class>
       <init-param>
          <param-name>id</param-name>
          <param-value>REQUEST_NAMED_FILTER</param-value>
@@ -66,7 +66,7 @@
 
    <filter>
       <filter-name>ForwardURLPatternFilter</filter-name>
-      <filter-class>org.jboss.portal.test.portlet.jsr286.ext.dispatcher.ServletFilter</filter-class>
+      <filter-class>org.gatein.pc.test.portlet.jsr286.ext.dispatcher.ServletFilter</filter-class>
       <init-param>
          <param-name>id</param-name>
          <param-value>FORWARD_URL_PATTERN_FILTER</param-value>
@@ -75,7 +75,7 @@
 
    <filter>
       <filter-name>ForwardNamedFilter</filter-name>
-      <filter-class>org.jboss.portal.test.portlet.jsr286.ext.dispatcher.ServletFilter</filter-class>
+      <filter-class>org.gatein.pc.test.portlet.jsr286.ext.dispatcher.ServletFilter</filter-class>
       <init-param>
          <param-name>id</param-name>
          <param-value>FORWARD_NAMED_FILTER</param-value>
@@ -84,7 +84,7 @@
 
    <filter>
       <filter-name>IncludeNamedJSPDispatchingFilter</filter-name>
-      <filter-class>org.jboss.portal.test.portlet.jsr286.ext.dispatcher.DispatchingFilter</filter-class>
+      <filter-class>org.gatein.pc.test.portlet.jsr286.ext.dispatcher.DispatchingFilter</filter-class>
       <init-param>
          <param-name>id</param-name>
          <param-value>INCLUDE_NAMED_FILTER</param-value>
@@ -93,7 +93,7 @@
 
    <filter>
       <filter-name>IncludeURLPatternJSPDispatchingFilter</filter-name>
-      <filter-class>org.jboss.portal.test.portlet.jsr286.ext.dispatcher.DispatchingFilter</filter-class>
+      <filter-class>org.gatein.pc.test.portlet.jsr286.ext.dispatcher.DispatchingFilter</filter-class>
       <init-param>
          <param-name>id</param-name>
          <param-value>INCLUDE_URL_PATTERN_FILTER</param-value>
@@ -149,32 +149,32 @@
    </filter-mapping>
 
    <listener>
-      <listener-class>org.jboss.portal.unit.PortletTestSuite</listener-class>
+      <listener-class>org.gatein.pc.test.unit.PortletTestSuite</listener-class>
    </listener>
 
    <servlet>
       <servlet-name>UniversalServletA</servlet-name>
-      <servlet-class>org.jboss.portal.test.portlet.framework.UTS1</servlet-class>
+      <servlet-class>org.gatein.pc.test.portlet.framework.UTS1</servlet-class>
    </servlet>
 
    <servlet>
       <servlet-name>NoopServlet</servlet-name>
-      <servlet-class>org.jboss.portal.test.portlet.framework.NoopServlet</servlet-class>
+      <servlet-class>org.gatein.pc.test.portlet.framework.NoopServlet</servlet-class>
    </servlet>
 
    <servlet>
       <servlet-name>TargetForIncludeNamedDispatchingFilter</servlet-name>
-      <servlet-class>org.jboss.portal.test.portlet.framework.NoopServlet</servlet-class>
+      <servlet-class>org.gatein.pc.test.portlet.framework.NoopServlet</servlet-class>
    </servlet>
 
    <servlet>
       <servlet-name>TargetForIncludeURLPatternDispatchingFilter</servlet-name>
-      <servlet-class>org.jboss.portal.test.portlet.framework.NoopServlet</servlet-class>
+      <servlet-class>org.gatein.pc.test.portlet.framework.NoopServlet</servlet-class>
    </servlet>
 
    <servlet>
       <servlet-name>ForwardedRequestContentServlet</servlet-name>
-      <servlet-class>org.jboss.portal.test.portlet.jsr286.ext.dispatcher.ContentServlet</servlet-class>
+      <servlet-class>org.gatein.pc.test.portlet.jsr286.ext.dispatcher.ContentServlet</servlet-class>
       <init-param>
          <param-name>content</param-name>
          <param-value>@ForwardedRequestContent@</param-value>
@@ -183,7 +183,7 @@
 
    <servlet>
       <servlet-name>ForwardedNamedContentServlet</servlet-name>
-      <servlet-class>org.jboss.portal.test.portlet.jsr286.ext.dispatcher.ContentServlet</servlet-class>
+      <servlet-class>org.gatein.pc.test.portlet.jsr286.ext.dispatcher.ContentServlet</servlet-class>
       <init-param>
          <param-name>content</param-name>
          <param-value>@ForwardedNamedContent@</param-value>
@@ -192,7 +192,7 @@
 
    <servlet>
       <servlet-name>IncludedRequestContentServlet</servlet-name>
-      <servlet-class>org.jboss.portal.test.portlet.jsr286.ext.dispatcher.ContentServlet</servlet-class>
+      <servlet-class>org.gatein.pc.test.portlet.jsr286.ext.dispatcher.ContentServlet</servlet-class>
       <init-param>
          <param-name>content</param-name>
          <param-value>@IncludedRequestContent@</param-value>
@@ -201,7 +201,7 @@
 
    <servlet>
       <servlet-name>IncludedNamedContentServlet</servlet-name>
-      <servlet-class>org.jboss.portal.test.portlet.jsr286.ext.dispatcher.ContentServlet</servlet-class>
+      <servlet-class>org.gatein.pc.test.portlet.jsr286.ext.dispatcher.ContentServlet</servlet-class>
       <init-param>
          <param-name>content</param-name>
          <param-value>@IncludedNamedContent@</param-value>

@@ -29,7 +29,7 @@
       <description>Portlet displaying a location on Google Maps</description>
       <portlet-name>GoogleMap</portlet-name>
       <display-name>Google Map Portlet</display-name>
-      <portlet-class>org.jboss.portal.portlet.samples.google.GoogleClippingPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.samples.google.GoogleClippingPortlet</portlet-class>
       <expiration-cache>120</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>
@@ -73,7 +73,7 @@
       <description>Portlet displaying the weather forecast for the specified location</description>
       <portlet-name>GoogleWeather</portlet-name>
       <display-name>Google Weather Portlet</display-name>
-      <portlet-class>org.jboss.portal.portlet.samples.google.GoogleWeatherClippingPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.samples.google.GoogleWeatherClippingPortlet</portlet-class>
       <expiration-cache>120</expiration-cache>
       <supports>
          <mime-type>text/html</mime-type>

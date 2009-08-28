@@ -5,23 +5,23 @@
    xsi:schemaLocation="urn:jboss:jboss-unit:1.0 jboss-unit_1_0.xsd">
    <pojo>
       <test>
-         <class name="org.jboss.portal.portlet.test.PortletUtilsTestCase">
+         <class name="org.gatein.pc.test.PortletUtilsTestCase">
          </class>
       </test>
       <test>
-         <class name="org.jboss.portal.portlet.test.url.DecoderTestCase">
+         <class name="org.gatein.pc.test.url.DecoderTestCase">
          </class>
       </test>
       <test>
-         <class name="org.jboss.portal.portlet.test.url.EncoderTestCase">
+         <class name="org.gatein.pc.test.url.EncoderTestCase">
          </class>
       </test>
       <test>
-         <class name="org.jboss.portal.portlet.test.StringCodecTestCase">
+         <class name="org.gatein.pc.test.StringCodecTestCase">
          </class>
       </test>
       <test>
-         <class name="org.jboss.portal.portlet.controller.StateControllerContextTestCase">
+         <class name="org.gatein.pc.controller.StateControllerContextTestCase">
          </class>
       </test>
    </pojo>

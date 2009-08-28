@@ -364,7 +364,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                      <tbody>
                         <row>
                            <entry>
-                              <parameter>org.jboss.portal.portlet.portal.error.status</parameter>
+                              <parameter>org.gatein.pc.portal.error.status</parameter>
                            </entry>
                            <entry>A
                               <className>String</className>
@@ -374,7 +374,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                         </row>
                         <row>
                            <entry>
-                              <parameter>org.jboss.portal.portlet.portal.error.cause</parameter>
+                              <parameter>org.gatein.pc.portal.error.cause</parameter>
                            </entry>
                            <entry>A (possibly<literal>null</literal>)
                               <className>Throwable</className>
@@ -383,7 +383,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                         </row>
                         <row>
                            <entry>
-                              <parameter>org.jboss.portal.portlet.portal.error.message</parameter>
+                              <parameter>org.gatein.pc.portal.error.message</parameter>
                            </entry>
                            <entry>A
                               <className>String</className>
@@ -392,7 +392,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                         </row>
                         <row>
                            <entry>
-                              <parameter>org.jboss.portal.portlet.portal.error.portlet_name</parameter>
+                              <parameter>org.gatein.pc.portal.error.portlet_name</parameter>
                            </entry>
                            <entry>A
                               <className>String</className>
@@ -403,7 +403,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                         </row>
                         <row>
                            <entry>
-                              <parameter>org.jboss.portal.portlet.portal.error.application_name</parameter>
+                              <parameter>org.gatein.pc.portal.error.application_name</parameter>
                            </entry>
                            <entry>A
                               <className>String</className>
@@ -415,7 +415,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
                         </row>
                         <row>
                            <entry>
-                              <parameter>org.jboss.portal.portlet.portal.error.window_id</parameter>
+                              <parameter>org.gatein.pc.portal.error.window_id</parameter>
                            </entry>
                            <entry>A
                               <className>String</className>

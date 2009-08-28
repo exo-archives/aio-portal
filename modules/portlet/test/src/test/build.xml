@@ -386,19 +386,19 @@
          <copy todir="${test.temp.dir}/@{testsuiteversion}/@{testsuitetype}/@{testsuitename}-war/WEB-INF/classes">
             <fileset
                dir="${test.temp.portlet}"
-               includes="org/jboss/portal/test/portlet/@{testsuiteversion}/@{testsuitetype}/common/**"/>
+               includes="org/gatein/pc/test/portlet/@{testsuiteversion}/@{testsuitetype}/common/**"/>
             <fileset
                dir="${test.temp.portlet}"
-               includes="org/jboss/portal/test/portlet/@{testsuiteversion}/common/**"/>
+               includes="org/gatein/pc/test/portlet/@{testsuiteversion}/common/**"/>
             <fileset
                dir="${test.temp.portlet}"
-               includes="org/jboss/portal/test/portlet/common/**"/>
+               includes="org/gatein/pc/test/portlet/common/**"/>
             <fileset
                dir="${test.temp.portlet}"
-               includes="org/jboss/portal/test/portlet/@{testsuiteversion}/@{testsuitetype}/@{testsuitename}/**"/>
+               includes="org/gatein/pc/test/portlet/@{testsuiteversion}/@{testsuitetype}/@{testsuitename}/**"/>
             <fileset
                dir="${test.temp.portlet}"
-               includes="org/jboss/portal/test/portlet/framework/**"/>
+               includes="org/gatein/pc/test/portlet/framework/**"/>
          </copy>
          <copy todir="${test.temp.dir}/@{testsuiteversion}/@{testsuitetype}/@{testsuitename}-war/WEB-INF/lib">
             <fileset
@@ -423,7 +423,7 @@
       <jar jarfile="${test.temp.lib}/portal-portlet-test-framework-lib.jar">
 
          <!-- -->
-         <fileset dir="${test.temp.portlet}" includes="org/jboss/portal/unit/**"/>
+         <fileset dir="${test.temp.portlet}" includes="org/gatein/pc/test/unit/**"/>
 
          <!--  JSR 168 TLD -->
          <zipfileset
@@ -977,7 +977,7 @@
       <mkdir dir="${tck-jetty}"/>
 
       <jar jarfile="${target}/portlet-test-lib.jar">
-         <fileset dir="${target}/classes" excludes="org/jboss/portal/portlet/portal/samples/**"/>
+         <fileset dir="${target}/classes" excludes="org/gatein/pc/portal/samples/**"/>
       </jar>
 
       <copy todir="${tck-jboss}/portlet-tck-war">

@@ -27,6 +27,6 @@
    "http://java.sun.com/dtd/web-app_2_3.dtd">
 <web-app>
    <listener>
-      <listener-class>org.jboss.portal.unit.PortletTestSuite</listener-class>
+      <listener-class>org.gatein.pc.test.unit.PortletTestSuite</listener-class>
    </listener>
 </web-app>

@@ -31,7 +31,7 @@
 
    <portlet>
       <portlet-name>ExceptionPortlet</portlet-name>
-      <portlet-class>org.jboss.portal.portlet.samples.basic.ExceptionPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.samples.basic.ExceptionPortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -42,7 +42,7 @@
 
    <portlet>
       <portlet-name>AJAXResourcePortlet</portlet-name>
-      <portlet-class>org.jboss.portal.portlet.samples.basic.AJAXResourcePortlet</portlet-class>
+      <portlet-class>org.gatein.pc.samples.basic.AJAXResourcePortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -56,7 +56,7 @@
 
    <portlet>
       <portlet-name>HeaderInjectionPortlet</portlet-name>
-      <portlet-class>org.jboss.portal.portlet.samples.basic.HeaderInjectionPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.samples.basic.HeaderInjectionPortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -70,7 +70,7 @@
 
    <portlet>
       <portlet-name>FailDuringInitPortlet</portlet-name>
-      <portlet-class>org.jboss.portal.portlet.samples.basic.FailDuringInitPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.samples.basic.FailDuringInitPortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -81,7 +81,7 @@
 
    <portlet>
       <portlet-name>RandomEventPortlet1</portlet-name>
-      <portlet-class>org.jboss.portal.portlet.samples.basic.RandomEventPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.samples.basic.RandomEventPortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -109,7 +109,7 @@
 
    <portlet>
       <portlet-name>RandomEventPortlet2</portlet-name>
-      <portlet-class>org.jboss.portal.portlet.samples.basic.RandomEventPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.samples.basic.RandomEventPortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -138,7 +138,7 @@
 
    <portlet>
       <portlet-name>RandomEventPortlet3</portlet-name>
-      <portlet-class>org.jboss.portal.portlet.samples.basic.RandomEventPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.samples.basic.RandomEventPortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -167,7 +167,7 @@
 
    <filter>
       <filter-name>FilterA</filter-name>
-      <filter-class>org.jboss.portal.portlet.samples.basic.NullFilter</filter-class>
+      <filter-class>org.gatein.pc.samples.basic.NullFilter</filter-class>
       <lifecycle>ACTION_PHASE</lifecycle>
       <lifecycle>EVENT_PHASE</lifecycle>
       <lifecycle>RENDER_PHASE</lifecycle>
@@ -176,7 +176,7 @@
 
    <filter>
       <filter-name>FilterB</filter-name>
-      <filter-class>org.jboss.portal.portlet.samples.basic.NullFilter</filter-class>
+      <filter-class>org.gatein.pc.samples.basic.NullFilter</filter-class>
       <lifecycle>ACTION_PHASE</lifecycle>
       <lifecycle>EVENT_PHASE</lifecycle>
       <lifecycle>RENDER_PHASE</lifecycle>

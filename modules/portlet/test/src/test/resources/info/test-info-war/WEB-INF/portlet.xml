@@ -28,7 +28,7 @@
              version="1.0">
    <portlet>
       <portlet-name>NoBundlePortlet</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.info.universal.SimplePortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.info.universal.SimplePortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -41,7 +41,7 @@
 
    <portlet>
       <portlet-name>CapabilitiesPortlet</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.info.universal.SimplePortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.info.universal.SimplePortlet</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
          <portlet-mode>HELP</portlet-mode>
@@ -59,7 +59,7 @@
 
    <portlet>
       <portlet-name>PreferenceInfoPortlet</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.info.universal.SimplePortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.info.universal.SimplePortlet</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
@@ -101,7 +101,7 @@
 
    <portlet>
       <portlet-name>CachePortlet</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.info.universal.SimplePortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.info.universal.SimplePortlet</portlet-class>
       <expiration-cache>65</expiration-cache>
       <supports>
         <mime-type>text/html</mime-type>
@@ -115,7 +115,7 @@
 
    <portlet>
       <portlet-name>ModePortlet1</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.info.universal.SimplePortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.info.universal.SimplePortlet</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
          <portlet-mode>EDIT</portlet-mode>
@@ -131,7 +131,7 @@
 
    <portlet>
       <portlet-name>ModePortlet2</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.info.universal.SimplePortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.info.universal.SimplePortlet</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
          <portlet-mode>VIEW</portlet-mode>
@@ -145,7 +145,7 @@
 
    <portlet>
       <portlet-name>RemotablePortlet1</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.info.universal.SimplePortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.info.universal.SimplePortlet</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
          <portlet-mode>VIEW</portlet-mode>
@@ -159,7 +159,7 @@
 
    <portlet>
       <portlet-name>RemotablePortlet2</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.info.universal.SimplePortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.info.universal.SimplePortlet</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
          <portlet-mode>VIEW</portlet-mode>
@@ -173,7 +173,7 @@
 
    <portlet>
       <portlet-name>RemotablePortlet3</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.info.universal.SimplePortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.info.universal.SimplePortlet</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
          <portlet-mode>VIEW</portlet-mode>
@@ -187,7 +187,7 @@
 
    <portlet>
       <portlet-name>SecuredPortlet1</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.info.universal.SimplePortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.info.universal.SimplePortlet</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
          <portlet-mode>VIEW</portlet-mode>
@@ -201,7 +201,7 @@
 
    <portlet>
       <portlet-name>SecuredPortlet2</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.info.universal.SimplePortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.info.universal.SimplePortlet</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
          <portlet-mode>VIEW</portlet-mode>
@@ -215,7 +215,7 @@
 
    <portlet>
       <portlet-name>SecuredPortlet3</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.info.universal.SimplePortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.info.universal.SimplePortlet</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
          <portlet-mode>VIEW</portlet-mode>

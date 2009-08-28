@@ -10,13 +10,13 @@
 
    <tag>
       <name>page</name>
-      <tag-class>org.jboss.portal.portlet.portal.jsp.taglib.PageTag</tag-class>
+      <tag-class>org.gatein.pc.portal.jsp.taglib.PageTag</tag-class>
       <body-content>JSP</body-content>
    </tag>
 
    <tag>
       <name>portlet</name>
-      <tag-class>org.jboss.portal.portlet.portal.jsp.taglib.PortletTag</tag-class>
+      <tag-class>org.gatein.pc.portal.jsp.taglib.PortletTag</tag-class>
       <body-content>JSP</body-content>
       <attribute>
          <name>name</name>
@@ -54,19 +54,19 @@
 
    <tag>
       <name>portletmarkup</name>
-      <tag-class>org.jboss.portal.portlet.portal.jsp.taglib.PortletMarkupTag</tag-class>
+      <tag-class>org.gatein.pc.portal.jsp.taglib.PortletMarkupTag</tag-class>
       <body-content>empty</body-content>
    </tag>
 
    <tag>
       <name>portlettitle</name>
-      <tag-class>org.jboss.portal.portlet.portal.jsp.taglib.PortletTitleTag</tag-class>
+      <tag-class>org.gatein.pc.portal.jsp.taglib.PortletTitleTag</tag-class>
       <body-content>empty</body-content>
    </tag>
 
    <tag>
       <name>portleturl</name>
-      <tag-class>org.jboss.portal.portlet.portal.jsp.taglib.PortletURLTag</tag-class>
+      <tag-class>org.gatein.pc.portal.jsp.taglib.PortletURLTag</tag-class>
       <body-content>JSP</body-content>
       <attribute>
          <name>mode</name>
@@ -82,7 +82,7 @@
 
    <tag>
       <name>param</name>
-      <tag-class>org.jboss.portal.portlet.portal.jsp.taglib.ParamTag</tag-class>
+      <tag-class>org.gatein.pc.portal.jsp.taglib.ParamTag</tag-class>
       <body-content>empty</body-content>
       <attribute>
          <name>name</name>
@@ -100,7 +100,7 @@
 
    <tag>
       <name>pageparam</name>
-      <tag-class>org.jboss.portal.portlet.portal.jsp.taglib.PageParamTag</tag-class>
+      <tag-class>org.gatein.pc.portal.jsp.taglib.PageParamTag</tag-class>
       <body-content>empty</body-content>
       <attribute>
          <name>namespaceURI</name>
@@ -129,7 +129,7 @@
 
    <tag>
       <name>headers</name>
-      <tag-class>org.jboss.portal.portlet.portal.jsp.taglib.HeadersTag</tag-class>
+      <tag-class>org.gatein.pc.portal.jsp.taglib.HeadersTag</tag-class>
       <body-content>empty</body-content>
    </tag>
 

@@ -29,7 +29,7 @@
 
    <portlet>
       <portlet-name>TestUniversalPortletA</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP1</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP1</portlet-class>
       <expiration-cache>-1</expiration-cache>
       <supports>
         <mime-type>text/html</mime-type>
@@ -41,7 +41,7 @@
 
    <portlet>
       <portlet-name>TestUniversalPortletB</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP2</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP2</portlet-class>
       <expiration-cache>-1</expiration-cache>
       <supports>
         <mime-type>text/html</mime-type>
@@ -53,7 +53,7 @@
 
    <portlet>
       <portlet-name>TestUniversalPortletC</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP3</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP3</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -64,7 +64,7 @@
 
    <portlet>
       <portlet-name>TestUniversalPortletD</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP4</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP4</portlet-class>
       <expiration-cache>-1</expiration-cache>
       <supports>
         <mime-type>text/html</mime-type>
@@ -76,7 +76,7 @@
 
    <portlet>
       <portlet-name>TestUniversalPortletE</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP5</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP5</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -87,7 +87,7 @@
 
    <portlet>
       <portlet-name>TestUniversalPortletF</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP6</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP6</portlet-class>
       <expiration-cache>-1</expiration-cache>
       <supports>
         <mime-type>text/html</mime-type>
@@ -99,7 +99,7 @@
 
    <portlet>
       <portlet-name>TestUniversalPortletG</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP7</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP7</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -110,7 +110,7 @@
 
    <portlet>
       <portlet-name>TestUniversalPortletH</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP8</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP8</portlet-class>
       <expiration-cache>-1</expiration-cache>
       <supports>
         <mime-type>text/html</mime-type>
@@ -123,7 +123,7 @@
 
    <portlet>
       <portlet-name>TestUniversalPortletI</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP9</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP9</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>

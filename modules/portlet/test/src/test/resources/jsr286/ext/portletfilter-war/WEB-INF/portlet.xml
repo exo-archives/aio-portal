@@ -29,7 +29,7 @@
 
    <portlet>
       <portlet-name>UniversalTestPortletA</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP1</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP1</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -37,7 +37,7 @@
 
    <portlet>
       <portlet-name>UniversalTestPortletB</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP2</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP2</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -45,7 +45,7 @@
 
    <portlet>
       <portlet-name>UniversalTestPortletC</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP3</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP3</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -53,7 +53,7 @@
 
    <filter>
       <filter-name>FilterConfigFilter</filter-name>
-      <filter-class>org.jboss.portal.test.portlet.jsr286.ext.portletfilter.FilterConfigFilter</filter-class>
+      <filter-class>org.gatein.pc.test.portlet.jsr286.ext.portletfilter.FilterConfigFilter</filter-class>
       <lifecycle>RENDER_PHASE</lifecycle>
       <init-param>
          <name>foo</name>
@@ -67,7 +67,7 @@
 
    <filter>
       <filter-name>RepeatedFilter</filter-name>
-      <filter-class>org.jboss.portal.test.portlet.jsr286.ext.portletfilter.RepeatedFilter</filter-class>
+      <filter-class>org.gatein.pc.test.portlet.jsr286.ext.portletfilter.RepeatedFilter</filter-class>
       <lifecycle>RENDER_PHASE</lifecycle>
    </filter>
 

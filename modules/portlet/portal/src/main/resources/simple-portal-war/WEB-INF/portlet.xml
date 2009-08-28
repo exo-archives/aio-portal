@@ -30,7 +30,7 @@
       <description>Administration Portlet</description>
       <portlet-name>AdminPortlet</portlet-name>
       <display-name>Admin Portlet</display-name>
-      <portlet-class>org.jboss.portal.portlet.portal.admin.ui.AdminPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.portal.admin.ui.AdminPortlet</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
          <portlet-mode>VIEW</portlet-mode>
@@ -45,7 +45,7 @@
       <description>Debugger Portlet</description>
       <portlet-name>DebuggerPortlet</portlet-name>
       <display-name>Debugger Portlet</display-name>
-      <portlet-class>org.jboss.portal.portlet.portal.admin.ui.DebuggerPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.portal.admin.ui.DebuggerPortlet</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
          <portlet-mode>VIEW</portlet-mode>

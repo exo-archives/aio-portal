@@ -29,7 +29,7 @@
       <description>Portlet controlling display of other portlets</description>
       <portlet-name>RemoteControl</portlet-name>
       <display-name>Remote Control Portlet</display-name>
-      <portlet-class>org.jboss.portal.portlet.samples.remotecontroller.RemoteControllerPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.samples.remotecontroller.RemoteControllerPortlet</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
          <portlet-mode>VIEW</portlet-mode>

@@ -29,7 +29,7 @@
 
    <portlet>
       <portlet-name>UniversalTestPortletA</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP1</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP1</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -43,7 +43,7 @@
 
    <portlet>
       <portlet-name>PrefixedUniversalTestPortletB</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP2</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP2</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -57,7 +57,7 @@
 
    <portlet>
       <portlet-name>UniversalTestPortletC</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP3</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP3</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -71,13 +71,13 @@
 
    <filter>
       <filter-name>PortletFilterCounter</filter-name>
-      <filter-class>org.jboss.portal.test.portlet.jsr286.tck.portletfilter.PortletFilterCounter</filter-class>
+      <filter-class>org.gatein.pc.test.portlet.jsr286.tck.portletfilter.PortletFilterCounter</filter-class>
       <lifecycle>RENDER_PHASE</lifecycle>
    </filter>
 
    <filter>
       <filter-name>WildcardFilter</filter-name>
-      <filter-class>org.jboss.portal.test.portlet.jsr286.tck.portletfilter.TraceFilter</filter-class>
+      <filter-class>org.gatein.pc.test.portlet.jsr286.tck.portletfilter.TraceFilter</filter-class>
       <lifecycle>ACTION_PHASE</lifecycle>
       <lifecycle>EVENT_PHASE</lifecycle>
       <lifecycle>RENDER_PHASE</lifecycle>
@@ -86,7 +86,7 @@
 
    <filter>
       <filter-name>PartialWildcardFilter</filter-name>
-      <filter-class>org.jboss.portal.test.portlet.jsr286.tck.portletfilter.TraceFilter</filter-class>
+      <filter-class>org.gatein.pc.test.portlet.jsr286.tck.portletfilter.TraceFilter</filter-class>
       <lifecycle>ACTION_PHASE</lifecycle>
       <lifecycle>EVENT_PHASE</lifecycle>
       <lifecycle>RENDER_PHASE</lifecycle>
@@ -95,7 +95,7 @@
 
    <filter>
       <filter-name>PropagateDoFilterArgsFilter1</filter-name>
-      <filter-class>org.jboss.portal.test.portlet.jsr286.tck.portletfilter.PropagateDoFilterArgsFilter1</filter-class>
+      <filter-class>org.gatein.pc.test.portlet.jsr286.tck.portletfilter.PropagateDoFilterArgsFilter1</filter-class>
       <lifecycle>ACTION_PHASE</lifecycle>
       <lifecycle>EVENT_PHASE</lifecycle>
       <lifecycle>RENDER_PHASE</lifecycle>
@@ -104,7 +104,7 @@
 
    <filter>
       <filter-name>PropagateDoFilterArgsFilter2</filter-name>
-      <filter-class>org.jboss.portal.test.portlet.jsr286.tck.portletfilter.PropagateDoFilterArgsFilter2</filter-class>
+      <filter-class>org.gatein.pc.test.portlet.jsr286.tck.portletfilter.PropagateDoFilterArgsFilter2</filter-class>
       <lifecycle>ACTION_PHASE</lifecycle>
       <lifecycle>EVENT_PHASE</lifecycle>
       <lifecycle>RENDER_PHASE</lifecycle>

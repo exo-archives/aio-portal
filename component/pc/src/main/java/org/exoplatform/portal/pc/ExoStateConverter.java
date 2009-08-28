@@ -16,12 +16,12 @@
  */
 package org.exoplatform.portal.pc;
 
-import org.jboss.portal.portlet.state.StateConverter;
-import org.jboss.portal.portlet.state.StateConversionException;
-import org.jboss.portal.portlet.state.SimplePropertyMap;
-import org.jboss.portal.portlet.state.producer.PortletState;
-import org.jboss.portal.portlet.api.PortletStateType;
-import org.jboss.portal.portlet.api.state.PropertyMap;
+import org.gatein.pc.portlet.state.StateConverter;
+import org.gatein.pc.portlet.state.StateConversionException;
+import org.gatein.pc.portlet.state.SimplePropertyMap;
+import org.gatein.pc.portlet.state.producer.PortletState;
+import org.gatein.pc.api.PortletStateType;
+import org.gatein.pc.api.state.PropertyMap;
 
 import java.io.Serializable;
 

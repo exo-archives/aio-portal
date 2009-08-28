@@ -33,11 +33,11 @@ import org.exoplatform.webui.core.UIContainer;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
 import org.gatein.common.i18n.LocalizedString;
-import org.jboss.portal.portlet.api.Portlet;
-import org.jboss.portal.portlet.api.PortletInvoker;
-import org.jboss.portal.portlet.api.info.MetaInfo;
-import org.jboss.portal.portlet.api.info.PortletInfo;
-import org.jboss.portal.portlet.api.info.PreferencesInfo;
+import org.gatein.pc.api.Portlet;
+import org.gatein.pc.api.PortletInvoker;
+import org.gatein.pc.api.info.MetaInfo;
+import org.gatein.pc.api.info.PortletInfo;
+import org.gatein.pc.api.info.PreferencesInfo;
 
 /**
  * Created by The eXo Platform SAS

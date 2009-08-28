@@ -30,7 +30,7 @@
       <description>Event Portlet A</description>
       <portlet-name>portletA</portlet-name>
       <display-name>Debug Portlet A</display-name>
-      <portlet-class>org.jboss.portal.portlet.samples.eventdebug.EventPortletA</portlet-class>
+      <portlet-class>org.gatein.pc.samples.eventdebug.EventPortletA</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
          <portlet-mode>VIEW</portlet-mode>
@@ -54,7 +54,7 @@
          <description>Event Portlet B</description>
          <portlet-name>portletB</portlet-name>
          <display-name>Debug Portlet B</display-name>
-         <portlet-class>org.jboss.portal.portlet.samples.eventdebug.EventPortletB</portlet-class>
+         <portlet-class>org.gatein.pc.samples.eventdebug.EventPortletB</portlet-class>
          <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -75,7 +75,7 @@
          <description>Event Portlet C</description>
          <portlet-name>portletC</portlet-name>
          <display-name>Debug Portlet C</display-name>
-         <portlet-class>org.jboss.portal.portlet.samples.eventdebug.EventPortletC</portlet-class>
+         <portlet-class>org.gatein.pc.samples.eventdebug.EventPortletC</portlet-class>
          <supports>
             <mime-type>text/html</mime-type>
             <portlet-mode>VIEW</portlet-mode>
@@ -94,15 +94,15 @@
 
    <event-definition>
       <qname xmlns:jbp='urn:jboss:portal:samples:eventa'>jbp:EventA</qname>
-      <value-type>org.jboss.portal.portlet.samples.eventdebug.EventA</value-type>
+      <value-type>org.gatein.pc.samples.eventdebug.EventA</value-type>
    </event-definition>
    <event-definition>
       <qname xmlns:jbp='urn:jboss:portal:samples:eventb'>jbp:EventB</qname>
-      <value-type>org.jboss.portal.portlet.samples.eventdebug.EventB</value-type>
+      <value-type>org.gatein.pc.samples.eventdebug.EventB</value-type>
    </event-definition>
    <event-definition>
       <qname xmlns:jbp='urn:jboss:portal:samples:eventc'>jbp:EventC</qname>
-      <value-type>org.jboss.portal.portlet.samples.eventdebug.EventC</value-type>
+      <value-type>org.gatein.pc.samples.eventdebug.EventC</value-type>
    </event-definition>
 </portlet-app>
 

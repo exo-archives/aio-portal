@@ -31,7 +31,7 @@
    <!--Spec Assertions related portlets-->
    <portlet>
       <portlet-name>RequestDispatchingDependingOnModePortlet</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.jsr168.tck.portletmode.spec.RequestDispatchingDependingOnModePortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.jsr168.tck.portletmode.spec.RequestDispatchingDependingOnModePortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
          <portlet-mode>edit</portlet-mode>
@@ -45,7 +45,7 @@
 
    <portlet>
       <portlet-name>NotInvokeModeDeclaredForNotSupportedMarkupHelperPortlet</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.jsr168.tck.portletmode.spec.NotInvokeModeDeclaredForNotSupportedMarkupHelperPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.jsr168.tck.portletmode.spec.NotInvokeModeDeclaredForNotSupportedMarkupHelperPortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>

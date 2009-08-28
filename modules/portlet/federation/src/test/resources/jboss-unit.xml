@@ -5,13 +5,13 @@
    xsi:schemaLocation="urn:jboss:jboss-unit:1.0 jboss-unit_1_0.xsd">
    <pojo>
       <test>
-         <class name="org.jboss.portal.test.portlet.federation.FederatingPortletInvokerTestCase"/>
+         <class name="org.gatein.pc.federation.FederatingPortletInvokerTestCase"/>
       </test>
       <test>
-         <class name="org.jboss.portal.test.portlet.federation.NoInvokersTestCase"/>
+         <class name="org.gatein.pc.federation.NoInvokersTestCase"/>
       </test>
       <test>
-         <class name="org.jboss.portal.test.portlet.federation.OneInvokerNoPortletsTestCase"/>
+         <class name="org.gatein.pc.federation.OneInvokerNoPortletsTestCase"/>
       </test>
    </pojo>
 </jboss-unit>

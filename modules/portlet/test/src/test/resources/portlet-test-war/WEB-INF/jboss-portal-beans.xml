@@ -34,7 +34,7 @@
       </constructor>
    </bean>
 
-   <bean name="PortletApplicationDeployer" class="org.jboss.portal.portlet.test.TestPortletApplicationDeployer">
+   <bean name="PortletApplicationDeployer" class="org.gatein.pc.test.TestPortletApplicationDeployer">
       <alias>PortletApplicationRegistry</alias>
       <property name="servletContainerFactory"><inject bean="ServletContainerFactory"/></property>
       <property name="driver"><inject bean="TestDriverServer"/></property>
@@ -54,29 +54,29 @@
    </bean>
 
    <!-- The producer persistence manager -->
-   <bean name="ProducerPersistenceManager" class="org.jboss.portal.portlet.impl.state.producer.PortletStatePersistenceManagerService"/>
+   <bean name="ProducerPersistenceManager" class="org.gatein.pc.portlet.impl.state.producer.PortletStatePersistenceManagerService"/>
 
    <!-- The producer state management policy -->
-   <bean name="ProducerStateManagementPolicy" class="org.jboss.portal.portlet.impl.state.StateManagementPolicyService">
+   <bean name="ProducerStateManagementPolicy" class="org.gatein.pc.portlet.impl.state.StateManagementPolicyService">
       <property name="persistLocally"><value>true</value></property>
    </bean>
 
    <!-- The producer state converter -->
-   <bean name="ProducerStateConverter" class="org.jboss.portal.portlet.impl.state.StateConverterV0"/>
+   <bean name="ProducerStateConverter" class="org.gatein.pc.portlet.impl.state.StateConverterV0"/>
 
    <!-- The consumer portlet invoker -->
-   <bean name="ConsumerPortletInvoker" class="org.jboss.portal.portlet.PortletInvokerInterceptor">
+   <bean name="ConsumerPortletInvoker" class="org.gatein.pc.portlet.PortletInvokerInterceptor">
       <property name="next"><inject bean="ConsumerCacheInterceptor"/></property>
    </bean>
-   <bean name="ConsumerCacheInterceptor" class="org.jboss.portal.portlet.aspects.portlet.ConsumerCacheInterceptor">
+   <bean name="ConsumerCacheInterceptor" class="org.gatein.pc.portlet.aspects.ConsumerCacheInterceptor">
       <property name="next"><inject bean="PortletCustomizationInterceptor"/></property>
    </bean>
-   <bean name="PortletCustomizationInterceptor" class="org.jboss.portal.portlet.aspects.portlet.PortletCustomizationInterceptor">
+   <bean name="PortletCustomizationInterceptor" class="org.gatein.pc.portlet.aspects.PortletCustomizationInterceptor">
       <property name="next"><inject bean="ProducerPortletInvoker"/></property>
    </bean>
 
    <!-- The producer portlet invoker -->
-   <bean name="ProducerPortletInvoker" class="org.jboss.portal.portlet.state.producer.ProducerPortletInvoker">
+   <bean name="ProducerPortletInvoker" class="org.gatein.pc.portlet.state.producer.ProducerPortletInvoker">
       <property name="next"><inject bean="ContainerPortletInvoker"/></property>
       <property name="persistenceManager"><inject bean="ProducerPersistenceManager"/></property>
       <property name="stateManagementPolicy"><inject bean="ProducerStateManagementPolicy"/></property>
@@ -84,35 +84,35 @@
    </bean>
 
    <!-- The portlet container invoker -->
-   <bean name="ContainerPortletInvoker" class="org.jboss.portal.portlet.container.ContainerPortletInvoker">
+   <bean name="ContainerPortletInvoker" class="org.gatein.pc.portlet.container.ContainerPortletInvoker">
       <property name="next"><inject bean="ValveInterceptor"/></property>
    </bean>
 
    <!-- Container stack -->
-   <bean name="ValveInterceptor" class="org.jboss.portal.portlet.aspects.portlet.ValveInterceptor">
+   <bean name="ValveInterceptor" class="org.gatein.pc.portlet.aspects.ValveInterceptor">
       <property name="portletApplicationRegistry"><inject bean="PortletApplicationRegistry" state="Instantiated"/></property>
       <property name="next"><inject bean="SecureTransportInterceptor"/></property>
    </bean>
-   <bean name="SecureTransportInterceptor" class="org.jboss.portal.portlet.aspects.portlet.SecureTransportInterceptor">
+   <bean name="SecureTransportInterceptor" class="org.gatein.pc.portlet.aspects.SecureTransportInterceptor">
       <property name="next"><inject bean="ContextDispatcherInterceptor"/></property>
    </bean>
-   <bean name="ContextDispatcherInterceptor" class="org.jboss.portal.portlet.aspects.portlet.ContextDispatcherInterceptor">
+   <bean name="ContextDispatcherInterceptor" class="org.gatein.pc.portlet.aspects.ContextDispatcherInterceptor">
       <property name="servletContainerFactory"><inject bean="ServletContainerFactory"/></property>
       <property name="next"><inject bean="ProducerCacheInterceptor"/></property>
    </bean>
-   <bean name="ProducerCacheInterceptor" class="org.jboss.portal.portlet.aspects.portlet.ProducerCacheInterceptor">
+   <bean name="ProducerCacheInterceptor" class="org.gatein.pc.portlet.aspects.ProducerCacheInterceptor">
       <property name="next"><inject bean="CCPPInterceptor"/></property>
    </bean>
-   <bean name="CCPPInterceptor" class="org.jboss.portal.portlet.aspects.portlet.CCPPInterceptor">
+   <bean name="CCPPInterceptor" class="org.gatein.pc.portlet.aspects.CCPPInterceptor">
       <property name="next"><inject bean="RequestAttributeConversationInterceptor"/></property>
    </bean>
-   <bean name="RequestAttributeConversationInterceptor" class="org.jboss.portal.portlet.aspects.portlet.RequestAttributeConversationInterceptor">
+   <bean name="RequestAttributeConversationInterceptor" class="org.gatein.pc.portlet.aspects.RequestAttributeConversationInterceptor">
       <property name="next"><inject bean="EventPayloadInterceptor"/></property>
    </bean>
-   <bean name="EventPayloadInterceptor" class="org.jboss.portal.portlet.aspects.portlet.EventPayloadInterceptor">
+   <bean name="EventPayloadInterceptor" class="org.gatein.pc.portlet.aspects.EventPayloadInterceptor">
       <property name="next"><inject bean="PortletContainerDispatcher"/></property>
    </bean>
-   <bean name="PortletContainerDispatcher" class="org.jboss.portal.portlet.container.ContainerPortletDispatcher">
+   <bean name="PortletContainerDispatcher" class="org.gatein.pc.portlet.container.ContainerPortletDispatcher">
    </bean>
 
 </deployment>

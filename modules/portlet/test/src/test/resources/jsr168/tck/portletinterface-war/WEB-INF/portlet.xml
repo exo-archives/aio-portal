@@ -29,7 +29,7 @@
 
    <portlet>
       <portlet-name>UniversalTestPortletA</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP1</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP1</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -40,7 +40,7 @@
 
    <portlet>
       <portlet-name>UniversalTestPortletB</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP2</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP2</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -53,7 +53,7 @@
 
   <portlet>
       <portlet-name>InitializeBeforeHandlePortlet</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.jsr168.tck.portletinterface.spec.InitializeBeforeHandlePortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.jsr168.tck.portletinterface.spec.InitializeBeforeHandlePortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -66,7 +66,7 @@
 
    <portlet>
       <portlet-name>PortletExceptionDuringInitPortlet</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.jsr168.tck.portletinterface.spec.PortletExceptionDuringInitPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.jsr168.tck.portletinterface.spec.PortletExceptionDuringInitPortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -77,7 +77,7 @@
 
    <portlet>
       <portlet-name>UnavailableExceptionDuringInitPortlet</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.jsr168.tck.portletinterface.spec.UnavailableExceptionDuringInitPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.jsr168.tck.portletinterface.spec.UnavailableExceptionDuringInitPortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -88,7 +88,7 @@
 
    <portlet>
       <portlet-name>RuntimeExceptionDuringInitPortlet</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.jsr168.tck.portletinterface.spec.RuntimeExceptionDuringInitPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.jsr168.tck.portletinterface.spec.RuntimeExceptionDuringInitPortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -99,7 +99,7 @@
 
    <portlet>
       <portlet-name>MinimizedStateDontRenderPortlet</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.jsr168.tck.portletinterface.spec.MinimizedStateDontRenderPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.jsr168.tck.portletinterface.spec.MinimizedStateDontRenderPortlet</portlet-class>
        <supports>
         <mime-type>text/html</mime-type>
          <portlet-mode>edit</portlet-mode>

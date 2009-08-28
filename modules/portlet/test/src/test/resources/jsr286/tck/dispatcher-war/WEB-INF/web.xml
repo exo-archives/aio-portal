@@ -28,37 +28,37 @@
 <web-app>
 
    <listener>
-         <listener-class>org.jboss.portal.unit.PortletTestSuite</listener-class>
+         <listener-class>org.gatein.pc.test.unit.PortletTestSuite</listener-class>
    </listener>
 
    <servlet>
       <servlet-name>UniversalServletA</servlet-name>
-      <servlet-class>org.jboss.portal.test.portlet.framework.UTS1</servlet-class>
+      <servlet-class>org.gatein.pc.test.portlet.framework.UTS1</servlet-class>
    </servlet>
 
    <servlet>
       <servlet-name>UniversalServletB</servlet-name>
-      <servlet-class>org.jboss.portal.test.portlet.framework.UTS2</servlet-class>
+      <servlet-class>org.gatein.pc.test.portlet.framework.UTS2</servlet-class>
    </servlet>
 
    <servlet>
       <servlet-name>UniversalServletC</servlet-name>
-      <servlet-class>org.jboss.portal.test.portlet.framework.UTS3</servlet-class>
+      <servlet-class>org.gatein.pc.test.portlet.framework.UTS3</servlet-class>
    </servlet>
 
    <servlet>
       <servlet-name>UniversalServletD</servlet-name>
-      <servlet-class>org.jboss.portal.test.portlet.framework.UTS4</servlet-class>
+      <servlet-class>org.gatein.pc.test.portlet.framework.UTS4</servlet-class>
    </servlet>
 
    <servlet>
       <servlet-name>RequestIncludeHopServlet</servlet-name>
-      <servlet-class>org.jboss.portal.test.portlet.jsr286.tck.dispatcher.RequestIncludeHopServlet</servlet-class>
+      <servlet-class>org.gatein.pc.test.portlet.jsr286.tck.dispatcher.RequestIncludeHopServlet</servlet-class>
    </servlet>
 
    <servlet>
       <servlet-name>RequestForwardHopServlet</servlet-name>
-      <servlet-class>org.jboss.portal.test.portlet.jsr286.tck.dispatcher.RequestForwardHopServlet</servlet-class>
+      <servlet-class>org.gatein.pc.test.portlet.jsr286.tck.dispatcher.RequestForwardHopServlet</servlet-class>
    </servlet>
 
    <servlet-mapping>

@@ -29,7 +29,7 @@
 
    <portlet>
       <portlet-name>UniversalTestPortletA</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.jsr168.misc.log4j.LoggingPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.jsr168.misc.log4j.LoggingPortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>

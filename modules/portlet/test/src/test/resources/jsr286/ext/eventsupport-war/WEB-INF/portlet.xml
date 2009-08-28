@@ -29,7 +29,7 @@
 
    <portlet>
       <portlet-name>CommonPayloadEvenPortlet</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.jsr286.ext.eventsupport.CommonPayloadEventPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.jsr286.ext.eventsupport.CommonPayloadEventPortlet</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
       </supports>
@@ -43,12 +43,12 @@
 
    <event-definition>
      <name>CommonPing</name>
-     <value-type>org.jboss.portal.test.portlet.jsr286.ext.common.CommonEventPayload</value-type>
+     <value-type>org.gatein.pc.test.portlet.jsr286.ext.common.CommonEventPayload</value-type>
    </event-definition>
 
    <event-definition>
      <name>CommonPong</name>
-     <value-type>org.jboss.portal.test.portlet.jsr286.ext.common.CommonEventPayload</value-type>
+     <value-type>org.gatein.pc.test.portlet.jsr286.ext.common.CommonEventPayload</value-type>
    </event-definition>
 
 </portlet-app>

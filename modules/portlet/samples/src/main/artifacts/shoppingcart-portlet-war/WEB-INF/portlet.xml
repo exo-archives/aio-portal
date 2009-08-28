@@ -30,7 +30,7 @@
       <description>Catalog Portlet</description>
       <portlet-name>Catalog</portlet-name>
       <display-name>Catalog Portlet</display-name>
-      <portlet-class>org.jboss.portal.portlet.samples.shoppingcart.CatalogPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.samples.shoppingcart.CatalogPortlet</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
          <portlet-mode>VIEW</portlet-mode>
@@ -48,7 +48,7 @@
       <description>Cart Portlet</description>
       <portlet-name>Cart</portlet-name>
       <display-name>Cart Portlet</display-name>
-      <portlet-class>org.jboss.portal.portlet.samples.shoppingcart.CartPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.samples.shoppingcart.CartPortlet</portlet-class>
       <supports>
          <mime-type>text/html</mime-type>
          <portlet-mode>VIEW</portlet-mode>
@@ -64,7 +64,7 @@
 
    <event-definition>
       <qname xmlns:jbp='urn:jboss:portal:samples:event'>jbp:CartEvent</qname>
-      <value-type>org.jboss.portal.portlet.samples.shoppingcart.CartEvent</value-type>
+      <value-type>org.gatein.pc.samples.shoppingcart.CartEvent</value-type>
    </event-definition>
 </portlet-app>
 

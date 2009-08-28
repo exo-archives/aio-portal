@@ -99,7 +99,7 @@
                      <execution>
                         <phase>package</phase>
                         <configuration>
-                           <factory>org.jboss.portal.unit.reports.TestCaseAPF</factory>
+                           <factory>org.gatein.pc.test.unit.reports.TestCaseAPF</factory>
                            <force>true</force>
                            <target>1.5</target>
                            <nocompile>true</nocompile>
@@ -136,7 +136,7 @@
                      <execution>
                         <phase>package</phase>
                         <configuration>
-                           <factory>org.jboss.portal.unit.reports.TestCaseAPF</factory>
+                           <factory>org.gatein.pc.test.unit.reports.TestCaseAPF</factory>
                            <force>true</force>
                            <target>1.5</target>
                            <nocompile>true</nocompile>

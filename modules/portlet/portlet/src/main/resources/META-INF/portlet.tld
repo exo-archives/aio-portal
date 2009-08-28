@@ -12,7 +12,7 @@
    <tag>
 
       <name>param</name>
-      <tag-class>org.jboss.portal.portlet.impl.jsr168.taglib.URLParameterTag</tag-class>
+      <tag-class>org.gatein.pc.portlet.impl.jsr168.taglib.URLParameterTag</tag-class>
       <body-content>empty</body-content>
 
       <attribute>
@@ -32,8 +32,8 @@
    <tag>
 
       <name>renderURL</name>
-      <tag-class>org.jboss.portal.portlet.impl.jsr168.taglib.RenderURLTag</tag-class>
-      <tei-class>org.jboss.portal.portlet.impl.jsr168.taglib.GenerateURLTagTEI</tei-class>
+      <tag-class>org.gatein.pc.portlet.impl.jsr168.taglib.RenderURLTag</tag-class>
+      <tei-class>org.gatein.pc.portlet.impl.jsr168.taglib.GenerateURLTagTEI</tei-class>
       <body-content>JSP</body-content>
 
       <attribute>
@@ -61,16 +61,16 @@
    <tag>
 
       <name>defineObjects</name>
-      <tag-class>org.jboss.portal.portlet.impl.jsr168.taglib.DefineObjectsTag</tag-class>
-      <tei-class>org.jboss.portal.portlet.impl.jsr168.taglib.DefineObjectsTagTEI</tei-class>
+      <tag-class>org.gatein.pc.portlet.impl.jsr168.taglib.DefineObjectsTag</tag-class>
+      <tei-class>org.gatein.pc.portlet.impl.jsr168.taglib.DefineObjectsTagTEI</tei-class>
       <body-content>empty</body-content>
 
    </tag>
    <tag>
 
       <name>actionURL</name>
-      <tag-class>org.jboss.portal.portlet.impl.jsr168.taglib.ActionURLTag</tag-class>
-      <tei-class>org.jboss.portal.portlet.impl.jsr168.taglib.GenerateURLTagTEI</tei-class>
+      <tag-class>org.gatein.pc.portlet.impl.jsr168.taglib.ActionURLTag</tag-class>
+      <tei-class>org.gatein.pc.portlet.impl.jsr168.taglib.GenerateURLTagTEI</tei-class>
       <body-content>JSP</body-content>
 
       <attribute>
@@ -98,7 +98,7 @@
    <tag>
 
       <name>namespace</name>
-      <tag-class>org.jboss.portal.portlet.impl.jsr168.taglib.NamespaceTag</tag-class>
+      <tag-class>org.gatein.pc.portlet.impl.jsr168.taglib.NamespaceTag</tag-class>
       <body-content>empty</body-content>
 
    </tag>

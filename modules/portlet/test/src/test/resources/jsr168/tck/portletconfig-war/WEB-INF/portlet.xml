@@ -28,7 +28,7 @@
              version="1.0">
    <portlet>
       <portlet-name>InlineValuesNotInResourceBundlePortlet</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.jsr168.tck.portletconfig.spec.InlineValuesNotInResourceBundlePortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.jsr168.tck.portletconfig.spec.InlineValuesNotInResourceBundlePortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -43,7 +43,7 @@
 
    <portlet>
       <portlet-name>InlineValuesWithNoResourceBundleDefinedPortlet</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.jsr168.tck.portletconfig.spec.InlineValuesWithNoResourceBundleDefinedPortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.jsr168.tck.portletconfig.spec.InlineValuesWithNoResourceBundleDefinedPortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>

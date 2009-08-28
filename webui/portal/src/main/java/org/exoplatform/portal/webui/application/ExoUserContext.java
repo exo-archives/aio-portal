@@ -20,10 +20,10 @@ package org.exoplatform.portal.webui.application;
 
 import org.exoplatform.services.organization.UserProfile;
 
-import org.jboss.portal.common.invocation.AttributeResolver;
-import org.jboss.portal.common.invocation.resolver.PrincipalAttributeResolver;
-import org.jboss.portal.common.util.Tools;
-import org.jboss.portal.portlet.api.spi.UserContext;
+import org.gatein.common.invocation.AttributeResolver;
+import org.gatein.common.invocation.resolver.PrincipalAttributeResolver;
+import org.gatein.common.util.Tools;
+import org.gatein.pc.api.spi.UserContext;
 
 import java.util.Collections;
 import java.util.Enumeration;

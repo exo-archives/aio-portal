@@ -30,7 +30,7 @@
 
    <portlet>
       <portlet-name>UniversalTestPortletA</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP1</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP1</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -41,7 +41,7 @@
 
    <portlet>
       <portlet-name>TestActionWithPortletModePortlet</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.jsr168.ext.portletmode.extended.TestActionWithPortletModePortlet</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.jsr168.ext.portletmode.extended.TestActionWithPortletModePortlet</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
          <portlet-mode>edit</portlet-mode>

@@ -29,7 +29,7 @@
 
    <portlet>
       <portlet-name>UniversalTestPortletB</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP2</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP2</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -52,7 +52,7 @@
 
    <portlet>
       <portlet-name>UniversalTestPortlet3</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP3</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP3</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>
@@ -73,7 +73,7 @@
    </portlet>
    <portlet>
       <portlet-name>UniversalTestPortlet4</portlet-name>
-      <portlet-class>org.jboss.portal.test.portlet.framework.UTP4</portlet-class>
+      <portlet-class>org.gatein.pc.test.portlet.framework.UTP4</portlet-class>
       <supports>
         <mime-type>text/html</mime-type>
       </supports>

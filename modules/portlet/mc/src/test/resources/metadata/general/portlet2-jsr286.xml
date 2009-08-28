@@ -350,12 +350,12 @@
 		<description xml:lang="de">Beschreibung</description>
 		<display-name>My Listener One</display-name>
 		<display-name xml:lang="de">Mein Zuhörer Eins</display-name>
-		<listener-class>org.jboss.portal.portlet.test.listener.MyListener</listener-class>
+		<listener-class>listener.MyListener</listener-class>
 	</listener>
 
 	<listener id="myListener2">
 		<display-name>My Listener Two</display-name>
-		<listener-class>org.jboss.portal.portlet.test.listener.MyListenerTwo</listener-class>
+		<listener-class>listener.MyListenerTwo</listener-class>
 	</listener>	
 	
 	<container-runtime-option>

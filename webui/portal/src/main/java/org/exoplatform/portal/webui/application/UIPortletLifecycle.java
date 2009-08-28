@@ -34,10 +34,10 @@ import org.exoplatform.webui.core.lifecycle.Lifecycle;
 import org.exoplatform.webui.core.lifecycle.WebuiBindingContext;
 import org.exoplatform.webui.event.Event;
 import org.gatein.common.util.MultiValuedPropertyMap;
-import org.jboss.portal.portlet.api.PortletInvoker;
-import org.jboss.portal.portlet.api.invocation.RenderInvocation;
-import org.jboss.portal.portlet.api.invocation.response.FragmentResponse;
-import org.jboss.portal.portlet.api.invocation.response.PortletInvocationResponse;
+import org.gatein.pc.api.PortletInvoker;
+import org.gatein.pc.api.invocation.RenderInvocation;
+import org.gatein.pc.api.invocation.response.FragmentResponse;
+import org.gatein.pc.api.invocation.response.PortletInvocationResponse;
 import org.w3c.dom.Element;
 
 /**

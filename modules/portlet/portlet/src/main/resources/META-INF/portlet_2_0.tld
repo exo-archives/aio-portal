@@ -14,7 +14,7 @@
    <tag>
 
       <name>param</name>
-      <tag-class>org.jboss.portal.portlet.impl.jsr286.taglib.URLParameter286Tag</tag-class>
+      <tag-class>org.gatein.pc.portlet.impl.jsr286.taglib.URLParameter286Tag</tag-class>
       <body-content>empty</body-content>
 
       <attribute>
@@ -34,7 +34,7 @@
    <tag>
 
       <name>property</name>
-      <tag-class>org.jboss.portal.portlet.impl.jsr286.taglib.URLProperty286Tag</tag-class>
+      <tag-class>org.gatein.pc.portlet.impl.jsr286.taglib.URLProperty286Tag</tag-class>
       <body-content>empty</body-content>
 
       <attribute>
@@ -54,8 +54,8 @@
    <tag>
 
       <name>renderURL</name>
-      <tag-class>org.jboss.portal.portlet.impl.jsr286.taglib.RenderURL286Tag</tag-class>
-      <tei-class>org.jboss.portal.portlet.impl.jsr286.taglib.GenerateURL286TagTEI</tei-class>
+      <tag-class>org.gatein.pc.portlet.impl.jsr286.taglib.RenderURL286Tag</tag-class>
+      <tei-class>org.gatein.pc.portlet.impl.jsr286.taglib.GenerateURL286TagTEI</tei-class>
       <body-content>JSP</body-content>
 
       <attribute>
@@ -93,16 +93,16 @@
    <tag>
 
       <name>defineObjects</name>
-      <tag-class>org.jboss.portal.portlet.impl.jsr286.taglib.DefineObjects286Tag</tag-class>
-      <tei-class>org.jboss.portal.portlet.impl.jsr286.taglib.DefineObjects286TagTEI</tei-class>
+      <tag-class>org.gatein.pc.portlet.impl.jsr286.taglib.DefineObjects286Tag</tag-class>
+      <tei-class>org.gatein.pc.portlet.impl.jsr286.taglib.DefineObjects286TagTEI</tei-class>
       <body-content>empty</body-content>
 
    </tag>
    <tag>
 
       <name>actionURL</name>
-      <tag-class>org.jboss.portal.portlet.impl.jsr286.taglib.ActionURL286Tag</tag-class>
-      <tei-class>org.jboss.portal.portlet.impl.jsr286.taglib.GenerateURL286TagTEI</tei-class>
+      <tag-class>org.gatein.pc.portlet.impl.jsr286.taglib.ActionURL286Tag</tag-class>
+      <tei-class>org.gatein.pc.portlet.impl.jsr286.taglib.GenerateURL286TagTEI</tei-class>
       <body-content>JSP</body-content>
 
       <attribute>
@@ -146,8 +146,8 @@
    <tag>
 
       <name>resourceURL</name>
-      <tag-class>org.jboss.portal.portlet.impl.jsr286.taglib.ResourceURL286Tag</tag-class>
-      <tei-class>org.jboss.portal.portlet.impl.jsr286.taglib.ResourceURL286TagTEI</tei-class>
+      <tag-class>org.gatein.pc.portlet.impl.jsr286.taglib.ResourceURL286Tag</tag-class>
+      <tei-class>org.gatein.pc.portlet.impl.jsr286.taglib.ResourceURL286TagTEI</tei-class>
       <body-content>JSP</body-content>
 
       <attribute>
@@ -180,7 +180,7 @@
    <tag>
 
       <name>namespace</name>
-      <tag-class>org.jboss.portal.portlet.impl.jsr286.taglib.Namespace286Tag</tag-class>
+      <tag-class>org.gatein.pc.portlet.impl.jsr286.taglib.Namespace286Tag</tag-class>
       <body-content>empty</body-content>
 
    </tag>

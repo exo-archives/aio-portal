@@ -17,7 +17,7 @@
 package org.exoplatform.portal.webui.application;
 
 import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
-import org.jboss.portal.portlet.api.spi.WindowContext;
+import org.gatein.pc.api.spi.WindowContext;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>

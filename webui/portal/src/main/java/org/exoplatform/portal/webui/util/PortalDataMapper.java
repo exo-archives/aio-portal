@@ -37,11 +37,11 @@ import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.core.UIComponent;
 
 import org.gatein.common.net.media.MediaType;
-import org.jboss.portal.portlet.api.PortletInvoker;
-import org.jboss.portal.portlet.api.Portlet;
-import org.jboss.portal.portlet.api.PortletContext;
-import org.jboss.portal.portlet.api.info.ModeInfo;
-import org.jboss.portal.portlet.api.info.PortletInfo;
+import org.gatein.pc.api.PortletInvoker;
+import org.gatein.pc.api.Portlet;
+import org.gatein.pc.api.PortletContext;
+import org.gatein.pc.api.info.ModeInfo;
+import org.gatein.pc.api.info.PortletInfo;
 /**
  * Created by The eXo Platform SAS May 4, 2007 TODO: Rename this to
  * PortalDataModelMapper

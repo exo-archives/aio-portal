@@ -5,16 +5,16 @@
    xsi:schemaLocation="urn:jboss:jboss-unit:1.0 jboss-unit_1_0.xsd">
    <pojo>
       <test>
-         <class name="org.jboss.portal.portlet.controller.PortletControllerTestCase"/>
+         <class name="org.gatein.pc.controller.PortletControllerTestCase"/>
       </test>
       <test>
-         <class name="org.jboss.portal.portlet.controller.EventControllerContextFailureTestCase"/>
+         <class name="org.gatein.pc.controller.EventControllerContextFailureTestCase"/>
       </test>
       <test>
-         <class name="org.jboss.portal.portlet.controller.PortletControllerRequestConstructorTestCase"/>
+         <class name="org.gatein.pc.controller.PortletControllerRequestConstructorTestCase"/>
       </test>
       <test>
-         <class name="org.jboss.portal.portlet.controller.PortletControllerRequestTestCase"/>
+         <class name="org.gatein.pc.controller.PortletControllerRequestTestCase"/>
       </test>
    </pojo>
 </jboss-unit>

@@ -16,7 +16,7 @@
  */
 package org.exoplatform.portal.pc;
 
-import org.jboss.portal.portlet.api.PortletStateType;
+import org.gatein.pc.api.PortletStateType;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
