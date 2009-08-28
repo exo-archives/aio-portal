@@ -158,6 +158,11 @@
 	background: url('background/ToolbarContainer.gif') no-repeat right -128px; /* orientation=rt */
 }
 
+.UIToolbarContainer .SiteIcon {
+	background: url('background/ToolbarContainer.gif') no-repeat left -449px; /* orientation=lt */
+	background: url('background/ToolbarContainer.gif') no-repeat right -449px; /* orientation=rt */
+}
+
 .UIToolbarContainer .GroupsIcon {
 	background: url('background/ToolbarContainer.gif') no-repeat left -160px; /* orientation=lt */
 	background: url('background/ToolbarContainer.gif') no-repeat right -160px; /* orientation=rt */
@@ -176,6 +181,11 @@
 .UIToolbarContainer .EditPageIcon {
 	background: url('background/ToolbarContainer.gif') no-repeat left -384px; /* orientation=lt */
 	background: url('background/ToolbarContainer.gif') no-repeat right -384px; /* orientation=rt */
+}
+
+.UIToolbarContainer .EditSiteIcon {
+	background: url('background/ToolbarContainer.gif') no-repeat left -416px; /* orientation=lt */
+	background: url('background/ToolbarContainer.gif') no-repeat right -416px; /* orientation=rt */	
 }
 
 .UIToolbarContainer .EditPortalIcon {	
@@ -220,6 +230,26 @@
 
 .UIStarToolBarPortlet .UITab {
 	height: 30px;
+}
+
+.UIStarToolBarPortlet .ChangeLanguageIcon {
+	background: url('background/ToolbarContainer.gif') no-repeat left -223px; /* orientation=lt */
+	background: url('background/ToolbarContainer.gif') no-repeat right -223px; /* orientation=rt */
+}
+
+.UIStarToolBarPortlet .ChangeSkinIcon {
+	background: url('background/ToolbarContainer.gif') no-repeat left -256px; /* orientation=lt */
+	background: url('background/ToolbarContainer.gif') no-repeat right -256px; /* orientation=rt */
+}
+
+.UIStarToolBarPortlet .AccountSettingIcon {
+	background: url('background/ToolbarContainer.gif') no-repeat left -288px; /* orientation=lt */
+	background: url('background/ToolbarContainer.gif') no-repeat right -288px; /* orientation=rt */
+}
+
+.UIStarToolBarPortlet .SignOutIcon {
+	background: url('background/ToolbarContainer.gif') no-repeat left -320px; /* orientation=lt */
+	background: url('background/ToolbarContainer.gif') no-repeat right -320px; /* orientation=rt */
 }
 
 .UIToolbarContainer .UIStarToolBarPortlet .UIHorizontalTabs .UITab, 
