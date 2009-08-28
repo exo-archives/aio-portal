@@ -16,22 +16,12 @@
  */
 package org.exoplatform.portal.webui.application;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Collections;
-import java.util.Map.Entry;
-
-import javax.portlet.PortletMode;
-import javax.portlet.WindowState;
-import javax.xml.namespace.QName;
-import javax.servlet.http.Cookie;
-
-import org.exoplatform.services.log.Log;
+import org.exoplatform.portal.application.PortalRequestContext;
+import org.exoplatform.portal.application.PortletPreferences;
+import org.exoplatform.portal.application.Preference;
+import org.exoplatform.portal.config.DataStorage;
+import org.exoplatform.portal.pc.ExoPortletState;
+import org.exoplatform.portal.pc.ExoPortletStateType;
 import org.exoplatform.portal.webui.application.UIPortletActionListener.ChangePortletModeActionListener;
 import org.exoplatform.portal.webui.application.UIPortletActionListener.ChangeWindowStateActionListener;
 import org.exoplatform.portal.webui.application.UIPortletActionListener.EditPortletActionListener;
@@ -43,43 +33,52 @@ import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.portal.UIPortalComponentActionListener.DeleteComponentActionListener;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
-import org.exoplatform.portal.config.DataStorage;
-import org.exoplatform.portal.application.PortletPreferences;
-import org.exoplatform.portal.application.Preference;
-import org.exoplatform.portal.application.PortalRequestContext;
-import org.exoplatform.portal.pc.ExoPortletState;
-import org.exoplatform.portal.pc.ExoPortletStateType;
 import org.exoplatform.services.log.ExoLogger;
-//TODO: replace the ExoWindowId class with the portlet api one
-import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
+import org.exoplatform.services.log.Log;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.UserProfile;
+import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.event.Event.Phase;
+
+import org.jboss.portal.Mode;
 import org.jboss.portal.common.net.media.MediaType;
+import org.jboss.portal.portlet.api.ParametersStateString;
 import org.jboss.portal.portlet.api.Portlet;
 import org.jboss.portal.portlet.api.PortletContext;
 import org.jboss.portal.portlet.api.PortletInvoker;
 import org.jboss.portal.portlet.api.PortletInvokerException;
-import org.jboss.portal.portlet.api.StatefulPortletContext;
 import org.jboss.portal.portlet.api.StateString;
-import org.jboss.portal.Mode;
-import org.jboss.portal.portlet.api.ParametersStateString;
-import org.jboss.portal.portlet.api.invocation.PortletInvocation;
-import org.jboss.portal.portlet.api.invocation.ActionInvocation;
-import org.jboss.portal.portlet.api.invocation.ResourceInvocation;
-import org.jboss.portal.portlet.api.invocation.EventInvocation;
-import org.jboss.portal.portlet.api.invocation.RenderInvocation;
+import org.jboss.portal.portlet.api.StatefulPortletContext;
 import org.jboss.portal.portlet.api.info.EventInfo;
 import org.jboss.portal.portlet.api.info.ModeInfo;
 import org.jboss.portal.portlet.api.info.ParameterInfo;
-import org.jboss.portal.portlet.impl.spi.AbstractRequestContext;
+import org.jboss.portal.portlet.api.invocation.ActionInvocation;
+import org.jboss.portal.portlet.api.invocation.EventInvocation;
+import org.jboss.portal.portlet.api.invocation.PortletInvocation;
+import org.jboss.portal.portlet.api.invocation.RenderInvocation;
+import org.jboss.portal.portlet.api.invocation.ResourceInvocation;
 import org.jboss.portal.portlet.impl.spi.AbstractClientContext;
-import org.jboss.portal.portlet.impl.spi.AbstractServerContext;
-import org.jboss.portal.portlet.impl.spi.AbstractUserContext;
 import org.jboss.portal.portlet.impl.spi.AbstractPortalContext;
+import org.jboss.portal.portlet.impl.spi.AbstractRequestContext;
 import org.jboss.portal.portlet.impl.spi.AbstractSecurityContext;
+import org.jboss.portal.portlet.impl.spi.AbstractServerContext;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import javax.portlet.PortletMode;
+import javax.portlet.WindowState;
+import javax.servlet.http.Cookie;
+import javax.xml.namespace.QName;
 
 /**
  * May 19, 2006
@@ -508,7 +507,8 @@ public class UIPortlet extends UIApplication {
     invocation.setClientContext(new AbstractClientContext(prc.getRequest(), requestCookies));
     invocation.setServerContext(new AbstractServerContext(prc.getRequest(), prc.getResponse()));
     invocation.setInstanceContext(new ExoPortletInstanceContext(preferencesPortletContext.getState().getPortletId(), getExoWindowID()));
-    invocation.setUserContext(new AbstractUserContext(prc.getRequest()));
+    //TODO: ExoUserContext impl not tested
+    invocation.setUserContext(new ExoUserContext(prc.getRequest(), userProfile));
     invocation.setWindowContext(new ExoWindowContext(exoWindowId_));
     invocation.setPortalContext(new AbstractPortalContext(Collections.singletonMap("javax.portlet.markup.head.element.support", "true")));
     invocation.setSecurityContext(new AbstractSecurityContext(prc.getRequest()));
