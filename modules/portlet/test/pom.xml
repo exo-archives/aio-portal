@@ -257,17 +257,17 @@
                         <property name="dependency.ccpp.jar" value="${maven.dependency.javax.ccpp.ccpp.jar.path}"/>
                         <property name="dependency.jaxb.jar" value="${maven.dependency.sun-jaxb.jaxb-api.jar.path}"/>
 
-                        <property name="dependency.portal-common-common.jar" value="${maven.dependency.org.jboss.portal.common.common-common.jar.path}"/>
-                        <property name="dependency.portal-common-portal.jar" value="${maven.dependency.org.jboss.portal.common.common-portal.jar.path}"/>
-                        <property name="dependency.portal-common-mc.jar" value="${maven.dependency.org.jboss.portal.common.common-mc.jar.path}"/>
+                        <property name="dependency.portal-common-common.jar" value="${maven.dependency.org.gatein.common.common-common.jar.path}"/>
+                        <property name="dependency.portal-common-portal.jar" value="${maven.dependency.org.gatein.common.common-portal.jar.path}"/>
+                        <property name="dependency.portal-common-mc.jar" value="${maven.dependency.org.gatein.common.common-mc.jar.path}"/>
 
-                        <property name="dependency.portal-web-web.jar" value="${maven.dependency.org.jboss.portal.web.web-web.jar.path}"/>
+                        <property name="dependency.portal-web-web.jar" value="${maven.dependency.org.gatein.wci.wci-wci.jar.path}"/>
 
-                        <property name="dependency.portal-portlet-portlet.jar" value="${maven.dependency.org.jboss.portal.portlet.portlet-portlet.jar.path}"/>
-                        <property name="dependency.portal-portlet-controller.jar" value="${maven.dependency.org.jboss.portal.portlet.portlet-controller.jar.path}"/>
-                        <property name="dependency.portal-portlet-mc.jar" value="${maven.dependency.org.jboss.portal.portlet.portlet-mc.jar.path}"/>
-                        <property name="dependency.portal-portlet-tests.test-jar" value="${maven.dependency.org.jboss.portal.portlet.portlet-portlet.tests.test-jar.path}"/>
-                        <property name="dependency.portal-portlet-api.jar" value="${maven.dependency.org.jboss.portal.portlet.portlet-api.jar.path}"/>
+                        <property name="dependency.portal-portlet-portlet.jar" value="${maven.dependency.org.gatein.pc.pc-portlet.jar.path}"/>
+                        <property name="dependency.portal-portlet-controller.jar" value="${maven.dependency.org.gatein.pc.pc-controller.jar.path}"/>
+                        <property name="dependency.portal-portlet-mc.jar" value="${maven.dependency.org.gatein.pc.pc-mc.jar.path}"/>
+                        <property name="dependency.portal-portlet-tests.test-jar" value="${maven.dependency.org.gatein.pc.pc-portlet.tests.test-jar.path}"/>
+                        <property name="dependency.portal-portlet-api.jar" value="${maven.dependency.org.gatein.pc.pc-api.jar.path}"/>
 
                         <property name="dependency.jboss-unit.jar" value="${maven.dependency.org.jboss.unit.jboss-unit.jar.path}"/>
                         <property name="dependency.jboss-unit-mc.jar" value="${maven.dependency.org.jboss.unit.jboss-unit-mc.jar.path}"/>
