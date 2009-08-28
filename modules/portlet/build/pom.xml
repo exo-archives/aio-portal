@@ -215,7 +215,7 @@
 
          <dependency>
             <groupId>org.gatein.wci</groupId>
-            <artifactId>web-web</artifactId>
+            <artifactId>wci-wci</artifactId>
             <version>${version.jboss.portal.web}</version>
          </dependency>
 

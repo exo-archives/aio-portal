@@ -8,7 +8,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.gatein.pc</groupId>
-  <artifactId>portlet-api</artifactId>
+  <artifactId>pc-api</artifactId>
   <packaging>jar</packaging>
   <name>portlet-api</name>
   <url>http://maven.apache.org</url>
@@ -24,7 +24,7 @@
     </dependency>
     <dependency>
        <groupId>org.gatein.wci</groupId>
-       <artifactId>web-web</artifactId>
+       <artifactId>wci-wci</artifactId>
     </dependency>
     <dependency>
        <groupId>sun-jaxb</groupId>

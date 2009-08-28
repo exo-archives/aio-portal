@@ -7,14 +7,14 @@
       <relativePath>../build/pom.xml</relativePath>
    </parent>
    <modelVersion>4.0.0</modelVersion>
-   <artifactId>portlet-management</artifactId>
+   <artifactId>pc-management</artifactId>
    <packaging>jar</packaging>
    <name>management</name>
 
    <dependencies>
       <dependency>
          <groupId>org.gatein.pc</groupId>
-         <artifactId>portlet-portlet</artifactId>
+         <artifactId>pc-portlet</artifactId>
          <version>${project.version}</version>
       </dependency>
    </dependencies>

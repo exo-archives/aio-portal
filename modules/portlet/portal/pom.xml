@@ -7,7 +7,7 @@
       <relativePath>../build/pom.xml</relativePath>
    </parent>
    <modelVersion>4.0.0</modelVersion>
-   <artifactId>portlet-portal</artifactId>
+   <artifactId>pc-portal</artifactId>
    <packaging>jar</packaging>
    <name>Portlet Container Simple Portal</name>
 
@@ -20,28 +20,28 @@
 
       <dependency>
          <groupId>org.gatein.wci</groupId>
-         <artifactId>web-web</artifactId>
+         <artifactId>wci-wci</artifactId>
          <type>jar</type>
       </dependency>
 
       <dependency>
          <groupId>org.gatein.pc</groupId>
-         <artifactId>portlet-portlet</artifactId>
+         <artifactId>pc-portlet</artifactId>
          <version>${project.version}</version>
       </dependency>
       <dependency>
          <groupId>org.gatein.pc</groupId>
-         <artifactId>portlet-controller</artifactId>
+         <artifactId>pc-controller</artifactId>
          <version>${project.version}</version>
       </dependency>
       <dependency>
          <groupId>org.gatein.pc</groupId>
-         <artifactId>portlet-mc</artifactId>
+         <artifactId>pc-mc</artifactId>
          <version>${project.version}</version>
       </dependency>
       <dependency>
          <groupId>org.gatein.pc</groupId>
-         <artifactId>portlet-api</artifactId>
+         <artifactId>pc-api</artifactId>
          <version>${project.version}</version>
       </dependency>
 

@@ -33,35 +33,35 @@
 
     <dependency>
       <groupId>org.gatein.pc</groupId>
-      <artifactId>portlet-api</artifactId>
+      <artifactId>pc-api</artifactId>
       <version>${org.gatein.pc.version}</version>
     </dependency>
     <dependency>
       <groupId>org.gatein.pc</groupId>
-      <artifactId>portlet-portlet</artifactId>
+      <artifactId>pc-portlet</artifactId>
       <version>${org.gatein.pc.version}</version>
     </dependency>
 	<!-- just to get those deps into the repo -->
 	<dependency>
 		<groupId>org.gatein.pc</groupId>
-		<artifactId>portlet-controller</artifactId>
+		<artifactId>pc-controller</artifactId>
 		<version>${org.gatein.pc.version}
 		</version>
 	</dependency>
 	<dependency>
 		<groupId>org.gatein.pc</groupId>
-		<artifactId>portlet-portal</artifactId>
+		<artifactId>pc-portal</artifactId>
 		<version>${org.gatein.pc.version}</version>
 	</dependency>
 
 	<dependency>
 		<groupId>org.gatein.pc</groupId>
-		<artifactId>portlet-federation</artifactId>
+		<artifactId>pc-federation</artifactId>
 		<version>${org.gatein.pc.version}</version>
 	</dependency>
 	<dependency>
 		<groupId>org.gatein.pc</groupId>
-		<artifactId>portlet-mc</artifactId>
+		<artifactId>pc-mc</artifactId>
 		<version>${org.gatein.pc.version}
 		</version>
 	</dependency>

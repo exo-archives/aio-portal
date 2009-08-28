@@ -7,7 +7,7 @@
       <relativePath>../build/pom.xml</relativePath>
    </parent>
    <modelVersion>4.0.0</modelVersion>
-   <artifactId>portlet-controller</artifactId>
+   <artifactId>pc-controller</artifactId>
    <packaging>jar</packaging>
    <name>Portlet controller</name>
 
@@ -15,7 +15,7 @@
 
       <dependency>
          <groupId>org.gatein.pc</groupId>
-         <artifactId>portlet-portlet</artifactId>
+         <artifactId>pc-portlet</artifactId>
          <version>${project.version}</version>
          <type>jar</type>
       </dependency>
@@ -30,7 +30,7 @@
 
       <dependency>
          <groupId>org.gatein.pc</groupId>
-         <artifactId>portlet-portlet</artifactId>
+         <artifactId>pc-portlet</artifactId>
          <version>${project.version}</version>
          <type>test-jar</type>
          <scope>test</scope>

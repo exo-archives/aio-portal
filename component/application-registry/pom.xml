@@ -32,7 +32,7 @@
     
     <dependency>
       <groupId>org.gatein.pc</groupId>
-      <artifactId>portlet-api</artifactId>
+      <artifactId>pc-api</artifactId>
       <version>${org.gatein.pc.version}</version>
     </dependency>
   </dependencies>

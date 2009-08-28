@@ -7,7 +7,7 @@
       <relativePath>../build/pom.xml</relativePath>
    </parent>
    <modelVersion>4.0.0</modelVersion>
-   <artifactId>portlet-jsr168api</artifactId>
+   <artifactId>pc-jsr168api</artifactId>
    <packaging>jar</packaging>
    <name>JSR 168 API</name>
 

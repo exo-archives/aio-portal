@@ -7,14 +7,14 @@
       <relativePath>../build/pom.xml</relativePath>
    </parent>
    <modelVersion>4.0.0</modelVersion>
-   <artifactId>portlet-mc</artifactId>
+   <artifactId>pc-mc</artifactId>
    <packaging>jar</packaging>
    <name>Portlet Container / JBoss MC integration</name>
 
    <dependencies>
       <dependency>
          <groupId>org.gatein.pc</groupId>
-         <artifactId>portlet-portlet</artifactId>
+         <artifactId>pc-portlet</artifactId>
          <version>${project.version}</version>
       </dependency>
       <dependency>

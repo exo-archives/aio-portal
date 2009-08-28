@@ -1,0 +1,111 @@
+<project>
+  <parent>
+    <groupId>org.exoplatform.portal</groupId>
+    <artifactId>config</artifactId>
+    <version>2.6-int-SNAPSHOT</version>
+  </parent>  
+  
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>exo.exoplatform.portal.packaging</artifactId>
+  <packaging>pom</packaging> 
+  <name>eXo Portla Packaging</name>
+  
+  <dependencies>    
+    
+    
+    <dependency>
+      <groupId>org.exoplatform.jcr</groupId>
+      <artifactId>exo.jcr.framework.web</artifactId>
+      <version>${org.exoplatform.jcr.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.exoplatform.jcr</groupId>
+      <artifactId>exo.jcr.component.webdav</artifactId>
+      <version>${org.exoplatform.jcr.version}</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.exoplatform.jcr</groupId>
+      <artifactId>exo.jcr.component.ftp</artifactId>
+      <version>${org.exoplatform.jcr.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.exoplatform.core</groupId>
+      <artifactId>exo.core.component.ldap</artifactId>
+      <version>${org.exoplatform.core.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.exoplatform.core</groupId>
+      <artifactId>exo.core.component.organization.ldap</artifactId>
+      <version>${org.exoplatform.core.version}</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.exoplatform.ws</groupId>
+      <artifactId>exo.ws.frameworks.servlet</artifactId>
+      <version>${org.exoplatform.ws.version}</version>
+    </dependency>
+    
+    <!-- Portal Packaging not in portal deps -->
+
+    <!-- 
+    Hamcrest-all, jsr107cache, backport-util-concurrent in module.js of portal are used by shindig in portal
+    with last version of shindig we don't need it anymore
+    -->
+    <!-- portal module.js -->
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-all</artifactId>
+      <version>1.1</version>
+    </dependency>
+    
+    <!-- portal module.js -->
+    <dependency>
+      <groupId>net.sf.jsr107cache</groupId>
+      <artifactId>jsr107cache</artifactId>
+      <version>1.0</version>
+    </dependency>
+    
+    <!-- portal module.js -->
+    <dependency>
+       <groupId>backport-util-concurrent</groupId>
+       <artifactId>backport-util-concurrent</artifactId>
+       <version>3.1</version>
+    </dependency>
+    
+    <!-- from ws module.js -->
+    <dependency>
+       <groupId>org.jvnet.jaxb2.maven2</groupId>
+       <artifactId>maven-jaxb2-plugin</artifactId>
+       <version>0.1</version>
+    </dependency>
+    
+
+    <!-- Tomcat Packaging -->
+    <!-- Tomcat.js -->
+    <dependency>
+      <groupId>org.exoplatform.tool</groupId>
+      <artifactId>exo.tool.webunit</artifactId>
+      <version>trunk</version>
+      <!-- TODO with SWF-218 <version>1.0.0</version> -->
+    </dependency>
+
+    <!-- Tomcat.js -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-jdk14</artifactId>
+      <version>1.5.6</version>
+    </dependency>
+
+    <!-- core module.js -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-cglib-repack</artifactId>
+      <version>2.1_3</version>
+    </dependency>
+    
+  </dependencies>
+</project>

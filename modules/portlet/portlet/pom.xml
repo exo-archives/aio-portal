@@ -7,7 +7,7 @@
       <relativePath>../build/pom.xml</relativePath>
    </parent>
    <modelVersion>4.0.0</modelVersion>
-   <artifactId>portlet-portlet</artifactId>
+   <artifactId>pc-portlet</artifactId>
    <packaging>jar</packaging>
    <name>portlet</name>
 
@@ -15,13 +15,13 @@
       <!--
             <dependency>
                <groupId>org.gatein.pc</groupId>
-               <artifactId>portlet-jsr168api</artifactId>
+               <artifactId>pc-jsr168api</artifactId>
                <version>${project.version}</version>
             </dependency>
       -->
       <dependency>
          <groupId>org.gatein.pc</groupId>
-         <artifactId>portlet-api</artifactId>
+         <artifactId>pc-api</artifactId>
          <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -34,7 +34,7 @@
       </dependency>
       <dependency>
          <groupId>org.gatein.wci</groupId>
-         <artifactId>web-web</artifactId>
+         <artifactId>wci-wci</artifactId>
       </dependency>
       <dependency>
          <groupId>javax.servlet.jsp</groupId>

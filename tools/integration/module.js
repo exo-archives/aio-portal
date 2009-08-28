@@ -48,12 +48,12 @@ function getModule(params) {
   module.component.portal  =
     new Project("org.exoplatform.portal", "exo.portal.component.portal", "jar", module.version).
     addDependency(module.component.web).
-    addDependency(new Project("org.gatein.pc", "portlet-api", "jar", "3.0.0-SNAPSHOT")).
-        addDependency(new Project("org.gatein.pc", "portlet-portlet", "jar", "3.0.0-SNAPSHOT")).
-        addDependency(new Project("org.gatein.pc", "portlet-mc", "jar", "3.0.0-SNAPSHOT")).
-        addDependency(new Project("org.gatein.pc", "portlet-controller", "jar", "3.0.0-SNAPSHOT")).
-        addDependency(new Project("org.gatein.pc", "portlet-federation", "jar", "3.0.0-SNAPSHOT")).
-        addDependency(new Project("org.gatein.wci", "web-web", "jar", "3.0.0-SNAPSHOT")).
+    addDependency(new Project("org.gatein.pc", "pc-api", "jar", "3.0.0-SNAPSHOT")).
+        addDependency(new Project("org.gatein.pc", "pc-portlet", "jar", "3.0.0-SNAPSHOT")).
+        addDependency(new Project("org.gatein.pc", "pc-mc", "jar", "3.0.0-SNAPSHOT")).
+        addDependency(new Project("org.gatein.pc", "pc-controller", "jar", "3.0.0-SNAPSHOT")).
+        addDependency(new Project("org.gatein.pc", "pc-federation", "jar", "3.0.0-SNAPSHOT")).
+        addDependency(new Project("org.gatein.wci", "wci-wci", "jar", "3.0.0-SNAPSHOT")).
         addDependency(new Project("org.gatein.common", "common-common", "jar", "3.0.0-SNAPSHOT")).
         addDependency(new Project("org.gatein.common", "common-portal", "jar", "3.0.0-SNAPSHOT")).
         addDependency(new Project("log4j", "log4j", "jar", "1.2.14")).
