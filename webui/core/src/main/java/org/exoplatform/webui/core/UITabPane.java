@@ -33,7 +33,7 @@ import org.exoplatform.webui.event.EventListener;
     events = {@EventConfig(listeners = UITabPane.SelectTabActionListener.class)}
 )
 public class UITabPane extends UIContainer {
-  private static String selectedTabId = "";
+  private String selectedTabId = "";
   
   public String getSelectedTabId() { return selectedTabId; }
   public void setSelectedTab(String renderTabId) { selectedTabId = renderTabId; }
@@ -44,7 +44,7 @@ public class UITabPane extends UIContainer {
 	      WebuiRequestContext context = event.getRequestContext();
 	      String renderTab = context.getRequestParameter(UIComponent.OBJECTID) ;
 	      if(renderTab == null) return;
-	      selectedTabId = renderTab ;
+	      event.getSource().setSelectedTab(renderTab);
         context.setResponseComplete(true);
 	    }
 	  }
