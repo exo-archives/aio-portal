@@ -27,7 +27,7 @@
 
    <modules>
       <module>build</module>
-      <module>web</module>
+      <module>wci</module>
    </modules>
 
    <reporting>
