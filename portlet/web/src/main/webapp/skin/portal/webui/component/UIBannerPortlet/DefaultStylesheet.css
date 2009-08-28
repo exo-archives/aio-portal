@@ -42,13 +42,12 @@
 }
 
 .UIBannerPortlet .MiddleLoginContainer a:hover {
-	color: #058ee6;
+	color: #e7e7e7;
 }
 
 .UIBannerPortlet .MiddleLoginContainer .Name {
 	text-align: left;	 
-	color: #0d62af;
-	font-size: 10px;
+	color: #666666;
 	margin-bottom: 6px;
 	line-height: 35px;
 	float: left;
