@@ -81,6 +81,8 @@ public class UIPortalApplication extends UIApplication {
   final static public String UI_WORKING_WS_ID  = "UIWorkingWorkspace";
   
   final static public String UI_VIEW_WS_ID  = "UIViewWS";
+  
+  final static public String UI_EDIT_WS_ID = "UIEditInlineWS";
 
   final static public String UI_MASK_WS_ID     = "UIMaskWorkspace";
 
@@ -308,6 +310,7 @@ public class UIPortalApplication extends UIApplication {
     Container container = dataStorage.getSharedLayout();
     UIPortal uiPortal = createUIComponent(UIPortal.class, null, null);
     PortalDataMapper.toUIPortal(uiPortal, userPortalConfig_);
+    uiWorkingWorkspace.addChild(UIEditInlineWorkspace.class, null, UI_EDIT_WS_ID).setRendered(false);
     if(container != null) {
     	org.exoplatform.portal.webui.container.UIContainer uiContainer = createUIComponent(org.exoplatform.portal.webui.container.UIContainer.class, null, null);
     	PortalDataMapper.toUIContainer(uiContainer, container);

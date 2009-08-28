@@ -36,6 +36,7 @@ import org.exoplatform.portal.webui.page.UIPage;
 import org.exoplatform.portal.webui.page.UIPageBody;
 import org.exoplatform.portal.webui.util.PortalDataMapper;
 import org.exoplatform.portal.webui.util.Util;
+import org.exoplatform.portal.webui.workspace.UIEditInlineWorkspace;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.webui.workspace.UIPortalToolPanel;
@@ -139,12 +140,6 @@ public class UIPortalComponentActionListener {
       Util.showComponentLayoutMode(uiRemoveComponent.getClass());
 
       PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext();
-      // UIPortalApplication uiPortalApp =
-      // uiParent.getAncestorOfType(UIPortalApplication.class);
-      // UIWorkingWorkspace uiWorkingWS =
-      // uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
-      // pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
-      // pcontext.setFullRender(true);
       pcontext.setFullRender(false);
       pcontext.getWriter().write("OK");
       pcontext.setResponseComplete(true);
@@ -176,9 +171,11 @@ public class UIPortalComponentActionListener {
       }
 
       UIWorkingWorkspace uiWorkingWS = uiApp.getChild(UIWorkingWorkspace.class);
-      UIComponent uiWorking = uiWorkingWS.getChild(UIPortalToolPanel.class);
-      if (!uiWorking.isRendered())
-      	uiWorking = uiApp.findFirstComponentOfType(UIPortal.class);
+      UIEditInlineWorkspace uiEditWS = uiWorkingWS.getChild(UIEditInlineWorkspace.class);
+      UIComponent uiWorking = uiEditWS.getUIComponent();
+//      UIComponent uiWorking = uiWorkingWS.getChild(UIPortalToolPanel.class);
+//      if (!uiWorking.isRendered())
+//      	uiWorking = uiApp.findFirstComponentOfType(UIPortal.class);
 
       String sourceId = pcontext.getRequestParameter("srcID");
       UIComponent uiSource = uiWorking.findComponentById(sourceId);

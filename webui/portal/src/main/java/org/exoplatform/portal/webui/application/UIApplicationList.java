@@ -61,7 +61,7 @@ public class UIApplicationList extends UIContainer {
       if(applications.size()<1) cateItr.remove() ;
       else Collections.sort(applications, portletComparator) ;
     }
-    setSelectedCategory(categories.get(0).getName());
+    if(categories.size() > 0) setSelectedCategory(categories.get(0).getName());
   }
 
   public Application getApplication(String id) throws Exception {

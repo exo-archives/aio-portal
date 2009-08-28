@@ -20,6 +20,7 @@ import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.UserACL;
 import org.exoplatform.portal.webui.page.UIPageBody;
 import org.exoplatform.portal.webui.page.UIPageCreationWizard;
+import org.exoplatform.portal.webui.page.UISiteBody;
 import org.exoplatform.portal.webui.page.UIWizardPageSetInfo;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.portal.UIPortalComposer;
@@ -92,7 +93,21 @@ public class UIMainActionListener {
 					.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
 			uiWorkingWS.setBackupUIPortal(null);
 			uiApp.setModeState(UIPortalApplication.APP_BLOCK_EDIT_MODE);
-			uiWorkingWS.addChild(UIPortalComposer.class, null, null);
+//			uiWorkingWS.addChild(UIPortalComposer.class, null, null);
+			
+//			UserPortalConfig portalConfig = uiApp.getUserPortalConfig();
+//			UIPortal newPortal = uiWorkingWS.createUIComponent(UIPortal.class, null, null);
+//			PortalDataMapper.toUIPortal(newPortal, portalConfig);
+			UIEditInlineWorkspace uiEditWS = uiWorkingWS.getChild(UIEditInlineWorkspace.class);
+//			uiEditWS.setUIComponent(newPortal);
+			UISiteBody uiSiteBody = uiWorkingWS.findFirstComponentOfType(UISiteBody.class);
+			uiSiteBody.setUIComponent(null);
+			uiEditWS.setUIComponent(uiPortal);
+			
+			UIPortalComposer uiComposer = uiEditWS.getComposer().setRendered(true);
+			uiComposer.setComponentConfig(UIPortalComposer.class, null);
+			
+			uiWorkingWS.setRenderedChild(UIEditInlineWorkspace.class);
 			pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
 			pcontext.setFullRender(true);
 		}

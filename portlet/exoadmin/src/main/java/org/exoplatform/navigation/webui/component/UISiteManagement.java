@@ -37,10 +37,12 @@ import org.exoplatform.portal.webui.navigation.UINavigationManagement;
 import org.exoplatform.portal.webui.navigation.UINavigationNodeSelector;
 import org.exoplatform.portal.webui.navigation.UIPageNavigationForm;
 import org.exoplatform.portal.webui.page.UIPageNodeForm2;
+import org.exoplatform.portal.webui.page.UISiteBody;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.portal.UIPortalComposer;
 import org.exoplatform.portal.webui.util.PortalDataMapper;
 import org.exoplatform.portal.webui.util.Util;
+import org.exoplatform.portal.webui.workspace.UIEditInlineWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
 import org.exoplatform.util.ReflectionUtil;
@@ -185,7 +187,6 @@ public class UISiteManagement extends UIContainer {
 			PortalConfig portalConfig = userConfig.getPortalConfig();
 
 			UIPortalApplication portalApp= (UIPortalApplication) prContext.getUIApplication();
-			//UserACL userACL = uicomp.getApplicationComponent(UserACL.class) ;
 			UserACL userACL = portalApp.getApplicationComponent(UserACL.class) ;
 			if(!userACL.hasEditPermission(portalConfig)){
 				portalApp.addMessage(new ApplicationMessage("UISiteManagement.msg.Invalid-editPermission",new String[]{portalConfig.getName()})) ;  
@@ -193,16 +194,20 @@ public class UISiteManagement extends UIContainer {
 			}		
 		  
 			UIWorkingWorkspace uiWorkingWS = portalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
-			uiWorkingWS.addChild(UIPortalComposer.class, null, null);
+			UIEditInlineWorkspace uiEditWS = uiWorkingWS.getChild(UIEditInlineWorkspace.class);
+			UIPortalComposer uiComposer = uiEditWS.getComposer().setRendered(true);
+			uiComposer.setComponentConfig(UIPortalComposer.class, null);
       
 	    //Added by Minh Hoang TO: Trigger the edit inline process
-			UIPortal currentPortal = uiWorkingWS.findFirstComponentOfType(UIPortal.class);
-			if(!portalName.equals(currentPortal.getName())) {
-				uiWorkingWS.setBackupUIPortal(currentPortal);
+			UIPortal uiPortal = Util.getUIPortal();
+			if(portalName.equals(uiPortal.getName())) {
+				uiWorkingWS.findFirstComponentOfType(UISiteBody.class).setUIComponent(null);
+				uiEditWS.setUIComponent(uiPortal);
+			} else {
 				UIPortal editPortal = uiWorkingWS.createUIComponent(UIPortal.class, null, null);
 				PortalDataMapper.toUIPortal(editPortal, userConfig);
-				uiWorkingWS.replaceChild(currentPortal.getId(), editPortal);
-			} else uiWorkingWS.setBackupUIPortal(null);
+				uiEditWS.setUIComponent(editPortal);
+			}
 			
 			portalApp.setModeState(UIPortalApplication.APP_BLOCK_EDIT_MODE);
       

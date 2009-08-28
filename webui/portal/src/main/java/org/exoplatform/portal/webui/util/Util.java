@@ -41,6 +41,7 @@ import org.exoplatform.portal.webui.application.UIPortlet;
 import org.exoplatform.portal.webui.container.UIContainer;
 import org.exoplatform.portal.webui.page.UIDesktopPage;
 import org.exoplatform.portal.webui.page.UIPage;
+import org.exoplatform.portal.webui.page.UISiteBody;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.portal.UIPortalComponent;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
@@ -68,7 +69,8 @@ public class Util {
   }
 
   static public UIPortal getUIPortal() {
-    return getUIPortalApplication().findFirstComponentOfType(UIPortal.class) ;
+    return (UIPortal) getUIPortalApplication()
+    		.findFirstComponentOfType(UISiteBody.class).getUIComponent() ;
   }  
 
   static public UIPortalToolPanel getUIPortalToolPanel(){
@@ -117,7 +119,7 @@ public class Util {
   static public void showPortalComponentLayoutMode(UIPortalApplication uiPortalApp){   
     UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
     uiWorkingWS.setRenderedChild(UIPortal.class) ;
-    UIPortal uiPortal = uiWorkingWS.getChild(UIPortal.class);    
+    UIPortal uiPortal = (UIPortal) uiWorkingWS.findFirstComponentOfType(UISiteBody.class).getUIComponent();    
 
     UIContainer uiContainer = Util.findUIComponent(uiPortal, UIContainer.class, UIPage.class);
     UIPage uiPage= uiPortal.findFirstComponentOfType(UIPage.class);
