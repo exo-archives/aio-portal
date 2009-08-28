@@ -25,6 +25,7 @@ package org.jboss.portal.test.portlet.state;
 import org.jboss.portal.portlet.api.Portlet;
 import org.jboss.portal.portlet.api.PortletContext;
 import org.jboss.portal.portlet.api.PortletInvokerException;
+import org.jboss.portal.portlet.api.PortletStateType;
 import org.jboss.portal.portlet.api.state.PropertyMap;
 import org.jboss.portal.portlet.support.info.PortletInfoSupport;
 import org.jboss.portal.portlet.support.PortletInvokerSupport;
@@ -160,7 +161,7 @@ public class ConsumerStatefulPortletInvokerTestCase extends AbstractStatefulPort
    protected PortletContext createLocalClone(PortletContext portletRef) throws Exception
    {
       stateManagementPolicy.setPersistLocally(true);
-      PortletContext cloneRef = consumer.createClone(portletRef);
+      PortletContext cloneRef = consumer.createClone(null, portletRef);
       stateManagementPolicy.setPersistLocally(persistLocally);
       return cloneRef;
    }
@@ -187,7 +188,7 @@ public class ConsumerStatefulPortletInvokerTestCase extends AbstractStatefulPort
 
    protected PortletContext createClone(PortletContext portletRef) throws PortletInvokerException
    {
-      return consumer.createClone(portletRef);
+      return consumer.createClone(persistLocally ? null : PortletStateType.OPAQUE, portletRef);
    }
 
    protected PortletContext setProperties(PortletContext portletRef, PropertyChange[] changes) throws PortletInvokerException

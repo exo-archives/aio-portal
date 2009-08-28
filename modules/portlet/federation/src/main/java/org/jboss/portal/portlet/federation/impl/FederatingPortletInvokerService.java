@@ -28,6 +28,7 @@ import org.jboss.portal.portlet.api.Portlet;
 import org.jboss.portal.portlet.api.PortletContext;
 import org.jboss.portal.portlet.api.PortletInvokerException;
 import org.jboss.portal.portlet.api.PortletInvoker;
+import org.jboss.portal.portlet.api.PortletStateType;
 import org.jboss.portal.portlet.api.state.PropertyMap;
 import org.jboss.portal.portlet.federation.FederatedPortletInvoker;
 import org.jboss.portal.portlet.federation.FederatingPortletInvoker;
@@ -149,10 +150,10 @@ public class FederatingPortletInvokerService implements FederatingPortletInvoker
       return federated.invoke(invocation);
    }
 
-   public PortletContext createClone(PortletContext compoundPortletContext) throws PortletInvokerException
+   public PortletContext createClone(PortletStateType stateType, PortletContext compoundPortletContext) throws PortletInvokerException
    {
       FederatedPortletInvoker federated = getFederatedPortletInvokerFor(compoundPortletContext);
-      return federated.createClone(compoundPortletContext);
+      return federated.createClone(stateType, compoundPortletContext);
    }
 
    public List<DestroyCloneFailure> destroyClones(List<PortletContext> portletContexts) throws IllegalArgumentException, PortletInvokerException, UnsupportedOperationException

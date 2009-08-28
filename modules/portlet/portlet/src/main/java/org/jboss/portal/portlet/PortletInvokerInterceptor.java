@@ -31,6 +31,7 @@ import org.jboss.portal.portlet.api.Portlet;
 import org.jboss.portal.portlet.api.PortletContext;
 import org.jboss.portal.portlet.api.PortletInvokerException;
 import org.jboss.portal.portlet.api.PortletInvoker;
+import org.jboss.portal.portlet.api.PortletStateType;
 
 import java.util.Set;
 import java.util.List;
@@ -86,9 +87,9 @@ public class PortletInvokerInterceptor implements PortletInvoker
       return safeGetNext().invoke(invocation);
    }
 
-   public PortletContext createClone(PortletContext portletContext) throws IllegalArgumentException, PortletInvokerException, UnsupportedOperationException
+   public PortletContext createClone(PortletStateType stateType, PortletContext portletContext) throws IllegalArgumentException, PortletInvokerException, UnsupportedOperationException
    {
-      return safeGetNext().createClone(portletContext);
+      return safeGetNext().createClone(stateType, portletContext);
    }
 
    public List<DestroyCloneFailure> destroyClones(List<PortletContext> portletContexts) throws IllegalArgumentException, PortletInvokerException, UnsupportedOperationException

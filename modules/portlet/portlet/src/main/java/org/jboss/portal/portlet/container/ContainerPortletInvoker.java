@@ -27,6 +27,7 @@ import org.jboss.portal.portlet.api.NoSuchPortletException;
 import org.jboss.portal.portlet.api.Portlet;
 import org.jboss.portal.portlet.api.PortletContext;
 import org.jboss.portal.portlet.api.PortletInvokerException;
+import org.jboss.portal.portlet.api.PortletStateType;
 import org.jboss.portal.portlet.api.state.PropertyMap;
 import org.jboss.portal.portlet.impl.info.ContainerPreferencesInfo;
 import org.jboss.portal.portlet.impl.info.ContainerPortletInfo;
@@ -178,7 +179,7 @@ public class ContainerPortletInvoker extends PortletInvokerInterceptor
       return result;
    }
 
-   public PortletContext createClone(PortletContext portletContext) throws IllegalArgumentException, PortletInvokerException, UnsupportedOperationException
+   public PortletContext createClone(PortletStateType stateType, PortletContext portletContext) throws IllegalArgumentException, PortletInvokerException, UnsupportedOperationException
    {
       throw new UnsupportedOperationException();
    }
