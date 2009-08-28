@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-unit
+   xmlns="urn:jboss:jboss-unit:1.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="urn:jboss:jboss-unit:1.0 jboss-unit_1_0.xsd">
+   <pojo>
+      <test>
+         <class name="org.jboss.portal.test.portlet.state.LocalStoreProducerStatefulPortletInvokerTestCase"/>
+      </test>
+      <test>
+         <class name="org.jboss.portal.test.portlet.state.RemoteStoreProducerStatefulPortletInvokerTestCase"/>
+      </test>
+      <test>
+         <class name="org.jboss.portal.test.portlet.state.LocalStoreConsumerStatefulPortletInvokerTestCase"/>
+      </test>
+      <test>
+         <class name="org.jboss.portal.test.portlet.state.RemoteStoreConsumerStatefulPortletInvokerTestCase"/>
+      </test>
+      <test>
+         <class name="org.jboss.portal.test.portlet.state.StateConverterV0TestCase"/>
+      </test>
+      <test>
+         <class name="org.jboss.portal.test.portlet.ParametersTestCase"/>
+      </test>
+      <test>
+         <class name="org.jboss.portal.test.portlet.ContentBufferTestCase"/>
+      </test>
+      <test>
+         <class name="org.jboss.portal.test.portlet.StateStringTestCase"/>
+      </test>
+      <test>
+         <class name="org.jboss.portal.portlet.container.LifeCycle1Test"/>
+      </test>
+      <test>
+         <class name="org.jboss.portal.portlet.container.LifeCycleReentranceDetectionTest"/>
+      </test>
+   </pojo>
+</jboss-unit>
