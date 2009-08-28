@@ -67,6 +67,7 @@ public class POMSession {
   }
 
   public <O extends WorkspaceObject> Iterator<O> findObject(ObjectType<O> ownerType, String statement) {
+    this.save();
     return model.findObject(ownerType, statement);
   }
 
@@ -96,7 +97,7 @@ public class POMSession {
     ObjectType<? extends Site> siteType,
     String ownerId,
     String title) {
-
+    this.save();
     //
     String ownerIdChunk = ownerId != null ? new MOPFormatter().encodeNodeName(null, ownerId) : "%";
 
