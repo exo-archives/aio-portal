@@ -131,7 +131,7 @@
 .UIHorizontalTabs .UITab .SelectedNavigationTab .TabIcon {
 	color: #f57a00;
 	line-height: 21px;
-	height: 26px;
+	padding-bottom: 5px;
 	background: url('background/NavigationTab.gif') no-repeat center -82px;;
 }
 
