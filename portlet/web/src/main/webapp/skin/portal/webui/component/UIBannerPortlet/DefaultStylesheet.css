@@ -8,16 +8,17 @@
 
 .UIBannerPortlet .LeftBanner {
 	border-top: 1px solid #b5b6b6;
-	padding-left: 10px;
+	padding-left: 10px; /* orientation=lt */
+	padding-right: 10px; /* orientation=rt */
 }
 
 .UIBannerPortlet .RightBanner {
-	background: url('DefaultSkin/background/Logo.gif') no-repeat left 10px; /* orientation=lt */
-	background: url('DefaultSkin/background/Logo.gif') no-repeat right -54px; /* orientation=rt */
+	background: url('DefaultSkin/background/Logo.gif') no-repeat left 11px; /* orientation=lt */
+	background: url('DefaultSkin/background/Logo.gif') no-repeat right -39px; /* orientation=rt */
 }
 
 .UIBannerPortlet .MiddleBanner {
-	height: 54px;
+	height: 43px;
 }
 
 .UIBannerPortlet .LeftLoginContainer {
@@ -29,7 +30,7 @@
 }
 
 .UIBannerPortlet .MiddleLoginContainer {
-	padding: 5px 15px 7px 15px;
+	padding: 5px 15px 1px;
 }
 
 .UIBannerPortlet .Signin {
