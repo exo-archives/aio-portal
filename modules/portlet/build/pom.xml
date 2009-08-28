@@ -199,11 +199,6 @@
          </dependency>
          <dependency>
             <groupId>org.gatein.common</groupId>
-            <artifactId>common-portal</artifactId>
-            <version>${version.jboss.portal.common}</version>
-         </dependency>
-         <dependency>
-            <groupId>org.gatein.common</groupId>
             <artifactId>common-mc</artifactId>
             <version>${version.jboss.portal.common}</version>
          </dependency>

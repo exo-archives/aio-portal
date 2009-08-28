@@ -30,7 +30,6 @@ import org.gatein.pc.api.info.PortletInfo;
 import org.gatein.pc.api.info.CapabilitiesInfo;
 import org.gatein.pc.api.info.ModeInfo;
 import org.gatein.pc.api.cache.CacheControl;
-import org.jboss.portal.Mode;
 
 import javax.portlet.RenderResponse;
 import javax.portlet.PortletMode;
@@ -47,7 +46,7 @@ public class RenderResponseImpl extends MimeResponseImpl implements RenderRespon
 {
 
    /** . */
-   protected Set<Mode> responseNextModes;
+   protected Set<org.gatein.pc.api.Mode> responseNextModes;
 
    /** The title if any. */
    protected String responseTitle;
@@ -72,7 +71,7 @@ public class RenderResponseImpl extends MimeResponseImpl implements RenderRespon
       {
          if (responseNextModes ==  null)
          {
-            responseNextModes = new LinkedHashSet<Mode>(portletModes.size());
+            responseNextModes = new LinkedHashSet<org.gatein.pc.api.Mode>(portletModes.size());
          }
          else
          {
@@ -84,7 +83,7 @@ public class RenderResponseImpl extends MimeResponseImpl implements RenderRespon
          {
             if (portletMode != null)
             {
-               Mode mode = Mode.create(portletMode.toString());
+               org.gatein.pc.api.Mode mode = org.gatein.pc.api.Mode.create(portletMode.toString());
 
                //
                if (preq.supportedModes.contains(mode))
@@ -120,7 +119,7 @@ public class RenderResponseImpl extends MimeResponseImpl implements RenderRespon
 //         }
 
       //
-      Mode currentMode = preq.invocation.getMode();
+      org.gatein.pc.api.Mode currentMode = preq.invocation.getMode();
 
       org.gatein.common.net.media.MediaType mediaType = org.gatein.common.net.media.MediaType.create(contentType);
 

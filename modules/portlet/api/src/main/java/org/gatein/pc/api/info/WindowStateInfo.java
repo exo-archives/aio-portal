@@ -22,7 +22,6 @@
  ******************************************************************************/
 package org.gatein.pc.api.info;
 
-import org.jboss.portal.WindowState;
 import org.gatein.common.i18n.LocalizedString;
 
 /**
@@ -44,7 +43,7 @@ public interface WindowStateInfo
     *
     * @return the window state value
     */
-   WindowState getWindowState();
+   org.gatein.pc.api.WindowState getWindowState();
 
    /**
     * Retrieves the associated window state name.

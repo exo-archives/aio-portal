@@ -25,8 +25,8 @@ package org.gatein.pc.mc.metadata;
 import java.util.List;
 import java.util.Locale;
 
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.Mode;
+import org.gatein.pc.api.WindowState;
 import org.gatein.pc.portlet.impl.metadata.PortletApplication10MetaData;
 import org.gatein.pc.portlet.impl.metadata.PortletApplication20MetaData;
 import org.gatein.pc.portlet.impl.metadata.PortletMetaDataConstants;
@@ -96,14 +96,14 @@ public class PortletTestEverythingTestCase extends AbstractMetaDataTestCase
 
          SupportsMetaData smd1 = p1.getSupports().get(0);
          assertEquals("text/html", smd1.getMimeType());
-         assertEquals(Mode.create("VIEW"), smd1.getPortletModes().get(0).getPortletMode());
-         assertEquals(Mode.create("EDIT"), smd1.getPortletModes().get(1).getPortletMode());
-         assertEquals(Mode.create("HELP"), smd1.getPortletModes().get(2).getPortletMode());
+         assertEquals(org.gatein.pc.api.Mode.create("VIEW"), smd1.getPortletModes().get(0).getPortletMode());
+         assertEquals(org.gatein.pc.api.Mode.create("EDIT"), smd1.getPortletModes().get(1).getPortletMode());
+         assertEquals(org.gatein.pc.api.Mode.create("HELP"), smd1.getPortletModes().get(2).getPortletMode());
 
          SupportsMetaData smd2 = p1.getSupports().get(1);
          assertEquals("text/wml", smd2.getMimeType());
-         assertEquals(Mode.create("VIEW"), smd2.getPortletModes().get(0).getPortletMode());
-         assertEquals(Mode.create("HELP"), smd2.getPortletModes().get(1).getPortletMode());
+         assertEquals(org.gatein.pc.api.Mode.create("VIEW"), smd2.getPortletModes().get(0).getPortletMode());
+         assertEquals(org.gatein.pc.api.Mode.create("HELP"), smd2.getPortletModes().get(1).getPortletMode());
 
          assertEquals("MyResourceBundle", p1.getResourceBundle());
 
@@ -266,14 +266,14 @@ public class PortletTestEverythingTestCase extends AbstractMetaDataTestCase
 
          SupportsMetaData smd1 = p1.getSupports().get(0);
          assertEquals("text/html", smd1.getMimeType());
-         assertEquals(Mode.create("VIEW"), smd1.getPortletModes().get(0).getPortletMode());
+         assertEquals(org.gatein.pc.api.Mode.create("VIEW"), smd1.getPortletModes().get(0).getPortletMode());
          assertEquals(Mode.create("EDIT"), smd1.getPortletModes().get(1).getPortletMode());
-         assertEquals(Mode.create("HELP"), smd1.getPortletModes().get(2).getPortletMode());
+         assertEquals(org.gatein.pc.api.Mode.create("HELP"), smd1.getPortletModes().get(2).getPortletMode());
 
          SupportsMetaData smd2 = p1.getSupports().get(1);
          assertEquals("text/wml", smd2.getMimeType());
-         assertEquals(Mode.create("VIEW"), smd2.getPortletModes().get(0).getPortletMode());
-         assertEquals(Mode.create("HELP"), smd2.getPortletModes().get(1).getPortletMode());
+         assertEquals(org.gatein.pc.api.Mode.create("VIEW"), smd2.getPortletModes().get(0).getPortletMode());
+         assertEquals(org.gatein.pc.api.Mode.create("HELP"), smd2.getPortletModes().get(1).getPortletMode());
 
          List<SupportedLocaleMetaData> localeList = p1.getSupportedLocale();
          assertEquals(3, localeList.size());
@@ -423,9 +423,9 @@ public class PortletTestEverythingTestCase extends AbstractMetaDataTestCase
 
          SupportsMetaData smd1 = p1.getSupports().get(0);
          assertEquals("text/html", smd1.getMimeType());
-         assertEquals(Mode.create("VIEW"), smd1.getPortletModes().get(0).getPortletMode());
-         assertEquals(Mode.create("EDIT"), smd1.getPortletModes().get(1).getPortletMode());
-         assertEquals(Mode.create("HELP"), smd1.getPortletModes().get(2).getPortletMode());
+         assertEquals(org.gatein.pc.api.Mode.create("VIEW"), smd1.getPortletModes().get(0).getPortletMode());
+         assertEquals(org.gatein.pc.api.Mode.create("EDIT"), smd1.getPortletModes().get(1).getPortletMode());
+         assertEquals(org.gatein.pc.api.Mode.create("HELP"), smd1.getPortletModes().get(2).getPortletMode());
          // window state jsr 286
          assertEquals(WindowState.create("MAXIMIZED"), smd1.getWindowStates().get(0).getWindowState());
          assertEquals(WindowState.create("NORMAL"), smd1.getWindowStates().get(1).getWindowState());
@@ -433,8 +433,8 @@ public class PortletTestEverythingTestCase extends AbstractMetaDataTestCase
          SupportsMetaData smd2 = p1.getSupports().get(1);
          assertEquals("foo", smd2.getId());
          assertEquals("text/wml", smd2.getMimeType());
-         assertEquals(Mode.create("VIEW"), smd2.getPortletModes().get(0).getPortletMode());
-         assertEquals(Mode.create("HELP"), smd2.getPortletModes().get(1).getPortletMode());
+         assertEquals(org.gatein.pc.api.Mode.create("VIEW"), smd2.getPortletModes().get(0).getPortletMode());
+         assertEquals(org.gatein.pc.api.Mode.create("HELP"), smd2.getPortletModes().get(1).getPortletMode());
          // window state jsr 286
          assertEquals(WindowState.create("NORMAL"), smd2.getWindowStates().get(0).getWindowState());
          assertEquals(WindowState.create("CUSTOM"), smd2.getWindowStates().get(1).getWindowState());

@@ -23,8 +23,8 @@
 package org.gatein.pc.portlet.impl.info;
 
 import org.apache.log4j.Logger;
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.Mode;
+import org.gatein.pc.api.WindowState;
 import org.gatein.common.i18n.LocaleFormat;
 import org.gatein.common.i18n.LocalizedString;
 import org.gatein.common.i18n.ResourceBundleManager;
@@ -172,7 +172,7 @@ public class ContainerInfoBuilder
    private final Map<Mode, ContainerModeInfo> customModes;
 
    /** . */
-   private final Map<WindowState, ContainerWindowStateInfo> customWindowStates;
+   private final Map<org.gatein.pc.api.WindowState, ContainerWindowStateInfo> customWindowStates;
 
    /** . */
    private final Logger log = Logger.getLogger(ContainerInfoBuilder.class);
@@ -189,8 +189,8 @@ public class ContainerInfoBuilder
       this.publicParameters = new LinkedHashMap<String, ContainerParameterInfo>();
       this.portlets = new LinkedHashMap<String, ContainerPortletInfo>();
       this.applicationOptions = new HashMap<String, RuntimeOptionInfo>();
-      this.customModes = new HashMap<Mode, ContainerModeInfo>();
-      this.customWindowStates = new HashMap<WindowState, ContainerWindowStateInfo>();
+      this.customModes = new HashMap<org.gatein.pc.api.Mode, ContainerModeInfo>();
+      this.customWindowStates = new HashMap<org.gatein.pc.api.WindowState, ContainerWindowStateInfo>();
    }
 
    public ContainerPortletApplicationInfo getApplication()
@@ -454,7 +454,7 @@ public class ContainerInfoBuilder
       // Build custom mode infos for reuse in portlet info
       for (CustomPortletModeMetaData customPortletModeMD : portletApplicationMD.getCustomPortletModes().values())
       {
-         Mode mode = Mode.create(customPortletModeMD.getPortletMode());
+         org.gatein.pc.api.Mode mode = org.gatein.pc.api.Mode.create(customPortletModeMD.getPortletMode());
 
          //
          LocalizedString description = customPortletModeMD.getDescription();
@@ -499,7 +499,7 @@ public class ContainerInfoBuilder
       // Build custom window state infos for reuse in portlet info
       for (CustomWindowStateMetaData customPortletModeMD : portletApplicationMD.getCustomWindowStates().values())
       {
-         WindowState windowState = WindowState.create(customPortletModeMD.getWindowState());
+         org.gatein.pc.api.WindowState windowState = WindowState.create(customPortletModeMD.getWindowState());
 
          //
          LocalizedString description = customPortletModeMD.getDescription();
@@ -919,9 +919,9 @@ public class ContainerInfoBuilder
          }
 
          // Override those as also now they must be supported
-         capabilities.add(mimeType, WindowState.NORMAL);
-         capabilities.add(mimeType, WindowState.MINIMIZED);
-         capabilities.add(mimeType, WindowState.MAXIMIZED);
+         capabilities.add(mimeType, org.gatein.pc.api.WindowState.NORMAL);
+         capabilities.add(mimeType, org.gatein.pc.api.WindowState.MINIMIZED);
+         capabilities.add(mimeType, org.gatein.pc.api.WindowState.MAXIMIZED);
       }
 
       //

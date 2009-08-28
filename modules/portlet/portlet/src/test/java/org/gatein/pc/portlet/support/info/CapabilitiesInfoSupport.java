@@ -25,8 +25,8 @@ package org.gatein.pc.portlet.support.info;
 import org.gatein.pc.api.info.CapabilitiesInfo;
 import org.gatein.pc.api.info.ModeInfo;
 import org.gatein.pc.api.info.WindowStateInfo;
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.Mode;
+import org.gatein.pc.api.WindowState;
 import org.gatein.common.net.media.MediaType;
 
 import java.util.Set;
@@ -60,15 +60,15 @@ public class CapabilitiesInfoSupport implements CapabilitiesInfo
 
       //
       this.modes = new HashSet<ModeInfo>();
-      modes.add(new ModeInfoSupport(Mode.VIEW));
-      modes.add(new ModeInfoSupport(Mode.EDIT));
-      modes.add(new ModeInfoSupport(Mode.HELP));
+      modes.add(new ModeInfoSupport(org.gatein.pc.api.Mode.VIEW));
+      modes.add(new ModeInfoSupport(org.gatein.pc.api.Mode.EDIT));
+      modes.add(new ModeInfoSupport(org.gatein.pc.api.Mode.HELP));
 
       //
       this.windowStates = new HashSet<WindowStateInfo>();
-      windowStates.add(new WindowStateInfoSupport(WindowState.NORMAL));
+      windowStates.add(new WindowStateInfoSupport(org.gatein.pc.api.WindowState.NORMAL));
       windowStates.add(new WindowStateInfoSupport(WindowState.MAXIMIZED));
-      windowStates.add(new WindowStateInfoSupport(WindowState.MINIMIZED));
+      windowStates.add(new WindowStateInfoSupport(org.gatein.pc.api.WindowState.MINIMIZED));
 
       //
       locales = new HashSet<Locale>();
@@ -127,7 +127,7 @@ public class CapabilitiesInfoSupport implements CapabilitiesInfo
       return locales;
    }
 
-   public WindowStateInfo getWindowState(WindowState value)
+   public WindowStateInfo getWindowState(org.gatein.pc.api.WindowState value)
    {
       for (WindowStateInfo windowState : getAllWindowStates())
       {

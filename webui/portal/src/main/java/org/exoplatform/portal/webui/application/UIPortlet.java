@@ -42,7 +42,7 @@ import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.event.Event.Phase;
 import org.gatein.common.net.media.MediaType;
-import org.jboss.portal.Mode;
+import org.gatein.pc.api.Mode;
 import org.gatein.pc.api.ParametersStateString;
 import org.gatein.pc.api.Portlet;
 import org.gatein.pc.api.PortletContext;
@@ -462,25 +462,25 @@ public class UIPortlet extends UIApplication {
       actionInvocation.setInteractionState(interactionState);
       actionInvocation.setPublicNavigationalState(allParams);
       actionInvocation.setMode(Mode.create(getCurrentPortletMode().toString()));
-      actionInvocation.setWindowState(org.jboss.portal.WindowState.create(getCurrentWindowState().toString()));
+      actionInvocation.setWindowState(org.gatein.pc.api.WindowState.create(getCurrentWindowState().toString()));
       invocation = (I)actionInvocation;
     } else if (type.equals(ResourceInvocation.class)) {
       ResourceInvocation resourceInvocation = new ResourceInvocation(pic);
       resourceInvocation.setMode(Mode.create(getCurrentPortletMode().toString()));
-      resourceInvocation.setWindowState(org.jboss.portal.WindowState.create(getCurrentWindowState().toString()));
+      resourceInvocation.setWindowState(org.gatein.pc.api.WindowState.create(getCurrentWindowState().toString()));
       resourceInvocation.setRequestContext(new AbstractRequestContext(prc.getRequest()));
       invocation = (I)resourceInvocation;
     } else if (type.equals(EventInvocation.class)) {
       EventInvocation eventInvocation = new EventInvocation(pic);
       eventInvocation.setMode(Mode.create(getCurrentPortletMode().toString()));
-      eventInvocation.setWindowState(org.jboss.portal.WindowState.create(getCurrentWindowState().toString()));
+      eventInvocation.setWindowState(org.gatein.pc.api.WindowState.create(getCurrentWindowState().toString()));
       invocation = (I)eventInvocation;
     } else if (type.equals(RenderInvocation.class)) {
       String stateString = StateString.encodeAsOpaqueValue(getRenderParameterMap(this));
       StateString navigationalState = StateString.create(stateString);
       RenderInvocation renderInvocation = new RenderInvocation(pic);
       renderInvocation.setMode(Mode.create(getCurrentPortletMode().toString()));
-      renderInvocation.setWindowState(org.jboss.portal.WindowState.create(getCurrentWindowState().toString()));
+      renderInvocation.setWindowState(org.gatein.pc.api.WindowState.create(getCurrentWindowState().toString()));
       renderInvocation.setNavigationalState(navigationalState);
       invocation = (I)renderInvocation;
     } else {

@@ -22,8 +22,7 @@
  ******************************************************************************/
 package org.gatein.pc.controller.impl;
 
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.WindowState;
 import org.gatein.common.io.IOTools;
 import org.gatein.common.io.Serialization;
 import org.gatein.common.io.SerializationFilter;
@@ -118,10 +117,10 @@ public class ControllerRequestFactory
       String windowId = queryParameters.get(ControllerRequestParameterNames.WINDOW_ID);
 
       //
-      Mode mode = null;
+      org.gatein.pc.api.Mode mode = null;
       if (queryParameters.get(ControllerRequestParameterNames.MODE) != null)
       {
-         mode = Mode.create(queryParameters.get(ControllerRequestParameterNames.MODE));
+         mode = org.gatein.pc.api.Mode.create(queryParameters.get(ControllerRequestParameterNames.MODE));
       }
 
       //

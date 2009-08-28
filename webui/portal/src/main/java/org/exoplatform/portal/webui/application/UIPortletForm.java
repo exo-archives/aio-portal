@@ -59,7 +59,7 @@ import org.exoplatform.webui.form.validator.MandatoryValidator;
 import org.exoplatform.webui.form.validator.StringLengthValidator;
 import org.exoplatform.webui.organization.UIListPermissionSelector;
 import org.exoplatform.webui.organization.UIListPermissionSelector.EmptyIteratorValidator;
-import org.jboss.portal.Mode;
+import org.gatein.pc.api.Mode;
 import org.gatein.pc.api.PortletContext;
 import org.gatein.pc.api.PortletInvoker;
 import org.gatein.pc.api.StatefulPortletContext;
@@ -178,7 +178,7 @@ public class UIPortletForm extends UIFormTabPane {
       renderInvocation.setTarget(portletContext);
       
       renderInvocation.setMode(Mode.create(uiPortlet_.getCurrentPortletMode().toString()));
-      renderInvocation.setWindowState(org.jboss.portal.WindowState.create(uiPortlet_.getCurrentWindowState().toString()));
+      renderInvocation.setWindowState(org.gatein.pc.api.WindowState.create(uiPortlet_.getCurrentWindowState().toString()));
       
       FragmentResponse fragmentResponse = (FragmentResponse) portletInvoker.invoke(renderInvocation);
       

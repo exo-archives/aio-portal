@@ -23,7 +23,6 @@
 package org.gatein.pc.portlet.impl.jsr168.api;
 
 import org.apache.log4j.Logger;
-import org.jboss.portal.Mode;
 import org.gatein.common.NotYetImplemented;
 import org.gatein.common.util.Tools;
 import org.gatein.pc.api.ParametersStateString;
@@ -154,7 +153,7 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
       }
 
       //
-      update.windowState = org.jboss.portal.WindowState.create(windowState.toString());
+      update.windowState = org.gatein.pc.api.WindowState.create(windowState.toString());
    }
 
    public void setPortletMode(PortletMode portletMode) throws PortletModeException
@@ -176,7 +175,7 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
          }
 
          //
-         update.mode = Mode.create(portletMode.toString());
+         update.mode = org.gatein.pc.api.Mode.create(portletMode.toString());
       }
    }
 
@@ -362,10 +361,10 @@ public abstract class StateAwareResponseImpl extends PortletResponseImpl impleme
       protected PortletParameterMap navigationalState = new PortletParameterMap(preq.navigationInfo);
 
       /** The new window state requested. */
-      protected org.jboss.portal.WindowState windowState = new org.jboss.portal.WindowState(preq.getWindowState().toString());
+      protected org.gatein.pc.api.WindowState windowState = new org.gatein.pc.api.WindowState(preq.getWindowState().toString());
 
       /** The new mode requested. */
-      protected Mode mode = new Mode(preq.getPortletMode().toString());
+      protected org.gatein.pc.api.Mode mode = new org.gatein.pc.api.Mode(preq.getPortletMode().toString());
 
       protected PortletInvocationResponse getResponse()
       {

@@ -22,8 +22,7 @@
  ******************************************************************************/
 package org.gatein.pc.api.invocation.response;
 
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.Mode;
 import org.gatein.pc.api.StateString;
 
 import javax.xml.namespace.QName;
@@ -49,10 +48,10 @@ public class UpdateNavigationalStateResponse extends PortletInvocationResponse
    private StateString navigationalState;
 
    /** The new window state requested. */
-   private WindowState windowState;
+   private org.gatein.pc.api.WindowState windowState;
 
    /** The new mode requested. */
-   private Mode mode;
+   private org.gatein.pc.api.Mode mode;
 
    /** The attributes snapshot after the request. */
    private Map<String, Object> attributes;
@@ -105,12 +104,12 @@ public class UpdateNavigationalStateResponse extends PortletInvocationResponse
       this.mode = mode;
    }
 
-   public WindowState getWindowState()
+   public org.gatein.pc.api.WindowState getWindowState()
    {
       return windowState;
    }
 
-   public void setWindowState(WindowState windowState)
+   public void setWindowState(org.gatein.pc.api.WindowState windowState)
    {
       this.windowState = windowState;
    }

@@ -22,8 +22,8 @@
  ******************************************************************************/
 package org.gatein.pc.portlet.impl.spi;
 
-import org.jboss.portal.WindowState;
-import org.jboss.portal.Mode;
+import org.gatein.pc.api.WindowState;
+import org.gatein.pc.api.Mode;
 import org.gatein.pc.api.spi.PortalContext;
 import org.gatein.common.util.Tools;
 
@@ -45,18 +45,18 @@ public class AbstractPortalContext implements PortalContext
    private static final Set<WindowState> ALL_WINDOW_STATES = Collections.unmodifiableSet(Tools.toSet(WindowState.MAXIMIZED, WindowState.MINIMIZED, WindowState.NORMAL));
 
    /** . */
-   private static final Set<Mode> ALL_MODES = Collections.unmodifiableSet(Tools.toSet(Mode.EDIT, Mode.HELP, Mode.VIEW));
+   private static final Set<org.gatein.pc.api.Mode> ALL_MODES = Collections.unmodifiableSet(Tools.toSet(org.gatein.pc.api.Mode.EDIT, Mode.HELP, org.gatein.pc.api.Mode.VIEW));
 
    /** . */
    private final Set<WindowState> windowStates;
 
    /** . */
-   private final Set<Mode> modes;
+   private final Set<org.gatein.pc.api.Mode> modes;
 
    /** . */
    private final Map<String, String> props;
 
-   public AbstractPortalContext(Set<WindowState> windowStates, Set<Mode> modes, Map<String, String> props)
+   public AbstractPortalContext(Set<WindowState> windowStates, Set<org.gatein.pc.api.Mode> modes, Map<String, String> props)
    {
       if (windowStates == null)
       {
@@ -95,7 +95,7 @@ public class AbstractPortalContext implements PortalContext
       return windowStates;
    }
 
-   public Set<Mode> getModes()
+   public Set<org.gatein.pc.api.Mode> getModes()
    {
       return modes;
    }

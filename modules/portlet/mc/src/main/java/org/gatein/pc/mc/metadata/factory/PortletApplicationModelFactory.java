@@ -24,8 +24,6 @@
 package org.gatein.pc.mc.metadata.factory;
 
 import org.apache.log4j.Logger;
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
 import org.gatein.common.i18n.LocalizedString;
 import org.gatein.pc.api.LifeCyclePhase;
 import org.gatein.pc.api.TransportGuarantee;
@@ -586,7 +584,7 @@ public class PortletApplicationModelFactory implements GenericObjectModelFactory
          PortletModeMetaData md = (PortletModeMetaData)object;
          if ("portlet-mode".equals(localName))
          {
-            md.setPortletMode(Mode.create(value));
+            md.setPortletMode(org.gatein.pc.api.Mode.create(value));
          }
       }
 
@@ -596,7 +594,7 @@ public class PortletApplicationModelFactory implements GenericObjectModelFactory
          WindowStateMetaData md = (WindowStateMetaData)object;
          if ("window-state".equals(localName))
          {
-            md.setWindowState(WindowState.create(value));
+            md.setWindowState(org.gatein.pc.api.WindowState.create(value));
          }
       }
 

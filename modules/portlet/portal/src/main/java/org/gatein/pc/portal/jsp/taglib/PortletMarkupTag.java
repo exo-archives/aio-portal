@@ -26,7 +26,6 @@ import org.gatein.pc.portal.jsp.PortalRenderResponse;
 import org.gatein.pc.api.invocation.response.PortletInvocationResponse;
 import org.gatein.pc.api.invocation.response.ContentResponse;
 import org.gatein.pc.controller.state.PortletWindowNavigationalState;
-import org.jboss.portal.WindowState;
 
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import javax.servlet.jsp.JspException;
@@ -57,7 +56,7 @@ public class PortletMarkupTag extends PortalSimpleTagSupport
             {
                windowNS = renderResponse.getPageNavigationalState().getPortletWindowNavigationalState(portletTag.result.getWindowDef().getWindowId());
             }
-            if (windowNS == null || !windowNS.getWindowState().equals(WindowState.MINIMIZED))
+            if (windowNS == null || !windowNS.getWindowState().equals(org.gatein.pc.api.WindowState.MINIMIZED))
             {
                if (fragment.getType() != ContentResponse.TYPE_EMPTY)
                {

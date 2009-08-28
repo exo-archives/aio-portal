@@ -556,7 +556,6 @@
          <sharedClasspath>
 
             <path location="${dependency.portal-common.jar}"/>
-            <path location="${dependency.portal-common-portal.jar}"/>
             <path location="${dependency.portal-portlet.jar}"/>
             <path location="${dependency.portal-web.jar}"/>
             <path location="${dependency.jsr168api.jar}"/>

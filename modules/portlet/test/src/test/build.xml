@@ -69,7 +69,6 @@
       </path>
 
       <path id="portal-common-shared">
-         <pathelement path="${dependency.portal-common-portal.jar}"/>
          <pathelement path="${dependency.portal-common-common.jar}"/>
       </path>
 

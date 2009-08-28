@@ -47,7 +47,7 @@ import org.gatein.pc.api.state.PropertyContext;
 import org.gatein.pc.api.info.CapabilitiesInfo;
 import org.gatein.pc.api.info.ModeInfo;
 import org.gatein.pc.api.info.PortletManagedModeInfo;
-import org.jboss.portal.Mode;
+import org.gatein.pc.api.Mode;
 
 import javax.portlet.PortalContext;
 import javax.portlet.PortletMode;
@@ -131,10 +131,10 @@ public abstract class PortletRequestImpl implements PortletRequest
    protected final PortletRequestParameterMap requestParameterMap;
 
    /** . */
-   protected final Set<Mode> supportedModes;
+   protected final Set<org.gatein.pc.api.Mode> supportedModes;
 
    /** . */
-   protected final Set<org.jboss.portal.WindowState> supportedWindowStates;
+   protected final Set<org.gatein.pc.api.WindowState> supportedWindowStates;
 
    /** . */
    private final String contextPath;
@@ -394,7 +394,7 @@ public abstract class PortletRequestImpl implements PortletRequest
       }
       else
       {
-         return supportedModes.contains(org.jboss.portal.Mode.create(portletMode.toString()));
+         return supportedModes.contains(Mode.create(portletMode.toString()));
       }
    }
 
@@ -402,7 +402,7 @@ public abstract class PortletRequestImpl implements PortletRequest
 
    public boolean isWindowStateAllowed(WindowState windowState)
    {
-      return supportedWindowStates.contains(org.jboss.portal.WindowState.create(windowState.toString()));
+      return supportedWindowStates.contains(org.gatein.pc.api.WindowState.create(windowState.toString()));
    }
 
    //
@@ -576,7 +576,7 @@ public abstract class PortletRequestImpl implements PortletRequest
     *
     * @return the set of portlet modes
     */
-   private Set<Mode> buildSupportedModes()
+   private Set<org.gatein.pc.api.Mode> buildSupportedModes()
    {
       // Get content type
       ContentInfo si = invocation.getContext().getMarkupInfo();
@@ -588,10 +588,10 @@ public abstract class PortletRequestImpl implements PortletRequest
       CapabilitiesInfo capabilities = container.getInfo().getCapabilities();
 
       // Add all the modes
-      Set<Mode> modes = new HashSet<Mode>();
+      Set<org.gatein.pc.api.Mode> modes = new HashSet<org.gatein.pc.api.Mode>();
       for (ModeInfo modeInfo : capabilities.getModes(si.getMediaType()))
       {
-         Mode mode = modeInfo.getMode();
+         org.gatein.pc.api.Mode mode = modeInfo.getMode();
 
          //
          if (modeInfo instanceof PortletManagedModeInfo || portalContext.getModes().contains(mode))
@@ -609,8 +609,8 @@ public abstract class PortletRequestImpl implements PortletRequest
     *
     * @return the set of portlet modes
     */
-   private Set<org.jboss.portal.WindowState> buildSupportedWindowState()
+   private Set<org.gatein.pc.api.WindowState> buildSupportedWindowState()
    {
-      return new HashSet<org.jboss.portal.WindowState>(invocation.getPortalContext().getWindowStates());
+      return new HashSet<org.gatein.pc.api.WindowState>(invocation.getPortalContext().getWindowStates());
    }
 }

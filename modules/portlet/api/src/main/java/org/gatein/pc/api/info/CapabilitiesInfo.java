@@ -23,8 +23,7 @@
 package org.gatein.pc.api.info;
 
 import org.gatein.common.net.media.MediaType;
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.WindowState;
 
 import java.util.Set;
 import java.util.Locale;
@@ -66,7 +65,7 @@ public interface CapabilitiesInfo
     * @param mode the mode
     * @return the mode info
     */
-   ModeInfo getMode(Mode mode);
+   ModeInfo getMode(org.gatein.pc.api.Mode mode);
 
    /**
     * Retrieves all the window states supported by the associated Portlet.

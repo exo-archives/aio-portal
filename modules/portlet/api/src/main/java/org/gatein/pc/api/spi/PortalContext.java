@@ -22,8 +22,7 @@
  ******************************************************************************/
 package org.gatein.pc.api.spi;
 
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.WindowState;
 import org.gatein.common.util.Version;
 
 import java.util.Map;
@@ -58,7 +57,7 @@ public interface PortalContext
     *
     * @return the modes
     */
-   Set<Mode> getModes();
+   Set<org.gatein.pc.api.Mode> getModes();
 
    /**
     * Return the set of properties of this portal context.

@@ -22,8 +22,8 @@
  ******************************************************************************/
 package org.gatein.pc.controller.state;
 
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.Mode;
+import org.gatein.pc.api.WindowState;
 import org.gatein.common.io.Serialization;
 import org.gatein.pc.api.StateString;
 
@@ -47,27 +47,27 @@ public class PortletPageNavigationalStateSerialization implements Serialization<
 {
 
    /** . */
-   private static final Map<WindowState, Integer> windowStateToCode = new HashMap<WindowState, Integer>();
+   private static final Map<org.gatein.pc.api.WindowState, Integer> windowStateToCode = new HashMap<WindowState, Integer>();
 
    /** . */
    private static final Map<Mode, Integer> modeToCode = new HashMap<Mode, Integer>();
 
    /** . */
-   private static final Map<Integer, WindowState> codeToWindowState = new HashMap<Integer, WindowState>();
+   private static final Map<Integer, org.gatein.pc.api.WindowState> codeToWindowState = new HashMap<Integer, org.gatein.pc.api.WindowState>();
 
    /** . */
-   private static final Map<Integer, Mode> codeToMode = new HashMap<Integer, Mode>();
+   private static final Map<Integer, org.gatein.pc.api.Mode> codeToMode = new HashMap<Integer, Mode>();
 
    static
    {
       windowStateToCode.put(WindowState.NORMAL, 1);
-      windowStateToCode.put(WindowState.MINIMIZED, 2);
+      windowStateToCode.put(org.gatein.pc.api.WindowState.MINIMIZED, 2);
       windowStateToCode.put(WindowState.MAXIMIZED, 3);
       codeToWindowState.put(1, WindowState.NORMAL);
-      codeToWindowState.put(2, WindowState.MINIMIZED);
-      codeToWindowState.put(3, WindowState.MAXIMIZED);
+      codeToWindowState.put(2, org.gatein.pc.api.WindowState.MINIMIZED);
+      codeToWindowState.put(3, org.gatein.pc.api.WindowState.MAXIMIZED);
       modeToCode.put(Mode.VIEW, 1);
-      modeToCode.put(Mode.EDIT, 2);
+      modeToCode.put(org.gatein.pc.api.Mode.EDIT, 2);
       modeToCode.put(Mode.HELP, 3);
       codeToMode.put(1, Mode.VIEW);
       codeToMode.put(2, Mode.EDIT);
@@ -183,19 +183,19 @@ public class PortletPageNavigationalStateSerialization implements Serialization<
          {
             portletNS = StateString.create(data);
          }
-         WindowState windowState = null;
+         org.gatein.pc.api.WindowState windowState = null;
          int windowStateHeader = (header & (7 << 1)) >> 1;
          switch (windowStateHeader)
          {
             case 0:
                break;
             case 4:
-               windowState = WindowState.create(data.readUTF());
+               windowState = org.gatein.pc.api.WindowState.create(data.readUTF());
                break;
             default:
                windowState = codeToWindowState.get(windowStateHeader);
          }
-         Mode mode = null;
+         org.gatein.pc.api.Mode mode = null;
          int modeStateHeader = (header & (7 << (1 + 3))) >> (1 + 3);
          switch (modeStateHeader)
          {

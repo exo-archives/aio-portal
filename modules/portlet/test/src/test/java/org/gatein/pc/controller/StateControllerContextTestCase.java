@@ -42,8 +42,8 @@ import org.gatein.pc.api.invocation.RenderInvocation;
 import org.gatein.pc.api.spi.PortletInvocationContext;
 import org.gatein.common.NotYetImplemented;
 import org.gatein.common.io.IOTools;
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.Mode;
+import org.gatein.pc.api.WindowState;
 import static org.jboss.unit.api.Assert.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -76,21 +76,21 @@ public class StateControllerContextTestCase
       params.setValue("foo", "bar");
       test(null, null, null);
       test(null, Mode.VIEW, null);
-      test(null, null, WindowState.NORMAL);
-      test(null, Mode.VIEW, WindowState.NORMAL);
+      test(null, null, org.gatein.pc.api.WindowState.NORMAL);
+      test(null, Mode.VIEW, org.gatein.pc.api.WindowState.NORMAL);
       test(null, Mode.create("foo"), null);
       test(null, null, WindowState.create("bar"));
-      test(null, Mode.create("foo"), WindowState.create("bar"));
+      test(null, org.gatein.pc.api.Mode.create("foo"), WindowState.create("bar"));
       test(params, null, null);
-      test(params, Mode.VIEW, null);
+      test(params, org.gatein.pc.api.Mode.VIEW, null);
       test(params, null, WindowState.NORMAL);
-      test(params, Mode.VIEW, WindowState.NORMAL);
-      test(params, Mode.create("foo"), null);
+      test(params, org.gatein.pc.api.Mode.VIEW, WindowState.NORMAL);
+      test(params, org.gatein.pc.api.Mode.create("foo"), null);
       test(params, null, WindowState.create("bar"));
-      test(params, Mode.create("foo"), WindowState.create("bar"));
+      test(params, org.gatein.pc.api.Mode.create("foo"), WindowState.create("bar"));
    }
 
-   private void test(StateString portletNavigationalState, Mode mode, WindowState windowState)
+   private void test(StateString portletNavigationalState, org.gatein.pc.api.Mode mode, WindowState windowState)
    {
       PortletPageNavigationalState pageNS = cc.createPortletPageNavigationalState(true);
       pageNS.setPortletWindowNavigationalState("foo", new PortletWindowNavigationalState(portletNavigationalState, mode, windowState));

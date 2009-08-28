@@ -23,8 +23,7 @@
 
 package org.gatein.pc.controller;
 
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.WindowState;
 import org.gatein.common.util.ParameterMap;
 import org.gatein.pc.api.PortletInvokerException;
 import org.gatein.pc.api.StateString;
@@ -297,10 +296,10 @@ class PortletRequestHandler extends RequestHandler<PortletRequest>
          PortletPageNavigationalState pageNavigationalState = portletActionRequest.getPageNavigationalState();
 
          //
-         Mode mode = portletActionRequest.getWindowNavigationalState().getMode();
+         org.gatein.pc.api.Mode mode = portletActionRequest.getWindowNavigationalState().getMode();
          if (mode == null)
          {
-            mode = Mode.VIEW;
+            mode = org.gatein.pc.api.Mode.VIEW;
          }
 
          //
@@ -381,7 +380,7 @@ class PortletRequestHandler extends RequestHandler<PortletRequest>
       }
 
       //
-      Mode mode = windowNS.getMode();
+      org.gatein.pc.api.Mode mode = windowNS.getMode();
       if (update.getMode() != null)
       {
          mode = update.getMode();

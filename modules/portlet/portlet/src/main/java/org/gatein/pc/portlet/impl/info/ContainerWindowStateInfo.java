@@ -23,7 +23,6 @@
 
 package org.gatein.pc.portlet.impl.info;
 
-import org.jboss.portal.WindowState;
 import org.gatein.common.i18n.LocalizedString;
 import org.gatein.pc.api.info.WindowStateInfo;
 
@@ -41,12 +40,12 @@ class ContainerWindowStateInfo implements WindowStateInfo
    private static final LocalizedString DEFAULT_DESCRIPTION = new LocalizedString("Default window state description.", Locale.ENGLISH);
 
    /** . */
-   private final WindowState windowState;
+   private final org.gatein.pc.api.WindowState windowState;
 
    /** . */
    private final LocalizedString description;
 
-   public ContainerWindowStateInfo(WindowState windowState, LocalizedString description)
+   public ContainerWindowStateInfo(org.gatein.pc.api.WindowState windowState, LocalizedString description)
    {
       if (windowState == null)
       {
@@ -62,7 +61,7 @@ class ContainerWindowStateInfo implements WindowStateInfo
       this.description = description;
    }
 
-   public ContainerWindowStateInfo(WindowState windowState)
+   public ContainerWindowStateInfo(org.gatein.pc.api.WindowState windowState)
    {
       this(windowState, DEFAULT_DESCRIPTION);
    }
@@ -94,7 +93,7 @@ class ContainerWindowStateInfo implements WindowStateInfo
       return description;
    }
 
-   public WindowState getWindowState()
+   public org.gatein.pc.api.WindowState getWindowState()
    {
       return windowState;
    }

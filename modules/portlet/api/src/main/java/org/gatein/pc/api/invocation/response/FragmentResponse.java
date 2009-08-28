@@ -23,7 +23,7 @@
 package org.gatein.pc.api.invocation.response;
 
 import org.gatein.pc.api.cache.CacheControl;
-import org.jboss.portal.Mode;
+import org.gatein.pc.api.Mode;
 
 import java.util.Set;
 import java.util.Map;
@@ -75,7 +75,7 @@ public class FragmentResponse extends ContentResponse
     *
     * @return the next modes
     */
-   public Set<Mode> getNextModes()
+   public Set<org.gatein.pc.api.Mode> getNextModes()
    {
       return nextModes;
    }

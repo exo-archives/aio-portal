@@ -36,8 +36,8 @@ import org.gatein.pc.api.PortletInvokerException;
 import org.gatein.pc.api.spi.UserContext;
 import org.gatein.pc.api.cache.CacheControl;
 import org.gatein.common.util.ParameterMap;
-import org.jboss.portal.WindowState;
-import org.jboss.portal.Mode;
+import org.gatein.pc.api.WindowState;
+import org.gatein.pc.api.Mode;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -243,7 +243,7 @@ public class ConsumerCacheInterceptor extends PortletInvokerInterceptor
       private final WindowState windowState;
 
       /** . */
-      private final Mode mode;
+      private final org.gatein.pc.api.Mode mode;
 
       /** . */
       private final Map<String, String[]> publicNavigationalState;
@@ -260,8 +260,8 @@ public class ConsumerCacheInterceptor extends PortletInvokerInterceptor
       public CacheEntry(
          StateString navigationalState,
          Map<String, String[]> publicNavigationalState,
-         WindowState windowState,
-         Mode mode,
+         org.gatein.pc.api.WindowState windowState,
+         org.gatein.pc.api.Mode mode,
          ContentResponse content,
          long expirationTimeMillis,
          String validationToken)

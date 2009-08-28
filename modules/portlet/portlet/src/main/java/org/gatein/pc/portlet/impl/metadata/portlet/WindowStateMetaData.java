@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.WindowState;
 import org.gatein.pc.portlet.impl.metadata.adapter.WindowStateAdapter;
 
 /**
@@ -38,7 +38,7 @@ public class WindowStateMetaData
 {
 
    /** The window state */
-   private WindowState windowState;
+   private org.gatein.pc.api.WindowState windowState;
 
    @XmlValue
    @XmlJavaTypeAdapter(WindowStateAdapter.class)

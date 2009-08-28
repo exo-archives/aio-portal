@@ -15,7 +15,6 @@
          <includes>
 
             <include>org.jboss.portal.common:common-common</include>
-            <include>org.jboss.portal.common:common-portal</include>
             <include>org.jboss.portal.web:web-web</include>
             <include>org.jboss.portal.portlet:portlet-portlet</include>
             <include>org.jboss.portal.portlet:portlet-api</include>

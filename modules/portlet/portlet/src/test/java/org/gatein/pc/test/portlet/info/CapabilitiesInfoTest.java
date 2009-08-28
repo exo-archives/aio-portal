@@ -23,8 +23,8 @@
 
 package org.gatein.pc.test.portlet.info;
 
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.Mode;
+import org.gatein.pc.api.WindowState;
 import org.gatein.common.net.media.MediaType;
 import org.gatein.pc.portlet.container.managed.ManagedPortletContainer;
 import org.gatein.pc.api.info.CapabilitiesInfo;
@@ -78,23 +78,23 @@ public class CapabilitiesInfoTest extends AbstractInfoTest
       Set modeInfos = capInfo.getAllModes();
       Set modes = extractModes(modeInfos);
 
-      assertTrue(modes.contains(Mode.VIEW));
-      assertTrue(modes.contains(Mode.HELP));
+      assertTrue(modes.contains(org.gatein.pc.api.Mode.VIEW));
+      assertTrue(modes.contains(org.gatein.pc.api.Mode.HELP));
       assertTrue(modes.contains(Mode.EDIT));
 
       //check text/html modes
       modeInfos = capInfo.getModes(MediaType.TEXT_HTML);
       modes = extractModes(modeInfos);
       assertEquals(2, modes.size());
-      assertTrue(modes.contains(Mode.VIEW));
-      assertTrue(modes.contains(Mode.HELP));
+      assertTrue(modes.contains(org.gatein.pc.api.Mode.VIEW));
+      assertTrue(modes.contains(org.gatein.pc.api.Mode.HELP));
 
       //check text/vnd.wap.wml modes
       modeInfos = capInfo.getModes(MediaType.create("text/vnd.wap.wml"));
       modes = extractModes(modeInfos);
       assertEquals(2, modes.size());
-      assertTrue(modes.contains(Mode.VIEW));
-      assertTrue(modes.contains(Mode.EDIT));
+      assertTrue(modes.contains(org.gatein.pc.api.Mode.VIEW));
+      assertTrue(modes.contains(org.gatein.pc.api.Mode.EDIT));
 
       //check undeclared
       modeInfos = capInfo.getModes(MediaType.create("text/undeclared"));
@@ -105,17 +105,17 @@ public class CapabilitiesInfoTest extends AbstractInfoTest
       Set stateInfos = capInfo.getAllWindowStates();
       Set states = extractWindowStates(stateInfos);
       assertEquals(3, states.size());
-      assertTrue(states.contains(WindowState.NORMAL));
-      assertTrue(states.contains(WindowState.MINIMIZED));
-      assertTrue(states.contains(WindowState.MAXIMIZED));
+      assertTrue(states.contains(org.gatein.pc.api.WindowState.NORMAL));
+      assertTrue(states.contains(org.gatein.pc.api.WindowState.MINIMIZED));
+      assertTrue(states.contains(org.gatein.pc.api.WindowState.MAXIMIZED));
 
       //check for text/html
       stateInfos = capInfo.getWindowStates(MediaType.TEXT_HTML);
       states = extractWindowStates(stateInfos);
       assertEquals(3, states.size());
-      assertTrue(states.contains(WindowState.NORMAL));
+      assertTrue(states.contains(org.gatein.pc.api.WindowState.NORMAL));
       assertTrue(states.contains(WindowState.MINIMIZED));
-      assertTrue(states.contains(WindowState.MAXIMIZED));
+      assertTrue(states.contains(org.gatein.pc.api.WindowState.MAXIMIZED));
 
       //simple check for text/vnd.wap.wml
       //TODO:is this really expected behaviour? shouldn't it return no states as this is unsupported by portal one?
@@ -138,7 +138,7 @@ public class CapabilitiesInfoTest extends AbstractInfoTest
       for (Iterator i = infos.iterator(); i.hasNext();)
       {
          WindowStateInfo info = (WindowStateInfo)i.next();
-         WindowState state = info.getWindowState();
+         org.gatein.pc.api.WindowState state = info.getWindowState();
          assertEquals(state.toString(), (info.getWindowStateName()));
          states.add(state);
       }

@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.gatein.pc.test.portlet.info;
 
-import org.jboss.portal.Mode;
+import org.gatein.pc.api.Mode;
 import org.gatein.common.net.media.MediaType;
 import org.gatein.pc.portlet.container.managed.ManagedPortletContainer;
 import org.gatein.pc.api.info.CapabilitiesInfo;
@@ -67,7 +67,7 @@ public class ModeInfoTest extends AbstractInfoTest
       }
 
 
-      assertTrue(portletModes.contains(Mode.VIEW));
+      assertTrue(portletModes.contains(org.gatein.pc.api.Mode.VIEW));
       assertTrue(portletModes.contains(Mode.HELP));
       assertTrue(portletModes.contains(Mode.EDIT));
 

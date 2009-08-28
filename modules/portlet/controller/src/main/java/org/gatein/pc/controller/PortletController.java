@@ -34,8 +34,7 @@ import org.gatein.pc.controller.request.PortletResourceRequest;
 import org.gatein.pc.controller.response.ControllerResponse;
 import org.gatein.pc.controller.state.PortletPageNavigationalState;
 import org.gatein.pc.controller.state.PortletWindowNavigationalState;
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.Mode;
 
 import javax.servlet.http.Cookie;
 import java.util.Map;
@@ -199,8 +198,8 @@ public class PortletController
       }
 
       //
-      Mode mode = Mode.VIEW;
-      WindowState windowState = WindowState.NORMAL;
+      org.gatein.pc.api.Mode mode = Mode.VIEW;
+      org.gatein.pc.api.WindowState windowState = org.gatein.pc.api.WindowState.NORMAL;
       StateString portletNS = null;
 
       //

@@ -41,8 +41,8 @@ import org.gatein.pc.controller.request.PortletRenderRequest;
 import org.gatein.pc.controller.state.PortletWindowNavigationalState;
 import org.gatein.pc.controller.state.PortletPageNavigationalState;
 import org.gatein.common.util.ParameterMap;
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.Mode;
+import org.gatein.pc.api.WindowState;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -74,7 +74,7 @@ public class PortletControllerRequestTestCase
    StateString portletNS = new OpaqueStateString("abc");
 
    /** . */
-   PortletWindowNavigationalState windowNS = new PortletWindowNavigationalState(portletNS, Mode.EDIT, WindowState.MAXIMIZED);
+   PortletWindowNavigationalState windowNS = new PortletWindowNavigationalState(portletNS, org.gatein.pc.api.Mode.EDIT, org.gatein.pc.api.WindowState.MAXIMIZED);
 
    /** . */
    ParameterMap body = new ParameterMap(Collections.singletonMap("param", new String[]{"value"}));
@@ -97,7 +97,7 @@ public class PortletControllerRequestTestCase
             assertEquals(is, action.getInteractionState());
             assertEquals(portletNS, action.getNavigationalState());
             assertEquals(Mode.EDIT, action.getMode());
-            assertEquals(WindowState.MAXIMIZED, action.getWindowState());
+            assertEquals(org.gatein.pc.api.WindowState.MAXIMIZED, action.getWindowState());
             assertEquals(body, action.getForm());
 
             //
@@ -131,7 +131,7 @@ public class PortletControllerRequestTestCase
       resourceHandler.expectedPortletNS = null;
       resourceHandler.expectedBody = body;
       resourceHandler.expectedMode = Mode.VIEW;
-      resourceHandler.expectedWindowState = WindowState.NORMAL;
+      resourceHandler.expectedWindowState = org.gatein.pc.api.WindowState.NORMAL;
       resourceHandler.expectedPublicState = null;
       fooPortlet.addHandler(resourceHandler);
       PortletResourceRequest fullServing = new PortletResourceRequest("foo", "resourceid", rs, body, new PortletResourceRequest.FullScope());
@@ -161,7 +161,7 @@ public class PortletControllerRequestTestCase
       resourceHandler.expectedCacheability = CacheLevel.PORTLET;
       resourceHandler.expectedPortletNS = portletNS;
       resourceHandler.expectedMode = Mode.EDIT;
-      resourceHandler.expectedWindowState = WindowState.MAXIMIZED;
+      resourceHandler.expectedWindowState = org.gatein.pc.api.WindowState.MAXIMIZED;
       resourceHandler.expectedPublicState = null;
       fooPortlet.addHandler(resourceHandler);
       PortletResourceRequest portletServing = new PortletResourceRequest("foo", "resourceid", rs, body, new PortletResourceRequest.PortletScope(windowNS));
@@ -170,7 +170,7 @@ public class PortletControllerRequestTestCase
       //
       resourceHandler.expectedPortletNS = null;
       resourceHandler.expectedMode = Mode.VIEW;
-      resourceHandler.expectedWindowState = WindowState.NORMAL;
+      resourceHandler.expectedWindowState = org.gatein.pc.api.WindowState.NORMAL;
       fooPortlet.addHandler(resourceHandler);
       PortletResourceRequest portletServing2 = new PortletResourceRequest("foo", "resourceid", rs, body, new PortletResourceRequest.PortletScope(null));
       controller.process(context, portletServing2);
@@ -202,7 +202,7 @@ public class PortletControllerRequestTestCase
       //
       resourceHandler.expectedPortletNS = null;
       resourceHandler.expectedMode = Mode.VIEW;
-      resourceHandler.expectedWindowState = WindowState.NORMAL;
+      resourceHandler.expectedWindowState = org.gatein.pc.api.WindowState.NORMAL;
       fooPortlet.addHandler(resourceHandler);
       PortletResourceRequest pageServing2 = new PortletResourceRequest("foo", "resourceid", rs, body, new PortletResourceRequest.PageScope(null, pageNS));
       controller.process(context, pageServing2);
@@ -235,7 +235,7 @@ public class PortletControllerRequestTestCase
       private ParameterMap expectedBody;
       private CacheLevel expectedCacheability;
       private Mode expectedMode;
-      private WindowState expectedWindowState;
+      private org.gatein.pc.api.WindowState expectedWindowState;
       private ParameterMap expectedPublicState;
 
       protected PortletInvocationResponse invoke(ResourceInvocation resServing) throws PortletInvokerException

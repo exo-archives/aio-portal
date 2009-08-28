@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.gatein.pc.portlet.impl.jsr168.api;
 
-import org.jboss.portal.Mode;
+import org.gatein.pc.api.WindowState;
 import org.gatein.common.util.Tools;
 import org.gatein.pc.api.spi.PortalContext;
 import org.gatein.pc.portlet.impl.jsr168.PortletUtils;
@@ -84,7 +84,7 @@ public class PortalContextImpl implements javax.portlet.PortalContext
          supportedPortletModes = new HashSet(tmp.size());
          for (Iterator i = tmp.iterator(); i.hasNext();)
          {
-            Mode mode = (Mode)i.next();
+            org.gatein.pc.api.Mode mode = (org.gatein.pc.api.Mode)i.next();
             supportedPortletModes.add(PortletUtils.decodePortletMode(mode.toString()));
          }
       }
@@ -99,7 +99,7 @@ public class PortalContextImpl implements javax.portlet.PortalContext
          supportedWindowStates = new HashSet(tmp.size());
          for (Iterator i = tmp.iterator(); i.hasNext();)
          {
-            org.jboss.portal.WindowState windowState = (org.jboss.portal.WindowState)i.next();
+            WindowState windowState = (WindowState)i.next();
             supportedWindowStates.add(PortletUtils.decodeWindowState(windowState.toString()));
          }
       }

@@ -22,8 +22,7 @@
  ******************************************************************************/
 package org.gatein.pc.controller.state;
 
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.Mode;
 import org.gatein.pc.api.StateString;
 
 import java.io.Serializable;
@@ -42,19 +41,19 @@ public class PortletWindowNavigationalState implements Serializable
    private final StateString portletNavigationalState;
 
    /** . */
-   private final Mode mode;
+   private final org.gatein.pc.api.Mode mode;
 
    /** . */
-   private final WindowState windowState;
+   private final org.gatein.pc.api.WindowState windowState;
 
    public PortletWindowNavigationalState()
    {
       this.portletNavigationalState = null;
-      this.mode = Mode.VIEW;
-      this.windowState = WindowState.NORMAL;
+      this.mode = org.gatein.pc.api.Mode.VIEW;
+      this.windowState = org.gatein.pc.api.WindowState.NORMAL;
    }
 
-   public PortletWindowNavigationalState(StateString portletNavigationalState, Mode mode, WindowState windowState)
+   public PortletWindowNavigationalState(StateString portletNavigationalState, org.gatein.pc.api.Mode mode, org.gatein.pc.api.WindowState windowState)
    {
       this.portletNavigationalState = portletNavigationalState;
       this.mode = mode;
@@ -71,7 +70,7 @@ public class PortletWindowNavigationalState implements Serializable
       return mode;
    }
 
-   public WindowState getWindowState()
+   public org.gatein.pc.api.WindowState getWindowState()
    {
       return windowState;
    }

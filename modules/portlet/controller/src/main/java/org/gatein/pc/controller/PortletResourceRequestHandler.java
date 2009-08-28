@@ -23,8 +23,8 @@
 
 package org.gatein.pc.controller;
 
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.Mode;
+import org.gatein.pc.api.WindowState;
 import org.gatein.common.util.ParameterMap;
 import org.gatein.pc.api.PortletInvokerException;
 import org.gatein.pc.api.StateString;
@@ -62,7 +62,7 @@ class PortletResourceRequestHandler extends RequestHandler<PortletResourceReques
 
       //
       Mode mode = null;
-      WindowState windowState = null;
+      org.gatein.pc.api.WindowState windowState = null;
       PortletPageNavigationalState pageNavigationalState = null;
       Map<String, String[]> publicNS = null;
       StateString portletNS = null;

@@ -47,8 +47,7 @@ import org.gatein.pc.api.invocation.ActionInvocation;
 import org.gatein.pc.api.invocation.EventInvocation;
 import org.gatein.pc.controller.PortletController;
 import org.gatein.common.util.Tools;
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.WindowState;
 import org.jboss.unit.api.pojo.annotations.Test;
 import org.jboss.unit.api.pojo.annotations.Create;
 import static org.jboss.unit.api.Assert.*;
@@ -88,7 +87,7 @@ public class PortletControllerTestCase
       invoker.addPortlet("foo");
       StateString portletNS = new OpaqueStateString("abc");
       PortletPageNavigationalState pageNS = context.getStateControllerContext().createPortletPageNavigationalState(true);
-      PortletWindowNavigationalState windowNS = new PortletWindowNavigationalState(portletNS, Mode.EDIT, WindowState.MAXIMIZED);
+      PortletWindowNavigationalState windowNS = new PortletWindowNavigationalState(portletNS, org.gatein.pc.api.Mode.EDIT, WindowState.MAXIMIZED);
       PortletRenderRequest render = new PortletRenderRequest("foo", windowNS, new HashMap<String, String[]>(), pageNS);
       ControllerResponse response = controller.process(context, render);
       PageUpdateResponse pageUpdate = assertInstanceOf(response, PageUpdateResponse.class);
@@ -97,7 +96,7 @@ public class PortletControllerTestCase
       PortletWindowNavigationalState windowNS2 = pageNS2.getPortletWindowNavigationalState("foo");
       assertNotNull(windowNS2);
       assertEquals(portletNS, windowNS2.getPortletNavigationalState());
-      assertEquals(Mode.EDIT, windowNS2.getMode());
+      assertEquals(org.gatein.pc.api.Mode.EDIT, windowNS2.getMode());
       assertEquals(WindowState.MAXIMIZED, windowNS2.getWindowState());
    }
 
@@ -125,7 +124,7 @@ public class PortletControllerTestCase
          protected PortletInvocationResponse invoke(ActionInvocation action) throws PortletInvokerException
          {
             UpdateNavigationalStateResponse updateNS = new UpdateNavigationalStateResponse();
-            updateNS.setMode(Mode.EDIT);
+            updateNS.setMode(org.gatein.pc.api.Mode.EDIT);
             updateNS.setWindowState(WindowState.MAXIMIZED);
             updateNS.setNavigationalState(new OpaqueStateString("abc"));
 
@@ -151,7 +150,7 @@ public class PortletControllerTestCase
 
             //
             UpdateNavigationalStateResponse updateNS = new UpdateNavigationalStateResponse();
-            updateNS.setMode(Mode.HELP);
+            updateNS.setMode(org.gatein.pc.api.Mode.HELP);
             updateNS.setWindowState(WindowState.MINIMIZED);
             updateNS.setNavigationalState(new OpaqueStateString("def"));
 
@@ -172,7 +171,7 @@ public class PortletControllerTestCase
       //
       PortletWindowNavigationalState fooNS = assertNotNull(pageNS.getPortletWindowNavigationalState("foo"));
       assertEquals(WindowState.MAXIMIZED, fooNS.getWindowState());
-      assertEquals(Mode.EDIT, fooNS.getMode());
+      assertEquals(org.gatein.pc.api.Mode.EDIT, fooNS.getMode());
       assertEquals(new OpaqueStateString("abc"), fooNS.getPortletNavigationalState());
 
       //
@@ -183,7 +182,7 @@ public class PortletControllerTestCase
          //
          PortletWindowNavigationalState barNS = assertNotNull(pageNS.getPortletWindowNavigationalState("bar"));
          assertEquals(WindowState.MINIMIZED, barNS.getWindowState());
-         assertEquals(Mode.HELP, barNS.getMode());
+         assertEquals(org.gatein.pc.api.Mode.HELP, barNS.getMode());
          assertEquals(new OpaqueStateString("def"), barNS.getPortletNavigationalState());
       }
       else

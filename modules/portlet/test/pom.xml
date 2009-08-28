@@ -258,7 +258,6 @@
                         <property name="dependency.jaxb.jar" value="${maven.dependency.sun-jaxb.jaxb-api.jar.path}"/>
 
                         <property name="dependency.portal-common-common.jar" value="${maven.dependency.org.gatein.common.common-common.jar.path}"/>
-                        <property name="dependency.portal-common-portal.jar" value="${maven.dependency.org.gatein.common.common-portal.jar.path}"/>
                         <property name="dependency.portal-common-mc.jar" value="${maven.dependency.org.gatein.common.common-mc.jar.path}"/>
 
                         <property name="dependency.portal-web-web.jar" value="${maven.dependency.org.gatein.wci.wci-wci.jar.path}"/>

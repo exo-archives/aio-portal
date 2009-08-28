@@ -26,7 +26,6 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.jboss.portal.Mode;
 import org.gatein.pc.portlet.impl.metadata.adapter.PortletModeAdapter;
 
 /**
@@ -39,16 +38,16 @@ public class PortletModeMetaData
 {
 
    /** The portlet mode */
-   private Mode portletMode;
+   private org.gatein.pc.api.Mode portletMode;
 
    @XmlValue
    @XmlJavaTypeAdapter(PortletModeAdapter.class)
-   public Mode getPortletMode()
+   public org.gatein.pc.api.Mode getPortletMode()
    {
       return portletMode;
    }
 
-   public void setPortletMode(Mode portletMode)
+   public void setPortletMode(org.gatein.pc.api.Mode portletMode)
    {
       this.portletMode = portletMode;
    }

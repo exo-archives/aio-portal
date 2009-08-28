@@ -24,8 +24,8 @@ package org.gatein.pc.api;
 
 import org.gatein.pc.api.cache.CacheLevel;
 import org.gatein.pc.api.ContainerURL;
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.Mode;
+import org.gatein.pc.api.WindowState;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

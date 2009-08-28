@@ -23,8 +23,8 @@
 package org.gatein.pc.portlet.impl.info;
 
 import org.apache.log4j.Logger;
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.Mode;
+import org.gatein.pc.api.WindowState;
 import org.gatein.common.net.media.MediaType;
 import org.gatein.common.net.media.MediaTypeMapImpl;
 import org.gatein.pc.api.info.CapabilitiesInfo;
@@ -62,9 +62,9 @@ public class ContainerCapabilitiesInfo implements CapabilitiesInfo
 
       //
       MediaTypeMapImpl<WindowStateInfo> supportedWindowStates = new MediaTypeMapImpl<WindowStateInfo>();
-      supportedWindowStates.put(new ContainerWindowStateInfo(WindowState.MAXIMIZED));
-      supportedWindowStates.put(new ContainerWindowStateInfo(WindowState.NORMAL));
-      supportedWindowStates.put(new ContainerWindowStateInfo(WindowState.MINIMIZED));
+      supportedWindowStates.put(new ContainerWindowStateInfo(org.gatein.pc.api.WindowState.MAXIMIZED));
+      supportedWindowStates.put(new ContainerWindowStateInfo(org.gatein.pc.api.WindowState.NORMAL));
+      supportedWindowStates.put(new ContainerWindowStateInfo(org.gatein.pc.api.WindowState.MINIMIZED));
 
       //
       this.supportedLocales = new HashSet<Locale>();
@@ -94,7 +94,7 @@ public class ContainerCapabilitiesInfo implements CapabilitiesInfo
       }
    }
 
-   public void add(String contentType, WindowState windowState)
+   public void add(String contentType, org.gatein.pc.api.WindowState windowState)
    {
       add(contentType, new ContainerWindowStateInfo(windowState));
    }
@@ -138,7 +138,7 @@ public class ContainerCapabilitiesInfo implements CapabilitiesInfo
       return supportedModes.getValues();
    }
 
-   public ModeInfo getMode(Mode value)
+   public ModeInfo getMode(org.gatein.pc.api.Mode value)
    {
       for (ModeInfo mode : getAllModes())
       {

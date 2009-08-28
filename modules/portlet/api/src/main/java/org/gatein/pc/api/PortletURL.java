@@ -22,8 +22,6 @@
  ******************************************************************************/
 package org.gatein.pc.api;
 
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
 import org.gatein.pc.api.ContainerURL;
 
 /**
@@ -37,12 +35,12 @@ public interface PortletURL extends ContainerURL
     *
     * @return the mode
     */
-   Mode getMode();
+   org.gatein.pc.api.Mode getMode();
 
    /**
     * Returns the window state that may be null.
     *
     * @return the window state
     */
-   WindowState getWindowState();
+   org.gatein.pc.api.WindowState getWindowState();
 }

@@ -22,8 +22,8 @@
  ******************************************************************************/
 package org.gatein.pc.portal.jsp;
 
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.Mode;
+import org.gatein.pc.api.WindowState;
 
 import java.util.Set;
 
@@ -53,7 +53,7 @@ public class WindowDef
    private final Set<Mode> supportedModes;
 
    /** . */
-   private final Set<WindowState> supportedWindowStates;
+   private final Set<org.gatein.pc.api.WindowState> supportedWindowStates;
 
    public WindowDef(
       String portletName,

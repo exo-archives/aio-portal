@@ -23,7 +23,7 @@
 
 package org.gatein.pc.portlet.impl.info;
 
-import org.jboss.portal.Mode;
+import org.gatein.pc.api.Mode;
 import org.gatein.common.i18n.LocalizedString;
 import org.gatein.pc.api.info.ModeInfo;
 
@@ -41,12 +41,12 @@ class ContainerModeInfo implements ModeInfo
    private static final LocalizedString DEFAULT_DESCRIPTION = new LocalizedString("Default Portlet mode description.", Locale.ENGLISH);
 
    /** . */
-   private final Mode mode;
+   private final org.gatein.pc.api.Mode mode;
 
    /** . */
    private final LocalizedString description;
 
-   public ContainerModeInfo(Mode mode, LocalizedString description)
+   public ContainerModeInfo(org.gatein.pc.api.Mode mode, LocalizedString description)
    {
       if (mode == null)
       {
@@ -93,7 +93,7 @@ class ContainerModeInfo implements ModeInfo
       return DEFAULT_DESCRIPTION; // fix-me
    }
 
-   public Mode getMode()
+   public org.gatein.pc.api.Mode getMode()
    {
       return mode;
    }

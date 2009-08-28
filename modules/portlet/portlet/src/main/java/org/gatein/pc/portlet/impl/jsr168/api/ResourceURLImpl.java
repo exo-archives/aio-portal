@@ -28,8 +28,8 @@ import org.gatein.pc.api.cache.CacheLevel;
 import org.gatein.pc.api.StateString;
 import org.gatein.pc.api.ParametersStateString;
 import org.gatein.common.util.ParameterMap;
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.Mode;
+import org.gatein.pc.api.WindowState;
 
 import javax.portlet.ResourceURL;
 import javax.portlet.PortletURLGenerationListener;
@@ -190,7 +190,7 @@ public class ResourceURLImpl extends BaseURLImpl implements ResourceURL
       private final Mode mode;
 
       /** . */
-      private final WindowState windowState;
+      private final org.gatein.pc.api.WindowState windowState;
 
       private InternalResourceURL(StateString navigationalState, Mode mode, WindowState windowState)
       {

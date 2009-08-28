@@ -24,7 +24,7 @@ package org.gatein.pc.portlet.impl.metadata.adapter;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.WindowState;
 
 /**
  * @author <a href="mailto:emuckenh@redhat.com">Emanuel Muckenhuber</a>
@@ -40,9 +40,9 @@ public class WindowStateAdapter extends XmlAdapter<String, WindowState>
    }
 
    @Override
-   public WindowState unmarshal(String name) throws Exception
+   public org.gatein.pc.api.WindowState unmarshal(String name) throws Exception
    {
-      return WindowState.create(name);
+      return org.gatein.pc.api.WindowState.create(name);
    }
 
 }

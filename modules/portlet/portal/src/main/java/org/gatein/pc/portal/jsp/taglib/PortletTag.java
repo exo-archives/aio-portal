@@ -32,8 +32,8 @@ import org.gatein.pc.api.invocation.response.PortletInvocationResponse;
 import org.gatein.pc.api.invocation.response.ErrorResponse;
 import org.gatein.pc.api.invocation.response.UnavailableResponse;
 import org.gatein.pc.api.invocation.response.ContentResponse;
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.Mode;
+import org.gatein.pc.api.WindowState;
 import org.gatein.common.util.Tools;
 
 import javax.servlet.jsp.JspException;
@@ -53,10 +53,10 @@ public class PortletTag extends PortalBodyTagSupport
 {
 
    /** . */
-   private static final Set<Mode> DEFAULT_MODES = Collections.unmodifiableSet(Tools.toSet(Mode.VIEW, Mode.EDIT, Mode.HELP));
+   private static final Set<Mode> DEFAULT_MODES = Collections.unmodifiableSet(Tools.toSet(Mode.VIEW, org.gatein.pc.api.Mode.EDIT, Mode.HELP));
 
    /** . */
-   private static final Set<WindowState> DEFAULT_WINDOW_STATES = Collections.unmodifiableSet(Tools.toSet(WindowState.NORMAL, WindowState.MAXIMIZED, WindowState.MINIMIZED));
+   private static final Set<org.gatein.pc.api.WindowState> DEFAULT_WINDOW_STATES = Collections.unmodifiableSet(Tools.toSet(org.gatein.pc.api.WindowState.NORMAL, org.gatein.pc.api.WindowState.MAXIMIZED, WindowState.MINIMIZED));
 
    /** . */
    private String nameAttr;
@@ -76,7 +76,7 @@ public class PortletTag extends PortalBodyTagSupport
    /** . */
    private String errorPageAttr;
 
-   private Set<WindowState> supportedWindowStates;
+   private Set<org.gatein.pc.api.WindowState> supportedWindowStates;
    private Set<Mode> supportedModes;
    private Mode initialMode;
    private PageTag pageTag;
@@ -152,7 +152,7 @@ public class PortletTag extends PortalBodyTagSupport
       {
          for (String supportedModeValue : supportedModesAttr.split(","))
          {
-            Mode mode = Mode.create(supportedModeValue.trim());
+            org.gatein.pc.api.Mode mode = Mode.create(supportedModeValue.trim());
             supportedModes.add(mode);
          }
       }
@@ -162,12 +162,12 @@ public class PortletTag extends PortalBodyTagSupport
       }
 
       //
-      Set<WindowState> supportedWindowStates = new LinkedHashSet<WindowState>();
+      Set<org.gatein.pc.api.WindowState> supportedWindowStates = new LinkedHashSet<org.gatein.pc.api.WindowState>();
       if (supportedWindowStatesAttr != null)
       {
          for (String supportedWindowStateValue : supportedWindowStatesAttr.split(","))
          {
-            WindowState windowState = WindowState.create(supportedWindowStateValue.trim());
+            org.gatein.pc.api.WindowState windowState = WindowState.create(supportedWindowStateValue.trim());
             supportedWindowStates.add(windowState);
          }
       }
@@ -177,10 +177,10 @@ public class PortletTag extends PortalBodyTagSupport
       }
 
       //
-      Mode initialMode = Mode.VIEW;
+      org.gatein.pc.api.Mode initialMode = Mode.VIEW;
       if (initialModeAttr != null)
       {
-         initialMode = Mode.create(initialModeAttr.trim());
+         initialMode = org.gatein.pc.api.Mode.create(initialModeAttr.trim());
       }
 
       //

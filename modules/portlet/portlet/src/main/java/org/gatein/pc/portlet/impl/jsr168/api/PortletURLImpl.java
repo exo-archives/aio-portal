@@ -29,7 +29,6 @@ import org.gatein.pc.api.ActionURL;
 import org.gatein.pc.api.StateString;
 import org.gatein.pc.api.ParametersStateString;
 import org.gatein.pc.api.RenderURL;
-import org.jboss.portal.Mode;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
@@ -169,20 +168,20 @@ public class PortletURLImpl extends BaseURLImpl implements PortletURL
          this.portletMode = original.portletMode;
       }
 
-      public Mode getMode()
+      public org.gatein.pc.api.Mode getMode()
       {
          if (portletMode != null)
          {
-            return Mode.create(portletMode.toString());
+            return org.gatein.pc.api.Mode.create(portletMode.toString());
          }
          return null;
       }
 
-      public org.jboss.portal.WindowState getWindowState()
+      public org.gatein.pc.api.WindowState getWindowState()
       {
          if (windowState != null)
          {
-            return org.jboss.portal.WindowState.create(windowState.toString());
+            return org.gatein.pc.api.WindowState.create(windowState.toString());
          }
          return null;
       }

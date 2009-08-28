@@ -23,7 +23,7 @@
 
 package org.gatein.pc.test.portlet;
 
-import org.jboss.portal.Mode;
+import org.gatein.pc.api.Mode;
 import org.gatein.pc.portlet.impl.info.ContainerCapabilitiesInfo;
 
 import java.util.Collection;
@@ -45,11 +45,11 @@ public class ContentTypesTestCase
    {
       contentTypes = new ContainerCapabilitiesInfo();
       ContainerCapabilitiesInfo md = new ContainerCapabilitiesInfo();
-      md.add("text/html", Mode.EDIT);
+      md.add("text/html", org.gatein.pc.api.Mode.EDIT);
       md.add("text/html", Mode.HELP );
-      md.add("text/html", Mode.VIEW);
-      md.add("text/xml", Mode.VIEW);
-      md.add("*", Mode.VIEW);
+      md.add("text/html", org.gatein.pc.api.Mode.VIEW);
+      md.add("text/xml", org.gatein.pc.api.Mode.VIEW);
+      md.add("*", org.gatein.pc.api.Mode.VIEW);
 //      md.add("*/*", new Mode[]{});
 //      md.add("text/*", new Mode[]{});
 
@@ -62,7 +62,7 @@ public class ContentTypesTestCase
    {
       Collection modes = contentTypes.getAllModes();
       assertEquals(3, modes.size());
-      assertTrue(modes.contains(Mode.EDIT));
+      assertTrue(modes.contains(org.gatein.pc.api.Mode.EDIT));
       assertTrue(modes.contains(Mode.HELP));
       assertTrue(modes.contains(Mode.VIEW));
    }

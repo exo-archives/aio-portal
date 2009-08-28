@@ -22,8 +22,7 @@
  ******************************************************************************/
 package org.gatein.pc.portal.jsp.taglib;
 
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.Mode;
 import org.gatein.pc.portal.jsp.PortalRenderResponse;
 import org.gatein.pc.portal.jsp.PagePortletControllerContext;
 import org.gatein.pc.controller.impl.PortletURLRenderer;
@@ -80,17 +79,17 @@ public class PortletURLTag extends AbstractURLTag
       PagePortletControllerContext context = renderResponse.getPortletControllerContext();
       PortletTag portletTag = (PortletTag)SimpleTagSupport.findAncestorWithClass(this, PortletTag.class);
 
-      Mode mode = null;
+      org.gatein.pc.api.Mode mode = null;
       if (modeValue != null)
       {
          mode = Mode.create(modeValue.trim());
       }
 
       //
-      WindowState windowState = null;
+      org.gatein.pc.api.WindowState windowState = null;
       if (windowStateValue != null)
       {
-         windowState = WindowState.create(windowStateValue.trim());
+         windowState = org.gatein.pc.api.WindowState.create(windowStateValue.trim());
       }
 
       PortletURLRenderer renderer = new PortletURLRenderer(
@@ -99,8 +98,8 @@ public class PortletURLTag extends AbstractURLTag
          context.getClientResponse(),
          context.getPageNavigationalStateSerialization());
 
-      final WindowState ws = windowState;
-      final Mode md = mode;
+      final org.gatein.pc.api.WindowState ws = windowState;
+      final org.gatein.pc.api.Mode md = mode;
 
       RenderURL url = new RenderURL()
       {
@@ -121,7 +120,7 @@ public class PortletURLTag extends AbstractURLTag
             return md;
          }
 
-         public WindowState getWindowState()
+         public org.gatein.pc.api.WindowState getWindowState()
          {
             return ws;
          }

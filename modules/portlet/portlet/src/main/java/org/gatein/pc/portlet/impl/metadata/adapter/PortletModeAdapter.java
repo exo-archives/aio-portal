@@ -24,17 +24,17 @@ package org.gatein.pc.portlet.impl.metadata.adapter;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-import org.jboss.portal.Mode;
+import org.gatein.pc.api.Mode;
 
 /**
  * @author <a href="mailto:emuckenh@redhat.com">Emanuel Muckenhuber</a>
  * @version $Revision$
  */
-public class PortletModeAdapter extends XmlAdapter<String, Mode>
+public class PortletModeAdapter extends XmlAdapter<String, org.gatein.pc.api.Mode>
 {
 
    @Override
-   public String marshal(Mode mode) throws Exception
+   public String marshal(org.gatein.pc.api.Mode mode) throws Exception
    {
       throw new UnsupportedOperationException();
    }

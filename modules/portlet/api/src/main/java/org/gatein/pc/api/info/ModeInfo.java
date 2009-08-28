@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.gatein.pc.api.info;
 
-import org.jboss.portal.Mode;
+import org.gatein.pc.api.Mode;
 import org.gatein.common.i18n.LocalizedString;
 
 /**

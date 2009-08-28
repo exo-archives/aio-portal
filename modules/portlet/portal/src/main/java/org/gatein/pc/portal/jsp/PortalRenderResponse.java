@@ -28,7 +28,6 @@ import org.gatein.pc.controller.PortletController;
 import org.gatein.pc.api.invocation.response.PortletInvocationResponse;
 import org.gatein.pc.api.PortletInvokerException;
 import org.gatein.pc.api.Portlet;
-import org.jboss.portal.WindowState;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -172,7 +171,7 @@ public class PortalRenderResponse extends PortalResponse
          for (String windowId : pageNavigationalState.getPortletWindowIds())
          {
             PortletWindowNavigationalState windowNS = pageNavigationalState.getPortletWindowNavigationalState(windowId);
-            if (WindowState.MAXIMIZED.equals(windowNS.getWindowState()))
+            if (org.gatein.pc.api.WindowState.MAXIMIZED.equals(windowNS.getWindowState()))
             {
                return windowId;
             }

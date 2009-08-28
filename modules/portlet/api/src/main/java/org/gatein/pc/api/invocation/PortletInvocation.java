@@ -34,8 +34,7 @@ import org.gatein.pc.api.spi.WindowContext;
 import org.gatein.pc.api.spi.ClientContext;
 import org.gatein.pc.api.PortletContext;
 import org.gatein.pc.api.StateString;
-import org.jboss.portal.Mode;
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,7 +58,7 @@ public abstract class PortletInvocation
    protected Map<String, String[]> publicNavigationalState;
 
    /** . */
-   protected Mode mode;
+   protected org.gatein.pc.api.Mode mode;
 
    /** . */
    protected WindowState windowState;
@@ -193,12 +192,12 @@ public abstract class PortletInvocation
       this.publicNavigationalState = publicNavigationalState;
    }
 
-   public Mode getMode()
+   public org.gatein.pc.api.Mode getMode()
    {
       return mode;
    }
 
-   public void setMode(Mode mode)
+   public void setMode(org.gatein.pc.api.Mode mode)
    {
       this.mode = mode;
    }

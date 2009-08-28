@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.gatein.pc.portlet.support.info;
 
-import org.jboss.portal.WindowState;
+import org.gatein.pc.api.WindowState;
 import org.gatein.common.i18n.LocalizedString;
 import org.gatein.pc.api.info.WindowStateInfo;
 
@@ -39,7 +39,7 @@ public class WindowStateInfoSupport implements WindowStateInfo
    private final LocalizedString description;
 
    /** . */
-   private final WindowState windowState;
+   private final org.gatein.pc.api.WindowState windowState;
 
    public WindowStateInfoSupport(WindowState mode)
    {
@@ -52,7 +52,7 @@ public class WindowStateInfoSupport implements WindowStateInfo
       return description;
    }
 
-   public WindowState getWindowState()
+   public org.gatein.pc.api.WindowState getWindowState()
    {
       return windowState;
    }
