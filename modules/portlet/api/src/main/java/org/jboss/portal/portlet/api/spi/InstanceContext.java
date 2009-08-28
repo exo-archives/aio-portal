@@ -23,7 +23,10 @@
 package org.jboss.portal.portlet.api.spi;
 
 import org.jboss.portal.portlet.api.StateEvent;
+import org.jboss.portal.portlet.api.PortletStateType;
 import org.jboss.portal.portlet.api.state.AccessMode;
+
+import java.io.Serializable;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>
@@ -51,4 +54,12 @@ public interface InstanceContext
     * @param event the event
     */
    void onStateEvent(StateEvent event);
+
+   /**
+    * Returns the state type managed by the consumer. If the consumer cannot manage
+    * state by itself, then null must be returned.
+    *
+    * @return the consumer state type
+    */
+   PortletStateType<?> getStateType();
 }

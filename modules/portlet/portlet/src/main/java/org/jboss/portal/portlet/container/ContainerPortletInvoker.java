@@ -206,6 +206,7 @@ public class ContainerPortletInvoker extends PortletInvokerInterceptor
       {
          this.container = container;
          this.context = PortletContext.createPortletContext(container.getPortletApplication().getId() + "." + container.getId());
+         //this.context = PortletContext.createPortletContext(container.getPortletApplication().getId().substring(1) + "/" + container.getId());
       }
 
       public PortletContext getContext()

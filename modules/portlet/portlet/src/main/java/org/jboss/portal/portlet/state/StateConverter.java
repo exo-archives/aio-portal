@@ -23,6 +23,9 @@
 package org.jboss.portal.portlet.state;
 
 import org.jboss.portal.portlet.state.producer.PortletState;
+import org.jboss.portal.portlet.api.PortletStateType;
+
+import java.io.Serializable;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>
@@ -33,20 +36,22 @@ public interface StateConverter
    /**
     * Marshall the producer state as a byte array.
     *
+    * @param stateType the state type
     * @param state the producer state
     * @return the marshalled state
     * @throws StateConversionException if marshalling cannot be performed
     * @throws IllegalArgumentException if the state is null
     */
-   byte[] marshall(PortletState state) throws StateConversionException, IllegalArgumentException;
+   <S extends Serializable> S marshall(PortletStateType<S> stateType, PortletState state) throws StateConversionException, IllegalArgumentException;
 
    /**
     * Unmarshall the producer state from a byte array.
     *
+    * @param stateType the state type
     * @param marshalledState the marshalled state
     * @return the producer state
     * @throws StateConversionException if unmarshalling cannot be performed
     * @throws IllegalArgumentException if the argument is null
     */
-   PortletState unmarshall(byte[] marshalledState) throws StateConversionException, IllegalArgumentException;
+   <S extends Serializable> PortletState unmarshall(PortletStateType<S> stateType, S marshalledState) throws StateConversionException, IllegalArgumentException;
 }

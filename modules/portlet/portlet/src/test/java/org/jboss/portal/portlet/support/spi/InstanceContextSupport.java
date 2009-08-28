@@ -23,6 +23,7 @@
 package org.jboss.portal.portlet.support.spi;
 
 import org.jboss.portal.portlet.api.StateEvent;
+import org.jboss.portal.portlet.api.PortletStateType;
 import org.jboss.portal.portlet.api.spi.InstanceContext;
 import org.jboss.portal.portlet.api.state.AccessMode;
 
@@ -44,6 +45,10 @@ public class InstanceContextSupport implements InstanceContext
 
    public void onStateEvent(StateEvent event)
    {
+      throw new UnsupportedOperationException();
+   }
+
+   public PortletStateType<?> getStateType() {
       throw new UnsupportedOperationException();
    }
 }

@@ -24,7 +24,7 @@ package org.jboss.portal.portlet.api;
 
 import org.jboss.portal.common.util.ParameterValidation;
 
-import java.util.Arrays;
+import java.io.Serializable;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>
@@ -32,21 +32,44 @@ import java.util.Arrays;
  * @version $Revision: 1.1 $
  * @since 2.6
  */
-public class StatefulPortletContext extends PortletContext
+public class StatefulPortletContext<S extends Serializable> extends PortletContext
 {
 
-   /** . */
-   private final byte[] marshalledState;
+   public static <S extends Serializable> StatefulPortletContext<S> create(String id, StatefulPortletContext<S> spc)
+   {
+      return new StatefulPortletContext<S>(id, spc.type, spc.state);
+   }
 
-   StatefulPortletContext(String id, byte[] marshalledState) throws IllegalArgumentException
+   public static <S extends Serializable> StatefulPortletContext<S> create(
+      String id,
+      PortletStateType<S> type,
+      S state)
+   {
+      return new StatefulPortletContext<S>(id, type, state);
+   }
+
+   /** . */
+   private final S state;
+
+   /** . */
+   private final PortletStateType<S> type;
+
+   StatefulPortletContext(String id, PortletStateType<S> type, S state) throws IllegalArgumentException
    {
       super(id);
 
-      ParameterValidation.throwIllegalArgExceptionIfNull(marshalledState, "Portlet state");
+      //
+      ParameterValidation.throwIllegalArgExceptionIfNull(type, "Portlet type");
+      ParameterValidation.throwIllegalArgExceptionIfNull(state, "Portlet state");
 
-      this.marshalledState = marshalledState;
+      //
+      this.type = type;
+      this.state = state;
    }
 
+   public PortletStateType<S> getType() {
+     return type;
+   }
 
    public boolean equals(Object o)
    {
@@ -63,25 +86,34 @@ public class StatefulPortletContext extends PortletContext
          return false;
       }
 
-      StatefulPortletContext that = (StatefulPortletContext)o;
+      //
+      StatefulPortletContext<?> that = (StatefulPortletContext<?>)o;
 
-      return Arrays.equals(marshalledState, that.marshalledState);
+      //
+      if (type.getJavaType().equals(that.type.getJavaType()))
+      {
+         S thatState = type.getJavaType().cast(that.getState());
+         return type.equals(state, thatState);
+      }
+
+      //
+      return false;
    }
 
    public int hashCode()
    {
       int result = super.hashCode();
-      result = 31 * result + (marshalledState != null ? marshalledState.hashCode() : 0);
+      result = 31 * result + (state != null ? state.hashCode() : 0);
       return result;
    }
 
-   public byte[] getState()
+   public S getState()
    {
-      return marshalledState;
+      return state;
    }
 
    public String toString()
    {
-      return "StatefulPortletContext[" + id + "," + marshalledState.length + "]";
+      return "StatefulPortletContext[" + id + "," + type.toString(state) + "]";
    }
 }

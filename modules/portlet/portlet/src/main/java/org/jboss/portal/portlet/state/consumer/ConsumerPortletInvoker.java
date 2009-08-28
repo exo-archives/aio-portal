@@ -29,6 +29,8 @@ import org.jboss.portal.portlet.api.Portlet;
 import org.jboss.portal.portlet.api.PortletContext;
 import org.jboss.portal.portlet.api.StateEvent;
 import org.jboss.portal.portlet.api.PortletInvokerException;
+import org.jboss.portal.portlet.api.StatefulPortletContext;
+import org.jboss.portal.portlet.api.PortletStateType;
 import org.jboss.portal.portlet.api.state.PropertyMap;
 import org.jboss.portal.portlet.PortletInvokerInterceptor;
 import org.jboss.portal.portlet.api.invocation.PortletInvocation;
@@ -43,6 +45,7 @@ import org.jboss.portal.portlet.api.state.DestroyCloneFailure;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.io.Serializable;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>
@@ -145,11 +148,14 @@ public class ConsumerPortletInvoker extends PortletInvokerInterceptor
          PortletContext clonedContext = pictx.clonedContext;
          if (clonedContext != null)
          {
-            byte[] state = clonedContext.getState();
-            if (state != null)
+            if (clonedContext instanceof StatefulPortletContext)
             {
+               StatefulPortletContext statefulClonedContext = (StatefulPortletContext)clonedContext;
+               Serializable state = statefulClonedContext.getState();
+               PortletStateType stateType = statefulClonedContext.getType();
+
                // Save the clone state
-               ConsumerState consumerState = new ConsumerState(clonedContext.getId(), state);
+               ConsumerState consumerState = new ConsumerState<Serializable>(clonedContext.getId(), stateType, state);
                String stateId = persistenceManager.createState(consumerState);
                String clonedId = CLONE_ID_PREFIX + stateId;
                StateEvent event = new StateEvent(PortletContext.createPortletContext(clonedId), StateEvent.Type.PORTLET_CLONED_EVENT);
@@ -166,13 +172,15 @@ public class ConsumerPortletInvoker extends PortletInvokerInterceptor
             PortletContext modifiedContext = pictx.modifiedContext;
             if (modifiedContext != null)
             {
-               byte[] state = modifiedContext.getState();
                // update state if needed
-               if (state != null)
+               if (clonedContext instanceof StatefulPortletContext)
                {
+                  StatefulPortletContext statefulClonedContext = (StatefulPortletContext)clonedContext;
+                  Serializable state = statefulClonedContext.getState();
+                  PortletStateType stateType = statefulClonedContext.getType();
                   try
                   {
-                     ConsumerState consumerState = new ConsumerState(modifiedContext.getId(), state);
+                     ConsumerState consumerState = new ConsumerState<Serializable>(modifiedContext.getId(), stateType, state);
                      persistenceManager.updateState(consumerContext.stateId, consumerState);
                   }
                   catch (NoSuchStateException e)
@@ -204,10 +212,10 @@ public class ConsumerPortletInvoker extends PortletInvokerInterceptor
       //
       PortletContext clonedContext = super.createClone(consumerContext.producerPortletContext);
 
-      byte[] state = clonedContext.getState();
-      if (state != null)
+      if (clonedContext instanceof StatefulPortletContext)
       {
-         ConsumerState consumerState = new ConsumerState(clonedContext.getId(), state);
+         StatefulPortletContext statefulClonedContext = (StatefulPortletContext)clonedContext;
+         ConsumerState consumerState = new ConsumerState<Serializable>(clonedContext.getId(), statefulClonedContext.getType(), statefulClonedContext.getState());
          String id = persistenceManager.createState(consumerState);
          return PortletContext.createPortletContext(CLONE_ID_PREFIX + id);
       }
@@ -279,16 +287,20 @@ public class ConsumerPortletInvoker extends PortletInvokerInterceptor
       //
       PortletContext updatedPortletContext = super.setProperties(consumerContext.producerPortletContext, changes);
 
-      byte[] state = updatedPortletContext.getState();
-      if (state != null)
+      if (updatedPortletContext instanceof StatefulPortletContext)
       {
+         StatefulPortletContext statefulUpdatedPortletContext = (StatefulPortletContext)updatedPortletContext;
+         Serializable state = statefulUpdatedPortletContext.getState();
+         PortletStateType stateType = statefulUpdatedPortletContext.getType();
+
+         //
          if (consumerContext.stateId == null)
          {
             throw new NotYetImplemented();
          }
 
          //
-         ConsumerState consumerState = new ConsumerState(updatedPortletContext.getId(), state);
+         ConsumerState consumerState = new ConsumerState<Serializable>(updatedPortletContext.getId(), stateType, state);
          try
          {
             persistenceManager.updateState(consumerContext.stateId, consumerState);
@@ -314,7 +326,7 @@ public class ConsumerPortletInvoker extends PortletInvokerInterceptor
       return portletContext;
    }
 
-   private static class StatefulInstanceContextImpl implements InstanceContext
+   private class StatefulInstanceContextImpl implements InstanceContext
    {
 
       /** . */
@@ -353,6 +365,10 @@ public class ConsumerPortletInvoker extends PortletInvokerInterceptor
                break;
          }
       }
+
+      public PortletStateType<?> getStateType() {
+         return persistenceManager.getStateType();
+      }
    }
 
    private ConsumerContext getConsumerContext(PortletContext portletContext) throws IllegalArgumentException, InvalidPortletIdException
@@ -372,7 +388,11 @@ public class ConsumerPortletInvoker extends PortletInvokerInterceptor
          try
          {
             ConsumerStateContext stateCtx = persistenceManager.loadState(stateId);
-            return new ConsumerContext(portletContext, PortletContext.createStatefulPortletContext(stateCtx.getPortletId(), stateCtx.getBytes()), stateId);
+            StatefulPortletContext<Serializable> blah = StatefulPortletContext.create(
+              stateCtx.getPortletId(),
+              stateCtx.getStateType(),
+              stateCtx.getState());
+            return new ConsumerContext(portletContext, blah, stateId);
          }
          catch (NoSuchStateException e)
          {

@@ -33,6 +33,7 @@ import org.jboss.portal.portlet.api.state.AccessMode;
 import org.jboss.portal.portlet.api.StateEvent;
 import org.jboss.portal.portlet.api.PortletContext;
 import org.jboss.portal.portlet.api.PortletInvokerException;
+import org.jboss.portal.portlet.api.PortletStateType;
 
 /**
  * <p>This interceptor takes in charge the management of portlet customization when the invocation carries
@@ -132,6 +133,10 @@ public class PortletCustomizationInterceptor extends PortletInvokerInterceptor
          target = event.getPortletContext();
          useClone = true;
          userContext.setAttribute("clone." + id, target);
+      }
+
+      public PortletStateType<?> getStateType() {
+         return PortletStateType.OPAQUE;
       }
    }
 }

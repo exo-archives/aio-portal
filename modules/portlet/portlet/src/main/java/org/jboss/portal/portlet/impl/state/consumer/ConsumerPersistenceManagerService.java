@@ -23,6 +23,7 @@
 package org.jboss.portal.portlet.impl.state.consumer;
 
 import org.jboss.portal.portlet.state.consumer.ConsumerStateContext;
+import org.jboss.portal.portlet.api.PortletStateType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,18 +32,22 @@ import java.util.Map;
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>
  * @version $Revision: 1.1 $
  */
-public class ConsumerPersistenceManagerService extends AbstractConsumerPersistenceManagerService
+public class ConsumerPersistenceManagerService extends AbstractConsumerPersistenceManagerService<byte[]>
 {
 
    /** . */
-   private Map<String, ConsumerStateContext> store = new HashMap<String, ConsumerStateContext>();
+   private Map<String, ConsumerStateContext<byte[]>> store = new HashMap<String, ConsumerStateContext<byte[]>>();
 
-   protected ConsumerStateContext get(String stateId)
+   public PortletStateType<byte[]> getStateType() {
+      return PortletStateType.OPAQUE;
+   }
+
+   protected ConsumerStateContext<byte[]> get(String stateId)
    {
       return store.get(stateId);
    }
 
-   protected void put(String stateId, ConsumerStateContext state)
+   protected void put(String stateId, ConsumerStateContext<byte[]> state)
    {
       store.put(stateId, state);
    }

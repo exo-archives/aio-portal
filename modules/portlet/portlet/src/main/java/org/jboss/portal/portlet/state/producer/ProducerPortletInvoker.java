@@ -30,6 +30,7 @@ import org.jboss.portal.portlet.api.StatefulPortletContext;
 import org.jboss.portal.portlet.api.PortletContext;
 import org.jboss.portal.portlet.api.PortletInvokerException;
 import org.jboss.portal.portlet.api.StateEvent;
+import org.jboss.portal.portlet.api.PortletStateType;
 import org.jboss.portal.portlet.api.state.PropertyMap;
 import org.jboss.portal.portlet.api.info.PortletInfo;
 import org.jboss.portal.portlet.api.info.PreferenceInfo;
@@ -60,6 +61,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
+import java.io.Serializable;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>
@@ -129,14 +131,14 @@ public class ProducerPortletInvoker extends PortletInvokerInterceptor
       //
       if (CONSUMER_CLONE_ID.equals(portletId))
       {
-         byte[] state = portletContext.getState();
-
-         //
-         if (state != null)
+         if (portletContext instanceof StatefulPortletContext)
          {
+            StatefulPortletContext statefulPortletContext = (StatefulPortletContext)portletContext;
+            Serializable state = statefulPortletContext.getState();
+
             try
             {
-               PortletState portletState = stateConverter.unmarshall(state);
+               PortletState portletState = stateConverter.unmarshall(statefulPortletContext.getType(), state);
                Portlet delegate = super.getPortlet(PortletContext.createPortletContext(portletState.getPortletId()));
                return new ProducerPortlet(portletContext, delegate);
             }
@@ -236,17 +238,19 @@ public class ProducerPortletInvoker extends PortletInvokerInterceptor
          PropertyMap newPrefs = prefs.getPrefs();
 
          //
+         PortletStateType stateType = instanceCtx.getStateType();
+         boolean persistLocally = stateType == null || stateManagementPolicy.persistLocally();
+
+         //
          switch(access)
          {
             case CLONE_BEFORE_WRITE:
             {
-               boolean persist = stateManagementPolicy.persistLocally();
-
                // Create the state
                if (context.isStateful())
                {
                   StatefulContext statefulContext = (StatefulContext)context;
-                  if (persist)
+                  if (persistLocally)
                   {
                      try
                      {
@@ -272,7 +276,7 @@ public class ProducerPortletInvoker extends PortletInvokerInterceptor
                   }
                   else
                   {
-                     PortletContext clonedCtx = marshall(context.getPortletId(), newPrefs);
+                     PortletContext clonedCtx = marshall(stateType, context.getPortletId(), newPrefs);
                      StateEvent event = new StateEvent(clonedCtx, StateEvent.Type.PORTLET_CLONED_EVENT);
                      instanceCtx.onStateEvent(event);
                   }
@@ -283,7 +287,7 @@ public class ProducerPortletInvoker extends PortletInvokerInterceptor
                   getPropertiesFromMetaData(portlet.getContext(), newPrefs);
 
                   //
-                  if (persist)
+                  if (persistLocally)
                   {
                      // Create the new state
                      String cloneStateId = persistenceManager.createState(context.getPortletId(), newPrefs);
@@ -296,7 +300,7 @@ public class ProducerPortletInvoker extends PortletInvokerInterceptor
                   }
                   else
                   {
-                     PortletContext clonedCtx = marshall(context.getPortletId(), newPrefs);
+                     PortletContext clonedCtx = marshall(stateType, context.getPortletId(), newPrefs);
                      StateEvent event = new StateEvent(clonedCtx, StateEvent.Type.PORTLET_CLONED_EVENT);
                      instanceCtx.onStateEvent(event);
                   }
@@ -326,7 +330,7 @@ public class ProducerPortletInvoker extends PortletInvokerInterceptor
                }
                else
                {
-                  PortletContext modifiedCtx = marshall(context.getPortletId(), newPrefs);
+                  PortletContext modifiedCtx = marshall(stateType, context.getPortletId(), newPrefs);
                   StateEvent event = new StateEvent(modifiedCtx, StateEvent.Type.PORTLET_MODIFIED_EVENT);
                   instanceCtx.onStateEvent(event);
                }
@@ -354,13 +358,15 @@ public class ProducerPortletInvoker extends PortletInvokerInterceptor
       //
       String portletId = portletContext.getId();
       InternalContext context = getStateContext(portletContext);
-      boolean useStore = stateManagementPolicy.persistLocally();
+
+      //
+      boolean persistLocally = !(portletContext instanceof StatefulPortletContext) || stateManagementPolicy.persistLocally();
 
       //
       if (context.isStateful())
       {
          StatefulContext statefulContext = (StatefulContext)context;
-         if (useStore)
+         if (persistLocally)
          {
             try
             {
@@ -379,21 +385,23 @@ public class ProducerPortletInvoker extends PortletInvokerInterceptor
          }
          else
          {
-            return marshall(statefulContext.getPortletId(), statefulContext.getProperties());
+            PortletStateType stateType = ((StatefulPortletContext)portletContext).getType();
+            return marshall(stateType, statefulContext.getPortletId(), statefulContext.getProperties());
          }
       }
       else
       {
          PropertyMap newState = new SimplePropertyMap();
          getPropertiesFromMetaData(portletContext, newState);
-         if (useStore)
+         if (persistLocally)
          {
             String cloneId = persistenceManager.createState(portletId, newState);
             return PortletContext.createPortletContext(PRODUCER_CLONE_ID_PREFIX + cloneId);
          }
          else
          {
-            return marshall(portletId, newState);
+            PortletStateType stateType = ((StatefulPortletContext)portletContext).getType();
+            return marshall(stateType, portletId, newState);
          }
       }
    }
@@ -595,17 +603,18 @@ public class ProducerPortletInvoker extends PortletInvokerInterceptor
       }
       else
       {
-         return marshall(context.getPortletId(), properties);
+         RemoteContext remoteStatefulContext = (RemoteContext)statefulContext;
+         return marshall(remoteStatefulContext.getStateType(), context.getPortletId(), properties);
       }
    }
 
-   private PortletContext marshall(String portletId, PropertyMap props) throws PortletInvokerException
+   private <S extends Serializable> PortletContext marshall(PortletStateType<S> stateType, String portletId, PropertyMap props) throws PortletInvokerException
    {
       try
       {
          PortletState sstate = new PortletState(portletId, props);
-         byte[] marshalledState = stateConverter.marshall(sstate);
-         return PortletContext.createStatefulPortletContext(CONSUMER_CLONE_ID, marshalledState);
+         S marshalledState = stateConverter.marshall(stateType, sstate);
+         return StatefulPortletContext.create(CONSUMER_CLONE_ID, stateType, marshalledState);
       }
       catch (StateConversionException e)
       {
@@ -660,8 +669,7 @@ public class ProducerPortletInvoker extends PortletInvokerInterceptor
     */
    private InternalContext getStateContext(final PortletContext portletContext) throws NoSuchPortletException, InvalidPortletIdException
    {
-      byte[] bytes = portletContext.getState();
-      if (bytes == null)
+      if (!(portletContext instanceof StatefulPortletContext))
       {
          String portletId = portletContext.getId();
          if (portletContext.getId().startsWith(PRODUCER_CLONE_ID_PREFIX))
@@ -688,10 +696,13 @@ public class ProducerPortletInvoker extends PortletInvokerInterceptor
       }
       else
       {
+         StatefulPortletContext statefulPortletContext = (StatefulPortletContext)portletContext;
+         Serializable bytes = statefulPortletContext.getState();
+         PortletStateType stateType = statefulPortletContext.getType();
          try
          {
-            final PortletState state = stateConverter.unmarshall(bytes);
-            return new RemoteContext(state.getPortletId(), state.getProperties());
+            final PortletState state = stateConverter.unmarshall(stateType, bytes);
+            return new RemoteContext(stateType, state.getPortletId(), state.getProperties());
          }
          catch (StateConversionException e)
          {
@@ -826,12 +837,23 @@ public class ProducerPortletInvoker extends PortletInvokerInterceptor
    private static class RemoteContext extends StatefulContext
    {
 
-      public RemoteContext(String portletId, PropertyMap state)
+      /** . */
+      private final PortletStateType stateType;
+
+      public RemoteContext(PortletStateType stateType, String portletId, PropertyMap state)
       {
          super(portletId, state);
+
+         //
+         this.stateType = stateType;
       }
 
-      public boolean isLocal()
+      public PortletStateType getStateType()
+      {
+        return stateType;
+      }
+
+     public boolean isLocal()
       {
          return false;
       }

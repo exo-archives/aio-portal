@@ -24,13 +24,24 @@ package org.jboss.portal.portlet.state.consumer;
 
 import org.jboss.portal.portlet.state.InvalidStateIdException;
 import org.jboss.portal.portlet.state.NoSuchStateException;
+import org.jboss.portal.portlet.api.PortletStateType;
+
+import java.io.Serializable;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>
  * @version $Revision: 5776 $
  */
-public interface ConsumerPersistenceManager
+public interface ConsumerPersistenceManager<S extends Serializable>
 {
+
+  /**
+   * Returns the consumer state type.
+   *
+   * @return the consume state type
+   */
+   PortletStateType<S> getStateType();
+
    /**
     * Load the state.
     *
@@ -40,31 +51,32 @@ public interface ConsumerPersistenceManager
     * @throws NoSuchStateException     is the specified state does not exist
     * @throws InvalidStateIdException  if the state id is not valid
     */
-   ConsumerStateContext loadState(String stateId) throws IllegalArgumentException, NoSuchStateException, InvalidStateIdException;
+   ConsumerStateContext<S> loadState(String stateId) throws IllegalArgumentException, NoSuchStateException, InvalidStateIdException;
 
    /**
     * Create the initial state.
     *
+    * @param state the state
     * @return the id of the state created
     * @throws IllegalArgumentException if the portlet id is null
     */
-   String createState(ConsumerState state) throws IllegalArgumentException;
+   String createState(ConsumerState<S> state) throws IllegalArgumentException;
 
    /**
     * Update the state.
     *
-    * @param stateId
+    * @param stateId the state id
     * @param propertyMap the updated state
     * @throws IllegalArgumentException if the state id is null or the values are null
     * @throws NoSuchStateException     is the specified state does not exist
     * @throws InvalidStateIdException  if the state id is not valid
     */
-   void updateState(String stateId, ConsumerState propertyMap) throws IllegalArgumentException, NoSuchStateException, InvalidStateIdException;
+   void updateState(String stateId, ConsumerState<S> propertyMap) throws IllegalArgumentException, NoSuchStateException, InvalidStateIdException;
 
    /**
     * Destroy the state.
     *
-    * @param stateId
+    * @param stateId the state id
     * @throws IllegalArgumentException if the state id is null
     * @throws NoSuchStateException     is the specified state does not exist
     * @throws InvalidStateIdException  if the state id is not valid

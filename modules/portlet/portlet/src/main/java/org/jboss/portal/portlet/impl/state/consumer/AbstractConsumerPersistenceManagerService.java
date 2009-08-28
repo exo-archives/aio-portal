@@ -28,25 +28,27 @@ import org.jboss.portal.portlet.state.consumer.ConsumerState;
 import org.jboss.portal.portlet.state.NoSuchStateException;
 import org.jboss.portal.portlet.state.InvalidStateIdException;
 
+import java.io.Serializable;
+
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>
  * @version $Revision: 1.1 $
  */
-public abstract class AbstractConsumerPersistenceManagerService implements ConsumerPersistenceManager
+public abstract class AbstractConsumerPersistenceManagerService<S extends Serializable> implements ConsumerPersistenceManager<S>
 {
 
    /** . */
    private int counter = 0;
 
-   protected abstract ConsumerStateContext get(String stateId);
-   protected abstract void put(String stateId, ConsumerStateContext state);
+   protected abstract ConsumerStateContext<S> get(String stateId);
+   protected abstract void put(String stateId, ConsumerStateContext<S> state);
    protected abstract void remove(String stateId);
    protected abstract int size();
 
-   public synchronized ConsumerStateContext loadState(String stateId) throws IllegalArgumentException, NoSuchStateException, InvalidStateIdException
+   public synchronized ConsumerStateContext<S> loadState(String stateId) throws IllegalArgumentException, NoSuchStateException, InvalidStateIdException
    {
       checkId(stateId);
-      ConsumerStateContext state = get(stateId);
+      ConsumerStateContext<S> state = get(stateId);
       if (state == null)
       {
          throw new NoSuchStateException(stateId);
@@ -54,18 +56,18 @@ public abstract class AbstractConsumerPersistenceManagerService implements Consu
       return state;
    }
 
-   public synchronized String createState(ConsumerState state) throws IllegalArgumentException
+   public synchronized String createState(ConsumerState<S> state) throws IllegalArgumentException
    {
       if (state == null)
       {
          throw new IllegalArgumentException();
       }
-      ConsumerStateContext ctx = new ConsumerStateContext(Integer.toString(counter++), state.getPortletId(), state.getBytes());
+      ConsumerStateContext<S> ctx = new ConsumerStateContext<S>(Integer.toString(counter++), state.getPortletId(), state.getStateType(), state.getState());
       put(ctx.getId(), ctx);
       return ctx.getId();
    }
 
-   public synchronized void updateState(String stateId, ConsumerState state) throws IllegalArgumentException, NoSuchStateException, InvalidStateIdException
+   public synchronized void updateState(String stateId, ConsumerState<S> state) throws IllegalArgumentException, NoSuchStateException, InvalidStateIdException
    {
       checkId(stateId);
       if (state == null)
@@ -78,7 +80,7 @@ public abstract class AbstractConsumerPersistenceManagerService implements Consu
       }
 
       //
-      put(stateId, new ConsumerStateContext(stateId, state.getPortletId(), state.getBytes()));
+      put(stateId, new ConsumerStateContext<S>(stateId, state.getPortletId(), state.getStateType(), state.getState()));
    }
 
    public synchronized void destroyState(String stateId) throws IllegalArgumentException, NoSuchStateException, InvalidStateIdException

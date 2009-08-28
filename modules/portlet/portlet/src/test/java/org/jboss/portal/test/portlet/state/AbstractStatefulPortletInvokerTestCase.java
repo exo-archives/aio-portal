@@ -29,6 +29,7 @@ import org.jboss.portal.portlet.api.NoSuchPortletException;
 import org.jboss.portal.portlet.api.Portlet;
 import org.jboss.portal.portlet.api.PortletContext;
 import org.jboss.portal.portlet.api.PortletInvokerException;
+import org.jboss.portal.portlet.api.StatefulPortletContext;
 import org.jboss.portal.portlet.api.state.PropertyMap;
 import org.jboss.portal.portlet.support.info.PortletInfoSupport;
 import org.jboss.portal.portlet.support.PortletSupport;
@@ -900,7 +901,7 @@ public abstract class AbstractStatefulPortletInvokerTestCase
       PortletSupport portletSupport = getPortletSupport(popCtx);
       portletSupport.addHandler(handler);
       addPreference(popCtx, "abc", Arrays.asList("def"));
-
+      
       //
       PortletContext ccpCtx = createClone(popCtx);
 
@@ -932,9 +933,20 @@ public abstract class AbstractStatefulPortletInvokerTestCase
          // Test handle first
          assertEquals(expected.getId(), actual.getId());
 
-         // Compare bytes
-         byte[] expectedState = expected.getState();
-         byte[] actualState = actual.getState();
+         // Compare States
+         Object expectedState = null;
+         Object actualState = null;
+         
+         if (expected instanceof StatefulPortletContext)
+         {  
+            expectedState = ((StatefulPortletContext)expected).getState();
+         }
+         
+         if (actual instanceof StatefulPortletContext)
+         {
+            actualState = ((StatefulPortletContext)actual).getState();
+         }
+         
          if (expectedState == null)
          {
             assertNull("Actual state should be null", actualState);
@@ -942,7 +954,7 @@ public abstract class AbstractStatefulPortletInvokerTestCase
          else
          {
             assertNotNull("Actual state should be not null", actualState);
-            assertTrue(Arrays.equals(expectedState, actualState));
+            assertTrue(expectedState.equals(actualState));
          }
       }
    }

@@ -30,6 +30,8 @@ import org.jboss.portal.portlet.api.PortletContext;
 import org.jboss.portal.portlet.api.StateEvent;
 import org.jboss.portal.portlet.api.PortletInvoker;
 import org.jboss.portal.portlet.api.PortletInvokerException;
+import org.jboss.portal.portlet.api.StatefulPortletContext;
+import org.jboss.portal.portlet.api.PortletStateType;
 import org.jboss.portal.portlet.api.state.PropertyMap;
 import org.jboss.portal.portlet.api.invocation.PortletInvocation;
 import org.jboss.portal.portlet.api.invocation.response.PortletInvocationResponse;
@@ -131,6 +133,10 @@ public class FederatedPortletInvokerService implements FederatedPortletInvoker
       {
          ctx.onStateEvent(new StateEvent(reference(event.getPortletContext()), event.getType()));
       }
+
+      public PortletStateType<?> getStateType() {
+         return ctx.getStateType();
+      }
    }
 
    public PortletInvocationResponse invoke(PortletInvocation invocation) throws InvocationException, PortletInvokerException
@@ -215,13 +221,29 @@ public class FederatedPortletInvokerService implements FederatedPortletInvoker
    private PortletContext dereference(PortletContext compoundPortletContext)
    {
       String portletId = compoundPortletContext.getId().substring(id.length() + 1);
-      return PortletContext.createPortletContext(portletId, compoundPortletContext.getState());
+      if (compoundPortletContext instanceof StatefulPortletContext)
+      {
+         StatefulPortletContext<?> compoundStatefulPortletContext = (StatefulPortletContext<?>)compoundPortletContext;
+         return StatefulPortletContext.create(portletId, compoundStatefulPortletContext);
+      }
+      else
+      {
+         return PortletContext.createPortletContext(portletId);
+      }
    }
 
    private PortletContext reference(PortletContext portletContext)
    {
       String compoundPortletId = reference(portletContext.getId());
-      return PortletContext.createPortletContext(compoundPortletId, portletContext.getState());
+      if (portletContext instanceof StatefulPortletContext)
+      {
+         StatefulPortletContext<?> statefulPortletContext = (StatefulPortletContext<?>)portletContext;
+         return StatefulPortletContext.create(compoundPortletId, statefulPortletContext);
+      }
+      else
+      {
+         return PortletContext.createPortletContext(compoundPortletId);
+      }
    }
 
    private String reference(String portletId)

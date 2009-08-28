@@ -74,11 +74,6 @@ public class PortletContext implements Serializable
       return "PortletContext[" + id + "]";
    }
 
-   public byte[] getState()
-   {
-      return null;
-   }
-
    /**
     * Create a PortletContext based on id and optional state.
     *
@@ -86,11 +81,12 @@ public class PortletContext implements Serializable
     * @param state the optional state
     * @return a new PortletContext based on the provided information
     */
+   @Deprecated()
    public static PortletContext createPortletContext(String id, byte[] state)
    {
       if (state != null && state.length > 0)
       {
-         return new StatefulPortletContext(id, state);
+         return new StatefulPortletContext<byte[]>(id, PortletStateType.OPAQUE, state);
       }
       else
       {
@@ -107,9 +103,10 @@ public class PortletContext implements Serializable
     * @param state the mandatory state
     * @return a new PortletContext
     */
-   public static PortletContext createStatefulPortletContext(String id, byte[] state)
+   @Deprecated
+   public static StatefulPortletContext<byte[]> createStatefulPortletContext(String id, byte[] state)
    {
-      return new StatefulPortletContext(id, state);
+      return new StatefulPortletContext<byte[]>(id, PortletStateType.OPAQUE, state);
    }
 
    public static PortletContext createPortletContext(String portletId)

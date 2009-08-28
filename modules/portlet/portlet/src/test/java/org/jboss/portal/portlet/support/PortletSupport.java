@@ -25,6 +25,8 @@ package org.jboss.portal.portlet.support;
 import org.jboss.portal.portlet.api.PortletInvokerException;
 import org.jboss.portal.portlet.api.PortletContext;
 import org.jboss.portal.portlet.api.Portlet;
+import org.jboss.portal.portlet.api.PortletStateType;
+import org.jboss.portal.portlet.api.StatefulPortletContext;
 import org.jboss.portal.portlet.support.info.PortletInfoSupport;
 import org.jboss.portal.portlet.api.invocation.PortletInvocation;
 import org.jboss.portal.portlet.api.invocation.ActionInvocation;

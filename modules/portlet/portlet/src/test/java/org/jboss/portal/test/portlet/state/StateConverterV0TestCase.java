@@ -23,6 +23,7 @@
 package org.jboss.portal.test.portlet.state;
 
 import org.jboss.portal.portlet.impl.state.StateConverterV0;
+import org.jboss.portal.portlet.api.PortletStateType;
 import org.jboss.portal.portlet.api.state.PropertyMap;
 import org.jboss.portal.portlet.state.SimplePropertyMap;
 import org.jboss.portal.portlet.state.StateConversionException;
@@ -50,7 +51,7 @@ public class StateConverterV0TestCase
    {
       try
       {
-         converter.marshall(null);
+         converter.marshall(PortletStateType.OPAQUE, null);
          fail("Was expecting an IAE");
       }
       catch (IllegalArgumentException expected)
@@ -58,7 +59,7 @@ public class StateConverterV0TestCase
       }
       try
       {
-         converter.unmarshall(null);
+         converter.unmarshall(PortletStateType.OPAQUE, null);
          fail("Was expecting an IAE");
       }
       catch (IllegalArgumentException expected)
@@ -69,14 +70,14 @@ public class StateConverterV0TestCase
    @Test
    public void testAlteredMagic() throws StateConversionException
    {
-      byte[] bytes = converter.marshall(new PortletState("foo"));
+      byte[] bytes = converter.marshall(PortletStateType.OPAQUE, new PortletState("foo"));
       bytes[0] = (byte)0xCA;
       bytes[1] = (byte)0xFE;
       bytes[2] = (byte)0xBA;
       bytes[3] = (byte)0xBE;
       try
       {
-         converter.unmarshall(bytes);
+         converter.unmarshall(PortletStateType.OPAQUE, bytes);
          fail("Was expecting a state conversion exception");
       }
       catch (StateConversionException expected)
@@ -87,11 +88,11 @@ public class StateConverterV0TestCase
    @Test
    public void testBadVersionNumber() throws StateConversionException
    {
-      byte[] bytes = converter.marshall(new PortletState("foo"));
+      byte[] bytes = converter.marshall(PortletStateType.OPAQUE,new PortletState("foo"));
       bytes[4] = (byte)0x01;
       try
       {
-         converter.unmarshall(bytes);
+         converter.unmarshall(PortletStateType.OPAQUE, bytes);
          fail("Was expecting a state conversion exception");
       }
       catch (StateConversionException expected)
@@ -118,9 +119,9 @@ public class StateConverterV0TestCase
 
    private void assertWorks(PortletState expectedState) throws Exception
    {
-      byte[] bytes = converter.marshall(expectedState);
+      byte[] bytes = converter.marshall(PortletStateType.OPAQUE, expectedState);
       assertNotNull(bytes);
-      PortletState state = converter.unmarshall(bytes);
+      PortletState state = converter.unmarshall(PortletStateType.OPAQUE, bytes);
       assertNotNull(state);
 
       //

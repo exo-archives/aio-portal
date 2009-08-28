@@ -22,19 +22,23 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.state.consumer;
 
+import org.jboss.portal.portlet.api.PortletStateType;
+
+import java.io.Serializable;
+
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>
  * @version $Revision: 5776 $
  */
-public class ConsumerStateContext extends ConsumerState
+public class ConsumerStateContext<S extends Serializable> extends ConsumerState<S>
 {
 
    /** . */
    private final String id;
 
-   public ConsumerStateContext(String id, String portletId, byte[] bytes)
+   public ConsumerStateContext(String id, String portletId, PortletStateType<S> stateType, S state)
    {
-      super(portletId, bytes);
+      super(portletId, stateType, state);
 
       //
       if (id == null)

@@ -23,6 +23,7 @@
 package org.jboss.portal.portlet.impl.state;
 
 import org.jboss.portal.portlet.api.state.PropertyMap;
+import org.jboss.portal.portlet.api.PortletStateType;
 import org.jboss.portal.portlet.state.SimplePropertyMap;
 import org.jboss.portal.portlet.state.StateConversionException;
 import org.jboss.portal.portlet.state.StateConverter;
@@ -33,6 +34,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Map;
 import java.util.List;
 import java.util.Arrays;
@@ -57,7 +59,19 @@ public class StateConverterV0 implements StateConverter
    /** . */
    private static final byte VERSION_ID = 0;
 
-   public byte[] marshall(PortletState state) throws StateConversionException
+  public <S extends Serializable> S marshall(PortletStateType<S> stateType, PortletState state) throws StateConversionException, IllegalArgumentException {
+    if (stateType.getJavaType().equals(byte[].class))
+    {
+       Object bytes = marshall(state);
+       return (S)bytes;
+    }
+    else
+    {
+       throw new UnsupportedOperationException();
+    }
+  }
+
+  public byte[] marshall(PortletState state) throws StateConversionException
    {
       if (state == null)
       {
@@ -100,6 +114,19 @@ public class StateConverterV0 implements StateConverter
       catch (IOException e)
       {
          throw new StateConversionException(e);
+      }
+   }
+
+   public <S extends Serializable> PortletState unmarshall(PortletStateType<S> stateType, S marshalledState) throws StateConversionException, IllegalArgumentException
+   {
+      if (stateType.getJavaType().equals(byte[].class))
+      {
+         byte[] bytes = (byte[])marshalledState;
+         return unmarshall(bytes);
+      }
+      else
+      {
+         throw new UnsupportedOperationException();
       }
    }
 

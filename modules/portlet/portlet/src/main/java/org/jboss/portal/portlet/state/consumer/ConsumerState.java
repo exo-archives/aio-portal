@@ -22,36 +22,44 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.state.consumer;
 
+import org.jboss.portal.portlet.api.PortletStateType;
+
 import java.util.Date;
+import java.io.Serializable;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>
  * @version $Revision: 5776 $
  */
-public class ConsumerState
+public class ConsumerState<S extends Serializable>
 {
 
    /** . */
-   private String portletId;
+   private final String portletId;
 
    /** . */
-   private byte[] bytes;
+   private final PortletStateType<S> stateType;
 
    /** . */
-   private Date terminationTime;
+   private final S state;
 
-   public ConsumerState(String porteltId, byte[] bytes)
+   /** . */
+   private final Date terminationTime;
+
+  public ConsumerState(String porteltId, PortletStateType<S> stateType, S state)
    {
       if (porteltId == null)
       {
          throw new IllegalArgumentException("No portlet id provided");
       }
-      if (bytes == null)
+      if (state == null)
       {
          throw new IllegalArgumentException("No bytes provided");
       }
       this.portletId = porteltId;
-      this.bytes = bytes;
+      this.stateType = stateType;
+      this.state = state;
+      this.terminationTime = null;
    }
 
    /**
@@ -62,12 +70,17 @@ public class ConsumerState
       return portletId;
    }
 
+   public PortletStateType<S> getStateType()
+   {
+     return stateType;
+   }
+
    /**
     *
     */
-   public byte[] getBytes()
+   public S getState()
    {
-      return bytes;
+      return state;
    }
 
    /**

@@ -25,6 +25,7 @@ package org.jboss.portal.portlet.impl.spi;
 import org.jboss.portal.portlet.api.state.AccessMode;
 import org.jboss.portal.portlet.api.PortletContext;
 import org.jboss.portal.portlet.api.StateEvent;
+import org.jboss.portal.portlet.api.PortletStateType;
 import org.jboss.portal.portlet.api.spi.InstanceContext;
 
 /**
@@ -98,5 +99,9 @@ public class AbstractInstanceContext implements InstanceContext
    public PortletContext getModifiedContext()
    {
       return modifiedContext;
+   }
+
+   public PortletStateType<?> getStateType() {
+      return null;
    }
 }
