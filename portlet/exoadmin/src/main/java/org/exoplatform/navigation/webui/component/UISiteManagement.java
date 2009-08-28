@@ -201,8 +201,8 @@ public class UISiteManagement extends UIContainer {
 	    //Added by Minh Hoang TO: Trigger the edit inline process
 			UIPortal uiPortal = Util.getUIPortal();
 			if(portalName.equals(uiPortal.getName())) {
-				uiWorkingWS.findFirstComponentOfType(UISiteBody.class).setUIComponent(null);
 				uiEditWS.setUIComponent(uiPortal);
+				uiWorkingWS.findFirstComponentOfType(UISiteBody.class).setUIComponent(null);
 			} else {
 				UIPortal editPortal = uiWorkingWS.createUIComponent(UIPortal.class, null, null);
 				PortalDataMapper.toUIPortal(editPortal, userConfig);

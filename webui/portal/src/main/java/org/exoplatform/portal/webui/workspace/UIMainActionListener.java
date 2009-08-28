@@ -89,8 +89,7 @@ public class UIMainActionListener {
 			}
 			PortalRequestContext pcontext = (PortalRequestContext) event
 					.getRequestContext();
-			UIWorkingWorkspace uiWorkingWS = uiApp
-					.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+			UIWorkingWorkspace uiWorkingWS = uiApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
 			uiWorkingWS.setBackupUIPortal(null);
 			uiApp.setModeState(UIPortalApplication.APP_BLOCK_EDIT_MODE);
 //			uiWorkingWS.addChild(UIPortalComposer.class, null, null);
@@ -101,8 +100,8 @@ public class UIMainActionListener {
 			UIEditInlineWorkspace uiEditWS = uiWorkingWS.getChild(UIEditInlineWorkspace.class);
 //			uiEditWS.setUIComponent(newPortal);
 			UISiteBody uiSiteBody = uiWorkingWS.findFirstComponentOfType(UISiteBody.class);
-			uiSiteBody.setUIComponent(null);
 			uiEditWS.setUIComponent(uiPortal);
+			uiSiteBody.setUIComponent(null);
 			
 			UIPortalComposer uiComposer = uiEditWS.getComposer().setRendered(true);
 			uiComposer.setComponentConfig(UIPortalComposer.class, null);

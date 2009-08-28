@@ -239,10 +239,10 @@ public class UIPortalComposer extends UIContainer {
 			UIEditInlineWorkspace uiEditWS = uiWorkingWS.getChild(UIEditInlineWorkspace.class);
 			uiEditWS.getComposer().setEditted(false);
 
-			UIPortal uiPortal = Util.getUIPortal();
-			UIPortal uiEditPortal = (UIPortal) uiEditWS.getUIComponent();
-			
 			UISiteBody siteBody = uiWorkingWS.findFirstComponentOfType(UISiteBody.class);
+			UIPortal uiEditPortal = (UIPortal) uiEditWS.getUIComponent();
+			UIPortal uiPortal = (UIPortal) siteBody.getUIComponent();
+			
 //			UISiteBody portalParent = uiPortal.getParent();
 //			UIPortal backupPortal = uiWorkingWS.getBackupUIPortal();
 
@@ -293,15 +293,17 @@ public class UIPortalComposer extends UIContainer {
 		public void execute(Event<UIPortalComposer> event) throws Exception {
 			UIPortalComposer uiComposer = event.getSource();
 			uiComposer.save();
+			uiComposer.setEditted(false);
 
 			PortalRequestContext prContext = Util.getPortalRequestContext();
 
 			UIPortalApplication uiPortalApp = (UIPortalApplication) prContext.getUIApplication();
 			UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
 			UIEditInlineWorkspace uiEditWS = uiWorkingWS.getChild(UIEditInlineWorkspace.class);
-			UISiteBody uiSiteBody = uiWorkingWS.findFirstComponentOfType(UISiteBody.class); 
-			UIPortal uiPortal = Util.getUIPortal();
 			UIPortal editPortal = (UIPortal) uiEditWS.getUIComponent();
+			
+			UISiteBody siteBody = uiWorkingWS.findFirstComponentOfType(UISiteBody.class); 
+			UIPortal uiPortal = (UIPortal) siteBody.getUIComponent();
 			
 			String uri = null;
 //			if(!uiPortal.getName().equals(editPortal.getName())) uiSiteBody.setUIComponent(editPortal);
@@ -313,9 +315,9 @@ public class UIPortalComposer extends UIContainer {
 //				PortalDataMapper.toUIPortal(newPortal, userConfig);
 //				uiSiteBody.setUIComponent(newPortal);
 //			}
-			if(uiPortal == null) uiSiteBody.setUIComponent(editPortal);
+			if(uiPortal == null) siteBody.setUIComponent(editPortal);
 			uiEditWS.setUIComponent(null);
-			uiPortal = (UIPortal) uiSiteBody.getUIComponent();
+			uiPortal = (UIPortal) siteBody.getUIComponent();
 			
 			if (PortalProperties.SESSION_ALWAYS.equals(uiPortal.getSessionAlive()))
 				uiPortalApp.setSessionOpen(true);
