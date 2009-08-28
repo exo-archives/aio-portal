@@ -25,7 +25,7 @@ package org.jboss.portal.portlet.api.spi;
 import java.io.IOException;
 import java.io.Writer;
 
-import org.jboss.portal.common.util.MarkupInfo;
+import org.gatein.common.util.MarkupInfo;
 import org.jboss.portal.portlet.api.ContainerURL;
 import org.jboss.portal.portlet.api.URLFormat;
 

@@ -23,7 +23,7 @@
 
 package org.jboss.portal.portlet.test.controller;
 
-import org.jboss.portal.common.util.MultiValuedPropertyMap;
+import org.gatein.common.util.MultiValuedPropertyMap;
 import org.jboss.portal.portlet.api.invocation.response.ResponseProperties;
 
 import javax.servlet.http.Cookie;

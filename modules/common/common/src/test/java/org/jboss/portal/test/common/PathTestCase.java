@@ -23,7 +23,7 @@
 package org.jboss.portal.test.common;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.path.RelativePathParser;
+import org.gatein.common.path.RelativePathParser;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

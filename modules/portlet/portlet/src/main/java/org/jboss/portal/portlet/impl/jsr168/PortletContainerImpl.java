@@ -22,9 +22,9 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.impl.jsr168;
 
-import org.jboss.portal.common.concurrent.Valve;
-import org.jboss.portal.common.i18n.ResourceBundleManager;
-import org.jboss.portal.common.invocation.InvocationException;
+import org.gatein.common.concurrent.Valve;
+import org.gatein.common.i18n.ResourceBundleManager;
+import org.gatein.common.invocation.InvocationException;
 import org.jboss.portal.portlet.api.PortletInvokerException;
 import org.jboss.portal.portlet.aspects.portlet.ContextDispatcherInterceptor;
 import org.jboss.portal.portlet.container.PortletApplication;

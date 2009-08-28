@@ -23,8 +23,8 @@
 package org.jboss.portal.portlet.impl.spi;
 
 import org.jboss.portal.portlet.api.spi.ClientContext;
-import org.jboss.portal.common.util.MultiValuedPropertyMap;
-import org.jboss.portal.common.util.SimpleMultiValuedPropertyMap;
+import org.gatein.common.util.MultiValuedPropertyMap;
+import org.gatein.common.util.SimpleMultiValuedPropertyMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Cookie;

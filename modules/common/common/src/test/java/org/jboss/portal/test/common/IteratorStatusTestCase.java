@@ -27,7 +27,7 @@ import junit.framework.TestCase;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-import org.jboss.portal.common.util.IteratorStatus;
+import org.gatein.common.util.IteratorStatus;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

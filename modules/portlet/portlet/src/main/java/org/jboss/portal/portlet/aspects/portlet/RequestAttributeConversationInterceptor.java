@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.aspects.portlet;
 
-import org.jboss.portal.common.util.UUIDGenerator;
+import org.gatein.common.util.UUIDGenerator;
 import org.jboss.portal.portlet.api.ParametersStateString;
 import org.jboss.portal.portlet.api.PortletInvokerException;
 import org.jboss.portal.portlet.PortletInvokerInterceptor;

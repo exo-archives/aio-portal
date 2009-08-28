@@ -27,10 +27,9 @@ import junit.framework.TestCase;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
-import java.util.Set;
 
-import org.jboss.portal.common.util.CollectionBuilder;
-import org.jboss.portal.common.util.MapBuilder;
+import org.gatein.common.util.CollectionBuilder;
+import org.gatein.common.util.MapBuilder;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

@@ -23,7 +23,7 @@
 package org.jboss.portal.portlet.mc;
 
 import org.apache.log4j.Logger;
-import org.jboss.portal.common.io.IOTools;
+import org.gatein.common.io.IOTools;
 import org.jboss.portal.portlet.api.PortletInvoker;
 import org.jboss.portal.portlet.container.ContainerPortletInvoker;
 import org.jboss.portal.portlet.container.PortletContainer;
@@ -45,12 +45,12 @@ import org.jboss.portal.portlet.mc.metadata.factory.PortletApplicationModelFacto
 import org.jboss.portal.portlet.mc.metadata.impl.AnnotationPortletApplication10MetaData;
 import org.jboss.portal.portlet.mc.metadata.impl.AnnotationPortletApplication20MetaData;
 import org.jboss.portal.portlet.mc.metadata.impl.ValueTrimmingFilter;
-import org.jboss.portal.web.ServletContainer;
-import org.jboss.portal.web.ServletContainerFactory;
-import org.jboss.portal.web.WebApp;
-import org.jboss.portal.web.WebAppEvent;
-import org.jboss.portal.web.WebAppLifeCycleEvent;
-import org.jboss.portal.web.WebAppListener;
+import org.gatein.wci.ServletContainer;
+import org.gatein.wci.ServletContainerFactory;
+import org.gatein.wci.WebApp;
+import org.gatein.wci.WebAppEvent;
+import org.gatein.wci.WebAppLifeCycleEvent;
+import org.gatein.wci.WebAppListener;
 import org.jboss.xb.binding.JBossXBException;
 import org.jboss.xb.binding.Unmarshaller;
 import org.jboss.xb.binding.UnmarshallerFactory;

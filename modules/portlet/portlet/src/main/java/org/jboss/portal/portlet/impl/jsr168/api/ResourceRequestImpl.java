@@ -25,8 +25,8 @@ package org.jboss.portal.portlet.impl.jsr168.api;
 import org.jboss.portal.portlet.api.invocation.ResourceInvocation;
 import org.jboss.portal.portlet.impl.jsr168.ResourceRequestParameterMap;
 import org.jboss.portal.portlet.impl.jsr168.PortletContainerImpl;
-import org.jboss.portal.common.util.MultiValuedPropertyMap;
-import org.jboss.portal.common.util.ParameterMap;
+import org.gatein.common.util.MultiValuedPropertyMap;
+import org.gatein.common.util.ParameterMap;
 
 import javax.portlet.ResourceRequest;
 import java.util.Map;

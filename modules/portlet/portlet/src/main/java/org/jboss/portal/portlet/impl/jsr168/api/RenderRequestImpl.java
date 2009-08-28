@@ -24,8 +24,7 @@ package org.jboss.portal.portlet.impl.jsr168.api;
 
 import org.jboss.portal.portlet.api.invocation.RenderInvocation;
 import org.jboss.portal.portlet.impl.jsr168.PortletContainerImpl;
-import org.jboss.portal.common.NotYetImplemented;
-import org.jboss.portal.common.util.MultiValuedPropertyMap;
+import org.gatein.common.util.MultiValuedPropertyMap;
 
 import javax.portlet.RenderRequest;
 

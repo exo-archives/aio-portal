@@ -22,17 +22,12 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.impl.jsr168.api;
 
-import org.jboss.portal.common.NotYetImplemented;
-
 import javax.portlet.PortletContext;
 import javax.portlet.PortletSession;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
-import javax.servlet.ServletContext;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Collections;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**

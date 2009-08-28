@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Locale;
 
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.i18n.LocalizedString;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

@@ -23,7 +23,7 @@
 package org.jboss.portal.portlet.impl.info;
 
 import org.jboss.portal.portlet.api.LifeCyclePhase;
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.i18n.LocalizedString;
 
 import java.util.Map;
 import java.util.Set;

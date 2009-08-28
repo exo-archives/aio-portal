@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.api.info;
 
-import org.jboss.portal.common.net.media.MediaType;
+import org.gatein.common.net.media.MediaType;
 import org.jboss.portal.Mode;
 import org.jboss.portal.WindowState;
 

@@ -22,9 +22,9 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.impl.jsr168.api;
 
-import org.jboss.portal.common.net.media.ContentType;
-import org.jboss.portal.common.net.media.MediaType;
-import org.jboss.portal.common.net.media.Parameter;
+import org.gatein.common.net.media.ContentType;
+import org.gatein.common.net.media.MediaType;
+import org.gatein.common.net.media.Parameter;
 import org.jboss.portal.portlet.api.invocation.ResourceInvocation;
 import org.jboss.portal.portlet.api.invocation.response.ContentResponse;
 import org.jboss.portal.portlet.api.invocation.response.ResponseProperties;

@@ -24,8 +24,8 @@ package org.jboss.portal.portlet.impl.jsr168.api;
 
 import org.apache.log4j.Logger;
 import org.jboss.portal.Mode;
-import org.jboss.portal.common.NotYetImplemented;
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.NotYetImplemented;
+import org.gatein.common.util.Tools;
 import org.jboss.portal.portlet.api.ParametersStateString;
 import org.jboss.portal.portlet.impl.info.ContainerEventInfo;
 import org.jboss.portal.portlet.impl.info.ContainerPortletApplicationInfo;

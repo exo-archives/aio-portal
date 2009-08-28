@@ -23,7 +23,7 @@
 package org.jboss.portal.portlet.support.info;
 
 import org.jboss.portal.portlet.api.info.ParameterInfo;
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.i18n.LocalizedString;
 
 import javax.xml.namespace.QName;
 import java.util.Collection;

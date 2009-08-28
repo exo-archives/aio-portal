@@ -23,7 +23,7 @@
 package org.jboss.portal.test.common.util;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.util.CollectionBuilder;
+import org.gatein.common.util.CollectionBuilder;
 
 import java.util.ArrayList;
 import java.util.HashSet;

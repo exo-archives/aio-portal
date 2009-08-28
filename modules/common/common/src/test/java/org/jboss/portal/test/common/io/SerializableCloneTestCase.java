@@ -23,7 +23,7 @@
 package org.jboss.portal.test.common.io;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.io.IOTools;
+import org.gatein.common.io.IOTools;
 
 import java.io.Serializable;
 import java.io.IOException;

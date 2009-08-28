@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.impl.spi;
 
-import org.jboss.portal.common.util.MarkupInfo;
+import org.gatein.common.util.MarkupInfo;
 import org.jboss.portal.portlet.api.ContainerURL;
 import org.jboss.portal.portlet.api.URLFormat;
 import org.jboss.portal.portlet.api.spi.PortletInvocationContext;

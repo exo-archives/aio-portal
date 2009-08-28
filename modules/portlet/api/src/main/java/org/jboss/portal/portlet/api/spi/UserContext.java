@@ -46,7 +46,7 @@ public interface UserContext
     * The user profile information keyed by P3PConstants
     *
     * @return a map containing user profile informaton
-    * @see org.jboss.portal.common.p3p.P3PConstants
+    * @see org.gatein.common.p3p.P3PConstants
     */
    Map<String, String> getInformations();
 

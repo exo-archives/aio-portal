@@ -30,12 +30,12 @@
    </bean>
 
    <!-- The ServletContainerFactory -->
-   <bean name="ServletContainerFactory" class="org.jboss.portal.web.impl.DefaultServletContainerFactory">
-      <constructor factoryClass="org.jboss.portal.web.impl.DefaultServletContainerFactory" factoryMethod="getInstance"/>
+   <bean name="ServletContainerFactory" class="org.gatein.wci.impl.DefaultServletContainerFactory">
+      <constructor factoryClass="org.gatein.wci.impl.DefaultServletContainerFactory" factoryMethod="getInstance"/>
    </bean>
 
    <!-- The servlet container obtained from the ServletContainerFactory -->
-   <bean name="ServletContainer" class="org.jboss.portal.web.ServletContainer">
+   <bean name="ServletContainer" class="org.gatein.wci.ServletContainer">
       <constructor factoryMethod="getServletContainer">
          <factory bean="ServletContainerFactory"/>
       </constructor>

@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.impl.jsr168;
 
-import org.jboss.portal.common.util.ParameterMap;
+import org.gatein.common.util.ParameterMap;
 import org.jboss.portal.portlet.api.info.NavigationInfo;
 import org.jboss.portal.portlet.api.invocation.ResourceInvocation;
 

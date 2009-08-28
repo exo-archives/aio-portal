@@ -23,7 +23,7 @@
 package org.jboss.portal.test.common;
 
 import junit.framework.TestCase;
-import static org.jboss.portal.common.p3p.P3PConstants.*;
+import static org.gatein.common.p3p.P3PConstants.*;
 
 /**
  * @author <a href="mailto:chris.laprun@jboss.com">Chris Laprun</a>

@@ -36,7 +36,7 @@ import org.jboss.portal.portlet.api.info.EventingInfo;
 import org.jboss.portal.portlet.api.info.EventInfo;
 import org.jboss.portal.portlet.impl.info.ContainerTypeInfo;
 import org.jboss.portal.portlet.api.PortletInvokerException;
-import org.jboss.portal.common.io.IOTools;
+import org.gatein.common.io.IOTools;
 import org.apache.log4j.Logger;
 
 import javax.xml.namespace.QName;

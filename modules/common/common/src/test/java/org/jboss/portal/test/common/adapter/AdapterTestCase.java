@@ -23,9 +23,9 @@
 package org.jboss.portal.test.common.adapter;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.adapter.ClassAdapter;
-import org.jboss.portal.common.adapter.ClassAdapted;
-import org.jboss.portal.common.adapter.ClassAdaptable;
+import org.gatein.common.adapter.ClassAdapter;
+import org.gatein.common.adapter.ClassAdapted;
+import org.gatein.common.adapter.ClassAdaptable;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

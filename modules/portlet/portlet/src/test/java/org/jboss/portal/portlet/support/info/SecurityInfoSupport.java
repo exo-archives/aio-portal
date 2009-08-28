@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.support.info;
 
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.util.Tools;
 import org.jboss.portal.portlet.api.TransportGuarantee;
 import org.jboss.portal.portlet.api.info.SecurityInfo;
 

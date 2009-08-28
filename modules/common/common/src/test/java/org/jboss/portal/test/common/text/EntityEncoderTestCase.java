@@ -23,8 +23,8 @@
 package org.jboss.portal.test.common.text;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.text.CharBuffer;
-import org.jboss.portal.common.text.EntityEncoder;
+import org.gatein.common.text.CharBuffer;
+import org.gatein.common.text.EntityEncoder;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

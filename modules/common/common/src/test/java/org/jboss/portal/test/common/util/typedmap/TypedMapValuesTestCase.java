@@ -26,14 +26,11 @@ import junit.framework.TestCase;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.Iterator;
 import java.util.Collection;
-import java.util.ArrayList;
 
-import org.jboss.portal.common.util.Tools;
-import org.jboss.portal.common.util.MapBuilder;
-import org.jboss.portal.common.NotYetImplemented;
+import org.gatein.common.util.Tools;
+import org.gatein.common.util.MapBuilder;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

@@ -22,9 +22,8 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.api;
 
-import org.jboss.portal.common.io.Serialization;
-import org.jboss.portal.common.util.ParameterMap;
-import org.jboss.portal.portlet.api.StateString;
+import org.gatein.common.io.Serialization;
+import org.gatein.common.util.ParameterMap;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

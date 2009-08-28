@@ -24,11 +24,11 @@ package org.jboss.portal.portlet.controller.impl;
 
 import org.jboss.portal.Mode;
 import org.jboss.portal.WindowState;
-import org.jboss.portal.common.io.IOTools;
-import org.jboss.portal.common.io.Serialization;
-import org.jboss.portal.common.io.SerializationFilter;
-import org.jboss.portal.common.util.Base64;
-import org.jboss.portal.common.util.MapAdapters;
+import org.gatein.common.io.IOTools;
+import org.gatein.common.io.Serialization;
+import org.gatein.common.io.SerializationFilter;
+import org.gatein.common.util.Base64;
+import org.gatein.common.util.MapAdapters;
 import org.jboss.portal.portlet.api.StateString;
 import org.jboss.portal.portlet.api.cache.CacheLevel;
 import org.jboss.portal.portlet.controller.request.ControllerRequest;
@@ -37,8 +37,8 @@ import org.jboss.portal.portlet.controller.request.PortletRenderRequest;
 import org.jboss.portal.portlet.controller.request.PortletResourceRequest;
 import org.jboss.portal.portlet.controller.state.PortletPageNavigationalState;
 import org.jboss.portal.portlet.controller.state.PortletWindowNavigationalState;
-import org.jboss.portal.web.Body;
-import org.jboss.portal.web.WebRequest;
+import org.gatein.wci.Body;
+import org.gatein.wci.WebRequest;
 
 import java.util.Map;
 

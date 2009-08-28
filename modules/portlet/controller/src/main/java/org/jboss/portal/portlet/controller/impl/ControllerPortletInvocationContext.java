@@ -23,8 +23,8 @@
 
 package org.jboss.portal.portlet.controller.impl;
 
-import org.jboss.portal.common.util.MarkupInfo;
-import org.jboss.portal.common.io.Serialization;
+import org.gatein.common.util.MarkupInfo;
+import org.gatein.common.io.Serialization;
 import org.jboss.portal.portlet.api.ContainerURL;
 import org.jboss.portal.portlet.api.URLFormat;
 import org.jboss.portal.portlet.controller.state.PortletPageNavigationalState;

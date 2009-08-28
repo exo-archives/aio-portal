@@ -33,7 +33,7 @@ import org.jboss.portal.unit.actions.PortletResourceTestAction;
 import org.jboss.portal.test.portlet.framework.UTP1;
 import org.jboss.portal.test.portlet.framework.UTS1;
 import org.jboss.portal.portlet.api.LifeCyclePhase;
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.util.Tools;
 import org.jboss.unit.driver.DriverResponse;
 import org.jboss.unit.driver.response.EndTestResponse;
 import static org.jboss.unit.api.Assert.assertEquals;

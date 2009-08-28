@@ -36,9 +36,9 @@ import org.jboss.portal.portlet.controller.state.PortletPageNavigationalState;
 import org.jboss.portal.portlet.controller.state.PortletPageNavigationalStateSerialization;
 import org.jboss.portal.portlet.api.invocation.PortletInvocation;
 import org.jboss.portal.portlet.api.invocation.response.PortletInvocationResponse;
-import org.jboss.portal.web.IllegalRequestException;
-import org.jboss.portal.common.io.Serialization;
-import org.jboss.portal.common.mc.bootstrap.WebBootstrap;
+import org.gatein.wci.IllegalRequestException;
+import org.gatein.common.io.Serialization;
+import org.gatein.common.mc.bootstrap.WebBootstrap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.federation.impl;
 
-import org.jboss.portal.common.invocation.InvocationException;
+import org.gatein.common.invocation.InvocationException;
 import org.jboss.portal.portlet.federation.FederatedPortletInvoker;
 import org.jboss.portal.portlet.federation.FederatingPortletInvoker;
 import org.jboss.portal.portlet.api.Portlet;

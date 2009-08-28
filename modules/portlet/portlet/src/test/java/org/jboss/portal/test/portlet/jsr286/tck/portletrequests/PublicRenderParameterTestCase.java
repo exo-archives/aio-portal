@@ -26,32 +26,22 @@ import org.jboss.portal.unit.annotations.TestCase;
 import org.jboss.portal.unit.Assertion;
 import org.jboss.portal.unit.PortletTestCase;
 import org.jboss.portal.unit.PortletTestContext;
-import org.jboss.portal.unit.base.AbstractUniversalTestPortlet;
 import org.jboss.portal.unit.actions.PortletRenderTestAction;
 import org.jboss.portal.unit.actions.PortletActionTestAction;
-import org.jboss.portal.test.portlet.framework.UTP9;
 import org.jboss.portal.test.portlet.framework.UTP1;
 import org.jboss.portal.test.portlet.framework.UTP2;
-import org.jboss.portal.common.util.Tools;
 import static org.jboss.unit.api.Assert.*;
 import org.jboss.unit.driver.DriverResponse;
 import org.jboss.unit.driver.response.EndTestResponse;
-import org.jboss.unit.driver.response.FailureResponse;
 import org.jboss.unit.remote.driver.handler.http.response.InvokeGetResponse;
-import org.jboss.unit.Failure;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.Portlet;
-import javax.portlet.PortletConfig;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.List;
-import java.util.HashSet;
 import java.io.IOException;
 
 /**

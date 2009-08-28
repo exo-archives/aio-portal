@@ -34,7 +34,7 @@ import org.jboss.portal.portlet.api.invocation.response.UnavailableResponse;
 import org.jboss.portal.portlet.api.invocation.response.ContentResponse;
 import org.jboss.portal.Mode;
 import org.jboss.portal.WindowState;
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.util.Tools;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.RequestDispatcher;

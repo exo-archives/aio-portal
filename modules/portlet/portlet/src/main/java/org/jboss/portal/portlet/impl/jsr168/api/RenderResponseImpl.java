@@ -122,7 +122,7 @@ public class RenderResponseImpl extends MimeResponseImpl implements RenderRespon
       //
       Mode currentMode = preq.invocation.getMode();
 
-      org.jboss.portal.common.net.media.MediaType mediaType = org.jboss.portal.common.net.media.MediaType.create(contentType);
+      org.gatein.common.net.media.MediaType mediaType = org.gatein.common.net.media.MediaType.create(contentType);
 
       PortletInfo info = preq.container.getInfo();
       CapabilitiesInfo capabilities = info.getCapabilities();

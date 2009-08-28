@@ -23,7 +23,7 @@
 package org.jboss.portal.test.common.net.media;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.net.media.TypeDef;
+import org.gatein.common.net.media.TypeDef;
 
 /**
  * @author <a href="mailto:julien@jboss-portal.org">Julien Viet</a>

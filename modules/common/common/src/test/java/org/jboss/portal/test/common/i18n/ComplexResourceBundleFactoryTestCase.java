@@ -27,7 +27,7 @@ import junit.framework.TestCase;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.jboss.portal.common.i18n.ComplexResourceBundleFactory;
+import org.gatein.common.i18n.ComplexResourceBundleFactory;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

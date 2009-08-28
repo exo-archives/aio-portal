@@ -22,8 +22,8 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.impl.jsr168.api;
 
-import org.jboss.portal.common.i18n.ResourceBundleManager;
-import org.jboss.portal.common.util.ParameterMap;
+import org.gatein.common.i18n.ResourceBundleManager;
+import org.gatein.common.util.ParameterMap;
 import org.jboss.portal.portlet.impl.info.ContainerParameterInfo;
 import org.jboss.portal.portlet.impl.info.ContainerPortletApplicationInfo;
 import org.jboss.portal.portlet.impl.info.ContainerPortletInfo;

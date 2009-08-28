@@ -39,7 +39,7 @@ import org.jboss.portal.portlet.container.object.PortletApplicationObject;
 import org.jboss.portal.portlet.container.object.PortletContainerObject;
 import org.jboss.portal.portlet.container.object.PortletFilterObject;
 import org.jboss.portal.portlet.container.managed.ManagedObjectRegistryEventListener;
-import org.jboss.portal.web.WebApp;
+import org.gatein.wci.WebApp;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

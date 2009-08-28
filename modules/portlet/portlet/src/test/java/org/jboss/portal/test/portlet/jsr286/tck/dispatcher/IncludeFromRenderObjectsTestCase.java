@@ -31,8 +31,6 @@ import org.jboss.portal.unit.actions.PortletRenderTestAction;
 import org.jboss.portal.unit.actions.ServletServiceTestAction;
 import org.jboss.portal.test.portlet.framework.UTP1;
 import org.jboss.portal.test.portlet.framework.UTS1;
-import org.jboss.portal.test.portlet.framework.UTP6;
-import org.jboss.portal.common.util.Tools;
 import org.jboss.unit.driver.DriverResponse;
 import org.jboss.unit.driver.response.EndTestResponse;
 import static org.jboss.unit.api.Assert.assertNotNull;
@@ -40,7 +38,6 @@ import static org.jboss.unit.api.Assert.assertNull;
 import static org.jboss.unit.api.Assert.assertEquals;
 import static org.jboss.unit.api.Assert.assertTrue;
 import static org.jboss.unit.api.Assert.assertFalse;
-import org.jboss.unit.api.pojo.annotations.Test;
 import org.jboss.unit.remote.driver.handler.http.response.InvokeGetResponse;
 
 import javax.portlet.Portlet;
@@ -48,7 +45,6 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletResponse;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -60,9 +56,7 @@ import java.util.LinkedList;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Locale;
-import java.util.Set;
 import java.util.Collections;
-import java.util.Arrays;
 import java.util.Iterator;
 
 /**

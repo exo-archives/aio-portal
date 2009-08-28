@@ -23,12 +23,12 @@
 package org.jboss.portal.test.common.net.media;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.net.media.MediaType;
-import org.jboss.portal.common.net.media.TypeDef;
-import org.jboss.portal.common.net.media.SubtypeDef;
-import org.jboss.portal.common.net.media.MediaTypeMap;
-import org.jboss.portal.common.net.media.MediaTypeMapImpl;
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.net.media.MediaType;
+import org.gatein.common.net.media.TypeDef;
+import org.gatein.common.net.media.SubtypeDef;
+import org.gatein.common.net.media.MediaTypeMap;
+import org.gatein.common.net.media.MediaTypeMapImpl;
+import org.gatein.common.util.Tools;
 
 import java.util.Set;
 

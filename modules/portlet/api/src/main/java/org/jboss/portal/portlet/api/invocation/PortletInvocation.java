@@ -22,8 +22,8 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.api.invocation;
 
-import org.jboss.portal.common.invocation.AttributeResolver;
-import org.jboss.portal.common.invocation.resolver.MapAttributeResolver;
+import org.gatein.common.invocation.AttributeResolver;
+import org.gatein.common.invocation.resolver.MapAttributeResolver;
 import org.jboss.portal.portlet.api.spi.InstanceContext;
 import org.jboss.portal.portlet.api.spi.PortalContext;
 import org.jboss.portal.portlet.api.spi.PortletInvocationContext;

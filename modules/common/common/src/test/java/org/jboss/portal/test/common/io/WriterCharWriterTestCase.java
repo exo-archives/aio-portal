@@ -22,8 +22,8 @@
  ******************************************************************************/
 package org.jboss.portal.test.common.io;
 
-import org.jboss.portal.common.io.WriterCharWriter;
-import org.jboss.portal.common.io.UndeclaredIOException;
+import org.gatein.common.io.WriterCharWriter;
+import org.gatein.common.io.UndeclaredIOException;
 
 import java.io.StringWriter;
 import java.io.IOException;

@@ -23,9 +23,9 @@
 package org.jboss.portal.test.common;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.invocation.AbstractInvocationContext;
-import org.jboss.portal.common.invocation.Scope;
-import org.jboss.portal.common.invocation.AttributeResolver;
+import org.gatein.common.invocation.AbstractInvocationContext;
+import org.gatein.common.invocation.Scope;
+import org.gatein.common.invocation.AttributeResolver;
 
 import java.util.HashMap;
 import java.util.Set;

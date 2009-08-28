@@ -23,8 +23,8 @@ import org.jboss.portal.portlet.api.RenderURL;
 import org.jboss.portal.portlet.api.ResourceURL;
 import org.jboss.portal.portlet.api.ActionURL;
 import org.jboss.portal.portlet.api.StateString;
-import org.jboss.portal.common.util.MarkupInfo;
-import org.jboss.portal.common.net.media.MediaType;
+import org.gatein.common.util.MarkupInfo;
+import org.gatein.common.net.media.MediaType;
 import org.exoplatform.portal.application.PortalRequestContext;
 
 import javax.servlet.http.HttpServletResponse;

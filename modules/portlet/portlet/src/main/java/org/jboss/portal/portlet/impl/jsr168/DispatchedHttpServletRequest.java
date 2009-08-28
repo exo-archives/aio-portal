@@ -22,9 +22,9 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.impl.jsr168;
 
-import org.jboss.portal.common.util.Tools;
-import org.jboss.portal.common.util.ParameterMap;
-import org.jboss.portal.common.http.QueryStringParser;
+import org.gatein.common.util.Tools;
+import org.gatein.common.util.ParameterMap;
+import org.gatein.common.http.QueryStringParser;
 import org.jboss.portal.portlet.impl.jsr168.api.PortletRequestImpl;
 
 import javax.servlet.RequestDispatcher;

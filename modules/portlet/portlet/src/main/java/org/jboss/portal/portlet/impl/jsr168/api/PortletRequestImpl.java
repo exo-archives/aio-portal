@@ -23,11 +23,11 @@
 package org.jboss.portal.portlet.impl.jsr168.api;
 
 import org.apache.log4j.Logger;
-import org.jboss.portal.common.util.Tools;
-import org.jboss.portal.common.util.ParameterMap;
-import org.jboss.portal.common.util.MultiValuedPropertyMap;
-import org.jboss.portal.common.util.SimpleMultiValuedPropertyMap;
-import org.jboss.portal.common.util.ContentInfo;
+import org.gatein.common.util.Tools;
+import org.gatein.common.util.ParameterMap;
+import org.gatein.common.util.MultiValuedPropertyMap;
+import org.gatein.common.util.SimpleMultiValuedPropertyMap;
+import org.gatein.common.util.ContentInfo;
 import org.jboss.portal.portlet.impl.jsr168.PortletApplicationImpl;
 import org.jboss.portal.portlet.impl.jsr168.PortletContainerImpl;
 import org.jboss.portal.portlet.impl.jsr168.PortletUtils;

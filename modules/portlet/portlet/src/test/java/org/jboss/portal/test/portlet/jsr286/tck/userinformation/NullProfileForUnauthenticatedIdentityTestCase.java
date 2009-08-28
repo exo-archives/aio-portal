@@ -28,7 +28,7 @@ import org.jboss.portal.unit.Assertion;
 import org.jboss.portal.unit.annotations.TestCase;
 import org.jboss.portal.unit.actions.PortletRenderTestAction;
 import org.jboss.portal.test.portlet.framework.UTP1;
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.util.Tools;
 import org.jboss.unit.driver.DriverResponse;
 import org.jboss.unit.driver.response.EndTestResponse;
 import static org.jboss.unit.api.Assert.*;

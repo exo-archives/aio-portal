@@ -22,8 +22,8 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.impl.info;
 
-import org.jboss.portal.common.i18n.ResourceBundleManager;
-import org.jboss.portal.common.reflect.NoSuchClassException;
+import org.gatein.common.i18n.ResourceBundleManager;
+import org.gatein.common.reflect.NoSuchClassException;
 import org.jboss.portal.portlet.impl.metadata.portlet.PortletMetaData;
 
 /**

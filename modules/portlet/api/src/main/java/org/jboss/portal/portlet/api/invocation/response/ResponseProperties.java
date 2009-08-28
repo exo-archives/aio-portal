@@ -22,8 +22,8 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.api.invocation.response;
 
-import org.jboss.portal.common.util.MultiValuedPropertyMap;
-import org.jboss.portal.common.util.SimpleMultiValuedPropertyMap;
+import org.gatein.common.util.MultiValuedPropertyMap;
+import org.gatein.common.util.SimpleMultiValuedPropertyMap;
 import org.w3c.dom.Element;
 
 import javax.servlet.http.Cookie;

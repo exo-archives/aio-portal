@@ -51,7 +51,7 @@ import org.exoplatform.webui.form.UIFormSelectBox;
 import org.exoplatform.webui.form.UIFormStringInput;
 import org.exoplatform.webui.form.UIFormTableInputSet;
 import org.exoplatform.webui.form.validator.StringLengthValidator;
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.i18n.LocalizedString;
 import org.jboss.portal.portlet.api.Portlet;
 import org.jboss.portal.portlet.api.PortletInvoker;
 import org.jboss.portal.portlet.api.info.MetaInfo;

@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.test.url;
 
-import org.jboss.portal.common.util.ParameterMap;
+import org.gatein.common.util.ParameterMap;
 
 import java.util.Iterator;
 import java.util.Map;

@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.portal.admin.ui;
 
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.i18n.LocalizedString;
 import org.jboss.portal.portlet.container.managed.ManagedObject;
 import org.jboss.portal.portlet.container.managed.ManagedPortletApplication;
 import org.jboss.portal.portlet.container.managed.ManagedPortletContainer;

@@ -32,9 +32,9 @@ import org.jboss.portal.portlet.controller.response.ControllerResponse;
 import org.jboss.portal.portlet.controller.request.ControllerRequest;
 import org.jboss.portal.portlet.api.invocation.response.ResponseProperties;
 import org.jboss.portal.portlet.api.Portlet;
-import org.jboss.portal.web.WebRequest;
-import org.jboss.portal.web.WebResponse;
-import org.jboss.portal.web.endpoint.EndPointServlet;
+import org.gatein.wci.WebRequest;
+import org.gatein.wci.WebResponse;
+import org.gatein.wci.endpoint.EndPointServlet;
 
 import javax.servlet.ServletException;
 import java.io.IOException;

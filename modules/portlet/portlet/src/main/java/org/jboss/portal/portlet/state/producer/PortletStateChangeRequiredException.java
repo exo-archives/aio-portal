@@ -23,7 +23,7 @@
 
 package org.jboss.portal.portlet.state.producer;
 
-import org.jboss.portal.common.invocation.InvocationException;
+import org.gatein.common.invocation.InvocationException;
 
 /**
  * @author <a href="mailto:chris.laprun@jboss.com">Chris Laprun</a>

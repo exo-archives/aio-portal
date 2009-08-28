@@ -281,10 +281,10 @@
       <mkdir dir="${test.temp.lib}"/>
       <jar jarfile="${test.temp.lib}/portal-test-spi-lib.jar">
          <fileset dir="${target}/test-classes/">
-            <include name="org/jboss/portal/test/web/spi/**"/>
-            <include name="org/jboss/portal/test/web/ServletTestCase.class"/>
-            <include name="org/jboss/portal/test/web/TestServlet.class"/>
-            <include name="org/jboss/portal/test/web/WebAppRegistry.class"/>
+            <include name="org/gatein/wci/spi/**"/>
+            <include name="org/gatein/wci/ServletTestCase.class"/>
+            <include name="org/gatein/wci/TestServlet.class"/>
+            <include name="org/gatein/wci/WebAppRegistry.class"/>
          </fileset>
          <fileset dir="${target}/test-classes//portal-test-spi-jar"/>
       </jar>
@@ -411,10 +411,10 @@
 
       <jar jarfile="${test.temp.lib}/portal-test-endpoint-lib.jar">
          <fileset dir="${target}/test-classes/">
-            <include name="org/jboss/portal/test/web/endpoint/**"/>
-            <include name="org/jboss/portal/test/web/ServletTestCase.class"/>
-            <include name="org/jboss/portal/test/web/TestServlet.class"/>
-            <include name="org/jboss/portal/test/web/WebAppRegistry.class"/>
+            <include name="org/gatein/wci/endpoint/**"/>
+            <include name="org/gatein/wci/ServletTestCase.class"/>
+            <include name="org/gatein/wci/TestServlet.class"/>
+            <include name="org/gatein/wci/WebAppRegistry.class"/>
          </fileset>
          <fileset dir="${target}/test-classes/portal-test-endpoint-jar"/>
       </jar>
@@ -462,10 +462,10 @@
 
       <jar jarfile="${test.temp.lib}/portal-test-endpoint-lib.jar">
          <fileset dir="${target}/test-classes/">
-            <include name="org/jboss/portal/test/web/endpoint/**"/>
-            <include name="org/jboss/portal/test/web/ServletTestCase.class"/>
-            <include name="org/jboss/portal/test/web/TestServlet.class"/>
-            <include name="org/jboss/portal/test/web/WebAppRegistry.class"/>
+            <include name="org/gatein/wci/endpoint/**"/>
+            <include name="org/gatein/wci/ServletTestCase.class"/>
+            <include name="org/gatein/wci/TestServlet.class"/>
+            <include name="org/gatein/wci/WebAppRegistry.class"/>
          </fileset>
          <fileset dir="${target}/test-classes/portal-test-endpoint-jar"/>
       </jar>

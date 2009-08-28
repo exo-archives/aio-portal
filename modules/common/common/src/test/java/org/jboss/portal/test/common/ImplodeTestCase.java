@@ -23,7 +23,7 @@
 package org.jboss.portal.test.common;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.ant.Implode;
+import org.gatein.common.ant.Implode;
 
 import java.io.File;
 import java.net.URL;

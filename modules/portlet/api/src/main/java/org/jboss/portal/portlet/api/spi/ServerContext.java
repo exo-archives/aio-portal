@@ -22,8 +22,8 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.api.spi;
 
-import org.jboss.portal.web.RequestDispatchCallback;
-import org.jboss.portal.web.ServletContainer;
+import org.gatein.wci.RequestDispatchCallback;
+import org.gatein.wci.ServletContainer;
 
 import javax.servlet.ServletContext;
 

@@ -23,9 +23,9 @@
 package org.jboss.portal.test.common.http;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.http.QueryStringParser;
-import org.jboss.portal.common.util.MapBuilder;
-import org.jboss.portal.common.util.ParameterMap;
+import org.gatein.common.http.QueryStringParser;
+import org.gatein.common.util.MapBuilder;
+import org.gatein.common.util.ParameterMap;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

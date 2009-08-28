@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.test.portlet.session;
 
-import org.jboss.portal.common.io.IOTools;
+import org.gatein.common.io.IOTools;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

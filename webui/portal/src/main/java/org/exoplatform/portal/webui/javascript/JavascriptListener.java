@@ -28,9 +28,9 @@ import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.ExoContainerContext;
 import org.exoplatform.container.component.BaseComponentPlugin;
 import org.exoplatform.web.application.javascript.JavascriptConfigService;
-import org.jboss.portal.web.WebAppEvent;
-import org.jboss.portal.web.WebAppListener;
-import org.jboss.portal.web.impl.DefaultServletContainerFactory;
+import org.gatein.wci.WebAppListener;
+import org.gatein.wci.WebAppEvent;
+import org.gatein.wci.impl.DefaultServletContainerFactory;
 
 /**
  * Created by The eXo Platform SAS

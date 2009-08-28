@@ -39,7 +39,7 @@ import org.jboss.portal.portlet.controller.request.PortletResourceRequest;
 import org.jboss.portal.portlet.controller.request.PortletRenderRequest;
 import org.jboss.portal.portlet.controller.state.PortletWindowNavigationalState;
 import org.jboss.portal.portlet.controller.state.PortletPageNavigationalState;
-import org.jboss.portal.common.util.ParameterMap;
+import org.gatein.common.util.ParameterMap;
 import org.jboss.portal.Mode;
 import org.jboss.portal.WindowState;
 

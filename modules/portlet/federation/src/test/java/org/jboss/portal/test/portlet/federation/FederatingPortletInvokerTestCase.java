@@ -33,7 +33,7 @@ import org.jboss.portal.portlet.api.PortletContext;
 import org.jboss.portal.portlet.api.info.PortletInfo;
 import org.jboss.portal.portlet.api.info.MetaInfo;
 import org.jboss.portal.portlet.support.info.PortletInfoSupport;
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.i18n.LocalizedString;
 
 import java.util.Collection;
 import java.util.Set;

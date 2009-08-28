@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.i18n.LocalizedString;
 import org.jboss.portal.portlet.api.LifeCyclePhase;
 import org.jboss.portal.portlet.impl.metadata.PortletMetaDataConstants;
 import org.jboss.portal.portlet.impl.metadata.common.InitParamMetaData;

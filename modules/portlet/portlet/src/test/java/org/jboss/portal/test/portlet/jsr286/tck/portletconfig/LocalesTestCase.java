@@ -29,7 +29,7 @@ import org.jboss.portal.unit.PortletTestContext;
 import org.jboss.portal.unit.base.AbstractUniversalTestPortlet;
 import org.jboss.portal.unit.actions.PortletRenderTestAction;
 import org.jboss.portal.test.portlet.framework.UTP9;
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.util.Tools;
 import static org.jboss.unit.api.Assert.*;
 import org.jboss.unit.driver.DriverResponse;
 import org.jboss.unit.driver.response.EndTestResponse;

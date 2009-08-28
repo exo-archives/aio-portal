@@ -23,7 +23,7 @@
 package org.jboss.portal.portlet.support.info;
 
 import org.jboss.portal.Mode;
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.i18n.LocalizedString;
 import org.jboss.portal.portlet.api.info.ModeInfo;
 
 import java.util.Locale;

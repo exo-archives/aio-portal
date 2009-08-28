@@ -24,7 +24,7 @@
 package org.jboss.portal.portlet.mc.metadata.factory;
 
 import org.apache.log4j.Logger;
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.i18n.LocalizedString;
 import org.jboss.portal.portlet.impl.metadata.adapter.LocalizedStringAdapter;
 import org.jboss.portal.portlet.impl.metadata.common.LocalizedDescriptionMetaData;
 

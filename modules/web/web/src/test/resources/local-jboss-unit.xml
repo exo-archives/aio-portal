@@ -5,7 +5,7 @@
    xsi:schemaLocation="urn:jboss:jboss-unit:1.0 jboss-unit_1_0.xsd">
    <pojo>
       <test>
-         <class name="org.jboss.portal.test.web.container.ServletContainerTestCase"/>
+         <class name="org.gatein.wci.container.ServletContainerTestCase"/>
       </test>
    </pojo>
 </jboss-unit>

@@ -33,7 +33,7 @@
       <version.jboss-logging>2.0.4.GA</version.jboss-logging>
       <version.jbossxb>2.0.0.GA</version.jbossxb>
       <version.jboss-remoting>2.2.1.GA</version.jboss-remoting>
-      <version.jboss.portal.common>1.2.5</version.jboss.portal.common>
+      <version.jboss.portal.common>1.2.3</version.jboss.portal.common>
       <version.jboss.portal.web>1.2.3</version.jboss.portal.web>
       <version.jboss.unit>1.2.3</version.jboss.unit>
       <version.log4j>1.2.14</version.log4j>

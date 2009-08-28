@@ -35,7 +35,7 @@ import org.jboss.portal.portlet.api.ParametersStateString;
 import org.jboss.portal.portlet.api.PortletInvokerException;
 import org.jboss.portal.portlet.api.spi.UserContext;
 import org.jboss.portal.portlet.api.cache.CacheControl;
-import org.jboss.portal.common.util.ParameterMap;
+import org.gatein.common.util.ParameterMap;
 import org.jboss.portal.WindowState;
 import org.jboss.portal.Mode;
 

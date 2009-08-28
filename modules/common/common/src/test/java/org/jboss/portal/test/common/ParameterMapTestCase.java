@@ -23,10 +23,10 @@
 package org.jboss.portal.test.common;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.util.ParameterMap;
-import org.jboss.portal.common.util.Tools;
-import org.jboss.portal.common.junit.ExtendedAssert;
-import org.jboss.portal.common.io.IOTools;
+import org.gatein.common.util.ParameterMap;
+import org.gatein.common.util.Tools;
+import org.gatein.common.junit.ExtendedAssert;
+import org.gatein.common.io.IOTools;
 
 import java.util.HashMap;
 import java.util.Set;

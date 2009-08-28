@@ -23,7 +23,7 @@
 package org.jboss.portal.test.common.util;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.util.Version;
+import org.gatein.common.util.Version;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

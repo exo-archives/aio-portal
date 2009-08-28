@@ -22,7 +22,6 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.impl.jsr168.api;
 
-import org.jboss.portal.common.NotYetImplemented;
 import org.jboss.portal.portlet.impl.info.ContainerFilterInfo;
 
 import javax.portlet.filter.FilterConfig;

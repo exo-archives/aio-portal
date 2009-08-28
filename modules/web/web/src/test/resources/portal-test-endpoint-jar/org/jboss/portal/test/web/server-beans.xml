@@ -45,11 +45,11 @@
       </constructor>
    </bean>
 
-   <bean name="ServletContainerFactory" class="org.jboss.portal.web.impl.DefaultServletContainerFactory">
-      <constructor factoryClass="org.jboss.portal.web.impl.DefaultServletContainerFactory" factoryMethod="getInstance"/>
+   <bean name="ServletContainerFactory" class="org.gatein.wci.impl.DefaultServletContainerFactory">
+      <constructor factoryClass="org.gatein.wci.impl.DefaultServletContainerFactory" factoryMethod="getInstance"/>
    </bean>
 
-   <bean name="ServletContainer" class="org.jboss.portal.web.ServletContainer">
+   <bean name="ServletContainer" class="org.gatein.wci.ServletContainer">
       <constructor factoryMethod="getServletContainer">
          <factory bean="ServletContainerFactory"/>
       </constructor>
@@ -57,7 +57,7 @@
 
    <bean name="TestSuite" class="org.jboss.unit.driver.impl.composite.CompositeTestDriver"/>
 
-   <bean name="GetTestCase" class="org.jboss.portal.test.web.endpoint.GetTestCase">
+   <bean name="GetTestCase" class="org.gatein.wci.endpoint.GetTestCase">
       <install bean="TestSuite" method="mount">
          <parameter><this/></parameter>
       </install>
@@ -66,7 +66,7 @@
       </uninstall>
    </bean>
 
-   <bean name="PostApplicationXWWWFormURLEncodedTestCase" class="org.jboss.portal.test.web.endpoint.PostApplicationXWWWFormURLEncodedTestCase">
+   <bean name="PostApplicationXWWWFormURLEncodedTestCase" class="org.gatein.wci.endpoint.PostApplicationXWWWFormURLEncodedTestCase">
       <install bean="TestSuite" method="mount">
          <parameter><this/></parameter>
       </install>
@@ -75,7 +75,7 @@
       </uninstall>
    </bean>
 
-   <bean name="PostMultipartFormDataTestCase" class="org.jboss.portal.test.web.endpoint.PostMultipartFormDataTestCase">
+   <bean name="PostMultipartFormDataTestCase" class="org.gatein.wci.endpoint.PostMultipartFormDataTestCase">
       <install bean="TestSuite" method="mount">
          <parameter><this/></parameter>
       </install>
@@ -84,7 +84,7 @@
       </uninstall>
    </bean>
 
-   <bean name="WebPathTestCase" class="org.jboss.portal.test.web.endpoint.WebPathTestCase">
+   <bean name="WebPathTestCase" class="org.gatein.wci.endpoint.WebPathTestCase">
       <install bean="TestSuite" method="mount">
          <parameter><this/></parameter>
       </install>
@@ -93,7 +93,7 @@
       </uninstall>
    </bean>
 
-   <bean name="RenderURLTestCase" class="org.jboss.portal.test.web.endpoint.RenderURLTestCase">
+   <bean name="RenderURLTestCase" class="org.gatein.wci.endpoint.RenderURLTestCase">
       <install bean="TestSuite" method="mount">
          <parameter><this/></parameter>
       </install>

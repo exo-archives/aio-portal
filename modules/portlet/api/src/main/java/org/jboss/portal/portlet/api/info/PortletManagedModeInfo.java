@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.api.info;
 
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.i18n.LocalizedString;
 
 /**
  * Extends the mode info interface to add the notion of portlet managed mode.

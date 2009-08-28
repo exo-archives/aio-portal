@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.aspects.portlet;
 
-import org.jboss.portal.common.concurrent.Valve;
+import org.gatein.common.concurrent.Valve;
 import org.jboss.portal.portlet.container.ContainerPortletInvoker;
 import org.jboss.portal.portlet.container.PortletContainerContext;
 import org.jboss.portal.portlet.container.managed.PortletApplicationRegistry;

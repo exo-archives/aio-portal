@@ -30,7 +30,7 @@ import java.util.Set;
 import java.util.Iterator;
 import java.util.HashSet;
 
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.util.Tools;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

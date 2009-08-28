@@ -36,7 +36,7 @@ import org.exoplatform.portal.webui.portal.UIPortalComponent;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.core.UIComponent;
 
-import org.jboss.portal.common.net.media.MediaType;
+import org.gatein.common.net.media.MediaType;
 import org.jboss.portal.portlet.api.PortletInvoker;
 import org.jboss.portal.portlet.api.Portlet;
 import org.jboss.portal.portlet.api.PortletContext;

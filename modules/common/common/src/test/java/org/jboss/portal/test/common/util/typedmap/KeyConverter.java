@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.test.common.util.typedmap;
 
-import org.jboss.portal.common.util.AbstractTypedMap;
+import org.gatein.common.util.AbstractTypedMap;
 import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 

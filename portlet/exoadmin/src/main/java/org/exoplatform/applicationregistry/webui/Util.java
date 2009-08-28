@@ -24,7 +24,7 @@ import org.exoplatform.application.registry.Application;
 import org.exoplatform.application.registry.ApplicationCategory;
 //import org.exoplatform.services.portletcontainer.pci.model.Description;
 //import org.exoplatform.services.portletcontainer.pci.model.DisplayName;
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.i18n.LocalizedString;
 
 /**
  * Created by The eXo Platform SAS

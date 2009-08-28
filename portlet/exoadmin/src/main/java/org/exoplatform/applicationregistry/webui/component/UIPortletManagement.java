@@ -32,7 +32,7 @@ import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.UIContainer;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.i18n.LocalizedString;
 import org.jboss.portal.portlet.api.Portlet;
 import org.jboss.portal.portlet.api.PortletInvoker;
 import org.jboss.portal.portlet.api.info.MetaInfo;

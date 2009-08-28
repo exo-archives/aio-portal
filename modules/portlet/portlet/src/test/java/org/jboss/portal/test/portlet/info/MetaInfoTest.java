@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.test.portlet.info;
 
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.i18n.LocalizedString;
 import org.jboss.portal.portlet.container.managed.ManagedPortletContainer;
 import org.jboss.portal.portlet.api.info.MetaInfo;
 import org.jboss.portal.portlet.api.info.PortletInfo;

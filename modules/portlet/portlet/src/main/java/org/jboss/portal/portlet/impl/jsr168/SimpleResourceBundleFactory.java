@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.impl.jsr168;
 
-import org.jboss.portal.common.i18n.ResourceBundleFactory;
+import org.gatein.common.i18n.ResourceBundleFactory;
 
 import java.util.ResourceBundle;
 import java.util.Locale;

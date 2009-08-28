@@ -28,8 +28,8 @@ import org.jboss.portal.portlet.portal.jsp.PortalPrepareResponse;
 import org.jboss.portal.portlet.api.invocation.response.PortletInvocationResponse;
 import org.jboss.portal.portlet.api.invocation.response.ResponseProperties;
 import org.jboss.portal.portlet.api.invocation.response.ContentResponse;
-import org.jboss.portal.common.util.MultiValuedPropertyMap;
-import org.jboss.portal.common.xml.XMLTools;
+import org.gatein.common.util.MultiValuedPropertyMap;
+import org.gatein.common.xml.XMLTools;
 import org.w3c.dom.Element;
 
 import javax.servlet.jsp.JspException;

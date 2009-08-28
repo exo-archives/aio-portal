@@ -24,7 +24,7 @@ package org.jboss.portal.portlet.api.spi;
 
 import org.jboss.portal.Mode;
 import org.jboss.portal.WindowState;
-import org.jboss.portal.common.util.Version;
+import org.gatein.common.util.Version;
 
 import java.util.Map;
 import java.util.Set;

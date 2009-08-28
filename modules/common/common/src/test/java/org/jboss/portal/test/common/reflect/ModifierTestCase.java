@@ -23,7 +23,7 @@
 package org.jboss.portal.test.common.reflect;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.reflect.Modifier;
+import org.gatein.common.reflect.Modifier;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

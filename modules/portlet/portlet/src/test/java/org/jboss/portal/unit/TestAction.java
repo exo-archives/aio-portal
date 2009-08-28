@@ -31,7 +31,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import static org.jboss.unit.api.Assert.*;
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.util.Tools;
 import org.apache.log4j.Logger;
 
 /**

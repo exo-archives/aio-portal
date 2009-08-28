@@ -24,7 +24,7 @@ package org.jboss.portal.unit.actions;
 
 import org.jboss.portal.unit.TestAction;
 import org.jboss.portal.unit.PortletTestContext;
-import org.jboss.portal.common.NotYetImplemented;
+import org.gatein.common.NotYetImplemented;
 import org.jboss.unit.driver.DriverResponse;
 import org.jboss.unit.driver.response.FailureResponse;
 import org.jboss.unit.Failure;

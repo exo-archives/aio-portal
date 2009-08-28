@@ -23,7 +23,7 @@
 package org.jboss.portal.test.common;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.mx.JavaBeanModelMBeanBuilder;
+import org.gatein.common.mx.JavaBeanModelMBeanBuilder;
 
 import javax.management.Attribute;
 import javax.management.AttributeNotFoundException;

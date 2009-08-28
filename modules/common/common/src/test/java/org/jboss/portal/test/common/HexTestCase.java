@@ -23,7 +23,7 @@
 package org.jboss.portal.test.common;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.util.Tools;
 
 import java.util.Arrays;
 

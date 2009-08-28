@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.api.invocation.response;
 
-import org.jboss.portal.common.util.Exceptions;
+import org.gatein.common.util.Exceptions;
 import org.apache.log4j.Logger;
 
 /**

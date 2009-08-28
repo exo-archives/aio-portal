@@ -23,7 +23,7 @@
 
 package org.jboss.portal.portlet.test.controller;
 
-import org.jboss.portal.common.io.IOTools;
+import org.gatein.common.io.IOTools;
 import org.jboss.portal.portlet.api.invocation.response.ContentResponse;
 
 import javax.servlet.ServletOutputStream;

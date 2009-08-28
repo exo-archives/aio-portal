@@ -23,9 +23,9 @@
 package org.jboss.portal.test.common.util;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.util.CollectionMap;
-import org.jboss.portal.common.util.ListMap;
-import org.jboss.portal.common.util.SetMap;
+import org.gatein.common.util.CollectionMap;
+import org.gatein.common.util.ListMap;
+import org.gatein.common.util.SetMap;
 
 import java.util.ArrayList;
 import java.util.Comparator;

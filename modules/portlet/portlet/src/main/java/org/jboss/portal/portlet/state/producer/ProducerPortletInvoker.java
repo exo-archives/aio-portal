@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.state.producer;
 
-import org.jboss.portal.common.invocation.InvocationException;
+import org.gatein.common.invocation.InvocationException;
 import org.jboss.portal.portlet.api.InvalidPortletIdException;
 import org.jboss.portal.portlet.api.NoSuchPortletException;
 import org.jboss.portal.portlet.api.Portlet;

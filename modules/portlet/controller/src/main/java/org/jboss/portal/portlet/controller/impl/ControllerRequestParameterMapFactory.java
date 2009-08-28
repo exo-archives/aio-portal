@@ -30,10 +30,10 @@ import org.jboss.portal.portlet.api.RenderURL;
 import org.jboss.portal.portlet.api.ResourceURL;
 import org.jboss.portal.portlet.api.PortletURL;
 import org.jboss.portal.portlet.api.cache.CacheLevel;
-import org.jboss.portal.common.io.IOTools;
-import org.jboss.portal.common.io.SerializationFilter;
-import org.jboss.portal.common.io.Serialization;
-import org.jboss.portal.common.util.Base64;
+import org.gatein.common.io.IOTools;
+import org.gatein.common.io.SerializationFilter;
+import org.gatein.common.io.Serialization;
+import org.gatein.common.util.Base64;
 
 import java.util.Map;
 import java.util.HashMap;

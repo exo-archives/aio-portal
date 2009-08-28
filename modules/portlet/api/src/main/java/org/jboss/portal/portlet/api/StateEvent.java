@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.api;
 
-import org.jboss.portal.common.util.ParameterValidation;
+import org.gatein.common.util.ParameterValidation;
 
 /**
  * An event that signals state modifications

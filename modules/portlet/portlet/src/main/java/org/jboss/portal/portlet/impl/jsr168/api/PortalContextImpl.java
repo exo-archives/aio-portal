@@ -23,7 +23,7 @@
 package org.jboss.portal.portlet.impl.jsr168.api;
 
 import org.jboss.portal.Mode;
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.util.Tools;
 import org.jboss.portal.portlet.api.spi.PortalContext;
 import org.jboss.portal.portlet.impl.jsr168.PortletUtils;
 

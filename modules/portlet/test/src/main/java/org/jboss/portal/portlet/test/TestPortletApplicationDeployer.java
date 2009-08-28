@@ -23,7 +23,7 @@
 
 package org.jboss.portal.portlet.test;
 
-import org.jboss.portal.web.WebApp;
+import org.gatein.wci.WebApp;
 import org.jboss.portal.portlet.mc.PortletApplicationDeployer;
 
 /**

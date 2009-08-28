@@ -23,9 +23,9 @@
 
 package org.jboss.portal.portlet.controller.impl;
 
-import org.jboss.portal.common.util.MarkupInfo;
-import org.jboss.portal.common.io.Serialization;
-import org.jboss.portal.common.net.media.MediaType;
+import org.gatein.common.util.MarkupInfo;
+import org.gatein.common.io.Serialization;
+import org.gatein.common.net.media.MediaType;
 import org.jboss.portal.portlet.api.Portlet;
 import org.jboss.portal.portlet.api.PortletInvokerException;
 import org.jboss.portal.portlet.controller.PortletControllerContext;
@@ -47,7 +47,7 @@ import org.jboss.portal.portlet.api.invocation.RenderInvocation;
 import org.jboss.portal.portlet.api.invocation.response.PortletInvocationResponse;
 import org.jboss.portal.portlet.api.spi.PortletInvocationContext;
 import org.jboss.portal.portlet.api.spi.PortalContext;
-import org.jboss.portal.web.IllegalRequestException;
+import org.gatein.wci.IllegalRequestException;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.Cookie;

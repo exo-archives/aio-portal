@@ -24,7 +24,7 @@ package org.jboss.portal.portlet.support.info;
 
 import org.jboss.portal.portlet.api.info.EventInfo;
 import org.jboss.portal.portlet.api.info.TypeInfo;
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.i18n.LocalizedString;
 
 import javax.xml.namespace.QName;
 import java.util.Collection;

@@ -23,7 +23,7 @@
 package org.jboss.portal.test.common.text;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.text.CharToByteEncoder;
+import org.gatein.common.text.CharToByteEncoder;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

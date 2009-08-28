@@ -26,7 +26,7 @@ package org.jboss.portal.portlet.mc.metadata.factory;
 import org.apache.log4j.Logger;
 import org.jboss.portal.Mode;
 import org.jboss.portal.WindowState;
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.i18n.LocalizedString;
 import org.jboss.portal.portlet.api.LifeCyclePhase;
 import org.jboss.portal.portlet.api.TransportGuarantee;
 import org.jboss.portal.portlet.impl.metadata.CustomPortletModeMetaData;

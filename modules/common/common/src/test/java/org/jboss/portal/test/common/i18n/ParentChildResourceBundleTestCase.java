@@ -32,7 +32,7 @@ import java.util.Vector;
 
 import junit.framework.TestCase;
 
-import org.jboss.portal.common.i18n.ParentChildResourceBundle;
+import org.gatein.common.i18n.ParentChildResourceBundle;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

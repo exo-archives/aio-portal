@@ -35,9 +35,9 @@ import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 
-import org.jboss.portal.common.jar.JarEntryInfo;
-import org.jboss.portal.common.jar.JarInfo;
-import org.jboss.portal.common.io.IOTools;
+import org.gatein.common.jar.JarEntryInfo;
+import org.gatein.common.jar.JarInfo;
+import org.gatein.common.io.IOTools;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

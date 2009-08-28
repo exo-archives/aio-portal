@@ -22,8 +22,8 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.support.spi;
 
-import org.jboss.portal.common.invocation.AbstractInvocationContext;
-import org.jboss.portal.common.util.MarkupInfo;
+import org.gatein.common.invocation.AbstractInvocationContext;
+import org.gatein.common.util.MarkupInfo;
 import org.jboss.portal.portlet.api.ContainerURL;
 import org.jboss.portal.portlet.api.URLFormat;
 import org.jboss.portal.portlet.api.spi.PortletInvocationContext;

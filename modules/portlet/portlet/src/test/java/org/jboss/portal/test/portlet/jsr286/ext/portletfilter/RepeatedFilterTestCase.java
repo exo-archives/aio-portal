@@ -30,7 +30,7 @@ import org.jboss.portal.unit.base.AbstractUniversalTestPortlet;
 import org.jboss.portal.unit.actions.PortletRenderTestAction;
 import org.jboss.portal.test.portlet.framework.UTP2;
 import org.jboss.portal.test.portlet.framework.UTP3;
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.util.Tools;
 import org.jboss.unit.driver.DriverResponse;
 import org.jboss.unit.driver.response.EndTestResponse;
 import org.jboss.unit.remote.driver.handler.http.response.InvokeGetResponse;

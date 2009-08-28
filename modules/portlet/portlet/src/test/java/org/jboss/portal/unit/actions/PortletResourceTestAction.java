@@ -24,19 +24,17 @@ package org.jboss.portal.unit.actions;
 
 import org.jboss.portal.unit.TestAction;
 import org.jboss.portal.unit.PortletTestContext;
-import org.jboss.portal.common.NotYetImplemented;
-import org.jboss.portal.common.io.IOTools;
+import org.gatein.common.NotYetImplemented;
+import org.gatein.common.io.IOTools;
 import org.jboss.unit.driver.DriverResponse;
 import org.jboss.unit.driver.response.FailureResponse;
 import org.jboss.unit.Failure;
-import org.apache.log4j.Logger;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Writer;
 import java.io.OutputStream;
 

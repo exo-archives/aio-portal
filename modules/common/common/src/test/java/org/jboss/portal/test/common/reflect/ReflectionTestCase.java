@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.AbstractList;
 
-import org.jboss.portal.common.reflect.Reflection;
+import org.gatein.common.reflect.Reflection;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

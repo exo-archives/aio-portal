@@ -29,8 +29,8 @@ import java.util.Map;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-import org.jboss.portal.common.i18n.LocaleFormat;
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.i18n.LocaleFormat;
+import org.gatein.common.i18n.LocalizedString;
 import static org.jboss.portal.portlet.impl.metadata.PortletMetaDataConstants.*;
 import org.jboss.portal.portlet.impl.metadata.common.LocalizedDescriptionMetaData;
 

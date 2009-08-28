@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.state.consumer;
 
-import org.jboss.portal.common.NotYetImplemented;
+import org.gatein.common.NotYetImplemented;
 import org.jboss.portal.portlet.api.InvalidPortletIdException;
 import org.jboss.portal.portlet.api.NoSuchPortletException;
 import org.jboss.portal.portlet.api.Portlet;

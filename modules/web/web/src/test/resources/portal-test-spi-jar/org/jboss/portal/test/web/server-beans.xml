@@ -45,11 +45,11 @@
       </constructor>
    </bean>
 
-   <bean name="ServletContainerFactory" GetTestCaseclass="org.jboss.portal.web.impl.DefaultServletContainerFactory">
-      <constructor factoryClass="org.jboss.portal.web.impl.DefaultServletContainerFactory" factoryMethod="getInstance"/>
+   <bean name="ServletContainerFactory" GetTestCaseclass="org.gatein.wci.impl.DefaultServletContainerFactory">
+      <constructor factoryClass="org.gatein.wci.impl.DefaultServletContainerFactory" factoryMethod="getInstance"/>
    </bean>
 
-   <bean name="ServletContainer" class="org.jboss.portal.web.ServletContainer">
+   <bean name="ServletContainer" class="org.gatein.wci.ServletContainer">
       <constructor factoryMethod="getServletContainer">
          <factory bean="ServletContainerFactory"/>
       </constructor>
@@ -57,7 +57,7 @@
 
    <bean name="TestSuite" class="org.jboss.unit.driver.impl.composite.CompositeTestDriver"/>
 
-   <bean name="SPITestCase" class="org.jboss.portal.test.web.spi.SPITestCase">
+   <bean name="SPITestCase" class="org.gatein.wci.spi.SPITestCase">
       <install bean="TestSuite" method="mount">
          <parameter><this/></parameter>
       </install>

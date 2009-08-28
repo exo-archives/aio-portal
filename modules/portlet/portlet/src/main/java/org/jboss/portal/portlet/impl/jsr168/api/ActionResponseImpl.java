@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.impl.jsr168.api;
 
-import org.jboss.portal.common.NotYetImplemented;
+import org.gatein.common.NotYetImplemented;
 import org.jboss.portal.portlet.api.ParametersStateString;
 import org.jboss.portal.portlet.api.invocation.ActionInvocation;
 import org.jboss.portal.portlet.api.invocation.response.PortletInvocationResponse;

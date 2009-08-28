@@ -22,8 +22,8 @@
  ******************************************************************************/
 package org.jboss.portal.test.common.io;
 
-import org.jboss.portal.common.io.IOTools;
-import org.jboss.portal.common.junit.ExtendedAssert;
+import org.gatein.common.io.IOTools;
+import org.gatein.common.junit.ExtendedAssert;
 import junit.framework.TestCase;
 
 import java.io.OutputStream;

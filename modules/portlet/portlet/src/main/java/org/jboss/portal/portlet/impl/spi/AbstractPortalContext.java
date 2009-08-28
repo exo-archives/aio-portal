@@ -25,7 +25,7 @@ package org.jboss.portal.portlet.impl.spi;
 import org.jboss.portal.WindowState;
 import org.jboss.portal.Mode;
 import org.jboss.portal.portlet.api.spi.PortalContext;
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.util.Tools;
 
 import java.util.Set;
 import java.util.Map;

@@ -24,7 +24,7 @@ package org.jboss.portal.portlet.mc;
 
 import org.jboss.portal.portlet.container.PortletApplicationContext;
 import org.jboss.portal.portlet.container.managed.ManagedPortletApplication;
-import org.jboss.portal.web.WebApp;
+import org.gatein.wci.WebApp;
 
 import javax.servlet.ServletContext;
 

@@ -27,7 +27,7 @@ import org.jboss.portal.portlet.api.info.ModeInfo;
 import org.jboss.portal.portlet.api.info.WindowStateInfo;
 import org.jboss.portal.Mode;
 import org.jboss.portal.WindowState;
-import org.jboss.portal.common.net.media.MediaType;
+import org.gatein.common.net.media.MediaType;
 
 import java.util.Set;
 import java.util.HashSet;

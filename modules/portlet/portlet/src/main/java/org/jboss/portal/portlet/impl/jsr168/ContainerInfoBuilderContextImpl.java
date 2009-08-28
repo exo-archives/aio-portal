@@ -26,10 +26,10 @@ import org.jboss.portal.portlet.impl.metadata.PortletApplication10MetaData;
 import org.jboss.portal.portlet.impl.metadata.PortletApplication20MetaData;
 import org.jboss.portal.portlet.impl.metadata.portlet.PortletMetaData;
 import org.jboss.portal.portlet.impl.info.ContainerInfoBuilderContext;
-import org.jboss.portal.web.WebApp;
-import org.jboss.portal.common.i18n.ResourceBundleManager;
-import org.jboss.portal.common.i18n.ResourceBundleFactory;
-import org.jboss.portal.common.reflect.NoSuchClassException;
+import org.gatein.wci.WebApp;
+import org.gatein.common.i18n.ResourceBundleManager;
+import org.gatein.common.i18n.ResourceBundleFactory;
+import org.gatein.common.reflect.NoSuchClassException;
 
 import java.util.Map;
 import java.util.HashMap;

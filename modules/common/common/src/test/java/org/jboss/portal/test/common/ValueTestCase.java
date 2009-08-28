@@ -24,11 +24,11 @@ package org.jboss.portal.test.common;
 
 import junit.framework.TestCase;
 
-import org.jboss.portal.common.value.Value;
-import org.jboss.portal.common.value.IntegerValue;
-import org.jboss.portal.common.value.StringValue;
-import org.jboss.portal.common.junit.ExtendedAssert;
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.value.Value;
+import org.gatein.common.value.IntegerValue;
+import org.gatein.common.value.StringValue;
+import org.gatein.common.junit.ExtendedAssert;
+import org.gatein.common.util.Tools;
 
 import java.util.ArrayList;
 

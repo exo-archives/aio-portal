@@ -24,8 +24,8 @@ package org.jboss.portal.test.common.net;
 
 import junit.framework.TestCase;
 import org.apache.log4j.Logger;
-import org.jboss.portal.common.junit.ExtendedAssert;
-import org.jboss.portal.common.net.URLTools;
+import org.gatein.common.junit.ExtendedAssert;
+import org.gatein.common.net.URLTools;
 
 import java.net.MalformedURLException;
 import java.net.URL;

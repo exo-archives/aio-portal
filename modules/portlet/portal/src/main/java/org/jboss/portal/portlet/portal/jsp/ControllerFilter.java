@@ -43,11 +43,11 @@ import org.jboss.portal.portlet.controller.response.ResourceResponse;
 import org.jboss.portal.portlet.controller.response.PortletResponse;
 import org.jboss.portal.portlet.controller.state.PortletPageNavigationalState;
 import org.jboss.portal.portlet.controller.state.PortletPageNavigationalStateSerialization;
-import org.jboss.portal.common.io.IOTools;
-import org.jboss.portal.common.io.SerializationFilter;
-import org.jboss.portal.common.mc.bootstrap.WebBootstrap;
-import org.jboss.portal.common.util.Base64;
-import org.jboss.portal.web.util.RequestDecoder;
+import org.gatein.common.io.IOTools;
+import org.gatein.common.io.SerializationFilter;
+import org.gatein.common.mc.bootstrap.WebBootstrap;
+import org.gatein.common.util.Base64;
+import org.gatein.wci.util.RequestDecoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

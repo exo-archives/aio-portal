@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.api;
 
-import org.jboss.portal.common.util.Base64;
+import org.gatein.common.util.Base64;
 import org.jboss.portal.portlet.api.ParametersStateString;
 import org.jboss.portal.portlet.api.OpaqueStateString;
 

@@ -27,7 +27,7 @@ import junit.framework.TestCase;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 
-import org.jboss.portal.common.i18n.BundleName;
+import org.gatein.common.i18n.BundleName;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

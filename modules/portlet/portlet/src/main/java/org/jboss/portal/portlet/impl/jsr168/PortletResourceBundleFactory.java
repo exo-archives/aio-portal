@@ -22,10 +22,10 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.impl.jsr168;
 
-import org.jboss.portal.common.util.EmptyResourceBundle;
-import org.jboss.portal.common.i18n.ParentChildResourceBundle;
-import org.jboss.portal.common.i18n.ResourceBundleManager;
-import org.jboss.portal.common.i18n.ResourceBundleFactory;
+import org.gatein.common.util.EmptyResourceBundle;
+import org.gatein.common.i18n.ParentChildResourceBundle;
+import org.gatein.common.i18n.ResourceBundleManager;
+import org.gatein.common.i18n.ResourceBundleFactory;
 import org.jboss.portal.portlet.impl.info.ContainerPortletInfo;
 
 import java.util.Locale;

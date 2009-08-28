@@ -25,7 +25,7 @@ package org.jboss.portal.portlet.portal.jsp.taglib;
 import org.jboss.portal.portlet.portal.jsp.PortalRenderResponse;
 import org.jboss.portal.portlet.portal.jsp.PortalResponse;
 import org.jboss.portal.portlet.portal.jsp.PortalPrepareResponse;
-import org.jboss.portal.common.NotYetImplemented;
+import org.gatein.common.NotYetImplemented;
 
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import javax.servlet.jsp.PageContext;

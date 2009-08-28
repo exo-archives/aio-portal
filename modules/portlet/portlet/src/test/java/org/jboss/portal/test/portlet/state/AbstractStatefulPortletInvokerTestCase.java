@@ -22,8 +22,8 @@
  ******************************************************************************/
 package org.jboss.portal.test.portlet.state;
 
-import org.jboss.portal.common.util.Tools;
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.util.Tools;
+import org.gatein.common.i18n.LocalizedString;
 import org.jboss.portal.portlet.api.InvalidPortletIdException;
 import org.jboss.portal.portlet.api.NoSuchPortletException;
 import org.jboss.portal.portlet.api.Portlet;

@@ -23,12 +23,12 @@
 
 package org.jboss.portal.portlet.controller.impl;
 
-import org.jboss.portal.common.io.IOTools;
-import org.jboss.portal.common.io.SerializationFilter;
-import org.jboss.portal.common.io.Serialization;
-import org.jboss.portal.common.text.CharBuffer;
-import org.jboss.portal.common.text.FastURLEncoder;
-import org.jboss.portal.common.util.Base64;
+import org.gatein.common.io.IOTools;
+import org.gatein.common.io.SerializationFilter;
+import org.gatein.common.io.Serialization;
+import org.gatein.common.text.CharBuffer;
+import org.gatein.common.text.FastURLEncoder;
+import org.gatein.common.util.Base64;
 import org.jboss.portal.portlet.api.ContainerURL;
 import org.jboss.portal.portlet.api.URLFormat;
 import org.jboss.portal.portlet.controller.state.PortletPageNavigationalState;

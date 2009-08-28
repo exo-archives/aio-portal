@@ -23,9 +23,9 @@
 package org.jboss.portal.test.common.text;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.text.CharBuffer;
-import org.jboss.portal.common.text.CharEncoder;
-import org.jboss.portal.common.text.FastURLEncoder;
+import org.gatein.common.text.CharBuffer;
+import org.gatein.common.text.CharEncoder;
+import org.gatein.common.text.FastURLEncoder;
 
 import java.net.URLEncoder;
 

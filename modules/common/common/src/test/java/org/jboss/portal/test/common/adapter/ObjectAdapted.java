@@ -22,8 +22,8 @@
  ******************************************************************************/
 package org.jboss.portal.test.common.adapter;
 
-import org.jboss.portal.common.adapter.JavaLangObjectAdapted;
-import org.jboss.portal.common.adapter.ClassAdaptable;
+import org.gatein.common.adapter.JavaLangObjectAdapted;
+import org.gatein.common.adapter.ClassAdaptable;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

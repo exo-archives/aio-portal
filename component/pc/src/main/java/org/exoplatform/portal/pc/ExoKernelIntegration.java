@@ -18,8 +18,6 @@ package org.exoplatform.portal.pc;
 
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.RootContainer;
-import org.jboss.portal.web.ServletContainer;
-import org.jboss.portal.web.impl.DefaultServletContainerFactory;
 import org.jboss.portal.portlet.api.PortletInvoker;
 import org.jboss.portal.portlet.container.ContainerPortletDispatcher;
 import org.jboss.portal.portlet.container.ContainerPortletInvoker;
@@ -42,6 +40,8 @@ import org.jboss.portal.portlet.aspects.portlet.ContextDispatcherInterceptor;
 import org.jboss.portal.portlet.aspects.portlet.SecureTransportInterceptor;
 import org.jboss.portal.portlet.aspects.portlet.ValveInterceptor;
 import org.picocontainer.Startable;
+import org.gatein.wci.ServletContainer;
+import org.gatein.wci.impl.DefaultServletContainerFactory;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>

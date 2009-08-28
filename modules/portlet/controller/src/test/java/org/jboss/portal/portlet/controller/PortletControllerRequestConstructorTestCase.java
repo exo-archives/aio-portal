@@ -30,7 +30,7 @@ import org.jboss.portal.portlet.controller.state.PortletPageNavigationalState;
 import org.jboss.portal.portlet.controller.impl.state.StateControllerContextImpl;
 import org.jboss.portal.portlet.api.StateString;
 import org.jboss.portal.portlet.api.OpaqueStateString;
-import org.jboss.portal.common.util.ParameterMap;
+import org.gatein.common.util.ParameterMap;
 import static org.jboss.unit.api.Assert.*;
 import org.jboss.unit.api.pojo.annotations.Test;
 

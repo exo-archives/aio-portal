@@ -23,7 +23,7 @@
 package org.jboss.portal.test.common;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.util.CopyOnWriteRegistry;
+import org.gatein.common.util.CopyOnWriteRegistry;
 
 import java.util.Collections;
 import java.util.Set;

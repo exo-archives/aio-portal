@@ -23,8 +23,8 @@
 
 package org.jboss.portal.portlet.test.controller;
 
-import org.jboss.portal.common.util.MultiValuedPropertyMap;
-import org.jboss.portal.common.xml.XMLTools;
+import org.gatein.common.util.MultiValuedPropertyMap;
+import org.gatein.common.xml.XMLTools;
 import org.jboss.portal.portlet.api.Portlet;
 import org.jboss.portal.portlet.api.PortletInvokerException;
 import org.jboss.portal.portlet.api.invocation.response.ErrorResponse;

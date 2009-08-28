@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.samples.basic;
 
-import org.jboss.portal.common.text.EntityEncoder;
+import org.gatein.common.text.EntityEncoder;
 
 import javax.portlet.GenericPortlet;
 import javax.portlet.PortletURL;

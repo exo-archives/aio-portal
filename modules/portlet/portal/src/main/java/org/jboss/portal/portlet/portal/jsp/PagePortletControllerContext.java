@@ -33,8 +33,8 @@ import org.jboss.portal.portlet.controller.impl.state.StateControllerContextImpl
 import org.jboss.portal.portlet.api.invocation.PortletInvocation;
 import org.jboss.portal.portlet.api.invocation.response.PortletInvocationResponse;
 import org.jboss.portal.portlet.controller.impl.AbstractPortletControllerContext;
-import org.jboss.portal.web.IllegalRequestException;
-import org.jboss.portal.common.io.Serialization;
+import org.gatein.wci.IllegalRequestException;
+import org.gatein.common.io.Serialization;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;

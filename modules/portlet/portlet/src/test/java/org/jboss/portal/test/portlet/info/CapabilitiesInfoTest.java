@@ -25,7 +25,7 @@ package org.jboss.portal.test.portlet.info;
 
 import org.jboss.portal.Mode;
 import org.jboss.portal.WindowState;
-import org.jboss.portal.common.net.media.MediaType;
+import org.gatein.common.net.media.MediaType;
 import org.jboss.portal.portlet.container.managed.ManagedPortletContainer;
 import org.jboss.portal.portlet.api.info.CapabilitiesInfo;
 import org.jboss.portal.portlet.api.info.ModeInfo;

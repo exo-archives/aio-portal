@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.impl.info;
 
-import org.jboss.portal.common.i18n.ResourceBundleManager;
+import org.gatein.common.i18n.ResourceBundleManager;
 import org.jboss.portal.portlet.api.info.PortletInfo;
 import org.jboss.portal.portlet.api.info.RuntimeOptionInfo;
 

@@ -25,7 +25,7 @@ package org.jboss.portal.portlet.controller;
 
 import org.jboss.portal.Mode;
 import org.jboss.portal.WindowState;
-import org.jboss.portal.common.util.ParameterMap;
+import org.gatein.common.util.ParameterMap;
 import org.jboss.portal.portlet.api.PortletInvokerException;
 import org.jboss.portal.portlet.api.StateString;
 import org.jboss.portal.portlet.api.spi.PortletInvocationContext;

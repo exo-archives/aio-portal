@@ -23,8 +23,7 @@
 package org.jboss.portal.test.common.util;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.util.MapAdapters;
-import org.jboss.portal.common.util.MapBuilder;
+import org.gatein.common.util.MapAdapters;
 
 import java.util.Map;
 import java.util.HashMap;

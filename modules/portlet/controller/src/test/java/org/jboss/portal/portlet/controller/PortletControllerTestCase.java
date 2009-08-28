@@ -45,7 +45,7 @@ import org.jboss.portal.portlet.api.invocation.response.PortletInvocationRespons
 import org.jboss.portal.portlet.api.invocation.response.UpdateNavigationalStateResponse;
 import org.jboss.portal.portlet.api.invocation.ActionInvocation;
 import org.jboss.portal.portlet.api.invocation.EventInvocation;
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.util.Tools;
 import org.jboss.portal.Mode;
 import org.jboss.portal.WindowState;
 import org.jboss.unit.api.pojo.annotations.Test;

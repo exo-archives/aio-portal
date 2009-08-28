@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.state;
 
-import org.jboss.portal.common.util.TypedMap;
+import org.gatein.common.util.TypedMap;
 import org.jboss.portal.portlet.api.state.PropertyMap;
 
 import java.util.Map;

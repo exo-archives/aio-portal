@@ -22,7 +22,7 @@
 
 package org.jboss.portal.portlet.api.info;
 
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.util.Tools;
 
 import java.util.Collections;
 import java.util.List;

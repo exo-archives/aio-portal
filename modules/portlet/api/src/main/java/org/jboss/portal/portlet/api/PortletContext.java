@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.api;
 
-import org.jboss.portal.common.util.ParameterValidation;
+import org.gatein.common.util.ParameterValidation;
 
 import java.io.Serializable;
 

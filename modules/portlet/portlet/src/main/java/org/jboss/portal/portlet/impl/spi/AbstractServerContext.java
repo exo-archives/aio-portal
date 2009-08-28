@@ -23,8 +23,8 @@
 package org.jboss.portal.portlet.impl.spi;
 
 import org.jboss.portal.portlet.api.spi.ServerContext;
-import org.jboss.portal.web.RequestDispatchCallback;
-import org.jboss.portal.web.ServletContainer;
+import org.gatein.wci.RequestDispatchCallback;
+import org.gatein.wci.ServletContainer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

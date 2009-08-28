@@ -24,7 +24,7 @@ package org.jboss.portal.portlet.controller.state;
 
 import org.jboss.portal.Mode;
 import org.jboss.portal.WindowState;
-import org.jboss.portal.common.io.Serialization;
+import org.gatein.common.io.Serialization;
 import org.jboss.portal.portlet.api.StateString;
 
 import javax.xml.namespace.QName;

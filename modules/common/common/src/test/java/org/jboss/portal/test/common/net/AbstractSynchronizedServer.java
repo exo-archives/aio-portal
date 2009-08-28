@@ -23,7 +23,7 @@
 package org.jboss.portal.test.common.net;
 
 import org.apache.log4j.Logger;
-import org.jboss.portal.common.junit.ExtendedAssert;
+import org.gatein.common.junit.ExtendedAssert;
 
 import java.net.ServerSocket;
 import java.net.Socket;

@@ -23,10 +23,10 @@
 package org.jboss.portal.test.common.text;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.text.FastURLDecoder;
-import org.jboss.portal.common.text.CharEncoder;
-import org.jboss.portal.common.text.CharBuffer;
-import org.jboss.portal.common.text.MalformedInputException;
+import org.gatein.common.text.FastURLDecoder;
+import org.gatein.common.text.CharEncoder;
+import org.gatein.common.text.CharBuffer;
+import org.gatein.common.text.MalformedInputException;
 
 import java.net.URLEncoder;
 

@@ -41,9 +41,8 @@ import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.event.Event.Phase;
-
+import org.gatein.common.net.media.MediaType;
 import org.jboss.portal.Mode;
-import org.jboss.portal.common.net.media.MediaType;
 import org.jboss.portal.portlet.api.ParametersStateString;
 import org.jboss.portal.portlet.api.Portlet;
 import org.jboss.portal.portlet.api.PortletContext;

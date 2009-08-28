@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.test.portlet;
 
-import org.jboss.portal.common.util.MapBuilder;
+import org.gatein.common.util.MapBuilder;
 import org.jboss.portal.portlet.api.OpaqueStateString;
 import org.jboss.portal.portlet.api.ParametersStateString;
 import org.jboss.portal.portlet.api.StateString;

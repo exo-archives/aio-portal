@@ -22,10 +22,10 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.impl.spi;
 
-import org.jboss.portal.common.util.Tools;
-import org.jboss.portal.common.invocation.resolver.PrincipalAttributeResolver;
-import org.jboss.portal.common.invocation.resolver.MapAttributeResolver;
-import org.jboss.portal.common.invocation.AttributeResolver;
+import org.gatein.common.util.Tools;
+import org.gatein.common.invocation.resolver.PrincipalAttributeResolver;
+import org.gatein.common.invocation.resolver.MapAttributeResolver;
+import org.gatein.common.invocation.AttributeResolver;
 import org.jboss.portal.portlet.api.spi.UserContext;
 
 import javax.servlet.http.HttpServletRequest;

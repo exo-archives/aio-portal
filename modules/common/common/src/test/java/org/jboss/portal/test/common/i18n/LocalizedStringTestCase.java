@@ -23,7 +23,7 @@
 package org.jboss.portal.test.common.i18n;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.i18n.LocalizedString;
+import org.gatein.common.i18n.LocalizedString;
 
 import java.util.HashMap;
 import java.util.Locale;

@@ -42,7 +42,7 @@ import org.jboss.portal.portlet.api.PortletContext;
 import org.jboss.portal.portlet.api.OpaqueStateString;
 import org.jboss.portal.portlet.support.PortletInvokerSupport;
 import org.jboss.portal.portlet.support.PortletSupport;
-import org.jboss.portal.common.util.ParameterMap;
+import org.gatein.common.util.ParameterMap;
 
 import javax.servlet.http.Cookie;
 import java.util.List;

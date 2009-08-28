@@ -33,7 +33,7 @@ import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.lifecycle.Lifecycle;
 import org.exoplatform.webui.core.lifecycle.WebuiBindingContext;
 import org.exoplatform.webui.event.Event;
-import org.jboss.portal.common.util.MultiValuedPropertyMap;
+import org.gatein.common.util.MultiValuedPropertyMap;
 import org.jboss.portal.portlet.api.PortletInvoker;
 import org.jboss.portal.portlet.api.invocation.RenderInvocation;
 import org.jboss.portal.portlet.api.invocation.response.FragmentResponse;

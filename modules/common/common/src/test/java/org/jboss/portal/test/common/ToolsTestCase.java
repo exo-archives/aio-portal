@@ -24,8 +24,8 @@
 package org.jboss.portal.test.common;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.junit.ExtendedAssert;
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.junit.ExtendedAssert;
+import org.gatein.common.util.Tools;
 
 import java.util.ArrayList;
 import java.util.Enumeration;

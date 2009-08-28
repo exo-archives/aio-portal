@@ -28,7 +28,7 @@
 <web-app>
    <servlet>
       <servlet-name>BootstrapServlet</servlet-name>
-      <servlet-class>org.jboss.portal.web.impl.generic.GenericBootstrapServlet</servlet-class>
+      <servlet-class>org.gatein.wci.impl.generic.GenericBootstrapServlet</servlet-class>
       <load-on-startup>1</load-on-startup>
    </servlet>
    <servlet-mapping>

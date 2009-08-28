@@ -29,12 +29,12 @@ import java.util.Map;
 import java.util.HashMap;
 import java.io.IOException;
 
-import org.jboss.portal.common.i18n.LocaleFormat;
-import org.jboss.portal.common.i18n.CachingLocaleFormat;
-import org.jboss.portal.common.i18n.AbstractLocaleFormat;
-import org.jboss.portal.common.util.FormatConversionException;
-import org.jboss.portal.common.util.ConversionException;
-import org.jboss.portal.common.text.CharWriter;
+import org.gatein.common.i18n.LocaleFormat;
+import org.gatein.common.i18n.CachingLocaleFormat;
+import org.gatein.common.i18n.AbstractLocaleFormat;
+import org.gatein.common.util.FormatConversionException;
+import org.gatein.common.util.ConversionException;
+import org.gatein.common.text.CharWriter;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

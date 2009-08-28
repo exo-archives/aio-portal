@@ -27,7 +27,7 @@ import org.jboss.portal.portlet.api.info.PortletInfo;
 import org.jboss.portal.portlet.api.invocation.response.PortletInvocationResponse;
 import org.jboss.portal.portlet.api.invocation.PortletInvocation;
 import org.jboss.portal.portlet.api.PortletInvokerException;
-import org.jboss.portal.common.invocation.InvocationException;
+import org.gatein.common.invocation.InvocationException;
 
 import java.util.Map;
 import java.util.HashMap;

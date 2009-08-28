@@ -28,7 +28,7 @@ import java.util.concurrent.BrokenBarrierException;
 
 import junit.framework.TestCase;
 
-import org.jboss.portal.common.concurrent.Valve;
+import org.gatein.common.concurrent.Valve;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

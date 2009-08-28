@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.api.spi;
 
-import org.jboss.portal.common.util.MultiValuedPropertyMap;
+import org.gatein.common.util.MultiValuedPropertyMap;
 
 import javax.servlet.http.Cookie;
 import java.util.List;

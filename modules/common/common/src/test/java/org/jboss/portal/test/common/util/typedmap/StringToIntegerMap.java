@@ -22,8 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.test.common.util.typedmap;
 
-import org.jboss.portal.common.util.AbstractTypedMap;
-import org.jboss.portal.common.util.TypedMap;
+import org.gatein.common.util.TypedMap;
 
 import java.util.Map;
 

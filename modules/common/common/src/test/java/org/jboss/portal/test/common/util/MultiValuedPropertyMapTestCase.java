@@ -23,8 +23,8 @@
 package org.jboss.portal.test.common.util;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.util.SimpleMultiValuedPropertyMap;
-import org.jboss.portal.common.util.Tools;
+import org.gatein.common.util.SimpleMultiValuedPropertyMap;
+import org.gatein.common.util.Tools;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

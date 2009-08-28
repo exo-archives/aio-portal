@@ -24,7 +24,7 @@ package org.jboss.portal.portlet.test.tck;
 
 import org.jboss.portal.portlet.controller.state.PortletPageNavigationalStateSerialization;
 import org.jboss.portal.portlet.controller.state.PortletPageNavigationalState;
-import org.jboss.portal.common.io.Serialization;
+import org.gatein.common.io.Serialization;
 
 import java.io.OutputStream;
 import java.io.IOException;

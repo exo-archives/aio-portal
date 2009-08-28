@@ -32,10 +32,10 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.jboss.portal.common.net.URLFilter;
-import org.jboss.portal.common.net.URLNavigator;
-import org.jboss.portal.common.net.URLVisitor;
-import org.jboss.portal.common.net.URLTools;
+import org.gatein.common.net.URLFilter;
+import org.gatein.common.net.URLNavigator;
+import org.gatein.common.net.URLVisitor;
+import org.gatein.common.net.URLTools;
 
 /**
  * @author <a href="mailto:julien@jboss.org">Julien Viet</a>

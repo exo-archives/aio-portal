@@ -23,10 +23,10 @@
 package org.jboss.portal.test.common;
 
 import junit.framework.TestCase;
-import org.jboss.portal.common.path.PathMapper;
-import org.jboss.portal.common.path.PathMapperContext;
-import org.jboss.portal.common.path.PathMapperResult;
-import org.jboss.portal.common.path.SimplePathMapper;
+import org.gatein.common.path.PathMapper;
+import org.gatein.common.path.PathMapperContext;
+import org.gatein.common.path.PathMapperResult;
+import org.gatein.common.path.SimplePathMapper;
 
 import java.util.HashMap;
 import java.util.Map;

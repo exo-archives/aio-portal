@@ -23,7 +23,7 @@
 package org.jboss.portal.unit;
 
 import org.jboss.portal.test.framework.server.NodeId;
-import org.jboss.portal.common.NotYetImplemented;
+import org.gatein.common.NotYetImplemented;
 import org.jboss.portal.unit.JoinPointType;
 import org.jboss.unit.driver.DriverResponse;
 import org.jboss.unit.driver.response.FailureResponse;

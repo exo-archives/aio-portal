@@ -33,9 +33,9 @@ import org.jboss.portal.portlet.test.controller.PageRenderer;
 import org.jboss.portal.portlet.test.controller.PortletControllerContextImpl;
 import org.jboss.portal.portlet.test.controller.Renderer;
 import org.jboss.portal.portlet.test.controller.RendererContextImpl;
-import org.jboss.portal.web.WebRequest;
-import org.jboss.portal.web.WebResponse;
-import org.jboss.portal.web.endpoint.EndPointServlet;
+import org.gatein.wci.WebRequest;
+import org.gatein.wci.WebResponse;
+import org.gatein.wci.endpoint.EndPointServlet;
 
 import javax.servlet.ServletException;
 import java.io.IOException;

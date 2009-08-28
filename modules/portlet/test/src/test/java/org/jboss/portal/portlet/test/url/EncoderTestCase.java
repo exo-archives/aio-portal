@@ -22,7 +22,7 @@
  ******************************************************************************/
 package org.jboss.portal.portlet.test.url;
 
-import org.jboss.portal.common.util.ParameterMap;
+import org.gatein.common.util.ParameterMap;
 
 import static org.jboss.unit.api.Assert.*;
 import org.jboss.unit.api.pojo.annotations.Create;

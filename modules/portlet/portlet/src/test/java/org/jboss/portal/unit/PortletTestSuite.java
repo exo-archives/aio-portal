@@ -24,9 +24,9 @@ package org.jboss.portal.unit;
 
 import org.apache.log4j.Logger;
 import org.jboss.unit.remote.driver.RemoteTestDriverServer;
-import org.jboss.portal.common.net.URLNavigator;
-import org.jboss.portal.common.net.URLVisitor;
-import org.jboss.portal.common.net.URLFilter;
+import org.gatein.common.net.URLNavigator;
+import org.gatein.common.net.URLVisitor;
+import org.gatein.common.net.URLFilter;
 import org.jboss.portal.unit.annotations.TestCase;
 import org.jboss.portal.unit.Assertion;
 
