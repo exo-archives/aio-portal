@@ -23,7 +23,7 @@
 
 .UIHorizontalTabs .UITab .NormalNavigationTab {
 	line-height: 26px; 
-	margin: 6px 8px 0px 0px; 
+	margin: 6px 2px 0px 0px; 
 }
 
 .UIHorizontalTabs .UITab .NormalNavigationTab .LeftTab {
@@ -39,7 +39,7 @@
 .UIHorizontalTabs .UITab .NormalNavigationTab .MiddleTab {
 	line-height: 21px;
 	text-align: center;
-	padding: 0px 8px 0px 8px;
+	padding: 0px 4px 0px 4px;
 }
 
 .UIHorizontalTabs .UITab .NormalNavigationTab .TabIcon {
@@ -52,8 +52,8 @@
 }
 
 .UIHorizontalTabs .UITab .NormalNavigationTab .DropDownArrowIcon {
-	padding-right: 20px; /* orientation=lt */
-	padding-left: 20px; /* orientation=rt */
+	padding-right: 16px; /* orientation=lt */
+	padding-left: 16px; /* orientation=rt */
 	background: url(background/NavDownArrow.gif) no-repeat right; /* orientation=lt */
 	background: url(background/NavDownArrow.gif) no-repeat left; /* orientation=rt */
 	cursor: pointer;
@@ -63,7 +63,7 @@
 
 .UIHorizontalTabs .UITab .HighlightNavigationTab {
 	line-height: 26px;  
-	margin: 6px 8px 0px 0px; 
+	margin: 6px 2px 0px 0px; 
 }
 
 .UIHorizontalTabs .UITab .HighlightNavigationTab .LeftTab {
@@ -81,7 +81,7 @@
 .UIHorizontalTabs .UITab .HighlightNavigationTab .MiddleTab {
 	height: 21px; 
 	text-align: center;
-	padding: 0px 8px 0px 8px;
+	padding: 0px 4px 0px 4px;
 	background: #6d94c8;
 }
 
@@ -95,8 +95,8 @@
 }
 
 .UIHorizontalTabs .UITab .HighlightNavigationTab .DropDownArrowIcon {
-	padding-right: 20px; /* orientation=lt */
-	padding-left: 20px; /* orientation=rt */
+	padding-right: 16px; /* orientation=lt */
+	padding-left: 16px; /* orientation=rt */
 	background: url(background/NavDownArrow.gif) no-repeat right; /* orientation=lt */
 	background: url(background/NavDownArrow.gif) no-repeat left; /* orientation=rt */
 	cursor: pointer;
@@ -106,7 +106,7 @@
 
 .UIHorizontalTabs .UITab .SelectedNavigationTab {
 	line-height: 26px; 
-	margin: 6px 8px 0px 0px; 
+	margin: 6px 2px 0px 0px; 
 }
 
 .UIHorizontalTabs .UITab .SelectedNavigationTab .LeftTab {
@@ -125,7 +125,7 @@
 	line-height: 21px;
 	background: url('background/NavigationTab.gif') repeat-x;
 	text-align: center;
-	padding: 0px 8px 0px 8px;
+	padding: 0px 4px 0px 4px;
 }
 
 .UIHorizontalTabs .UITab .SelectedNavigationTab .TabIcon {
@@ -140,8 +140,8 @@
 }
 
 .UIHorizontalTabs .UITab .SelectedNavigationTab .DropDownArrowIcon {
-	padding-right: 20px; /* orientation=lt */
-	padding-left: 20px; /* orientation=rt */
+	padding-right: 16px; /* orientation=lt */
+	padding-left: 16px; /* orientation=rt */
 	background: transparent url(background/NavDownArrow.gif) no-repeat scroll right center;	/* orientation=lt */
 	background: transparent url(background/NavDownArrow.gif) no-repeat scroll left center; /* orientation=rt */
 	cursor: pointer;
