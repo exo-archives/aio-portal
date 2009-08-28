@@ -211,12 +211,12 @@
          <pathelement path="${dependency.jbossxb.jar}"/>
       </path>
 
-      <path id="portal-common">
-         <pathelement path="${dependency.portal-common-mc.jar}"/>
+      <path id="gatein-common">
+         <pathelement path="${dependency.gatein-common-mc.jar}"/>
       </path>
 
-      <path id="portal-common-shared">
-         <pathelement path="${dependency.portal-common-common.jar}"/>
+      <path id="gatein-common-shared">
+         <pathelement path="${dependency.gatein-common-common.jar}"/>
       </path>
 
       <path id="jboss-unit">
@@ -229,29 +229,29 @@
       </path>
 
       <path id="jboss-4.2">
-         <path refid="portal-common"/>
+         <path refid="gatein-common"/>
          <path refid="jboss-unit"/>
          <path refid="jboss-microcontainer"/>
       </path>
 
       <path id="jboss-4.2-shared">
-         <path refid="portal-common-shared"/>
-         <path location="${target}/web-web-${project.version}.jar"/>
+         <path refid="gatein-common-shared"/>
+         <path location="${target}/wci-wci-${project.version}.jar"/>
       </path>
 
       <path id="jboss-5.0">
-         <path refid="portal-common"/>
+         <path refid="gatein-common"/>
          <path refid="jboss-unit"/>
          <path refid="jboss-microcontainer"/>
       </path>
 
       <path id="jboss-5.0-shared">
-         <path refid="portal-common-shared"/>
-         <path location="${target}/web-web-${project.version}.jar"/>
+         <path refid="gatein-common-shared"/>
+         <path location="${target}/wci-wci-${project.version}.jar"/>
       </path>
 
       <path id="tomcat-6.0">
-         <path refid="portal-common"/>
+         <path refid="gatein-common"/>
          <path refid="jboss-unit"/>
          <path refid="jboss-microcontainer"/>
          <pathelement path="${dependency.log4j.jar}"/>
@@ -263,15 +263,15 @@
 
       <path id="tomcat-6.0-shared">
          <path refid="jboss-logging"/>
-         <path refid="portal-common-shared"/>
+         <path refid="gatein-common-shared"/>
          <path location="${dependency.log4j.jar}"/>
          <path location="${dependency.activation.jar}"/>
          <path location="${dependency.junit.jar}"/>
-         <path location="${target}/web-web-${project.version}.jar"/>
+         <path location="${target}/wci-wci-${project.version}.jar"/>
       </path>
 
       <path id="jetty-6.1">
-         <path refid="portal-common"/>
+         <path refid="gatein-common"/>
          <path refid="jboss-unit"/>
          <path refid="jboss-microcontainer"/>
       </path>
@@ -980,19 +980,19 @@
          action="start"
          wait="${cargo.wait}">
          <extraClasspath>
-            <path location="${dependency.portal-common-common.jar}"/>
+            <path location="${dependency.gatein-common-common.jar}"/>
             <path location="${dependency.jboss-unit.jar}"/>
             <path location="${dependency.jboss-unit-remote.jar}"/>
-            <path location="${target}/web-web-${project.version}.jar"/>
+            <path location="${target}/wci-wci-${project.version}.jar"/>
 
             <path location="${dependency.log4j.jar}"/>
             <path location="${dependency.concurrent.jar}"/>
-            <path location="${dependency.portal-common.jar}"/>
+            <path location="${dependency.gatein-common.jar}"/>
             <path location="${dependency.activation.jar}"/>
             <path location="${dependency.junit.jar}"/>
             <path location="${dependency.jboss-logging-spi.jar}"/>
 
-            <path location="${target}/web-web-${project.version}.jar"/>
+            <path location="${target}/wci-wci-${project.version}.jar"/>
 
          </extraClasspath>
          <configuration>
