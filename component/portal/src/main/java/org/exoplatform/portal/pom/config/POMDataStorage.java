@@ -152,7 +152,7 @@ public class POMDataStorage implements DataStorage {
     sharedLayout.setTemplate("system:/groovy/portal/webui/container/UIContainer.gtmpl");
     Container toolbarContainer = new Container();
     toolbarContainer.setTemplate("system:/groovy/portal/webui/container/UIToolbarContainer.gtmpl");
-    toolbarContainer.setAccessPermissions(new String[]{"*:/platform/administrators; *:/organization/management/executive-board"});
+    toolbarContainer.setAccessPermissions(new String[]{"*:/platform/administrators", "*:/organization/management/executive-board"});
     
     Container starToolBarPortletContainer = new Container();
     starToolBarPortletContainer.setId("StarToolBarPortlet");
