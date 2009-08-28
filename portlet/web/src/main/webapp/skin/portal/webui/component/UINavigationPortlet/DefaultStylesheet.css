@@ -25,15 +25,17 @@
 }
 
 .UINavigationPortlet .UINavigationBar .LeftNavigationBar {
-	background: url('DefaultSkin/background/LeftNavigation.gif') no-repeat left;
+	background: url('DefaultSkin/background/LeftNavigation.gif') no-repeat left top;
 	padding-left: 3px; /* orientation=lt */
 	padding-right: 3px; /* orientation=rt */
+	height: 32px
 }
 
 .UINavigationPortlet .UINavigationBar .RightNavigationBar {
-	background: url('DefaultSkin/background/RightNavigation.gif') no-repeat right;
+	background: url('DefaultSkin/background/RightNavigation.gif') no-repeat right top;
 	padding-right: 3px; /* orientation=lt */
 	padding-left: 3px; /* orientation=rt */
+	height: 32px
 }
 
 .UINavigationPortlet .UINavigationBar .MiddleNavigationBar {
