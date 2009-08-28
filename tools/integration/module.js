@@ -21,6 +21,9 @@ function getModule(params) {
   module.component.gifbackport = 
     new Project("org.exoplatform.portal", "exo.portal.component.gifbackport", "jar", module.version) ;
 
+  module.component.common = 
+    new Project("org.exoplatform.portal", "exo.portal.component.common", "jar", module.version);
+
   module.component.pc = 
     new Project("org.exoplatform.portal", "exo.portal.component.pc", "jar", module.version).
     addDependency(new Project("javax.portlet", "portlet-api", "jar", "2.0")).
@@ -76,6 +79,7 @@ function getModule(params) {
 
   module.webui.portal = 
     new Project("org.exoplatform.portal", "exo.portal.webui.portal", "jar", module.version).
+    addDependency(module.component.common) .
     addDependency(module.component.resources) .
     addDependency(module.component.gifbackport) .
     addDependency(module.component.pc) .
