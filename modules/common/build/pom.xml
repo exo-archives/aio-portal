@@ -6,11 +6,11 @@
       <version>1.0.0</version>
    </parent>
    <modelVersion>4.0.0</modelVersion>
-   <groupId>org.jboss.portal.common</groupId>
+   <groupId>org.gatein.common</groupId>
    <artifactId>module-parent</artifactId>
    <packaging>pom</packaging>
    <name>JBoss Portal Modules Common</name>
-   <version>1.2.3</version>
+   <version>3.0.0-SNAPSHOT</version>
    <url>http://labs.jboss.com/jbossportal</url>
 
    <properties>

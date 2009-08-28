@@ -21,27 +21,27 @@
       <version>2.6-int-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>org.jboss.portal.common</groupId>
+      <groupId>org.gatein.common</groupId>
       <artifactId>common-common</artifactId>
-      <version>1.2.3</version>
+      <version>${org.gatein.common.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.jboss.portal.portlet</groupId>
+      <groupId>org.gatein.pc</groupId>
       <artifactId>portlet-api</artifactId>
       <version>${org.gatein.pc.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.jboss.portal.portlet</groupId>
+      <groupId>org.gatein.pc</groupId>
       <artifactId>portlet-portlet</artifactId>
       <version>${org.gatein.pc.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.jboss.portal.portlet</groupId>
+      <groupId>org.gatein.pc</groupId>
       <artifactId>portlet-mc</artifactId>
       <version>${org.gatein.pc.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.jboss.portal.portlet</groupId>
+      <groupId>org.gatein.pc</groupId>
       <artifactId>portlet-federation</artifactId>
       <version>${org.gatein.pc.version}</version>
     </dependency>

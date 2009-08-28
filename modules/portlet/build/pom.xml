@@ -16,9 +16,9 @@
       <version>1.0.0</version>
    </parent>
    <modelVersion>4.0.0</modelVersion>
-   <groupId>org.jboss.portal.portlet</groupId>
+   <groupId>org.gatein.pc</groupId>
    <artifactId>module-parent</artifactId>
-   <version>2.0.8</version>
+   <version>3.0.0-SNAPSHOT</version>
    <packaging>pom</packaging>
    <name>JBoss Portal Portlet Module</name>
    <description>JBoss Portal Portlet Module</description>
@@ -33,8 +33,8 @@
       <version.jboss-logging>2.0.4.GA</version.jboss-logging>
       <version.jbossxb>2.0.0.GA</version.jbossxb>
       <version.jboss-remoting>2.2.1.GA</version.jboss-remoting>
-      <version.jboss.portal.common>1.2.3</version.jboss.portal.common>
-      <version.jboss.portal.web>1.2.3</version.jboss.portal.web>
+      <version.jboss.portal.common>3.0.0-SNAPSHOT</version.jboss.portal.common>
+      <version.jboss.portal.web>3.0.0-SNAPSHOT</version.jboss.portal.web>
       <version.jboss.unit>1.2.3</version.jboss.unit>
       <version.log4j>1.2.14</version.log4j>
       <version.apache.commons-logging>1.1.1</version.apache.commons-logging>
@@ -193,28 +193,28 @@
          </dependency>
 
          <dependency>
-            <groupId>org.jboss.portal.common</groupId>
+            <groupId>org.gatein.common</groupId>
             <artifactId>common-common</artifactId>
             <version>${version.jboss.portal.common}</version>
          </dependency>
          <dependency>
-            <groupId>org.jboss.portal.common</groupId>
+            <groupId>org.gatein.common</groupId>
             <artifactId>common-portal</artifactId>
             <version>${version.jboss.portal.common}</version>
          </dependency>
          <dependency>
-            <groupId>org.jboss.portal.common</groupId>
+            <groupId>org.gatein.common</groupId>
             <artifactId>common-mc</artifactId>
             <version>${version.jboss.portal.common}</version>
          </dependency>
          <dependency>
-            <groupId>org.jboss.portal.common</groupId>
+            <groupId>org.gatein.common</groupId>
             <artifactId>common-mc</artifactId>
             <version>${version.jboss.portal.common}</version>
          </dependency>
 
          <dependency>
-            <groupId>org.jboss.portal.web</groupId>
+            <groupId>org.gatein.wci</groupId>
             <artifactId>web-web</artifactId>
             <version>${version.jboss.portal.web}</version>
          </dependency>

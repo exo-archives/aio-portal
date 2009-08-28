@@ -48,14 +48,14 @@ function getModule(params) {
   module.component.portal  =
     new Project("org.exoplatform.portal", "exo.portal.component.portal", "jar", module.version).
     addDependency(module.component.web).
-    addDependency(new Project("org.jboss.portal.portlet", "portlet-api", "jar", "2.0.8")).
-        addDependency(new Project("org.jboss.portal.portlet", "portlet-portlet", "jar", "2.0.8")).
-        addDependency(new Project("org.jboss.portal.portlet", "portlet-mc", "jar", "2.0.8")).
-        addDependency(new Project("org.jboss.portal.portlet", "portlet-controller", "jar", "2.0.8")).
-        addDependency(new Project("org.jboss.portal.portlet", "portlet-federation", "jar", "2.0.8")).
-        addDependency(new Project("org.jboss.portal.web", "web-web", "jar", "1.2.3")).
-        addDependency(new Project("org.jboss.portal.common", "common-common", "jar", "1.2.3")).
-        addDependency(new Project("org.jboss.portal.common", "common-portal", "jar", "1.2.3")).
+    addDependency(new Project("org.gatein.pc", "portlet-api", "jar", "3.0.0-SNAPSHOT")).
+        addDependency(new Project("org.gatein.pc", "portlet-portlet", "jar", "3.0.0-SNAPSHOT")).
+        addDependency(new Project("org.gatein.pc", "portlet-mc", "jar", "3.0.0-SNAPSHOT")).
+        addDependency(new Project("org.gatein.pc", "portlet-controller", "jar", "3.0.0-SNAPSHOT")).
+        addDependency(new Project("org.gatein.pc", "portlet-federation", "jar", "3.0.0-SNAPSHOT")).
+        addDependency(new Project("org.gatein.wci", "web-web", "jar", "3.0.0-SNAPSHOT")).
+        addDependency(new Project("org.gatein.common", "common-common", "jar", "3.0.0-SNAPSHOT")).
+        addDependency(new Project("org.gatein.common", "common-portal", "jar", "3.0.0-SNAPSHOT")).
         addDependency(new Project("log4j", "log4j", "jar", "1.2.14")).
         addDependency(new Project("org.jboss", "jbossxb", "jar", "2.0.0.GA")).
         addDependency(new Project("org.jboss.logging", "jboss-logging-spi", "jar", "2.0.5.GA")).

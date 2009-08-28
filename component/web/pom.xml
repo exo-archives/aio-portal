@@ -32,35 +32,35 @@
     </dependency>
 
     <dependency>
-      <groupId>org.jboss.portal.portlet</groupId>
+      <groupId>org.gatein.pc</groupId>
       <artifactId>portlet-api</artifactId>
       <version>${org.gatein.pc.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.jboss.portal.portlet</groupId>
+      <groupId>org.gatein.pc</groupId>
       <artifactId>portlet-portlet</artifactId>
       <version>${org.gatein.pc.version}</version>
     </dependency>
 	<!-- just to get those deps into the repo -->
 	<dependency>
-		<groupId>org.jboss.portal.portlet</groupId>
+		<groupId>org.gatein.pc</groupId>
 		<artifactId>portlet-controller</artifactId>
 		<version>${org.gatein.pc.version}
 		</version>
 	</dependency>
 	<dependency>
-		<groupId>org.jboss.portal.portlet</groupId>
+		<groupId>org.gatein.pc</groupId>
 		<artifactId>portlet-portal</artifactId>
 		<version>${org.gatein.pc.version}</version>
 	</dependency>
 
 	<dependency>
-		<groupId>org.jboss.portal.portlet</groupId>
+		<groupId>org.gatein.pc</groupId>
 		<artifactId>portlet-federation</artifactId>
 		<version>${org.gatein.pc.version}</version>
 	</dependency>
 	<dependency>
-		<groupId>org.jboss.portal.portlet</groupId>
+		<groupId>org.gatein.pc</groupId>
 		<artifactId>portlet-mc</artifactId>
 		<version>${org.gatein.pc.version}
 		</version>

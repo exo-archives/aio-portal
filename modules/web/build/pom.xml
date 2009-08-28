@@ -16,9 +16,9 @@
     <version>1.0.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jboss.portal.web</groupId>
+  <groupId>org.gatein.wci</groupId>
   <artifactId>module-parent</artifactId>
-  <version>1.2.3</version>
+  <version>3.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>JBoss Portal Test Module</name>
   <url>http://www.jboss.com/products/jbossmc</url>
@@ -32,7 +32,7 @@
       <version.jboss-logging>2.0.4.GA</version.jboss-logging>
       <version.apache.log4j>1.2.14</version.apache.log4j>
       <version.jboss-remoting>2.5.0.GA</version.jboss-remoting>
-      <version.jboss.portal.common>1.2.3</version.jboss.portal.common>
+      <version.jboss.portal.common>3.0.0-SNAPSHOT</version.jboss.portal.common>
       <version.jboss.unit>1.2.2</version.jboss.unit>
       <version.jboss-reflect>2.0.2.GA</version.jboss-reflect>
       <version.apache.commons-logging>1.1.0.jboss</version.apache.commons-logging>
@@ -113,12 +113,12 @@
             <version>${version.junit}</version>
          </dependency>
          <dependency>
-            <groupId>org.jboss.portal.common</groupId>
+            <groupId>org.gatein.common</groupId>
             <artifactId>common-common</artifactId>
             <version>${version.jboss.portal.common}</version>
          </dependency>
          <dependency>
-            <groupId>org.jboss.portal.common</groupId>
+            <groupId>org.gatein.common</groupId>
             <artifactId>common-mc</artifactId>
             <version>${version.jboss.portal.common}</version>
          </dependency>

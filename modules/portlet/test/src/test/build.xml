@@ -417,6 +417,16 @@
 
    <target name="package-tests">
 
+      <echo>------------------------</echo>
+      <echo>------------------------</echo>
+      <echo>------------------------</echo>
+      <echo>------------------------</echo>
+      <echo>------------------------</echo>
+      <echo>------------------------</echo>
+      <echo>------------------------</echo>
+      <echo>dependency.portal-portlet-tests.test-jar=${dependency.portal-portlet-tests.test-jar}</echo>
+      <echo>dependency.portal-portlet-mc.jar=${dependency.portal-portlet-mc.jar}</echo>
+      
       <unjar src="${dependency.portal-portlet-tests.test-jar}" dest="${test.temp.portlet}"/>
 
       <!--Portlet test framework lib jar-->
