@@ -23,7 +23,7 @@
 
 .UIHorizontalTabs .UITab .NormalNavigationTab {
 	line-height: 26px; 
-	margin: 6px 2px 0px 0px; 
+	margin: 6px 8px 0px 0px; 
 }
 
 .UIHorizontalTabs .UITab .NormalNavigationTab .LeftTab {
@@ -63,7 +63,7 @@
 
 .UIHorizontalTabs .UITab .HighlightNavigationTab {
 	line-height: 26px;  
-	margin: 6px 2px 0px 0px; 
+	margin: 6px 8px 0px 0px; 
 }
 
 .UIHorizontalTabs .UITab .HighlightNavigationTab .LeftTab {
@@ -106,7 +106,7 @@
 
 .UIHorizontalTabs .UITab .SelectedNavigationTab {
 	line-height: 26px; 
-	margin: 6px 2px 0px 0px; 
+	margin: 6px 8px 0px 0px; 
 }
 
 .UIHorizontalTabs .UITab .SelectedNavigationTab .LeftTab {
