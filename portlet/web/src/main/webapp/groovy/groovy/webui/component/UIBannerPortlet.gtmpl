@@ -26,7 +26,7 @@
 									
 									<div class="Name">									
 										<%=_ctx.appRes("UILogged.note.loggedUser")%>
-										<a style="padding: 0px 10px 0px 2px; color: red; font-weight:bold; cursor:pointer;" href="$accountSetting">
+										<a style="padding: 0px 10px 0px 2px; color: #e66a1f; font-weight:bold; cursor:pointer;" href="$accountSetting">
 											<% if(prContext.getRemoteUser() != null) {
 													ConversationState state = ConversationState.getCurrent();
 													User user = state.getAttribute(CacheUserProfileFilter.USER_PROFILE);

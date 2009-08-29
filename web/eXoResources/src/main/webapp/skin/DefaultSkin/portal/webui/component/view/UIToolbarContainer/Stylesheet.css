@@ -98,10 +98,6 @@
 .UIToolbarContainer .MenuItemContainer {	
 	position: absolute;
 	border: 1px solid #9e9fa3;
-	background: #f5f9fa;
-	z-index: 100;
-	opacity: 0.9;
-	filter: alpha(opacity=90);
 }
 
 .UIToolbarContainer .TitleBar {
@@ -112,13 +108,17 @@
 	font-weight: bold;
 	padding: 0px 5px;
 	white-space: nowrap;
+	opacity: 0.9;
+	filter: alpha(opacity=90);
 }
 
 .UIToolbarContainer .MenuItem {	
+	background: #f5f9fa;
+	opacity: 0.9;
+	filter: alpha(opacity=90);
 	height: 28px;
 	line-height: 28px;
-	border-bottom: 1px dashed white;
-	width: 98.5%;
+	width: 100%;
 }
 
 .UIToolbarContainer .MenuItem .MenuItemHover {
