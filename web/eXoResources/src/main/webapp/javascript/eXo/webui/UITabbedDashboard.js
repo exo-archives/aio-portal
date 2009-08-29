@@ -52,6 +52,8 @@ eXo.webui.UITabbedDashboard = {
 		inputElement.type = "text";
 		inputElement.id = nodeIndex;
 		inputElement.name = currentContent; // To store old value
+		inputElement.focus();
+		inputElement.select();
 		inputElement.value = currentContent;
 		inputElement.style.border = "1px solid #b7b7b7";
 		inputElement.onkeypress = eXo.webui.UITabbedDashboard.renameTabLabel;
@@ -80,7 +82,12 @@ eXo.webui.UITabbedDashboard = {
 		}
 		//If user presses on ESCAPE button
 		else if(keyNum == 27){
-				
+			var DOMUtil = eXo.core.DOMUtil;
+			var inputElement = eXo.core.Browser.getEventSource(e);
+			var editingTabElement = DOMUtil.findAncestorByClass(inputElement, "UITab GrayTabStyle");
+			
+			//Remove the editing tab
+			editingTabElement.parentNode.removeChild(editingTabElement);
 		}
 	},
 	
@@ -89,16 +96,19 @@ eXo.webui.UITabbedDashboard = {
 		var tabContainer = addTabElement.parentNode;
 		var tabElements = DOMUtil.findChildrenByClass(tabContainer, "div", "UITab GrayTabStyle");
 		var portletFrag = DOMUtil.findAncestorByClass(tabContainer, "PORTLET-FRAGMENT");
-		var selectingTab = DOMUtil.findFirstDescendantByClass(tabContainer, "div", "SelectedTab").parentNode;
+		var selectedTabElement = DOMUtil.findFirstDescendantByClass(tabContainer, "div", "SelectedTab");
 		var buttonElement = DOMUtil.findFirstDescendantByClass(tabContainer, "div", "AddDashboard").parentNode;
 		
-		var newTabElement = selectingTab.cloneNode(true);
+		var newTabElement = selectedTabElement.parentNode.cloneNode(true);
+		//selectedTabElement.className = "NormalTab";
 		tabContainer.insertBefore(newTabElement, buttonElement);	
 		
 		var inputElement = document.createElement("input");
 		inputElement.type = "text";
+		inputElement.focus();
+		inputElement.select();
 		inputElement.value = "Tab_" + tabElements.length;
-		inputElement.style.border = "medium none";
+		inputElement.style.border = "1px solid #b7b7b7";
 		inputElement.onkeypress = eXo.webui.UITabbedDashboard.createDashboardPage;
 		inputElement.id = portletFrag.parentNode.id; //Store the id of the portlet here
 		
