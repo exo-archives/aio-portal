@@ -18,6 +18,7 @@ package org.exoplatform.portal.webui.page;
 
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.webui.portal.UIPortal;
+import org.exoplatform.portal.webui.portal.UIPortalComposer;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
@@ -140,6 +141,8 @@ public abstract class UIPageWizard extends UIWizard {
       pcontext.setFullRender(true);
 
       UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+      uiWorkingWS.removeChild(UIPortalComposer.class);
+      uiWorkingWS.setRenderedChild(UIPortalApplication.UI_VIEW_WS_ID);
       pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
     }
   }

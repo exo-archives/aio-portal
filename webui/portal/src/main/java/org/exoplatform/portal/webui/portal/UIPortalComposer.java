@@ -183,6 +183,9 @@ public class UIPortalComposer extends UIContainer {
 		UIWorkingWorkspace uiWorkingWS = uiApp
 				.findFirstComponentOfType(UIWorkingWorkspace.class);
 		List<UIComponent> children = uiWorkingWS.getChildren();
+		if(!uiWorkingWS.getChild(UIPortalToolPanel.class).isRendered()) {
+			children = uiWorkingWS.findFirstComponentOfType(UIEditInlineWorkspace.class).getChildren();
+		}
 		for (UIComponent child : children) {
 			if (!child.isRendered()
 					|| child.getClass().equals(UIPortalComposer.class))
