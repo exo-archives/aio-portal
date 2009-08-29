@@ -171,11 +171,11 @@ public class UIPortalComponentActionListener {
       }
 
       UIWorkingWorkspace uiWorkingWS = uiApp.getChild(UIWorkingWorkspace.class);
-      UIEditInlineWorkspace uiEditWS = uiWorkingWS.getChild(UIEditInlineWorkspace.class);
-      UIComponent uiWorking = uiEditWS.getUIComponent();
-//      UIComponent uiWorking = uiWorkingWS.getChild(UIPortalToolPanel.class);
-//      if (!uiWorking.isRendered())
-//      	uiWorking = uiApp.findFirstComponentOfType(UIPortal.class);
+      UIComponent uiWorking = uiWorkingWS.getChild(UIPortalToolPanel.class);
+      if (!uiWorking.isRendered()) {
+      	UIEditInlineWorkspace uiEditWS = uiWorkingWS.getChild(UIEditInlineWorkspace.class);
+      	uiWorking = uiEditWS.getUIComponent();
+      }
 
       String sourceId = pcontext.getRequestParameter("srcID");
       UIComponent uiSource = uiWorking.findComponentById(sourceId);

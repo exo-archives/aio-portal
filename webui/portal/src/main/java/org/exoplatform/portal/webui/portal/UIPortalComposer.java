@@ -243,23 +243,7 @@ public class UIPortalComposer extends UIContainer {
 			UIPortal uiEditPortal = (UIPortal) uiEditWS.getUIComponent();
 			UIPortal uiPortal = (UIPortal) siteBody.getUIComponent();
 			
-//			UISiteBody portalParent = uiPortal.getParent();
-//			UIPortal backupPortal = uiWorkingWS.getBackupUIPortal();
-
 			String uri = null;
-//			if(backupPortal != null) portalParent.setUIComponent(backupPortal);
-//			else {
-//				UserPortalConfigService configService = uiPortalApp
-//						.getApplicationComponent(UserPortalConfigService.class);
-//				String remoteUser = prContext.getRemoteUser();
-//				String ownerUser = prContext.getPortalOwner();
-//				uri = (uiPortal.getSelectedNode() != null) ? uiPortal.getSelectedNode().getUri() : null;
-//				UserPortalConfig userPortalConfig = configService.getUserPortalConfig(ownerUser, remoteUser);
-//				UIPortal newPortal = uiWorkingWS.createUIComponent(UIPortal.class, null, null);
-//				PortalDataMapper.toUIPortal(newPortal, userPortalConfig);
-//				portalParent.setUIComponent(newPortal);
-//			}
-//			uiPortal = (UIPortal) portalParent.getUIComponent();
 			if(uiPortal == null) {
 				uri = (uiEditPortal.getSelectedNode() != null) ? uiEditPortal.getSelectedNode().getUri() : null;
 				UserPortalConfigService configService = uiPortalApp
@@ -283,6 +267,7 @@ public class UIPortalComposer extends UIContainer {
 			PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(
 					uiPortal,PageNodeEvent.CHANGE_PAGE_NODE, uri) ;
 			uiPortal.broadcast(pnevent, Event.Phase.PROCESS) ;
+			prContext.addUIComponentToUpdateByAjax(uiWorkingWS);
 		}
 
 	}
@@ -306,15 +291,6 @@ public class UIPortalComposer extends UIContainer {
 			UIPortal uiPortal = (UIPortal) siteBody.getUIComponent();
 			
 			String uri = null;
-//			if(!uiPortal.getName().equals(editPortal.getName())) uiSiteBody.setUIComponent(editPortal);
-//			else {
-//				uri = (uiPortal.getSelectedNode() != null) ? uiPortal.getSelectedNode().getUri() : null;
-//				PortalConfig portalConfig = PortalDataMapper.buildModelObject(editPortal);
-//				UserPortalConfig userConfig = new UserPortalConfig(portalConfig, editPortal.getNavigations());
-//				UIPortal newPortal = uiWorkingWS.createUIComponent(UIPortal.class, null, null);
-//				PortalDataMapper.toUIPortal(newPortal, userConfig);
-//				uiSiteBody.setUIComponent(newPortal);
-//			}
 			if(uiPortal == null) siteBody.setUIComponent(editPortal);
 			uiEditWS.setUIComponent(null);
 			uiPortal = (UIPortal) siteBody.getUIComponent();
@@ -324,10 +300,12 @@ public class UIPortalComposer extends UIContainer {
 			else
 				uiPortalApp.setSessionOpen(false);
 			uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
+			uiWorkingWS.setRenderedChild(UIPortalApplication.UI_VIEW_WS_ID);
 			
 			if(uri == null) uri = uiPortal.getSelectedNode() != null ? uiPortal.getSelectedNode().getUri() : null;
 			PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal,PageNodeEvent.CHANGE_PAGE_NODE, uri);
 			uiPortal.broadcast(pnevent, Event.Phase.PROCESS);
+			prContext.addUIComponentToUpdateByAjax(uiWorkingWS);
 		}
 
 	}
