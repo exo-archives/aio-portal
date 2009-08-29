@@ -46,14 +46,19 @@
 	padding: 0 2px;
 }
 
-.UITabPaneDashboard .UIHorizontalTabs .UITab .Lable {
+.UITabPaneDashboard .UIHorizontalTabs .GrayTabStyle .NormalTab .MiddleTab,
+.UITabPaneDashboard .UIHorizontalTabs .GrayTabStyle .SelectedTab .MiddleTab {
+	padding: 0px;
+}
+
+.UITabPaneDashboard .UIHorizontalTabs .UITab a {
+	margin: 3px 10px;
 }
 
 .UITabPaneDashboard .UIHorizontalTabs .UITab .CloseIcon {
 	background: url('background/IconClose.gif') no-repeat center;
 	width: 16px; height: 16px;
 	cursor: pointer;
-	margin: 3px 0px 0px 30px;
 }
 
 .UITabPaneDashboard .UIHorizontalTabs .AddDashboard {
@@ -216,7 +221,7 @@
 /*----------------------UIGadgetsContainer-------------------*/
 
 .UIDashboard .UIGadget {
-	background: #fbfafa;
+	background: white;
 	border: 1px dashed #ababab;
 	padding: 5px 0px;
 }

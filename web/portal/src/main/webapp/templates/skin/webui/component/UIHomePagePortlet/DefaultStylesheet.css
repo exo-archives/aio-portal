@@ -5,22 +5,22 @@
 
 .UIHomePagePortlet {	
 	background: white;
-	padding: 8px;
+	padding: 8px 8px 0px;
 	width: 948px;
 }
 
 .UIHomePagePortlet .TRContainer .PortletDecoration {	
-	background-color: #ffffff;
 	padding-top: 7px;
-	border: 1px solid #C6C6C6;	
 }
 
 .UIHomePagePortlet .TRContainer {
 	width: 210px;
+	height: 390px;
 	float: right; /* orientation=lt */
 	float: left; /* orientation=rt */
-	border: 1px solid #ffffff;
+	border: 1px solid #C6C6C6;	
 	text-align: center;
+	background: url('DefaultSkin/background/BgRightColumn.gif') repeat-x bottom center;
 }
 
 .UIHomePagePortlet .TRContainer a {
@@ -45,7 +45,7 @@
 	background: url("DefaultSkin/background/HomePagePortlet.gif") no-repeat left -978px;
 	height: 65px;
 	width: 50px;
-	margin: 0 auto;
+	margin: 20px auto;
 	cursor: pointer;
 }
 
@@ -61,10 +61,9 @@
 	background: url("DefaultSkin/background/HomePagePortlet.gif") no-repeat left -1209px;
 	height: 70px;
 	width: 50px;
-	margin: 0 auto;
+	margin: 20px auto;
 	cursor: pointer;
 }
-
 
 .UIHomePagePortlet  .TLContainer {
 	border: 1px solid #ffffff;
@@ -164,8 +163,8 @@ _html .UIHomePagePortlet .HomePortletContent .RightAccountsContainer {
 	width: 120px;
 	float: left; /* orientation=lt */
 	float: right; /* orientation=rt */
-	padding: 0px 34px 0px 0px; /* orientation=lt */
-	padding: 0px 0px 0px 34px; /* orientation=rt */
+	padding: 0px 42px 0px 0px; /* orientation=lt */
+	padding: 0px 0px 0px 42px; /* orientation=rt */
 }
 
 .UIHomePagePortlet .HomePortletContent .AdministratorUser {
@@ -193,7 +192,7 @@ _html .UIHomePagePortlet .HomePortletContent .RightAccountsContainer {
 	width: 9px;
 	float: left; /* orientation=lt */
 	float: right; /* orientation=rt */
-	padding: 0px 10px 0px;
+	padding: 0px 4px 0px;
 	background: url('DefaultSkin/background/HomePagePortlet.gif') no-repeat left -675px; /* orientation=lt */
 	background: url('DefaultSkin/background/HomePagePortlet-rt.gif') no-repeat right -675px; /* orientation=rt */
 }
