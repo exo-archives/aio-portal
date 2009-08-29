@@ -80,10 +80,6 @@ public class UIPortalComponent extends UIContainer {
   public String getTitle() { return title_ ; }
   public void   setTitle(String s) { title_ = s ; } 
   
-  public int getMode() { return mode_ ; }
-  public void setMode(int mode) {  mode_ = mode ; }
-  public boolean isEditMode(){ return mode_ == COMPONENT_EDIT_MODE; }
-  
   public boolean isShowEditControl(){ return showEditControl_; }
   public void setShowEditControl(boolean show) { showEditControl_ = show; }
   

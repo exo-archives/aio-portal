@@ -74,7 +74,6 @@ public abstract class UIPageWizard extends UIWizard {
     PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext();
 
     UIPortal uiPortal = Util.getUIPortal();
-    uiPortal.setMode(UIPortal.COMPONENT_VIEW_MODE);
     uiPortal.setRenderSibbling(UIPortal.class);
     pcontext.setFullRender(true);
   }
@@ -137,7 +136,6 @@ public abstract class UIPageWizard extends UIWizard {
       PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext();
 
       UIPortal uiPortal = Util.getUIPortal();
-      uiPortal.setMode(UIPortal.COMPONENT_VIEW_MODE);
       uiPortal.setRenderSibbling(UIPortal.class);
       pcontext.setFullRender(true);
 

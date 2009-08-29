@@ -180,7 +180,6 @@ public class UIDesktopPage extends UIPage {
     public void execute(Event<UIPage> event) throws Exception {
       String uri  = event.getRequestContext().getRequestParameter(OBJECTID);
       UIPortal uiPortal = Util.getUIPortal();
-      uiPortal.setMode(UIPortal.COMPONENT_VIEW_MODE);
       UIPageBody uiPageBody = uiPortal.findFirstComponentOfType(UIPageBody.class);
       if(uiPageBody != null) {
         if(uiPageBody.getMaximizedUIComponent() != null) {
