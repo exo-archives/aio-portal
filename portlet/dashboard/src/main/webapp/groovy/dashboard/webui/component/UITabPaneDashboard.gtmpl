@@ -63,9 +63,9 @@
 										</div>
 									<%} %>	
 						<% } %>
-										<a  href="<%= uicomponent.url("AddDashboard"); %>" >
+										<div  onclick="eXo.webui.UITabbedDashboard.createTabDashboard(this)" >
 												<div class="AddDashboard"><span></span></div>				
-										</a>		
+										</div>		
 				</div>
 		</div>						
 </div>

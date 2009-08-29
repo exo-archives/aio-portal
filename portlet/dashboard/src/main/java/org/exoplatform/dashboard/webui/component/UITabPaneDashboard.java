@@ -128,19 +128,24 @@ public class UITabPaneDashboard extends UIContainer{
 		}
 	}
 	
-	public String createNewPageNode(String nodeName){
+	public String createNewPageNode(String nodeLabel){
 		try{
-			if(nodeName == null){
-				nodeName = "Tab_"+getCurrentNumberOfTabs();
+			if(nodeLabel == null || nodeLabel.length() == 0){
+				nodeLabel = "Tab_"+getCurrentNumberOfTabs();
 			}
 			Page page = configService.createPageTemplate(UITabPaneDashboard.PAGE_TEMPLATE,pageNavigation.getOwnerType(),pageNavigation.getOwnerId());
-			page.setTitle(nodeName);
-			page.setName(nodeName);
+			page.setTitle(nodeLabel);
 			
 			PageNode pageNode = new PageNode();
-			pageNode.setName(nodeName);
-			pageNode.setLabel(nodeName);
-			pageNode.setUri(nodeName);
+			pageNode.setLabel(nodeLabel);
+			String uniqueNodeName = nodeLabel.toLowerCase().replace(' ', '_');
+			if(nameExisted(uniqueNodeName)){
+				uniqueNodeName = uniqueNodeName + "_" + System.currentTimeMillis();
+			}
+			
+			page.setName(uniqueNodeName);
+			pageNode.setName(uniqueNodeName);
+			pageNode.setUri(uniqueNodeName);
 			pageNode.setPageReference(page.getPageId());
 				
 			pageNavigation.addNode(pageNode);
@@ -149,11 +154,20 @@ public class UITabPaneDashboard extends UIContainer{
 			configService.create(page);
 			configService.update(pageNavigation);
 			
-			return nodeName;
+			return uniqueNodeName;
 		}catch(Exception ex){
 			logger.info("Could not create page template",ex);
 			return null;
 		}
+	}
+	
+	private boolean nameExisted(String nodeName){
+		for(PageNode node : pageNavigation.getNodes()){
+			if(node.getName().equals(nodeName)){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public String renamePageNode(int nodeIndex, String newNodeLabel){
@@ -167,6 +181,9 @@ public class UITabPaneDashboard extends UIContainer{
 			renamedNode.setLabel(newNodeLabel);
 		
 			String newNodeName = newNodeLabel.toLowerCase().replace(' ','_');
+			if(nameExisted(newNodeName)){
+				newNodeName = newNodeName + "_" + System.currentTimeMillis();
+			}
 			renamedNode.setName(newNodeName);
 			renamedNode.setUri(newNodeName);
 			
@@ -221,7 +238,9 @@ public class UITabPaneDashboard extends UIContainer{
 	static public class AddDashboardActionListener extends EventListener<UITabPaneDashboard>{
 		public void execute(Event<UITabPaneDashboard> event) throws Exception {
 			UITabPaneDashboard tabPane = event.getSource();
-			String newNodeName = tabPane.createNewPageNode(null);
+			WebuiRequestContext context = event.getRequestContext();
+			String newTabLabel = context.getRequestParameter(UIComponent.OBJECTID);
+			String newNodeName = tabPane.createNewPageNode(newTabLabel);
 			
 			//If new node is created with success, then redirect to it
 			if(newNodeName != null){

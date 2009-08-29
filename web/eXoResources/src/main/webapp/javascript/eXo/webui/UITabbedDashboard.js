@@ -8,7 +8,7 @@ eXo.webui.UITabbedDashboard = {
 		}
 		var keyNum = e.keyCode;
 		
-		//If user presses on ENTER button, then rename the btton
+		//If user presses on ENTER button, then rename the tab label
 		if(keyNum == 13){
 			var inputElement = eXo.core.Browser.getEventSource(e);
 			var newTabLabel = inputElement.value;
@@ -56,5 +56,54 @@ eXo.webui.UITabbedDashboard = {
 		inputElement.style.border = "medium none";
 		inputElement.onkeypress = eXo.webui.UITabbedDashboard.renameTabLabel;
 		selectedElement.parentNode.replaceChild(inputElement, selectedElement);
+	},
+	
+	createDashboardPage : function(e){
+		if(!e){
+			e = window.event;
+		}	
+		var keyNum = e.keyCode;
+		
+		//If user presses on ENTER button
+		if(keyNum == 13){
+			var inputElement = eXo.core.Browser.getEventSource(e);
+			var newTabLabel = inputElement.value;
+			
+			//Send request to server to change node name
+			var href = eXo.env.server.portalBaseURL + "?portal:componentId=" + inputElement.id;
+			href += "&portal:type=action";
+			href += "&portal:isSecure=false";
+			href += "&uicomponent=UITabPaneDashboard";
+			href += "&op=AddDashboard";
+			href += "&objectId=" + newTabLabel;
+			window.location = href;
+		}
+		//If user presses on ESCAPE button
+		else if(keyNum == 27){
+				
+		}
+	},
+	
+	createTabDashboard : function(addTabElement){
+		var DOMUtil = eXo.core.DOMUtil;
+		var tabContainer = addTabElement.parentNode;
+		var tabElements = DOMUtil.findChildrenByClass(tabContainer, "div", "UITab GrayTabStyle");
+		var portletFrag = DOMUtil.findAncestorByClass(tabContainer, "PORTLET-FRAGMENT");
+		var selectingTab = DOMUtil.findFirstDescendantByClass(tabContainer, "div", "SelectedTab").parentNode;
+		var buttonElement = DOMUtil.findFirstDescendantByClass(tabContainer, "div", "AddDashboard").parentNode;
+		
+		var newTabElement = selectingTab.cloneNode(true);
+		tabContainer.insertBefore(newTabElement, buttonElement);	
+		
+		var inputElement = document.createElement("input");
+		inputElement.type = "text";
+		inputElement.value = "Tab_" + tabElements.length;
+		inputElement.style.border = "medium none";
+		inputElement.onkeypress = eXo.webui.UITabbedDashboard.createDashboardPage;
+		inputElement.id = portletFrag.parentNode.id; //Store the id of the portlet here
+		
+		var spanElement = DOMUtil.findDescendantsByTagName(newTabElement, "span")[0];
+		spanElement.parentNode.replaceChild(inputElement, spanElement);
+				
 	}
 }
