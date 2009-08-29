@@ -319,6 +319,8 @@ UIPortal.prototype.showLayoutModeForPage = function(control) {
 };
 
 UIPortal.prototype.showViewMode = function() {
+  var uiWorkingWS = document.getElementById("UIWorkingWorkspace");
+  var isRTL = eXo.core.I18n.isRT();
   var portal = this.getUIPortal() ;
   this.switchLayoutModeToViewMode(portal, true) ;
   this.showUIComponentControl(portal, false) ;
@@ -346,8 +348,8 @@ UIPortal.prototype.showViewMode = function() {
       mask.style.display = "block";
       mask.style.height = component.offsetHeight + "px";
       mask.style.width  = component.offsetWidth + "px";
-      mask.style.top = eXo.core.Browser.findPosY(component) + "px";
-      mask.style.left = eXo.core.Browser.findPosX(component) + "px";
+      mask.style.top = eXo.core.Browser.findPosYInContainer(component, uiWorkingWS) + "px";
+      mask.style.left = eXo.core.Browser.findPosXInContainer(component, uiWorkingWS, isRTL) + "px";
     } else if(mask) {
     	mask.style.display = "none";
     }
@@ -369,8 +371,8 @@ UIPortal.prototype.showViewMode = function() {
 	  	if(!(eXo.portal.portalMode%2)) {
 	  		mask.style.height = pageBodyBlock.offsetHeight + "px";
 	  		mask.style.width = pageBodyBlock.offsetWidth + "px";
-	  		mask.style.top = eXo.core.Browser.findPosY(pageBodyBlock) + "px";
-	      mask.style.left = eXo.core.Browser.findPosX(pageBodyBlock) + "px";
+	  		mask.style.top = eXo.core.Browser.findPosYInContainer(pageBodyBlock, uiWorkingWS) + "px";
+	      mask.style.left = eXo.core.Browser.findPosXInContainer(pageBodyBlock, uiWorkingWS, isRTL) + "px";
 	  		mask.style.display = "block";
 	  	} else if(mask) {
 	  		mask.style.display = "none";
