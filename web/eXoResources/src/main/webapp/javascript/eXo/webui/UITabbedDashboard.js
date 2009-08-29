@@ -53,7 +53,7 @@ eXo.webui.UITabbedDashboard = {
 		inputElement.id = nodeIndex;
 		inputElement.name = currentContent; // To store old value
 		inputElement.value = currentContent;
-		inputElement.style.border = "medium none";
+		inputElement.style.border = "1px solid #b7b7b7";
 		inputElement.onkeypress = eXo.webui.UITabbedDashboard.renameTabLabel;
 		selectedElement.parentNode.replaceChild(inputElement, selectedElement);
 	},
