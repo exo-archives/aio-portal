@@ -286,3 +286,11 @@
 .UIStarToolBarPortlet .UITab {
     height: 30px;
 }
+
+.UIToolbarContainer .UITableColumnContainer .UITab .HighlightNavigationTab{
+	margin-top: 2px;
+}
+
+.UIToolbarContainer .UITableColumnContainer .UITab .NormalNavigationTab{
+	margin-top: 2px;
+}

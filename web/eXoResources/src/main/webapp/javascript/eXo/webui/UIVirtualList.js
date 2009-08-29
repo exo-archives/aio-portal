@@ -9,6 +9,7 @@ UIVirtualList.prototype.init = function(generateId) {
   var uicomponent = this.getUIComponent(generateId);
   if (uicomponent == null) return;
   var children = eXo.core.DOMUtil.getChildrenByTagName(uicomponent,"div");
+  alert(children);
   var appendFragment = children[1];
   //var initHeight = appendFragment.offsetHeight - 100;
   uicomponent.style.height = 300 + "px";
