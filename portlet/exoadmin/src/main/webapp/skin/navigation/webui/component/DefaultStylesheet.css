@@ -74,13 +74,7 @@
 
 .UIAddGroupNavigation {
 	background: white; 
-	border: 1px solid #b7b7b7; 
-	padding: 10px; 
-	margin: 5px;
-}
-
-.UIWindown .UIAddGroupNavigation {
-	margin: 0px;
+	padding: 0px; 
 }
 
 .UIAddGroupNavigation .AddGroupIcon {
