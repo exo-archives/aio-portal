@@ -56,6 +56,7 @@ eXo.webui.UITabbedDashboard = {
 		inputElement.select();
 		inputElement.value = currentContent;
 		inputElement.style.border = "1px solid #b7b7b7";
+		inputElement.style.width = "95px";
 		inputElement.onkeypress = eXo.webui.UITabbedDashboard.renameTabLabel;
 		selectedElement.parentNode.replaceChild(inputElement, selectedElement);
 	},
@@ -109,6 +110,7 @@ eXo.webui.UITabbedDashboard = {
 		inputElement.select();
 		inputElement.value = "Tab_" + tabElements.length;
 		inputElement.style.border = "1px solid #b7b7b7";
+		inputElement.style.width = "95px";
 		inputElement.onkeypress = eXo.webui.UITabbedDashboard.createDashboardPage;
 		inputElement.id = portletFrag.parentNode.id; //Store the id of the portlet here
 		
