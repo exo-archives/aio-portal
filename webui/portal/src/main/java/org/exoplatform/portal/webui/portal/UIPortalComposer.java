@@ -432,7 +432,6 @@ public class UIPortalComposer extends UIContainer {
 			uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
 
 			UIPortal uiPortal = Util.getUIPortal();
-			uiPortal.setMode(UIPortal.COMPONENT_VIEW_MODE);
 			uiPortal.setRenderSibbling(UIPortal.class);
 			uiWorkingWS.removeChild(UIPortalComposer.class);
 
