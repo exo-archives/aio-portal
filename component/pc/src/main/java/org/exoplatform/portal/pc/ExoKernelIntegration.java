@@ -73,7 +73,7 @@ public class ExoKernelIntegration implements Startable {
 
 
      // The portlet application deployer
-     portletApplicationRegistry = new PortletApplicationDeployer();
+     portletApplicationRegistry = new ExoPortletApplicationDeployer();
      portletApplicationRegistry.setContainerPortletInvoker(containerPortletInvoker);
 
      //Container Stack
