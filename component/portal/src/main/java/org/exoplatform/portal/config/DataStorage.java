@@ -20,6 +20,7 @@ import java.util.Comparator;
 
 import org.exoplatform.commons.utils.LazyPageList;
 import org.exoplatform.portal.application.PortletPreferences;
+import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PortalConfig;
@@ -55,6 +56,14 @@ public interface DataStorage {
    * @throws Exception
    */
   public PortalConfig getPortalConfig(String portalName) throws Exception ;
+
+  /**
+   * This method should load the PortalConfig object from db according to the portalName
+   * @param portalName
+   * @return
+   * @throws Exception
+   */
+  public PortalConfig getPortalConfig(String ownerType, String portalName) throws Exception ;
 
   /**
    * This method should remove the PortalConfig ,  all the Page that belong to the portal and the 
@@ -138,7 +147,9 @@ public interface DataStorage {
   
   public void remove(PortletPreferences portletPreferences) throws Exception ;
   
-  public  LazyPageList find(Query<?> q) throws Exception ;
+  public  <T> LazyPageList<T> find(Query<T> q) throws Exception ;
   
-  public  LazyPageList find(Query<?> q, Comparator<?> sortComparator) throws Exception ;  
+  public <T> LazyPageList<T> find(Query<T> q, Comparator<T> sortComparator) throws Exception ;
+  
+  public Container getSharedLayout() throws Exception ;
 }

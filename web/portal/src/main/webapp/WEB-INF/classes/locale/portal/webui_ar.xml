@@ -22,12 +22,6 @@
       <null>التصريح</null>
     </label>
   </UIPermissionForm>
-  <ApplicationRegistryWorkingArea>
-    <msg>
-      <nullCategory>!يجب إضافة فئة قبل إضافة المداخل</nullCategory>
-      <selectCategory>!يجب اختيار فئة قبل إضافة المداخل</selectCategory>
-    </msg>
-  </ApplicationRegistryWorkingArea>
   <UICategoryForm>
     <action>
       <Close>إغلاق</Close>
@@ -188,25 +182,6 @@
   </UIFormMultiValueInputSet>
   <!--
   #############################################################################
-  #       org.exoplatform.portal.component.customization.UIPageNavigationControlBar      #
-  #############################################################################
-  -->
-  <UIPageNavigationControlBar>
-    <tooltip>
-      <Finish>إنقاذ واقفال</Finish>
-      <Rollback>رجوع</Rollback>
-      <SaveNavigation>احفظ التصفح</SaveNavigation>
-      <EditNavigation>تحريرالتصفح</EditNavigation>
-      <CreateNavigation>إنشاء تصفح صفحة جديدة</CreateNavigation>
-      <Abort>الغاء</Abort>
-      <Back>رجوع</Back>
-    </tooltip>
-    <msg>
-      <noEditablePageNavigation>لا تصفح صفحة تسمح لك  التحرير</noEditablePageNavigation>
-    </msg>
-  </UIPageNavigationControlBar>
-  <!--
-  #############################################################################
   #org.exoplatform.portal.webui.portal.UIPortalComposer												#
   #############################################################################
   -->
@@ -258,23 +233,7 @@
       <oneRow2Column1Row>One Row, Two Columns, One Row</oneRow2Column1Row>
     </Item>
   </ContainerOptions>
-  <!--
-  #############################################################################
-  #org.exoplatform.portal.component.customization.UIPortalManagementControlBar#
-  #############################################################################
-  -->
-  <UIPortalManagementControlBar>
-    <tooltip>
-      <Finish>إنقاذ واقفال</Finish>
-      <RollBack>رجوع</RollBack>
-      <Save>احفظ</Save>
-      <Abort>الغاء</Abort>
-      <ViewMode>اعرض الأسلوب</ViewMode>
-      <EditMode>تحرير طريقة التنسيق</EditMode>
-      <BrowserPortal>تصفح البوابة</BrowserPortal>
-      <Rollback>رجوع</Rollback>
-    </tooltip>
-  </UIPortalManagementControlBar>
+
   <!--
   #############################################################################
   #              Identifier String Validator                                  #
@@ -702,7 +661,7 @@
   #              org.exoplatform.portal.component.customization.UIPageSelector#
   #############################################################################
   -->
-  <UIPageSelector>
+  <UIPageSelector2>
     <header>
       <name>اسم</name>
       <id>تعريفة الصفحة</id>
@@ -712,13 +671,14 @@
     </header>
     <label>
       <clearPage>حذف محتويات الصفحة</clearPage>
+      <createPage>Create Page</createPage>
       <searchandSelectPage>بحث واختيار الصفحة</searchandSelectPage>
       <currentSelectedPage>معلومات الصفحة المختارة الحالية</currentSelectedPage>
       <title>العنوان</title>
       <name>#{word.name}</name>
       <accessGroups>الدخول للمجموعة</accessGroups>
     </label>
-  </UIPageSelector>
+  </UIPageSelector2>
   <UIPageBrowser>
     <msg>
       <NoPermission>!ليس لديك تصريح للحصول على هذه الصفحة</NoPermission>
@@ -871,7 +831,7 @@
   #              org.exoplatform.portal.component.customization.UIPageNodeForm#
   #############################################################################
   -->
-  <UIPageNodeForm>
+  <UIPageNodeForm2>
     <title>إضافة / تحرير عقدة الصفحة</title>
     <msg>
       <SameName>!هذه العقدة في القائمة ، من فضلك ادخل واحدة آخرى</SameName>
@@ -897,30 +857,23 @@
       <startPublicationDate>:بداية تاريخ النشر</startPublicationDate>
       <endPublicationDate>نهاية تاريخ النشر</endPublicationDate>
     </label>
-    <tab>
-      <label>
-        <PageNodeSetting>وضع عقدة الصفحة</PageNodeSetting>
-        <Icon>#{word.icon}</Icon>
-        <UIPageSelector>اختيار الصفحة</UIPageSelector>
-      </label>
-    </tab>
     <Icon>
       <title>
         <SetDefault>احصل على الافتراضي</SetDefault>
       </title>
     </Icon>
+  </UIPageNodeForm2>
+  
+  <UIPageNodeForm>
+    <tab>
+      <label>
+        <PageNodeSetting>وضع عقدة الصفحة</PageNodeSetting>
+        <Icon>#{word.icon}</Icon>
+        <UIPageSelector2>اختيار الصفحة</UIPageSelector2>
+      </label>
+    </tab>
   </UIPageNodeForm>
-  <!--
-  #############################################################################
-  #              org.exoplatform.portal.component.customization.UIPageBrowser #
-  #############################################################################
-  -->
-  <UIPageBrowseControlBar>
-    <tooltip>
-      <Back>العودة إلى الصفحة الأولى</Back>
-      <Finish>إنقاذ واقفال</Finish>
-    </tooltip>
-  </UIPageBrowseControlBar>
+
   <UIPageBrowse>
     <deletePage>هل تريد حذف هذه الصفحة؟</deletePage>
   </UIPageBrowse>
@@ -1112,27 +1065,7 @@
       <title>16x16 أيقونات</title>
     </UIDropDown>
   </Icon>
-  <!--
-  #############################################################################
-  #    org.exoplatform.webui.form.UIFormInputItemSelector                #
-  #############################################################################
-  -->
-  <UIFormInputDecoratorSelector>
-    <label>
-      <selectDecorator>قسم الديكور</selectDecorator>
-      <SimpleStyle>النمط البسيط</SimpleStyle>
-      <ThickStyle>نمط سميك الحدود</ThickStyle>
-      <TextureStyle>نمط نص الخلف</TextureStyle>
-      <ColorStyle>نمط لون الخلف</ColorStyle>
-      <RoundedStyle>نمط مقربة الحدود</RoundedStyle>
-      <StylizedStyle>نمط  حدود المجدد</StylizedStyle>
-      <Currentdecoratorinfo>اختيار ديكور المعلومات الحالية</Currentdecoratorinfo>
-      <Decoratorname>اسم الديكور</Decoratorname>
-      <Selectedname>اختيار اسم ديكور</Selectedname>
-      <DecoratorStyle>نمط الديكور</DecoratorStyle>
-      <Namedecoratorstyle>اسم نمط الديكور</Namedecoratorstyle>
-    </label>
-  </UIFormInputDecoratorSelector>
+
   <!--
   #############################################################################
   #    org.exoplatform.webui.core.UIWizard                  #
@@ -1193,32 +1126,7 @@
       <edit>معالج تحرير الصحف</edit>
     </title>
   </UIPageCreateDescription>
-  <UIPageEditWizard>
-    <label>
-      <step1>
-        <title>إختار من جديد عقدة الصفحة  وحرر اسم الصفحة</title>
-      </step1>
-      <step2>
-        <title>إختار من جديد تصميم قالب الصفحة</title>
-      </step2>
-      <step3>
-        <title>إعادة ترتيب وتصميم صفحة  واضف مداخل للصفحة</title>
-      </step3>
-      <pageCreateWizard>معالج تحرير الصفحة الحالية</pageCreateWizard>
-      <wizardSteps>خطوات المعالج</wizardSteps>
-      <step>خطوة</step>
-      <back>#{word.back}</back>
-      <next>#{word.next}</next>
-      <done>#{word.save}</done>
-      <abort>#{word.abort}</abort>
-    </label>
-    <msg>
-      <selectStep2>في المرة الأولى ، يجب أن تمر بالخطوة 2</selectStep2>
-      <notSelectedPageNavigation>عدم اختيار التصفح الصفحة</notSelectedPageNavigation>
-      <notSelectedPage>!عدم اختيار الصفحة</notSelectedPage>
-      <Invalid-editPermission>لم يتم العثور على هذه الصفحة أو لم يكن لديك الحق في تعديل</Invalid-editPermission>
-    </msg>
-  </UIPageEditWizard>
+  
   <UIPageTemplateOptions>
     <UIDropDown>
       <title>تشكيلات الصفحة</title>
@@ -1316,18 +1224,7 @@
       <pageName>اسم الصفحة</pageName>
     </label>
   </UIPageCreationWizardStepForm>
-  <!--
-  ############################################################################
-  #  org.exoplatform.portal.component.customization.UIWizardPageCreationBar   #
-  ############################################################################
-  -->
-  <WizardPageEditBar>
-    <tooltip>
-      <PagePreview>معاينة الصفحة</PagePreview>
-      <EditPortlet>اظهر المدخل</EditPortlet>
-      <EditContainer>اظهر الحاوية</EditContainer>
-    </tooltip>
-  </WizardPageEditBar>
+
   <!--
   #############################################################################
   #    org.exoplatform.portal.component.customization.UIAdvancedCustomization #
@@ -1392,51 +1289,7 @@
       <oneRow2Column1Row>حاويات بصف واحد و عمودين و صف واحد</oneRow2Column1Row>
     </template>
   </UIContainerConfigOptions>
-  <!--
-  #############################################################################
-  # org.exoplatform.portal.component.customization.UIPageTemplatesForm #
-  #############################################################################
-  -->
-  <UIPageTemplatesForm>
-    <title>
-      <addNewPage>أضف صفحة جديدة</addNewPage>
-    </title>
-    <label>
-      <pageName>اسم الصفحة</pageName>
-      <detail>اختيار تشكيل قالب الصفحة</detail>
-    </label>
-  </UIPageTemplatesForm>
-  <!--
-  #############################################################################
-  #  org.exoplatform.portal.component.customization.UIPortletOptions  #
-  #############################################################################
-  -->
-  <UIPortletOptions>
-    <label>
-      <selectPortletCategory>فئة المدخل</selectPortletCategory>
-      <description>وصف المدخل</description>
-    </label>
-    <tab>
-      <content>محتوى</content>
-      <site>الموقع</site>
-      <exoadmin>إدارة إكزو</exoadmin>
-      <web>الويب</web>
-      <test>اختبار</test>
-    </tab>
-    <UIDropDown>
-      <title>فئة المدخل</title>
-      <label>
-        <PortletCategory>فئة المدخل</PortletCategory>
-        <content>محتوى</content>
-        <exoadmin>إدارة إكزو</exoadmin>
-        <site>الموقع</site>
-        <web>الويب</web>
-        <test>اختبار</test>
-        <ecm>ECM</ecm>
-        <workflow>Workflow</workflow>
-      </label>
-    </UIDropDown>
-  </UIPortletOptions>
+  
   <!--
   #############################################################################
   # org.exoplatform.portal.component.customization.UIDecoratorConfigOptions #
@@ -1475,6 +1328,9 @@
       <ResizeWindow>تغيير حجم النافذة</ResizeWindow>
       <DragControl>هذا المجال لجر هذا المدخل</DragControl>
     </tooltip>
+	<message>
+      <RuntimeError>هذا المدخل واجه خطأ وأنه لا يمكن عرضها</RuntimeError>
+    </message>
   </UIPortlet>
   <!--
   #############################################################################
@@ -1515,20 +1371,7 @@
       <UIFormTableInputSet>مدخل</UIFormTableInputSet>
     </label>
   </UIFormAvailablePortlet>
-  <!--
-  #############################################################################
-  #  org.exoplatform.portal.component.control.UIControlWorkspace              #
-  #############################################################################
-  -->
-  <UIWorkspaceContainer>
-    <tooltip>
-      <CloseControlWorkspace>إغلاق فضاء عمل</CloseControlWorkspace>
-      <OpenControlWorkspace>انقر لفتح مراقبة فضاء العمل</OpenControlWorkspace>
-    </tooltip>
-    <lable>
-      <UserWorkspaceTitle>فضاء العمل</UserWorkspaceTitle>
-    </lable>
-  </UIWorkspaceContainer>
+
   <!--
   #############################################################################
   #      org.exoplatform.portal.component.control.UIQuickBar                  #
@@ -1565,23 +1408,7 @@
       <Invalid-editPermission>هذه الصفحة لا تسمح التحرير</Invalid-editPermission>
     </msg>
   </UIPageManagement>
-  <!--
-  #############################################################################
-  #  org.exoplatform.portal.component.customization.UIPageManagementEditBar   #
-  #############################################################################
-  -->
-  <UIPageManagementEditBar>
-    <tooltip>
-      <AddNode>اضف عقدة جديدة</AddNode>
-      <EditPageNode>تحرير عقدة الصفحة المختارة</EditPageNode>
-      <EditSelectedNode>تحرير العقدة المختارة</EditSelectedNode>
-      <EditNavigation>تحريرالتصفح</EditNavigation>
-      <CopyNode>نسخ العقدة المختارة</CopyNode>
-      <PasteNode>لصق العقدة المختارة الحالية</PasteNode>
-      <SaveNavigation>إنقاذ التصفح</SaveNavigation>
-      <DeleteNode>حذف العقدة المختارة</DeleteNode>
-    </tooltip>
-  </UIPageManagementEditBar>
+ 
   <!--
   #############################################################################
   #org.exoplatform.webui.core.UIPageIterator                              #
@@ -1596,20 +1423,7 @@
       <nextTenPages>صفحات المقبلة10</nextTenPages>
     </label>
   </UIPageIterator>
-  <!--
-  #############################################################################
-  # org.exoplatform.portal.component.customization.UIPortalManagementEditBar  #
-  #############################################################################
-  -->
-  <UIPortalManagementEditBar>
-    <tooltip>
-      <Preview>معاينة موقع البوابة</Preview>
-      <EditPortal>تعديل البوابة</EditPortal>
-      <EditContainer>عرض مراقبة الحاويات</EditContainer>
-      <EditPortlet>عرض مراقبة المدخل</EditPortlet>
-      <SavePortal>تعديل البوابة</SavePortal>
-    </tooltip>
-  </UIPortalManagementEditBar>
+
   <!--
   #############################################################################
   #      org.exoplatform.portal.component.customization.UIPortalBrowser       #
@@ -1677,6 +1491,11 @@
       <UIApplicationTree>شجرة الخدمات</UIApplicationTree>
     </title>
   </UIControWSPopupWindow>
+  <EditGroup>
+  	<title>
+      <UIPageNavigationForm>Add Navigation</UIPageNavigationForm>
+    </title>
+  </EditGroup>
   <!--
   ############################################################################
   #         org.exoplatform.portal.component.widget.UILogged                 #
@@ -1943,53 +1762,7 @@
       <description>حاوية التصفح</description>
     </label>
   </UITableColumnContainer>
-  <!--
-  ############################################################################
-  #              org.exoplatform.portal.component.control.UIExoStart         #
-  ############################################################################
-  -->
-  <UIExoStart>
-    <item>
-      <Administration>إدارة</Administration>
-      <System>نظام</System>
-      <Support>مساعدة</Support>
-      <Refresh>تجديد</Refresh>
-      <Basic>الأساسية</Basic>
-      <Advanced>متقدم</Advanced>
-      <ChangeSkin>تغيير المظهر</ChangeSkin>
-      <ChangeLanguage>تغيير اللغة</ChangeLanguage>
-      <PageCreationWizard>معالج تكوين صفحة</PageCreationWizard>
-      <EditCurrentPage>معالج تحرير صفحة</EditCurrentPage>
-      <EditCurrentPortal>تعديل البوابة الحالية</EditCurrentPortal>
-      <BrowseExistingPortals>تصفح قائمة البوابات</BrowseExistingPortals>
-      <Navigation>تصفح</Navigation>
-      <EditNavigation>تحرير التصفح</EditNavigation>
-      <BrowseExistingPages>تصفح الصفحات الموجودة</BrowseExistingPages>
-      <Default>افتراضي</Default>
-      <Mac>ماك</Mac>
-      <Vista>فيستا</Vista>
-      <English>انقليزية</English>
-      <Vietnamese>فيتنامية</Vietnamese>
-      <French>فرنسية</French>
-      <EditPortal>تعديل البوابة الحالية</EditPortal>
-      <EditPage>تحرير الصفحة والتصفح</EditPage>
-      <BrowsePortal>إدارة البوابات</BrowsePortal>
-      <BrowsePage>إدارة الصفحات</BrowsePage>
-      <InterfaceSettings>تعديل الواجهة</InterfaceSettings>
-      <SkinSettings>تعديل المظهر</SkinSettings>
-      <LanguageSettings>ضبط اللغة</LanguageSettings>
-      <AccountSettings>ضبط الحساب</AccountSettings>
-      <ChangePortal>تغيير البوابة</ChangePortal>
-      <Login>تسجيل الدخول</Login>
-      <Logout>تسجيل الخروج</Logout>
-      <PageNavigation>تصفح الموقع</PageNavigation>
-    </item>
-    <tooltip>
-      <scrollUp>اضغط باستمرار للتمرير للأعلى</scrollUp>
-      <scrollDown>اضغط باستمرار للانتقال للأسفل</scrollDown>
-      <begin>اضغط هنا لتبدأ</begin>
-    </tooltip>
-  </UIExoStart>
+  
   <!--
   ###############################################################################
   #                    org.exoplatform.portal.webui.component.UISearchForm      #
@@ -2088,17 +1861,6 @@
       </step4>
     </label>
   </UIEditCurentPage>
-  <UIWizardCurentPageInfo>
-    <title>أضف صفحة جديدة</title>
-    <label>
-      <curentSelectedNodeInfo>عقدة الصفحة المختارة الحالية</curentSelectedNodeInfo>
-      <pageName>اسم الصفحة</pageName>
-      <description>وصف</description>
-    </label>
-    <action>
-      <Save>#{word.save}</Save>
-    </action>
-  </UIWizardCurentPageInfo>
   <!--
   ###############################################################################
   #               org.exoplatform.portal.webui.UIAccessGroup                    #
@@ -2134,24 +1896,7 @@
     </left>
     <title>رقم تعريفة المصنع</title>
   </FactoryId>
-  <!--
-  ################################################################################
-  #   org.exoplatform.portal.webui.application.UIWidgets
-  ################################################################################
-  -->
-  <UIWidgets>
-    <UIDropDown>
-      <label>
-        <SelectContainer>اختيار الحاويات</SelectContainer>
-        <Information>معلومات</Information>
-        <Calendar>التقويم</Calendar>
-        <Calculator>حاسبة</Calculator>
-      </label>
-    </UIDropDown>
-    <tooltip>
-      <widgetManagent>إدارة حاويات الأدوات</widgetManagent>
-    </tooltip>
-  </UIWidgets>
+
   <!--
   ################################################################################
   #   org.exoplatform.webui.core.UIGrid
@@ -2258,38 +2003,6 @@
       <tabsPageConfigs>تشكيلات صفحة بعلامات التبويب</tabsPageConfigs>
     </item>
   </UIDropDownPageTemp>
-  <!--
-  ################################################################################
-  #    org.exoplatform.portal.webui.application.UIWidgetContainerManagement
-  ################################################################################
-  -->
-  <UIWidgetContainerManagement>
-    <action>
-      <close>الغاء</close>
-      <save>#{word.save}</save>
-    </action>
-    <confirm>
-      <DeleteContainer>هل أنت متأكد من حذف هذه الحاوية؟</DeleteContainer>
-    </confirm>
-    <title>
-      <manager>إدارة حاويات الأدوات</manager>
-      <containers>الحاويات</containers>
-      <selectedContainer>معلومات حاوية الأداة المختارة</selectedContainer>
-    </title>
-    <msg>
-      <emptyList>لا يوجد حاويات في هذه الفئة</emptyList>
-      <noSelected>لا حاوية مختارة</noSelected>
-    </msg>
-    <label>
-      <label>:علامة الحاوية</label>
-      <description>:وصف الحاوية</description>
-    </label>
-    <tooltip>
-      <remove>إزالة حاوية الأداة المختارة</remove>
-      <edit>تحرير حاوية الأداة المختارة</edit>
-      <addnew>إضافة حاوية أداة جديدة</addnew>
-    </tooltip>
-  </UIWidgetContainerManagement>
   <!--
   ################################################################################
   #    org.exoplatform.portal.webui.application.UIGadgetContainerManagement
@@ -2504,6 +2217,11 @@
   -->
   <UIPopupWindow>
     <Close>Close Window</Close>
+    <title>
+    	<UIPageNodeForm2>ADD/EDIT PAGE NODE</UIPageNodeForm2>
+    	<UINavigationManagement>Navigation Management</UINavigationManagement>
+    	<UIPageNavigationForm>Page Navigation Form</UIPageNavigationForm>
+    </title>
   </UIPopupWindow>
   <!--
   #############################################################################

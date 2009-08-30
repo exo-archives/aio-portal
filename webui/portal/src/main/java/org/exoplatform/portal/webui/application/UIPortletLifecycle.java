@@ -43,7 +43,7 @@ import org.w3c.dom.Element;
 /**
  * Created by The eXo Platform SAS May 8, 2006
  */
-public class UIPortletLifecycle extends Lifecycle {
+public class UIPortletLifecycle extends Lifecycle<UIPortlet> {
 
   protected static Log log = ExoLogger.getLogger("portal:UIPortletLifecycle");
 
@@ -62,7 +62,7 @@ public class UIPortletLifecycle extends Lifecycle {
    * broadcasted and the portlet is added in the list of components to update
    * within the AJAX call
    */
-  public void processAction(UIComponent uicomponent, WebuiRequestContext context) throws Exception {
+  public void processAction(UIPortlet uicomponent, WebuiRequestContext context) throws Exception {
     String action = context.getRequestParameter(PortalRequestContext.UI_COMPONENT_ACTION);
     if (action != null) {
       Event<UIComponent> event = uicomponent.createEvent(action, Event.Phase.PROCESS, context);
@@ -135,8 +135,7 @@ public class UIPortletLifecycle extends Lifecycle {
    * one, just write in the buffer the content returned by the portlet container
    * 4) If not AJAX, then merge the content with the UIPortlet.gtmpl
    */
-  public void processRender(UIComponent uicomponent, WebuiRequestContext context) throws Exception {
-    UIPortlet uiPortlet = (UIPortlet) uicomponent;
+  public void processRender(UIPortlet uicomponent, WebuiRequestContext context) throws Exception {
     PortalRequestContext prcontext = (PortalRequestContext) context;
     ExoContainer container = prcontext.getApplication().getApplicationServiceContainer();
     
@@ -147,7 +146,7 @@ public class UIPortletLifecycle extends Lifecycle {
     
     try
     {
-      RenderInvocation renderInvocation = uiPortlet.create(RenderInvocation.class, prcontext);
+      RenderInvocation renderInvocation = uicomponent.create(RenderInvocation.class, prcontext);
 
       //
       PortletInvocationResponse piResponse =  portletInvoker.invoke(renderInvocation);
@@ -194,13 +193,13 @@ public class UIPortletLifecycle extends Lifecycle {
       ApplicationResourceResolver resolver = app.getResourceResolver();
       WebuiBindingContext bcontext = new WebuiBindingContext(resolver,
                                                              context.getWriter(),
-                                                             uiPortlet,
+                                                             uicomponent,
                                                              prcontext);
-      bcontext.put("uicomponent", uiPortlet);
+      bcontext.put("uicomponent", uicomponent);
       bcontext.put("portletContent", markup);
       bcontext.put("portletTitle", portletTitle);
       try {
-        renderTemplate(uiPortlet.getTemplate(), bcontext);
+        renderTemplate(uicomponent.getTemplate(), bcontext);
       } catch (Throwable ex) {
       }
     }

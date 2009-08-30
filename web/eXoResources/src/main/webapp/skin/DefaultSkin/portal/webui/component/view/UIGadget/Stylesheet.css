@@ -30,7 +30,7 @@
 	padding-left: 4px; /* orientation=rt */
 }
 
-.UIGadget .GadgetControl .CenterControlBar{
+.UIGadget .GadgetControl .CenterControlBar {
 	height: 19px;
 	background: url('background/Gadget.png') repeat-x center -19px;	
 }
@@ -45,34 +45,34 @@
 }
 
 .UIGadget .GadgetControl .IconControl {
-	background-image: url('background/Gadget.png');
+	background-image: url('background/IconGadget.gif');
 	background-position: no-repeat;
 	float: right; /* orientation=lt */
 	float: left; /* orientation=rt */
-	height: 13px;
-	width: 13px;
+	height: 14px;
+	width: 14px;
 	margin: 3px;
 	cursor: pointer;
 }
 
 .UIGadget .GadgetControl .CloseGadget {
-	background-position: right -91px;
+	background-position: top right;
 }
 
 .UIGadget .GadgetControl .MinimizeGadget {
-	background-position: left -91px;
+	background-position: 31px top;
 }
 
 .UIGadget .GadgetControl .RestoreGadget {
-	background-position: left -104px;
+	background-position: 48px top;
 }
 
 .UIGadget .GadgetControl .EditGadget {
-	background-position: right -78px;
+	background-position: left top;
 }
 
 .UIGadget .GadgetControl .MaximizeGadget {
-	background-position: left -104px;
+	background-position: 48px top;
 }
 
 .UIGadget .TLGadget {

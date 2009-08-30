@@ -26,6 +26,7 @@ import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.web.application.ApplicationMessage;
+import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.UIComponent;
@@ -153,7 +154,8 @@ public class UIPageNavigationForm extends UIForm {
     public void execute(Event<UIPageNavigationForm> event) throws Exception {
       UIPageNavigationForm uiForm = event.getSource();
       PageNavigation pageNav = uiForm.getPageNav();
-      PortalRequestContext pcontext = Util.getPortalRequestContext();
+      //PortalRequestContext pcontext = Util.getPortalRequestContext();
+      WebuiRequestContext pcontext = event.getRequestContext();
 
       UserPortalConfigService service = uiForm.getApplicationComponent(UserPortalConfigService.class);
       
@@ -170,7 +172,8 @@ public class UIPageNavigationForm extends UIForm {
         
         UIPopupWindow uiPopup = uiForm.getParent();
         uiPopup.setShow(false);
-        pcontext.addUIComponentToUpdateByAjax(uiPopup);
+        UIComponent opener = uiPopup.getParent();
+        pcontext.addUIComponentToUpdateByAjax(opener);
         return;
       }
 
@@ -185,7 +188,8 @@ public class UIPageNavigationForm extends UIForm {
       pageNav.setModifiable(true);
       pageNav.setCreator(pcontext.getRemoteUser());
       pageNav.setOwnerId(uiOwnerId.getValue());
-      UIPortalApplication uiPortalApp = uiForm.getAncestorOfType(UIPortalApplication.class);
+      //UIPortalApplication uiPortalApp = uiForm.getAncestorOfType(UIPortalApplication.class);      
+      UIPortalApplication uiPortalApp = Util.getUIPortal().getAncestorOfType(UIPortalApplication.class);        
 
       // ensure this navigation is not exist
       DataStorage dataService = uiForm.getApplicationComponent(DataStorage.class);
@@ -203,7 +207,8 @@ public class UIPageNavigationForm extends UIForm {
       // close popup window, update popup window
       UIPopupWindow uiPopup = uiForm.getParent();
       uiPopup.setShow(false);
-      pcontext.addUIComponentToUpdateByAjax(uiPopup);
+      UIComponent opener = uiPopup.getParent();
+      pcontext.addUIComponentToUpdateByAjax(opener);
     }
   }
 

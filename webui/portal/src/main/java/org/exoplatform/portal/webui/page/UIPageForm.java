@@ -167,7 +167,7 @@ public class UIPageForm extends UIFormTabPane {
   @SuppressWarnings("unchecked")
   public void setValues(UIPage uiPage) throws Exception {
     uiPage_ = uiPage;
-    Page page = PortalDataMapper.toPageModel(uiPage) ;
+    Page page = PortalDataMapper.buildModelObject(uiPage) ;
     if(uiPage.getOwnerType().equals(PortalConfig.USER_TYPE)) {
       removeChildById("PermissionSetting") ;  
     } else if(getChildById("PermissionSetting") == null) {
@@ -254,7 +254,7 @@ public class UIPageForm extends UIFormTabPane {
       findAllPortlet(uiPortlets, uiPage);
       ArrayList<Object> applications = new ArrayList<Object>();
       for(UIPortlet uiPortlet : uiPortlets) {
-        applications.add(PortalDataMapper.toPortletModel(uiPortlet));
+        applications.add(PortalDataMapper.buildModelObject(uiPortlet));
       }
       
       if(Page.DESKTOP_PAGE.equals(uiPage.getFactoryId()) && !Page.DESKTOP_PAGE.equals(page.getFactoryId())) {
@@ -305,7 +305,7 @@ public class UIPageForm extends UIFormTabPane {
       }
       ArrayList<Object>  children = new ArrayList<Object>();
       for(UIComponent child : uiChildren){ 
-        Object component = PortalDataMapper.buildChild(child);
+        Object component = PortalDataMapper.buildModelObject(child);
         if(component != null) children.add(component);
       }
       page.setChildren(children);

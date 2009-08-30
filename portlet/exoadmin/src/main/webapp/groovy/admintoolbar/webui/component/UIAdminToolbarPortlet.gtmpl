@@ -27,19 +27,19 @@
 		<!-- Editor -->		
 			<% if (currentRole >= UIAdminToolbarPortlet.EDITOR) { %>
 			<div class="UITab NormalToolbarTab">
-				<div class="NormalNavigationTab">
+				<div class="">
 					<a class="EditorIcon TBIcon" href="#">$editorLabel</a>
 				</div>
 				<div class="MenuItemContainer" style="position: absolute; display:none;">
 					<div class="SubBlock">
-						<div class="MenuItem OddItem">	
+						<div class="MenuItem">	
 							<a href="javascript:ajaxGet(eXo.env.server.createPortalURL('UIWorkingWorkspace', 'PageCreationWizard', true))" title="" class="ItemIcon AddPageIcon">$addPageLabel</a>
 						</div>
-						<div class="MenuItem EvenItem">
+						<div class="MenuItem">
 							<a href="javascript:ajaxGet(eXo.env.server.createPortalURL('UIWorkingWorkspace', 'EditCurrentPage', true))" title="" class="ItemIcon EditPageIcon">$editPageLabel</a>
 						</div>
-						<div class="MenuItem OddItem">	
-							<a href="javascript:ajaxGet(eXo.env.server.createPortalURL('UIWorkingWorkspace', 'EditInline', true))" title="" class="ItemIcon AddPageIcon">$editSiteLayout</a>
+						<div class="MenuItem">	
+							<a href="javascript:ajaxGet(eXo.env.server.createPortalURL('UIWorkingWorkspace', 'EditInline', true))" title="" class="ItemIcon EditSiteIcon">$editSiteLayout</a>
 						</div>
 					</div>
 				</div>

@@ -11,7 +11,7 @@
     <edit-permission>manager:/organization/management/executive-board</edit-permission>
     
     <application>
-    	<instance-id>group#organization/managerment/executive-board:/exoadmin/AccountPortlet/Account</instance-id>        
+    	<instance-id>group#organization/management/executive-board:/exoadmin/AccountPortlet/Account</instance-id>        
       <title>New Staff</title>
 	  	<show-info-bar>true</show-info-bar>
 	  	<show-application-state>true</show-application-state>
@@ -28,7 +28,7 @@
     <edit-permission>manager:/organization/management/executive-board</edit-permission>
     
     <application>
-      <instance-id>group#organization/managerment/executive-board:/exoadmin/OrganizationPortlet/Organization</instance-id>
+      <instance-id>group#organization/management/executive-board:/exoadmin/OrganizationPortlet/Organization</instance-id>
       <title>Organization Management</title>
       <show-info-bar>false</show-info-bar>
     </application>  

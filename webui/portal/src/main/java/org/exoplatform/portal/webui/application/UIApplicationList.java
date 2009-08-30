@@ -52,7 +52,7 @@ public class UIApplicationList extends UIContainer {
     ApplicationRegistryService service = getApplicationComponent(ApplicationRegistryService.class) ;
     String remoteUser = Util.getPortalRequestContext().getRemoteUser();
     PortletComparator portletComparator = new PortletComparator() ;
-    categories = service.getApplicationCategories(remoteUser, org.exoplatform.web.application.Application.EXO_PORTLET_TYPE) ; 
+    categories = service.getApplicationCategories(remoteUser) ; 
     Collections.sort(categories, new PortletCategoryComparator()) ;
     Iterator<ApplicationCategory> cateItr = categories.iterator() ;
     while(cateItr.hasNext()) {
@@ -61,10 +61,10 @@ public class UIApplicationList extends UIContainer {
       if(applications.size()<1) cateItr.remove() ;
       else Collections.sort(applications, portletComparator) ;
     }
-    setSelectedCategory(categories.get(0).getName());
+    if(categories.size() > 0) setSelectedCategory(categories.get(0).getName());
   }
 
-  public Application getPortlet(String id) throws Exception {
+  public Application getApplication(String id) throws Exception {
     for(ApplicationCategory category : categories){
       List<Application> items = category.getApplications();
       for(Application item : items){

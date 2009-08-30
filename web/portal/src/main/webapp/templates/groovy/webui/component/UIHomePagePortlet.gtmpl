@@ -1,39 +1,12 @@
 <div class="UIHomePagePortlet" id="$uicomponent.id">
 	<div class="TRContainer">
 		<div class="PortletDecoration">					
-			<div class="GuideText">To test, you can either <a style="font-weight: bold; color: #888a8c;" href="#">register</a> or <span style="color: #888a8c; font-weight: bold;">use the Demo Account</span> <b style="color: #f95106;">Login:</b> <i>demo</i>, <b style="color: #f95106;">Password:</b> <i>exo</i></div>
-			<div class="DotLine"><span></span></div>
-			
-			<div class="DownloadButtonLeft">
-				<div class="DownloadButtonRight">
-					<div class="DownloadButtonMiddle">
-						<div class="DropdownDownloadButton"><span></span></div>
-						<a class="DownloadTextOnButton" href="#"><b style="color: #ffffff; font-size: 18px;">Download</b><span style="color: #ffffff; font-size: 11px; "> Commnity Version </span></a>	
-					</div>
-				</div>
-			</div>
-			
-			
-			<div class="GuideText">eXo PORTAL is open source and FREE for download</div>
-			<div class="DotLine"><span></span></div>
+			<div class="GuideText">GateIn is the new generation of Open Source portal, co-leaded by RedHat JBoss and eXo Platform who partners to gather the best portal experts and communities around a robust and intuitive portal that brings rich administration functionalities to IT systems.</div>
 			<div class="VersionIcon"><span></span></div>
-			<div class="GuideText">For support, check our <a style="color:#F95106; font-family:tahoma; font-weight:bold;" href="#">professional version</a></div>			
-			<div class="DotLine"><span></span></div>                                
-			<div class="ButtonLeft">
-				<div class="ButtonRight">
-					<div class="ButtonMiddle">
-						<a class="TextOnButton" href="#">Take a tour</a>	
-					</div>
-				</div>
-			</div>
-			<div class="DotLine"><span></span></div>  	
-			<div class="ButtonLeft TextOnButton">
-				<div class="ButtonRight">
-					<div class="ButtonMiddle">
-						<a class="TextOnButton">Feedback</a>
-					</div>
-				</div>
-			</div>							
+			<div class="DotLine"><span></span></div>
+			<div class="GuideText">For more information, please contact us.</div>
+			<div class="ContactIcon"><span></span></div>
+			
 		</div>
 	</div>
 	<div class="TLContainer">
@@ -43,7 +16,6 @@
 				<div class="AdImageLeft">
 					<div class="AdImageRight">
 						<div class="EmptyBlock"><span></span></div>
-						<div class="ProductSlogan"><%=_ctx.appRes("UIHomePagePortlet.Label.Slogan")%></div>
 					</div>
 				</div>
 			</div>
@@ -52,7 +24,7 @@
 				<div class="LeftAccountsContainer">
 					<div class="RightAccountsContainer">
 						<div class="MiddleAccountsContainer">
-							<div class="InstructionTitle"><%=_ctx.appRes("UIHomePagePortlet.Label.Title")%></div>
+							<div class="InstructionTitle">Try GateIn 3.0 with one of these user accounts</div>
 							<div class="AccountsContainerDeco">
 								<div class="AccountBlock AdministratorUser">
 									<div class="AccountInfos">
@@ -62,7 +34,7 @@
 											<div class="ClearBoth"><span></span></div>
 										</div>
 										<div class="Passwords">
-											<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Password")%></div><span>exo</span>
+											<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Password")%></div><span>gtn</span>
 											<div class="ClearBoth"><span></span></div>
 										</div>
 									</div>
@@ -76,7 +48,7 @@
 											<div class="ClearBoth"><span></span></div>
 										</div>
 										<div class="Passwords">
-											<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Password")%></div><span>exo</span>
+											<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Password")%></div><span>gtn</span>
 											<div class="ClearBoth"><span></span></div>
 										</div>
 									</div>
@@ -90,7 +62,7 @@
 											<div class="ClearBoth"><span></span></div>
 										</div>
 										<div class="Passwords">
-											<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Password")%></div><span>exo</span>
+											<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Password")%></div><span>gtn</span>
 											<div class="ClearBoth"><span></span></div>
 										</div>
 									</div>
@@ -104,7 +76,7 @@
 											<div class="ClearBoth"><span></span></div>
 										</div>
 										<div class="Passwords">
-											<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Password")%></div><span>exo</span>
+											<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Password")%></div><span>gtn</span>
 											<div class="ClearBoth"><span></span></div>
 										</div>
 									</div>
@@ -119,4 +91,11 @@
 		</div>	
 	</div>	
 	<div class="ClearBoth"><span></span></div>
+</div>
+<div class="BottomDecoratorHome">
+	<div class="BottomDecoratorLeft">
+		<div class="BottomDecoratorRight">
+			<div class="BottomDecoratorMiddle"><span></span></div>
+		</div>
+	</div>
 </div>

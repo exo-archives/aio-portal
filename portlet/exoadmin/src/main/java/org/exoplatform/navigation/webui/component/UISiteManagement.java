@@ -37,12 +37,14 @@ import org.exoplatform.portal.webui.navigation.UINavigationManagement;
 import org.exoplatform.portal.webui.navigation.UINavigationNodeSelector;
 import org.exoplatform.portal.webui.navigation.UIPageNavigationForm;
 import org.exoplatform.portal.webui.page.UIPageNodeForm2;
+import org.exoplatform.portal.webui.page.UISiteBody;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.portal.UIPortalComposer;
+import org.exoplatform.portal.webui.util.PortalDataMapper;
 import org.exoplatform.portal.webui.util.Util;
+import org.exoplatform.portal.webui.workspace.UIEditInlineWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
-import org.exoplatform.portal.webui.workspace.pool.UIPortalPool;
 import org.exoplatform.util.ReflectionUtil;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webui.application.WebuiRequestContext;
@@ -75,7 +77,8 @@ import org.exoplatform.webui.event.Event.Phase;
                      @EventConfig(listeners = UIPageNodeForm2.SaveActionListener.class ),
                      @EventConfig(listeners = UISiteManagement.BackActionListener.class, phase = Phase.DECODE),
                      @EventConfig(listeners = UIPageNodeForm2.SwitchPublicationDateActionListener.class, phase = Phase.DECODE ),
-                     @EventConfig(listeners = UIPageNodeForm2.ClearPageActionListener.class, phase = Phase.DECODE)
+                     @EventConfig(listeners = UIPageNodeForm2.ClearPageActionListener.class, phase = Phase.DECODE),
+                     @EventConfig(listeners = UIPageNodeForm2.CreatePageActionListener.class, phase = Phase.DECODE)
                    }
   )  
 })
@@ -89,7 +92,7 @@ public class UISiteManagement extends UIContainer {
   private PageNavigation       selectedNavigation;
   
   public UISiteManagement() throws Exception {  
-    UIPopupWindow editNavigation = addChild(UIPopupWindow.class, null, "EditPortalNavigation");
+    UIPopupWindow editNavigation = addChild(UIPopupWindow.class, null, null);
     editNavigation.setWindowSize(400, 400);
     //loadPortalConfigs();
   }
@@ -149,6 +152,9 @@ public class UISiteManagement extends UIContainer {
       } else if(config != null){
         uiPortalApp.addMessage(new ApplicationMessage("UISiteManagement.msg.Invalid-deletePermission", new String[]{config.getPortalConfig().getName()})) ;; 
         return;
+      } else {
+      	uiPortalApp.addMessage(new ApplicationMessage("UISiteManagement.msg.portal-not-exist", new String[]{portalName})) ;; 
+        return;
       }
       
       if(config == null && !Util.getUIPortal().getName().equals(portalName)) {
@@ -178,27 +184,33 @@ public class UISiteManagement extends UIContainer {
 			PortalRequestContext prContext = Util.getPortalRequestContext();
 
 			UserPortalConfig userConfig = service.getUserPortalConfig(portalName, prContext.getRemoteUser());
-			//PortalConfig portalConfig = userConfig.getPortalConfig();
+			PortalConfig portalConfig = userConfig.getPortalConfig();
 
-			UIPortalApplication portalApp=(UIPortalApplication)prContext.getUIApplication();
-			//UserACL userACL = uicomp.getApplicationComponent(UserACL.class) ;
-			//UserACL userACL = portalApp.getApplicationComponent(UserACL.class) ;
-			//if(!userACL.hasEditPermission(portalConfig)){
-			//	portalApp.addMessage(new ApplicationMessage("UISiteManagement.msg.Invalid-editPermission",new String[]{portalConfig.getName()})) ;;  
-			//	return;
-			//}		
+			UIPortalApplication portalApp= (UIPortalApplication) prContext.getUIApplication();
+			UserACL userACL = portalApp.getApplicationComponent(UserACL.class) ;
+			if(!userACL.hasEditPermission(portalConfig)){
+				portalApp.addMessage(new ApplicationMessage("UISiteManagement.msg.Invalid-editPermission",new String[]{portalConfig.getName()})) ;  
+				return;
+			}		
 		  
 			UIWorkingWorkspace uiWorkingWS = portalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+			UIEditInlineWorkspace uiEditWS = uiWorkingWS.getChild(UIEditInlineWorkspace.class);
+			UIPortalComposer uiComposer = uiEditWS.getComposer().setRendered(true);
+			uiComposer.setComponentConfig(UIPortalComposer.class, null);
       
-      //Added by Minh Hoang TO: Update the UIPortal on UIWorkingWorkspace
-			UIPortalPool portalPool=portalApp.getUIPortalPool();
-	    UIPortal uiPortal=portalPool.fetchUIPortal(portalName,userConfig,uiWorkingWS);		
-			portalPool.setSelectedUIPortal(uiPortal);
-			
 	    //Added by Minh Hoang TO: Trigger the edit inline process
+			UIPortal uiPortal = Util.getUIPortal();
+			if(portalName.equals(uiPortal.getName())) {
+				uiEditWS.setUIComponent(uiPortal);
+				uiWorkingWS.findFirstComponentOfType(UISiteBody.class).setUIComponent(null);
+			} else {
+				UIPortal editPortal = uiWorkingWS.createUIComponent(UIPortal.class, null, null);
+				PortalDataMapper.toUIPortal(editPortal, userConfig);
+				uiEditWS.setUIComponent(editPortal);
+			}
+			
 			portalApp.setModeState(UIPortalApplication.APP_BLOCK_EDIT_MODE);
-      UIPortalComposer portalComposer=uiWorkingWS.addChild(UIPortalComposer.class, null, null);
-      portalComposer.setOwnerPortalName(portalName);
+			uiWorkingWS.setRenderedChild(UIPortalApplication.UI_EDITTING_WS_ID);
       
       prContext.addUIComponentToUpdateByAjax(uiWorkingWS);
       prContext.setFullRender(true);
@@ -227,7 +239,10 @@ public class UISiteManagement extends UIContainer {
       UIPopupWindow popUp = uicomp.getChild(UIPopupWindow.class);
       
       UINavigationManagement naviManager = popUp.createUIComponent(UINavigationManagement.class, null, null, popUp);
+      
       naviManager.setOwner(portalName);
+      naviManager.setOwnerType(PortalConfig.PORTAL_TYPE);
+      
       PageNavigation navi = service.getPageNavigation(PortalConfig.PORTAL_TYPE, portalName);
       uicomp.setSelectedNavigation(navi);
       UINavigationNodeSelector selector = naviManager.getChild(UINavigationNodeSelector.class);

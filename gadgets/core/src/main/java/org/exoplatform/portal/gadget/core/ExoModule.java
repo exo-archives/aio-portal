@@ -31,7 +31,7 @@ public class ExoModule extends DefaultGuiceModule {
 
   @Override
   protected void configure() {
-    super.configure();
+    //super.configure();
 
     //
     bind(ContainerConfig.class).to(ExoContainerConfig.class);

@@ -1,5 +1,4 @@
 /*##############################-Page Layout Decorator-################################*/
-
 .UIPageBody .PageLayoutDecorator	{
 	padding: 0px;
 	margin: 0px 2px auto 2px;
@@ -69,10 +68,44 @@
 	height: 38px;	 
 }
 
-.UIPage .UIRowContainer {
-	padding: 1px;
+.UIPageBody .VIEW-PAGEBODY .UIPage {
+	padding: 0px 8px;
 }
 
-.UIPage .VIEW-PAGE {
+.UIPageBody .VIEW-PAGEBODY .UIPage .UIComponentBlock {
+	background: white;
+}
+
+.UIPageBody .BLPagebody {
+	background: url('background/BgPagebody.gif') no-repeat left top;
+	padding-left: 6px;
+}
+
+.UIPageBody .BRPagebody {
+	background: url('background/BgPagebody.gif') no-repeat right top; 
+	padding-right: 6px;
+}
+
+.UIPageBody .BMPagebody {
+	background: url('background/BgPagebody.gif') repeat-x center bottom; 
+	height: 16px;
+}
+
+.UIPage .UIRowContainer {
 	padding: 0px;
+}
+
+.BottomDecoratorHome .BottomDecoratorLeft{
+	background: url('background/BottomDecoratorHome.gif') no-repeat left;
+	padding-left: 7px;
+}
+
+.BottomDecoratorHome .BottomDecoratorRight{
+	background: url('background/BottomDecoratorHome.gif') no-repeat right;
+	padding-right: 7px;
+}
+
+.BottomDecoratorHome .BottomDecoratorMiddle{
+	background: white;
+	height: 7px;
 }

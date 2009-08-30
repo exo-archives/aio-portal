@@ -2,15 +2,14 @@
 <page-set>
 		 		
   <page>
-  	<page-id>group::platform/guests::register</page-id>
     <owner-type>group</owner-type>
-    <owner-id>platform/guests</owner-id>
+    <owner-id>/platform/guests</owner-id>
     <name>register</name>
     <title>Register</title>
 	  <access-permissions>*:/platform/guests</access-permissions>
 	  <edit-permission>*:/platform/administrators</edit-permission>    
     <application>
-      <instance-id>group#platform/guests:/exoadmin/AccountPortlet/Account</instance-id>
+      <instance-id>group#/platform/guests:/exoadmin/AccountPortlet/Account</instance-id>
       <title>New Account</title>
       <access-permissions>*:/platform/guests</access-permissions>
       <show-info-bar>false</show-info-bar>      
@@ -18,15 +17,14 @@
   </page>          
     
   <page>
-  	<page-id>group::platform/guests::sitemap</page-id>
     <owner-type>group</owner-type>
-    <owner-id>platform/guests</owner-id>
+    <owner-id>/platform/guests</owner-id>
     <name>sitemap</name>
     <title>Site Map</title>
 	  <access-permissions>*:/platform/guests</access-permissions>
 	  <edit-permission>*:/platform/administrators</edit-permission>
 	  <application>
-      <instance-id>group#platform/guests:/web/SiteMapPortlet/sitemapportlet</instance-id>
+      <instance-id>group#/platform/guests:/web/SiteMapPortlet/sitemapportlet</instance-id>
       <title>SiteMap</title>
       <access-permissions>*:/platform/guests</access-permissions>
       <show-info-bar>false</show-info-bar>      
@@ -34,15 +32,14 @@
   </page>
   
   <page>
-  	<page-id>group::platform/guests::link</page-id>
   	<owner-type>group</owner-type>
-    <owner-id>platform/guests</owner-id>
+    <owner-id>/platform/guests</owner-id>
     <name>link</name>
     <title>Link</title>
     <access-permissions>*:/platform/guests</access-permissions>
     <edit-permission>*:/platform/administrators</edit-permission>
     <application>
-      <instance-id>group#platform/guests:/web/IFramePortlet/blog</instance-id>
+      <instance-id>group#/platform/guests:/web/IFramePortlet/blog</instance-id>
       <title>Blog</title>
       <access-permissions>*:/platform/guests</access-permissions>
       <show-info-bar>false</show-info-bar>

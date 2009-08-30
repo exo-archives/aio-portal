@@ -24,12 +24,11 @@ import org.exoplatform.webui.core.lifecycle.Lifecycle;
  * Created by The eXo Platform SAS
  * May 8, 2006
  */
-public class UIPortalLifecycle extends Lifecycle { 
+public class UIPortalLifecycle extends Lifecycle<UIPortal> { 
   
-  public void processRender(UIComponent uicomponent , WebuiRequestContext context) throws Exception { 
-    UIPortal uiPortal = (UIPortal) uicomponent;
-    if(uiPortal.getMaximizedUIComponent() != null){
-      UIComponent uiComponent = uiPortal.getMaximizedUIComponent();
+  public void processRender(UIPortal uicomponent , WebuiRequestContext context) throws Exception { 
+    if(uicomponent.getMaximizedUIComponent() != null){
+      UIComponent uiComponent = uicomponent.getMaximizedUIComponent();
       uiComponent.processRender(context);
       return;
     }

@@ -20,16 +20,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.exoplatform.commons.utils.PageList;
+import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.Query;
 import org.exoplatform.portal.config.UserACL;
+import org.exoplatform.portal.config.UserPortalConfigService;
+import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
+import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.webui.navigation.PageNavigationUtils;
+import org.exoplatform.portal.webui.portal.PageNodeEvent;
+import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.util.Util;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
+import org.exoplatform.webui.config.annotation.EventConfig;
+import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.UIPortletApplication;
 import org.exoplatform.webui.core.lifecycle.UIApplicationLifecycle;
+import org.exoplatform.webui.event.Event;
+import org.exoplatform.webui.event.EventListener;
+import org.exoplatform.webui.event.Event.Phase;
 
 /**
  * Created by The eXo Platform SAS
@@ -39,7 +52,10 @@ import org.exoplatform.webui.core.lifecycle.UIApplicationLifecycle;
  */
 @ComponentConfig(
                  lifecycle = UIApplicationLifecycle.class,
-                 template = "app:/groovy/admintoolbar/webui/component/UIUserToolBarPortlet.gtmpl"
+                 template = "app:/groovy/admintoolbar/webui/component/UIUserToolBarPortlet.gtmpl",
+                 events = {
+                	 @EventConfig(name = "AddDefaultDashboard", listeners = UIUserToolBarPortlet.AddDashboardActionListener.class)
+                 }
 )
 public class UIUserToolBarPortlet extends UIPortletApplication {
   
@@ -94,4 +110,54 @@ public class UIUserToolBarPortlet extends UIPortletApplication {
     return null;
   }
   
+  public PageNavigation getCurrentUserNavigation(){
+  	String remoteUser = Util.getPortalRequestContext().getRemoteUser();
+  	return getPageNavigation(PortalConfig.USER_TYPE + "::" + remoteUser);
+  }
+  
+  static public class AddDashboardActionListener extends EventListener<UIUserToolBarPortlet>{
+  	
+  	private final static String PAGE_TEMPLATE = "dashboard";
+    private static Log logger = ExoLogger.getExoLogger(AddDashboardActionListener.class);
+    
+  	public void execute(Event<UIUserToolBarPortlet> event) throws Exception {
+  		UIUserToolBarPortlet toolBarPortlet = event.getSource();
+  		String nodeName = event.getRequestContext().getRequestParameter(UIComponent.OBJECTID);
+  	  PageNavigation userNavigation = toolBarPortlet.getCurrentUserNavigation();
+  	  UserPortalConfigService configService = toolBarPortlet.getApplicationComponent(UserPortalConfigService.class);
+  	  if(userNavigation != null && configService !=null && userNavigation.getNodes().size() < 1){
+  	  	createDashboard(nodeName,userNavigation,configService);
+  	  }
+  	}
+  	
+  	private static void createDashboard(String _nodeName, PageNavigation _pageNavigation, UserPortalConfigService _configService){
+  		try{
+  			if(_nodeName == null){
+  				logger.debug("Parsed nodeName is null, hence use Tab_0 as default name");
+  				_nodeName = "Tab_0";
+  			}
+  			Page page = _configService.createPageTemplate(PAGE_TEMPLATE, _pageNavigation.getOwnerType(), _pageNavigation.getOwnerId());
+  			page.setTitle(_nodeName);
+  			page.setName(_nodeName);
+  			
+  			PageNode pageNode = new PageNode();
+  			pageNode.setName(_nodeName);
+  			pageNode.setLabel(_nodeName);
+  	    pageNode.setUri(_nodeName);
+  			pageNode.setPageReference(page.getPageId());
+  				
+  			_pageNavigation.addNode(pageNode);
+  			_configService.create(page);
+  			_configService.update(_pageNavigation);
+  			
+  			UIPortal uiPortal = Util.getUIPortal();
+  			uiPortal.setSelectedNode(pageNode);
+  			
+  			PortalRequestContext prContext = Util.getPortalRequestContext();
+  			prContext.getResponse().sendRedirect(prContext.getPortalURI() + _nodeName);
+  		}catch(Exception ex){
+  			logger.info("Could not create default dashboard page",ex);
+  		}
+  	}
+  }
 }

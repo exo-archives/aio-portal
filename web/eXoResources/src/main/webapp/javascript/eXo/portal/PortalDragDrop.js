@@ -369,7 +369,8 @@ PortalDragDrop.prototype.setDragObjectProperties = function(dragObject, listComp
     if(eXo.core.I18n.isLT()) dragObject.style.left = (eXo.core.Browser.findMouseRelativeX(dragObject.offsetParent, e) -
                               eXo.portal.PortalDragDrop.deltaXDragObjectAndMouse) + "px" ;
   } else {
-    if(eXo.core.I18n.isLT()) dragObject.style.left = (eXo.core.Browser.findMouseXInPage(e) - 
+  	var uiWorkingWS = document.getElementById("UIWorkingWorkspace");
+    if(eXo.core.I18n.isLT()) dragObject.style.left = (eXo.core.Browser.findMouseRelativeX(uiWorkingWS, e) - 
                                 eXo.portal.PortalDragDrop.deltaXDragObjectAndMouse) + "px" ;
     var editBlock = eXo.core.DOMUtil.findFirstChildByClass(componentBlock, "div", "EDITION-BLOCK");
     if(editBlock) {

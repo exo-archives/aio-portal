@@ -44,4 +44,9 @@
       </init-params>
   </component>    
   
+  <component>
+    <key>org.exoplatform.services.resources.ResourceBundleManager</key>
+    <type>org.exoplatform.services.resources.ResourceBundleManager</type>
+  </component>
+
 </configuration>

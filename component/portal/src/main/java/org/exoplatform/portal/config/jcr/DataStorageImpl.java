@@ -25,6 +25,7 @@ import org.exoplatform.commons.utils.LazyPageList;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.Query;
+import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PortalConfig;
@@ -54,7 +55,6 @@ public class DataStorageImpl implements DataStorage, Startable {
   
   final private static String PORTAL_CONFIG_FILE_NAME = "portal-xml" ;
   final private static String NAVIGATION_CONFIG_FILE_NAME = "navigation-xml" ;
-  final private static String GADGETS_CONFIG_FILE_NAME = "gadgets-xml" ; //TODO: dang.tung
   final private static String PAGE_SET_NODE = "pages" ;
   final private static String PORTLET_PREFERENCES_SET_NODE = "portletPreferences" ;
 
@@ -65,6 +65,10 @@ public class DataStorageImpl implements DataStorage, Startable {
   public DataStorageImpl(RegistryService service,ListenerService listenerService) throws Exception {
     regService_ = service ;
     this.listenerService = listenerService; 
+  }
+
+  public PortalConfig getPortalConfig(String ownerType, String portalName) throws Exception {
+    throw new UnsupportedOperationException();
   }
 
   public PortalConfig getPortalConfig(String portalName) throws Exception {
@@ -84,53 +88,59 @@ public class DataStorageImpl implements DataStorage, Startable {
   }
   
   public void create(PortalConfig config) throws Exception {
-    String portalAppPath = getApplicationRegistryPath(PortalConfig.PORTAL_TYPE, config.getName()) ;
-    SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
-    try {
-      RegistryEntry portalEntry = new RegistryEntry(PORTAL_CONFIG_FILE_NAME) ;
-      mapper_.map(portalEntry.getDocument(), config) ;
-      regService_.createEntry(sessionProvider, portalAppPath, portalEntry) ;
-      //Broadcase event should be on UserPortalConfigService
-      /**
-     * Broadcast event should be on UserPortalConfigService
-       * but in current implement, portal use 2 component to create new portal:
-       * UserPortalConfigservice create/update/remove new portal from web ui
-       * NewPortalConfigListener create new portal from config to create some predefined portal from
-       * xml configuration.
-       * this implement prevent us broadcast the event in UserPortalConfigService level.
-       *
-       * */
-      listenerService.broadcast(CREATE_PORTAL_EVENT,this,config);
-    }
-    finally {
-      sessionProvider.close() ;
+    if (config.getType().equals(PortalConfig.PORTAL_TYPE)) {
+      String portalAppPath = getApplicationRegistryPath(PortalConfig.PORTAL_TYPE, config.getName()) ;
+      SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
+      try {
+        RegistryEntry portalEntry = new RegistryEntry(PORTAL_CONFIG_FILE_NAME) ;
+        mapper_.map(portalEntry.getDocument(), config) ;
+        regService_.createEntry(sessionProvider, portalAppPath, portalEntry) ;
+        //Broadcase event should be on UserPortalConfigService
+        /**
+       * Broadcast event should be on UserPortalConfigService
+         * but in current implement, portal use 2 component to create new portal:
+         * UserPortalConfigservice create/update/remove new portal from web ui
+         * NewPortalConfigListener create new portal from config to create some predefined portal from
+         * xml configuration.
+         * this implement prevent us broadcast the event in UserPortalConfigService level.
+         *
+         * */
+        listenerService.broadcast(CREATE_PORTAL_EVENT,this,config);
+      }
+      finally {
+        sessionProvider.close() ;
+      }
     }
   }
   
   public void save(PortalConfig config) throws Exception {
-    String portalAppPath = getApplicationRegistryPath(PortalConfig.PORTAL_TYPE, config.getName()) ;
-    SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
-    try {
-      RegistryEntry portalEntry = regService_.getEntry(sessionProvider, portalAppPath + "/" + PORTAL_CONFIG_FILE_NAME) ;
-      mapper_.map(portalEntry.getDocument(), config) ;
-      regService_.recreateEntry(sessionProvider, portalAppPath, portalEntry) ;
-      listenerService.broadcast(UPDATE_PORTAL_EVENT,this,config);
-    }
-    finally {
-      sessionProvider.close() ;
+    if (config.getType().equals(PortalConfig.PORTAL_TYPE)) {
+      String portalAppPath = getApplicationRegistryPath(PortalConfig.PORTAL_TYPE, config.getName()) ;
+      SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
+      try {
+        RegistryEntry portalEntry = regService_.getEntry(sessionProvider, portalAppPath + "/" + PORTAL_CONFIG_FILE_NAME) ;
+        mapper_.map(portalEntry.getDocument(), config) ;
+        regService_.recreateEntry(sessionProvider, portalAppPath, portalEntry) ;
+        listenerService.broadcast(UPDATE_PORTAL_EVENT,this,config);
+      }
+      finally {
+        sessionProvider.close() ;
+      }
     }
   }
 
   public void remove(PortalConfig config) throws Exception {
-    String portalPath = getApplicationRegistryPath(PortalConfig.PORTAL_TYPE, config.getName())
-                        + "/"  + PORTAL_CONFIG_FILE_NAME;
-    SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
-    try {
-      regService_.removeEntry(sessionProvider, portalPath) ;
-      listenerService.broadcast(REMOVE_PORTAL_EVENT,this,config);
-    }
-    finally {
-      sessionProvider.close() ;
+    if (config.getType().equals(PortalConfig.PORTAL_TYPE)) {
+      String portalPath = getApplicationRegistryPath(PortalConfig.PORTAL_TYPE, config.getName())
+                          + "/"  + PORTAL_CONFIG_FILE_NAME;
+      SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
+      try {
+        regService_.removeEntry(sessionProvider, portalPath) ;
+        listenerService.broadcast(REMOVE_PORTAL_EVENT,this,config);
+      }
+      finally {
+        sessionProvider.close() ;
+      }
     }
   }
 
@@ -364,5 +374,9 @@ public class DataStorageImpl implements DataStorage, Startable {
     
     return path ;
   }
+
+	public Container getSharedLayout() throws Exception {
+		throw new UnsupportedOperationException();
+	}
   
 }

@@ -601,8 +601,8 @@
 }
 
 .DefaultPageIcon {
-	background: url('icons/DefaultPageIcon.gif') no-repeat left center; /* orientation=lt */
-	background: url('icons/DefaultPageIcon.gif') no-repeat right center; /* orientation=rt */
+	background: url('icons/DefaultNodeIcon.gif') no-repeat left center; /* orientation=lt */
+	background: url('icons/DefaultNodeIcon.gif') no-repeat right center; /* orientation=rt */
 }
 
 /*##############################Icon Stylesheet for IconSelector##########################*/

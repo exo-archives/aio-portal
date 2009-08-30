@@ -6,15 +6,10 @@
  */	
  
 .UIWindow .UIApplicationRegistryPortlet {
-	border: none;
-	margin: 0px;
 	overflow: visible;
 }
 
 .UIApplicationRegistryPortlet {
-	border: 1px solid #b7b7b7;
-	margin: 5px;
-	background: #fff;
 	overflow: auto;
 }
 

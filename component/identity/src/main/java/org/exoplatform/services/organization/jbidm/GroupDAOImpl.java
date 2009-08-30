@@ -221,6 +221,20 @@ public class GroupDAOImpl
    public Collection findGroupsOfUser(String user) throws Exception
    {
 
+      if (user == null)
+      {
+         // julien : integration bug
+         // need to look at that later
+         //
+         // Caused by: java.lang.IllegalArgumentException: User name cannot be null
+         // at org.jboss.identity.idm.impl.api.session.managers.AbstractManager.checkNotNullArgument(AbstractManager.java:267)
+         //  at org.jboss.identity.idm.impl.api.session.managers.RelationshipManagerImpl.findRelatedGroups(RelationshipManagerImpl.java:753)
+         // at org.exoplatform.services.organization.jbidm.GroupDAOImpl.findGroupsOfUser(GroupDAOImpl.java:225)
+         // at org.exoplatform.organization.webui.component.GroupManagement.isMemberOfGroup(GroupManagement.java:72)
+         // at org.exoplatform.organization.webui.component.GroupManagement.isAdministrator(GroupManagement.java:125)
+         // at org.exoplatform.organization.webui.component.UIGroupExplorer.<init>(UIGroupExplorer.java:57)
+         return Collections.emptyList();
+      }
 
       Collection< org.jboss.identity.idm.api.Group> allGroups =
          getIdentitySession().getRelationshipManager().findRelatedGroups(user, orgService.getExoGroupType(), null);

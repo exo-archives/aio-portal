@@ -33,7 +33,6 @@ abstract public class Application extends BaseComponentPlugin {
   
   final static public String JSR168_APPLICATION_TYPE = "jsr168Application" ;
   final static public String EXO_PORTLET_TYPE = "portlet" ;
-  final static public String EXO_WIDGET_TYPE = "eXoWidget" ;
   final static public String EXO_PORTAL_TYPE = "eXoPortal" ;
   final static public String EXO_GAGGET_TYPE = "eXoGadget" ;
  

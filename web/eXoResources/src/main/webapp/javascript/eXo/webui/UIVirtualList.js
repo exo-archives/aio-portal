@@ -1,31 +1,29 @@
 function UIVirtualList() {
 	this.componentMark = "rel";
-	this.finishLoadMark = "finish";
 	this.storeMark = "store";
 }
 
 UIVirtualList.prototype.init = function(generateId) {
-  var uicomponent = this.getUIComponent(generateId);
-  if (uicomponent == null) return;
-  var children = eXo.core.DOMUtil.getChildrenByTagName(uicomponent,"div");
+  var uiVirtualList = this.getUIComponent(generateId);
+  if (uiVirtualList == null) return;
+  var children = eXo.core.DOMUtil.getChildrenByTagName(uiVirtualList,"div");
   var appendFragment = children[1];
-  var initHeight = appendFragment.offsetHeight - 100;
-  uicomponent.style.height = initHeight + "px";  
+  var initHeight = appendFragment.offsetHeight - 20;
+  uiVirtualList.style.height = initHeight + "px";  
 }
 
-UIVirtualList.prototype.scrollMove = function(uicomponent, url) {
+UIVirtualList.prototype.scrollMove = function(uiVirtualList, url) {
+	if (uiVirtualList.isFinished) return;
 	var DOMUtil = eXo.core.DOMUtil;	
-	var finished = uicomponent.getAttribute(this.finishLoadMark);	
-	if (finished == "true") return;
 	
-	var children = DOMUtil.getChildrenByTagName(uicomponent,"div");
+	var children = DOMUtil.getChildrenByTagName(uiVirtualList,"div");
 	var storeFragment = children[0]; // store fragment
   var appendFragment = children[1]; // append fragment
   
-	var componentHeight = uicomponent.offsetHeight;	
-	var dataFeedId = uicomponent.getAttribute(this.componentMark);	
-	var scrollPosition = uicomponent.scrollTop;
-	var scrollerHeight = uicomponent.scrollHeight;	
+	var componentHeight = uiVirtualList.offsetHeight;	
+	var dataFeedId = uiVirtualList.getAttribute(this.componentMark);	
+	var scrollPosition = uiVirtualList.scrollTop;
+	var scrollerHeight = uiVirtualList.scrollHeight;	
 	var scrollable_gap = scrollerHeight - (scrollPosition + componentHeight);	
 	// if scrollbar reaches bottom	
 	if (scrollable_gap <= 1) {
@@ -52,12 +50,12 @@ UIVirtualList.prototype.getUIComponent = function(generateId) {
 
 UIVirtualList.prototype.updateList = function(generateId) {
   var DOMUtil = eXo.core.DOMUtil;
-  var uicomponent = this.getUIComponent(generateId);
-  if (uicomponent == null) return;
-  var children = DOMUtil.getChildrenByTagName(uicomponent,"div");
+  var uiVirtualList = this.getUIComponent(generateId);
+  if (uiVirtualList == null) return;
+  var children = DOMUtil.getChildrenByTagName(uiVirtualList,"div");
   var storeFragment = children[0]; // store fragment
   var appendFragment = children[1]; // append fragment
-  var dataFeedId = uicomponent.getAttribute(this.componentMark);
+  var dataFeedId = uiVirtualList.getAttribute(this.componentMark);
   var dataFeed = DOMUtil.findDescendantById(appendFragment, dataFeedId);
   var loadedContent = storeFragment.getAttribute(this.storeMark);
   //storeFragment.setAttribute(this.storeMark, "");
@@ -75,9 +73,9 @@ UIVirtualList.prototype.updateList = function(generateId) {
 }
 
 UIVirtualList.prototype.loadFinished = function(generateId) {  
-  var uicomponent = this.getUIComponent(generateId);
-  if (uicomponent == null) return;
-  uicomponent.setAttribute(this.finishLoadMark, "true");
+  var uiVirtualList = this.getUIComponent(generateId);
+  if (uiVirtualList == null) return;
+  uiVirtualList.isFinished = true;
 }
 
 eXo.webui.UIVirtualList = new UIVirtualList();

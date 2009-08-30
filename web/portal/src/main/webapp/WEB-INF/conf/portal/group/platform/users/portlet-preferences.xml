@@ -3,8 +3,8 @@
 
 	<portlet-preferences>
     <owner-type>group</owner-type>
-    <owner-id>platform/users</owner-id>
-    <window-id>group#platform/users:/web/IFramePortlet/blog</window-id>
+    <owner-id>/platform/users</owner-id>
+    <window-id>group#/platform/users:/web/IFramePortlet/blog</window-id>
     <preference>
         <name>url</name>
         <value>http://blog.exoplatform.org</value>
@@ -14,8 +14,8 @@
 	
 	<portlet-preferences>
     <owner-type>group</owner-type>
-    <owner-id>platform/users</owner-id>
-    <window-id>group#platform/users:/web/IFramePortlet/google</window-id>
+    <owner-id>/platform/users</owner-id>
+    <window-id>group#/platform/users:/web/IFramePortlet/google</window-id>
     <preference>
         <name>url</name>
         <value>http://www.google.com</value>
@@ -25,8 +25,8 @@
 	
 	<portlet-preferences>
     <owner-type>group</owner-type>
-    <owner-id>platform/users</owner-id>
-    <window-id>group#platform/users:/web/IFramePortlet/facebook</window-id>
+    <owner-id>/platform/users</owner-id>
+    <window-id>group#/platform/users:/web/IFramePortlet/facebook</window-id>
     <preference>
         <name>url</name>
         <value>http://www.facebook.com</value>

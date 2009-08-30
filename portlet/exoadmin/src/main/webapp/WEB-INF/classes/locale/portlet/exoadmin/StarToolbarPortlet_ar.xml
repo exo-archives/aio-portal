@@ -4,6 +4,7 @@
     <item>
       <ChangeLanguage>تغيير اللغة</ChangeLanguage>
       <ChangeSkin>تغيير المظهر</ChangeSkin>
+      <AccountSetting>Account Setting</AccountSetting>
       <Logout>تسجيل الخروج</Logout>
     </item>
   </UIStarToolbarPortlet>

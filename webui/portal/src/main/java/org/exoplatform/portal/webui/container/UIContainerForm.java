@@ -113,7 +113,7 @@ public class UIContainerForm extends UIFormTabPane {
 
   public void setValues(final UIContainer uiContainer) throws Exception {
     uiContainer_ = uiContainer;
-    Container container = PortalDataMapper.toContainer(uiContainer);
+    Container container = PortalDataMapper.buildModelObject(uiContainer);
     getUIStringInput("id").setEditable(false);
     invokeGetBindingBean(container);
   }

@@ -25,18 +25,19 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.exoplatform.portal.application.PortalRequestContext;
+import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.UserPortalConfig;
+import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.skin.Skin;
 import org.exoplatform.portal.skin.SkinConfig;
 import org.exoplatform.portal.skin.SkinService;
 import org.exoplatform.portal.skin.SkinURL;
 import org.exoplatform.portal.webui.application.UIPortlet;
+import org.exoplatform.portal.webui.page.UISiteBody;
 import org.exoplatform.portal.webui.portal.PageNodeEvent;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.util.PortalDataMapper;
 import org.exoplatform.portal.webui.util.Util;
-import org.exoplatform.portal.webui.workspace.pool.UIPCListenerImpl;
-import org.exoplatform.portal.webui.workspace.pool.UIPortalPool;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.UserProfile;
@@ -48,6 +49,7 @@ import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.core.UIApplication;
 import org.exoplatform.webui.core.UIComponent;
+import org.exoplatform.webui.core.UIComponentDecorator;
 import org.exoplatform.webui.core.UIContainer;
 import org.exoplatform.webui.event.Event;
 
@@ -77,6 +79,10 @@ public class UIPortalApplication extends UIApplication {
   private Orientation        orientation_      = Orientation.LT;
 
   final static public String UI_WORKING_WS_ID  = "UIWorkingWorkspace";
+  
+  final static public String UI_VIEWING_WS_ID  = "UIViewWS";
+  
+  final static public String UI_EDITTING_WS_ID = "UIEditInlineWS";
 
   final static public String UI_MASK_WS_ID     = "UIMaskWorkspace";
 
@@ -86,8 +92,6 @@ public class UIPortalApplication extends UIApplication {
 
   private boolean            isSessionOpen     = false;
  
-  private UIPortalPool _uiPortalPool;
-  
   /**
    * The constructor of this class is used to build the tree of UI components
    * that will be aggregated in the portal page. 1) The component is stored in
@@ -260,7 +264,7 @@ public class UIPortalApplication extends UIApplication {
     // Determine portlets visible on the page
     List<UIPortlet> uiportlets = new ArrayList<UIPortlet>();
     UIWorkingWorkspace uiWorkingWS = getChildById(UI_WORKING_WS_ID);
-    UIPortal uiPortal = uiWorkingWS.getChild(UIPortal.class);
+    UIPortal uiPortal = uiWorkingWS.findFirstComponentOfType(UIPortal.class);
     uiPortal.findComponentOfType(uiportlets, UIPortlet.class);
     UIPortalToolPanel toolPanel = uiWorkingWS.getChild(UIPortalToolPanel.class);
     if (toolPanel != null && toolPanel.isRendered()) {
@@ -299,16 +303,23 @@ public class UIPortalApplication extends UIApplication {
     UIWorkingWorkspace uiWorkingWorkspace = addChild(UIWorkingWorkspace.class,
                                                      UIPortalApplication.UI_WORKING_WS_ID,
                                                      null);
+    UIComponentDecorator uiViewWS = uiWorkingWorkspace.addChild(UIComponentDecorator.class, null, UI_VIEWING_WS_ID);
+    
+    DataStorage dataStorage = getApplicationComponent(DataStorage.class);
+    Container container = dataStorage.getSharedLayout();
     UIPortal uiPortal = createUIComponent(UIPortal.class, null, null);
     PortalDataMapper.toUIPortal(uiPortal, userPortalConfig_);
-    uiWorkingWorkspace.addChild(uiPortal);
-    
-    //Minh Hoang TO: Set listener as well as default UIPortal on the portal pool
-    _uiPortalPool = new UIPortalPool();
-    _uiPortalPool.backupUIPortal(userPortalConfig_.getPortalConfig().getName(), uiPortal);
-    _uiPortalPool.setDefaultUIPortal(uiPortal);
-    _uiPortalPool.setListener(new UIPCListenerImpl(uiWorkingWorkspace,_uiPortalPool));
-    
+    uiWorkingWorkspace.addChild(UIEditInlineWorkspace.class, null, UI_EDITTING_WS_ID).setRendered(false);
+    if(container != null) {
+    	org.exoplatform.portal.webui.container.UIContainer uiContainer = createUIComponent(org.exoplatform.portal.webui.container.UIContainer.class, null, null);
+    	PortalDataMapper.toUIContainer(uiContainer, container);
+    	UISiteBody uiSiteBody = uiContainer.findFirstComponentOfType(UISiteBody.class);
+    	uiSiteBody.setUIComponent(uiPortal);
+    	uiContainer.setRendered(true);
+    	uiViewWS.setUIComponent(uiContainer);
+    } else {
+    	uiViewWS.setUIComponent(uiPortal);
+    }
     uiWorkingWorkspace.addChild(UIPortalToolPanel.class, null, null).setRendered(false);
     addChild(UIMaskWorkspace.class, UIPortalApplication.UI_MASK_WS_ID, null);
   }
@@ -468,7 +479,4 @@ public class UIPortalApplication extends UIApplication {
     this.userPortalConfig_ = userPortalConfig;
   }
   
-  public UIPortalPool getUIPortalPool(){
-  	return _uiPortalPool;
-  }
 }

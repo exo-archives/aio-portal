@@ -69,7 +69,6 @@ import org.exoplatform.webui.form.UISearchForm;
     @ComponentConfig(template = "system:/groovy/portal/webui/page/UIPageBrowser.gtmpl", events = {
         @EventConfig(listeners = UIPageBrowser.DeleteActionListener.class, confirm = "UIPageBrowse.deletePage"),
         @EventConfig(listeners = UIPageBrowser.EditInfoActionListener.class),
-        @EventConfig(listeners = UIPageBrowser.PreviewActionListener.class),
         @EventConfig(listeners = UIPageBrowser.AddNewActionListener.class),
         @EventConfig(listeners = UIPageBrowser.BackActionListener.class)}),
     @ComponentConfig(id = "UIBrowserPageForm", type = UIPageForm.class, lifecycle = UIFormLifecycle.class, template = "system:/groovy/webui/form/UIFormTabPane.gtmpl", events = {
@@ -84,7 +83,7 @@ public class UIPageBrowser extends UISearch {
   public static String[]                        BEAN_FIELD     = { "pageId", "title",
       "accessPermissions", "editPermission"                   };
 
-  public static String[]                        ACTIONS        = { "Preview", "EditInfo", "Delete" };
+  public static String[]                        ACTIONS        = { "EditInfo", "Delete" };
 
   private boolean                               showAddNewPage = false;
 
@@ -130,12 +129,10 @@ public class UIPageBrowser extends UISearch {
     if (lastQuery_ == null) {
       lastQuery_ = new Query<Page>(null, null, null, null, Page.class);
     }
-    LazyPageList pagelist = null;
+    LazyPageList<Page> pagelist = null;
     try {
-      pagelist = service.find(lastQuery_, new Comparator<Object>() {
-        public int compare(Object obj1, Object obj2) {
-          Page page1 = (Page) obj1;
-          Page page2 = (Page) obj2;
+      pagelist = service.find(lastQuery_, new Comparator<Page>() {
+        public int compare(Page page1, Page page2) {
           return page1.getName().compareTo(page2.getName());
         }
       });
@@ -309,55 +306,6 @@ public class UIPageBrowser extends UISearch {
     }
   }
 
-  static public class PreviewActionListener extends EventListener<UIPageBrowser> {
-    public void execute(Event<UIPageBrowser> event) throws Exception {
-      UIPageBrowser uiPageBrowser = event.getSource();
-      PortalRequestContext pcontext = Util.getPortalRequestContext();
-      String id = pcontext.getRequestParameter(OBJECTID);
-      UserPortalConfigService service = uiPageBrowser.getApplicationComponent(UserPortalConfigService.class);
-      UIPortalApplication uiPortalApp = (UIPortalApplication) pcontext.getUIApplication();
-      if (service.getPage(id) == null) {
-        uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.PageNotExist",
-                                                      new String[] { id },
-                                                      1));
-        pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
-        return;
-      }
-      Page page = service.getPage(id, pcontext.getRemoteUser());
-      if (page == null) {
-        uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.NotViewPage",
-                                                      new String[] { id },
-                                                      1));
-        pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
-        return;
-      }
-      if (Page.DESKTOP_PAGE.equals(page.getFactoryId())) {
-        uiPortalApp.addMessage(new ApplicationMessage("UIPageBrowser.msg.Invalid-Preview",
-                                                      new String[] { page.getName() }));
-        pcontext.addUIComponentToUpdateByAjax(uiPortalApp.getUIPopupMessages());
-        return;
-      }
-
-      UIPage uiPage = uiPageBrowser.createUIComponent(event.getRequestContext(),
-                                                      UIPage.class,
-                                                      null,
-                                                      null);
-      PortalDataMapper.toUIPage(uiPage, page);
-      UIPortalToolPanel uiToolPanel = Util.getUIPortalToolPanel();
-      UIPagePreview uiPagePreview = uiToolPanel.createUIComponent(UIPagePreview.class,
-                                                                  "UIPagePreviewWithMessage",
-                                                                  null);
-      uiPagePreview.setUIComponent(uiPage);
-      uiToolPanel.setUIComponent(uiPagePreview);
-      uiToolPanel.setShowMaskLayer(true);
-      uiToolPanel.setRenderSibbling(UIPortalToolPanel.class);
-
-      UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
-      pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
-      pcontext.setFullRender(true);
-    }
-  }
-
   static public class AddNewActionListener extends EventListener<UIPageBrowser> {
     public void execute(Event<UIPageBrowser> event) throws Exception {
       PortalRequestContext prContext = Util.getPortalRequestContext();
@@ -428,7 +376,7 @@ public class UIPageBrowser extends UISearch {
       findAllPortlet(uiPortlets, uiPage);
       ArrayList<Object> applications = new ArrayList<Object>();
       for (UIPortlet uiPortlet : uiPortlets) {
-        applications.add(PortalDataMapper.toPortletModel(uiPortlet));
+        applications.add(PortalDataMapper.buildModelObject(uiPortlet));
       }
 
       if (Page.DESKTOP_PAGE.equals(uiPage.getFactoryId())
@@ -452,7 +400,7 @@ public class UIPageBrowser extends UISearch {
         return;
       ArrayList<Object> children = new ArrayList<Object>();
       for (UIComponent child : uiChildren) {
-        Object component = PortalDataMapper.buildChild(child);
+        Object component = PortalDataMapper.buildModelObject(child);
         if (component != null)
           children.add(component);
       }

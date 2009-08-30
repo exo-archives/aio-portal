@@ -24,13 +24,12 @@ import org.exoplatform.webui.core.lifecycle.Lifecycle;
  * Created by The eXo Platform SAS
  * May 8, 2006
  */
-public class UIPortalApplicationLifecycle extends Lifecycle {  
+public class UIPortalApplicationLifecycle extends Lifecycle<UIPortalApplication> {  
   
-  public void processDecode(UIComponent uicomponent , WebuiRequestContext context) throws Exception {  
-    UIPortalApplication uiApp = (UIPortalApplication) uicomponent ; 
+  public void processDecode(UIPortalApplication uicomponent , WebuiRequestContext context) throws Exception {  
     String componentId =  context.getRequestParameter(context.getUIComponentIdParameterName()) ;
     if(componentId == null)  return ;
-    UIComponent uiTarget =  uiApp.findComponentById(componentId);
+    UIComponent uiTarget =  uicomponent.findComponentById(componentId);
     if(uiTarget == null)  return ;
     if(uiTarget == uicomponent)  super.processDecode(uicomponent, context) ;
     uiTarget.processDecode(context);
@@ -46,11 +45,10 @@ public class UIPortalApplicationLifecycle extends Lifecycle {
    * targeted component is extracted and a call of its processAction() method is executed.
    * 
    */
-  public void processAction(UIComponent uicomponent, WebuiRequestContext context) throws Exception {
-    UIPortalApplication uiApp = (UIPortalApplication) uicomponent ;
+  public void processAction(UIPortalApplication uicomponent, WebuiRequestContext context) throws Exception {
     String componentId =  context.getRequestParameter(context.getUIComponentIdParameterName()) ;
     if(componentId == null)  return;
-    UIComponent uiTarget =  uiApp.findComponentById(componentId);  
+    UIComponent uiTarget =  uicomponent.findComponentById(componentId);  
     if(uiTarget == null)  return ;
     if(uiTarget == uicomponent)  super.processAction(uicomponent, context) ;
     uiTarget.processAction(context) ;

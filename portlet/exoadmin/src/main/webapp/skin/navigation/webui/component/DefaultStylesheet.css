@@ -1,17 +1,9 @@
-
-.UIWindow .UIManagement {
-	margin: 0px;
-}
-
 .UIManagement {
 	padding: 10px;
-	margin: 7px;
-	border: 1px solid #ccc;
-	background: white;
 }
 
 .UIManagement .ManagementBlock {
-	height: 100px;
+	height: 75px;
 	background: white url('background/ContentBg.gif') repeat-x bottom;
 }
 
@@ -24,9 +16,13 @@
 	vertical-align: top;
 	background: url('background/LineBg.gif') no-repeat right center;
 	padding: 20px 10px 0px;
-	width: 35%;
+	width: 37%;
 	overflow: hidden;
 	white-space: normal;
+}
+
+.UIPortalNavigationPortlet .UIManagement table.ManagementBlock td.Content {
+	width: 14%;
 }
 
 .UIManagement table.ManagementBlock td.Content strong {
@@ -35,8 +31,12 @@
 
 .UIManagement .ManagementBlock .Image {
 	width: 103px;
-	line-height: 100px;
+	line-height: 75px;
 	padding: 0px 10px 0px 20px;
+}
+
+.UIManagement .ManagementBlock .Image img {
+	width: 80px;
 }
 
 .UIManagement .ManagementBlock .Label {
@@ -55,7 +55,7 @@
 	line-height: 16px;
 	width: auto;
 	padding: 1px 0px 2px 25px;
-	margin: 0px 70px 0px 0px;
+	margin: 0px 50px 0px 0px;
 }
 
 .UIManagement .ManagementBlock .EditLayoutIcon {
@@ -74,13 +74,7 @@
 
 .UIAddGroupNavigation {
 	background: white; 
-	border: 1px solid #b7b7b7; 
-	padding: 10px; 
-	margin: 5px;
-}
-
-.UIWindown .UIAddGroupNavigation {
-	margin: 0px;
+	padding: 0px; 
 }
 
 .UIAddGroupNavigation .AddGroupIcon {

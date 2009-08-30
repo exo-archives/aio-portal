@@ -247,8 +247,7 @@ public class UIPortletForm extends UIFormTabPane {
     //
 
     PropertyChange[] propertyChanges = new PropertyChange[uiFormInputs.size()];
-    ArrayList<PropertyChange> foo = new ArrayList<PropertyChange>();
-    
+
     for (int i = 0 ; i < uiFormInputs.size(); i++)
     {
     	String name = uiFormInputs.get(i).getName();
@@ -256,11 +255,8 @@ public class UIPortletForm extends UIFormTabPane {
     	propertyChanges[i] = PropertyChange.newUpdate(name, value);
     }
 
-    // Get marshalled version
-    StatefulPortletContext<ExoPortletState> updatedCtx = (StatefulPortletContext<ExoPortletState>)portletInvoker.setProperties(portletContext, propertyChanges);
-
     // Now save it
-    uiPortlet_.save(updatedCtx.getState());
+    uiPortlet_.update(propertyChanges);
   }
   
   

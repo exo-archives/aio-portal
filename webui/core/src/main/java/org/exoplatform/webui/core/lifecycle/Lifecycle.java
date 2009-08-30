@@ -30,7 +30,7 @@ import org.exoplatform.webui.event.Event;
  * Created by The eXo Platform SAS
  * May 7, 2006
  */
-public class Lifecycle {
+public class Lifecycle<E extends UIComponent> {
   
   protected static Log log = ExoLogger.getLogger("portal:Lifecycle");
   
@@ -38,9 +38,9 @@ public class Lifecycle {
   
 //  public void init(UIComponent uicomponent, WebuiRequestContext context) throws Exception {}
   
-  public void processDecode(UIComponent uicomponent , WebuiRequestContext context) throws Exception {}
+  public void processDecode(E uicomponent , WebuiRequestContext context) throws Exception {}
   
-  public void processAction(UIComponent uicomponent , WebuiRequestContext context) throws Exception {
+  public void processAction(E uicomponent , WebuiRequestContext context) throws Exception {
     String action =  context.getRequestParameter(context.getActionParameterName()) ;
     if(action == null) return ;
     Event<UIComponent> event = uicomponent.createEvent(action, Event.Phase.PROCESS, context) ;
@@ -58,7 +58,7 @@ public class Lifecycle {
    * class) 
    * 
    */
-  public void processRender(UIComponent uicomponent , WebuiRequestContext context) throws Exception {
+  public void processRender(E uicomponent , WebuiRequestContext context) throws Exception {
     String template = uicomponent.getTemplate() ;
     ResourceResolver resolver =  uicomponent.getTemplateResourceResolver(context, template);
     WebuiBindingContext bcontext = 

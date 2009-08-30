@@ -71,7 +71,12 @@
 					</div>
 				</div>
 			</div>
-			<% } else { uicomponent.renderChildren(); } %>
+			<% } else { uicomponent.renderChildren(); }%>
+			<div class="BLPagebody">
+				<div class="BRPagebody">
+					<div class="BMPagebody"><span></span></div>
+				</div>
+			</div>
 		</div>
 	<%}%>
 		<div class="EDITION-BLOCK EDITION-PAGEBODY">

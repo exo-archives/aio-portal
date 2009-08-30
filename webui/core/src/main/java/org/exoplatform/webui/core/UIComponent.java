@@ -19,6 +19,7 @@ package org.exoplatform.webui.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.poi.poifs.property.Parent;
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.resolver.ResourceResolver;
 import org.exoplatform.web.application.Parameter;
@@ -257,11 +258,13 @@ abstract public class UIComponent {
   }
   
   public <T extends UIComponent> void setRenderSibbling(Class<T> type) {
-    UIContainer uicontainer = (UIContainer) uiparent ;
-  	List<UIComponent> children = uicontainer.getChildren() ;
-  	for(UIComponent child : children) {
-  		if(type.isInstance(child))  child.setRendered(true);
-  		else   child.setRendered(false) ;
+  	if(uiparent instanceof UIContainer ) {
+	    UIContainer uicontainer = (UIContainer) uiparent ;
+	  	List<UIComponent> children = uicontainer.getChildren() ;
+	  	for(UIComponent child : children) {
+	  		if(type.isInstance(child))  child.setRendered(true);
+	  		else   child.setRendered(false) ;
+	  	}
   	}
   }
   

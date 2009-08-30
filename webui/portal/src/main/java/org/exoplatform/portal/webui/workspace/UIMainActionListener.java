@@ -20,6 +20,7 @@ import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.UserACL;
 import org.exoplatform.portal.webui.page.UIPageBody;
 import org.exoplatform.portal.webui.page.UIPageCreationWizard;
+import org.exoplatform.portal.webui.page.UISiteBody;
 import org.exoplatform.portal.webui.page.UIWizardPageSetInfo;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.portal.UIPortalComposer;
@@ -43,10 +44,7 @@ public class UIMainActionListener {
 			UIWorkingWorkspace uiWorkingWS = uiApp
 					.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
 			uiWorkingWS.setRenderedChild(UIPortalToolPanel.class);
-			UIPortalComposer uiPortalComposer = uiWorkingWS.addChild(
-					UIPortalComposer.class, "UIPageEditor", null);
-			UIPortal uiPortal = uiWorkingWS.getChild(UIPortal.class);
-			uiPortalComposer.setOwnerPortalName(uiPortal.getName());
+			uiWorkingWS.addChild(UIPortalComposer.class, "UIPageEditor", null);
 			UIPortalToolPanel uiToolPanel = uiWorkingWS
 					.getChild(UIPortalToolPanel.class);
 			uiToolPanel.setShowMaskLayer(false);
@@ -66,7 +64,7 @@ public class UIMainActionListener {
       uiWorkingWS.setRenderedChild(UIPortalToolPanel.class);
       UIPortalComposer portalComposer = uiWorkingWS.addChild(UIPortalComposer.class, "UIPageEditor", null);
       portalComposer.setRendered(false);
-      portalComposer.setOwnerPortalName(uiWorkingWS.getChild(UIPortal.class).getName());
+      portalComposer.setShowControl(false);
       UIPortalToolPanel uiToolPanel = uiWorkingWS.getChild(UIPortalToolPanel.class);
       uiToolPanel.setShowMaskLayer(false);
       uiToolPanel.setWorkingComponent(UIPageCreationWizard.class, null);
@@ -91,12 +89,24 @@ public class UIMainActionListener {
 			}
 			PortalRequestContext pcontext = (PortalRequestContext) event
 					.getRequestContext();
-			UIWorkingWorkspace uiWorkingWS = uiApp
-					.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+			UIWorkingWorkspace uiWorkingWS = uiApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+			uiWorkingWS.setBackupUIPortal(null);
 			uiApp.setModeState(UIPortalApplication.APP_BLOCK_EDIT_MODE);
-			UIPortalComposer uiPortalComposer = uiWorkingWS.addChild(
-					UIPortalComposer.class, null, null);
-			uiPortalComposer.setOwnerPortalName(uiPortal.getName());
+//			uiWorkingWS.addChild(UIPortalComposer.class, null, null);
+			
+//			UserPortalConfig portalConfig = uiApp.getUserPortalConfig();
+//			UIPortal newPortal = uiWorkingWS.createUIComponent(UIPortal.class, null, null);
+//			PortalDataMapper.toUIPortal(newPortal, portalConfig);
+			UIEditInlineWorkspace uiEditWS = uiWorkingWS.getChild(UIEditInlineWorkspace.class);
+//			uiEditWS.setUIComponent(newPortal);
+			UISiteBody uiSiteBody = uiWorkingWS.findFirstComponentOfType(UISiteBody.class);
+			uiEditWS.setUIComponent(uiPortal);
+			uiSiteBody.setUIComponent(null);
+			
+			UIPortalComposer uiComposer = uiEditWS.getComposer().setRendered(true);
+			uiComposer.setComponentConfig(UIPortalComposer.class, null);
+			
+			uiWorkingWS.setRenderedChild(UIEditInlineWorkspace.class);
 			pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
 			pcontext.setFullRender(true);
 		}
