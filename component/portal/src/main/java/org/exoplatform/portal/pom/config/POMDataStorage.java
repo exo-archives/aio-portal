@@ -16,28 +16,25 @@
  */
 package org.exoplatform.portal.pom.config;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+
+import org.exoplatform.commons.utils.LazyPageList;
+import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.Query;
 import org.exoplatform.portal.config.model.Application;
 import org.exoplatform.portal.config.model.Container;
-import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
+import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.config.model.SiteBody;
-import org.exoplatform.portal.application.PortletPreferences;
-import org.exoplatform.services.portletcontainer.pci.WindowID;
-import org.exoplatform.commons.utils.LazyPageList;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
+import org.exoplatform.portal.pom.config.tasks.PageNavigationTask;
 import org.exoplatform.portal.pom.config.tasks.PageTask;
 import org.exoplatform.portal.pom.config.tasks.PortalConfigTask;
-import org.exoplatform.portal.pom.config.tasks.PageNavigationTask;
 import org.exoplatform.portal.pom.config.tasks.PortletPreferencesTask;
 import org.exoplatform.portal.pom.config.tasks.SearchTask;
+import org.exoplatform.services.portletcontainer.pci.WindowID;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>

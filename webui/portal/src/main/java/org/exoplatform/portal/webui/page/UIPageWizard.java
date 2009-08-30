@@ -142,7 +142,7 @@ public abstract class UIPageWizard extends UIWizard {
 
       UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
       uiWorkingWS.removeChild(UIPortalComposer.class);
-      uiWorkingWS.setRenderedChild(UIPortalApplication.UI_VIEW_WS_ID);
+      uiWorkingWS.setRenderedChild(UIPortalApplication.UI_VIEWING_WS_ID);
       pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
     }
   }

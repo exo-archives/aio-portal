@@ -5,20 +5,13 @@
     boolean hasNext = uicomponent.getDataFeed().hasNext();
     def rcontext = _ctx.getRequestContext();
     
-    rcontext.getJavascriptManager().importJavascript('eXo.core.DOMUtil');
-    rcontext.getJavascriptManager().importJavascript('eXo.core.Browser');
-    rcontext.getJavascriptManager().importJavascript('eXo.webui.UIVirtualList');
-    
-    String url = uicomponent.url("LoadNext") + "&ajaxRequest=true&component_generate_id=" + uicomponent.generateId; 
+    String url = uicomponent.url("LoadNext") + "&ajaxRequest=true"; 
+		rcontext.getJavascriptManager().addJavascript("eXo.webui.UIVirtualList.init('$uicomponent.generateId');");
+    if (!hasNext) {
+    	rcontext.getJavascriptManager().addJavascript("eXo.webui.UIVirtualList.loadFinished('$uicomponent.generateId');");
+		}   
 %>
-<div id="$uicomponent.id" rel="$uicomponent.generateId" style="overflow:auto;" 
-    onscroll="eXo.webui.UIVirtualList.scrollMove(this,'$url');">    
-    <div style="display:none;"></div>
-    <div><% uicomponent.renderChildren();%></div>
-    <% 
-      rcontext.getJavascriptManager().addJavascript("eXo.webui.UIVirtualList.init('$uicomponent.generateId');");
-        if (!hasNext) {
-            rcontext.getJavascriptManager().addJavascript("eXo.webui.UIVirtualList.loadFinished('$uicomponent.generateId');");
-        }   
-    %>
+<div class="UIVirtualList" id="$uicomponent.id" rel="$uicomponent.generateId" style="overflow:auto; height: 300px;" onscroll="eXo.webui.UIVirtualList.scrollMove(this,'$url');">    
+ 	<div style="display:none;"></div>
+	<div><% uicomponent.renderChildren();%></div>
 </div>

@@ -263,7 +263,7 @@ public class UIPortalComposer extends UIContainer {
 			uiEditWS.setUIComponent(null);
 			
 			uiPortal = (UIPortal) siteBody.getUIComponent();
-			uiWorkingWS.setRenderedChild(UIPortalApplication.UI_VIEW_WS_ID) ;
+			uiWorkingWS.setRenderedChild(UIPortalApplication.UI_VIEWING_WS_ID) ;
 			
 			if(uri == null) uri = (uiPortal.getSelectedNode() != null) 
 					? uiPortal.getSelectedNode().getUri() : null;
@@ -303,7 +303,7 @@ public class UIPortalComposer extends UIContainer {
 			else
 				uiPortalApp.setSessionOpen(false);
 			uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
-			uiWorkingWS.setRenderedChild(UIPortalApplication.UI_VIEW_WS_ID);
+			uiWorkingWS.setRenderedChild(UIPortalApplication.UI_VIEWING_WS_ID);
 			
 			if(uri == null) uri = uiPortal.getSelectedNode() != null ? uiPortal.getSelectedNode().getUri() : null;
 			PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal,PageNodeEvent.CHANGE_PAGE_NODE, uri);
