@@ -15,6 +15,7 @@ import org.jboss.identity.idm.api.RoleType;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Collections;
 
 import javax.naming.InvalidNameException;
 
@@ -214,6 +215,12 @@ public class MembershipDAOImpl
 
    public Collection findMembershipsByUserAndGroup(String userName, String groupId) throws Exception
    {
+      if (userName == null)
+      {
+        // julien fix : if user name is null, need to check if we do need to return a special group
+        return Collections.emptyList();
+      }
+
       String gid = getIdentitySession().getPersistenceManager().createGroupId(getGroupNameFromId(groupId), orgService.getExoGroupType());
 
       Collection<RoleType> roleTypes = getIdentitySession().getRoleManager().findRoleTypes(userName, gid, null);

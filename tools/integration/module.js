@@ -47,7 +47,21 @@ function getModule(params) {
 
   module.component.portal  =
     new Project("org.exoplatform.portal", "exo.portal.component.portal", "jar", module.version).
+  	addDependency(new Project("org.gatein.mop", "mop.api", "jar", "1.0.0-Beta02")).
+  	addDependency(new Project("org.gatein.mop", "mop.spi", "jar", "1.0.0-Beta02")).
+  	addDependency(new Project("org.gatein.mop", "mop.core", "jar", "1.0.0-Beta02")).
+  	addDependency(new Project("org.chromattic", "chromattic.api", "jar", "1.0.0-beta1")).
+  	addDependency(new Project("org.chromattic", "chromattic.common", "jar", "1.0.0-beta1")).
+  	addDependency(new Project("org.chromattic", "chromattic.spi", "jar", "1.0.0-beta1")).
+  	addDependency(new Project("org.chromattic", "chromattic.core", "jar", "1.0.0-beta1")).
+  	addDependency(new Project("org.chromattic", "chromattic.apt", "jar", "1.0.0-beta1")).
+  	addDependency(new Project("org.reflext", "reflext.api", "jar", "1.0.0-beta1")).
+  	addDependency(new Project("org.reflext", "reflext.core", "jar", "1.0.0-beta1")).
+  	addDependency(new Project("org.reflext", "reflext.spi", "jar", "1.0.0-beta1")).
+  	addDependency(new Project("org.reflext", "reflext.jlr", "jar", "1.0.0-beta1")).
+  	addDependency(new Project("org.reflext", "reflext.api", "jar", "1.0.0-beta1")).
     addDependency(module.component.web).
+
     addDependency(new Project("org.gatein.pc", "pc-api", "jar", "3.0.0-SNAPSHOT")).
         addDependency(new Project("org.gatein.pc", "pc-portlet", "jar", "3.0.0-SNAPSHOT")).
         addDependency(new Project("org.gatein.pc", "pc-mc", "jar", "3.0.0-SNAPSHOT")).

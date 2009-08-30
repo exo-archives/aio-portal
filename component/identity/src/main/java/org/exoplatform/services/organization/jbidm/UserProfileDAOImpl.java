@@ -128,26 +128,33 @@ public class UserProfileDAOImpl
 
 
       UserProfile up = (UserProfile) cache_.get(userName);
-      if (up != null)
+      if (up == null)
       {
-         if (NOT_FOUND == up)
-         {
-            return null;
-         }
-         return up;
+         up = getProfile(userName);
       }
 
-      up = getProfile(userName);
-      
-      if (up != null)
+      //
+      if (up == null)
       {
-         cache_.put(userName, up);
+         up = NOT_FOUND;
+      }
+
+      //
+      cache_.put(userName, up);
+
+      // Just to avoid to return a shared object between many threads
+      // that would not be thread safe nor corrct
+      if (up == NOT_FOUND)
+      {
+         // julien : integration bug fix
+         // Return an empty profile to avoid NPE in portal
+         // Should clarify what do do (maybe portal should care about returned value)
+         return new UserProfileImpl();
       }
       else
       {
-         cache_.put(userName, NOT_FOUND);
+         return up;
       }
-      return up;
    }
 
 

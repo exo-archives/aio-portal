@@ -3,8 +3,13 @@
   xsi:schemaLocation="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd http://www.exoplaform.org/xml/ns/kernel_1_0.xsd"
   xmlns="http://www.exoplaform.org/xml/ns/kernel_1_0.xsd">
   <component>
+    <key>org.exoplatform.portal.pom.config.POMSessionManager</key>
+    <type>org.exoplatform.portal.pom.config.POMSessionManager</type>
+  </component>
+  <component>
     <key>org.exoplatform.portal.config.DataStorage</key>
-    <type>org.exoplatform.portal.config.jcr.DataStorageImpl</type>
+    <!--<type>org.exoplatform.portal.config.jcr.DataStorageImpl</type>-->
+    <type>org.exoplatform.portal.pom.config.POMDataStorage</type>
   </component>
   <component>
     <key>org.exoplatform.portal.application.UserGadgetStorage</key>
@@ -65,6 +70,9 @@
                   <value>
                     <string>classic</string>
                   </value>
+                  <value>
+                    <string>test</string>
+                  </value>
                 </collection>
               </field>
               <field name="ownerType">
@@ -89,6 +97,12 @@
                   </value>
                   <value>
                     <string>platform/guests</string>
+                  </value>
+                  <value>
+                    <string>platform/test/legacy</string>
+                  </value>
+                  <value>
+                    <string>platform/test/normalized</string>
                   </value>
                   <value>
                     <string>organization/management/executive-board</string>
@@ -200,7 +214,7 @@
             <field name="workspaces">
               <collection type="java.util.ArrayList">
                 <value>
-                  <string>collaboration</string>
+                  <string>portal-system</string>
                 </value>
               </collection>
             </field>
@@ -271,7 +285,7 @@
             <field name="workspaces">
               <collection type="java.util.ArrayList">
                 <value>
-                  <string>collaboration</string>
+                  <string>portal-system</string>
                 </value>
               </collection>
             </field>
@@ -341,4 +355,5 @@
   <import>jar:/conf/portal/common-configuration.xml</import>
   <import>jar:/conf/portal/database-configuration.xml</import>
   <import>jar:/conf/portal/jcr-configuration.xml</import>
+	<import>jar:/conf/portal/organization-configuration.xml</import>
 </configuration>

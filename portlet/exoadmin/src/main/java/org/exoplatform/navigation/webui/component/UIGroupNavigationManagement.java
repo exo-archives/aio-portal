@@ -68,7 +68,8 @@ import org.exoplatform.webui.event.Event.Phase;
                        @EventConfig(listeners = UIPageNodeForm2.SaveActionListener.class ),
                        @EventConfig(listeners = UIGroupNavigationManagement.BackActionListener.class, phase = Phase.DECODE),
                        @EventConfig(listeners = UIPageNodeForm2.SwitchPublicationDateActionListener.class, phase = Phase.DECODE ),
-                       @EventConfig(listeners = UIPageNodeForm2.ClearPageActionListener.class, phase = Phase.DECODE)
+                       @EventConfig(listeners = UIPageNodeForm2.ClearPageActionListener.class, phase = Phase.DECODE),
+                       @EventConfig(listeners = UIPageNodeForm2.CreatePageActionListener.class, phase = Phase.DECODE)
                      }
     )    
 })
@@ -85,7 +86,7 @@ public class UIGroupNavigationManagement extends UIContainer {
                                             "UIGroupNavigationGrid",
                                             virtualList.getGenerateId());
     virtualList.setUIComponent(repeater);
-    UIPopupWindow editNavigation = addChild(UIPopupWindow.class, null, "EditGroupNavigation");
+    UIPopupWindow editNavigation = addChild(UIPopupWindow.class, null, null);
   }
 
   public void loadNavigations() throws Exception {
@@ -198,7 +199,12 @@ public class UIGroupNavigationManagement extends UIContainer {
                                                                    null,
                                                                    popUp);
       pageManager.setOwner(navigation.getOwnerId());
+      pageManager.setOwnerType(navigation.getOwnerType());
+      
       UINavigationNodeSelector selector = pageManager.getChild(UINavigationNodeSelector.class);
+      ArrayList<PageNavigation> list = new ArrayList<PageNavigation>();
+      list.add(navigation);
+      selector.initNavigations(list);
       selector.loadNavigationByNavId(navId, uicomp.navigations);
       popUp.setUIComponent(pageManager);
       popUp.setWindowSize(400, 400);

@@ -19,8 +19,6 @@ package org.exoplatform.webui.core.lifecycle;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.component.UIInput;
-
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.core.UIApplication;
@@ -39,45 +37,43 @@ import org.exoplatform.webui.form.validator.Validator;
  *          nhudinhthuan@yahoo.com
  * Jun 1, 2006
  */
-public class UIFormLifecycle  extends Lifecycle {
+public class UIFormLifecycle  extends Lifecycle<UIForm> {
 
-  public void processDecode(UIComponent uicomponent, WebuiRequestContext context) throws Exception {
-    UIForm uiForm = (UIForm) uicomponent ;
+  public void processDecode(UIForm uicomponent, WebuiRequestContext context) throws Exception {
 //    HttpServletRequest httpRequest = (HttpServletRequest)context.getRequest() ;
-    uiForm.setSubmitAction(null) ;  
+    uicomponent.setSubmitAction(null) ;  
 //    if(ServletFileUpload.isMultipartContent(new ServletRequestContext(httpRequest))) {
 //      processMultipartRequest(uiForm, context) ;
 //    } else {
-    processNormalRequest(uiForm, context) ;
+    processNormalRequest(uicomponent, context) ;
 //    }
-    List<UIComponent>  children =  uiForm.getChildren() ;
+    List<UIComponent>  children =  uicomponent.getChildren() ;
     for(UIComponent uiChild :  children) {
       uiChild.processDecode(context) ;     
     }
-    String action =  uiForm.getSubmitAction();
+    String action =  uicomponent.getSubmitAction();
     String subComponentId = context.getRequestParameter(UIForm.SUBCOMPONENT_ID);
     if(subComponentId == null || subComponentId.trim().length() < 1) {
-      Event<UIComponent> event = uiForm.createEvent(action, Event.Phase.DECODE, context) ;
+      Event<UIComponent> event = uicomponent.createEvent(action, Event.Phase.DECODE, context) ;
       if(event != null) event.broadcast() ;
       return;
     }
-    UIComponent uiSubComponent = uiForm.findComponentById(subComponentId);
+    UIComponent uiSubComponent = uicomponent.findComponentById(subComponentId);
     Event<UIComponent> event = uiSubComponent.createEvent(action, Event.Phase.DECODE, context) ;
     if(event != null)  event.broadcast() ;      
   }
 
-  public void processAction(UIComponent uicomponent , WebuiRequestContext context) throws Exception {
-    UIForm uiForm = (UIForm) uicomponent ;
+  public void processAction(UIForm uicomponent , WebuiRequestContext context) throws Exception {
     String action =  context.getRequestParameter(UIForm.ACTION);
-    if(action == null) action = uiForm.getSubmitAction();
+    if(action == null) action = uicomponent.getSubmitAction();
     if(action == null) return ;    
     Event<UIComponent> event = uicomponent.createEvent(action, Event.Phase.PROCESS, context) ;
     if(event == null) {
       event = uicomponent.<UIComponent>getParent().createEvent(action, Event.Phase.PROCESS, context) ;
     }
     if(event == null) return;
-    UIApplication uiApp = uiForm.getAncestorOfType(UIApplication.class) ;
-    List<UIComponent>  children = uiForm.getChildren() ;
+    UIApplication uiApp = uicomponent.getAncestorOfType(UIApplication.class) ;
+    List<UIComponent>  children = uicomponent.getChildren() ;
     validateChildren(children, uiApp, context);
     
     /*List<Validator> validators = uiForm.getValidators() ;

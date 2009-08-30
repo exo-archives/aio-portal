@@ -25,6 +25,7 @@ import org.exoplatform.portal.config.UserACL;
 import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.webui.application.UIApplicationList;
+import org.exoplatform.portal.webui.application.UIGadget;
 import org.exoplatform.portal.webui.application.UIPortlet;
 import org.exoplatform.portal.webui.container.UIContainerList;
 import org.exoplatform.portal.webui.login.UILogin;
@@ -33,12 +34,15 @@ import org.exoplatform.portal.webui.page.UIPage;
 import org.exoplatform.portal.webui.page.UIPageBody;
 import org.exoplatform.portal.webui.util.PortalDataMapper;
 import org.exoplatform.portal.webui.util.Util;
+import org.exoplatform.portal.webui.workspace.UIEditInlineWorkspace;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.webui.workspace.UIPortalToolPanel;
+import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.Query;
 import org.exoplatform.services.organization.User;
+import org.exoplatform.web.application.Application;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.UIContainer;
@@ -46,6 +50,7 @@ import org.exoplatform.webui.core.UITabPane;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
 import org.exoplatform.webui.exception.MessageException;
+import org.gatein.pc.api.state.PropertyChange;
 
 /**
  * Author : Nhu Dinh Thuan nhudinhthuan@yahoo.com Jun 14, 2006
@@ -131,12 +136,6 @@ public class UIPortalComponentActionListener {
       Util.showComponentLayoutMode(uiRemoveComponent.getClass());
 
       PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext();
-      // UIPortalApplication uiPortalApp =
-      // uiParent.getAncestorOfType(UIPortalApplication.class);
-      // UIWorkingWorkspace uiWorkingWS =
-      // uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
-      // pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
-      // pcontext.setFullRender(true);
       pcontext.setFullRender(false);
       pcontext.getWriter().write("OK");
       pcontext.setResponseComplete(true);
@@ -167,9 +166,12 @@ public class UIPortalComponentActionListener {
         pcontext.setFullRender(true);
       }
 
-      UIComponent uiWorking = uiApp.findFirstComponentOfType(UIPortal.class);
-      if (!uiWorking.isRendered())
-        uiWorking = uiApp.findFirstComponentOfType(UIPortalToolPanel.class);
+      UIWorkingWorkspace uiWorkingWS = uiApp.getChild(UIWorkingWorkspace.class);
+      UIComponent uiWorking = uiWorkingWS.getChild(UIPortalToolPanel.class);
+      if (!uiWorking.isRendered()) {
+      	UIEditInlineWorkspace uiEditWS = uiWorkingWS.getChild(UIEditInlineWorkspace.class);
+      	uiWorking = uiEditWS.getUIComponent();
+      }
 
       String sourceId = pcontext.getRequestParameter("srcID");
       UIComponent uiSource = uiWorking.findComponentById(sourceId);
@@ -200,8 +202,14 @@ public class UIPortalComponentActionListener {
           uiContainer.setAccessPermissions(accessPers);
           uiSource = uiContainer;
         } else {
-          org.exoplatform.application.registry.Application portlet = null;
-          portlet = uiApp.findFirstComponentOfType(UIApplicationList.class).getPortlet(sourceId);
+          org.exoplatform.application.registry.Application app = null;
+          UIApplicationList appList = uiApp.findFirstComponentOfType(UIApplicationList.class); 
+          app = appList.getApplication(sourceId);
+          
+          boolean isGadget = app.getApplicationType().equals(Application.EXO_GAGGET_TYPE);
+          org.exoplatform.application.registry.Application portlet = isGadget
+          	? appList.getApplication("dashboard/GadgetPortlet"): app;
+          
           UIPortlet uiPortlet = uiTarget.createUIComponent(UIPortlet.class, null, null);
           if (portlet.getDisplayName() != null) {
             uiPortlet.setTitle(portlet.getDisplayName());
@@ -230,6 +238,19 @@ public class UIPortalComponentActionListener {
           uiPortlet.setWindowId(windowId.toString());
           uiPortlet.setShowEditControl(true);
           uiSource = uiPortlet;
+          if(app.getApplicationType().equals(Application.EXO_GAGGET_TYPE)) {
+          	windowId = new StringBuilder(PortalConfig.PORTAL_TYPE) ;
+            windowId.append("#").append(pcontext.getRemoteUser()) ;
+            windowId.append(":/").append(
+                app.getApplicationGroup() + "/" + app.getApplicationName()).append('/') ;
+            UIGadget uiGadget = uiApp.createUIComponent(pcontext, UIGadget.class, null, null) ;
+            uiGadget.setId(Integer.toString(uiGadget.hashCode())) ;
+            windowId.append(uiGadget.hashCode()) ;
+            uiGadget.setApplicationInstanceId(windowId.toString()) ;
+            
+            //save preference for portlet
+            uiPortlet.update(PropertyChange.newUpdate("url", uiGadget.getUrl()));
+          }
         }
         List<UIComponent> children = uiTarget.getChildren();
         uiSource.setParent(uiTarget);

@@ -9,7 +9,21 @@
       <uri>home</uri>
       <name>home</name>
       <label>Home</label>
-      <page-reference>portal::@owner@::sitemap</page-reference>
+      <page-reference>portal::@owner@::homepage</page-reference>
+    </node>
+    <node>
+      <uri>groupnavigation</uri>
+      <name>groupnavigation</name>
+      <label>Group Navigation</label>
+      <visible>false</visible>
+      <page-reference>portal::@owner@::groupnavigation</page-reference>
+    </node>
+    <node>
+      <uri>portalnavigation</uri>
+      <name>portalnavigation</name>
+      <label>Portal Navigation</label>
+      <visible>false</visible>
+      <page-reference>portal::@owner@::portalnavigation</page-reference>
     </node> 
   </page-nodes>
 </node-navigation>

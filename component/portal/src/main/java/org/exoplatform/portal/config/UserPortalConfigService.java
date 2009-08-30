@@ -33,6 +33,8 @@ import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.config.model.PortalConfig;
+import org.exoplatform.portal.pom.config.POMDataStorage;
+import org.exoplatform.portal.pom.config.POMSession;
 import org.exoplatform.services.cache.CacheService;
 import org.exoplatform.services.cache.ExoCache;
 import org.exoplatform.services.cache.ExpireKeyStartWithSelector;
@@ -157,6 +159,7 @@ public class UserPortalConfigService implements Startable {
 			while (iterator.hasNext()) {
 				Group m = (Group) iterator.next();
 				String groupId = m.getId().trim();
+				if(groupId.equals(userACL_.getGuestsGroup())) continue;
 				navigation = getPageNavigation(PortalConfig.GROUP_TYPE, groupId);
 				if (navigation == null)
 					continue;
@@ -186,8 +189,6 @@ public class UserPortalConfigService implements Startable {
 			while (iterator.hasNext()) {
 				Group m = (Group) iterator.next();
 				String groupId = m.getId().trim();
-				if (groupId.charAt(0) == '/')
-					groupId = groupId.substring(1);
 				list.add(groupId);
 			}
 		}
@@ -205,12 +206,18 @@ public class UserPortalConfigService implements Startable {
 	 */
 	public void createUserPortalConfig(String portalName, String template)
 	throws Exception {
-		NewPortalConfig portalConfig = newPortalConfigListener_
-		.getPortalConfig(PortalConfig.PORTAL_TYPE);
+		NewPortalConfig portalConfig = newPortalConfigListener_.getPortalConfig(PortalConfig.PORTAL_TYPE);
+
+    //
 		portalConfig.setTemplateOwner(template);
 		portalConfig.getPredefinedOwner().clear();
 		portalConfig.getPredefinedOwner().add(portalName);
-		newPortalConfigListener_.initPortalTypeDB(portalConfig);
+
+    //
+    newPortalConfigListener_.initPortletPreferencesDB(portalConfig);
+    newPortalConfigListener_.initPortalConfigDB(portalConfig);
+    newPortalConfigListener_.initPageDB(portalConfig);
+    newPortalConfigListener_.initPageNavigationDB(portalConfig);
 	}
 
 	/**
@@ -582,10 +589,20 @@ public class UserPortalConfigService implements Startable {
 		try {
 			if (newPortalConfigListener_ == null)
 				return;
+
+      //
+      if (storage_ instanceof POMDataStorage) {
+        ((POMDataStorage)storage_).getPOMSessionManager().openSession();
+      }
+
 			newPortalConfigListener_.run();
 		} catch (Exception e) {
-			log.error(e);
-		}
+			log.error("", e);
+		} finally {
+      if (storage_ instanceof POMDataStorage) {
+        ((POMDataStorage)storage_).getPOMSessionManager().closeSession(true);
+      }
+    }
 	}
 
 	public void stop() {

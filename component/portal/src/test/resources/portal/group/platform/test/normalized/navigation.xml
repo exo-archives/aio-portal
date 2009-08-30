@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<node-navigation>
+  <owner-type>group</owner-type>  
+	<owner-id>/platform/test/normalized</owner-id>
+	<priority>9</priority>
+  <description>description for node navigation </description>
+  
+  <page-nodes>  		  	  
+	  <node>
+      <uri>register</uri>
+      <name>register</name>
+      <label>#{platform.guests.register}</label>
+      <page-reference>group::/platform/test/normalized::register</page-reference>
+    </node>
+    
+   </page-nodes>
+  
+</node-navigation>

@@ -34,7 +34,7 @@
 			</preference>
 			<preference>
 				<name>template</name>
-				<value>two-columns</value>
+				<value>three-columns</value>
 			</preference>
 		</portlet-preferences>
 		<security-role-ref>
@@ -68,4 +68,28 @@
 			<role-link>admin</role-link>
 		</security-role-ref>
 	</portlet>
+	
+	<portlet>
+  	<description>Tabbed Dashboard Portlet</description>
+  	<portlet-name>TabbedDashboardPortlet</portlet-name>
+  	<display-name>Tabbed Dashboard</display-name>
+  	<portlet-class>org.exoplatform.webui.application.portlet.PortletApplicationController</portlet-class>
+  	
+  	<init-param>
+  		<name>webui.configuration</name>
+  		<value>/WEB-INF/conf/portlet/dashboard/TabbedDashboardPortlet/webui/configuration.xml</value>
+  	</init-param>
+  	<supports>
+  		<mime-type>text/html</mime-type>
+  		<portlet-mode>help</portlet-mode>
+  	</supports>
+  	<supported-locale>en</supported-locale>
+  	<resource-bundle>locale.portlet.dashboard.TabbedDashboardPortlet</resource-bundle>
+  	<portlet-info>
+  		<title>Tabbed Dashboard Portlet</title>
+  		<short-title>Tabbed Dashboard</short-title>
+  		<keywords>tabbedDashboard</keywords>
+  	</portlet-info>
+  </portlet>
+	
 </portlet-app>

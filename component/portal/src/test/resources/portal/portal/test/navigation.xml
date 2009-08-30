@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node-navigation>
+  <owner-type>portal</owner-type>
+  <owner-id>test</owner-id>
+  <priority>1</priority>
+  <creator>navigation_creator</creator>
+  <modifier>navigation_modifier</modifier>
+  <description>navigation_description</description>
+
+  <page-nodes>
+	  <node>
+	    <uri>node_uri</uri>
+	    <name>node_name</name>
+	    <label>node_label</label>
+      <icon>node_icon</icon>
+      <start-publication-date>2000-03-21T01:33:00</start-publication-date>
+      <end-publication-date>2009-03-21T01:33:00</end-publication-date>
+      <show-publication-date>true</show-publication-date>
+      <visible>true</visible>
+	    <page-reference>portal::test::test</page-reference>
+	  </node>    
+    <node>
+      <uri>node_uri2</uri>
+      <name>node_name2</name>
+      <label>node_label2</label>
+      <page-reference>portal::test::test</page-reference>
+    </node>
+  </page-nodes>
+</node-navigation>

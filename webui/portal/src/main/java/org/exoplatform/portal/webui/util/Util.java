@@ -43,6 +43,7 @@ import org.exoplatform.portal.webui.page.UIDesktopPage;
 import org.exoplatform.portal.webui.page.UIPage;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.portal.UIPortalComponent;
+import org.exoplatform.portal.webui.workspace.UIEditInlineWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.webui.workspace.UIPortalToolPanel;
 import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
@@ -68,14 +69,16 @@ public class Util {
   }
 
   static public UIPortal getUIPortal() {
-    return getUIPortalApplication().findFirstComponentOfType(UIPortal.class) ;
+    return getUIPortalApplication()
+    			.<UIWorkingWorkspace>getChildById(UIPortalApplication.UI_WORKING_WS_ID)
+    			.findFirstComponentOfType(UIPortal.class);
   }  
 
   static public UIPortalToolPanel getUIPortalToolPanel(){
     return getUIPortalApplication().findFirstComponentOfType(UIPortalToolPanel.class) ;    
   }  
   
-  static  public void setShowEditControl(UIComponent uiComponent, Class clazz){
+  private static void setShowEditControl(UIComponent uiComponent, Class clazz){
     if(uiComponent == null) return;
     if(uiComponent instanceof UIPortalComponent) {
       UIPortalComponent uiContainer = (UIPortalComponent) uiComponent;
@@ -117,7 +120,7 @@ public class Util {
   static public void showPortalComponentLayoutMode(UIPortalApplication uiPortalApp){   
     UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
     uiWorkingWS.setRenderedChild(UIPortal.class) ;
-    UIPortal uiPortal = uiWorkingWS.getChild(UIPortal.class);    
+    UIPortal uiPortal = uiWorkingWS.findFirstComponentOfType(UIPortal.class);    
 
     UIContainer uiContainer = Util.findUIComponent(uiPortal, UIContainer.class, UIPage.class);
     UIPage uiPage= uiPortal.findFirstComponentOfType(UIPage.class);
@@ -142,9 +145,9 @@ public class Util {
   static public void showPageComponentLayoutMode(UIPortalApplication uiPortalApp){   
     UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
     uiWorkingWS.setRenderedChild(UIPortalToolPanel.class) ;
-    UIPortalToolPanel uiPortalToolPanel = uiWorkingWS.findFirstComponentOfType(UIPortalToolPanel.class);
+    UIPortalToolPanel uiPortalToolPanel = uiWorkingWS.getChild(UIPortalToolPanel.class);
 
-    UIPage uiPage= uiPortalToolPanel.findFirstComponentOfType(UIPage.class);  
+    UIPage uiPage = uiPortalToolPanel.findFirstComponentOfType(UIPage.class);  
     UIContainer uiContainer = uiPage.findFirstComponentOfType(UIContainer.class);
     UIPortlet uiPortlet = uiPage.findFirstComponentOfType(UIPortlet.class);
 
@@ -203,11 +206,13 @@ public class Util {
     return uiPage;
   }
 
-  static public void showComponentLayoutMode(Class clazz) throws Exception  {
+  public static void showComponentLayoutMode(Class clazz) throws Exception  {
     if(clazz == null) return;
-    UIPortal uiPortal = getUIPortal();
+    UIPortalApplication portalApp = getUIPortalApplication();
+    UIEditInlineWorkspace uiEditWS = portalApp.findFirstComponentOfType(UIEditInlineWorkspace.class);
+    UIPortal uiPortal = (UIPortal) uiEditWS.getUIComponent();
     UIContainer uiParent  = null;
-    if(uiPortal.isRendered()){
+    if(uiPortal != null){
       uiPortal.setMaximizedUIComponent(null);
       uiParent = uiPortal;
     } else{
@@ -229,9 +234,11 @@ public class Util {
   
   static public void showComponentEditInViewMode(Class clazz) throws Exception  {
     if(clazz == null) return;
-    UIPortal uiPortal = getUIPortal();
+    UIPortalApplication portalApp = getUIPortalApplication();
+    UIEditInlineWorkspace uiEditWS = portalApp.findFirstComponentOfType(UIEditInlineWorkspace.class);
+    UIPortal uiPortal = (UIPortal) uiEditWS.getUIComponent();
     UIContainer uiParent  = null;
-    if(uiPortal.isRendered()){
+    if(uiPortal != null){
       uiPortal.setMaximizedUIComponent(null);
       uiParent = uiPortal;
     } else{
@@ -247,7 +254,7 @@ public class Util {
     context.getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIPortal.showViewMode('"+layoutMode+"');") ;
   }
   
-  static public UIWorkingWorkspace updateUIApplication(Event<? extends UIComponent> event){
+  public static UIWorkingWorkspace updateUIApplication(Event<? extends UIComponent> event){
     PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext() ;
     UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
     

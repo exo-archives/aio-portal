@@ -48,6 +48,7 @@ public class UINavigationManagement extends UIContainer {
   
   private String owner;  
 
+  private String ownerType;
   @SuppressWarnings("unused")
   public UINavigationManagement() throws Exception {    
     addChild(UINavigationNodeSelector.class, null, null);
@@ -78,6 +79,14 @@ public class UINavigationManagement extends UIContainer {
     uiTree.createEvent("ChangeNode", event.getExecutionPhase(), event.getRequestContext()).broadcast();
   }
   
+  public void setOwnerType(String ownerType) {
+    this.ownerType = ownerType;
+  }
+
+  public String getOwnerType() {
+    return ownerType;
+  }
+
   static public class SaveActionListener extends EventListener<UINavigationManagement> {
 
     public void execute(Event<UINavigationManagement> event) throws Exception {
@@ -119,6 +128,11 @@ public class UINavigationManagement extends UIContainer {
       uiNodeForm.setValues(null);
       uiManagementPopup.setUIComponent(uiNodeForm);
       uiNodeForm.setSelectedParent(uiNodeSelector.getSelectedNavigation());
+      
+      // set owner type, owner
+      uiNodeForm.setOwner(uiManagement.getOwner());
+      uiNodeForm.setOwnerType(uiManagement.getOwnerType());
+      
       uiManagementPopup.setWindowSize(800, 500);
       event.getRequestContext().addUIComponentToUpdateByAjax(uiManagementPopup);      
     }

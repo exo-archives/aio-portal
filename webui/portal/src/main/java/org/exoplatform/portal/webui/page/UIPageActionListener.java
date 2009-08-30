@@ -69,8 +69,8 @@ public class UIPageActionListener {
       }
       UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
       PortalRequestContext pcontext = Util.getPortalRequestContext();     
-      pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);      
-      uiPortal.setRenderSibbling(UIPortal.class);
+      pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);   
+      uiWorkingWS.setRenderedChild(UIPortalApplication.UI_VIEWING_WS_ID);
       pcontext.setFullRender(true);
       
       String currentUri = (uiPortal.getSelectedNode() == null) ? null: uiPortal.getSelectedNode().getUri() ;
@@ -235,7 +235,7 @@ public class UIPageActionListener {
             widgetDataService.delete(userName, uiWidget.getApplicationName(), uiWidget.getApplicationInstanceUniqueId()) ;            
           }
           if(uiPage.isModifiable()) {
-            Page page = PortalDataMapper.toPageModel(uiPage);    
+            Page page = PortalDataMapper.buildModelObject(uiPage);    
             UserPortalConfigService configService = uiPage.getApplicationComponent(UserPortalConfigService.class);     
             if(page.getChildren() == null) page.setChildren(new ArrayList<Object>());
             configService.update(page);
@@ -257,7 +257,7 @@ public class UIPageActionListener {
       PortalRequestContext pcontext = (PortalRequestContext)event.getRequestContext();
       if(uiPage.isModifiable()) {
         uiPage.removeChildById(id);
-        Page page = PortalDataMapper.toPageModel(uiPage); 
+        Page page = PortalDataMapper.buildModelObject(uiPage); 
         UserPortalConfigService configService = uiPage.getApplicationComponent(UserPortalConfigService.class);     
         if(page.getChildren() == null) page.setChildren(new ArrayList<Object>());
         configService.update(page);

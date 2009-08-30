@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<portal-config>
+  <portal-name>test</portal-name>
+  <locale>en</locale>
+  <access-permissions>test_access_permissions</access-permissions>
+  <edit-permission>test_edit_permission</edit-permission>
+  <skin>test_skin</skin>
+  <title>test_title</title>
+  <creator>test_creator</creator>
+  <modifier>test_modifier</modifier>
+  
+  <properties>
+    <entry key="prop_key">test_prop_value</entry>
+  </properties>
+    
+ 	<portal-layout> 		
+		<application>
+	    <instance-id>portal#test:/web/BannerPortlet/banner</instance-id>
+	    <show-info-bar>false</show-info-bar>
+	  </application>
+
+	  <application>
+	  	<instance-id>portal#test:/web/NavigationPortlet/toolbar</instance-id>
+	    <show-info-bar>false</show-info-bar>
+	  </application>
+		
+	  <application>
+	    <instance-id>portal#test:/web/BreadcumbsPortlet/breadcumbs</instance-id>
+	    <show-info-bar>false</show-info-bar>
+	  </application>
+	  
+	  <page-body> </page-body>
+	  
+	  <application>
+	    <instance-id>portal#test:/web/FooterPortlet/footer</instance-id>
+	    <show-info-bar>false</show-info-bar>
+	  </application>
+  </portal-layout>
+  
+</portal-config>

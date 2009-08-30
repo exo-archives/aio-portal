@@ -104,7 +104,7 @@ public class UIDesktopPage extends UIPage {
       uiGadget.getProperties().put(UIApplication.zIndex, zIndex) ;
       
       if(!uiPage.isModifiable()) return;
-      Page page = PortalDataMapper.toPageModel(uiPage);
+      Page page = PortalDataMapper.buildModelObject(uiPage);
       UserPortalConfigService configService = uiPage.getApplicationComponent(UserPortalConfigService.class);
       if(page.getChildren() == null) page.setChildren(new ArrayList<Object>());
       configService.update(page);
@@ -180,7 +180,6 @@ public class UIDesktopPage extends UIPage {
     public void execute(Event<UIPage> event) throws Exception {
       String uri  = event.getRequestContext().getRequestParameter(OBJECTID);
       UIPortal uiPortal = Util.getUIPortal();
-      uiPortal.setMode(UIPortal.COMPONENT_VIEW_MODE);
       UIPageBody uiPageBody = uiPortal.findFirstComponentOfType(UIPageBody.class);
       if(uiPageBody != null) {
         if(uiPageBody.getMaximizedUIComponent() != null) {

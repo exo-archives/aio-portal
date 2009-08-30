@@ -35,6 +35,7 @@ import org.exoplatform.portal.webui.portal.UIPortalComposer;
 import org.exoplatform.portal.webui.util.PortalDataMapper;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
+import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.web.application.RequestContext;
 import org.exoplatform.webui.application.WebuiRequestContext;
@@ -88,7 +89,7 @@ public class UIPageCreationWizard extends UIPageWizard {
     PageNode selectedNode = uiNodeSelector.getSelectedPageNode();
     PageNavigation pageNav = uiNodeSelector.getSelectedNavigation();
 
-    Page page = PortalDataMapper.toPageModel(uiPage);
+    Page page = PortalDataMapper.buildModelObject(uiPage);
     PageNode pageNode = uiPageInfo.getPageNode();
     pageNode.setPageReference(page.getPageId());
     if (selectedNode != null) {
@@ -151,8 +152,8 @@ public class UIPageCreationWizard extends UIPageWizard {
       uiWizard.setDescriptionWizard(1);
       uiWizard.updateWizardComponent();
       uiWizard.viewStep(1);
-      UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
-      uiPortalApp.findFirstComponentOfType(UIPortalComposer.class).setRendered(false);
+      UIWorkingWorkspace uiWorkingWS = uiWizard.getAncestorOfType(UIWorkingWorkspace.class);
+      uiWorkingWS.getChild(UIPortalComposer.class).setRendered(false);
     }
   }
 
@@ -164,8 +165,8 @@ public class UIPageCreationWizard extends UIPageWizard {
       uiWizard.updateWizardComponent();
       uiWizard.viewStep(2);
       
-      UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
-      uiPortalApp.findFirstComponentOfType(UIPortalComposer.class).setRendered(false);
+      UIWorkingWorkspace uiWorkingWS = uiWizard.getAncestorOfType(UIWorkingWorkspace.class);
+      uiWorkingWS.getChild(UIPortalComposer.class).setRendered(false);
     }
   }
 
@@ -173,7 +174,8 @@ public class UIPageCreationWizard extends UIPageWizard {
     public void execute(Event<UIPageCreationWizard> event) throws Exception {
       UIPageCreationWizard uiWizard = event.getSource();
       UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
-      uiPortalApp.findFirstComponentOfType(UIPortalComposer.class).setRendered(false);
+      UIWorkingWorkspace uiWorkingWS = uiWizard.getAncestorOfType(UIWorkingWorkspace.class);
+      uiWorkingWS.getChild(UIPortalComposer.class).setRendered(false);
       uiWizard.viewStep(3);
 
       if (uiWizard.getSelectedStep() < 3) {
@@ -227,7 +229,8 @@ public class UIPageCreationWizard extends UIPageWizard {
     public void execute(Event<UIPageCreationWizard> event) throws Exception {
       UIPageCreationWizard uiWizard = event.getSource();
       UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
-      uiPortalApp.findFirstComponentOfType(UIPortalComposer.class).setRendered(true);
+      UIWorkingWorkspace uiWorkingWS = uiWizard.getAncestorOfType(UIWorkingWorkspace.class);
+      uiWorkingWS.getChild(UIPortalComposer.class).setRendered(true);
       WebuiRequestContext context = Util.getPortalRequestContext();
 
       if (uiWizard.isSelectedNodeExist()) {
@@ -301,7 +304,8 @@ public class UIPageCreationWizard extends UIPageWizard {
     public void execute(Event<UIPageCreationWizard> event) throws Exception {
       UIPageCreationWizard uiWizard = event.getSource();
       UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
-      uiPortalApp.findFirstComponentOfType(UIPortalComposer.class).setRendered(false);
+      UIWorkingWorkspace uiWorkingWS = uiWizard.getAncestorOfType(UIWorkingWorkspace.class);
+      uiWorkingWS.removeChild(UIPortalComposer.class);
       if (uiWizard.isSelectedNodeExist()) {
         uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.NameNotSame", null));
         uiWizard.setDescriptionWizard(2);

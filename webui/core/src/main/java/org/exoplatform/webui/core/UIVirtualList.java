@@ -76,14 +76,13 @@ public class UIVirtualList extends UIComponentDecorator {
       UIVirtualList virtualList = event.getSource();
       UIDataFeed dataFeed = virtualList.getDataFeed();
       WebuiRequestContext rContext = event.getRequestContext();
-      String generateId = rContext.getRequestParameter(COMPONENT_GENERATE_ID);
       dataFeed.feedNext();
       if (!dataFeed.hasNext()) {        
-        rContext.getJavascriptManager().addJavascript("eXo.webui.UIVirtualList.loadFinished('"
-            + generateId + "');");
+        rContext.getJavascriptManager()
+        	.addJavascript("eXo.webui.UIVirtualList.loadFinished('" + virtualList.getGenerateId() + "');");
       }
-      rContext.getJavascriptManager().addJavascript("eXo.webui.UIVirtualList.updateList('"
-                                                    + generateId + "');");
+      rContext.getJavascriptManager()
+      	.addJavascript("eXo.webui.UIVirtualList.updateList('" + virtualList.getGenerateId() + "');");
       rContext.addUIComponentToUpdateByAjax((UIComponent)dataFeed);
     }
   }

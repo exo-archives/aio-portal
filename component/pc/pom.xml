@@ -46,6 +46,11 @@
       <version>${org.gatein.pc.version}</version>
     </dependency>
     <dependency>
+      <groupId>org.gatein.wci</groupId>
+      <artifactId>wci-wci</artifactId>
+      <version>${org.gatein.wci.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.exoplatform.kernel</groupId>
       <artifactId>exo.kernel.container</artifactId>
       <version>${org.exoplatform.kernel.version}</version>

@@ -16,10 +16,7 @@
  */
 package org.exoplatform.portal.webui.portal;
 
-import java.net.URLEncoder;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.UserPortalConfig;
@@ -32,14 +29,17 @@ import org.exoplatform.portal.webui.application.UIApplicationList;
 import org.exoplatform.portal.webui.application.UIPortlet;
 import org.exoplatform.portal.webui.container.UIContainerList;
 import org.exoplatform.portal.webui.page.UIPage;
+import org.exoplatform.portal.webui.page.UIPageCreationWizard;
 import org.exoplatform.portal.webui.page.UIPageForm;
+import org.exoplatform.portal.webui.page.UIPagePreview;
+import org.exoplatform.portal.webui.page.UISiteBody;
 import org.exoplatform.portal.webui.util.PortalDataMapper;
 import org.exoplatform.portal.webui.util.Util;
+import org.exoplatform.portal.webui.workspace.UIEditInlineWorkspace;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.webui.workspace.UIPortalToolPanel;
 import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
-import org.exoplatform.portal.webui.workspace.pool.UIPortalPool;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.UserProfile;
 import org.exoplatform.services.resources.LocaleConfig;
@@ -95,7 +95,7 @@ public class UIPortalComposer extends UIContainer {
   
   private boolean isEditted = false;
   private boolean isCollapse = false;
-	private String ownerPortalName;
+  private boolean isShowControl = true;
 
 	public UIPortalComposer() throws Exception {
 		UITabPane uiTabPane = addChild(UITabPane.class, "UIPortalComposerTab", null);
@@ -117,39 +117,34 @@ public class UIPortalComposer extends UIContainer {
 	public boolean isEditted() { return isEditted; }
 	public void setEditted(boolean b) { isEditted = b; }
 
-	public boolean isCollapse() {
-		return isCollapse;
-	}
-
+	public boolean isCollapse() {return isCollapse;}
 	public void setCollapse(boolean isCollapse) {
 		this.isCollapse = isCollapse;
 	}
-
-	public void setOwnerPortalName(String _ownerPortalName) {
-		ownerPortalName = _ownerPortalName;
-	}
-
-	public String getOwnerPortalName() {
-		return ownerPortalName;
-	}
+	
+	public boolean isShowControl() { return isShowControl; }
+	public void setShowControl(boolean state) {isShowControl = state;}
 
 	public void save() throws Exception {
+		PortalRequestContext prContext = Util.getPortalRequestContext();
+		UIPortalApplication uiPortalApp = (UIPortalApplication) prContext.getUIApplication();
+		UIWorkingWorkspace uiWorkingWS = uiPortalApp.findFirstComponentOfType(UIWorkingWorkspace.class);
+		UIEditInlineWorkspace uiEditWS = uiWorkingWS.getChild(UIEditInlineWorkspace.class);
+		UIPortal editPortal = (UIPortal) uiEditWS.getUIComponent();
 		UIPortal uiPortal = Util.getUIPortal();
-		UIPortalApplication uiPortalApp = getAncestorOfType(UIPortalApplication.class);
 
-		PortalConfig portalConfig = PortalDataMapper.toPortal(uiPortal);
+		PortalConfig portalConfig = PortalDataMapper.buildModelObject(editPortal);
 		UserPortalConfigService configService = getApplicationComponent(UserPortalConfigService.class);
 		configService.update(portalConfig);
 		uiPortalApp.getUserPortalConfig().setPortal(portalConfig);
-		PortalRequestContext prContext = Util.getPortalRequestContext();
 		String remoteUser = prContext.getRemoteUser();
 		String ownerUser = prContext.getPortalOwner();
 		UserPortalConfig userPortalConfig = configService.getUserPortalConfig(
 				ownerUser, remoteUser);
 		if (userPortalConfig != null) {
-			uiPortal.setModifiable(userPortalConfig.getPortalConfig().isModifiable());
+			editPortal.setModifiable(userPortalConfig.getPortalConfig().isModifiable());
 		} else {
-			uiPortal.setModifiable(false);
+			editPortal.setModifiable(false);
 		}
 		LocaleConfigService localeConfigService = uiPortalApp
 				.getApplicationComponent(LocaleConfigService.class);
@@ -166,16 +161,19 @@ public class UIPortalComposer extends UIContainer {
 				.findUserProfileByName(remoteUser);
 		String userLanguage = userProfile.getUserInfoMap().get("user.language");
 		String browserLanguage = prContext.getRequest().getLocale().getLanguage();
-		if (!portalAppLanguage.equals(userLanguage)
-				&& !portalAppLanguage.equals(browserLanguage)) {
-			uiPortalApp.setLocale(localeConfig.getLocale());
-			uiPortal.refreshNavigation(localeConfig.getLocale());
+		
+		//in case: edit current portal, set skin and language for uiPortalApp
+		if(uiPortal == null) {
+			if (!portalAppLanguage.equals(userLanguage)
+					&& !portalAppLanguage.equals(browserLanguage)) {
+				uiPortalApp.setLocale(localeConfig.getLocale());
+				editPortal.refreshNavigation(localeConfig.getLocale());
+			}
+			uiPortalApp.setSkin(editPortal.getSkin());
 		}
-		// ----------------------------------------------------------------------------------------------------
-		uiPortalApp.setSkin(uiPortal.getSkin());
 		prContext.refreshResourceBundle();
 		SkinService skinService = getApplicationComponent(SkinService.class);
-		skinService.invalidatePortalSkinCache(uiPortal.getName(), uiPortal
+		skinService.invalidatePortalSkinCache(editPortal.getName(), editPortal
 				.getSkin());
 	}
 
@@ -185,6 +183,9 @@ public class UIPortalComposer extends UIContainer {
 		UIWorkingWorkspace uiWorkingWS = uiApp
 				.findFirstComponentOfType(UIWorkingWorkspace.class);
 		List<UIComponent> children = uiWorkingWS.getChildren();
+		if(!uiWorkingWS.getChild(UIPortalToolPanel.class).isRendered()) {
+			children = uiWorkingWS.findFirstComponentOfType(UIEditInlineWorkspace.class).getChildren();
+		}
 		for (UIComponent child : children) {
 			if (!child.isRendered()
 					|| child.getClass().equals(UIPortalComposer.class))
@@ -200,7 +201,7 @@ public class UIPortalComposer extends UIContainer {
 		}
 		JavascriptManager jsManager = Util.getPortalRequestContext()
 				.getJavascriptManager();
-		jsManager.addJavascript("eXo.portal.portalMode=" + portalMode);
+		jsManager.addJavascript("eXo.portal.portalMode=" + portalMode + ";");
 	}
 
 	public void processRender(WebuiRequestContext context) throws Exception {
@@ -233,48 +234,43 @@ public class UIPortalComposer extends UIContainer {
 
 	static public class AbortActionListener extends
 			EventListener<UIPortalComposer> {
-
 		public void execute(Event<UIPortalComposer> event) throws Exception {
-			UIPortalApplication uiPortalApp = Util.getUIPortalApplication();
-			UIWorkingWorkspace uiWorkingWS = uiPortalApp
-					.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
-
 			PortalRequestContext prContext = Util.getPortalRequestContext();
-			UserPortalConfigService configService = uiPortalApp
-					.getApplicationComponent(UserPortalConfigService.class);
-			configService.update(uiPortalApp.getUserPortalConfig().getPortalConfig());
+			UIPortalApplication uiPortalApp = (UIPortalApplication) prContext.getUIApplication();
 			uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
+			UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+			UIEditInlineWorkspace uiEditWS = uiWorkingWS.getChild(UIEditInlineWorkspace.class);
+			uiEditWS.getComposer().setEditted(false);
 
-			String remoteUser = prContext.getRemoteUser();
-			// String ownerUser = prContext.getPortalOwner();
-			String ownerUser = event.getSource().getOwnerPortalName();
-			UserPortalConfig userPortalConfig = configService.getUserPortalConfig(
-					ownerUser, remoteUser);
-
-			if (userPortalConfig == null) {
-				HttpServletRequest request = prContext.getRequest();
-				String portalName = URLEncoder.encode(Util.getUIPortal().getName(),
-						"UTF-8");
-				String redirect = request.getContextPath() + "/public/" + portalName
-						+ "/";
-				prContext.getResponse().sendRedirect(redirect);
+			UISiteBody siteBody = uiWorkingWS.findFirstComponentOfType(UISiteBody.class);
+			UIPortal uiEditPortal = (UIPortal) uiEditWS.getUIComponent();
+			UIPortal uiPortal = (UIPortal) siteBody.getUIComponent();
+			
+			String uri = null;
+			if(uiPortal == null) {
+				uri = (uiEditPortal.getSelectedNode() != null) ? uiEditPortal.getSelectedNode().getUri() : null;
+				UserPortalConfigService configService = uiPortalApp
+						.getApplicationComponent(UserPortalConfigService.class);
+				String remoteUser = prContext.getRemoteUser();
+				String ownerUser = prContext.getPortalOwner();
+				UserPortalConfig userPortalConfig = configService.getUserPortalConfig(ownerUser, remoteUser);
+				UIPortal newPortal = uiWorkingWS.createUIComponent(UIPortal.class, null, null);
+				PortalDataMapper.toUIPortal(newPortal, userPortalConfig);
+				siteBody.setUIComponent(newPortal);
+			} else {
+				siteBody.setUIComponent(uiEditPortal);
 			}
-
-			UIPortal uiPortal = uiWorkingWS.createUIComponent(prContext,
-					UIPortal.class, null, null);
-			PortalDataMapper.toUIPortal(uiPortal, userPortalConfig);
-
-			UIPortal oldUIPortal = uiWorkingWS.getChild(UIPortal.class);
-			String uri = (oldUIPortal.getSelectedNode() != null ? oldUIPortal
-					.getSelectedNode().getUri() : null);
-			uiWorkingWS.setBackupUIPortal(oldUIPortal);
-			uiWorkingWS.replaceChild(oldUIPortal.getId(), uiPortal);
-			uiWorkingWS.setRenderedChild(UIPortal.class) ;
-			uiWorkingWS.removeChild(UIPortalComposer.class);
-			PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal, 
-					PageNodeEvent.CHANGE_PAGE_NODE, uri) ;
-			uiPortal.broadcast(pnevent, Event.Phase.PROCESS) ;  
-			uiPortalApp.getUIPortalPool().resetDefaultUIPortal();
+			uiEditWS.setUIComponent(null);
+			
+			uiPortal = (UIPortal) siteBody.getUIComponent();
+			uiWorkingWS.setRenderedChild(UIPortalApplication.UI_VIEWING_WS_ID) ;
+			
+			if(uri == null) uri = (uiPortal.getSelectedNode() != null) 
+					? uiPortal.getSelectedNode().getUri() : null;
+			PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(
+					uiPortal,PageNodeEvent.CHANGE_PAGE_NODE, uri) ;
+			uiPortal.broadcast(pnevent, Event.Phase.PROCESS) ;
+			prContext.addUIComponentToUpdateByAjax(uiWorkingWS);
 		}
 
 	}
@@ -285,37 +281,34 @@ public class UIPortalComposer extends UIContainer {
 		public void execute(Event<UIPortalComposer> event) throws Exception {
 			UIPortalComposer uiComposer = event.getSource();
 			uiComposer.save();
+			uiComposer.setEditted(false);
 
 			PortalRequestContext prContext = Util.getPortalRequestContext();
-			UserPortalConfigService configService = uiComposer
-					.getApplicationComponent(UserPortalConfigService.class);
-			// UserPortalConfig userPortalConfig =
-			// configService.getUserPortalConfig(prContext.getPortalOwner(),
-			// prContext.getRemoteUser());
-			UserPortalConfig userPortalConfig = configService.getUserPortalConfig(
-					uiComposer.getOwnerPortalName(), prContext.getRemoteUser());
-			if (userPortalConfig == null) {
-				HttpServletRequest request = prContext.getRequest();
-				String portalName = URLEncoder.encode(Util.getUIPortal().getName(),
-						"UTF-8");
-				String redirect = request.getContextPath() + "/public/" + portalName
-						+ "/";
-				prContext.getResponse().sendRedirect(redirect);
-			}
 
-			UIPortal uiPortal = Util.getUIPortal();
-			UIPortalApplication uiPortalApp = Util.getUIPortalApplication();
+			UIPortalApplication uiPortalApp = (UIPortalApplication) prContext.getUIApplication();
+			UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+			UIEditInlineWorkspace uiEditWS = uiWorkingWS.getChild(UIEditInlineWorkspace.class);
+			UIPortal editPortal = (UIPortal) uiEditWS.getUIComponent();
+			
+			UISiteBody siteBody = uiWorkingWS.findFirstComponentOfType(UISiteBody.class); 
+			UIPortal uiPortal = (UIPortal) siteBody.getUIComponent();
+			
+			String uri = null;
+			if(uiPortal == null) siteBody.setUIComponent(editPortal);
+			uiEditWS.setUIComponent(null);
+			uiPortal = (UIPortal) siteBody.getUIComponent();
+			
 			if (PortalProperties.SESSION_ALWAYS.equals(uiPortal.getSessionAlive()))
 				uiPortalApp.setSessionOpen(true);
 			else
 				uiPortalApp.setSessionOpen(false);
 			uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
-			PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal,
-					PageNodeEvent.CHANGE_PAGE_NODE,
-					(uiPortal.getSelectedNode() != null ? uiPortal.getSelectedNode()
-							.getUri() : null));
+			uiWorkingWS.setRenderedChild(UIPortalApplication.UI_VIEWING_WS_ID);
+			
+			if(uri == null) uri = uiPortal.getSelectedNode() != null ? uiPortal.getSelectedNode().getUri() : null;
+			PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal,PageNodeEvent.CHANGE_PAGE_NODE, uri);
 			uiPortal.broadcast(pnevent, Event.Phase.PROCESS);
-      uiPortalApp.getUIPortalPool().resetDefaultUIPortal();
+			prContext.addUIComponentToUpdateByAjax(uiWorkingWS);
 		}
 
 	}
@@ -393,7 +386,9 @@ public class UIPortalComposer extends UIContainer {
 					.getChildById(UIPortalApplication.UI_MASK_WS_ID);
 			UIPageForm uiPageForm = uiPortalApp.createUIComponent(UIPageForm.class,
 					null, null);
-			uiPageForm.setValues((UIPage) uiToolPanel.getUIComponent());
+			
+			UIComponent uiPage = uiToolPanel.findFirstComponentOfType(UIPage.class);
+				uiPageForm.setValues((UIPage)uiPage);
 			uiMaskWS.setUIComponent(uiPageForm);
 			event.getRequestContext().addUIComponentToUpdateByAjax(uiMaskWS);
 		}
@@ -409,7 +404,6 @@ public class UIPortalComposer extends UIContainer {
 			uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
 
 			UIPortal uiPortal = Util.getUIPortal();
-			uiPortal.setMode(UIPortal.COMPONENT_VIEW_MODE);
 			uiPortal.setRenderSibbling(UIPortal.class);
 			uiWorkingWS.removeChild(UIPortalComposer.class);
 
@@ -424,12 +418,11 @@ public class UIPortalComposer extends UIContainer {
 	static public class Finish2ActionListener extends EventListener<UIPortalComposer> {
 		public void execute(Event<UIPortalComposer> event) throws Exception {
 			UIWorkingWorkspace uiWorkingWS = event.getSource().getParent();
-			UIPortalToolPanel uiToolPanel = uiWorkingWS
-					.getChild(UIPortalToolPanel.class);
-			UIPage uiPage = (UIPage) uiToolPanel.getUIComponent();
-			Page page = PortalDataMapper.toPageModel(uiPage);
-			UserPortalConfigService portalConfigService = uiWorkingWS
-					.getApplicationComponent(UserPortalConfigService.class);
+			UIPortalToolPanel uiToolPanel = uiWorkingWS.getChild(UIPortalToolPanel.class);
+			uiWorkingWS.removeChild(UIPortalComposer.class);
+			UIPage uiPage = (UIPage) uiToolPanel.findFirstComponentOfType(UIPage.class);
+			Page page = PortalDataMapper.buildModelObject(uiPage);
+			UserPortalConfigService portalConfigService = uiWorkingWS.getApplicationComponent(UserPortalConfigService.class);
 			portalConfigService.update(page);
 			uiToolPanel.setUIComponent(null);
 			UIPortal uiPortal = Util.getUIPortal();

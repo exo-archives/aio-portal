@@ -86,5 +86,9 @@ public class PageNavigation {
     }
     return newNav;
   }
- 
+
+  @Override
+  public String toString() {
+    return "PageNavigation[ownerType=" + ownerType + ",ownerId=" + ownerId + "]"; 
+  }
 }

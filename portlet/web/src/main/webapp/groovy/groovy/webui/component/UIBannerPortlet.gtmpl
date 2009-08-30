@@ -26,7 +26,7 @@
 									
 									<div class="Name">									
 										<%=_ctx.appRes("UILogged.note.loggedUser")%>
-										<a style="padding: 0px 10px 0px 2px; color: red; font-weight:bold; cursor:pointer;" href="$accountSetting">
+										<a style="padding: 0px 10px 0px 2px; color: #e66a1f; font-weight:bold; cursor:pointer;" href="$accountSetting">
 											<% if(prContext.getRemoteUser() != null) {
 													ConversationState state = ConversationState.getCurrent();
 													User user = state.getAttribute(CacheUserProfileFilter.USER_PROFILE);
@@ -36,7 +36,7 @@
 										</a>
 									</div>
 									<a class="Logout" onclick="eXo.portal.logout();"><%=_ctx.appRes("UILogged.action.signout")%></a>
-									<a class="Language" onclick="$changeLanguageAction"><%=_ctx.appRes("UIExoStart.item.ChangeLanguage")%></a>
+									<a class="Language" onclick="$changeLanguageAction"><%=_ctx.appRes("UIBannerPortlet.action.changeLanguage")%></a>
 									<div class="ClearBoth"><span></span></div>	
 								</div>							
 					<%} else {%>
@@ -47,7 +47,7 @@
 								<div class="MiddleLoginContainer Signin">
 									<a class="Login" onclick="$signInAction"><%=_ctx.appRes("UILoginForm.label.Signin")%></a>								
 									<a class="Language" onclick="$changeLanguageAction">
-										<%=_ctx.appRes("UIExoStart.item.ChangeLanguage")%>
+										<%=_ctx.appRes("UIBannerPortlet.action.changeLanguage")%>
 									</a>		
 									<div class="ClearBoth"><span></span></div>
 								</div>

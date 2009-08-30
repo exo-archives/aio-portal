@@ -200,6 +200,18 @@ UIPortalNavigation.prototype.toggleSubMenu = function(e, tab, menuItemContainer)
       
       menuItemContainer.style.width = menuItemContainer.offsetWidth - parseInt(DOMUtil.getStyle(menuItemContainer, "borderLeftWidth")) 
           - parseInt(DOMUtil.getStyle(menuItemContainer, "borderRightWidth")) + "px";
+			var posXinBrowser = eXo.core.Browser.findPosX(menuItemContainer);
+			if(eXo.core.I18n.isLT()) {
+				if(posXinBrowser + menuItemContainer.offsetWidth >= eXo.core.Browser.getBrowserWidth()) {
+					x += (item.offsetWidth - menuItemContainer.offsetWidth) ;
+					menuItemContainer.style.left = x + "px";
+				}
+			} else {
+				if(posXinBrowser + item.offsetWidth <menuItemContainer.offsetWidth) {
+					x += (item.offsetWidth - menuItemContainer.offsetWidth) ;
+					menuItemContainer.style.right = x + "px";
+				}
+			}
       eXo.portal.UIPortalNavigation.currentOpenedMenu = menuItemContainer.id;
       
       /*Hide eXoStartMenu whenever click on the UIApplication*/

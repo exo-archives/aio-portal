@@ -50,6 +50,7 @@ import org.gatein.pc.api.PortletInvoker;
 import org.gatein.pc.api.PortletInvokerException;
 import org.gatein.pc.api.StateString;
 import org.gatein.pc.api.StatefulPortletContext;
+import org.gatein.pc.api.state.PropertyChange;
 import org.gatein.pc.api.info.EventInfo;
 import org.gatein.pc.api.info.ModeInfo;
 import org.gatein.pc.api.info.ParameterInfo;
@@ -144,9 +145,17 @@ public class UIPortlet extends UIApplication {
      return StatefulPortletContext.create("local._dumbvalue", ExoPortletStateType.getInstance(), map);
   }
 
-  public void save(ExoPortletState state) throws Exception {
+  public void update(PropertyChange... changes) throws Exception {
+    PortletInvoker portletInvoker = getApplicationComponent(PortletInvoker.class);
+    PortletContext portletContext = getPortletContext();
+
+    // Get marshalled version
+    StatefulPortletContext<ExoPortletState> updatedCtx = (StatefulPortletContext<ExoPortletState>)portletInvoker.setProperties(portletContext, changes);
+    ExoPortletState updateState = updatedCtx.getState();
+
+    // Now save it
     ArrayList<Preference> prefs = new ArrayList<Preference>();
-    for(Map.Entry<String, List<String>> entry : state.getState().entrySet()) {
+    for(Map.Entry<String, List<String>> entry : updateState.getState().entrySet()) {
       Preference pref = new Preference();
       pref.setName(entry.getKey());
       pref.setValues(new ArrayList<String>(entry.getValue()));

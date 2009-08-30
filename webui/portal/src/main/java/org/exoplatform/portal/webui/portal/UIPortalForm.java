@@ -251,12 +251,9 @@ public class UIPortalForm extends UIFormTabPane {
       UIMaskWorkspace uiMaskWS = uiPortalApp.getChildById(UIPortalApplication.UI_MASK_WS_ID) ;
       uiMaskWS.setUIComponent(null);
       pcontext.addUIComponentToUpdateByAjax(uiMaskWS) ;      
-      UIPortalBrowser uiPortalBrowser = uiPortalApp.findFirstComponentOfType(UIPortalBrowser.class);
-      //hoa.phamvu: in some case, the create portal action is call out side portal browser
-      if(uiPortalBrowser != null) {
-        uiPortalBrowser.loadPortalConfigs();
-        pcontext.addUIComponentToUpdateByAjax(uiPortalBrowser); 
-      }
+      
+      UIPortal uiPortal = uiPortalApp.findFirstComponentOfType(UIPortal.class);
+      uiPortal.updatePortletsByName("PortalNavigationPortlet");
     }
   }
   

@@ -12,12 +12,14 @@
 	jsmanager.addCustomizedOnLoadScript('eXo.portal.UIAdminToolbar.onLoad("' + uicomponent.id + '");');
 	
 	def groupNavigations = uicomponent.getGroupNavigations();
+	def currentUserNavigation = uicomponent.getCurrentUserNavigation();
+ 	def portalURI = Util.getPortalRequestContext().getPortalURI();
  
 	void renderGroupPageNavigation(PageNavigation navigation) {
 		nodes = navigation.getNodes() ;
 		if(nodes.size() < 1) return ;
 		String navTitle = _ctx.appRes("UIPageNavigation.label.titleBar") ;
-		navTitle = navTitle.replace("{0}", OrganizationUtils.getGroupLabel("/" + navigation.ownerId));
+		navTitle = navTitle.replace("{0}", OrganizationUtils.getGroupLabel(navigation.ownerId));
 		print """
 					<div class="TitleBar"><div style="width: 99%" title="$navigation.ownerId">$navTitle</div></div>
 					<div class="SubBlock">
@@ -39,14 +41,11 @@
 		if(icon == null) icon = "DefaultPageIcon";
 		boolean toolong = (node.resolvedLabel.length() > 60);
 		String label = ( toolong ? node.resolvedLabel.substring(0, 57) + "..." : node.resolvedLabel);
-		String itemClass;
-		if(flag) itemClass =	"OddItem";
-		else itemClass =	"EvenItem";
 		String title = "";
 		if(toolong) title = "title='$node.resolvedLabel'";
 		else title = "";
 		print """
-			<div class="MenuItem $itemClass">
+			<div class="MenuItem">
 				<div class="$clazz">
 		""";
 						if(node.pageReference != null) {
@@ -85,7 +84,8 @@
 			boolean isCurrent = false;
 			String clazz = "";
 			String href = "#";
-			for(portal in uicomponent.getAllPortalNames()) {
+			for(int i = 0; i < uicomponent.getAllPortalNames().size(); i++) {
+				String portal = uicomponent.getAllPortalNames().get(i);
  				if(portal.equals(uicomponent.getCurrentPortal())) {
 					isCurrent = true;
 			 	} else isCurrent = false;
@@ -93,7 +93,7 @@
 				else clazz = "";
 				href = uicomponent.getPortalURI(portal);
 				print """
-					<div class="MenuItem OddItem">
+					<div class="MenuItem">
 						<div $clazz>						
 							<a href="$href" class="ItemIcon SiteIcon">$portal</a>
 						</div>
@@ -126,29 +126,50 @@
 			</div>
 		""";
 	}
+	
+	void renderDashboards(){
+		PageNavigation userNavigation = uicomponent.getCurrentUserNavigation();
+		if(userNavigation == null){
+			return;
+		}
+		
+		nodes = userNavigation.getNodes();
+		int size = nodes.size();
+		if(size < 1){
+			return;
+		}
+		String clazz = "";
+		
+		print """
+			<div style="position: absolute; display:none" class="MenuItemContainer">
+				<div class="SubBlock">
+		""";
+					for(int i = 0; i < size; i++) {
+						renderPageNode( nodes.get(i), i%2 == 0);
+					}
+		print """
+				</div>
+			</div>
+		""" ;
+	}
+	
 %> 
 <div class="UIUserToolbarPortlet" id="$uicomponent.id">
 	<div class="UIHorizontalTabs">
 		<div class="TabsContainer" style="position: relative">
-
+			
 			<div class="UITab NormalToolbarTab">
-				<div class="NormalNavigationTab">
-					<a class="DashboardIcon TBIcon" href="#">Dashboard</a>
-				</div>
-			</div>
-
-			<div class="UITab NormalToolbarTab">
-				<div class="NormalNavigationTab">
-					<a class="SitesIcon TBIcon" href="<% print Util.getPortalRequestContext().getPortalURI() + "portalnavigation" %>">
-						Site
-					</a>
+				<div class="">
+							<a class="SitesIcon TBIcon" href="<%= portalURI + "portalnavigation" %>">
+									Site
+							</a>
 				</div>
 				<% renderPortalNavigations() %>
 			</div>
-
+			
 			<div class="UITab NormalToolbarTab">
-				<div class="NormalNavigationTab">
-					<a class="SitesIcon TBIcon" href="<% print Util.getPortalRequestContext().getPortalURI() + "groupnavigation" %>">Group</a>
+				<div class="">
+							<a class="SitesIcon TBIcon" href="<%= portalURI + "groupnavigation" %>">Group</a>
 				</div>
 				<% if (!groupNavigations.isEmpty()) { %>
 				<div style="position: absolute; display:none" class="MenuItemContainer">
@@ -158,6 +179,27 @@
 				</div>
 				<% } %>
 			</div>
+			<% 
+				String defaultDashboardPage;				
+				if(currentUserNavigation.getNodes() ==null || currentUserNavigation.getNodes().size() < 1){ 
+					defaultDashboardPage = "Tab_0";
+			%>
+						<div class="UITab NormalToolbarTab">
+							<div class="">
+								<a class="DashboardIcon TBIcon" href="<%= uicomponent.url("AddDefaultDashboard", defaultDashboardPage); %>">Dashboard</a>
+							</div>
+						</div>
+			<% 
+				}else{
+					defaultDashboardPage = currentUserNavigation.getNodes().get(0).getName();	
+			%>
+						<div class="UITab NormalToolbarTab">
+								<div class="">
+										<a class="DashboardIcon TBIcon" href="<%= portalURI + defaultDashboardPage %>">Dashboard</a>
+								</div>
+								<% renderDashboards(); %>
+						</div>
+			<% } %>
 			
 		</div>
 	</div>

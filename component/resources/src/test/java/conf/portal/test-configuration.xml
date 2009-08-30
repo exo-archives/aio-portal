@@ -43,5 +43,11 @@
         </value-param>
       </init-params>
   </component> 
+
+  <component>
+    <key>org.exoplatform.services.resources.ResourceBundleManager</key>
+    <type>org.exoplatform.services.resources.ResourceBundleManager</type>
+  </component>
+
   <import>jar:/conf/portal/testjcr/test-jcr-configuration.xml</import>
 </configuration>

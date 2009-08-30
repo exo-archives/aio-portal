@@ -223,7 +223,7 @@ public class UIAddNewApplication extends UIContainer {
 
       // Save all changes
       if (uiPage.isModifiable()) {
-        Page page = PortalDataMapper.toPageModel(uiPage);
+        Page page = PortalDataMapper.buildModelObject(uiPage);
         UserPortalConfigService configService = uiPortalApp.getApplicationComponent(UserPortalConfigService.class);
         if (page.getChildren() == null)
           page.setChildren(new ArrayList<Object>());
@@ -292,7 +292,7 @@ public class UIAddNewApplication extends UIContainer {
 
       // Save all changes
       if (uiPage.isModifiable()) {
-        Page page = PortalDataMapper.toPageModel(uiPage);
+        Page page = PortalDataMapper.buildModelObject(uiPage);
         UserPortalConfigService configService = uiPortalApp.getApplicationComponent(UserPortalConfigService.class);
         if (page.getChildren() == null)
           page.setChildren(new ArrayList<Object>());
