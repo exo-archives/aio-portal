@@ -16,10 +16,14 @@
  */
 package org.exoplatform.portal.pom.config;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import org.exoplatform.commons.utils.IOUtil;
 import org.exoplatform.commons.utils.LazyPageList;
+import org.exoplatform.container.configuration.ConfigurationManager;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.Query;
@@ -35,6 +39,9 @@ import org.exoplatform.portal.pom.config.tasks.PortalConfigTask;
 import org.exoplatform.portal.pom.config.tasks.PortletPreferencesTask;
 import org.exoplatform.portal.pom.config.tasks.SearchTask;
 import org.exoplatform.services.portletcontainer.pci.WindowID;
+import org.jibx.runtime.BindingDirectory;
+import org.jibx.runtime.IBindingFactory;
+import org.jibx.runtime.IUnmarshallingContext;
 
 /**
  * @author <a href="mailto:julien.viet@exoplatform.com">Julien Viet</a>
@@ -44,9 +51,11 @@ public class POMDataStorage implements DataStorage {
 
   /** . */
   private final POMSessionManager pomMgr;
+  private ConfigurationManager confManager_;
 
-  public POMDataStorage(POMSessionManager pomMgr) {
+  public POMDataStorage(POMSessionManager pomMgr, ConfigurationManager confManager) {
     this.pomMgr = pomMgr;
+    confManager_ = confManager;
   }
 
   private <T extends AbstractPOMTask> T execute(T task) throws Exception {
@@ -144,46 +153,12 @@ public class POMDataStorage implements DataStorage {
     }
   }
   
-  public Container getSharedLayout() {
-    Container sharedLayout = new Container();
-    sharedLayout.setTemplate("system:/groovy/portal/webui/container/UIContainer.gtmpl");
-    Container toolbarContainer = new Container();
-    toolbarContainer.setTemplate("system:/groovy/portal/webui/container/UIToolbarContainer.gtmpl");
-    toolbarContainer.setAccessPermissions(new String[]{"*:/platform/administrators", "*:/organization/management/executive-board"});
-    
-    Container starToolBarPortletContainer = new Container();
-    starToolBarPortletContainer.setId("StarToolBarPortlet");
-    starToolBarPortletContainer.setTemplate("system:/groovy/portal/webui/container/UIContainer.gtmpl");
-    Application starToolBarPortletApplication = new Application();
-    starToolBarPortletApplication.setInstanceId("portal#classic:/exoadmin/StarToolbarPortlet/starportlet");
-    starToolBarPortletApplication.setAccessPermissions(new String[] {"Everyone"});
-    starToolBarPortletApplication.setShowInfoBar(false);
-    starToolBarPortletContainer.getChildren().add(starToolBarPortletApplication);
-    toolbarContainer.getChildren().add(starToolBarPortletContainer);
-    
-    Container userToolBarPortletContainer = new Container();
-    userToolBarPortletContainer.setId("UserToolBarPortlet");
-    userToolBarPortletContainer.setTemplate("system:/groovy/portal/webui/container/UIContainer.gtmpl");
-    Application userToolBarPortletApplication = new Application();
-    userToolBarPortletApplication.setInstanceId("portal#classic:/exoadmin/UserToolbarPortlet/userportlet");
-    userToolBarPortletApplication.setAccessPermissions(new String[] {"Everyone"});
-    userToolBarPortletApplication.setShowInfoBar(false);
-    userToolBarPortletContainer.getChildren().add(userToolBarPortletApplication);
-    toolbarContainer.getChildren().add(userToolBarPortletContainer);
-    
-    Container adminToolBarPortletContainer = new Container();
-    adminToolBarPortletContainer.setId("AdminToolBarPortlet");
-    adminToolBarPortletContainer.setTemplate("system:/groovy/portal/webui/container/UIContainer.gtmpl");
-    Application adminToolBarPortletApplication = new Application();
-    adminToolBarPortletApplication.setInstanceId("portal#classic:/exoadmin/AdminToolbarPortlet/adminportlet");
-    adminToolBarPortletApplication.setAccessPermissions(new String[] {"Everyone"});
-    adminToolBarPortletApplication.setShowInfoBar(false);
-    adminToolBarPortletContainer.getChildren().add(adminToolBarPortletApplication);
-    toolbarContainer.getChildren().add(adminToolBarPortletContainer);
-    
-    ArrayList<Object> children = sharedLayout.getChildren();
-    children.add(toolbarContainer);
-    children.add(new SiteBody());
-    return sharedLayout;
+  public Container getSharedLayout() throws Exception {
+  	String path = "war:/conf/portal/portal/sharedlayout.xml";
+    String out =  IOUtil.getStreamContentAsString(confManager_.getInputStream(path));
+    ByteArrayInputStream is = new ByteArrayInputStream(out.getBytes("UTF-8")) ;
+    IBindingFactory bfact = BindingDirectory.getFactory(Container.class) ;
+    IUnmarshallingContext uctx = bfact.createUnmarshallingContext() ;
+    return Container.class.cast(uctx.unmarshalDocument(is, null));
   }
 }
