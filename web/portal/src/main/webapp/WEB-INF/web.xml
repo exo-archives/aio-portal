@@ -131,14 +131,6 @@
 	  <load-on-startup>1</load-on-startup> 
 	</servlet>
  
-   <!-- Sets up the Tomcat web module -->
-   <!-- julien : that should be somehow only for tomcat, so in a tomcat integration war only -->
-   <servlet>
-      <servlet-name>ContainerServlet</servlet-name>
-      <servlet-class>org.gatein.wci.impl.tomcat.TC6ContainerServlet</servlet-class>
-      <load-on-startup>0</load-on-startup>
-   </servlet>
- 
   <servlet>
     <servlet-name>RestServer</servlet-name>
     <description>eXo - Platform REST Server</description>
@@ -209,6 +201,16 @@
     <url-pattern>/connector</url-pattern>
   </servlet-mapping>  
   	
+  <servlet>
+    <servlet-name>GateInServlet</servlet-name>
+    <servlet-class>org.gatein.wci.api.GateInServlet</servlet-class>
+    <load-on-startup>0</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GateInServlet</servlet-name>
+    <url-pattern>/gateinservlet</url-pattern>
+  </servlet-mapping>
+
 	<session-config>
 	  <session-timeout>30</session-timeout> 
 	</session-config>
