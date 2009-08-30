@@ -28,7 +28,18 @@ function getModule(params) {
     new Project("org.exoplatform.portal", "exo.portal.component.pc", "jar", module.version).
     addDependency(new Project("javax.portlet", "portlet-api", "jar", "2.0")).
     addDependency(new Project("javax.ccpp", "ccpp", "jar", "1.0")).
-    addDependency(new Project("javax.xml.bind", "jaxb-api", "jar", "2.1"));
+    addDependency(new Project("javax.xml.bind", "jaxb-api", "jar", "2.1")).
+    addDependency(new Project("org.gatein.pc", "pc-api", "jar", "3.0.0-SNAPSHOT")).
+    addDependency(new Project("org.gatein.pc", "pc-portlet", "jar", "3.0.0-SNAPSHOT")).
+    addDependency(new Project("org.gatein.pc", "pc-mc", "jar", "3.0.0-SNAPSHOT")).
+    addDependency(new Project("org.gatein.pc", "pc-controller", "jar", "3.0.0-SNAPSHOT")).
+    addDependency(new Project("org.gatein.pc", "pc-federation", "jar", "3.0.0-SNAPSHOT")).
+    addDependency(new Project("org.gatein.wci", "wci-wci", "jar", "3.0.0-SNAPSHOT")).
+    addDependency(new Project("org.gatein.common", "common-common", "jar", "3.0.0-SNAPSHOT")).
+    addDependency(new Project("log4j", "log4j", "jar", "1.2.14")).
+    addDependency(new Project("org.jboss", "jbossxb", "jar", "2.0.0.GA")).
+    addDependency(new Project("org.jboss.logging", "jboss-logging-spi", "jar", "2.0.5.GA")).
+    addDependency(new Project("org.jboss", "jboss-common-core", "jar", "2.2.9.GA"));
 
   module.component.xmlParser =
     new Project("org.exoplatform.portal", "exo.portal.component.xml-parser", "jar", module.version).
@@ -60,19 +71,7 @@ function getModule(params) {
   	addDependency(new Project("org.reflext", "reflext.spi", "jar", "1.0.0-beta1")).
   	addDependency(new Project("org.reflext", "reflext.jlr", "jar", "1.0.0-beta1")).
   	addDependency(new Project("org.reflext", "reflext.api", "jar", "1.0.0-beta1")).
-    addDependency(module.component.web).
-
-    addDependency(new Project("org.gatein.pc", "pc-api", "jar", "3.0.0-SNAPSHOT")).
-        addDependency(new Project("org.gatein.pc", "pc-portlet", "jar", "3.0.0-SNAPSHOT")).
-        addDependency(new Project("org.gatein.pc", "pc-mc", "jar", "3.0.0-SNAPSHOT")).
-        addDependency(new Project("org.gatein.pc", "pc-controller", "jar", "3.0.0-SNAPSHOT")).
-        addDependency(new Project("org.gatein.pc", "pc-federation", "jar", "3.0.0-SNAPSHOT")).
-        addDependency(new Project("org.gatein.wci", "wci-wci", "jar", "3.0.0-SNAPSHOT")).
-        addDependency(new Project("org.gatein.common", "common-common", "jar", "3.0.0-SNAPSHOT")).
-        addDependency(new Project("log4j", "log4j", "jar", "1.2.14")).
-        addDependency(new Project("org.jboss", "jbossxb", "jar", "2.0.0.GA")).
-        addDependency(new Project("org.jboss.logging", "jboss-logging-spi", "jar", "2.0.5.GA")).
-        addDependency(new Project("org.jboss", "jboss-common-core", "jar", "2.2.9.GA")) ;
+    addDependency(module.component.web);
 
   module.component.identity =
 	new Project("org.exoplatform.portal", "exo.portal.component.identity", "jar", module.version).
@@ -124,9 +123,6 @@ function getModule(params) {
 //  	addDependency(ws.frameworks.cometd).
 
     addDependency(jcr.services.jcr);
-
-//    addDependency(eXoPortletContainer.services.jsr168jsr286) ;
-//    addDependency(eXoPortletContainer.web.wsrp) ;
 
   module.portlet = {};
 
