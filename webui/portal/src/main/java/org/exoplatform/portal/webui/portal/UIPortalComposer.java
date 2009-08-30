@@ -387,17 +387,8 @@ public class UIPortalComposer extends UIContainer {
 			UIPageForm uiPageForm = uiPortalApp.createUIComponent(UIPageForm.class,
 					null, null);
 			
-			UIComponent uiPage = uiToolPanel.getUIComponent();
-			if( uiPage instanceof UIPage){
+			UIComponent uiPage = uiToolPanel.findFirstComponentOfType(UIPage.class);
 				uiPageForm.setValues((UIPage)uiPage);
-			}
-			else{
-				UIPageCreationWizard pageCreationWizard = (UIPageCreationWizard)uiToolPanel.getUIComponent();
-				UIPagePreview pagePreview = pageCreationWizard.getChild(UIPagePreview.class);
-				uiPage = pagePreview.getUIComponent();
-				uiPageForm.setValues((UIPage)uiPage);
-			}
-			//uiPageForm.setValues((UIPage) uiToolPanel.getUIComponent());
 			uiMaskWS.setUIComponent(uiPageForm);
 			event.getRequestContext().addUIComponentToUpdateByAjax(uiMaskWS);
 		}
@@ -427,12 +418,11 @@ public class UIPortalComposer extends UIContainer {
 	static public class Finish2ActionListener extends EventListener<UIPortalComposer> {
 		public void execute(Event<UIPortalComposer> event) throws Exception {
 			UIWorkingWorkspace uiWorkingWS = event.getSource().getParent();
-			UIPortalToolPanel uiToolPanel = uiWorkingWS
-					.getChild(UIPortalToolPanel.class);
-			UIPage uiPage = (UIPage) uiToolPanel.getUIComponent();
+			UIPortalToolPanel uiToolPanel = uiWorkingWS.getChild(UIPortalToolPanel.class);
+			uiWorkingWS.removeChild(UIPortalComposer.class);
+			UIPage uiPage = (UIPage) uiToolPanel.findFirstComponentOfType(UIPage.class);
 			Page page = PortalDataMapper.buildModelObject(uiPage);
-			UserPortalConfigService portalConfigService = uiWorkingWS
-					.getApplicationComponent(UserPortalConfigService.class);
+			UserPortalConfigService portalConfigService = uiWorkingWS.getApplicationComponent(UserPortalConfigService.class);
 			portalConfigService.update(page);
 			uiToolPanel.setUIComponent(null);
 			UIPortal uiPortal = Util.getUIPortal();
