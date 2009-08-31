@@ -92,8 +92,6 @@ public class UIPortletActionListener {
       PortletInvoker portletInvoker = uiPortlet.getApplicationComponent(PortletInvoker.class);
       PortletInvocationResponse portletResponse = portletInvoker.invoke(actionInvocation);
       
-      System.out.println("ACTIONRESPONSE : " + portletResponse);
-      
       UpdateNavigationalStateResponse navStateResponse = (UpdateNavigationalStateResponse) portletResponse;
       
       //TODO: (mwringe) figure out how exactly we should be getting the redirect
