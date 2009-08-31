@@ -7,7 +7,7 @@
 	def navigations = (List<PageNavigation>) uicomponent.getBeans();
 %>
 
-<div id="$uicomponent.id">
+<div id="$uicomponent.id" class="FeedBox">
 	<% for(navigation in navigations) { 
 			description = (navigation.getDescription()==null)? "" : navigation.getDescription();
 			deleteLink = parent.event("DeleteNavigation",String.valueOf(navigation.getId()));

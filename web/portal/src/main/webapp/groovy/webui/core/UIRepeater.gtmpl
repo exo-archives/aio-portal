@@ -8,7 +8,6 @@
   String[] beanFields =  uicomponent.getBeanFields() ;  
   String[] beanActions =  uicomponent.getBeanActions() ;  
   def uiParent = uicomponent.getParent();
-  String uniqueId = uicomponent.getUniqueId();
 
   String name = uicomponent.getLabel() ;
   UIForm uiForm = uicomponent.getAncestorOfType(UIForm.class); 
@@ -16,7 +15,6 @@
   DateFormat dateFormat = null;
 %>
 <div id="$uicomponent.id">
-
     <table class="UIGrid" cellspacing="0">
         <thead>
             <tr>
@@ -38,7 +36,7 @@
                 <%}%>
             </tr>
         </thead>
-        <tbody id="$uniqueId">
+        <tbody class="FeedBox">
        <% for (bean in uicomponent.getBeans())  { %>   
 	        <tr>
 			      <%
