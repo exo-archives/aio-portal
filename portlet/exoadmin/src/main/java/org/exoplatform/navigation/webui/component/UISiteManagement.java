@@ -194,11 +194,8 @@ public class UISiteManagement extends UIContainer {
 			}		
 		  
 			UIWorkingWorkspace uiWorkingWS = portalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
-			UIEditInlineWorkspace uiEditWS = uiWorkingWS.getChild(UIEditInlineWorkspace.class);
-			UIPortalComposer uiComposer = uiEditWS.getComposer().setRendered(true);
-			uiComposer.setComponentConfig(UIPortalComposer.class, null);
-      
-	    //Added by Minh Hoang TO: Trigger the edit inline process
+			UIEditInlineWorkspace uiEditWS = uiWorkingWS.addChild(UIEditInlineWorkspace.class, null, UIPortalApplication.UI_EDITTING_WS_ID);
+
 			UIPortal uiPortal = Util.getUIPortal();
 			if(portalName.equals(uiPortal.getName())) {
 				uiEditWS.setUIComponent(uiPortal);

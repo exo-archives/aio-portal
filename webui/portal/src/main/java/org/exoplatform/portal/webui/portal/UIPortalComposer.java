@@ -260,7 +260,8 @@ public class UIPortalComposer extends UIContainer {
 			} else {
 				siteBody.setUIComponent(uiEditPortal);
 			}
-			uiEditWS.setUIComponent(null);
+//			uiEditWS.setUIComponent(null);
+			uiWorkingWS.removeChild(UIEditInlineWorkspace.class);
 			
 			uiPortal = (UIPortal) siteBody.getUIComponent();
 			uiWorkingWS.setRenderedChild(UIPortalApplication.UI_VIEWING_WS_ID) ;
@@ -275,8 +276,7 @@ public class UIPortalComposer extends UIContainer {
 
 	}
 
-	static public class FinishActionListener extends
-			EventListener<UIPortalComposer> {
+	static public class FinishActionListener extends EventListener<UIPortalComposer> {
 
 		public void execute(Event<UIPortalComposer> event) throws Exception {
 			UIPortalComposer uiComposer = event.getSource();
@@ -295,7 +295,8 @@ public class UIPortalComposer extends UIContainer {
 			
 			String uri = null;
 			if(uiPortal == null) siteBody.setUIComponent(editPortal);
-			uiEditWS.setUIComponent(null);
+//			uiEditWS.setUIComponent(null);
+			uiWorkingWS.removeChild(UIEditInlineWorkspace.class);
 			uiPortal = (UIPortal) siteBody.getUIComponent();
 			
 			if (PortalProperties.SESSION_ALWAYS.equals(uiPortal.getSessionAlive()))
