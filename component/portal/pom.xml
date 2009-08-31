@@ -48,20 +48,20 @@
 
     <dependency>
       <groupId>org.gatein.mop</groupId>
-      <artifactId>mop.api</artifactId>
-      <version>1.0.0-Beta02</version>
+      <artifactId>mop-api</artifactId>
+      <version>${org.gatein.mop.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.gatein.mop</groupId>
-      <artifactId>mop.spi</artifactId>
-      <version>1.0.0-Beta02</version>
+      <artifactId>mop-spi</artifactId>
+      <version>${org.gatein.mop.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.gatein.mop</groupId>
-      <artifactId>mop.core</artifactId>
-      <version>1.0.0-Beta02</version>
+      <artifactId>mop-core</artifactId>
+      <version>${org.gatein.mop.version}</version>
     </dependency>
 
   </dependencies>
