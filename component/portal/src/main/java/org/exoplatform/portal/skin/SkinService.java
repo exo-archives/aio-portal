@@ -45,6 +45,8 @@ import org.exoplatform.management.jmx.annotations.NameTemplate;
 import org.exoplatform.management.jmx.annotations.Property;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.resources.Orientation;
+import org.picocontainer.Startable;
+import org.gatein.wci.impl.DefaultServletContainerFactory;
 
 @Managed
 @NameTemplate({
@@ -53,7 +55,7 @@ import org.exoplatform.services.resources.Orientation;
   @Property(key="type", value="skin")
 })
 @ManagedDescription("Skin service")
-public class SkinService {
+public class SkinService implements Startable {
 
   protected static Log log = ExoLogger.getLogger("portal.SkinService");
 
@@ -87,6 +89,9 @@ public class SkinService {
 
   /** One hour caching. */
   private static final int ONE_HOUR = 3600;
+
+  /** The deployer. */
+  private final SkinConfigDeployer deployer = new SkinConfigDeployer(this);
 
   private final Map<SkinKey, SkinConfig> portalSkins_ ;
   private final Map<SkinKey, SkinConfig> skinConfigs_;
@@ -447,5 +452,13 @@ public class SkinService {
   public void reloadSkin(@ManagedDescription("The skin id") @ManagedName("skinId") String skinId) {
 	  ltCache.remove(skinId);
 	  rtCache.remove(skinId);
+  }
+
+  public void start() {
+    DefaultServletContainerFactory.getInstance().getServletContainer().addWebAppListener(deployer);
+  }
+
+  public void stop() {
+    DefaultServletContainerFactory.getInstance().getServletContainer().removeWebAppListener(deployer);
   }
 }

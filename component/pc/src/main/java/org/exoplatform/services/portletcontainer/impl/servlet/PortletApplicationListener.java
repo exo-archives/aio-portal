@@ -23,19 +23,15 @@ import javax.servlet.ServletContextEvent;
  * <p>This class just do nothing. This class exists to provide backwards compatiblity for portlets that have
  * been setup to be deployable on versions of eXo portal.</p>
  *
- * <p>When the context is initiliazed it prints a message on the system logging to explain that this
- * class should not be used anymore.</p>
- *
  * @author <a href="mailto:mwringe@redhat.com">Matt Wringe</a>
  * @version $Revision$
  */
 public class PortletApplicationListener implements ServletContextListener
 {
+
   public void contextInitialized(ServletContextEvent servletContextEvent) {
-    // julien todo : print log that say that the legacy exo servlet should be replaced by GateIn servlet
   }
 
   public void contextDestroyed(ServletContextEvent servletContextEvent) {
-    
   }
 }

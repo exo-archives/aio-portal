@@ -17,50 +17,19 @@
 
 package org.exoplatform.portal.webui.skin;
 
-import groovy.lang.Binding;
-import groovy.lang.GroovyShell;
-
-import java.io.InputStream;
-
-import javax.servlet.ServletContext;
-
-import org.exoplatform.container.ExoContainer;
-import org.exoplatform.container.ExoContainerContext;
-import org.exoplatform.container.component.BaseComponentPlugin;
-import org.gatein.wci.WebAppListener;
-import org.gatein.wci.WebAppEvent;
-import org.gatein.wci.impl.DefaultServletContainerFactory;
+import javax.servlet.ServletContextListener;
+import javax.servlet.ServletContextEvent;
 
 /**
  * Created by The eXo Platform SAS
  * Jan 19, 2007  
  */
 
-public class SkinConfigListener extends BaseComponentPlugin implements WebAppListener
+public class SkinConfigListener implements ServletContextListener
 {
-
-  public SkinConfigListener() {
-    DefaultServletContainerFactory.getInstance().getServletContainer().addWebAppListener(this);
+  public void contextInitialized(ServletContextEvent servletContextEvent) {
   }
 
-  public void onEvent(WebAppEvent event) {
-		try {
-			ServletContext scontext = event.getWebApp().getServletContext();
-			InputStream is = scontext.getResourceAsStream("/WEB-INF/conf/script/groovy/SkinConfigScript.groovy") ;
-			if(is == null)  return ;
-
-			Binding binding = new Binding();
-			ExoContainer rootContainer = ExoContainerContext.getTopContainer();
-			org.exoplatform.portal.skin.SkinService skinService = 
-				(org.exoplatform.portal.skin.SkinService)rootContainer.getComponentInstanceOfType(org.exoplatform.portal.skin.SkinService.class);
-			binding.setVariable("SkinService", skinService) ;
-			binding.setVariable("ServletContext", scontext) ;      
-			GroovyShell shell = new GroovyShell(binding);
-			shell.evaluate(is);
-			is.close() ;
-		} catch (Exception ex) {
-			ex.printStackTrace() ;
-		}
-	}
-	
+  public void contextDestroyed(ServletContextEvent servletContextEvent) {
+  }
 }

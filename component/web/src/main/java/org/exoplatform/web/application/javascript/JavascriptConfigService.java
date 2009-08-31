@@ -16,6 +16,9 @@
  */
 package org.exoplatform.web.application.javascript;
 
+import org.picocontainer.Startable;
+import org.gatein.wci.impl.DefaultServletContainerFactory;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -26,7 +29,7 @@ import java.util.HashMap;
 
 import javax.servlet.ServletContext;
 
-public class JavascriptConfigService {
+public class JavascriptConfigService implements Startable {
 
   private Collection<String> availableScripts_;
   private Collection<String> availableScriptsPaths_;
@@ -36,6 +39,9 @@ public class JavascriptConfigService {
   private HashMap<String,String> extendedJavascripts ;
 
   private ByteArrayOutputStream jsStream_ = null;
+
+  /** . */
+  private JavascriptDeployer deployer = new JavascriptDeployer(this);
 
   public JavascriptConfigService() {
     availableScripts_ = new ArrayList<String>();
@@ -65,12 +71,6 @@ public class JavascriptConfigService {
     extendedJavascripts.put(path, scriptData) ;
   }
 
-  /**
-   * 
-   * @param module
-   * @param skinName
-   * @param cssPath
-   */
   public void addJavascript(String module, String scriptPath, ServletContext scontext) {
     String servletContextName = scontext.getServletContextName();
     availableScripts_.add(module);
@@ -129,5 +129,13 @@ public class JavascriptConfigService {
     availableScriptsPaths_.remove(path);
     extendedJavascripts.remove(path) ;
     jsStream_ = null ;
+  }
+
+  public void start() {
+    DefaultServletContainerFactory.getInstance().getServletContainer().addWebAppListener(deployer);
+  }
+
+  public void stop() {
+    DefaultServletContainerFactory.getInstance().getServletContainer().removeWebAppListener(deployer);
   }
 }

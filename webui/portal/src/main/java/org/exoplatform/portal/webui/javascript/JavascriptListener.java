@@ -17,52 +17,19 @@
 
 package org.exoplatform.portal.webui.javascript;
 
-import groovy.lang.Binding;
-import groovy.lang.GroovyShell;
-
-import java.io.InputStream;
-
-import javax.servlet.ServletContext;
-
-import org.exoplatform.container.ExoContainer;
-import org.exoplatform.container.ExoContainerContext;
-import org.exoplatform.container.component.BaseComponentPlugin;
-import org.exoplatform.web.application.javascript.JavascriptConfigService;
-import org.gatein.wci.WebAppListener;
-import org.gatein.wci.WebAppEvent;
-import org.gatein.wci.impl.DefaultServletContainerFactory;
+import javax.servlet.ServletContextListener;
+import javax.servlet.ServletContextEvent;
 
 /**
  * Created by The eXo Platform SAS
  * Jan 19, 2007  
  */
 
-public class JavascriptListener extends BaseComponentPlugin implements WebAppListener
+public class JavascriptListener implements ServletContextListener
 {
-
-  public JavascriptListener() {
-    DefaultServletContainerFactory.getInstance().getServletContainer().addWebAppListener(this);
+  public void contextInitialized(ServletContextEvent servletContextEvent) {
   }
 
-  public void onEvent(WebAppEvent event) {
-		try {
-			ServletContext scontext = event.getWebApp().getServletContext();
-
-			InputStream is = scontext.getResourceAsStream("/WEB-INF/conf/script/groovy/JavascriptScript.groovy") ;
-			if(is == null)  return ;
-
-			Binding binding = new Binding();
-			ExoContainer container = ExoContainerContext.getCurrentContainer();
-			JavascriptConfigService javascriptService = 
-				(JavascriptConfigService) container.getComponentInstanceOfType(JavascriptConfigService.class);
-			binding.setVariable("JavascriptService", javascriptService) ;
-			binding.setVariable("ServletContext", scontext) ;      
-			GroovyShell shell = new GroovyShell(binding);
-			shell.evaluate(is);
-			is.close() ;
-		} catch (Exception ex) {
-			ex.printStackTrace() ;
-		}
-	}
-
+  public void contextDestroyed(ServletContextEvent servletContextEvent) {
+  }
 }
