@@ -67,7 +67,7 @@
 	                    for(action in beanActions) { 
 	                      def beanId = uicomponent.getFieldValue(bean, beanIdField)  ;
 	                        if(action == null) continue;
-	                      String title = _ctx.appRes(uicomponent.getParent().getName() + ".action.title." + action);
+	                      String title = _ctx.appRes(uiParent.getParent().getName() + ".action.title." + action);
 	                      String actionLink = uiParent.event(action, beanId);
 	                    %>             
 	                        <img onclick="$actionLink" alt="" title="$title" src="/eXoResources/skin/sharedImages/Blank.gif" class="${action}Icon" />
