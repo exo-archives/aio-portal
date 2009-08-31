@@ -25,10 +25,4 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
     <url-pattern>/gateinservlet</url-pattern>
   </servlet-mapping>
 
-  <!-- ================================================================== -->
-  <!--           LISTENER                                                 -->
-  <!-- ================================================================== -->
-  <listener>
-    <listener-class>org.exoplatform.portal.webui.skin.SkinConfigListener</listener-class>
-  </listener>
 </web-app>
