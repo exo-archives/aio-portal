@@ -12,12 +12,6 @@
 	    <page-reference>portal::classic::homepage</page-reference>	    
 	  </node>    
 	  <node>
-	    <uri>webexplorer</uri>
-	    <name>webexplorer</name>
-	    <label>#{portal.classic.webexplorer}</label>
-	    <page-reference>portal::classic::webexplorer</page-reference>	    
-	  </node>
-	  <node>
 	    <uri>groupnavigation</uri>
 	    <name>groupnavigation</name>
 	    <label>#{portal.classic.groupnavigation}</label>

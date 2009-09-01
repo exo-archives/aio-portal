@@ -16,7 +16,12 @@
  */
 package org.exoplatform.portal.webui.workspace;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.exoplatform.portal.webui.application.UIPortlet;
 import org.exoplatform.portal.webui.portal.UIPortal;
+import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.UIContainer;
@@ -45,4 +50,26 @@ public class UIWorkingWorkspace extends UIContainer {
   public UIPortal getBackupUIPortal() { return backupUIPortal; }
   
   public void setBackupUIPortal(UIPortal uiPortal) { backupUIPortal = uiPortal;   }
+  
+  public void updatePortletByWindowId(String windowId) throws Exception {
+    List<UIPortlet> portletInstancesInPage = new ArrayList<UIPortlet>();
+    findComponentOfType(portletInstancesInPage, UIPortlet.class);
+    
+    for (UIPortlet portlet : portletInstancesInPage) {
+      if (portlet.getExoWindowID().equals(windowId)) {
+        Util.getPortalRequestContext().addUIComponentToUpdateByAjax(portlet);
+      }
+    }
+  }
+  
+  public void updatePortletsByName(String portletName) throws Exception {
+    List<UIPortlet> portletInstancesInPage = new ArrayList<UIPortlet>();
+    findComponentOfType(portletInstancesInPage, UIPortlet.class);
+    
+    for (UIPortlet portlet : portletInstancesInPage) {
+      if (portlet.getExoWindowID().getPortletName().equals(portletName)) {
+        Util.getPortalRequestContext().addUIComponentToUpdateByAjax(portlet);
+      }
+    }
+  } 
 }

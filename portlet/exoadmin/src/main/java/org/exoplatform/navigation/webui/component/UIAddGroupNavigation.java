@@ -55,11 +55,9 @@ import org.exoplatform.webui.event.EventListener;
 public class UIAddGroupNavigation extends UIContainer {
 
   public UIAddGroupNavigation() throws Exception {
-    UIVirtualList virtualList = addChild(UIVirtualList.class, null, "virtualGroupList");
+    UIVirtualList virtualList = addChild(UIVirtualList.class, null, "AddGroupNavList");
     virtualList.setPageSize(6);
-    UIRepeater repeater = createUIComponent(UIRepeater.class,
-                                            "UIAddGroupNavigationGrid",
-                                            virtualList.getGenerateId());
+    UIRepeater repeater = createUIComponent(UIRepeater.class, "UIAddGroupNavigationGrid", null);
     virtualList.setUIComponent(repeater);
     UIPopupWindow editGroup = addChild(UIPopupWindow.class, null, "EditGroup");
   }

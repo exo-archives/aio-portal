@@ -138,7 +138,7 @@ public class TestUserPortalConfigService extends UserPortalServiceTestBase {
 		UserPortalConfig oldUserPortalConfig = userPortalConfigSer_
 				.getUserPortalConfig(portalName, accessUser);
 		List<PageNavigation> oldNavigations = oldUserPortalConfig.getNavigations();
-		assertEquals(5, oldNavigations.size());
+		assertEquals(2, oldNavigations.size());
 
 		// Remove navigation of the portal
 		PageNavigation portalNavigation = oldNavigations.get(1);
@@ -147,7 +147,7 @@ public class TestUserPortalConfigService extends UserPortalServiceTestBase {
 		UserPortalConfig newUserPortalConfig = userPortalConfigSer_
 				.getUserPortalConfig(portalName, accessUser);
 		List<PageNavigation> newNavigations = newUserPortalConfig.getNavigations();
-		assertEquals(4, newNavigations.size());
+		assertEquals(1, newNavigations.size());
 	}
 
 	public void testPageGet() throws Exception {

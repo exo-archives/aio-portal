@@ -10,11 +10,11 @@
 }
 
 .UIHomePagePortlet .TRContainer .PortletDecoration {	
-	padding-top: 7px;
+	padding: 10px;
 }
 
 .UIHomePagePortlet .TRContainer {
-	width: 210px;
+	width: 222px;
 	height: 390px;
 	float: right; /* orientation=lt */
 	float: left; /* orientation=rt */
@@ -28,8 +28,7 @@
 }
 
 .UIHomePagePortlet .TRContainer .GuideText {
-	margin: 0 10px;
-	text-align: left;
+	text-align: justify;
 	color: #777777;
 }
 
@@ -44,31 +43,24 @@
 .UIHomePagePortlet .TRContainer .VersionIcon {
 	background: url("DefaultSkin/background/HomePagePortlet.gif") no-repeat left -978px;
 	height: 65px;
-	width: 50px;
+	width: 80px;
 	margin: 20px auto;
-	cursor: pointer;
-}
-
-.UIHomePagePortlet .TRContainer .DownloadIcon {
-	background: url("DefaultSkin/background/HomePagePortlet.gif") no-repeat left -1098px;
-	height: 65px;
-	width: 65px;
-	margin: 8px auto;
 	cursor: pointer;
 }
 
 .UIHomePagePortlet .TRContainer .ContactIcon {
 	background: url("DefaultSkin/background/HomePagePortlet.gif") no-repeat left -1209px;
 	height: 70px;
-	width: 50px;
+	width: 80px;
 	margin: 20px auto;
 	cursor: pointer;
 }
 
 .UIHomePagePortlet  .TLContainer {
 	border: 1px solid #ffffff;
-	margin-right: 219px; /* orientation=lt */	
-	margin-left: 219px; /* orientation=rt */
+	float: left; /* orientation=lt */	
+	float: right; /* orientation=rt */
+	width: 713px;
 }
 
 .UIHomePagePortlet .TLContainer .PortletDecoration {	
@@ -160,7 +152,7 @@ _html .UIHomePagePortlet .HomePortletContent .RightAccountsContainer {
 
 .UIHomePagePortlet .HomePortletContent .AccountBlock {
 	height: 105px; 
-	width: 120px;
+	width: 118px;
 	float: left; /* orientation=lt */
 	float: right; /* orientation=rt */
 	padding: 0px 42px 0px 0px; /* orientation=lt */

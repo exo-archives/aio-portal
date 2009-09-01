@@ -103,7 +103,7 @@
     </supports>
     <supported-locale>en</supported-locale>
     
-    <resource-bundle>locale.portlet.exoadmin.AccountPortlet</resource-bundle>
+    <resource-bundle>locale.portlet.exoadmin.PortalNavigationPortlet</resource-bundle>
     <portlet-info>
       <title>Portal Navigation Portlet</title>
       <short-title>Portal Navigation Portlet</short-title>

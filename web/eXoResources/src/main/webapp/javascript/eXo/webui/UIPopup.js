@@ -105,6 +105,7 @@ UIPopup.prototype.setPosition = function(popup, x, y, isRTL) {
  */
 UIPopup.prototype.setAlign = function(popup, pos) {
 	if ( typeof(popup) == 'string') popup = document.getElementById(popup) ;
+	var stdLeft = eXo.core.Browser.getBrowserWidth() - eXo.core.Browser.findPosX(document.getElementById("UIWorkingWorkspace"));
 	var intTop = 0 ;
 	var intLeft = 0 ;
 	switch (pos) {
@@ -114,7 +115,7 @@ UIPopup.prototype.setAlign = function(popup, pos) {
 			break ;
 		case 2:							// Top Right
   		intTop = 0 ;  		
-		  intLeft = (eXo.core.Browser.getBrowserWidth() - popup.offsetWidth) ;
+		  intLeft = (stdLeft - popup.offsetWidth) ;
 			break ;
 		case 3:							// Bottom Left
 		  intTop = (eXo.core.Browser.getBrowserHeight() - popup.offsetHeight) ;
@@ -122,15 +123,15 @@ UIPopup.prototype.setAlign = function(popup, pos) {
 			break ;
 		case 4:							// Bottom Right
   		intTop = (eXo.core.Browser.getBrowserHeight() - popup.offsetHeight) ;
-		  intLeft = (eXo.core.Browser.getBrowserWidth() - popup.offsetWidth) ;			
+		  intLeft = (stdLeft - popup.offsetWidth) ;			
 			break ;
 		default:
 		  intTop = (eXo.core.Browser.getBrowserHeight() - popup.offsetHeight) / 2 ;
-		  intLeft = (eXo.core.Browser.getBrowserWidth() - popup.offsetWidth) / 2 ;	
+		  intLeft = (uiWorkingWS.offsetWidth - popup.offsetWidth) / 2 ;	
 			break ;
 	}
 	
-	this.setPosition(popup, intLeft, intTop) ;
+	this.setPosition(popup, intLeft, intTop, eXo.core.I18n.isRT()) ;
 } ;
 /**
  * Inits the DragDrop class with empty values

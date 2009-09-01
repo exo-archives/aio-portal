@@ -26,6 +26,9 @@
   
   <mapping name="page-body" label="pageBody" class="org.exoplatform.portal.config.model.PageBody">
   </mapping>
+	
+  <mapping name="site-body" label="siteBody" class="org.exoplatform.portal.config.model.SiteBody">
+  </mapping>
   
   <mapping name="container" label="container" class="org.exoplatform.portal.config.model.Container">
     <value name="id" usage="optional" field="id" style="attribute"/>
@@ -43,6 +46,7 @@
       <structure map-as="org.exoplatform.portal.config.model.Container" usage="optional"/>
       <structure map-as="org.exoplatform.portal.config.model.Application" usage="optional"/>
       <structure map-as="org.exoplatform.portal.config.model.PageBody" usage="optional"/>
+			<structure map-as="org.exoplatform.portal.config.model.SiteBody" usage="optional"/>
     </collection>
   </mapping>
   

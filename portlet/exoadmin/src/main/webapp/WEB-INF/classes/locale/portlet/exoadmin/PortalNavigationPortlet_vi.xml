@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bundle>
+  <UISiteManagement>
+  	<action>
+  		<addNewPortal>Tạo Portal</addNewPortal>
+  	</action>
+  	<label>
+  		<editLayout>Edit Layout</editLayout>
+  		<editNav>Edit Navigation</editNav>
+  		<editNavProp>Edit Nav's Properties</editNavProp>
+  		<deletePortal>Delete Portal</deletePortal>
+  	</label>
+  </UISiteManagement>
+</bundle>

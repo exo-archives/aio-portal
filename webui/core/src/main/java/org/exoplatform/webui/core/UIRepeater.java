@@ -106,9 +106,4 @@ public class UIRepeater extends UIComponent implements UIDataFeed {
   public PageList getDataSource() {
     return this.datasource;  
   }
-  
-  public String getUniqueId() {
-    UIVirtualList parent = this.getParent(); 
-    return parent.getGenerateId();
-  }
 }

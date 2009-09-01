@@ -2,6 +2,7 @@
   import org.exoplatform.dashboard.webui.component.UIDashboardSelectContainer;
   import org.exoplatform.web.application.JavascriptManager;
   import org.exoplatform.dashboard.webui.component.DashboardParent ;
+  import org.exoplatform.portal.webui.application.UIGadget;
   
   def uiDashboard = uicomponent.getParent();
   def uiSelectForm = uiDashboard.getChild(UIDashboardSelectContainer.class);
@@ -17,7 +18,7 @@
 %>
 <div id="$uicomponent.id" class="UIDashboardContainer">
 	<div class="GadgetContainer UIResizableBlock" id="GadgetContainer">
-		<% if (uiDashboard.canEdit()) { %>
+		<%if (uiDashboard.canEdit()) { %>
 		<div class="ContainerControlBarL" style="visibility: <%= uiSelectForm.isShow()? "hidden" : "visible"; %>;">
 			<div class="ContainerControlBarR">
 				<div class="ContainerControlBarM">
@@ -27,10 +28,14 @@
 				</div>
 			</div>
 		</div>
-		
 		<%
-		   }
-	       uicomponent.renderChildren() ;
+			}
+			if (uicomponent.findFirstComponentOfType(UIGadget.class) == null) {
+		%>
+		<div class="NoGadget"><%= _ctx.appRes("UIDashboard.msg.addGadget"); %></div>
+		<%
+			}
+			uicomponent.renderChildren() ;
 		%>
 		
 	</div>

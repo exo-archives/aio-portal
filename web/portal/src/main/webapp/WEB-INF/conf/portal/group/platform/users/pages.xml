@@ -4,36 +4,6 @@
   <page>
   	<owner-type>group</owner-type>
     <owner-id>/platform/users</owner-id>
-    <name>dashboard</name>
-    <title>Dashboard</title>
-    <access-permissions>*:/platform/users</access-permissions>
-    <edit-permission>*:/platform/administrators</edit-permission>
-    <application>
-      <instance-id>group#/platform/users:/dashboard/DashboardPortlet/Dashboard</instance-id>
-      <title>Dashboard</title>
-      <access-permissions>*:/platform/users</access-permissions>
-      <show-info-bar>false</show-info-bar>
-    </application>   
-  </page>
-  
-  <page>
-  	<owner-type>group</owner-type>
-    <owner-id>/platform/users</owner-id>
-    <name>webexplorer</name>
-    <title>Web Explorer</title>
-    <access-permissions>*:/platform/users</access-permissions>
-    <edit-permission>*:/platform/administrators</edit-permission>
-    <application>
-      <instance-id>group#/platform/users:/web/BrowserPortlet/WebExplorer</instance-id>
-      <title>Web Explorer</title>
-      <access-permissions>*:/platform/users</access-permissions>
-      <show-info-bar>false</show-info-bar>
-    </application>  
-  </page>               
-       
-  <page>
-  	<owner-type>group</owner-type>
-    <owner-id>/platform/users</owner-id>
     <name>mylink-blog</name>
     <title>Blog</title>
     <access-permissions>*:/platform/users</access-permissions>

@@ -97,7 +97,7 @@ public class UIMainActionListener {
 //			UserPortalConfig portalConfig = uiApp.getUserPortalConfig();
 //			UIPortal newPortal = uiWorkingWS.createUIComponent(UIPortal.class, null, null);
 //			PortalDataMapper.toUIPortal(newPortal, portalConfig);
-			UIEditInlineWorkspace uiEditWS = uiWorkingWS.getChild(UIEditInlineWorkspace.class);
+			UIEditInlineWorkspace uiEditWS = uiWorkingWS.addChild(UIEditInlineWorkspace.class, null, UIPortalApplication.UI_EDITTING_WS_ID);
 //			uiEditWS.setUIComponent(newPortal);
 			UISiteBody uiSiteBody = uiWorkingWS.findFirstComponentOfType(UISiteBody.class);
 			uiEditWS.setUIComponent(uiPortal);

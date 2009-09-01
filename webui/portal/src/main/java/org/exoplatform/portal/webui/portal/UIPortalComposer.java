@@ -29,9 +29,7 @@ import org.exoplatform.portal.webui.application.UIApplicationList;
 import org.exoplatform.portal.webui.application.UIPortlet;
 import org.exoplatform.portal.webui.container.UIContainerList;
 import org.exoplatform.portal.webui.page.UIPage;
-import org.exoplatform.portal.webui.page.UIPageCreationWizard;
 import org.exoplatform.portal.webui.page.UIPageForm;
-import org.exoplatform.portal.webui.page.UIPagePreview;
 import org.exoplatform.portal.webui.page.UISiteBody;
 import org.exoplatform.portal.webui.util.PortalDataMapper;
 import org.exoplatform.portal.webui.util.Util;
@@ -260,7 +258,8 @@ public class UIPortalComposer extends UIContainer {
 			} else {
 				siteBody.setUIComponent(uiEditPortal);
 			}
-			uiEditWS.setUIComponent(null);
+//			uiEditWS.setUIComponent(null);
+			uiWorkingWS.removeChild(UIEditInlineWorkspace.class);
 			
 			uiPortal = (UIPortal) siteBody.getUIComponent();
 			uiWorkingWS.setRenderedChild(UIPortalApplication.UI_VIEWING_WS_ID) ;
@@ -271,12 +270,13 @@ public class UIPortalComposer extends UIContainer {
 					uiPortal,PageNodeEvent.CHANGE_PAGE_NODE, uri) ;
 			uiPortal.broadcast(pnevent, Event.Phase.PROCESS) ;
 			prContext.addUIComponentToUpdateByAjax(uiWorkingWS);
+			JavascriptManager jsManager = prContext.getJavascriptManager();
+			jsManager.addJavascript("eXo.portal.portalMode=" + UIPortalApplication.NORMAL_MODE + ";");
 		}
 
 	}
 
-	static public class FinishActionListener extends
-			EventListener<UIPortalComposer> {
+	static public class FinishActionListener extends EventListener<UIPortalComposer> {
 
 		public void execute(Event<UIPortalComposer> event) throws Exception {
 			UIPortalComposer uiComposer = event.getSource();
@@ -295,7 +295,8 @@ public class UIPortalComposer extends UIContainer {
 			
 			String uri = null;
 			if(uiPortal == null) siteBody.setUIComponent(editPortal);
-			uiEditWS.setUIComponent(null);
+//			uiEditWS.setUIComponent(null);
+			uiWorkingWS.removeChild(UIEditInlineWorkspace.class);
 			uiPortal = (UIPortal) siteBody.getUIComponent();
 			
 			if (PortalProperties.SESSION_ALWAYS.equals(uiPortal.getSessionAlive()))
@@ -309,6 +310,8 @@ public class UIPortalComposer extends UIContainer {
 			PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal,PageNodeEvent.CHANGE_PAGE_NODE, uri);
 			uiPortal.broadcast(pnevent, Event.Phase.PROCESS);
 			prContext.addUIComponentToUpdateByAjax(uiWorkingWS);
+			JavascriptManager jsManager = prContext.getJavascriptManager();
+			jsManager.addJavascript("eXo.portal.portalMode=" + UIPortalApplication.NORMAL_MODE + ";");
 		}
 
 	}
@@ -412,6 +415,8 @@ public class UIPortalComposer extends UIContainer {
 					(uiPortal.getSelectedNode() != null ? uiPortal.getSelectedNode()
 							.getUri() : null));
 			uiPortal.broadcast(pnevent, Event.Phase.PROCESS);
+			JavascriptManager jsManager = event.getRequestContext().getJavascriptManager();
+			jsManager.addJavascript("eXo.portal.portalMode=" + UIPortalApplication.NORMAL_MODE + ";");
 		}
 	}
 

@@ -309,7 +309,7 @@ public class UIPortalApplication extends UIApplication {
     Container container = dataStorage.getSharedLayout();
     UIPortal uiPortal = createUIComponent(UIPortal.class, null, null);
     PortalDataMapper.toUIPortal(uiPortal, userPortalConfig_);
-    uiWorkingWorkspace.addChild(UIEditInlineWorkspace.class, null, UI_EDITTING_WS_ID).setRendered(false);
+//    uiWorkingWorkspace.addChild(UIEditInlineWorkspace.class, null, UI_EDITTING_WS_ID).setRendered(false);
     if(container != null) {
     	org.exoplatform.portal.webui.container.UIContainer uiContainer = createUIComponent(org.exoplatform.portal.webui.container.UIContainer.class, null, null);
     	PortalDataMapper.toUIContainer(uiContainer, container);

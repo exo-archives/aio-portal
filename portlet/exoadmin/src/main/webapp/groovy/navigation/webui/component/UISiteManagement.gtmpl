@@ -19,10 +19,10 @@
 					   			
 					   		</td>
 				        <td class="ActionBlock">
-					        	<a href="<%=uicomponent.event("EditPortalLayout", portalConfig.getName());%>" class="EditLayoutIcon">Edit Layout</a>
-					        	<a href="<%=uicomponent.event("EditNavigation", portalConfig.getName());%>" class="EditNavIcon">Edit Navigation</a>
-					        	<a href="<%=uicomponent.event("EditProperties", portalConfig.getName());%>" class="EditNavIcon">Edit Properties</a>
-					        	<a href="<%=uicomponent.url("DeletePortal", portalConfig.getName());%>" class="DeleteIcon">Delete</a>
+					        	<a href="<%=uicomponent.event("EditPortalLayout", portalConfig.getName());%>" class="EditLayoutIcon"><%=_ctx.appRes("UISiteManagement.label.editLayout")%></a>
+					        	<a href="<%=uicomponent.event("EditNavigation", portalConfig.getName());%>" class="EditNavIcon"><%=_ctx.appRes("UISiteManagement.label.editNav")%></a>
+					        	<a href="<%=uicomponent.event("EditProperties", portalConfig.getName());%>" class="EditNavIcon"><%=_ctx.appRes("UISiteManagement.label.editNavProp")%></a>
+					        	<a href="<%=uicomponent.url("DeletePortal", portalConfig.getName());%>" class="DeleteIcon"><%=_ctx.appRes("UISiteManagement.label.deletePortal")%></a>
 				        </td>
 				      </tr>
 				    </table>    

@@ -224,6 +224,12 @@
 
 /*----------------------UIGadgetsContainer-------------------*/
 
+.UIDashboard .UIDashboardContainer .NoGadget {
+	text-align: center;
+	font-size: 12px; font-weight: bold; 
+	padding: 5px; color: #111;
+}
+
 .UIDashboard .UIGadget {
 	background: white;
 	border: 1px dashed #ababab;

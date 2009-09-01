@@ -21,21 +21,6 @@
   <page>
     <owner-type>portal</owner-type>
     <owner-id>classic</owner-id>
-    <name>webexplorer</name>
-    <title>Web Explorer</title>
-	  <access-permissions>*:/platform/users</access-permissions>
-	  <edit-permission>*:/platform/administrators</edit-permission>    
-    <application>
-      <instance-id>group#platform/users:/web/BrowserPortlet/WebExplorer</instance-id>
-      <title>Web Explorer</title>
-      <access-permissions>*:/platform/users</access-permissions>
-      <show-info-bar>false</show-info-bar>
-    </application>  
-  </page>  
-  
-  <page>
-    <owner-type>portal</owner-type>
-    <owner-id>classic</owner-id>
     <name>groupnavigation</name>
     <title>Group Navigation</title>
 	  <access-permissions>*:/platform/users</access-permissions>

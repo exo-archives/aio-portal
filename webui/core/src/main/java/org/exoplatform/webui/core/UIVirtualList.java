@@ -29,16 +29,7 @@ import org.exoplatform.webui.event.EventListener;
 @ComponentConfig(template = "system:/groovy/webui/core/UIVirtualList.gtmpl", events = { @EventConfig(listeners = UIVirtualList.LoadNextActionListener.class) })
 public class UIVirtualList extends UIComponentDecorator {
 
-  private final static String COMPONENT_GENERATE_ID = "component_generate_id";
-
-  public UIVirtualList() {
-    this.generateId = new Double(Math.random()).toString() + "_"
-        + Calendar.getInstance().getTimeInMillis();
-  }
-
-  private String generateId;
-
-  private int    pageSize = 1;
+  private int pageSize = 1;
 
   public int getPageSize() {
     return pageSize;
@@ -46,10 +37,6 @@ public class UIVirtualList extends UIComponentDecorator {
 
   public void setPageSize(int pageSize) {
     this.pageSize = pageSize;
-  }
-
-  public String getGenerateId() {
-    return this.generateId;
   }
 
   public String event(String name, String beanId) throws Exception {
@@ -72,18 +59,18 @@ public class UIVirtualList extends UIComponentDecorator {
   }
 
   static public class LoadNextActionListener extends EventListener<UIVirtualList> {
-    public void execute(Event<UIVirtualList> event) throws Exception {      
+    public void execute(Event<UIVirtualList> event) throws Exception {
       UIVirtualList virtualList = event.getSource();
       UIDataFeed dataFeed = virtualList.getDataFeed();
       WebuiRequestContext rContext = event.getRequestContext();
       dataFeed.feedNext();
-      if (!dataFeed.hasNext()) {        
-        rContext.getJavascriptManager()
-        	.addJavascript("eXo.webui.UIVirtualList.loadFinished('" + virtualList.getGenerateId() + "');");
+      if (!dataFeed.hasNext()) {
+        rContext.getJavascriptManager().addJavascript("eXo.webui.UIVirtualList.loadFinished('"
+            + virtualList.getId() + "');");
       }
-      rContext.getJavascriptManager()
-      	.addJavascript("eXo.webui.UIVirtualList.updateList('" + virtualList.getGenerateId() + "');");
-      rContext.addUIComponentToUpdateByAjax((UIComponent)dataFeed);
+      rContext.getJavascriptManager().addJavascript("eXo.webui.UIVirtualList.updateList('"
+          + virtualList.getId() + "');");
+      rContext.addUIComponentToUpdateByAjax((UIComponent) dataFeed);
     }
   }
 }

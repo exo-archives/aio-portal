@@ -6,7 +6,7 @@
     	def listGroupNames = (List<String>)uicomponent.getBeans();    	
     	def parent = uicomponent.getParent();
     %>
-<div id="$uicomponent.id">   
+<div id="$uicomponent.id" class="FeedBox">   
 	<%   	 
 	for(groupName in listGroupNames) { 
 			addLink = parent.event("AddNavigation", java.net.URLEncoder.encode(groupName));

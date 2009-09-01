@@ -210,9 +210,9 @@ public class Util {
     if(clazz == null) return;
     UIPortalApplication portalApp = getUIPortalApplication();
     UIEditInlineWorkspace uiEditWS = portalApp.findFirstComponentOfType(UIEditInlineWorkspace.class);
-    UIPortal uiPortal = (UIPortal) uiEditWS.getUIComponent();
     UIContainer uiParent  = null;
-    if(uiPortal != null){
+    if(uiEditWS != null && uiEditWS.getUIComponent() != null){
+    	UIPortal uiPortal = (UIPortal) uiEditWS.getUIComponent();
       uiPortal.setMaximizedUIComponent(null);
       uiParent = uiPortal;
     } else{
@@ -236,9 +236,9 @@ public class Util {
     if(clazz == null) return;
     UIPortalApplication portalApp = getUIPortalApplication();
     UIEditInlineWorkspace uiEditWS = portalApp.findFirstComponentOfType(UIEditInlineWorkspace.class);
-    UIPortal uiPortal = (UIPortal) uiEditWS.getUIComponent();
     UIContainer uiParent  = null;
-    if(uiPortal != null){
+    if(uiEditWS != null && uiEditWS.getUIComponent() != null) {
+    	UIPortal uiPortal = (UIPortal) uiEditWS.getUIComponent();
       uiPortal.setMaximizedUIComponent(null);
       uiParent = uiPortal;
     } else{
