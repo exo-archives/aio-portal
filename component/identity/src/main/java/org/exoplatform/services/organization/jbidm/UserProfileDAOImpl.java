@@ -149,7 +149,9 @@ public class UserProfileDAOImpl
          // julien : integration bug fix
          // Return an empty profile to avoid NPE in portal
          // Should clarify what do do (maybe portal should care about returned value)
-         return new UserProfileImpl();
+        UserProfileImpl profile = new UserProfileImpl();
+        profile.setUserName(userName);
+        return profile;
       }
       else
       {
