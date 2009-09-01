@@ -9,10 +9,6 @@
 		jsmanager.importJavascript('eXo.portal.UIAdminToolbar');
 		jsmanager.addCustomizedOnLoadScript('eXo.portal.UIAdminToolbar.onLoad("' + uicomponent.id + '");');
 		
-		int currentRole = uicomponent.getRole();
-		
-		if (currentRole == UIAdminToolbarPortlet.VISITOR) return; 
-			
 		String addPageLabel = _ctx.appRes("UIAdminToolbarPortlet.action.AddPage");	
 		String editPageLabel = _ctx.appRes("UIAdminToolbarPortlet.action.EditPage");
 		String editPortalLabel = _ctx.appRes("UIAdminToolbarPortlet.action.EditPortal");
@@ -23,9 +19,6 @@
 <div class="UIAdminToolbarPortlet" id="$uicomponent.id">
 	<div class="UIHorizontalTabs">
 		<div class="TabsContainer" style="position: relative">
-
-		<!-- Editor -->		
-			<% if (currentRole >= UIAdminToolbarPortlet.EDITOR) { %>
 			<div class="UITab NormalToolbarTab">
 				<div class="">
 					<a class="EditorIcon TBIcon" href="#">$editorLabel</a>
@@ -44,8 +37,6 @@
 					</div>
 				</div>
 			</div>
-			<% } %>
-		
 		</div>
 	</div>
 </div>
