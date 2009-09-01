@@ -16,7 +16,7 @@
       <groupId>org.exoplatform.tool</groupId>
       <artifactId>exopackage</artifactId>
       <type>zip</type>
-      <version>1.0.1</version>
+      <version>1.0.2</version>
     </dependency>
     
     <dependency>
@@ -118,6 +118,12 @@
       <groupId>org.hibernate</groupId>
       <artifactId>hibernate-cglib-repack</artifactId>
       <version>2.1_3</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss</groupId>
+      <artifactId>jbossxb</artifactId>
+      <version>2.0.1.GA</version>
     </dependency>
     
   </dependencies>
