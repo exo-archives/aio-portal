@@ -2145,6 +2145,7 @@
   <UIDashboard>
     <msg>
       <required>النص مطلوب هنا</required>
+      <addGadget>Drag your gadgets here.</addGadget>
       <notUrl>عنوان غير صالح ! الرجاء إدخال عنوان صحيح للالأداة</notUrl>
     </msg>
   </UIDashboard>
