@@ -19,7 +19,7 @@ Process:
 * in your settings.xml file (maven local computer configuration) you should at least add this
     <profile>
       <id>exo-projects</id>
-      <activation><activeByDefault>false</activeByDefault></activation>
+      <activation><activeByDefault>true</activeByDefault></activation>
       <properties>
         <exo.projects.directory.dependencies>c:/ExoPlatform/src/exo-dependencies</exo.projects.directory.dependencies> 
         <exo.projects.app.tomcat.version>tomcat-6.0.16</exo.projects.app.tomcat.version>
