@@ -11,7 +11,34 @@
   <name>eXo Portla Packaging</name>
   
   <dependencies>    
+
+    <dependency>
+      <groupId>org.exoplatform.tool</groupId>
+      <artifactId>exopackage</artifactId>
+      <type>zip</type>
+      <version>1.0.0</version>
+    </dependency>
     
+    <dependency>
+      <groupId>org.exoplatform.delivery</groupId>
+      <artifactId>exopackage-conf</artifactId>
+      <type>zip</type>
+      <version>20090901</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.exoplatform.portal</groupId>
+      <artifactId>exo.portal.web.portal</artifactId>
+      <type>war</type>
+      <version>2.6-int-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.exoplatform.portal</groupId>
+      <artifactId>exo.portal.web.portal</artifactId>
+      <type>war</type>
+      <version>2.6-int-SNAPSHOT</version>
+    </dependency>
     
     <dependency>
       <groupId>org.exoplatform.jcr</groupId>
@@ -89,7 +116,7 @@
     <dependency>
       <groupId>org.exoplatform.tool</groupId>
       <artifactId>exo.tool.webunit</artifactId>
-      <version>trunk</version>
+      <version>1.0.0</version>
       <!-- TODO with SWF-218 <version>1.0.0</version> -->
     </dependency>
 
@@ -108,4 +135,100 @@
     </dependency>
     
   </dependencies>
+
+  <build>
+    <plugins>
+      <!-- check-out exobuild -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.exoplatform.tool</groupId>
+                  <artifactId>exopackage</artifactId>
+                  <type>zip</type>
+                  <outputDirectory>target/exopackage</outputDirectory>
+                </artifactItem>
+                <artifactItem>
+                  <groupId>org.exoplatform.delivery</groupId>
+                  <artifactId>exopackage-conf</artifactId>
+                  <type>zip</type>
+                  <outputDirectory>target/exopackage-conf</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+          </configuration>
+          </execution>
+        </executions>
+      </plugin>
+        <!-- run exo buils -->
+        <plugin> 
+            <groupId>org.codehaus.mojo</groupId> 
+            <artifactId>exec-maven-plugin</artifactId> 
+            <executions> 
+                <execution> 
+                <id>exopackage</id> 
+                <phase>package</phase> 
+                <configuration>
+                    <executable>java</executable>
+                    <workingDirectory>${basedir}</workingDirectory>
+                    <arguments> 
+                        <argument>-Dexo.package.home=${basedir}/target/exopackage</argument>
+                        <argument>-Dexo.current.dir=${basedir}</argument>
+                        <argument>-Dexo.base.dir=${exo.projects.directory.base}</argument>
+                        <argument>-Dexo.conf.dir=${basedir}/target/exopackage-conf</argument>
+                        <argument>-Dexo.working.dir=${basedir}/target/working</argument>
+                        <!--argument>-Dexo.src.dir=NONE</argument-->
+                        <argument>-Dexo.dep.dir=${exo.projects.directory.dependencies}</argument><!-- to get the server ref install -->
+                        <argument>-Dexo.m2.repos=file:${settings.localRepository}</argument>
+                        <argument>-Dclean.server=${exo.packaging.server}</argument>
+                        <!--argument>-Dexo.m2.home=${maven.home}</argument-->
+                        <argument>-Xshare:auto</argument>
+                        <argument>-Xms128m</argument>
+                        <argument>-Xmx512m</argument>
+                        <argument>-classpath</argument>
+                        <argument>${basedir}/target/exopackage/lib/js.jar</argument>
+                        <argument>org.mozilla.javascript.tools.shell.Main</argument>
+                        <argument>${basedir}/target/exopackage/javascript/eXo/eXo.js</argument>
+                        <argument>exobuild</argument>
+                        <argument>--version=integration</argument>
+                        <argument>--deploy=${exo.packaging.target}</argument>
+                    </arguments>
+                </configuration>
+                <goals> <goal>exec</goal> </goals> 
+                 </execution>
+                 </executions>
+                 <dependencies /> 
+          </plugin>
+     </plugins>
+    </build>
+    
+    <profiles>
+        <profile>
+          <id>tomcat</id>
+          <activation>
+            <property><name>default</name></property>
+            <activeByDefault>true</activeByDefault>
+          </activation>
+          <properties>
+                <exo.packaging.server>${exo.projects.app.tomcat.version}</exo.packaging.server>          
+                <exo.packaging.target>tomcat</exo.packaging.target>          
+          </properties>
+        </profile>
+        <profile>
+          <id>jboss</id>
+          <properties>
+                <exo.packaging.server>${exo.projects.app.jboss.version}</exo.packaging.server>          
+                <exo.packaging.target>jbossear</exo.packaging.target>          
+          </properties>
+        </profile>
+    </profiles>
+    
 </project>
