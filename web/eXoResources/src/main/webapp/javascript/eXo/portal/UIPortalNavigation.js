@@ -123,12 +123,14 @@ UIPortalNavigation.prototype.setTabStyleOnMouseOver = function(e) {
       var DOMUtil = eXo.core.DOMUtil ;
 		  if(eXo.core.Browser.browserType == "ie") {
 		    var navAncestor = DOMUtil.findAncestorByClass(tab, "UINavigationPortlet") ;
-		    var pageBody = document.getElementById("UIPageBody") 
-		    var uicomponents = DOMUtil.getChildrenByTagName(pageBody.parentNode, "div") ;
-		    for(var i = 0; i < uicomponents.length; i ++) {
-		      var navPortlet = DOMUtil.findFirstDescendantByClass(uicomponents[i], "div", "UINavigationPortlet") ;
-		      if(navPortlet && (navAncestor != navPortlet)) navPortlet.style.position = "static" ;
-		    }
+		    var pageBody = document.getElementById("UIPageBody");
+		    if(pageBody){
+		    	var uicomponents = DOMUtil.getChildrenByTagName(pageBody.parentNode, "div") ;
+		    	for(var i = 0; i < uicomponents.length; i ++) {
+		      	var navPortlet = DOMUtil.findFirstDescendantByClass(uicomponents[i], "div", "UINavigationPortlet") ;
+		      	if(navPortlet && (navAncestor != navPortlet)) navPortlet.style.position = "static" ;
+		    	}	
+		    } 
 		  }
       eXo.portal.UIPortalNavigation.toggleSubMenu(e, tab, menuItemContainer) ;
     }
@@ -274,6 +276,7 @@ UIPortalNavigation.prototype.hideMenu = function() {
   var DOMUtil = eXo.core.DOMUtil ;
   if(eXo.core.Browser.browserType == "ie") {
     var pageBody = document.getElementById("UIPageBody") ;
+    if(!pageBody) return;
     var uicomponents = DOMUtil.getChildrenByTagName(pageBody.parentNode, "div") ;
     for(var i = 0; i < uicomponents.length; i ++) {
       var navPortlet = DOMUtil.findFirstDescendantByClass(uicomponents[i], "div", "UINavigationPortlet") ;
