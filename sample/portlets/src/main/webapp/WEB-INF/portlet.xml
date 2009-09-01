@@ -21,7 +21,7 @@
 		<portlet-info>
 			<title>Sample FCK Editor Portlet</title>
 			<short-title>FCK Editor Portlet</short-title>
-			<keywords>portlet,sample,fck</keywords>
+			<keywords>Sample</keywords>
 		</portlet-info>
 		<security-role-ref>
 			<role-name>admin</role-name>
@@ -48,7 +48,7 @@
 		<portlet-info>
 			<title>Sample Lazy Tab Pane Portlet</title>
 			<short-title>Lazy Tab Pane Portlet</short-title>
-			<keywords>portlet,sample,lazytabpane</keywords>
+			<keywords>Sample</keywords>
 		</portlet-info>
 		<security-role-ref>
 			<role-name>admin</role-name>
@@ -75,7 +75,7 @@
 		<portlet-info>
 			<title>CS Input Portlet</title>
 			<short-title>CS Input Portlet</short-title>
-			<keywords>portlet,sample,input</keywords>
+			<keywords>Sample</keywords>
 		</portlet-info>
 		<security-role-ref>
 			<role-name>admin</role-name>
@@ -102,7 +102,7 @@
 		<portlet-info>
 			<title>Sample Virtual List Portlet</title>
 			<short-title>Sample Virtual List Portlet</short-title>
-			<keywords>portlet,sample,input</keywords>
+			<keywords>Sample</keywords>
 		</portlet-info>
 		<security-role-ref>
 			<role-name>admin</role-name>

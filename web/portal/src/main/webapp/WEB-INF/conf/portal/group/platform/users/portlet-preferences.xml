@@ -7,7 +7,7 @@
     <window-id>group#/platform/users:/web/IFramePortlet/blog</window-id>
     <preference>
         <name>url</name>
-        <value>http://blog.exoplatform.org</value>
+        <value>http://blog.gatein.org</value>
         <read-only>false</read-only>
       </preference>
 	</portlet-preferences>

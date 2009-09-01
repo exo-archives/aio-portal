@@ -250,7 +250,7 @@
 	          <description>eXoGadgets</description>
 	          <object type="org.exoplatform.application.registry.ApplicationCategory">
 	            <field name="name"><string>eXoGadgets</string></field>
-	            <field name="displayName"><string>eXoGadgets</string></field> 
+	            <field name="displayName"><string>eXoGadgets</string></field>
 	            <field name="description"><string>eXoGadgets</string></field>
               <field name="accessPermissions">
 				        <collection type="java.util.ArrayList" item-type="java.lang.String">													

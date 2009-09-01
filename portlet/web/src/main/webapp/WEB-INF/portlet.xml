@@ -31,7 +31,7 @@
     <portlet-info>
       <title>Banner Portlet</title>
       <short-title>Banner Portlet</short-title>
-      <keywords>banner</keywords>
+      <keywords>System</keywords>
     </portlet-info>    
     
     <portlet-preferences>
@@ -64,7 +64,7 @@
     <portlet-info>
       <title>Footer Portlet</title>
       <short-title>Footer Portlet</short-title>
-      <keywords>footer</keywords>
+      <keywords>System</keywords>
     </portlet-info>    
     
     <portlet-preferences>
@@ -102,7 +102,7 @@
     <portlet-info>
       <title>Breadcumbs Portlet</title>
       <short-title>Breadcumbs Portlet</short-title>
-      <keywords>Breadcumbs</keywords>
+      <keywords>System</keywords>
     </portlet-info>
   </portlet> 
   
@@ -127,7 +127,7 @@
     <portlet-info>
       <title>Navigation Portlet</title>
       <short-title>Navigation Portlet</short-title>
-      <keywords>Navigation</keywords>
+      <keywords>System</keywords>
     </portlet-info>
     <portlet-preferences>
       <preference>
@@ -164,7 +164,7 @@
     <portlet-info>
       <title>Portal Navigation Portlet</title>
       <short-title>Portal Navigation Portlet</short-title>
-      <keywords>Portal Navigation</keywords>
+      <keywords>System</keywords>
     </portlet-info>
     <portlet-preferences>
       <preference>
@@ -197,7 +197,7 @@
     <portlet-info>
       <title>Site map Portlet</title>
       <short-title>Site map Portlet</short-title>
-      <keywords>sitemap</keywords>
+      <keywords>Navigation</keywords>
     </portlet-info>     
     
     <portlet-preferences>
@@ -231,7 +231,7 @@
     <portlet-info>
       <title>Browser Portlet</title>
       <short-title>Browser Portlet</short-title>
-      <keywords>browser</keywords>
+      <keywords>Sample</keywords>
     </portlet-info>     
   </portlet>
    
@@ -257,7 +257,7 @@
     <portlet-info>
       <title>Console Portlet</title>
       <short-title>Console Portlet</short-title>
-      <keywords>console</keywords>
+      <keywords>Sample</keywords>
     </portlet-info>     
   </portlet>
     
@@ -280,22 +280,18 @@
     <supported-locale>en</supported-locale>
     <resource-bundle>locale.portlet.web.GroovyPortlet</resource-bundle>
     <portlet-info>
-      <title>Footer Portlet</title>
-      <short-title>Footer Portlet</short-title>
-      <keywords>footer</keywords>
+      <title>IFrame Portlet</title>
+      <short-title>IFrame Portlet</short-title>
+      <keywords>Integration</keywords>
     </portlet-info>    
     
     <portlet-preferences>
       <preference>
         <name>url</name>
-        <value>http://blog.exoplatform.org</value>
+        <value>http://blog.gatein.org</value>
         <read-only>false</read-only>
       </preference>
     </portlet-preferences>
-    
-    <!--supported-processing-event>
-      <name>MyEventPub</name>
-    </supported-processing-event-->
   </portlet>
   
   <portlet>
@@ -320,7 +316,7 @@
     <portlet-info>
       <title>HomePage Portlet</title>
       <short-title>HomePage Portlet</short-title>
-      <keywords>homepage</keywords>
+      <keywords>System</keywords>
     </portlet-info>     
 
     <portlet-preferences>
@@ -332,11 +328,5 @@
     </portlet-preferences>
     
   </portlet>
-
-  <!--event-definition>
-    <name>MyEventPub</name>
-    <value-type>org.exoplatform.services.portletcontainer.test.portlet2.MyEventPub</value-type>
-  </event-definition-->  
-  
 
 </portlet-app>

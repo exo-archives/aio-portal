@@ -23,7 +23,7 @@
     <portlet-info>
       <title>Organization Portlet</title>
       <short-title>Organization Portlet</short-title>
-      <keywords>Organization</keywords>
+      <keywords>Administration</keywords>
     </portlet-info>
     
     <security-role-ref>
@@ -55,7 +55,7 @@
     <portlet-info>
       <title>Account Portlet</title>
       <short-title>Account Portlet</short-title>
-      <keywords>Account</keywords>
+      <keywords>Administration</keywords>
     </portlet-info>
   </portlet>  
 
@@ -81,7 +81,7 @@
     <portlet-info>
       <title>Group Navigation Portlet</title>
       <short-title>Group Navigation Portlet</short-title>
-      <keywords>Group Navigation</keywords>
+      <keywords>Administration</keywords>
     </portlet-info>
   </portlet>
   
@@ -107,7 +107,7 @@
     <portlet-info>
       <title>Portal Navigation Portlet</title>
       <short-title>Portal Navigation Portlet</short-title>
-      <keywords>Portal Navigation</keywords>
+      <keywords>System</keywords>
     </portlet-info>
   </portlet>
   
@@ -133,7 +133,7 @@
     <portlet-info>
       <title>Page Management Portlet</title>
       <short-title>Page Management Portlet</short-title>
-      <keywords>Page Management</keywords>
+      <keywords>Administration</keywords>
     </portlet-info>
   </portlet>
   
@@ -158,7 +158,7 @@
     <portlet-info>
       <title>Internationalization Portlet</title>
       <short-title>Internationalization</short-title>
-      <keywords>portlet, registry</keywords>
+      <keywords>Administration</keywords>
     </portlet-info>
   </portlet>
   
@@ -184,7 +184,7 @@
     <portlet-info>
       <title>Application Registry Portlet</title>
       <short-title>Registry</short-title>
-      <keywords>application, registry</keywords>
+      <keywords>Administration</keywords>
     </portlet-info>
     
     <security-role-ref>
@@ -214,7 +214,7 @@
     <portlet-info>
       <title>Administration Toolbar Portlet</title>
       <short-title>Administration Toolbar</short-title>
-      <keywords>Toolbar</keywords>
+      <keywords>System</keywords>
     </portlet-info>
   </portlet>
 
@@ -239,7 +239,7 @@
     <portlet-info>
       <title>User Toolbar Portlet</title>
       <short-title>UserToolbar</short-title>
-      <keywords>toolbar</keywords>
+      <keywords>System</keywords>
     </portlet-info>
     
     <security-role-ref>
@@ -269,7 +269,7 @@
     <portlet-info>
       <title>Star Toolbar Portlet</title>
       <short-title>Star Toolbar</short-title>
-      <keywords>star,toolbar</keywords>
+      <keywords>System</keywords>
     </portlet-info>
   </portlet>   
      

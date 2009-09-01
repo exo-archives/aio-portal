@@ -21,7 +21,7 @@
 		<portlet-info>
 			<title>Dashboard Portlet</title>
 			<short-title>Dashboard Portlet</short-title>
-			<keywords>portlet,dashboard</keywords>
+			<keywords>Integration</keywords>
 		</portlet-info>
 		<portlet-preferences>
       <preference>
@@ -61,7 +61,7 @@
 		<portlet-info>
 			<title>Gadget Portlet</title>
 			<short-title>Gadget Portlet</short-title>
-			<keywords>portlet,gadget</keywords>
+			<keywords>Integration</keywords>
 		</portlet-info>
 		<security-role-ref>
 			<role-name>admin</role-name>
@@ -88,7 +88,7 @@
   	<portlet-info>
   		<title>Tabbed Dashboard Portlet</title>
   		<short-title>Tabbed Dashboard</short-title>
-  		<keywords>tabbedDashboard</keywords>
+  		<keywords>System</keywords>
   	</portlet-info>
   </portlet>
 	
