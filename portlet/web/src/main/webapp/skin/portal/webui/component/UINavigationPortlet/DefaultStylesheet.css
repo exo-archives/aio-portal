@@ -53,6 +53,11 @@
 	background-position: right; /* orientation=rt */
 }
 
+.UINavigationPortlet .UITab a.DefaultPageIcon {
+	background: none;
+	padding: 0px;
+}
+
 /*###########################--NavigationTabTab--############################*/
 
 .UINavigationPortlet .UITab .NormalNavigationTab {

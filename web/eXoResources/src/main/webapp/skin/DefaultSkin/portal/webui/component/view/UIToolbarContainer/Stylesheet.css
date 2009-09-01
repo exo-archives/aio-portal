@@ -40,12 +40,13 @@
 
 .UIToolbarContainer .ToolbarContainer a {
 	display: block;
-	padding-left: 35px; /* orientation=lt */
-	padding-right: 35px; /* orientation=rt */
+	padding: 0px 5px 0px 35px; /* orientation=lt */
+	padding: 0px 35px 0px 5px; /* orientation=rt */
 	white-space: nowrap;
+	color: #3e3e3e;
 }
 
-.UIToolbarContainer .ToolbarContainer .UIHorizontalTabs .UITab a:hover {
+.UIToolbarContainer .UITab a:hover {
 	color: #058ee6;
 }
 
@@ -55,42 +56,17 @@
 	float: right; /* orientation=rt */
 }
 
-.UIToolbarContainer .ToolbarContainer .UIHorizontalTabs .UITab a {
-	color: #3e3e3e;
-}
 
 .UIToolbarContainer .UIHorizontalTabs .UITab {
 	line-height: 30px;	
 	float: left; /* orientation=lt */
 	float: right; /* orientation=rt */
 	background: url('background/ToolbarContainer.gif') no-repeat right -32px; /* orientation=lt */
-	background: url('background/ToolbarContainer.gif') no-repeat left -32px; /* orientation=rt */
+	background: url('background/ToolbarContainer-rt.gif') no-repeat left -32px; /* orientation=rt */
 	padding-right: 2px; /* orientation=lt */
 	padding-left: 2px; /* orientation=rt */
 	text-align: left; /* orientation=lt */
 	text-align: right; /* orientation=rt */
-}
-
-.UIToolbarContainer .TBItemHover {
-	line-height: 30px;	
-	float: left; /* orientation=lt */
-	float: right; /* orientation=rt */
-	background: #a4a4a4 url('icons/IconToolBar.gif') no-repeat right -320px;
-	padding-right: 2px;
-}
-
-.UIToolbarContainer .TBItemHover a.TBIcon {
-	color: white;
-}
-
-.UIToolbarContainer .TBExoLogo {
-	background: none;
-}
-
-.UIToolbarContainer .TBIcon {
-	padding: 0px 13px 0px 35px; /* orientation=lt */
-	padding: 0px 35px 0px 13px; /* orientation=rt */
-	line-height: 30px;	
 }
 
 /****************************/
@@ -126,10 +102,8 @@
 }
 
 .UIToolbarContainer .MenuItem .ArrowIcon {
-	background-image: url('icons/IconToolBar.gif');
-	background-position: right -290px; /* orientation=lt */
-	background-position: left -290px; /* orientation=rt */
-	background-repeat: no-repeat;
+	background: url('background/ToolbarContainer.gif') no-repeat right bottom; /* orientation=lt */
+	background: url('background/ToolbarContainer-rt.gif') no-repeat left bottom; /* orientation=rt */
 }
 
 .UIToolbarContainer .MenuItem a {	
