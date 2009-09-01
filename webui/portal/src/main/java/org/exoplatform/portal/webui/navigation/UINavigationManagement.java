@@ -134,7 +134,7 @@ public class UINavigationManagement extends UIContainer {
       uiNodeForm.setOwnerType(uiManagement.getOwnerType());
       
       uiManagementPopup.setWindowSize(800, 500);
-      event.getRequestContext().addUIComponentToUpdateByAjax(uiManagementPopup);      
+      event.getRequestContext().addUIComponentToUpdateByAjax(uiManagementPopup.getParent());      
     }
     
   }
