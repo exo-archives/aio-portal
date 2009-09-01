@@ -272,6 +272,8 @@ public class UIPortalComposer extends UIContainer {
 					uiPortal,PageNodeEvent.CHANGE_PAGE_NODE, uri) ;
 			uiPortal.broadcast(pnevent, Event.Phase.PROCESS) ;
 			prContext.addUIComponentToUpdateByAjax(uiWorkingWS);
+			JavascriptManager jsManager = prContext.getJavascriptManager();
+			jsManager.addJavascript("eXo.portal.portalMode=" + UIPortalApplication.NORMAL_MODE + ";");
 		}
 
 	}
@@ -310,6 +312,8 @@ public class UIPortalComposer extends UIContainer {
 			PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal,PageNodeEvent.CHANGE_PAGE_NODE, uri);
 			uiPortal.broadcast(pnevent, Event.Phase.PROCESS);
 			prContext.addUIComponentToUpdateByAjax(uiWorkingWS);
+			JavascriptManager jsManager = prContext.getJavascriptManager();
+			jsManager.addJavascript("eXo.portal.portalMode=" + UIPortalApplication.NORMAL_MODE + ";");
 		}
 
 	}
