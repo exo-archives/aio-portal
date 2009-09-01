@@ -43,23 +43,15 @@
 .UIHomePagePortlet .TRContainer .VersionIcon {
 	background: url("DefaultSkin/background/HomePagePortlet.gif") no-repeat left -978px;
 	height: 65px;
-	width: 50px;
+	width: 80px;
 	margin: 20px auto;
-	cursor: pointer;
-}
-
-.UIHomePagePortlet .TRContainer .DownloadIcon {
-	background: url("DefaultSkin/background/HomePagePortlet.gif") no-repeat left -1098px;
-	height: 65px;
-	width: 65px;
-	margin: 8px auto;
 	cursor: pointer;
 }
 
 .UIHomePagePortlet .TRContainer .ContactIcon {
 	background: url("DefaultSkin/background/HomePagePortlet.gif") no-repeat left -1209px;
 	height: 70px;
-	width: 50px;
+	width: 80px;
 	margin: 20px auto;
 	cursor: pointer;
 }

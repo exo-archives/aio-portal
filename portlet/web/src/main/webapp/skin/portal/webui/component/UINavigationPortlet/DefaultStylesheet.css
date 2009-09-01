@@ -106,13 +106,13 @@
 }
 
 .UINavigationPortlet .UITab .HighlightNavigationTab .LeftTab {
-	line-height: 21px; 
+	line-height: 26px; 
 	padding-left: 3px;
 	background: url('DefaultSkin/background/NavigationTab.gif') no-repeat left -108px;
 }
 
 .UINavigationPortlet .UITab .HighlightNavigationTab .RightTab {
-	line-height: 21px; 
+	line-height: 26px; 
 	padding-right: 3px;
 	background: url('DefaultSkin/background/NavigationTab.gif') no-repeat right -130px;
 }
@@ -122,6 +122,7 @@
 	text-align: center;
 	padding: 0px 4px 0px 4px;
 	background: #6d94c8;
+	margin-bottom: 4px;
 }
 
 .UINavigationPortlet .UITab .HighlightNavigationTab .TabIcon {
@@ -150,19 +151,17 @@
 
 .UINavigationPortlet .UITab .SelectedNavigationTab .LeftTab {
 	line-height: 21px; 
-	background: url('DefaultSkin/background/NavigationTab.gif') no-repeat left -28px;
 	padding-left: 3px;
 }
 
 .UINavigationPortlet .UITab .SelectedNavigationTab .RightTab {
 	line-height: 21px; 
-	background: url('DefaultSkin/background/NavigationTab.gif') no-repeat right -55px;
 	padding-right: 3px;
 }
 
 .UINavigationPortlet .UITab .SelectedNavigationTab .MiddleTab {
 	line-height: 21px;
-	background: url('DefaultSkin/background/NavigationTab.gif') repeat-x;
+	background: red;
 	text-align: center;
 	padding: 0px 4px 0px 4px;
 }

@@ -3,7 +3,7 @@
 }	
 
 .UIBannerPortlet {
-	overflow: auto;	
+	zoom: 100%;
 }
 
 .UIBannerPortlet .LeftBanner {
