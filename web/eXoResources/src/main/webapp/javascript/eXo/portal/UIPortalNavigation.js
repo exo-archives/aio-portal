@@ -128,7 +128,10 @@ UIPortalNavigation.prototype.setTabStyleOnMouseOver = function(e) {
 		    	var uicomponents = DOMUtil.getChildrenByTagName(pageBody.parentNode, "div") ;
 		    	for(var i = 0; i < uicomponents.length; i ++) {
 		      	var navPortlet = DOMUtil.findFirstDescendantByClass(uicomponents[i], "div", "UINavigationPortlet") ;
-		      	if(navPortlet && (navAncestor != navPortlet)) navPortlet.style.position = "static" ;
+		      	if(navPortlet && (navAncestor != navPortlet)) {
+		      		var tabsContainer = DOMUtil.findFirstDescendantByClass(navPortlet, "div", "TabsContainer");
+		      		tabsContainer.style.position = "static" ;
+		      	}
 		    	}	
 		    } 
 		  }
@@ -280,7 +283,10 @@ UIPortalNavigation.prototype.hideMenu = function() {
     var uicomponents = DOMUtil.getChildrenByTagName(pageBody.parentNode, "div") ;
     for(var i = 0; i < uicomponents.length; i ++) {
       var navPortlet = DOMUtil.findFirstDescendantByClass(uicomponents[i], "div", "UINavigationPortlet") ;
-      if(navPortlet) navPortlet.style.position = "relative" ;
+      if(navPortlet) {
+      	var tabsContainer = DOMUtil.findFirstDescendantByClass(navPortlet, "div", "TabsContainer");
+      	tabsContainer.style.position = "relative" ;
+      }
     }
   }
 };
