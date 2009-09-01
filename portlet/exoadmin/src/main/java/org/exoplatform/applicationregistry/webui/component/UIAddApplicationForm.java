@@ -21,6 +21,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import org.exoplatform.application.gadget.Gadget;
 import org.exoplatform.application.gadget.GadgetRegistryService;
@@ -138,6 +140,9 @@ public class UIAddApplicationForm extends UIForm {
     uiIterator.setPageList(pageList) ;    
   }
   
+  /** . */
+  private static final Pattern PATTERN = Pattern.compile("^local\\.\\/([^\\.]+)\\.(.+)$");
+
   private List<Application> getApplcationByType(String type) throws Exception {
     List<Application> list = new ArrayList<Application>(10) ;
     if(org.exoplatform.web.application.Application.EXO_PORTLET_TYPE.equals(type)) {
@@ -150,23 +155,24 @@ public class UIAddApplicationForm extends UIForm {
       {
     	  Portlet portlet = iterator.next();
     	  String portletID = portlet.getContext().getId();
-    	  String categoryName = portletID.split("/")[0];
-    	  String portletName = portletID.split("/")[1];
-    	  
-    	  LocalizedString descriptionLS = portlet.getInfo().getMeta().getMetaValue(MetaInfo.DESCRIPTION);
-          LocalizedString displayNameLS = portlet.getInfo().getMeta().getMetaValue(MetaInfo.DISPLAY_NAME);
-          
-    	  Application app = new Application();
-          app.setApplicationName(portletName);
-          app.setApplicationGroup(categoryName);
-          app.setApplicationType(org.exoplatform.web.application.Application.EXO_PORTLET_TYPE);
-          app.setDisplayName(Util.getLocalizedStringValue(displayNameLS, portletName));
-          app.setDescription(Util.getLocalizedStringValue(descriptionLS, portletName));
-          app.setAccessPermissions(new ArrayList<String>());
-          list.add(app) ;
-      }
-      
+        Matcher matcher = PATTERN.matcher(portletID);
+        if (matcher.matches()) {
+          String portletApplicationName = matcher.group(1);
+          String portletName = matcher.group(2);
 
+          LocalizedString descriptionLS = portlet.getInfo().getMeta().getMetaValue(MetaInfo.DESCRIPTION);
+          LocalizedString displayNameLS = portlet.getInfo().getMeta().getMetaValue(MetaInfo.DISPLAY_NAME);
+
+          Application app = new Application();
+            app.setApplicationName(portletName);
+            app.setApplicationGroup(portletApplicationName);
+            app.setApplicationType(org.exoplatform.web.application.Application.EXO_PORTLET_TYPE);
+            app.setDisplayName(Util.getLocalizedStringValue(displayNameLS, portletName));
+            app.setDescription(Util.getLocalizedStringValue(descriptionLS, portletName));
+            app.setAccessPermissions(new ArrayList<String>());
+            list.add(app) ;
+        }
+      }
     } else if(org.exoplatform.web.application.Application.EXO_GAGGET_TYPE.equals(type)) {
       GadgetRegistryService gadgetService = getApplicationComponent(GadgetRegistryService.class) ;
       Iterator<Gadget> iterator = gadgetService.getAllGadgets().iterator() ;
