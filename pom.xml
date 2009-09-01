@@ -63,9 +63,9 @@
   </properties>
 
   <scm>
-    <connection>scm:svn:http://svn.exoplatform.org/projects/portal/trunk</connection>
-    <developerConnection>scm:svn:http://svn.exoplatform.org/projects/portal/trunk</developerConnection>
-    <url>http://fisheye.exoplatform.org/browse/projects/portal/trunk</url>
+    <connection>scm:svn:http://svn.exoplatform.org/projects/portal/branches/integration</connection>
+    <developerConnection>scm:svn:http://svn.exoplatform.org/projects/portal/branches/integration</developerConnection>
+    <url>http://fisheye.exoplatform.org/browse/projects/portal/branches/integration</url>
   </scm> 
 
   <modules>
