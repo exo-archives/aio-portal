@@ -171,6 +171,7 @@
                 <exo.packaging.target>tomcat</exo.packaging.target>          
           </properties>
           <build>
+          <finalName>GateIn-${project.version}-${exo.packaging.target}</finalName>
           <plugins>
             <!-- run exo buils -->
             <plugin> 
@@ -188,7 +189,7 @@
                             <argument>-Dexo.current.dir=${basedir}</argument>
                             <argument>-Dexo.base.dir=${exo.projects.directory.base}</argument>
                             <argument>-Dexo.conf.dir=${basedir}/target/exopackage-conf</argument>
-                            <argument>-Dexo.working.dir=${basedir}/target/working</argument>
+                            <argument>-Dexo.working.dir=${basedir}/target</argument>
                             <!--argument>-Dexo.src.dir=NONE</argument-->
                             <argument>-Dexo.dep.dir=${exo.projects.directory.dependencies}</argument><!-- to get the server ref install -->
                             <argument>-Dexo.m2.repos=file:${settings.localRepository},http://maven2.exoplatform.org/rest/maven2,http://repository.jboss.org/maven2</argument>
@@ -211,9 +212,22 @@
                      </executions>
                      <dependencies /> 
               </plugin>
+                <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals><goal>assembly</goal></goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <descriptors><descriptor>src/assemble/${exo.packaging.target}-zip.xml</descriptor></descriptors>
+                    </configuration>
+                </plugin>
             </plugins>
           </build>
         </profile>
+
         <profile>
           <id>jboss</id>
           <properties>
@@ -221,6 +235,7 @@
                 <exo.packaging.target>jbossear</exo.packaging.target>          
           </properties>
           <build>
+          <finalName>GateIn-${project.version}-${exo.packaging.target}</finalName>
           <plugins>
             <!-- run exo buils -->
             <plugin> 
@@ -238,7 +253,7 @@
                             <argument>-Dexo.current.dir=${basedir}</argument>
                             <argument>-Dexo.base.dir=${exo.projects.directory.base}</argument>
                             <argument>-Dexo.conf.dir=${basedir}/target/exopackage-conf</argument>
-                            <argument>-Dexo.working.dir=${basedir}/target/working</argument>
+                            <argument>-Dexo.working.dir=${basedir}/target</argument>
                             <!--argument>-Dexo.src.dir=NONE</argument-->
                             <argument>-Dexo.dep.dir=${exo.projects.directory.dependencies}</argument><!-- to get the server ref install -->
                             <argument>-Dexo.m2.repos=file:${settings.localRepository},http://maven2.exoplatform.org/rest/maven2,http://repository.jboss.org/maven2</argument>
@@ -261,6 +276,18 @@
                      </executions>
                      <dependencies /> 
               </plugin>
+                <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals><goal>assembly</goal></goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <descriptors><descriptor>src/assemble/${exo.packaging.target}-zip.xml</descriptor></descriptors>
+                    </configuration>
+                </plugin>
             </plugins>
           </build>
         </profile>

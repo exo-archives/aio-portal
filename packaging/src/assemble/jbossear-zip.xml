@@ -1,0 +1,13 @@
+<assembly>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+	 <fileSet>
+	  <directory>target/jboss</directory>
+	  <outputDirectory></outputDirectory>
+	  <useDefaultExcludes>true</useDefaultExcludes>
+	 </fileSet>
+	</fileSets>
+</assembly>
