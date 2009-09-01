@@ -415,6 +415,8 @@ public class UIPortalComposer extends UIContainer {
 					(uiPortal.getSelectedNode() != null ? uiPortal.getSelectedNode()
 							.getUri() : null));
 			uiPortal.broadcast(pnevent, Event.Phase.PROCESS);
+			JavascriptManager jsManager = event.getRequestContext().getJavascriptManager();
+			jsManager.addJavascript("eXo.portal.portalMode=" + UIPortalApplication.NORMAL_MODE + ";");
 		}
 	}
 
