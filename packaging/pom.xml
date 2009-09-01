@@ -217,7 +217,7 @@
                     <executions>
                         <execution>
                             <phase>package</phase>
-                            <goals><goal>assembly</goal></goals>
+                            <goals><goal>single</goal></goals>
                         </execution>
                     </executions>
                     <configuration>
@@ -281,7 +281,7 @@
                     <executions>
                         <execution>
                             <phase>package</phase>
-                            <goals><goal>assembly</goal></goals>
+                            <goals><goal>single</goal></goals>
                         </execution>
                     </executions>
                     <configuration>
