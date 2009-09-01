@@ -73,7 +73,7 @@ public class UIGroupNavigationManagement extends UIContainer {
   private PageNavigation       selectedNavigation;
 
   public UIGroupNavigationManagement() throws Exception {
-    UIVirtualList virtualList = addChild(UIVirtualList.class, null, null);
+    UIVirtualList virtualList = addChild(UIVirtualList.class, null, "GroupNavigationList");
     virtualList.setPageSize(4);
     UIRepeater repeater = createUIComponent(UIRepeater.class, "UIGroupNavigationGrid", null);
     virtualList.setUIComponent(repeater);
@@ -308,7 +308,9 @@ public class UIGroupNavigationManagement extends UIContainer {
       selector.initNavigations(navis);
       uiNavigationPopup.setUIComponent(pageManager);
       uiNavigationPopup.setWindowSize(400, 400);
-      event.getRequestContext().addUIComponentToUpdateByAjax(uiNavigationPopup);
+      uiNavigationPopup.setRendered(true);
+      
+      event.getRequestContext().addUIComponentToUpdateByAjax(uiNavigationPopup.getParent());      
     }
 
   }

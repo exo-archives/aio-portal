@@ -48,9 +48,6 @@ public class UIVirtualList extends UIComponentDecorator {
     UIDataFeed dataFeed = this.getDataFeed();
     datasource.setPageSize(this.getPageSize());
     dataFeed.setDataSource(datasource);
-
-    this.setId(new Double(Math.random()).toString() + "_"
-        + Calendar.getInstance().getTimeInMillis());
   }
 
   public UIDataFeed getDataFeed() {
