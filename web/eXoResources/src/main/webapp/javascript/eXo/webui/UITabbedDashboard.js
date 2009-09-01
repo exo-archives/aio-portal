@@ -52,13 +52,12 @@ eXo.webui.UITabbedDashboard = {
 		inputElement.type = "text";
 		inputElement.id = nodeIndex;
 		inputElement.name = currentContent; // To store old value
-		inputElement.focus();
-		inputElement.select();
 		inputElement.value = currentContent;
 		inputElement.style.border = "1px solid #b7b7b7";
 		inputElement.style.width = "95px";
 		inputElement.onkeypress = eXo.webui.UITabbedDashboard.renameTabLabel;
 		selectedElement.parentNode.replaceChild(inputElement, selectedElement);
+		inputElement.focus();
 	},
 	
 	createDashboardPage : function(e){
@@ -83,13 +82,23 @@ eXo.webui.UITabbedDashboard = {
 		}
 		//If user presses on ESCAPE button
 		else if(keyNum == 27){
-			var DOMUtil = eXo.core.DOMUtil;
 			var inputElement = eXo.core.Browser.getEventSource(e);
-			var editingTabElement = DOMUtil.findAncestorByClass(inputElement, "UITab GrayTabStyle");
+			var editingTabElement = eXo.core.DOMUtil.findAncestorByClass(inputElement, "UITab GrayTabStyle");
 			
 			//Remove the editing tab
 			editingTabElement.parentNode.removeChild(editingTabElement);
 		}
+	},
+	
+	cancelTabDashboard : function(e){
+		if(!e){
+			e = window.event;
+		}
+		var inputElement = eXo.core.Browser.getEventSource(e);
+		var editingTabElement = eXo.core.DOMUtil.findAncestorByClass(inputElement, "UITab GrayTabStyle");
+		
+		//Remove the editing tab
+		editingTabElement.parentNode.removeChild(editingTabElement);
 	},
 	
 	createTabDashboard : function(addTabElement){
@@ -106,16 +115,17 @@ eXo.webui.UITabbedDashboard = {
 		
 		var inputElement = document.createElement("input");
 		inputElement.type = "text";
-		inputElement.focus();
-		inputElement.select();
 		inputElement.value = "Tab_" + tabElements.length;
 		inputElement.style.border = "1px solid #b7b7b7";
 		inputElement.style.width = "95px";
 		inputElement.onkeypress = eXo.webui.UITabbedDashboard.createDashboardPage;
+		inputElement.onblur = eXo.webui.UITabbedDashboard.cancelTabDashboard;
 		inputElement.id = portletFrag.parentNode.id; //Store the id of the portlet here
 		
 		var spanElement = DOMUtil.findDescendantsByTagName(newTabElement, "span")[0];
 		spanElement.parentNode.replaceChild(inputElement, spanElement);
-				
+		
+		DOMUtil.findNextElementByTagName(inputElement, "a").href = "#";
+		inputElement.focus();		
 	}
 }
