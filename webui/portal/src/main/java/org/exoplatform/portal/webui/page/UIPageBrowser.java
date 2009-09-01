@@ -69,8 +69,9 @@ import org.exoplatform.webui.form.UISearchForm;
     @ComponentConfig(template = "system:/groovy/portal/webui/page/UIPageBrowser.gtmpl", events = {
         @EventConfig(listeners = UIPageBrowser.DeleteActionListener.class, confirm = "UIPageBrowse.deletePage"),
         @EventConfig(listeners = UIPageBrowser.EditInfoActionListener.class),
-        @EventConfig(listeners = UIPageBrowser.AddNewActionListener.class),
-        @EventConfig(listeners = UIPageBrowser.BackActionListener.class)}),
+        @EventConfig(listeners = UIPageBrowser.AddNewActionListener.class)
+//        @EventConfig(listeners = UIPageBrowser.BackActionListener.class)
+        }),
     @ComponentConfig(id = "UIBrowserPageForm", type = UIPageForm.class, lifecycle = UIFormLifecycle.class, template = "system:/groovy/webui/form/UIFormTabPane.gtmpl", events = {
         @EventConfig(listeners = UIPageBrowser.SavePageActionListener.class, name = "Save"),
         @EventConfig(listeners = UIPageForm.ChangeOwnerTypeActionListener.class, phase = Phase.DECODE),
@@ -328,21 +329,22 @@ public class UIPageBrowser extends UISearch {
     }
   }
 
-  static public class BackActionListener extends EventListener<UIPageBrowser> {
-
-    public void execute(Event<UIPageBrowser> event) throws Exception {
-      UIPortalApplication uiPortalApp = Util.getUIPortalApplication();
-      uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
-      UIPortal uiPortal = Util.getUIPortal();
-      String uri = uiPortal.getSelectedNavigation().getId() + "::"
-          + uiPortal.getSelectedNode().getUri();
-      PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal,
-                                                                    PageNodeEvent.CHANGE_PAGE_NODE,
-                                                                    uri);
-      uiPortal.broadcast(pnevent, Event.Phase.PROCESS);
-    }
-
-  }
+//  TODO: Tan Pham Dinh: No need back action in portal 2.6
+//  static public class BackActionListener extends EventListener<UIPageBrowser> {
+//
+//    public void execute(Event<UIPageBrowser> event) throws Exception {
+//      UIPortalApplication uiPortalApp = Util.getUIPortalApplication();
+//      uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
+//      UIPortal uiPortal = Util.getUIPortal();
+//      String uri = uiPortal.getSelectedNavigation().getId() + "::"
+//          + uiPortal.getSelectedNode().getUri();
+//      PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal,
+//                                                                    PageNodeEvent.CHANGE_PAGE_NODE,
+//                                                                    uri);
+//      uiPortal.broadcast(pnevent, Event.Phase.PROCESS);
+//    }
+//
+//  }
 
   static public class SavePageActionListener extends UIPageForm.SaveActionListener {
     public void execute(Event<UIPageForm> event) throws Exception {

@@ -262,7 +262,7 @@ eXo.webui.UIDashboard = {
 		for(var i=0; i<columns.length; i++) {
 			if(columns[i].style.display != "none") colsSize++;
 		}
-		if(colsSize*320 + 20> uiContainer.offsetWidth)	colsContainer.style.width = colsSize*320 + 20 + "px";
+		if(colsSize*320 + 20> uiContainer.offsetWidth)	colsContainer.style.width = colsSize*320 + "px";
 		else colsContainer.style.width = "100%" ;
 
 		eXo.webui.UIDashboard.initHeight(windowId) ;

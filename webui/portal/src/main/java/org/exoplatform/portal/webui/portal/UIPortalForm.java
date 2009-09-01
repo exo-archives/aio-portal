@@ -35,6 +35,7 @@ import org.exoplatform.portal.skin.SkinService;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
+import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
 import org.exoplatform.services.organization.Group;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.resources.LocaleConfig;
@@ -252,8 +253,9 @@ public class UIPortalForm extends UIFormTabPane {
       uiMaskWS.setUIComponent(null);
       pcontext.addUIComponentToUpdateByAjax(uiMaskWS) ;      
       
-      UIPortal uiPortal = uiPortalApp.findFirstComponentOfType(UIPortal.class);
-      uiPortal.updatePortletsByName("PortalNavigationPortlet");
+      UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChild(UIWorkingWorkspace.class);
+      uiWorkingWS.updatePortletsByName("PortalNavigationPortlet");
+      uiWorkingWS.updatePortletsByName("UserToolbarPortlet");
     }
   }
   
