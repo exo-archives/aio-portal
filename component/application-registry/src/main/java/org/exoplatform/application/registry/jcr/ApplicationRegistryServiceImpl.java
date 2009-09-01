@@ -11,11 +11,14 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.Session;
+import javax.jcr.RepositoryException;
 import javax.jcr.query.Query;
 import javax.jcr.query.QueryManager;
 import javax.jcr.query.QueryResult;
@@ -42,6 +45,7 @@ import org.gatein.common.i18n.LocalizedString;
 import org.gatein.pc.api.Portlet;
 import org.gatein.pc.api.PortletInvoker;
 import org.gatein.pc.api.info.MetaInfo;
+import org.gatein.pc.api.info.PortletInfo;
 import org.picocontainer.Startable;
 
 /**
@@ -133,13 +137,15 @@ public class ApplicationRegistryServiceImpl implements ApplicationRegistryServic
     RegistryEntry entry ;
     try {
       entry = regService_.getEntry(sessionProvider, categoryDataPath) ;
-    } catch (PathNotFoundException ie) {
-      sessionProvider.close() ;
+    } catch (PathNotFoundException e) {
       return null ;
+    } catch (RepositoryException ie) {
+      log.error("Could not create application category '" + name + "' with path '" + categoryDataPath + "'", ie);
+      throw ie;
+    } finally {
+      sessionProvider.close() ;
     }
-    ApplicationCategory category = mapper_.toApplicationCategory(entry.getDocument()) ;
-    sessionProvider.close() ;
-    return category ;
+    return mapper_.toApplicationCategory(entry.getDocument()) ;
   }
   
   public void save(ApplicationCategory category) throws Exception {
@@ -285,6 +291,9 @@ public class ApplicationRegistryServiceImpl implements ApplicationRegistryServic
     }
   }
 
+  /** . */
+  private static final Pattern PATTERN = Pattern.compile("^local\\.\\/([^\\.]+)\\.(.+)$");
+
   public void importAllPortlets() throws Exception {
 	
     ExoContainer manager  = ExoContainerContext.getCurrentContainer();
@@ -297,38 +306,55 @@ public class ApplicationRegistryServiceImpl implements ApplicationRegistryServic
     {
     	Portlet portlet = iterator.next();
     	String portletID = portlet.getContext().getId();
-    	String categoryName = portletID.split("/")[0];
-    	String portletName = portletID.split("/")[1];
-    	      
-      ApplicationCategory category = null;
+      Matcher matcher = PATTERN.matcher(portletID);
+      if (matcher.matches()) {
+        String portletApplicationName = matcher.group(1);
+        String portletName = matcher.group(2);
+        PortletInfo info = portlet.getInfo();
+        LocalizedString keywordsLS = info.getMeta().getMetaValue(MetaInfo.KEYWORDS);
+        String[] categoryNames = keywordsLS.getDefaultString().split(",");
+        if (categoryNames.length == 0) {
+          categoryNames = new String[]{portletApplicationName};
+        }
 
-      category = getApplicationCategory(categoryName);
-      if(category == null) {
-        category = new ApplicationCategory();
-        category.setName(categoryName);
-        category.setDisplayName(categoryName);
-        save(category);
+        //
+        for (int i = 0;i < categoryNames.length;i++) {
+          categoryNames[i] = categoryNames[i].trim();
+        }
+
+        //
+        for (String categoryName : categoryNames) {
+          ApplicationCategory category;
+
+          category = getApplicationCategory(categoryName);
+          if(category == null) {
+            category = new ApplicationCategory();
+            category.setName(categoryName);
+            category.setDisplayName(categoryName);
+            save(category);
+          }
+
+          Application app = getApplication(categoryName + "/" + portletName) ;
+          if(app != null) continue;
+          LocalizedString descriptionLS = portlet.getInfo().getMeta().getMetaValue(MetaInfo.DESCRIPTION);
+          LocalizedString displayNameLS = portlet.getInfo().getMeta().getMetaValue(MetaInfo.DISPLAY_NAME);
+
+          getLocalizedStringValue(descriptionLS, portletName);
+
+          app = new Application();
+          app.setApplicationName(portletName);
+          app.setApplicationGroup(portletApplicationName);
+          app.setCategoryName(categoryName);
+          app.setApplicationType(org.exoplatform.web.application.Application.EXO_PORTLET_TYPE);
+          app.setDisplayName(getLocalizedStringValue(displayNameLS, portletName));
+          app.setDescription(getLocalizedStringValue(descriptionLS, portletName));
+          save(category, app);
+        }
       }
-
-      Application app = getApplication(categoryName + "/" + portletName) ;
-      if(app != null) continue; 
-      LocalizedString descriptionLS = portlet.getInfo().getMeta().getMetaValue(MetaInfo.DESCRIPTION);
-      LocalizedString displayNameLS = portlet.getInfo().getMeta().getMetaValue(MetaInfo.DISPLAY_NAME);
-      
-      getLocalizedStringValue(descriptionLS, portletName);
-      
-      app = new Application();
-      app.setApplicationName(portletName);
-      app.setApplicationGroup(categoryName);
-      app.setCategoryName(categoryName);
-      app.setApplicationType(org.exoplatform.web.application.Application.EXO_PORTLET_TYPE);
-      app.setDisplayName(getLocalizedStringValue(displayNameLS, portletName));
-      app.setDescription(getLocalizedStringValue(descriptionLS, portletName));
-      save(category, app);
     }
   }
 
-public void remove(Application app) throws Exception {
+  public void remove(Application app) throws Exception {
     String applicationPath = getCategoryPath(app.getCategoryName())
                              + "/" + APPLICATIONS + "/" + app.getApplicationName() ;
     SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
