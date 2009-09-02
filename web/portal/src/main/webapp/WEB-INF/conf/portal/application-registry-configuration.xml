@@ -247,11 +247,11 @@
 	        
 	        <object-param>
 	          <name>eXoGadgets</name>
-	          <description>eXoGadgets</description>
+	          <description>Gadgets</description>
 	          <object type="org.exoplatform.application.registry.ApplicationCategory">
 	            <field name="name"><string>eXoGadgets</string></field>
-	            <field name="displayName"><string>eXoGadgets</string></field>
-	            <field name="description"><string>eXoGadgets</string></field>
+	            <field name="displayName"><string>Gadgets</string></field>
+	            <field name="description"><string>Gadgets</string></field>
               <field name="accessPermissions">
 				        <collection type="java.util.ArrayList" item-type="java.lang.String">													
 									<value><string>*:/platform/users</string></value>													
