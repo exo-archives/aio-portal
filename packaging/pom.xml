@@ -16,7 +16,7 @@
          <groupId>org.exoplatform.tool</groupId>
          <artifactId>exopackage</artifactId>
          <type>zip</type>
-         <version>1.0.2</version>
+         <version>1.0.3-SNAPSHOT</version>
       </dependency>
 
       <dependency>
@@ -103,7 +103,6 @@
          <groupId>org.exoplatform.tool</groupId>
          <artifactId>exo.tool.webunit</artifactId>
          <version>1.0.0</version>
-         <!-- TODO with SWF-218 <version>1.0.0</version> -->
       </dependency>
 
       <!-- Tomcat.js -->
