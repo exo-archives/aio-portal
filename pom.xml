@@ -375,7 +375,7 @@
         <org.gatein.wci.version>2.0.0-Beta01</org.gatein.wci.version>
         <org.gatein.pc.version>2.1.0-Beta01</org.gatein.pc.version>
         <org.gatein.mop.version>1.0.0-Beta03</org.gatein.mop.version>
-        <org.jboss.identity.idm>1.0.0-SNAPSHOT</org.jboss.identity.idm>
+        <org.jboss.identity.idm>1.0.0.Beta2</org.jboss.identity.idm>
       </properties>
     </profile>
   </profiles>

@@ -16,7 +16,7 @@
          <groupId>org.exoplatform.tool</groupId>
          <artifactId>exopackage</artifactId>
          <type>zip</type>
-         <version>1.0.3-SNAPSHOT</version>
+         <version>1.0.3</version>
       </dependency>
 
       <dependency>

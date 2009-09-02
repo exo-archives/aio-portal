@@ -75,12 +75,12 @@ function getModule(params) {
 
   module.component.identity =
 	new Project("org.exoplatform.portal", "exo.portal.component.identity", "jar", module.version).
-   addDependency(new Project("org.jboss.identity.idm", "idm-core", "jar", "1.0.0-SNAPSHOT")).
-   addDependency(new Project("org.jboss.identity.idm", "idm-common", "jar", "1.0.0-SNAPSHOT")).
-   addDependency(new Project("org.jboss.identity.idm", "idm-api", "jar", "1.0.0-SNAPSHOT")).
-   addDependency(new Project("org.jboss.identity.idm", "idm-spi", "jar", "1.0.0-SNAPSHOT")).
-   addDependency(new Project("org.jboss.identity.idm", "idm-hibernate", "jar", "1.0.0-SNAPSHOT")).
-   addDependency(new Project("org.jboss.identity.idm", "idm-ldap", "jar", "1.0.0-SNAPSHOT"));
+   addDependency(new Project("org.jboss.identity.idm", "idm-core", "jar", "1.0.0.Beta2")).
+   addDependency(new Project("org.jboss.identity.idm", "idm-common", "jar", "1.0.0.Beta2")).
+   addDependency(new Project("org.jboss.identity.idm", "idm-api", "jar", "1.0.0.Beta2")).
+   addDependency(new Project("org.jboss.identity.idm", "idm-spi", "jar", "1.0.0.Beta2")).
+   addDependency(new Project("org.jboss.identity.idm", "idm-hibernate", "jar", "1.0.0.Beta2")).
+   addDependency(new Project("org.jboss.identity.idm", "idm-ldap", "jar", "1.0.0.Beta2"));
 
   module.component.applicationRegistry  =
     new Project("org.exoplatform.portal", "exo.portal.component.application-registry", "jar", module.version).
