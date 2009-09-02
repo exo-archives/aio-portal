@@ -43,6 +43,7 @@ import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
+import org.exoplatform.portal.pc.ExoPortletState;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.core.UIComponent;
@@ -51,6 +52,8 @@ import org.exoplatform.webui.event.EventListener;
 import org.exoplatform.webui.event.Event.Phase;
 import org.gatein.pc.api.PortletInvoker;
 import org.gatein.pc.api.StateString;
+import org.gatein.pc.api.PortletContext;
+import org.gatein.pc.api.StatefulPortletContext;
 import org.gatein.pc.api.invocation.ActionInvocation;
 import org.gatein.pc.api.invocation.EventInvocation;
 import org.gatein.pc.api.invocation.ResourceInvocation;
@@ -92,16 +95,17 @@ public class UIPortletActionListener {
       PortletInvoker portletInvoker = uiPortlet.getApplicationComponent(PortletInvoker.class);
       PortletInvocationResponse portletResponse = portletInvoker.invoke(actionInvocation);
       
+      //
+      ExoPortletInstanceContext instanceCtx = (ExoPortletInstanceContext)actionInvocation.getInstanceContext();
+      if (instanceCtx.getModifiedContext() != null) {
+        StatefulPortletContext<ExoPortletState> updatedCtx = (StatefulPortletContext<ExoPortletState>)instanceCtx.getModifiedContext();
+        ExoPortletState portletState = updatedCtx.getState();
+        uiPortlet.update(portletState);
+      }
+
+      //
       UpdateNavigationalStateResponse navStateResponse = (UpdateNavigationalStateResponse) portletResponse;
-      
-      //TODO: (mwringe) figure out how exactly we should be getting the redirect
-//      String redirectUrl = (String) output.getProperties().get(Output.SEND_REDIRECT) ;
-//      if(redirectUrl != null) {
-//      	prcontext.sendRedirect(redirectUrl);
-//      	return;
-//      }
-      
-      
+
       /*
        * Update the portlet window state according to the action output
        * information
@@ -265,7 +269,7 @@ public class UIPortletActionListener {
         ContentResponse piResponse = (ContentResponse)portletInvoker.invoke(resourceInvocation);
         
         //
-       
+
         //TODO: (mwringe) setup headers properly
         //Manage headers
         //context.setHeaders(output.getHeaderProperties());
@@ -425,6 +429,14 @@ public class UIPortletActionListener {
       PortletInvoker portletInvoker = uiPortlet.getApplicationComponent(PortletInvoker.class);
       PortletInvocationResponse piResponse = portletInvoker.invoke(eventInvocation);
       
+      //
+      ExoPortletInstanceContext instanceCtx = (ExoPortletInstanceContext)eventInvocation.getInstanceContext();
+      if (instanceCtx.getModifiedContext() != null) {
+        StatefulPortletContext<ExoPortletState> updatedCtx = (StatefulPortletContext<ExoPortletState>)instanceCtx.getModifiedContext();
+        ExoPortletState portletState = updatedCtx.getState();
+        uiPortlet.update(portletState);
+      }
+
       UpdateNavigationalStateResponse navResponse = (UpdateNavigationalStateResponse) piResponse;
       
       //

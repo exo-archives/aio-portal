@@ -154,6 +154,11 @@ public class UIPortlet extends UIApplication {
     ExoPortletState updateState = updatedCtx.getState();
 
     // Now save it
+    update(updateState); 
+  }
+
+
+  public void update(ExoPortletState updateState) throws Exception {
     ArrayList<Preference> prefs = new ArrayList<Preference>();
     for(Map.Entry<String, List<String>> entry : updateState.getState().entrySet()) {
       Preference pref = new Preference();

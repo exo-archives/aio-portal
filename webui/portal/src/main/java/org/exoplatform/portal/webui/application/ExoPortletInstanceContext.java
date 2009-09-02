@@ -131,7 +131,6 @@ public class ExoPortletInstanceContext implements InstanceContext {
               break;
 */
 
-        throw new UnsupportedOperationException("TODO");
     }
   }
 
