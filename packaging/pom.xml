@@ -249,13 +249,13 @@
                         <goals>
                            <goal>single</goal>
                         </goals>
+                        <configuration>
+                           <descriptors>
+                              <descriptor>src/main/assembly/tomcat-zip.xml</descriptor>
+                           </descriptors>
+                        </configuration>
                      </execution>
                   </executions>
-                  <configuration>
-                     <descriptors>
-                        <descriptor>src/main/assembly/tomcat-zip.xml</descriptor>
-                     </descriptors>
-                  </configuration>
                </plugin>
             </plugins>
          </build>
@@ -347,13 +347,13 @@
                         <goals>
                            <goal>single</goal>
                         </goals>
+                        <configuration>
+                           <descriptors>
+                              <descriptor>src/main/assembly/jbossear-zip.xml</descriptor>
+                           </descriptors>
+                        </configuration>
                      </execution>
                   </executions>
-                  <configuration>
-                     <descriptors>
-                        <descriptor>src/main/assembly/jbossear-zip.xml</descriptor>
-                     </descriptors>
-                  </configuration>
                </plugin>
             </plugins>
          </build>
