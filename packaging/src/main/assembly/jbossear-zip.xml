@@ -1,13 +1,15 @@
 <assembly>
-	<formats>
-		<format>zip</format>
-	</formats>
-	<includeBaseDirectory>false</includeBaseDirectory>
-	<fileSets>
-	 <fileSet>
-	  <directory>target/jboss</directory>
-	  <outputDirectory></outputDirectory>
-	  <useDefaultExcludes>true</useDefaultExcludes>
-	 </fileSet>
-	</fileSets>
+   <id>jbossas</id>
+   <formats>
+      <format>zip</format>
+      <format>tar.gz</format>
+   </formats>
+   <includeBaseDirectory>false</includeBaseDirectory>
+   <fileSets>
+      <fileSet>
+         <directory>target/jboss</directory>
+         <outputDirectory></outputDirectory>
+         <useDefaultExcludes>true</useDefaultExcludes>
+      </fileSet>
+   </fileSets>
 </assembly>

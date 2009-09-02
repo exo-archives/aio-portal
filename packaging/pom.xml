@@ -171,7 +171,7 @@
             <exo.packaging.target>tomcat</exo.packaging.target>
          </properties>
          <build>
-            <finalName>GateIn-${project.version}-${exo.packaging.target}</finalName>
+            <finalName>GateIn-${project.version}</finalName>
             <plugins>
                <!-- Ensure your environment is correctly setup -->
                <plugin>
@@ -272,7 +272,7 @@
             <exo.packaging.target>jbossear</exo.packaging.target>
          </properties>
          <build>
-            <finalName>GateIn-${project.version}-${exo.packaging.target}</finalName>
+            <finalName>GateIn-${project.version}</finalName>
             <plugins>
                <!-- Ensure your environment is correctly setup -->
                <plugin>

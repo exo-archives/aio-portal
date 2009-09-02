@@ -29,13 +29,13 @@ function getModule(params) {
     addDependency(new Project("javax.portlet", "portlet-api", "jar", "2.0")).
     addDependency(new Project("javax.ccpp", "ccpp", "jar", "1.0")).
     addDependency(new Project("javax.xml.bind", "jaxb-api", "jar", "2.1")).
-    addDependency(new Project("org.gatein.pc", "pc-api", "jar", "2.1.0-SNAPSHOT")).
-    addDependency(new Project("org.gatein.pc", "pc-portlet", "jar", "2.1.0-SNAPSHOT")).
-    addDependency(new Project("org.gatein.pc", "pc-mc", "jar", "2.1.0-SNAPSHOT")).
-    addDependency(new Project("org.gatein.pc", "pc-controller", "jar", "2.1.0-SNAPSHOT")).
-    addDependency(new Project("org.gatein.pc", "pc-federation", "jar", "2.1.0-SNAPSHOT")).
-    addDependency(new Project("org.gatein.wci", "wci-wci", "jar", "2.0.0-SNAPSHOT")).
-    addDependency(new Project("org.gatein.common", "common-common", "jar", "2.0.0-SNAPSHOT")).
+    addDependency(new Project("org.gatein.pc", "pc-api", "jar", "2.1.0-Beta01")).
+    addDependency(new Project("org.gatein.pc", "pc-portlet", "jar", "2.1.0-Beta01")).
+    addDependency(new Project("org.gatein.pc", "pc-mc", "jar", "2.1.0-Beta01")).
+    addDependency(new Project("org.gatein.pc", "pc-controller", "jar", "2.1.0-Beta01")).
+    addDependency(new Project("org.gatein.pc", "pc-federation", "jar", "2.1.0-Beta01")).
+    addDependency(new Project("org.gatein.wci", "wci-wci", "jar", "2.0.0-Beta01")).
+    addDependency(new Project("org.gatein.common", "common-common", "jar", "2.0.0-Beta01")).
     addDependency(new Project("log4j", "log4j", "jar", "1.2.14")).
     addDependency(new Project("org.jboss", "jbossxb", "jar", "2.0.1.GA")).
     addDependency(new Project("org.jboss.logging", "jboss-logging-spi", "jar", "2.0.5.GA")).
