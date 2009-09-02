@@ -29,6 +29,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -108,6 +109,9 @@ public class SkinService implements Startable {
    */
   final String id = Long.toString(System.currentTimeMillis());
 
+  /** Temporary hack. */
+  private static final List<String> skinBlackList = Arrays.asList("Vista", "Mac");
+
   public SkinService() {
     portalSkins_ = new LinkedHashMap<SkinKey, SkinConfig>() ;
     skinConfigs_ = new LinkedHashMap<SkinKey, SkinConfig>(20);
@@ -138,6 +142,9 @@ public class SkinService implements Startable {
    */
   public void addPortalSkin(String module, String skinName, String cssPath,
       ServletContext scontext, boolean overwrite) {
+    if (skinBlackList.contains(skinName)) {
+      return;
+    }
 
     // Triggers a put if absent
     mainResolver.registerContext(scontext);
@@ -189,6 +196,9 @@ public class SkinService implements Startable {
   }
 
   public void addSkin(String module, String skinName, String cssPath, ServletContext scontext, boolean overwrite) {
+    if (skinBlackList.contains(skinName)) {
+      return;
+    }
 
     // Triggers a put if absent
     mainResolver.registerContext(scontext);
@@ -203,6 +213,11 @@ public class SkinService implements Startable {
   }
 
   public void addSkin(String module, String skinName, String cssPath, String cssData) {
+    if (skinBlackList.contains(skinName)) {
+      return;
+    }
+
+    //
     availableSkins_.add(skinName);
     SkinKey key = new SkinKey(module, skinName);
     SkinConfig skinConfig = skinConfigs_.get(key);
