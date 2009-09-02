@@ -25,6 +25,7 @@ import org.exoplatform.Constants;
 import org.exoplatform.commons.utils.Text;
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.portal.application.PortalRequestContext;
+import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.resolver.ApplicationResourceResolver;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.webui.application.WebuiApplication;
@@ -39,6 +40,8 @@ import org.gatein.pc.api.invocation.RenderInvocation;
 import org.gatein.pc.api.invocation.response.FragmentResponse;
 import org.gatein.pc.api.invocation.response.PortletInvocationResponse;
 import org.w3c.dom.Element;
+
+import javax.portlet.WindowState;
 
 /**
  * Created by The eXo Platform SAS May 8, 2006
@@ -142,48 +145,55 @@ public class UIPortletLifecycle extends Lifecycle<UIPortlet> {
     PortletInvoker portletInvoker = (PortletInvoker)container.getComponentInstanceOfType(PortletInvoker.class);
     
     //
-    FragmentResponse fragmentResponse = null;
-    
+    Text markup = null;
+    String portletTitle = null;
+
     try
     {
       RenderInvocation renderInvocation = uicomponent.create(RenderInvocation.class, prcontext);
 
-      //
-      PortletInvocationResponse piResponse =  portletInvoker.invoke(renderInvocation);
-      fragmentResponse = (FragmentResponse)piResponse;
-    
+      if (uicomponent.getCurrentWindowState() != WindowState.MINIMIZED) {
+        String appStatus = uicomponent.getProperties().get("appStatus");
+        if ("Window".equals(uicomponent.getPortletStyle())
+            && !("SHOW".equals(appStatus) || "HIDE".equals(appStatus))) {
+          markup = Text.create("<span></span>");
+        } else {
+          int portalMode = Util.getUIPortalApplication().getModeState();
+          if(portalMode % 2 == 0) {
+            PortletInvocationResponse response =  portletInvoker.invoke(renderInvocation);
+            if (response instanceof FragmentResponse) {
+              FragmentResponse fragmentResponse = (FragmentResponse)response;
+              markup = Text.create(fragmentResponse.getContent());
+              portletTitle = fragmentResponse.getTitle();
+              //TODO: (mwringe )setup headers
+              if (fragmentResponse.getProperties() != null)
+              {
+                MultiValuedPropertyMap<Element> hMap = fragmentResponse.getProperties().getMarkupHeaders();
+                if (hMap != null)
+                {
+                  Map<String, String> headers = new HashMap<String, String>();
+                  Set<String> keys = hMap.keySet();
+                }
+                Map<String, String> headers = new HashMap<String, String>();
+                prcontext.setHeaders(headers);
+              }
+            } else {
+              throw new UnsupportedOperationException("Portlet container response handling not yet implemented " + response);
+            }
+          }
+        }
+      }
     }
-    catch (Exception e)
-    {
-    	e.printStackTrace();
+    catch (Exception e) {
+      throw new UnsupportedOperationException("Portlet container failure handling not yet implemented ", e);
     }
-    
-    Text markup = null;
-    String portletTitle = null;
-    if (fragmentResponse != null)
-    {
-    	markup = Text.create(fragmentResponse.getContent());
-    	portletTitle = fragmentResponse.getTitle();
-    	
-    	if (fragmentResponse.getProperties() != null)
-    	{
-    		MultiValuedPropertyMap<Element> hMap = fragmentResponse.getProperties().getMarkupHeaders();
-    		if (hMap != null)
-    		{
-    			Map<String, String> headers = new HashMap<String, String>();
-    			Set<String> keys = hMap.keySet();
-    		}
-    	}
-    	
-    	//TODO: (mwringe )setup headers
-    	Map<String, String> headers = new HashMap<String, String>();
-//    	fragmentResponse.getProperties().getMarkupHeaders();	
-    	prcontext.setHeaders(headers);
-    	
-    }
-    if (portletTitle == null)
-      portletTitle = "Portlet";
 
+    //
+    if (portletTitle == null) {
+      portletTitle = "Portlet";
+    }
+
+    //
     if (context.useAjax() && !prcontext.getFullRender()) {
       if (markup != null) {
         markup.writeTo(prcontext.getWriter());
