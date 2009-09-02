@@ -166,10 +166,6 @@
    <profiles>
       <profile>
          <id>pkg-tomcat</id>
-         <properties>
-            <exo.packaging.server>${exo.projects.app.tomcat.version}</exo.packaging.server>
-            <exo.packaging.target>tomcat</exo.packaging.target>
-         </properties>
          <build>
             <finalName>GateIn-${project.version}</finalName>
             <plugins>
@@ -179,7 +175,7 @@
                   <artifactId>maven-enforcer-plugin</artifactId>
                   <executions>
                      <execution>
-                        <id>enforce-environment-ready</id>
+                        <id>tomcat-check-environment-ready</id>
                         <goals>
                            <goal>enforce</goal>
                         </goals>
@@ -211,7 +207,7 @@
                   <artifactId>exec-maven-plugin</artifactId>
                   <executions>
                      <execution>
-                        <id>exopackage</id>
+                        <id>tomcat-exopackage</id>
                         <phase>package</phase>
                         <configuration>
                            <executable>java</executable>
@@ -225,7 +221,7 @@
                               <!--argument>-Dexo.src.dir=NONE</argument-->
                               <argument>-Dexo.dep.dir=${exo.projects.directory.dependencies}</argument><!-- to get the server ref install -->
                               <argument>-Dexo.m2.repos=file:${settings.localRepository},http://maven2.exoplatform.org/rest/maven2,http://repository.jboss.org/maven2</argument>
-                              <argument>-Dclean.server=${exo.packaging.server}</argument>
+                              <argument>-Dclean.server=${exo.projects.app.tomcat.version}</argument>
                               <!--argument>-Dexo.m2.home=${maven.home}</argument-->
                               <argument>-Xshare:auto</argument>
                               <argument>-Xms128m</argument>
@@ -236,7 +232,7 @@
                               <argument>${basedir}/target/exopackage/javascript/eXo/eXo.js</argument>
                               <argument>exobuild</argument>
                               <argument>--version=integration</argument>
-                              <argument>--deploy=${exo.packaging.target}</argument>
+                              <argument>--deploy=tomcat</argument>
                            </arguments>
                         </configuration>
                         <goals>
@@ -249,6 +245,7 @@
                   <artifactId>maven-assembly-plugin</artifactId>
                   <executions>
                      <execution>
+                        <id>tomcat-assembly</id>
                         <phase>package</phase>
                         <goals>
                            <goal>single</goal>
@@ -257,7 +254,7 @@
                   </executions>
                   <configuration>
                      <descriptors>
-                        <descriptor>src/main/assembly/${exo.packaging.target}-zip.xml</descriptor>
+                        <descriptor>src/main/assembly/tomcat-zip.xml</descriptor>
                      </descriptors>
                   </configuration>
                </plugin>
@@ -267,10 +264,6 @@
 
       <profile>
          <id>pkg-jbossas</id>
-         <properties>
-            <exo.packaging.server>${exo.projects.app.jboss.version}</exo.packaging.server>
-            <exo.packaging.target>jbossear</exo.packaging.target>
-         </properties>
          <build>
             <finalName>GateIn-${project.version}</finalName>
             <plugins>
@@ -280,7 +273,7 @@
                   <artifactId>maven-enforcer-plugin</artifactId>
                   <executions>
                      <execution>
-                        <id>enforce-environment-ready</id>
+                        <id>jbossas-check-environment-ready</id>
                         <goals>
                            <goal>enforce</goal>
                         </goals>
@@ -312,7 +305,7 @@
                   <artifactId>exec-maven-plugin</artifactId>
                   <executions>
                      <execution>
-                        <id>exopackage</id>
+                        <id>jbossas-exopackage</id>
                         <phase>package</phase>
                         <configuration>
                            <executable>java</executable>
@@ -326,7 +319,7 @@
                               <!--argument>-Dexo.src.dir=NONE</argument-->
                               <argument>-Dexo.dep.dir=${exo.projects.directory.dependencies}</argument><!-- to get the server ref install -->
                               <argument>-Dexo.m2.repos=file:${settings.localRepository},http://maven2.exoplatform.org/rest/maven2,http://repository.jboss.org/maven2</argument>
-                              <argument>-Dclean.server=${exo.packaging.server}</argument>
+                              <argument>-Dclean.server=${exo.projects.app.jboss.version}</argument>
                               <!--argument>-Dexo.m2.home=${maven.home}</argument-->
                               <argument>-Xshare:auto</argument>
                               <argument>-Xms128m</argument>
@@ -337,7 +330,7 @@
                               <argument>${basedir}/target/exopackage/javascript/eXo/eXo.js</argument>
                               <argument>exobuild</argument>
                               <argument>--version=integration</argument>
-                              <argument>--deploy=${exo.packaging.target}</argument>
+                              <argument>--deploy=jbossear</argument>
                            </arguments>
                         </configuration>
                         <goals>
@@ -350,6 +343,7 @@
                   <artifactId>maven-assembly-plugin</artifactId>
                   <executions>
                      <execution>
+                        <id>jbossas-assembly</id>
                         <phase>package</phase>
                         <goals>
                            <goal>single</goal>
@@ -358,7 +352,7 @@
                   </executions>
                   <configuration>
                      <descriptors>
-                        <descriptor>src/main/assembly/${exo.packaging.target}-zip.xml</descriptor>
+                        <descriptor>src/main/assembly/jbossear-zip.xml</descriptor>
                      </descriptors>
                   </configuration>
                </plugin>
