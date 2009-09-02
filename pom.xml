@@ -1,23 +1,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-  <parent>
-    <groupId>org.exoplatform</groupId>
-    <artifactId>parent</artifactId>
-    <version>1.1.1</version>
-  </parent>
+   <parent>
+      <groupId>org.exoplatform</groupId>
+      <artifactId>parent</artifactId>
+      <version>1.1.1</version>
+   </parent>
 
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.exoplatform.portal</groupId>
-  <artifactId>config</artifactId>
-  <name>eXo Portal Config</name>
-  <version>2.6-int-SNAPSHOT</version>
-  <packaging>pom</packaging>
+   <modelVersion>4.0.0</modelVersion>
+   <groupId>org.exoplatform.portal</groupId>
+   <artifactId>config</artifactId>
+   <name>eXo Portal Config</name>
+   <version>2.6-int-SNAPSHOT</version>
+   <packaging>pom</packaging>
 
    <repositories>
       <repository>
          <id>exo-int</id>
          <url>http://maven2.exoplatform.org/rest/maven2</url>
-         <releases> 
+         <releases>
             <enabled>true</enabled>
          </releases>
          <snapshots>
@@ -27,7 +27,7 @@
       <repository>
          <id>repository.jboss.org</id>
          <url>http://repository.jboss.org/maven2</url>
-         <releases> 
+         <releases>
             <enabled>true</enabled>
          </releases>
          <snapshots>
@@ -47,7 +47,7 @@
       <repository>
          <id>caja</id>
          <url>http://google-caja.googlecode.com/svn/maven</url>
-         <releases> 
+         <releases>
             <enabled>true</enabled>
          </releases>
          <snapshots>
@@ -57,7 +57,7 @@
       <repository>
          <id>oauth</id>
          <url>http://oauth.googlecode.com/svn/code/maven</url>
-         <releases> 
+         <releases>
             <enabled>true</enabled>
          </releases>
          <snapshots>
@@ -69,7 +69,7 @@
       <pluginRepository>
          <id>exo-int</id>
          <url>http://maven2.exoplatform.org/rest/maven2</url>
-         <releases> 
+         <releases>
             <enabled>true</enabled>
          </releases>
          <snapshots>
@@ -79,7 +79,7 @@
       <pluginRepository>
          <id>repository.jboss.org</id>
          <url>http://repository.jboss.org/maven2</url>
-         <releases> 
+         <releases>
             <enabled>true</enabled>
          </releases>
          <snapshots>
@@ -96,287 +96,288 @@
             <enabled>true</enabled>
          </snapshots>
       </pluginRepository>
-   </pluginRepositories>  
-  
-  <properties>
-     <exo.product.name>exo-portal</exo.product.name>
-     <exo.product.specification>2.6</exo.product.specification>
-  </properties>
+   </pluginRepositories>
 
-  <scm>
-    <connection>scm:svn:http://svn.exoplatform.org/projects/portal/branches/integration</connection>
-    <developerConnection>scm:svn:http://svn.exoplatform.org/projects/portal/branches/integration</developerConnection>
-    <url>http://fisheye.exoplatform.org/browse/projects/portal/branches/integration</url>
-  </scm> 
+   <distributionManagement>
+      <repository>
+         <id>exo-releases</id>
+         <name>exo releases</name>
+         <url>${exo.distrib.repo.url}</url>
+      </repository>
+   </distributionManagement>
 
-  <modules>
-    <module>component/common</module>
-    <module>component/pc</module>
-    <module>component/xml-parser</module>
-    <module>component/resources</module>
-    <module>component/gifbackport</module>
-    <module>component/application-registry</module>
-    <module>component/portal</module>
-    <module>component/web</module>
-    <module>component/scripting</module>
-    <module>component/identity</module>
-    <module>component/dashboard</module>
-    <module>gadgets</module>
-	
-    <module>webui/core</module>
-    <module>webui/eXo</module>
-    <module>webui/portal</module>
-    
-    <module>portlet/exoadmin</module>
-    <module>portlet/web</module>
-    <module>portlet/dashboard</module>
+   <properties>
+      <org.exoplatform.kernel.version>2.2.Alpha3</org.exoplatform.kernel.version>
+      <org.exoplatform.core.version>2.3.Alpha4</org.exoplatform.core.version>
+      <org.exoplatform.ws.version>2.1.Alpha4</org.exoplatform.ws.version>
+      <org.exoplatform.jcr.version>1.12.Alpha4</org.exoplatform.jcr.version>
+      <org.jibx.version>1.2.1</org.jibx.version>
+      <org.shindig.version>SNAPSHOT-r790473</org.shindig.version>
+      <org.gatein.common.version>2.0.0-Beta01</org.gatein.common.version>
+      <org.gatein.wci.version>2.0.0-Beta01</org.gatein.wci.version>
+      <org.gatein.pc.version>2.1.0-Beta01</org.gatein.pc.version>
+      <org.gatein.mop.version>1.0.0-Beta03</org.gatein.mop.version>
+      <org.jboss.identity.idm>1.0.0.Beta2</org.jboss.identity.idm>
 
-    <module>web/eXoResources</module>
-    <module>web/eXoSkinMac</module>
-    <module>web/eXoSkinVista</module>
-    <module>web/rest</module>
-    <module>web/portal</module>
+      <exo.product.name>GateIn</exo.product.name>
+      <exo.product.specification>3.0.0</exo.product.specification>
+      
+      <exo.product.developing>true</exo.product.developing>
 
-    <module>server/tomcat/patch</module>
-    <module>server/tomcat/plugin</module>
-    <module>server/jboss/patch</module>
-    <module>server/jboss/patch-ear</module>
-    <module>server/jboss/plugin</module>
-    <module>server/jonas/patch</module>
-    <module>server/jonas/plugin</module>
-    
-    <module>server/websphere/patch</module>
-    <module>server/websphere/plugin</module>
+      <exo.distrib.repo.url>http://archiva.exoplatform.org/archiva/repository/exo-releases</exo.distrib.repo.url>
+   </properties>
 
-    <module>packaging</module>
+   <scm>
+      <connection>scm:svn:http://svn.exoplatform.org/projects/portal/branches/integration</connection>
+      <developerConnection>scm:svn:http://svn.exoplatform.org/projects/portal/branches/integration</developerConnection>
+      <url>http://fisheye.exoplatform.org/browse/projects/portal/branches/integration</url>
+   </scm>
 
-  </modules>
+   <modules>
+      <module>component/common</module>
+      <module>component/pc</module>
+      <module>component/xml-parser</module>
+      <module>component/resources</module>
+      <module>component/gifbackport</module>
+      <module>component/application-registry</module>
+      <module>component/portal</module>
+      <module>component/web</module>
+      <module>component/scripting</module>
+      <module>component/identity</module>
+      <module>component/dashboard</module>
+      <module>gadgets</module>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <version>1.5.6</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  <build>
-    <resources>
-      <resource>
-        <directory>src/main/java</directory>
-        <includes>
-          <include>**/*.properties</include>
-          <include>**/*.xml</include>
-        </includes>
-      </resource>
-    </resources>
-    <testResources>
-      <testResource>
-        <directory>src/test/java</directory>
-        <includes>
-          <include>**/*.properties</include>
-          <include>**/*.xml</include>
-          <include>**/*.jstmpl</include>
-        </includes>
-      </testResource>
-      <testResource>
-	<directory>src/test/resources</directory>
-      </testResource>
-    </testResources>
-    <pluginManagement>
-       <plugins>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>buildnumber-maven-plugin</artifactId>
-          <version>1.0-beta-3</version>
-          <configuration>
-            <doCheck>false</doCheck>
-            <doUpdate>false</doUpdate>
-            <revisionOnScmFailure>no_revision</revisionOnScmFailure>
-          </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <version>1.3</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-assembly-plugin</artifactId>
-          <version>2.2-beta-4</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>2.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-checkstyle-plugin</artifactId>
-          <version>2.3</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>2.0.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-dependency-plugin</artifactId>
-          <version>2.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.4</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-ear-plugin</artifactId>
-          <version>2.3.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-ejb-plugin</artifactId>
-          <version>2.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-enforcer-plugin</artifactId>
-          <version>1.0-beta-1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>2.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>2.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>2.5</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-plugin-plugin</artifactId>
-          <version>2.4.3</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-rar-plugin</artifactId>
-          <version>2.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-release-plugin</artifactId>
-          <version>2.0-beta-9</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>2.3</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>2.0-beta-7</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-source-plugin</artifactId>
-          <version>2.0.4</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.4.3</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>2.0.2</version>
-        </plugin>
-       </plugins>
-    </pluginManagement>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <skip>${exo.test.skip}</skip>
-          <forkMode>pertest</forkMode><!--once , pertest -->
-          <testFailureIgnore>${exo.test.failure.ignore}</testFailureIgnore>
-          <includes>
-            <include>**/${exo.test.includes}.java</include>
-          </includes>
-          <systemProperties>
-            <property>
-              <name>maven.exoplatform.dir</name>
-              <value>${exo.directory.base}/projects/exo-platform</value>
-            </property>
-            <property>
-              <name>mock.portal.dir</name>
-              <value>${exo.projects.directory.src}/portal/trunk/web/portal/src/main/webapp</value>
-            </property>
-            <property>
-              <name>org.apache.commons.logging.Log</name>
-              <value>org.apache.commons.logging.impl.SimpleLog</value>
-            </property>
-            <property>
-              <name>org.apache.commons.logging.simplelog.defaultlog</name>
-              <value>info</value>
-            </property>
-            <property>
-              <name>org.apache.commons.logging.simplelog.log.[eXo]</name>
-              <value>debug</value>
-            </property>
-            <property>
-              <name>org.apache.commons.logging.simplelog.log.net.hibernate</name>
-              <value>warn</value>
-            </property>
-            <property>
-              <name>java.naming.factory.initial</name>
-              <value>org.exoplatform.services.naming.SimpleContextFactory</value>
-            </property>
-          </systemProperties>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>compile</id>
-            <phase>compile</phase>
+      <module>webui/core</module>
+      <module>webui/eXo</module>
+      <module>webui/portal</module>
+
+      <module>portlet/exoadmin</module>
+      <module>portlet/web</module>
+      <module>portlet/dashboard</module>
+
+      <module>web/eXoResources</module>
+      <module>web/eXoSkinMac</module>
+      <module>web/eXoSkinVista</module>
+      <module>web/rest</module>
+      <module>web/portal</module>
+
+      <module>server/tomcat/patch</module>
+      <module>server/tomcat/plugin</module>
+      <module>server/jboss/patch</module>
+      <module>server/jboss/patch-ear</module>
+      <module>server/jboss/plugin</module>
+      <module>server/jonas/patch</module>
+      <module>server/jonas/plugin</module>
+
+      <module>server/websphere/patch</module>
+      <module>server/websphere/plugin</module>
+
+      <module>packaging</module>
+
+   </modules>
+
+   <dependencies>
+      <dependency>
+         <groupId>org.slf4j</groupId>
+         <artifactId>slf4j-simple</artifactId>
+         <version>1.5.6</version>
+         <scope>test</scope>
+      </dependency>
+   </dependencies>
+   <build>
+      <resources>
+         <resource>
+            <directory>src/main/java</directory>
+            <includes>
+               <include>**/*.properties</include>
+               <include>**/*.xml</include>
+            </includes>
+         </resource>
+      </resources>
+      <testResources>
+         <testResource>
+            <directory>src/test/java</directory>
+            <includes>
+               <include>**/*.properties</include>
+               <include>**/*.xml</include>
+               <include>**/*.jstmpl</include>
+            </includes>
+         </testResource>
+         <testResource>
+            <directory>src/test/resources</directory>
+         </testResource>
+      </testResources>
+      <pluginManagement>
+         <plugins>
+            <plugin>
+               <groupId>org.codehaus.mojo</groupId>
+               <artifactId>buildnumber-maven-plugin</artifactId>
+               <version>1.0-beta-3</version>
+               <configuration>
+                  <doCheck>false</doCheck>
+                  <doUpdate>false</doUpdate>
+                  <revisionOnScmFailure>no_revision</revisionOnScmFailure>
+               </configuration>
+            </plugin>
+            <plugin>
+               <artifactId>maven-antrun-plugin</artifactId>
+               <version>1.3</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-assembly-plugin</artifactId>
+               <version>2.2-beta-4</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-clean-plugin</artifactId>
+               <version>2.2</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-checkstyle-plugin</artifactId>
+               <version>2.3</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-compiler-plugin</artifactId>
+               <version>2.0.2</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-dependency-plugin</artifactId>
+               <version>2.0</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-deploy-plugin</artifactId>
+               <version>2.4</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-ear-plugin</artifactId>
+               <version>2.3.1</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-ejb-plugin</artifactId>
+               <version>2.1</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-enforcer-plugin</artifactId>
+               <version>1.0-beta-1</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-install-plugin</artifactId>
+               <version>2.2</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-jar-plugin</artifactId>
+               <version>2.2</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-javadoc-plugin</artifactId>
+               <version>2.5</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-plugin-plugin</artifactId>
+               <version>2.4.3</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-rar-plugin</artifactId>
+               <version>2.2</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-release-plugin</artifactId>
+               <version>2.0-beta-9</version>
+               <configuration>
+                  <autoVersionSubmodules>true</autoVersionSubmodules>
+                  <goals>deploy</goals>
+                  <useReleaseProfile>false</useReleaseProfile>
+                  <arguments>-Prelease,pkg-tomcat,pkg-jbossas -Dexo.test.skip=true -Dexo.product.developing=false</arguments>
+               </configuration>
+            </plugin>
+            <plugin>
+               <artifactId>maven-resources-plugin</artifactId>
+               <version>2.3</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-site-plugin</artifactId>
+               <version>2.0-beta-7</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-source-plugin</artifactId>
+               <version>2.0.4</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-surefire-plugin</artifactId>
+               <version>2.4.3</version>
+            </plugin>
+            <plugin>
+               <artifactId>maven-war-plugin</artifactId>
+               <version>2.0.2</version>
+            </plugin>
+         </plugins>
+      </pluginManagement>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
-              <tasks>
-                <copy failonerror="false" todir="${project.build.directory}/${project.build.finalName}/WEB-INF/classes">
-                  <fileset dir="${basedir}/src/main/webapp/WEB-INF/classes">
-                    <include name="**/*_en.properties"/>
-                  </fileset>
-                  <globmapper from="*_en.properties" to="*.properties"/>         
-                </copy>
-              </tasks>
+               <skip>${exo.test.skip}</skip>
+               <forkMode>pertest</forkMode><!--once , pertest -->
+               <testFailureIgnore>${exo.test.failure.ignore}</testFailureIgnore>
+               <includes>
+                  <include>**/${exo.test.includes}.java</include>
+               </includes>
+               <systemProperties>
+                  <property>
+                     <name>maven.exoplatform.dir</name>
+                     <value>${exo.directory.base}/projects/exo-platform</value>
+                  </property>
+                  <property>
+                     <name>mock.portal.dir</name>
+                     <value>${exo.projects.directory.src}/portal/trunk/web/portal/src/main/webapp</value>
+                  </property>
+                  <property>
+                     <name>org.apache.commons.logging.Log</name>
+                     <value>org.apache.commons.logging.impl.SimpleLog</value>
+                  </property>
+                  <property>
+                     <name>org.apache.commons.logging.simplelog.defaultlog</name>
+                     <value>info</value>
+                  </property>
+                  <property>
+                     <name>org.apache.commons.logging.simplelog.log.[eXo]</name>
+                     <value>debug</value>
+                  </property>
+                  <property>
+                     <name>org.apache.commons.logging.simplelog.log.net.hibernate</name>
+                     <value>warn</value>
+                  </property>
+                  <property>
+                     <name>java.naming.factory.initial</name>
+                     <value>org.exoplatform.services.naming.SimpleContextFactory</value>
+                  </property>
+               </systemProperties>
             </configuration>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+         </plugin>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+               <execution>
+                  <id>compile</id>
+                  <phase>compile</phase>
+                  <configuration>
+                     <tasks>
+                        <copy failonerror="false" todir="${project.build.directory}/${project.build.finalName}/WEB-INF/classes">
+                           <fileset dir="${basedir}/src/main/webapp/WEB-INF/classes">
+                              <include name="**/*_en.properties" />
+                           </fileset>
+                           <globmapper from="*_en.properties" to="*.properties" />
+                        </copy>
+                     </tasks>
+                  </configuration>
+                  <goals>
+                     <goal>run</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+      </plugins>
+   </build>
 
-  <profiles>
-    <profile>
-      <id>default</id>
-      <activation>
-        <property><name>default</name></property>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <properties>
-        <org.exoplatform.kernel.version>2.2.Alpha3</org.exoplatform.kernel.version>
-        <org.exoplatform.core.version>2.3.Alpha4</org.exoplatform.core.version>
-    	<org.exoplatform.ws.version>2.1.Alpha4</org.exoplatform.ws.version>
-        <org.exoplatform.jcr.version>1.12.Alpha4</org.exoplatform.jcr.version>
-        <org.jibx.version>1.2.1</org.jibx.version>
-      <!--
-        <org.exoplatform.kernel.version>2.1.2</org.exoplatform.kernel.version>
-        <org.exoplatform.core.version>2.2.2</org.exoplatform.core.version>
-    	<org.exoplatform.ws.version>2.0.2</org.exoplatform.ws.version>
-        <org.exoplatform.jcr.version>1.11.2</org.exoplatform.jcr.version>
-        <org.jibx.version>1.1.6a</org.jibx.version>
-      -->
-        <org.shindig.version>SNAPSHOT-r790473</org.shindig.version>
-        <org.gatein.common.version>2.0.0-Beta01</org.gatein.common.version>
-        <org.gatein.wci.version>2.0.0-Beta01</org.gatein.wci.version>
-        <org.gatein.pc.version>2.1.0-Beta01</org.gatein.pc.version>
-        <org.gatein.mop.version>1.0.0-Beta03</org.gatein.mop.version>
-        <org.jboss.identity.idm>1.0.0.Beta2</org.jboss.identity.idm>
-      </properties>
-    </profile>
-  </profiles>
 </project>
