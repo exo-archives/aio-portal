@@ -257,7 +257,7 @@
                   </executions>
                   <configuration>
                      <descriptors>
-                        <descriptor>src/assemble/${exo.packaging.target}-zip.xml</descriptor>
+                        <descriptor>src/main/assembly/${exo.packaging.target}-zip.xml</descriptor>
                      </descriptors>
                   </configuration>
                </plugin>
@@ -358,7 +358,7 @@
                   </executions>
                   <configuration>
                      <descriptors>
-                        <descriptor>src/assemble/${exo.packaging.target}-zip.xml</descriptor>
+                        <descriptor>src/main/assembly/${exo.packaging.target}-zip.xml</descriptor>
                      </descriptors>
                   </configuration>
                </plugin>
