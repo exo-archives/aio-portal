@@ -10,7 +10,7 @@
    <groupId>org.exoplatform.portal</groupId>
    <artifactId>config</artifactId>
    <name>eXo Portal Config</name>
-   <version>3.0.0-Beta01</version>
+   <version>3.0.0-Beta02-SNAPSHOT</version>
    <packaging>pom</packaging>
 
    <repositories>
@@ -128,9 +128,9 @@
    </properties>
 
    <scm>
-      <connection>scm:svn:http://svn.exoplatform.org/projects/portal/tags/3.0.0-Beta01</connection>
-      <developerConnection>scm:svn:http://svn.exoplatform.org/projects/portal/tags/3.0.0-Beta01</developerConnection>
-      <url>http://fisheye.exoplatform.org/browse/projects/portal/tags/3.0.0-Beta01</url>
+      <connection>scm:svn:http://svn.exoplatform.org/projects/portal/branches/integration</connection>
+      <developerConnection>scm:svn:http://svn.exoplatform.org/projects/portal/branches/integration</developerConnection>
+      <url>http://fisheye.exoplatform.org/browse/projects/portal/branches/integration</url>
    </scm>
 
    <modules>
