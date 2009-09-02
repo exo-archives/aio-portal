@@ -11,34 +11,11 @@
   <name>JBoss Identity IDM integration</name>
   <description>JBoss Identity IDM integration</description>
 
-  <build>
-     <plugins>
-        <plugin>
-           <groupId>org.codehaus.mojo</groupId>
-           <artifactId>buildnumber-maven-plugin</artifactId>
-           <version>1.0-beta-3</version>
-           <executions>
-              <execution>
-                 <phase>validate</phase>
-                 <goals>
-                    <goal>create</goal>
-                 </goals>
-              </execution>
-           </executions>
-           <configuration>
-              <doCheck>false</doCheck>
-              <doUpdate>false</doUpdate>
-              <revisionOnScmFailure>no_revision</revisionOnScmFailure>
-           </configuration>
-        </plugin>
-     </plugins>
-  </build>
-
   <dependencies>
     <dependency>
       <groupId>org.exoplatform.core</groupId>
       <artifactId>exo.core.component.database</artifactId>
-      <version>2.3.Alpha4</version>
+      <version>${org.exoplatform.core.version}</version>
         <exclusions>
             <exclusion>
                 <groupId>org.hibernate</groupId>

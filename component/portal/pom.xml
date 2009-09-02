@@ -11,14 +11,6 @@
   <name>eXo Portal Data</name>
   <url>http://www.exoplatform.org</url>
   <description>eXo Portal Data</description>
-
-  <!-- To retreive MOP -->
-  <repositories>
-    <repository>
-      <id>repository.jboss.org</id>
-      <url>http://repository.jboss.org/maven2</url>
-    </repository>   
-  </repositories>  
   
   <dependencies>
     <dependency>
