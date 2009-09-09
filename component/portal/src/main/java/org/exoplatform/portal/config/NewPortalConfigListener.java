@@ -62,6 +62,8 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
 
   private String               defaultPortal;
 
+  private boolean              isUseTryCatch;
+
   private Log                  log = ExoLogger.getLogger("Portal:NewPortalConfigListener");
 
   public NewPortalConfigListener(DataStorage pdcService,
@@ -81,22 +83,49 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     if (defaultPortal == null || defaultPortal.trim().length() == 0)
       defaultPortal = "classic";
     configs = params.getObjectParamValues(NewPortalConfig.class);
+
+    // get parameter
+    valueParam = params.getValueParam("default.isUseTryCatch");
+    // determine in the run function, is use try catch or not
+    isUseTryCatch = (valueParam.getValue().toLowerCase().equals("true"));
   }
 
   public void run() throws Exception {
     if (isInitedDB(defaultPortal))
       return;
-    for (Object ele : configs) {
-      NewPortalConfig portalConfig = (NewPortalConfig) ele;
-      if (portalConfig.getOwnerType().equals("user")) {
-        initUserTypeDB(portalConfig);
-      } else if (portalConfig.getOwnerType().equals(PortalConfig.GROUP_TYPE)) {
-        initGroupTypeDB(portalConfig);
-      } else {
-        initPortalTypeDB(portalConfig);
+
+    if (isUseTryCatch) {
+      for (Object ele : configs) {
+        try {
+          NewPortalConfig portalConfig = (NewPortalConfig) ele;
+          if (portalConfig.getOwnerType().equals("user")) {
+            initUserTypeDB(portalConfig);
+          } else if (portalConfig.getOwnerType().equals(PortalConfig.GROUP_TYPE)) {
+            initGroupTypeDB(portalConfig);
+          } else {
+            initPortalTypeDB(portalConfig);
+          }
+          portalConfig.getPredefinedOwner().clear();
+        } catch (Exception e) {
+          // TODO handle error properly
+          System.err.println("NewPortalConfig error: " + e.getMessage());
+        }
+
       }
-      portalConfig.getPredefinedOwner().clear();
+    } else {
+      for (Object ele : configs) {
+        NewPortalConfig portalConfig = (NewPortalConfig) ele;
+        if (portalConfig.getOwnerType().equals("user")) {
+          initUserTypeDB(portalConfig);
+        } else if (portalConfig.getOwnerType().equals(PortalConfig.GROUP_TYPE)) {
+          initGroupTypeDB(portalConfig);
+        } else {
+          initPortalTypeDB(portalConfig);
+        }
+        portalConfig.getPredefinedOwner().clear();
+      }
     }
+
   }
 
   NewPortalConfig getPortalConfig(String ownerType) {
@@ -152,8 +181,8 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     // get path of xml file, check if path in template folder and if path not in
     // template folder
     boolean notTemplate = (config.getTemplateOwner() == null || config.getTemplateOwner()
-                                                                     .trim()
-                                                                     .length() < 1);
+                                                                      .trim()
+                                                                      .length() < 1);
     String path = getPathConfig(config, owner, "portal", notTemplate);
 
     // get xml content and parse xml content
@@ -177,8 +206,8 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     // get path of xml file, check if path in template folder and if path not in
     // template folder
     boolean notTemplate = (config.getTemplateOwner() == null || config.getTemplateOwner()
-                                                                     .trim()
-                                                                     .length() < 1);
+                                                                      .trim()
+                                                                      .length() < 1);
     String path = getPathConfig(config, owner, "pages", notTemplate);
 
     // get xml content and parse xml content
@@ -205,8 +234,8 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     // get path of xml file, check if path in template folder and if path not in
     // template folder
     boolean notTemplate = (config.getTemplateOwner() == null || config.getTemplateOwner()
-                                                                     .trim()
-                                                                     .length() < 1);
+                                                                      .trim()
+                                                                      .length() < 1);
     String path = getPathConfig(config, owner, "navigation", notTemplate);
 
     // get xml content and parse xml content
@@ -257,7 +286,7 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
 
   private void createPortletPreferences(NewPortalConfig config, String owner) throws Exception {
     String xml = null;
-    //  get path of xml file, check if path in template folder and if path not in
+    // get path of xml file, check if path in template folder and if path not in
     // template folder
     boolean isTemplate = (config.getTemplateOwner() == null || config.getTemplateOwner()
                                                                      .trim()
@@ -271,11 +300,11 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
       if (isTemplate) {
         xml = StringUtils.replace(xml, "@owner@", owner);
       }
-    PortletPreferencesSet portletSet = fromXML(xml, PortletPreferencesSet.class);
-    ArrayList<PortletPreferences> list = portletSet.getPortlets();
-    for (PortletPreferences portlet : list) {
-      pdcService_.save(portlet);
-    }
+      PortletPreferencesSet portletSet = fromXML(xml, PortletPreferencesSet.class);
+      ArrayList<PortletPreferences> list = portletSet.getPortlets();
+      for (PortletPreferences portlet : list) {
+        pdcService_.save(portlet);
+      }
     } catch (JiBXException e) {
       log.error(e.getMessage() + " file: " + path);
     }

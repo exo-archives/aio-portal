@@ -272,9 +272,11 @@ public class UserPortalConfigService implements Startable {
 		}
 
 		PortalConfig config = storage_.getPortalConfig(portalName);
-		portalConfigCache_.remove(config.getName());
-		if (config != null)
+		
+		if (config != null) {
+			portalConfigCache_.remove(config.getName());
 			storage_.remove(config);
+		}
 	}
 
 	/**

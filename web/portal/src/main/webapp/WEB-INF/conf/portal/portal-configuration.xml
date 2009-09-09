@@ -95,6 +95,11 @@
 	          <description>The default portal for checking db is empty or not</description>
 	          <value>classic</value>
 	        </value-param> 
+	        <value-param>
+	          <name>default.isUseTryCatch</name>
+	          <description>In the run method, use try catch or not (value is true/false)</description>
+	          <value>true</value>
+	        </value-param>
 	        <object-param>
 	          <name>portal.configuration</name>
 	          <description>description</description>
