@@ -85,9 +85,13 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     configs = params.getObjectParamValues(NewPortalConfig.class);
 
     // get parameter
-    valueParam = params.getValueParam("default.isUseTryCatch");
+    valueParam = params.getValueParam("initializing.failure.ignore");
     // determine in the run function, is use try catch or not
-    isUseTryCatch = (valueParam.getValue().toLowerCase().equals("true"));
+    if (valueParam != null) {
+      isUseTryCatch = (valueParam.getValue().toLowerCase().equals("true"));
+    } else {
+      isUseTryCatch = true;
+    }
   }
 
   public void run() throws Exception {

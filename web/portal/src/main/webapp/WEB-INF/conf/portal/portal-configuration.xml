@@ -96,7 +96,7 @@
 	          <value>classic</value>
 	        </value-param> 
 	        <value-param>
-	          <name>default.isUseTryCatch</name>
+	          <name>initializing.failure.ignore</name>
 	          <description>In the run method, use try catch or not (value is true/false)</description>
 	          <value>true</value>
 	        </value-param>
