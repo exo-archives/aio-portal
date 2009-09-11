@@ -30,15 +30,15 @@ import org.exoplatform.webui.core.model.SelectItemOption ;
         "OneRowContainerLayout")) ;
     column.addSelectItemOption(new SelectItemOption("twoColumns",
         "<container template=\"system:/groovy/portal/webui/container/UITableColumnContainer.gtmpl\">" +
-        "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
-        "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
+        "  <container template=\"system:/groovy/portal/webui/container/UIContainer2.gtmpl\"></container>" +
+        "  <container template=\"system:/groovy/portal/webui/container/UIContainer2.gtmpl\"></container>" +
         "</container>",
         "TwoColumnContainerLayout")) ;
     column.addSelectItemOption(new SelectItemOption("threeColumns",
         "<container template=\"system:/groovy/portal/webui/container/UITableColumnContainer.gtmpl\">" +
-        "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
-        "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
-        "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
+        "  <container template=\"system:/groovy/portal/webui/container/UIContainer2.gtmpl\"></container>" +
+        "  <container template=\"system:/groovy/portal/webui/container/UIContainer2.gtmpl\"></container>" +
+        "  <container template=\"system:/groovy/portal/webui/container/UIContainer2.gtmpl\"></container>" +
         "</container>",
         "ThreeColumnContainerLayout")) ;
   templates.add(column);  
@@ -69,8 +69,8 @@ import org.exoplatform.webui.core.model.SelectItemOption ;
     mixed.addSelectItemOption(new SelectItemOption("twoColumnsOneRow",
         "<container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\">" +
         "  <container template=\"system:/groovy/portal/webui/container/UITableColumnContainer.gtmpl\">" +
-        "    <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
-        "    <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
+        "    <container template=\"system:/groovy/portal/webui/container/UIContainer2.gtmpl\"></container>" +
+        "    <container template=\"system:/groovy/portal/webui/container/UIContainer2.gtmpl\"></container>" +
         "  </container>" +
         "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
         "</container>",
@@ -79,8 +79,8 @@ import org.exoplatform.webui.core.model.SelectItemOption ;
         "<container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\">" +
         "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
         "  <container template=\"system:/groovy/portal/webui/container/UITableColumnContainer.gtmpl\">" +
-        "    <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
-        "    <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
+        "    <container template=\"system:/groovy/portal/webui/container/UIContainer2.gtmpl\"></container>" +
+        "    <container template=\"system:/groovy/portal/webui/container/UIContainer2.gtmpl\"></container>" +
         "  </container>" +
         "</container>",
         "OneRowTwoColumnContainerLayout")) ;
@@ -88,8 +88,8 @@ import org.exoplatform.webui.core.model.SelectItemOption ;
         "<container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\">" +
         "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
         "  <container template=\"system:/groovy/portal/webui/container/UITableColumnContainer.gtmpl\">" +
-        "    <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
-        "    <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
+        "    <container template=\"system:/groovy/portal/webui/container/UIContainer2.gtmpl\"></container>" +
+        "    <container template=\"system:/groovy/portal/webui/container/UIContainer2.gtmpl\"></container>" +
         "  </container>" +
         "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
         "</container>",

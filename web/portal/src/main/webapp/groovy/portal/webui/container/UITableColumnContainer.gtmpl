@@ -59,8 +59,11 @@
     <div id="$uicomponent.id">    
       <table class="UITableColumnContainer" style="table-layout: fixed; margin: 0px auto; width: 99%; $style">
         <tr class="TRContainer">
-          <% for(uiChild in uicomponent.getChildren()) { %>
-            <td class="${uiChild.id}TDContainer"><% uicomponent.renderUIComponent(uiChild) %></td>
+          <% for(uiChild in uicomponent.getChildren()) {
+			// Workaround for bug# PORTAL-2983
+          	// Adding the width attribute to the following tag
+           %>
+            <td class="${uiChild.id}TDContainer" width="<%= uiChild.getWidth() %>"><% uicomponent.renderUIComponent(uiChild) %></td>
           <% } %>
        </tr>
       </table>
