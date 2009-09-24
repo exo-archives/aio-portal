@@ -153,15 +153,25 @@ public class UIFormDateTimeInput extends UIFormInputBase<String> {
     if(input != null) value_ = ((String)input).trim();
   }
 
+  private String getResourceString(ResourceBundle rs, String key) {
+    String value = key;
+    try {
+      value = rs.getString(key);
+    } catch(Exception ex) {
+      value = key.substring(key.lastIndexOf('.') + 1) ;
+    }
+    return value;
+  }
+
   public void processRender(WebuiRequestContext context) throws Exception {
     
     WebuiRequestContext requestContext = WebuiRequestContext.getCurrentInstance();
     formatPattern(requestContext.getLocale()) ;
     ResourceBundle res = context.getApplicationResourceBundle() ;
-    String nextMonth = res.getString("UICalendar.NextMonth") ;
-    String preMonth = res.getString("UICalendar.PreMonth") ;
-    String nextYear = res.getString("UICalendar.NextYear") ;
-    String preYear = res.getString("UICalendar.PreYear") ;
+    String nextMonth = getResourceString(res, "UICalendar.NextMonth") ;
+    String preMonth = getResourceString(res, "UICalendar.PreMonth") ;
+    String nextYear = getResourceString(res, "UICalendar.NextYear") ;
+    String preYear = getResourceString(res, "UICalendar.PreYear") ;
     
     String monthNames_ = ""; 
     for (String month : months_) {
