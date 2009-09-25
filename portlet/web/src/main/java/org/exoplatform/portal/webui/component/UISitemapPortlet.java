@@ -41,14 +41,19 @@ import org.exoplatform.webui.core.lifecycle.UIApplicationLifecycle;
   @ComponentConfig(
     type = UIPortalNavigation.class,
     id = "UISiteMap",
-    template = "system:/groovy/webui/core/UISitemap.gtmpl" ,
     events = @EventConfig(listeners = UIPortalNavigation.SelectNodeActionListener.class)
   )
 })
 public class UISitemapPortlet extends UIPortletApplication {
   
   public UISitemapPortlet() throws Exception {
-    addChild(UIPortalNavigation.class, "UISiteMap", null) ;
+    PortletRequestContext context = (PortletRequestContext)  WebuiRequestContext.getCurrentInstance() ;
+    PortletRequest prequest = context.getRequest() ;
+    PortletPreferences prefers = prequest.getPreferences() ;
+    String template =  prefers.getValue("template", "system:/groovy/webui/core/UISitemap.gtmpl") ;
+    
+    UIPortalNavigation uiPortalNavigation = addChild(UIPortalNavigation.class, "UISiteMap", null) ;
+    uiPortalNavigation.getComponentConfig().setTemplate(template) ;
   }
 
   public boolean isUseAjax(){

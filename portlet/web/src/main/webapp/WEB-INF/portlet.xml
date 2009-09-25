@@ -104,6 +104,15 @@
       <short-title>Breadcumbs Portlet</short-title>
       <keywords>Breadcumbs</keywords>
     </portlet-info>
+    
+    <portlet-preferences>
+      <preference>
+        <name>template</name>
+        <value>system:/groovy/webui/core/UIBreadcumbs.gtmpl</value>
+        <read-only>false</read-only>
+      </preference>
+    </portlet-preferences>
+    
   </portlet> 
   
   <portlet>
@@ -135,6 +144,11 @@
         <value>false</value>
         <read-only>false</read-only>
       </preference>
+      <preference>
+        <name>template</name>
+        <value>app:/groovy/portal/webui/component/UIPortalNavigation.gtmpl</value>
+        <read-only>false</read-only>
+    </preference>
     </portlet-preferences>
   </portlet> 
   
@@ -162,13 +176,18 @@
       <short-title>Site map Portlet</short-title>
       <keywords>sitemap</keywords>
     </portlet-info>     
-
+    
     <portlet-preferences>
     	<preference>
     		<name>useAJAX</name>
     		<value>false</value>
     		<read-only>false</read-only>
     	</preference>
+    	<preference>
+	        <name>template</name>
+	        <value>system:/groovy/webui/core/UISitemap.gtmpl</value>
+	        <read-only>false</read-only>
+        </preference>
     </portlet-preferences>
   </portlet>
   

@@ -19,7 +19,12 @@ package org.exoplatform.portal.webui.component;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+
 import org.exoplatform.portal.config.model.PageNode;
+import org.exoplatform.webui.application.WebuiRequestContext;
+import org.exoplatform.webui.application.portlet.PortletRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
 import org.exoplatform.webui.core.UIBreadcumbs;
@@ -45,7 +50,13 @@ import org.exoplatform.portal.webui.util.Util;
 public class UIBreadcumbsPortlet extends UIPortletApplication {
   
   public UIBreadcumbsPortlet() throws Exception {
-    addChild(UIBreadcumbs.class, null, null);
+    PortletRequestContext context = (PortletRequestContext)  WebuiRequestContext.getCurrentInstance() ;
+    PortletRequest prequest = context.getRequest() ;
+    PortletPreferences prefers = prequest.getPreferences() ;
+    String template =  prefers.getValue("template", "system:/groovy/webui/core/UIBreadcumbs.gtmpl") ;
+    
+    UIBreadcumbs uiBreadcumbs = addChild(UIBreadcumbs.class, null, null);
+    uiBreadcumbs.getComponentConfig().setTemplate(template) ;
   }
   
   public void loadSelectedPath() {   
