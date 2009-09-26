@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
@@ -71,6 +74,16 @@ public class DataStorageImpl implements DataStorage, Startable {
   private DataMapper mapper_ = new DataMapper() ;
   private ListenerService listenerService;
   
+  private final ReadWriteLock lockPortalConfig = new ReentrantReadWriteLock();
+  private final Lock lockPortalConfigRead = lockPortalConfig.readLock();
+  private final Lock lockPortalConfigWrite = lockPortalConfig.writeLock();
+  private final ReadWriteLock lockNavigationConfig = new ReentrantReadWriteLock();
+  private final Lock lockNavigationConfigRead = lockNavigationConfig.readLock();
+  private final Lock lockNavigationConfigWrite = lockNavigationConfig.writeLock();
+  private final ReadWriteLock lockGadgetsConfig = new ReentrantReadWriteLock();
+  private final Lock lockGadgetsConfigRead = lockGadgetsConfig.readLock();
+  private final Lock lockGadgetsConfigWrite = lockGadgetsConfig.writeLock();
+  
   public DataStorageImpl(RegistryService service,ListenerService listenerService) throws Exception {
     regService_ = service ;
     this.listenerService = listenerService; 
@@ -81,11 +94,13 @@ public class DataStorageImpl implements DataStorage, Startable {
                         + "/"  + PORTAL_CONFIG_FILE_NAME;
     SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
     RegistryEntry portalEntry ;
+    lockPortalConfigRead.lock();
     try {
       portalEntry = regService_.getEntry(sessionProvider, portalPath) ;
     } catch (PathNotFoundException ie) {
       return null ;
     } finally {
+      lockPortalConfigRead.unlock();
       sessionProvider.close() ;
     }
     PortalConfig config = mapper_.toPortalConfig(portalEntry.getDocument()) ;
@@ -95,6 +110,7 @@ public class DataStorageImpl implements DataStorage, Startable {
   public void create(PortalConfig config) throws Exception {
     String portalAppPath = getApplicationRegistryPath(PortalConfig.PORTAL_TYPE, config.getName()) ;
     SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
+    lockPortalConfigWrite.lock();
     try {
       RegistryEntry portalEntry = new RegistryEntry(PORTAL_CONFIG_FILE_NAME) ;
       mapper_.map(portalEntry.getDocument(), config) ;
@@ -112,6 +128,7 @@ public class DataStorageImpl implements DataStorage, Startable {
       listenerService.broadcast(CREATE_PORTAL_EVENT,this,config);
     }
     finally {
+      lockPortalConfigWrite.unlock();
       sessionProvider.close() ;
     }
   }
@@ -119,6 +136,7 @@ public class DataStorageImpl implements DataStorage, Startable {
   public void save(PortalConfig config) throws Exception {
     String portalAppPath = getApplicationRegistryPath(PortalConfig.PORTAL_TYPE, config.getName()) ;
     SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
+    lockPortalConfigWrite.lock();
     try {
       RegistryEntry portalEntry = regService_.getEntry(sessionProvider, portalAppPath + "/" + PORTAL_CONFIG_FILE_NAME) ;
       mapper_.map(portalEntry.getDocument(), config) ;
@@ -126,6 +144,7 @@ public class DataStorageImpl implements DataStorage, Startable {
       listenerService.broadcast(UPDATE_PORTAL_EVENT,this,config);
     }
     finally {
+      lockPortalConfigWrite.unlock();
       sessionProvider.close() ;
     }
   }
@@ -134,11 +153,13 @@ public class DataStorageImpl implements DataStorage, Startable {
     String portalPath = getApplicationRegistryPath(PortalConfig.PORTAL_TYPE, config.getName())
                         + "/"  + PORTAL_CONFIG_FILE_NAME;
     SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
+    lockPortalConfigWrite.lock();
     try {
       regService_.removeEntry(sessionProvider, portalPath) ;
       listenerService.broadcast(REMOVE_PORTAL_EVENT,this,config);
     }
     finally {
+      lockPortalConfigWrite.unlock();
       sessionProvider.close() ;
     }
   }
@@ -218,12 +239,14 @@ public class DataStorageImpl implements DataStorage, Startable {
     String navigationPath = getApplicationRegistryPath(ownerType, id)
                             + "/" + NAVIGATION_CONFIG_FILE_NAME ;
     SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
+    lockNavigationConfigRead.lock();
     RegistryEntry navigationEntry ;
     try {      
      navigationEntry = regService_.getEntry(sessionProvider, navigationPath) ;
     } catch (PathNotFoundException ie) {
       return null ;
     } finally {
+      lockNavigationConfigRead.unlock();
       sessionProvider.close() ;
     }
     PageNavigation navigation = mapper_.toPageNavigation(navigationEntry.getDocument()) ;
@@ -233,12 +256,14 @@ public class DataStorageImpl implements DataStorage, Startable {
   public void create(PageNavigation navigation) throws Exception {
     String appRegPath = getApplicationRegistryPath(navigation.getOwnerType(), navigation.getOwnerId()) ; 
     SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
+    lockNavigationConfigWrite.lock();
     try {
       RegistryEntry NavigationEntry = new RegistryEntry(NAVIGATION_CONFIG_FILE_NAME) ;
       mapper_.map(NavigationEntry.getDocument(), navigation) ;
       regService_.createEntry(sessionProvider, appRegPath, NavigationEntry) ;
     }
     finally {
+      lockNavigationConfigWrite.unlock();
       sessionProvider.close() ;
     }
   }
@@ -246,20 +271,27 @@ public class DataStorageImpl implements DataStorage, Startable {
   public void save(PageNavigation navigation) throws Exception {
     String appRegPath = getApplicationRegistryPath(navigation.getOwnerType(), navigation.getOwnerId()) ;
     SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
-    RegistryEntry navigationEntry = regService_.getEntry(sessionProvider, appRegPath + "/" + NAVIGATION_CONFIG_FILE_NAME ) ;
-    mapper_.map(navigationEntry.getDocument(), navigation) ;
-    regService_.recreateEntry(sessionProvider, appRegPath, navigationEntry) ;
-    sessionProvider.close() ;
+    lockNavigationConfigWrite.lock();
+    try {
+      RegistryEntry navigationEntry = regService_.getEntry(sessionProvider, appRegPath + "/" + NAVIGATION_CONFIG_FILE_NAME ) ;
+      mapper_.map(navigationEntry.getDocument(), navigation) ;
+      regService_.recreateEntry(sessionProvider, appRegPath, navigationEntry) ;
+    } finally {
+      lockNavigationConfigWrite.unlock();
+      sessionProvider.close();
+    }    
   }
   
   public void remove(PageNavigation navigation) throws Exception {
     String navigationPath = getApplicationRegistryPath(navigation.getOwnerType(), navigation.getOwnerId())
                             + "/" + NAVIGATION_CONFIG_FILE_NAME ;
     SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
+    lockNavigationConfigWrite.lock();
     try {
       regService_.removeEntry(sessionProvider, navigationPath) ;
     }
     finally {
+      lockNavigationConfigWrite.unlock();
       sessionProvider.close() ;;
     }
   }
@@ -273,11 +305,13 @@ public class DataStorageImpl implements DataStorage, Startable {
     + "/" + GADGETS_CONFIG_FILE_NAME ;
     SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
     RegistryEntry gadgetsEntry ;
+    lockGadgetsConfigRead.lock();
     try {      
       gadgetsEntry = regService_.getEntry(sessionProvider, gadgetsPath) ;
     } catch (PathNotFoundException ie) {
       return null ;
     } finally {
+      lockGadgetsConfigRead.unlock();
       sessionProvider.close() ;
     }
     Gadgets gadgets = mapper_.toGadgets(gadgetsEntry.getDocument()) ;
@@ -287,12 +321,14 @@ public class DataStorageImpl implements DataStorage, Startable {
   public void create(Gadgets gadgets) throws Exception {
     String appRegPath = getApplicationRegistryPath(gadgets.getOwnerType(), gadgets.getOwnerId()) ;
     SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
+    lockGadgetsConfigWrite.lock();
     try {
       RegistryEntry gadgetsEntry = new RegistryEntry(GADGETS_CONFIG_FILE_NAME) ;
       mapper_.map(gadgetsEntry.getDocument(), gadgets) ;
       regService_.createEntry(sessionProvider, appRegPath, gadgetsEntry) ;
     }
     finally {
+      lockGadgetsConfigWrite.unlock();
       sessionProvider.close() ;
     }
   }
@@ -300,12 +336,14 @@ public class DataStorageImpl implements DataStorage, Startable {
   public void save(Gadgets gadgets) throws Exception {
     String appRegPath = getApplicationRegistryPath(gadgets.getOwnerType(), gadgets.getOwnerId()) ;
     SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
+    lockGadgetsConfigWrite.lock();
     try {
       RegistryEntry gadgetsEntry = regService_.getEntry(sessionProvider, appRegPath + "/" + GADGETS_CONFIG_FILE_NAME) ;
       mapper_.map(gadgetsEntry.getDocument(), gadgets) ;
       regService_.recreateEntry(sessionProvider, appRegPath, gadgetsEntry) ;
     }
     finally {
+      lockGadgetsConfigWrite.unlock();
       sessionProvider.close() ;
     }
   }
@@ -314,10 +352,12 @@ public class DataStorageImpl implements DataStorage, Startable {
     String gadgetsPath = getApplicationRegistryPath(gadgets.getOwnerType(), gadgets.getOwnerId())
                          + "/" + GADGETS_CONFIG_FILE_NAME ;
     SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
+    lockGadgetsConfigWrite.lock();
     try {
       regService_.removeEntry(sessionProvider, gadgetsPath) ;
     }
     finally {
+      lockGadgetsConfigWrite.unlock();
       sessionProvider.close() ;
     }
   }
