@@ -1,2 +1,2 @@
-<Context path="/dashboard" docBase="../../../eXoProjects/portal/branches/2.5.x/portlet/dashboard/src/main/webapp"
+<Context path="/dashboard" docBase="../../../eXoProjects/portal/tags/2.5.6/portlet/dashboard/src/main/webapp"
 				 debug="0" reloadable="true" />
