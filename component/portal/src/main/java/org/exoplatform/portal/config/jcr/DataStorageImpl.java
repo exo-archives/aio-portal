@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
@@ -37,6 +40,7 @@ import org.exoplatform.portal.config.model.Gadgets;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PortalConfig;
+import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
 import org.exoplatform.services.jcr.ext.registry.RegistryEntry;
 import org.exoplatform.services.jcr.ext.registry.RegistryService;
@@ -227,6 +231,7 @@ public class DataStorageImpl implements DataStorage, Startable {
       sessionProvider.close() ;
     }
     PageNavigation navigation = mapper_.toPageNavigation(navigationEntry.getDocument()) ;
+    navigation.document = navigationEntry.getDocument();
     return navigation ;
   }
   
@@ -246,10 +251,187 @@ public class DataStorageImpl implements DataStorage, Startable {
   public void save(PageNavigation navigation) throws Exception {
     String appRegPath = getApplicationRegistryPath(navigation.getOwnerType(), navigation.getOwnerId()) ;
     SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
-    RegistryEntry navigationEntry = regService_.getEntry(sessionProvider, appRegPath + "/" + NAVIGATION_CONFIG_FILE_NAME ) ;
-    mapper_.map(navigationEntry.getDocument(), navigation) ;
-    regService_.recreateEntry(sessionProvider, appRegPath, navigationEntry) ;
-    sessionProvider.close() ;
+    try {
+      RegistryEntry navigationEntry = regService_.getEntry(sessionProvider, appRegPath + "/" + NAVIGATION_CONFIG_FILE_NAME ) ;
+      PageNavigation saved;
+      if (navigation.document != null) {
+        PageNavigation existingNavigation = mapper_.toPageNavigation(navigationEntry.getDocument()) ;
+        PageNavigation originalNavigation = mapper_.toPageNavigation(navigation.document);
+        merge(new NavigationNodeContainer(originalNavigation), new NavigationNodeContainer(navigation), new NavigationNodeContainer(existingNavigation));
+        saved = existingNavigation;
+      } else {
+        saved = navigation;
+      }
+      mapper_.map(navigationEntry.getDocument(), saved) ;
+      regService_.recreateEntry(sessionProvider, appRegPath, navigationEntry) ;
+    }
+    finally {
+      sessionProvider.close() ;
+    }
+  }
+
+  private abstract class NodeContainer {
+
+    protected abstract List<PageNode> getNodes();
+
+    protected abstract void setNodes(ArrayList<PageNode> nodes);
+
+    protected boolean remove(String name) {
+      List<PageNode> nodes = getNodes();
+      if (nodes != null) {
+        for (Iterator<PageNode> i = nodes.iterator();i.hasNext();) {
+          PageNode node = i.next();
+          if (node.getName().equals(name)) {
+            i.remove();
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+
+    protected void add(PageNode node) {
+      List<PageNode> nodes = getNodes();
+      if (nodes == null) {
+        setNodes(new ArrayList<PageNode>());
+        nodes = getNodes();
+      }
+      nodes.add(node);
+    }
+
+    protected final PageNode get(String name) {
+      List<PageNode> nodes = getNodes();
+      if (nodes != null) {
+        for (PageNode node : nodes) {
+          if (node.getName().equals(name)) {
+            return node;
+          }
+        }
+      }
+      return null;
+    }
+
+    protected final Set<String> getNames() {
+      Set<String> ids = new HashSet<String>();
+      List<PageNode> nodes = getNodes();
+      if (nodes != null) {
+        for (PageNode fromNode : nodes) {
+          ids.add(fromNode.getName());
+        }
+      }
+      return ids;
+    }
+  }
+
+  private class PageNodeContainer extends NodeContainer {
+
+    /** . */
+    private final PageNode node;
+
+    private PageNodeContainer(PageNode node) {
+      this.node = node;
+    }
+
+    protected List<PageNode> getNodes() {
+      return node.getChildren();
+    }
+
+    protected void setNodes(ArrayList<PageNode> nodes) {
+      node.setChildren(nodes);
+    }
+  }
+
+  private class NavigationNodeContainer extends NodeContainer {
+
+    /** . */
+    private final PageNavigation navigation;
+
+    private NavigationNodeContainer(PageNavigation navigation) {
+      this.navigation = navigation;
+    }
+
+    protected List<PageNode> getNodes() {
+      return navigation.getNodes();
+    }
+
+    protected void setNodes(ArrayList<PageNode> nodes) {
+      throw new AssertionError("Should never happen");
+    }
+  }
+
+  /**
+   * Merge state between navigation nodes with the last commit wins strategy.
+   *
+   * @param from
+   * @param to
+   * @param target
+   * @return
+   */
+  private boolean merge(NodeContainer from, NodeContainer to, NodeContainer target) {
+
+    boolean modified = false;
+
+    // Common nodes
+    Set<String> commonNames = new HashSet<String>(from.getNames());
+    commonNames.retainAll(to.getNames());
+
+    // Removed nodes
+    Set<String> removedNames = new HashSet<String>(from.getNames());
+    removedNames.removeAll(to.getNames());
+
+    // Added nodes
+    Set<String> addedNames = new HashSet<String>(to.getNames());
+    addedNames.removeAll(from.getNames());
+
+    // Remove removed nodes
+    for (String removedName : removedNames) {
+      // Attempt to remove, not sure it was still here
+      if (!target.remove(removedName)) {
+        // CONFLICT : we may throw an exception instead
+        // The node we removed was concurrently removed previously
+        // For now we do nothing
+      }
+    }
+
+    // Add new nodes
+    for (String addedName : addedNames) {
+      PageNode addedNode = to.get(addedName);
+      PageNode phantomNode = target.get(addedName);
+      if (phantomNode == null) {
+        // We add it
+        target.add(addedNode);
+        modified = true;
+      } else {
+        // CONFLICT : we may throw an exception instead
+        // A same new node was added
+        // For now we use the last one
+        target.remove(addedName);
+        target.add(addedNode);
+        modified = true;
+      }
+    }
+
+    // Merge common nodes
+    for (String commonName : commonNames) {
+      PageNode fromNode = from.get(commonName);
+      PageNode toNode = to.get(commonName);
+      PageNode targetNode = target.get(commonName);
+
+      //
+      if (targetNode != null) {
+        // We perform the merge
+        modified |= merge(new PageNodeContainer(fromNode), new PageNodeContainer(toNode), new PageNodeContainer(targetNode));
+      } else {
+        // CONFLICT : we may throw an exception instead
+        // The common node was concurrently removed
+        // For now we put it back
+        target.add(toNode);
+        modified =  true;
+      }
+    }
+
+    //
+    return modified;
   }
   
   public void remove(PageNavigation navigation) throws Exception {

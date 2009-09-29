@@ -16,6 +16,8 @@
  */
 package org.exoplatform.portal.config.model;
 
+import org.w3c.dom.Document;
+
 import java.util.ArrayList;
 
 public class PageNavigation {
@@ -27,7 +29,13 @@ public class PageNavigation {
   private  String     modifier ;
   private ArrayList<PageNode>	pageNodes = new ArrayList<PageNode>();
   private int         priority = 1 ;
-  
+
+  /** The original document might be null. */
+  public Document document;
+
+  public PageNavigation() {
+  }
+
   public int getId() { return getOwner().hashCode(); }
   
   public String getOwnerId() { return ownerId; }
@@ -70,6 +78,7 @@ public class PageNavigation {
   
   public PageNavigation clone() {
     PageNavigation newNav = new PageNavigation();
+    newNav.document = document;
     newNav.setOwnerId(ownerId);
     newNav.setOwnerType(ownerType);
     newNav.setPriority(priority);
