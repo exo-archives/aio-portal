@@ -53,7 +53,7 @@ public class UIPortalNavigation extends UIComponent {
     return result;
   }
   
-  public PageNavigation getSelectedNavigation() {
+  public PageNavigation getSelectedNavigation() throws Exception {
     PageNavigation nav = Util.getUIPortal().getSelectedNavigation();
     if(nav != null) return nav;
     if(Util.getUIPortal().getNavigations().size() < 1) return null;
@@ -61,7 +61,7 @@ public class UIPortalNavigation extends UIComponent {
   }
 
   public Object getSelectedParent() { return selectedParent_ ; }
-  public PageNode getSelectedPageNode() {
+  public PageNode getSelectedPageNode() throws Exception {
     if(selectedNode_ != null)  return selectedNode_;
     selectedNode_ = Util.getUIPortal().getSelectedNode();    
     return selectedNode_ ; 
@@ -132,42 +132,4 @@ public class UIPortalNavigation extends UIComponent {
       uiPortal.broadcast(pnevent, Event.Phase.PROCESS) ;
     }
   }
-
-  //TODO TrongTT : This class seem not be used
-/*  static  public class UpLevelActionListener extends EventListener<UIPortalNavigation> {
-    public void execute(Event<UIPortalNavigation> event) throws Exception {
-      UIPortalNavigation uiNavigation = event.getSource();      
-      String uri  = event.getRequestContext().getRequestParameter(OBJECTID); 
-      UIPortal uiPortal = Util.getUIPortal();
-      
-      int index = uri.lastIndexOf("::");
-      String id = uri.substring(index +2);
-      PageNavigation selectNav = null;
-      if(index <= 0) {selectNav = uiPortal.getSelectedNavigation();}
-      else {
-        String navId = uri.substring(0, index);
-        selectNav = uiPortal.getPageNavigation(navId);
-      }
-      PageNode selectNode = PageNavigationUtils.searchPageNodeByUri(selectNav, id);
-      uiNavigation.selectedNode_ = selectNode;
-      String parentUri = null;
-      index = uri.lastIndexOf("/");
-      if(index > 0) parentUri = uri.substring(0, index);
-      if(parentUri == null || parentUri.length() < 1) uiNavigation.selectedParent_ = selectNav;
-      else uiNavigation.selectedParent_ = PageNavigationUtils.searchPageNodeByUri(selectNav, parentUri);
-      UIPageBody uiPageBody = uiPortal.findFirstComponentOfType(UIPageBody.class);
-      if(uiPageBody != null) {
-        if(uiPageBody.getMaximizedUIComponent() != null) {
-          UIPortlet currentPortlet =  (UIPortlet) uiPageBody.getMaximizedUIComponent();
-          currentPortlet.setCurrentWindowState(WindowState.NORMAL);
-          uiPageBody.setMaximizedUIComponent(null);
-        }
-      }
-     
-      PageNodeEvent<UIPortal> pnevent = 
-        new PageNodeEvent<UIPortal>(uiPortal, PageNodeEvent.CHANGE_PAGE_NODE, null, uri) ;
-      uiPortal.broadcast(pnevent, Event.Phase.PROCESS) ;      
-    }
-  }*/
-
 }

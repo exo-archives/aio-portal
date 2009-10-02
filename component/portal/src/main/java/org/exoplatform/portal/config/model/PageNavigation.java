@@ -29,8 +29,10 @@ public class PageNavigation {
   private  String     modifier ;
   private ArrayList<PageNode>	pageNodes = new ArrayList<PageNode>();
   private int         priority = 1 ;
+  private long 				serialMark ;
+  
 
-  /** The original document might be null. */
+	/** The original document might be null. */
   public Document document;
 
   public PageNavigation() {
@@ -69,6 +71,14 @@ public class PageNavigation {
   public ArrayList<PageNode> getNodes(){ return pageNodes; }
   public void setNodes(ArrayList<PageNode> nodes) { pageNodes = nodes; }
   
+  public long getSerialMark() {
+  	return serialMark;
+  }
+  
+  public void setSerialMark(long serialModifiedKey) {
+  	this.serialMark = serialModifiedKey;
+  }
+  
   public PageNode getNode(String name) {
     for(PageNode node : pageNodes){       
       if(node.getName().equals(name)) return node;
@@ -85,6 +95,7 @@ public class PageNavigation {
 //    newNav.setAccessPermissions(accessPermissions);
 //    newNav.setEditPermission(editPermission);
     newNav.setModifiable(modifiable);
+    newNav.setSerialMark(serialMark);
 //    newNav.setDescription(description);
     newNav.setCreator(creator);
     newNav.setModifier(modifier);
@@ -95,5 +106,4 @@ public class PageNavigation {
     }
     return newNav;
   }
- 
 }

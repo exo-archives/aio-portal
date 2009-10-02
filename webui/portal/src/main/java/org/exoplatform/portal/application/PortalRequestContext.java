@@ -122,7 +122,7 @@ public class PortalRequestContext extends WebuiRequestContext {
     appRes_ = getApplication().getResourceBundle(getLocale()) ;
   }
 
-  public String getTitle() {
+  public String getTitle() throws Exception {
     String title = (String)request_.getAttribute(REQUEST_TITLE);
     if(title != null) return title;
     UIPortal uiportal = Util.getUIPortal();

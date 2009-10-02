@@ -374,6 +374,7 @@ public class UserPortalConfigService implements Startable {
 
 	public void create(PageNavigation navigation) throws Exception {
 		storage_.create(navigation);
+		navigation.setSerialMark(System.currentTimeMillis());
 		pageNavigationCache_.put(navigation.getOwner(), navigation);
 		listenerService.broadcast(CREATE_NAVIGATION_EVENT, this, navigation);
 	}
@@ -386,8 +387,7 @@ public class UserPortalConfigService implements Startable {
 	 */
 	public void update(PageNavigation navigation) throws Exception {
 		storage_.save(navigation);
-		pageNavigationCache_.select(new ExpireKeyStartWithSelector(navigation
-				.getOwner()));
+		pageNavigationCache_.select(new ExpireKeyStartWithSelector(navigation.getOwner()));
 		listenerService.broadcast(UPDATE_NAVIGATION_EVENT, this, navigation);
 	}
 
@@ -405,10 +405,15 @@ public class UserPortalConfigService implements Startable {
 
 	public PageNavigation getPageNavigation(String ownerType, String id)
 			throws Exception {
-		PageNavigation navigation = (PageNavigation) pageNavigationCache_
-				.get(ownerType + "::" + id);
-		if (navigation == null)
+		PageNavigation navigation = (PageNavigation) pageNavigationCache_.get(ownerType + "::" + id);
+		if (navigation == null) {
 			navigation = storage_.getPageNavigation(ownerType, id);
+			if (navigation != null) {
+				navigation.setSerialMark(System.currentTimeMillis());
+				pageNavigationCache_.put(navigation.getOwner(), navigation);
+			}
+		}
+		
 		return navigation;
 	}
 

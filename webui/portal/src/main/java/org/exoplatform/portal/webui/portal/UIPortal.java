@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.exoplatform.portal.account.UIAccountSetting;
 import org.exoplatform.portal.application.PortalRequestContext;
+import org.exoplatform.portal.config.UserPortalConfigService;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.config.model.PortalConfig;
@@ -104,7 +105,21 @@ public class UIPortal extends UIContainer {
     publicParameters_ = publicParams;
   }
 
-  public List<PageNavigation> getNavigations() { return navigations ; }
+  public List<PageNavigation> getNavigations() throws Exception {
+  	UserPortalConfigService serv = getApplicationComponent(UserPortalConfigService.class);
+  	for (int i = 0; i < navigations.size(); i++) {
+  		PageNavigation ele = navigations.get(i);
+  		PageNavigation temp = serv.getPageNavigation(ele.getOwnerType(), ele.getOwnerId());
+  		if (temp.getSerialMark() != ele.getSerialMark()) {
+  			UIPortalApplication uiApp = getAncestorOfType(UIPortalApplication.class);
+  			LocaleConfig localeConfig = getApplicationComponent(LocaleConfigService.class).getLocaleConfig(uiApp.getLocale().getLanguage()) ;
+  			temp.setModifiable(ele.isModifiable());
+  			localizePageNavigation(temp, localeConfig);
+  			navigations.set(i, temp);
+  		}
+  	}
+  	return navigations ;	
+  }
   public void setNavigation(List<PageNavigation> navs) throws Exception {
     navigations = navs;
     selectedPaths_ = new ArrayList<PageNode>();
@@ -133,7 +148,7 @@ public class UIPortal extends UIContainer {
   }
 
   public void setSelectedNode(PageNode node) { selectedNode_ = node; }
-  public PageNode getSelectedNode(){ 
+  public PageNode getSelectedNode() throws Exception { 
     if(selectedNode_ != null) return selectedNode_;
     if(getSelectedNavigation() == null || selectedNavigation_.getNodes() == null ||
        selectedNavigation_.getNodes().size()< 1) return null;
@@ -144,7 +159,7 @@ public class UIPortal extends UIContainer {
   public List<PageNode> getSelectedPaths() { return selectedPaths_ ; }
   public void setSelectedPaths(List<PageNode> nodes){  selectedPaths_ = nodes; }
   
-  public PageNavigation getSelectedNavigation() {
+  public PageNavigation getSelectedNavigation() throws Exception {
     if(selectedNavigation_ != null && selectedNavigation_.getNodes() != null
         && selectedNavigation_.getNodes().size() > 0) {
       return selectedNavigation_;
@@ -181,28 +196,19 @@ public class UIPortal extends UIContainer {
     this.maximizedUIComponent = maximizedReferenceComponent;
   }
   
-  @Deprecated
-  public void refreshNavigation() {
-    LocaleConfig localeConfig = getApplicationComponent(LocaleConfigService.class).
-                                getLocaleConfig(locale) ;
-    for(PageNavigation nav : navigations) {
-      if(nav.getOwnerType().equals(PortalConfig.USER_TYPE)) continue ;
-      ResourceBundle res = localeConfig.getNavigationResourceBundle(nav.getOwnerType(), nav.getOwnerId()) ;
-      for(PageNode node : nav.getNodes()) {
-        resolveLabel(res, node) ;
-      }
-    }
-  }
-  
   public void refreshNavigation(Locale locale) {
     LocaleConfig localeConfig = getApplicationComponent(LocaleConfigService.class).getLocaleConfig(locale.getLanguage()) ;
     for(PageNavigation nav : navigations) {
-      if(nav.getOwnerType().equals(PortalConfig.USER_TYPE)) continue ;
-      ResourceBundle res = localeConfig.getNavigationResourceBundle(nav.getOwnerType(), nav.getOwnerId()) ;
-      for(PageNode node : nav.getNodes()) {
-        resolveLabel(res, node) ;
-      }
+    	localizePageNavigation(nav, localeConfig);
     }
+  }
+  
+  private void localizePageNavigation(PageNavigation nav, LocaleConfig localeConfig) {
+  	if(nav.getOwnerType().equals(PortalConfig.USER_TYPE)) return ;
+  	ResourceBundle res = localeConfig.getNavigationResourceBundle(nav.getOwnerType(), nav.getOwnerId()) ;
+  	for(PageNode node : nav.getNodes()) {
+  		resolveLabel(res, node) ;
+  	}
   }
   
   private void resolveLabel(ResourceBundle res, PageNode node) {
