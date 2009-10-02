@@ -17,6 +17,7 @@
 package org.exoplatform.web.command.handler;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,13 +61,27 @@ public class DownloadHandler extends Command {
     }
     res.setContentType(dresource.getResourceMimeType()) ;
     InputStream is = dresource.getInputStream() ;
-    byte[] buf = new byte[is.available()] ;
-    is.read(buf) ;
-    res.setContentType(dresource.getResourceMimeType()) ;          
-    res.getOutputStream().write(buf) ;        
-    is.close();
+    try{
+    	optimalRead(is, res.getOutputStream());
+    }catch(Exception ex){
+    	ex.printStackTrace();
+    }finally{
+    	is.close();
+    }
   }
 
   public String getResourceId() { return resourceId; }  
+  
+  private static void optimalRead(InputStream is, OutputStream os) throws Exception{
+	  int bufferLength = 1024; //TODO: Better to compute bufferLength in term of -Xms, -Xmx properties
+	  int readLength = 0;
+	  while(readLength > -1){
+	  	byte[] chunk = new byte[bufferLength];
+	  	readLength = is.read(chunk);
+	  	if(readLength > 0){
+	  		os.write(chunk, 0, readLength);
+	  	}
+	  }
+  }
 
 }
