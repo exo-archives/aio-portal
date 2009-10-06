@@ -95,7 +95,7 @@ public class ExoContainerConfig extends JsonContainerConfig {
     if (!keyFile.exists()) {
     	log.debug("No key file found at path " + keyPath + " generating a new key and saving it");
     	File parentFolder = keyFile.getParentFile();
-    	if(!parentFolder.exists()) parentFolder.mkdirs();
+    	if(parentFolder != null && !parentFolder.exists()) parentFolder.mkdirs();
       String key = generateKey();
       Writer out = null;
       try {
