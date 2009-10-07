@@ -97,7 +97,6 @@ public class PortalStateManager extends StateManager {
       Class type = Thread.currentThread().getContextClassLoader().loadClass(uirootClass) ;
       UserPortalConfig config = getUserPortalConfig(pcontext) ;
       if(config == null) {
-        pcontext.getRequest().getSession().invalidate() ;
         HttpServletResponse response = pcontext.getResponse();
         if(pcontext.getRemoteUser() == null) {
           String portalName = pcontext.getPortalOwner() ;
