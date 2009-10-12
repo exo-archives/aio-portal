@@ -90,7 +90,7 @@ public class UIPageNavigationActionListener {
       PortalRequestContext pcontext = (PortalRequestContext)event.getRequestContext();
       UIPageNodeSelector uiPageNodeSelector = uiPopup.getAncestorOfType(UIPageNodeSelector.class);
       PageNavigation selectedNavigation = uiPageNodeSelector.getSelectedNavigation();
-      if(!selectedNavigation.getOwnerType().equals(PortalConfig.GROUP_TYPE)){
+      if(selectedNavigation.getOwnerType().equals(PortalConfig.PORTAL_TYPE)){
         UIApplication uiApp = pcontext.getUIApplication() ;
         uiApp.addMessage(new ApplicationMessage("UIPageNodeSelector.msg.deleteNav", null ,ApplicationMessage.ERROR)) ;
 

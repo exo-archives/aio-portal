@@ -93,17 +93,17 @@ public class UserPortalConfigListener extends UserEventListener {
     String userName = user.getUserName() ;
     PageNavigation navigation = dataStorage.getPageNavigation(PortalConfig.USER_TYPE, userName) ;
     if (navigation != null) return;
-    PageNavigation pageNav = new PageNavigation();
-    pageNav.setOwnerType(PortalConfig.USER_TYPE);
-    pageNav.setOwnerId(userName);
-    pageNav.setPriority(5);
-    pageNav.setNodes(new ArrayList<PageNode>());
-    portalConfigService.create(pageNav);
+//    PageNavigation pageNav = new PageNavigation();
+//    pageNav.setOwnerType(PortalConfig.USER_TYPE);
+//    pageNav.setOwnerId(userName);
+//    pageNav.setPriority(5);
+//    pageNav.setNodes(new ArrayList<PageNode>());
+//    portalConfigService.create(pageNav);
     
-    Gadgets gadgets = new Gadgets() ;
-    gadgets.setOwnerType(PortalConfig.USER_TYPE) ;
-    gadgets.setOwnerId(userName) ;
-    gadgets.setChildren(new ArrayList<Container>()) ;
-    portalConfigService.create(gadgets) ;
+//    Gadgets gadgets = new Gadgets() ;
+//    gadgets.setOwnerType(PortalConfig.USER_TYPE) ;
+//    gadgets.setOwnerId(userName) ;
+//    gadgets.setChildren(new ArrayList<Container>()) ;
+//    portalConfigService.create(gadgets) ;
   }
 }

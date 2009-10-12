@@ -46,12 +46,12 @@ public class UIWelcomeComponent extends UIContainer {
     Gadgets gadgets = userPortalConfig.getGadgets() ;
     if(gadgets == null) {
       gadgets = new Gadgets() ;
-      gadgets.setOwnerType(PortalConfig.USER_TYPE) ;
-      gadgets.setOwnerId(rcontext.getRemoteUser()) ;
-      gadgets.setChildren(new ArrayList<Container>()) ;
-      UserPortalConfigService configService = getApplicationComponent(UserPortalConfigService.class) ;
-      configService.create(gadgets) ;
-      userPortalConfig.setGadgets(gadgets) ;
+//      gadgets.setOwnerType(PortalConfig.USER_TYPE) ;
+//      gadgets.setOwnerId(rcontext.getRemoteUser()) ;
+//      gadgets.setChildren(new ArrayList<Container>()) ;
+//      UserPortalConfigService configService = getApplicationComponent(UserPortalConfigService.class) ;
+//      configService.create(gadgets) ;
+//      userPortalConfig.setGadgets(gadgets) ;
     }
     UIGadgets uiGadgets = addChild(UIGadgets.class, null, null) ;
     PortalDataMapper.toUIGadgets(uiGadgets, gadgets) ;

@@ -19,10 +19,13 @@ package org.exoplatform.portal.webui.application;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.exoplatform.portal.config.UserPortalConfig;
 import org.exoplatform.portal.config.UserPortalConfigService;
 import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.Gadgets;
+import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.webui.util.PortalDataMapper;
+import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIControlWorkspace;
 import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
 import org.exoplatform.portal.webui.workspace.UIPortalApplication;
@@ -175,7 +178,8 @@ public class UIGadgetContainerManagement extends UIContainer {
       List<Container> containers = uiManagement.getContainers() ;
       
       UserPortalConfigService configService = uiManagement.getApplicationComponent(UserPortalConfigService.class) ;
-      UIPortalApplication uiPortalApp = uiManagement.getAncestorOfType(UIPortalApplication.class) ;
+      UIPortalApplication uiPortalApp = uiManagement.getAncestorOfType(UIPortalApplication.class) ;      
+      createGadgets(configService);
       Gadgets gadgets = uiPortalApp.getUserPortalConfig().getGadgets() ;
       gadgets.setChildren((ArrayList<Container>)containers) ;
       configService.update(gadgets) ;
@@ -189,6 +193,22 @@ public class UIGadgetContainerManagement extends UIContainer {
       uiMaskWorkspace.createEvent("Close", Phase.PROCESS, rcontext).broadcast() ;
     }
     
+    private void createGadgets(UserPortalConfigService userPortalConfigService) throws Exception {
+      WebuiRequestContext rcontext = Util.getPortalRequestContext();
+      UIPortalApplication uiPortalApplication = (UIPortalApplication)rcontext.getUIApplication();
+      UserPortalConfig userPortalConfig = uiPortalApplication.getUserPortalConfig();
+      if(userPortalConfig == null) return;
+      Gadgets gadgets = userPortalConfig.getGadgets() ;
+      if(gadgets == null) {
+        gadgets = new Gadgets() ;
+        gadgets.setOwnerType(PortalConfig.USER_TYPE) ;
+        gadgets.setOwnerId(rcontext.getRemoteUser()) ;
+        gadgets.setChildren(new ArrayList<Container>()) ;
+        
+        userPortalConfigService.create(gadgets) ;
+        userPortalConfig.setGadgets(gadgets) ;
+      }
+    }
   }
 
 }
