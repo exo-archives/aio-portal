@@ -3,6 +3,8 @@
   import org.exoplatform.web.application.JavascriptManager ;
   import org.exoplatform.portal.config.model.PageNavigation ;
   import org.exoplatform.portal.config.model.PageNode ;
+  import org.exoplatform.portal.webui.util.Util;
+  
   def rcontext = _ctx.getRequestContext() ;
   JavascriptManager jsmanager = rcontext.getJavascriptManager();
   
@@ -20,23 +22,27 @@
   String comId = uicomponent.getId();
   boolean modifiable = uicomponent.isModifiable();
   
-    void renderSinglePageNode(PageNavigation nav, PageNode node) {
-    String  href = uicomponent.event("ChangePage",  nav.getId() + "::" + node.getUri()) ;
+  void renderSinglePageNode(PageNavigation nav, PageNode node) {    
+    String pageURI = Util.getPortalRequestContext().getPortalURI() + node.getUri();  
+    String onclickEvt = uicomponent.event("ChangePage",  nav.getId() + "::" + node.getUri()) + "; event.cancelBubble = true; return false;";
+    
     String icon = node.getIcon();
     if(icon == null) icon = "DefaultPageIcon";
     print """
       <div class="MenuItem">
         <div class="LabelItem">
           <div class="Icon $icon"  style="padding-left: 18px">
-            <div class="LabelText"><a href="#" onclick="$href">$node.resolvedLabel</a></div>
+            <div class="LabelText"><a href="$pageURI" onclick="$onclickEvt">$node.resolvedLabel</a></div>
           </div>
         </div>
       </div>
     """ ;
   }
   
-  void renderPageNode(PageNavigation nav, PageNode node) {
-     String  href = uicomponent.event("ChangePage",   nav.getId() + "::" +  node.getUri()) ;
+  void renderPageNode(PageNavigation nav, PageNode node) {     
+     String pageURI = Util.getPortalRequestContext().getPortalURI() + node.getUri();  
+     String onclickEvt = uicomponent.event("ChangePage",  nav.getId() + "::" + node.getUri()) + "; event.cancelBubble = true; return false;";
+     
      String icon = node.getIcon();
      String scrollUpTitle = _ctx.appRes("UIExoStart.tooltip.scrollUp") ;
   	 String scrollDownTitle = _ctx.appRes("UIExoStart.tooltip.scrollDown") ;
@@ -46,7 +52,7 @@
         <div class="LabelItem">
           <div class="Icon $icon" style="padding-left: 18px"> 
             <div class="BlackArrowIcon">
-              <div class="LabelText "><a href="#" onclick="$href">$node.resolvedLabel</a></div>
+              <div class="LabelText "><a href="$pageURI" onclick="$onclickEvt">$node.resolvedLabel</a></div>
             </div>
           </div>
         </div>

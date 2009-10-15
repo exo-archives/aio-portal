@@ -42,20 +42,16 @@ UIPopupMenu.prototype.setCloseTimeout = function(time) {
 	if (!time) time = 100;
 	setTimeout("eXo.webui.UIPopupMenu.doOnMenuItemOut()", time) ;
 };
+
 /**
  * Adds an onCLick event to link elements
  * If they are http links, changes the url in the browser
  * If they are javascript links, executes the javascript
  */
-UIPopupMenu.prototype.createLink = function(menuItem, link) {
-	if (link && link.href) {
+UIPopupMenu.prototype.createLink = function(menuItem, link) {	
+	if (link && link.onclick) {
 		menuItem.onclick = function(e) {
-			if (link.href.substr(0, 7) == "http://") window.location.href = link.href;
-			else eval(link.href);
-			if (!e) e = window.event;
-			if (e.stopPropagation) e.stopPropagation();
-			e.cancelBubble = true;
-			return false;
+			link.onclick(); return;
 		}
 	}
 };
