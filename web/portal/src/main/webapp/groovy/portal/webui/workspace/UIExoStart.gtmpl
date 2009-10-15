@@ -17,7 +17,7 @@
     String pageURI = Util.getPortalRequestContext().getPortalURI() + node.getUri();  
     String onclickEvt = ""
     if(uicomponent.isUseAjax()){
-  	  	  onclickEvt = "onclick=\"" + uicomponent.event("ChangePage",  nav.getId() + "::" + node.getUri()) + ";return false;\"";  	  
+  	  	  onclickEvt = "onclick=\"" + uicomponent.event("ChangePage",  nav.getId() + "::" + node.getUri()) + "; event.cancelBubble = true; return false;\"";  	  
   	}
     String icon = node.getIcon();
     if(icon == null) icon = "DefaultPageIcon";
@@ -45,7 +45,7 @@
     String pageURI = Util.getPortalRequestContext().getPortalURI() + node.getUri();  
     String onclickEvt = ""
     if(uicomponent.isUseAjax()){
-  	  	  onclickEvt = "onclick=\"" + uicomponent.event("ChangePage",  nav.getId() + "::" + node.getUri()) + ";return false;\"";  	  
+  	  	  onclickEvt = "onclick=\"" + uicomponent.event("ChangePage",  nav.getId() + "::" + node.getUri()) + "; event.cancelBubble = true; return false;\"";  	  
   	}
     String icon = node.getIcon();
     String scrollUpTitle = _ctx.appRes("UIExoStart.tooltip.scrollUp") ;
