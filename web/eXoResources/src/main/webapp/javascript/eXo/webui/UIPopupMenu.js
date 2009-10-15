@@ -47,15 +47,13 @@ UIPopupMenu.prototype.setCloseTimeout = function(time) {
  * If they are http links, changes the url in the browser
  * If they are javascript links, executes the javascript
  */
-UIPopupMenu.prototype.createLink = function(menuItem, link) {
+UIPopupMenu.prototype.createLink = function(menuItem, link) {	
 	if (link && link.href) {
-		menuItem.onclick = function(e) {
-			if (link.href.substr(0, 7) == "http://") window.location.href = link.href;
-			else eval(link.href);
-			if (!e) e = window.event;
-			if (e.stopPropagation) e.stopPropagation();
-			e.cancelBubble = true;
-			return false;
+		menuItem.onclick = function(e) {			
+			if (link && link.onclick) {				
+				link.onclick();
+				return;
+			}
 		}
 	}
 };
