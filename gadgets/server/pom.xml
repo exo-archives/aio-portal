@@ -22,41 +22,15 @@
                 <configuration>
                     <dependentWarExcludes>gadgets/**</dependentWarExcludes>
                     <dependentWarExcludes>WEB-INF/web**</dependentWarExcludes>
-                    <webResources>
-                        <resource>
-                            <!-- this is relative to the pom.xml directory -->
-                            <directory>${basedir}/../config</directory>
-                            <includes>
-                                <include>oauth.xml</include>
-                            </includes>
-                        </resource>
-                    </webResources>
                 </configuration>
             </plugin>
-
         </plugins>
-        <resources>
-            <resource>
-                <targetPath>containers/default</targetPath>
-                <directory>${basedir}/../config</directory>
-                <includes>
-                    <include>container.js</include>
-                </includes>
-            </resource>
-            <resource>
-                <targetPath>config</targetPath>
-                <directory>${basedir}/../config</directory>
-                <includes>
-                    <include>oauth.json</include>
-                </includes>
-            </resource>
-        </resources>
     </build>
 
     <!-- ====================================================================== -->
     <!-- R E P O S I T O R I E S                                                -->
     <!-- ====================================================================== -->
-    <repositories>
+    <!--<repositories>
         <repository>
             <id>caja</id>
             <url>http://google-caja.googlecode.com/svn/maven</url>
@@ -65,7 +39,7 @@
             <id>oauth</id>
             <url>http://oauth.googlecode.com/svn/code/maven</url>
         </repository>
-    </repositories>
+    </repositories>-->
 
     <dependencies>
         <!-- project dependencies -->

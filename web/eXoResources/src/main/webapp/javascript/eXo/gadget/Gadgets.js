@@ -19,11 +19,7 @@
 /**
  * @fileoverview Open Gadget Container
  */
-
 var gadgets = gadgets || {};
-
-//do not load twice this library
-if (!gadgets.Gadget) {
 gadgets.error = {};
 gadgets.error.SUBCLASS_RESPONSIBILITY = 'subclass responsibility';
 gadgets.error.TO_BE_DONE = 'to be done';
@@ -58,12 +54,12 @@ gadgets.callAsyncAndJoin = function(functions, continuation, opt_this) {
   var pending = functions.length;
   var results = [];
   for (var i = 0; i < functions.length; i++) {
-    // we need a wrapper here because i changes and we need once index
+    // we need a wrapper here because i changes and we need one index
     // variable per closure
     var wrapper = function(index) {
       functions[index].call(opt_this, function(result) {
         results[index] = result;
-        if (--pending == 0) {
+        if (--pending === 0) {
           continuation(results);
         }
       });
@@ -193,15 +189,18 @@ gadgets.IfrGadgetService.prototype.setHeight = function(height) {
   if (height > gadgets.container.maxheight_) {
     height = gadgets.container.maxheight_;
   }
-
   var element = document.getElementById(this.f);
   if (element) {
-    element.style.height = height + 'px';
+	  if(height <= 0) element.style.height = "auto" ;
+  	else element.style.height = height + 'px';
   }
 };
 
 gadgets.IfrGadgetService.prototype.setTitle = function(title) {
-  var element = document.getElementById(this.f + '_title');
+  var element = document.getElementById(this.f);
+  element = eXo.core.DOMUtil.findAncestorByClass(element, "UIGadget");
+  element = eXo.core.DOMUtil.findFirstDescendantByClass(element, "div", "GadgetTitle");
+
   if (element) {
     element.innerHTML = title.replace(/&/g, '&amp;').replace(/</g, '&lt;');
   }
@@ -216,7 +215,7 @@ gadgets.IfrGadgetService.prototype.setTitle = function(title) {
  */
 gadgets.IfrGadgetService.prototype.setUserPref = function(editToken, name,
     value) {
-  var id = this.getGadgetIdFromModuleId(this.f);
+  var id = gadgets.container.gadgetService.getGadgetIdFromModuleId(this.f);
   var gadget = gadgets.container.getGadget(id);
   var prefs = gadget.getUserPrefs();
   for (var i = 1, j = arguments.length; i < j; i += 2) {
@@ -229,36 +228,57 @@ gadgets.IfrGadgetService.prototype.setUserPref = function(editToken, name,
  * Navigates the page to a new url based on a gadgets requested view and
  * parameters.
  */
+//TODO: tung.dang - support requestNavigate function
 gadgets.IfrGadgetService.prototype.requestNavigateTo = function(view,
     opt_params) {
-  var id = this.getGadgetIdFromModuleId(this.f);
-  var url = this.getUrlForView(view);
-
+  var id = gadgets.container.gadgetService.getGadgetIdFromModuleId(this.f);
+  var gadget = gadgets.container.getGadget(id);
+  var iframe = document.getElementById(gadget.getIframeId()); 
+  var DOMUtil = eXo.core.DOMUtil;
+  var uiGadget = DOMUtil.findAncestorByClass(iframe,"UIGadget");
+  //set iframe url
+  var url = gadget.getIframeUrl();
+  var currentView = gadget.view || gadgets.container.view_;
+  if(currentView == view) return;
+  url = url.replace('view=' + currentView, 'view=' + view);
   if (opt_params) {
-    var paramStr = JSON.stringify(opt_params);
-    if (paramStr.length > 0) {
-      url += '&appParams=' + encodeURIComponent(paramStr);
-    }
+          if (url.indexOf('view-params=') == -1) {
+                  url += '&view-params=' + $.toJSON(opt_params);
+          } else {
+                  // Replace old view-params with opt_param and keep other params.
+                  url = url.replace(/([?&])view-params=.*?(&|$)/, '$1' + $.toJSON(opt_params) + '$2')
+          }
   }
-
-  if (url && document.location.href.indexOf(url) == -1) {
-    document.location.href = url;
-  }
+  iframe.src = url;
+  
+  // create portal action to maximize or unmaximize gadget
+  var portletFrag = DOMUtil.findAncestorByClass(uiGadget, "PORTLET-FRAGMENT") ;
+  if (!portletFrag) return;
+  var maximize = "maximize";
+  if(view == 'canvas') maximize = "maximize";
+  else if(view == 'home') maximize = "unmaximize";
+  var compId = portletFrag.parentNode.id;
+  var uicomp = DOMUtil.getChildrenByTagName(portletFrag, "div")[0];
+  var href = eXo.env.server.portalBaseURL + "?portal:componentId=" + compId ;
+  href += "&portal:type=action&uicomponent=" + uicomp.id;
+  href += "&op=MaximizeGadget";
+  href += "&maximize=" + maximize;
+  href += "&objectId=" + uiGadget.id + "&ajaxRequest=true";
+  ajaxGet(href,true);
 };
 
 /**
  * This is a silly implementation that will need to be overriden by almost all
  * real containers.
- * TODO: Find a better default for this function
- *
+ * 
  * @param view The view name to get the url for
  */
 gadgets.IfrGadgetService.prototype.getUrlForView = function(
     view) {
   if (view === 'canvas') {
-    return '/canvas';
-  } else if (view === 'profile') {
-    return '/profile';
+    return 'canvas';
+  } else if (view === 'home') {
+    return 'home';
   } else {
     return null;
   }
@@ -316,16 +336,6 @@ gadgets.StaticLayoutManager.prototype.setGadgetChromeIds =
 gadgets.StaticLayoutManager.prototype.getGadgetChrome = function(gadget) {
   var chromeId = this.gadgetChromeIds_[gadget.id];
   return chromeId ? document.getElementById(chromeId) : null;
-};
-
-
-/**
- *
- * eXo's layout manager
- */
-var EXoLayoutManager = function() {
-	gadgets.LayoutManager.call(this);
-	this.gadgetList = new HashTable();
 };
 
 
@@ -392,7 +402,14 @@ gadgets.Gadget = function(params) {
       this[name] = params[name];
     }
   }
+  if (!this.secureToken) {
+    // Assume that the default security token implementation is
+    // in use on the server.
+    this.secureToken = 'root:john:appid:cont:url:0';
+  }
 };
+
+
 
 gadgets.Gadget.prototype.getUserPrefs = function() {
   return this.userPrefs_;
@@ -469,14 +486,14 @@ gadgets.Gadget.prototype.getAdditionalParams = function() {
 
 gadgets.IfrGadget = function(opt_params) {
   gadgets.Gadget.call(this, opt_params);
-  this.serverBase_ = '/gadgets/' // default gadget server
+  this.serverBase_ = '/eXoGadgetServer/gadgets/' // default gadget server
 };
 
 gadgets.IfrGadget.inherits(gadgets.Gadget);
 
 gadgets.IfrGadget.prototype.GADGET_IFRAME_PREFIX_ = 'remote_iframe_';
 
-gadgets.IfrGadget.prototype.SYND = 'default';
+gadgets.IfrGadget.prototype.CONTAINER = 'default';
 
 gadgets.IfrGadget.prototype.cssClassGadget = 'gadgets-gadget';
 gadgets.IfrGadget.prototype.cssClassTitleBar = 'gadgets-gadget-title-bar';
@@ -490,19 +507,10 @@ gadgets.IfrGadget.prototype.cssClassGadgetUserPrefsDialogActionBar =
 gadgets.IfrGadget.prototype.cssClassTitleButton = 'gadgets-gadget-title-button';
 gadgets.IfrGadget.prototype.cssClassGadgetContent = 'gadgets-gadget-content';
 gadgets.IfrGadget.prototype.rpcToken = (0x7FFFFFFF * Math.random()) | 0;
-gadgets.IfrGadget.prototype.rpcRelay = 'files/rpc_relay.html';
+gadgets.IfrGadget.prototype.rpcRelay = 'files/container/rpc_relay.html';
 
 gadgets.IfrGadget.prototype.getTitleBarContent = function(continuation) {
-  continuation('<div id="' + this.cssClassTitleBar + '-' + this.id +
-      '" class="' + this.cssClassTitleBar + '"><span id="' +
-      this.getIframeId() + '_title" class="' +
-      this.cssClassTitle + '">' + (this.title ? this.title : 'Title') + '</span> | <span class="' +
-      this.cssClassTitleButtonBar +
-      '"><a href="#" onclick="gadgets.container.getGadget(' + this.id +
-      ').handleOpenUserPrefsDialog();return false;" class="' + this.cssClassTitleButton +
-      '">settings</a> <a href="#" onclick="gadgets.container.getGadget(' +
-      this.id + ').handleToggle();return false;" class="' + this.cssClassTitleButton +
-      '">toggle</a></span></div>');
+	continuation('');
 };
 
 gadgets.IfrGadget.prototype.getUserPrefsDialogContent = function(continuation) {
@@ -522,6 +530,12 @@ gadgets.IfrGadget.prototype.getMainContent = function(continuation) {
   var iframeId = this.getIframeId();
   gadgets.rpc.setRelayUrl(iframeId, this.serverBase_ + this.rpcRelay);
   gadgets.rpc.setAuthToken(iframeId, this.rpcToken);
+  
+  /*
+   * TODO: tan.pham: Fix bug WEBOS-273, width of iframe to large
+   * When width of gadget didn't specify, set width of iframe to auto.
+   * In control workspace, we set width of iframe by css.
+   */
   continuation('<div class="' + this.cssClassGadgetContent + '"><iframe id="' +
       iframeId + '" name="' + iframeId + '" class="' + this.cssClassGadget +
       '" src="' + this.getIframeUrl() +
@@ -541,20 +555,20 @@ gadgets.IfrGadget.prototype.getUserPrefsDialogId = function() {
 
 gadgets.IfrGadget.prototype.getIframeUrl = function() {
   return this.serverBase_ + 'ifr?' +
-      'url=' + encodeURIComponent(this.specUrl) +
-      '&synd=' + this.SYND +
+      'container=' + this.CONTAINER +
       '&mid=' +  this.id +
-      '&nocache=' + gadgets.container.nocache_ +
+      '&nocache=' + this.nocache +
       '&country=' + gadgets.container.country_ +
       '&lang=' + gadgets.container.language_ +
-      '&view=' + gadgets.container.view_ +
+      '&view=' + (this.view || gadgets.container.view_) +
       (this.specVersion ? '&v=' + this.specVersion : '') +
       (gadgets.container.parentUrl_ ? '&parent=' + encodeURIComponent(gadgets.container.parentUrl_) : '') +
       (this.debug ? '&debug=1' : '') +
       this.getAdditionalParams() +
       this.getUserPrefsParams() +
+      (this.secureToken ? '&st=' + encodeURIComponent(this.secureToken) : '') +
+      '&url=' + encodeURIComponent(this.specUrl) +
       '#rpctoken=' + this.rpcToken +
-      (this.secureToken ? '&st=' + this.secureToken : '') +
       (this.viewParams ?
           '&view-params=' +  encodeURIComponent(JSON.stringify(this.viewParams)) : '') +
       (this.hashData ? '&' + this.hashData : '');
@@ -587,17 +601,108 @@ gadgets.IfrGadget.prototype.handleOpenUserPrefsDialog = function() {
   } else {
     var gadget = this;
     var igCallbackName = 'ig_callback_' + this.id;
-    window[igCallbackName] = function(userPrefsDialogContent) {
+    //window[igCallbackName] = function(userPrefsDialogContent) {
       gadget.userPrefsDialogContentLoaded = true;
-      gadget.buildUserPrefsDialog(userPrefsDialogContent);
+      this.generateForm(gadget, this.getUserPrefsParams());
+      //gadget.buildUserPrefsDialog(userPrefsDialogContent);
       gadget.showUserPrefsDialog();
-    };
-	
-    var script = document.createElement('script');
-    script.src = 'http://gmodules.com/ig/gadgetsettings?url=' + this.specUrl +
-        '&mid=' + this.id + '&output=js' + this.getUserPrefsParams();
-    document.body.appendChild(script);
+    //};
+
+    /*var script = document.createElement('script');
+    script.src = 'http://gmodules.com/ig/gadgetsettings?mid=' + this.id +
+        '&output=js' + this.getUserPrefsParams() +  '&url=' + this.specUrl;
+    document.body.appendChild(script); */
   }
+};
+
+gadgets.IfrGadget.prototype.generateForm = function(gadget) {
+    var prefs = gadget.metadata.userPrefs;
+    var userPrefs = gadget.userPrefs_;
+    var gadgetId = gadget.id;
+    var parentEl = document.getElementById(this.getUserPrefsDialogId());
+    var formEl = document.createElement("form");
+    var prefix = "m_" + gadgetId + "_up_";
+
+    var j = 0;
+    for (var att in prefs) {
+	    	//TODO: dang.tung not append when using list
+				type = prefs[att].type;
+				if(type == "list"|| type == "hidden") continue;
+				// end
+        var attEl = document.createElement("div");
+        var labelEl = document.createElement("span");
+
+        var elID = "m_" + gadgetId + '_' + j;
+
+        labelEl.innerHTML = prefs[att].displayName + ": ";
+        attEl.appendChild(labelEl);
+        if (type == "enum") {
+            var el = document.createElement("select");
+            el.name = prefix + att;
+            var values = prefs[att].orderedEnumValues;
+            var userValue = userPrefs[att];
+
+            for (var i = 0; i < values.length; i++) {
+                var value = values[i];
+                var optEl = document.createElement("option");
+                theText = document.createTextNode(value.displayValue);
+                optEl.appendChild(theText);
+                optEl.setAttribute("value", value.value);
+                if(userValue && value.value == userValue)
+                    optEl.setAttribute("selected", "selected");  
+                el.appendChild(optEl);
+            }
+            el.id = elID;
+            attEl.appendChild(el);
+        }
+        else if (type == "string" || type == "number") {
+            var el = document.createElement("input");
+            el.name = prefix + att;
+            el.id = elID;
+            if (userPrefs[att]) {
+                el.value = userPrefs[att];
+            }
+            attEl.appendChild(el);
+        }
+        formEl.appendChild(attEl);
+        j++;
+    }
+
+		//TODO: dang.tung remove save and cancel button when doesn't have any pref
+    //if(formEl.innerHTML == "") return;
+    // end
+    
+    var numFieldsEl = document.createElement("input");
+    numFieldsEl.type = "hidden";
+    numFieldsEl.value = j;
+    numFieldsEl.id = "m_" + gadgetId + "_numfields";
+    formEl.appendChild(numFieldsEl);
+
+    parentEl.appendChild(formEl);
+
+    var saveEl = document.createElement("div");
+    saveEl.className = this.cssClassGadgetUserPrefsDialogActionBar;
+    saveEl.innerHTML = '<input type="button" value="'+eXo.gadget.UIGadget.SaveTitle+'" onclick="gadgets.container.getGadget(' +
+      this.id +').handleSaveUserPrefs()"> <input type="button" value="'+eXo.gadget.UIGadget.CancelTitle+'" onclick="gadgets.container.getGadget(' +
+      this.id +').handleCancelUserPrefs()">';
+    parentEl.appendChild(saveEl);
+    if(gadget.isdev) {
+      //Are we in a portlet ? if not, we don't had  this code because we can't save the value
+      var gadgetEl = document.getElementById("gadget_" + gadget.id) ;
+      var portletFragment = eXo.core.DOMUtil.findAncestorByClass(gadgetEl, "PORTLET-FRAGMENT");
+
+      if (portletFragment) {
+        var devEl = document.createElement("div");
+        devEl.className = "devToolbar";
+        devEl.innerHTML = '<table>' +
+                          '<tr><td>'+eXo.gadget.UIGadget.Cache+'</td><td><input type="checkbox"' + (gadget.nocache ? ' checked=""' : "") + ' onclick="gadgets.container.getGadget(' + this.id + ').setNoCache(checked)"/></td></tr>' +
+                          '<tr><td>'+eXo.gadget.UIGadget.Debug+'</td><td><input type="checkbox"' + (gadget.debug ? ' checked=""' : "") + ' onclick="gadgets.container.getGadget(' + this.id + ').setDebug(checked)"/></td></tr>' +
+                          '</table>';
+        parentEl.appendChild(devEl);
+      }
+    }
+
+
 };
 
 gadgets.IfrGadget.prototype.buildUserPrefsDialog = function(content) {
@@ -635,7 +740,6 @@ gadgets.IfrGadget.prototype.handleSaveUserPrefs = function() {
       prefs[userPrefName] = userPrefValue;
     }
   }
-
   this.setUserPrefs(prefs);
   this.refresh();
 };
@@ -647,6 +751,34 @@ gadgets.IfrGadget.prototype.handleCancelUserPrefs = function() {
 gadgets.IfrGadget.prototype.refresh = function() {
   var iframeId = this.getIframeId();
   document.getElementById(iframeId).src = this.getIframeUrl();
+};
+
+
+gadgets.IfrGadget.prototype.sendServerRequest = function(op, key, value) {
+  var DOMUtil = eXo.core.DOMUtil;
+  var gadget = document.getElementById("gadget_" + this.id) ;
+  if(gadget != null ) {                    
+    var portletFragment = DOMUtil.findAncestorByClass(gadget, "PORTLET-FRAGMENT");
+    var uiGadget = gadget.parentNode;
+    if (portletFragment != null) {
+      var compId = portletFragment.parentNode.id;
+      var href = eXo.env.server.portalBaseURL + "?portal:componentId=" + compId;
+      href += "&portal:type=action&uicomponent=" + uiGadget.id;
+      href += "&op=" + op;
+      href += "&" + key + "=" + value;
+      ajaxAsyncGetRequest(href,true);
+    } else {
+      alert("not managed yet");
+    }
+  }
+}
+
+gadgets.IfrGadget.prototype.setDebug = function(value) {
+  this.sendServerRequest("SetDebug", "debug", (value ? "1" : "0"));
+};
+
+gadgets.IfrGadget.prototype.setNoCache = function(value) {
+  this.sendServerRequest("SetNoCache", "nocache", (value ? "1" : "0"));
 };
 
 
@@ -730,11 +862,11 @@ gadgets.Container.prototype.addGadget = function(gadget) {
   this.gadgets_[this.getGadgetKey_(gadget.id)] = gadget;
 };
 
-/*gadgets.Container.prototype.addGadgets = function(gadgets) {
+gadgets.Container.prototype.addGadgets = function(gadgets) {
   for (var i = 0; i < gadgets.length; i++) {
     this.addGadget(gadgets[i]);
   }
-};*/
+};
 
 /**
  * Renders all gadgets in the container.
@@ -808,5 +940,3 @@ gadgets.IfrContainer.prototype.renderGadget = function(gadget) {
  * Default container.
  */
 gadgets.container = new gadgets.IfrContainer();
-
-}
