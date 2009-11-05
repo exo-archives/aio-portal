@@ -17,9 +17,9 @@
      <exo.product.specification>2.5</exo.product.specification>
   </properties>
   <scm>
-    <connection>scm:svn:http://svn.exoplatform.org/svnroot/exoplatform/projects/portal/tags/2.5.6.1</connection>
-    <developerConnection>scm:svn:http://svn.exoplatform.org/svnroot/exoplatform/projects/portal/tags/2.5.6.1</developerConnection>
-    <url>http://fisheye.exoplatform.org/browse/projects/portal/tags/2.5.6.1</url>
+    <connection>scm:svn:http://svn.exoplatform.org/svnroot/exoplatform/projects/portal/tags/2.5.6.2</connection>
+    <developerConnection>scm:svn:http://svn.exoplatform.org/svnroot/exoplatform/projects/portal/tags/2.5.6.2</developerConnection>
+    <url>http://fisheye.exoplatform.org/browse/projects/portal/tags/2.5.6.2</url>
   </scm>
 
   <modules>
