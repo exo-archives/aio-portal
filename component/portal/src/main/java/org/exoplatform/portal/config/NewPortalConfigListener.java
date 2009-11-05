@@ -184,16 +184,15 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     String xml = null;
     // get path of xml file, check if path in template folder and if path not in
     // template folder
-    boolean notTemplate = (config.getTemplateOwner() == null || config.getTemplateOwner()
-                                                                      .trim()
-                                                                      .length() < 1);
-    String path = getPathConfig(config, owner, "portal", notTemplate);
+    boolean isTemplate = (config.getTemplateOwner() != null && config.getTemplateOwner()
+                                                                      .trim().length() > 0);
+    String path = getPathConfig(config, owner, "portal", isTemplate);
 
     // get xml content and parse xml content
     try {
       xml = getDefaultConfig(config.getTemplateLocation(), path);
 
-      if (!notTemplate) {
+      if (isTemplate) {
         xml = StringUtils.replace(xml, "@owner@", owner);
       }
       PortalConfig pconfig = fromXML(xml, PortalConfig.class);
@@ -209,16 +208,15 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
 
     // get path of xml file, check if path in template folder and if path not in
     // template folder
-    boolean notTemplate = (config.getTemplateOwner() == null || config.getTemplateOwner()
-                                                                      .trim()
-                                                                      .length() < 1);
-    String path = getPathConfig(config, owner, "pages", notTemplate);
+    boolean isTemplate = (config.getTemplateOwner() != null && config.getTemplateOwner()
+                                                                      .trim().length() > 0);
+    String path = getPathConfig(config, owner, "pages", isTemplate);
 
     // get xml content and parse xml content
     try {
       xml = getDefaultConfig(config.getTemplateLocation(), path);
 
-      if (!notTemplate) {
+      if (isTemplate) {
         xml = StringUtils.replace(xml, "@owner@", owner);
       }
 
@@ -237,16 +235,15 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
 
     // get path of xml file, check if path in template folder and if path not in
     // template folder
-    boolean notTemplate = (config.getTemplateOwner() == null || config.getTemplateOwner()
-                                                                      .trim()
-                                                                      .length() < 1);
-    String path = getPathConfig(config, owner, "navigation", notTemplate);
+    boolean isTemplate = (config.getTemplateOwner() != null && config.getTemplateOwner()
+                                                                      .trim().length() > 0);
+    String path = getPathConfig(config, owner, "navigation", isTemplate);
 
     // get xml content and parse xml content
     try {
       xml = getDefaultConfig(config.getTemplateLocation(), path);
 
-      if (!notTemplate) {
+      if (isTemplate) {
         xml = StringUtils.replace(xml, "@owner@", owner);
       }
 
@@ -292,9 +289,8 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     String xml = null;
     // get path of xml file, check if path in template folder and if path not in
     // template folder
-    boolean isTemplate = (config.getTemplateOwner() == null || config.getTemplateOwner()
-                                                                     .trim()
-                                                                     .length() < 1);
+    boolean isTemplate = (config.getTemplateOwner() != null && config.getTemplateOwner()
+                                                                     .trim().length() > 0);
     String path = getPathConfig(config, owner, "portlet-preferences", isTemplate);
 
     // get xml content and parse xml content
@@ -321,9 +317,9 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
   private String getPathConfig(NewPortalConfig portalConfig,
                                String owner,
                                String dataType,
-                               boolean notTemplate) {
+                               boolean isTemplate) {
     String path = "";
-    if (!notTemplate) {
+    if (isTemplate) {
       String ownerType = portalConfig.getOwnerType();
       path = "/" + ownerType + "/template/" + portalConfig.getTemplateOwner() + "/" + dataType
           + ".xml";
