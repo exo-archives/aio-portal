@@ -104,7 +104,7 @@ public class UICategoryForm extends UIFormTabPane {
     category_ = category ;
     uiSetting.getUIStringInput(FIELD_NAME).setEditable(false).setValue(category_.getName()) ;
     uiSetting.getUIStringInput(FIELD_DISPLAY_NAME).setValue(category_.getDisplayName()) ;
-    uiSetting.getUIStringInput(FIELD_DESCRIPTION).setValue(category_.getDescription()) ;
+    uiSetting.getUIFormTextAreaInput(FIELD_DESCRIPTION).setValue(category_.getDescription()) ;
     ArrayList<String> accessPermissions = category_.getAccessPermissions() ;
     String[] per = new String[accessPermissions.size()];
     if (accessPermissions != null && accessPermissions.size() > 0) {
@@ -129,7 +129,7 @@ public class UICategoryForm extends UIFormTabPane {
       String displayName = uiSetting.getUIStringInput(FIELD_DISPLAY_NAME).getValue();
       if(displayName == null || displayName.length() < 1 ) category.setDisplayName(category.getName());
       else category.setDisplayName(displayName) ;
-      category.setDescription(uiSetting.getUIStringInput(FIELD_DESCRIPTION).getValue()) ;
+      category.setDescription(uiSetting.getUIFormTextAreaInput(FIELD_DESCRIPTION).getValue()) ;
       
       UIListPermissionSelector uiListPermissionSelector = uiPermission.getChild(UIListPermissionSelector.class) ;
       ArrayList<String> pers = new ArrayList<String>();
