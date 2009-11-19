@@ -33,7 +33,9 @@ var eXo  = {
    
   mail : { },
   
-  faq : { }
+  faq : { },
+  
+  i18n : { }
 } ;
 
 /*

@@ -405,10 +405,10 @@ function HttpResponseHandler(){
 	    } else {
 	    	target = document.getElementById(blockToUpdate.blockId) ;
 	    }
-	    if(target == null) alert("target  BlockToUpdate.blockId " + blockToUpdate.blockId) ;
+	    if(target == null) alert(eXo.i18n.I18NMessage.getMessage("TargetBlockNotFound", new Array (blockToUpdate.blockId))) ;
 	    var newData =  eXo.core.DOMUtil.findDescendantById(blockToUpdate.data, blockToUpdate.blockId) ;
 	   	//var newData =  blockToUpdate.data.getElementById(blockToUpdate.blockId) ;
-	    if(newData == null) alert("block to update Id " + blockToUpdate.blockId) ;
+	    if(newData == null) alert(eXo.i18n.I18NMessage.getMessage("BlockUpdateNotFound", new Array (blockToUpdate.blockId))) ;
 	    target.innerHTML = newData.innerHTML ;
 	    
 	    //update embedded scripts
@@ -488,7 +488,7 @@ function HttpResponseHandler(){
 	    }
 	  }
 	  if(response.blocksToUpdate == undefined) {
-	  	if(confirm("Session timeout. Refresh your browser?")) instance.ajaxTimeout(request) ;
+	  	if(confirm(eXo.i18n.I18NMessage.getMessage("SessionTimeout"))) instance.ajaxTimeout(request) ;
 	  }
 	  //Handle the portal responses
 	  instance.updateBlocks(response.blocksToUpdate) ;
