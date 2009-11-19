@@ -113,7 +113,7 @@ public class UIPortalApplication extends UIApplication {
       if(userProfile != null) {
         portalLanguage = userProfile.getUserInfoMap().get("user.language") ;
        } else {
-         if (log.isWarnEnabled()) log.warn("Could not load user profile for " + user + ". Using default portal locale.");
+         if (log.isWarnEnabled()) log.info("Could not load user profile for " + user + ". Using default portal locale.");
        }
     }
     localeConfig = localeConfigService.getLocaleConfig(portalLanguage) ;
