@@ -233,44 +233,6 @@ public class UserPortalConfigService implements Startable {
 	 * @throws Exception
 	 */
 	public void removeUserPortalConfig(String portalName) throws Exception {
-		Query<Page> query = new Query<Page>(null, null, null, null, Page.class);
-		query.setOwnerType(PortalConfig.PORTAL_TYPE);
-		query.setOwnerId(portalName);
-		PageList pageList = storage_.find(query);
-		pageList.setPageSize(10);
-		int i = 1;
-		while (i <= pageList.getAvailablePage()) {
-			List<?> list = pageList.getPage(i);
-			Iterator<?> itr = list.iterator();
-			while (itr.hasNext()) {
-				Page page = (Page) itr.next();
-				remove(page);
-			}
-			i++;
-		}
-
-		PageNavigation navigation = storage_.getPageNavigation(
-				PortalConfig.PORTAL_TYPE, portalName);
-		if (navigation != null)
-			remove(navigation);
-
-		Query<PortletPreferences> portletPrefQuery = new Query<PortletPreferences>(
-				null, null, null, null, PortletPreferences.class);
-		portletPrefQuery.setOwnerType(PortalConfig.PORTAL_TYPE);
-		portletPrefQuery.setOwnerId(portalName);
-		pageList = storage_.find(portletPrefQuery);
-		pageList.setPageSize(10);
-		i = 1;
-		while (i <= pageList.getAvailablePage()) {
-			List<?> list = pageList.getPage(i);
-			Iterator<?> itr = list.iterator();
-			while (itr.hasNext()) {
-				PortletPreferences portletPreferences = (PortletPreferences) itr.next();
-				storage_.remove(portletPreferences);
-			}
-			i++;
-		}
-
 		PortalConfig config = storage_.getPortalConfig(portalName);
 		
 		if (config != null) {

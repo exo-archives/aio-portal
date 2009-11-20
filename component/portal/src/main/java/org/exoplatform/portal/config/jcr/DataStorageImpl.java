@@ -135,8 +135,7 @@ public class DataStorageImpl implements DataStorage, Startable {
   }
 
   public void remove(PortalConfig config) throws Exception {
-    String portalPath = getApplicationRegistryPath(PortalConfig.PORTAL_TYPE, config.getName())
-                        + "/"  + PORTAL_CONFIG_FILE_NAME;
+    String portalPath = getApplicationRegistryPath(PortalConfig.PORTAL_TYPE, config.getName());
     SessionProvider sessionProvider = SessionProvider.createSystemProvider() ;
     try {
       regService_.removeEntry(sessionProvider, portalPath) ;
