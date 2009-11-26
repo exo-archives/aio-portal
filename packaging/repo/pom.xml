@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+      <groupId>org.exoplatform.portal</groupId>
+      <artifactId>exo.portal.packaging</artifactId>
+      <version>2.5.7-SNAPSHOT</version>
+  </parent>
+  <artifactId>exo.portal.packaging.repo</artifactId>
+  <name>eXo Portal delivery repository</name>
+  <packaging>pom</packaging>
+
+  <dependencies>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>config</artifactId><version>2.5.7-SNAPSHOT</version><type>pom</type></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.component.application-registry</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.component.dashboard</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.component.portal</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.component.resources</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.component.scripting</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.component.web</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.component.xml-parser</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.eXoGadgets</artifactId><version>2.5.7-SNAPSHOT</version><type>war</type></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.gadgets-core</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.gadgets-server</artifactId><version>2.5.7-SNAPSHOT</version><type>war</type></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.portlet.dashboard</artifactId><version>2.5.7-SNAPSHOT</version><type>war</type></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.portlet.exoadmin</artifactId><version>2.5.7-SNAPSHOT</version><type>war</type></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.portlet.web</artifactId><version>2.5.7-SNAPSHOT</version><type>war</type></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.sample.application.map</artifactId><version>2.5.7-SNAPSHOT</version><type>war</type></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.server.jboss.patch</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.server.jboss.patch-ear</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.server.jboss.plugin</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.server.jonas.patch</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.server.jonas.plugin</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.server.tomcat.patch</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.server.tomcat.plugin</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.server.websphere.patch</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.server.websphere.plugin</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.web.eXoResources</artifactId><version>2.5.7-SNAPSHOT</version><type>war</type></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.web.eXoSkinMac</artifactId><version>2.5.7-SNAPSHOT</version><type>war</type></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.web.eXoSkinVista</artifactId><version>2.5.7-SNAPSHOT</version><type>war</type></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.web.portal</artifactId><version>2.5.7-SNAPSHOT</version><type>war</type></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.web.rest</artifactId><version>2.5.7-SNAPSHOT</version><type>war</type></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.webui.core</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.webui.eXo</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+        <dependency><groupId>org.exoplatform.portal</groupId><artifactId>exo.portal.webui.portal</artifactId><version>2.5.7-SNAPSHOT</version></dependency>
+  </dependencies>
+
+  <!-- Packaging -->
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>sources</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <classifier>sources</classifier>
+              <includeGroupIds>org.exoplatform</includeGroupIds>
+              <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+              <outputDirectory>${project.build.directory}/dependency</outputDirectory>
+              <useRepositoryLayout>true</useRepositoryLayout>
+              <copyPom>true</copyPom>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-dependencies</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <includeGroupIds>org.exoplatform</includeGroupIds>
+              <outputDirectory>${project.build.directory}/dependency</outputDirectory>
+              <useRepositoryLayout>true</useRepositoryLayout>
+              <copyPom>true</copyPom>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptors>
+            <descriptor>assemble-repository.xml</descriptor>
+          </descriptors>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id> <!-- this is used for inheritance merges -->
+            <phase>package</phase> <!-- append to the packaging phase. -->
+            <goals>
+              <goal>attached</goal> <!-- goals == mojos -->
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

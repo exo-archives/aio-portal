@@ -57,9 +57,10 @@
     <module>server/websphere/patch</module>
     <module>server/websphere/plugin</module>
 
-
     <module>sample/application/map</module>
     <module>sample/portlets</module>
+
+    <module>packaging</module>
   </modules>
 
   <build>
