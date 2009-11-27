@@ -80,7 +80,9 @@ public class UIGroupMembershipSelector extends UIContainer {
     for(Object obj : collection){
       listMemberhip.add(((MembershipType)obj).getName());
     }
-    listMemberhip.add("*");
+    
+    //TODO: a temporary fix for PORTAL-3616. it should be a real fix in JCR-1275
+    if (!listMemberhip.contains("*")) listMemberhip.add("*");
     
     tree.setSibbling((List)sibblingsGroup);
     tree.setIcon("GroupAdminIcon");
@@ -91,25 +93,6 @@ public class UIGroupMembershipSelector extends UIContainer {
     uiBreadcumbs.setBreadcumbsStyle("UIExplorerHistoryPath") ;
   }
   
-  /*public void processDecode(WebuiRequestContext context) throws Exception {   
-    super.processDecode(context);
-    UIForm uiForm  = getAncestorOfType(UIForm.class);
-    String action =  null;
-    if(uiForm != null){
-      action =  uiForm.getSubmitAction();
-    }else {
-      action = context.getRequestParameter(UIForm.ACTION);
-    }    
-    if(action == null)  return;    
-    
-    String componentId =  context.getRequestParameter("selectorId") ;
-    System.out.println("\n\n\n\n == > tai day ta co "+componentId +"\n\n\n");
-    if(componentId != null && componentId.trim().length() > 0 && componentId.equals(getId())) {
-      Event<UIComponent> event = createEvent(action, Event.Phase.DECODE, context) ;   
-      if(event != null) event.broadcast()  ;  
-    }
-  }*/
-
   public Group getCurrentGroup() { return selectGroup_ ; }
 
   public void changeGroup(String groupId) throws Exception {    
