@@ -334,13 +334,12 @@ public class UIPortletActionListener {
       EventListener<UIPortlet> {
     public void execute(Event<UIPortlet> event) throws Exception {
       UIPortlet uiPortlet = event.getSource();
-      PortalRequestContext context = (PortalRequestContext) event
+      PortalRequestContext ptContext = (PortalRequestContext) event
           .getRequestContext();
       List<UIPortlet> portletInstancesInPage = new ArrayList<UIPortlet>();
       UIPortalApplication uiPortal = uiPortlet.getAncestorOfType(UIPortalApplication.class);
       uiPortal.findComponentOfType(portletInstancesInPage, UIPortlet.class);
-      EventsWrapper eventsWrapper = (EventsWrapper) event.getRequestContext()
-          .getAttribute(PORTLET_EVENTS);
+      EventsWrapper eventsWrapper = (EventsWrapper) ptContext.getAttribute(PORTLET_EVENTS);
       List<javax.portlet.Event> events = eventsWrapper.getEvents(); 
       
       /*
@@ -349,33 +348,25 @@ public class UIPortletActionListener {
        * page (usual layout or webos) which instance can be targeted by the
        * event and then process the event on the associated UIPortlet component
        */
-      for (Iterator<javax.portlet.Event> iter = events.iterator(); iter.hasNext();) {
-        javax.portlet.Event nativeEvent = iter.next();
-        QName eventName = nativeEvent.getQName();
-        for (Iterator iterator = portletInstancesInPage.iterator(); iterator
-            .hasNext();) {
-          UIPortlet uiPortletInPage = (UIPortlet) iterator.next();
+      while(events.size() > 0) {
+        javax.portlet.Event plEvent = events.remove(0);
+        QName eventName = plEvent.getQName();
+        for (Iterator<UIPortlet> iterator = portletInstancesInPage.iterator(); iterator.hasNext();) {
+          UIPortlet uiPortletInPage = iterator.next();
           if (uiPortletInPage.supportsProcessingEvent(eventName)
-              && !eventsWrapper.isInvokedTooManyTimes(uiPortletInPage
-                  .getWindowId())) {
-            List<javax.portlet.Event> newEvents = processEvent(uiPortletInPage, nativeEvent);
+              && !eventsWrapper.isInvokedTooManyTimes(uiPortletInPage.getWindowId())) {
+            List<javax.portlet.Event> newEvents = processEvent(uiPortletInPage, plEvent);
             eventsWrapper.increaseCounter(uiPortletInPage.getWindowId());
-            if (context.useAjax()) {
-              log
-                  .info("Events were generated inside the scope of an AJAX call, hence will only refresh the targeted portlets");
-              event.getRequestContext().addUIComponentToUpdateByAjax(
-                  uiPortletInPage);
+            if (ptContext.useAjax()) {
+              log.info("Events were generated inside the scope of an AJAX call, hence will only refresh the targeted portlets");
+              event.getRequestContext().addUIComponentToUpdateByAjax(uiPortletInPage);
             } else {
-              log
-                  .info("Events were generated outside the scope of an AJAX call, hence will make a full render of the page");
-              context.setFullRender(true);
+              log.info("Events were generated outside the scope of an AJAX call, hence will make a full render of the page");
+              ptContext.setFullRender(true);
             }
             if (newEvents != null && !newEvents.isEmpty()) {
-              log.info("The portlet: " + uiPortletInPage.getWindowId()
-                  + " processEvent() method has generated new events itself");
+              log.info("The portlet: " + uiPortletInPage.getWindowId() + " processEvent() method has generated new events itself");
               events.addAll(newEvents);
-              uiPortlet.createEvent("ProcessEvents", Phase.PROCESS, context)
-                  .broadcast();
             }
           }
         }

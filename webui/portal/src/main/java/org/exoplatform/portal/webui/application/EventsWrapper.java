@@ -34,60 +34,59 @@ import org.exoplatform.services.log.ExoLogger;
  */
 public class EventsWrapper {
 
-  protected static Log log = ExoLogger
-	  .getLogger("portal:EventsWrapper");
+	protected static Log log = ExoLogger.getLogger("portal:EventsWrapper");
 
-  private List<javax.portlet.Event> events;
-  private List<CounterWrapper> counters = new ArrayList<CounterWrapper>();
-  public static final int THRESHOLD = 4;
+	private List<javax.portlet.Event> events;
+	private List<CounterWrapper> counters = new ArrayList<CounterWrapper>();
+	public static final int THRESHOLD = 4;
 
-  public EventsWrapper(List<javax.portlet.Event> events) {
-	this.events = events;
-  }
-
-  public List<javax.portlet.Event> getEvents() {
-	return this.events;
-  }
-
-  public List<CounterWrapper> getCounters() {
-	return counters;
-  }
-
-  public void increaseCounter(String portletId) {
-	for (Iterator iter = counters.iterator(); iter.hasNext();) {
-	  CounterWrapper counter = (CounterWrapper) iter.next();
-	  if (portletId.equals(counter.portletId)) {
-		counter.counter++;
-		return;
-	  }
+	public EventsWrapper(List<javax.portlet.Event> events) {
+		this.events = events;
 	}
-	counters.add(new CounterWrapper(portletId));
-  }
 
-  public boolean isInvokedTooManyTimes(String windowId) {
-	for (Iterator iter = counters.iterator(); iter.hasNext();) {
-	  CounterWrapper counter = (CounterWrapper) iter.next();
-	  if (windowId.equals(counter.portletId)) {
-		if (counter.counter + 1 > THRESHOLD) {
-		  log.info("Portlet " + windowId + " has already been invokated "
-			  + THRESHOLD
-			  + " times and will not be more to avoid infinite cycles");
-		  return true;
+	public List<javax.portlet.Event> getEvents() {
+		return this.events;
+	}
+
+	public List<CounterWrapper> getCounters() {
+		return counters;
+	}
+
+	public void increaseCounter(String portletId) {
+		for (Iterator iter = counters.iterator(); iter.hasNext();) {
+			CounterWrapper counter = (CounterWrapper) iter.next();
+			if (portletId.equals(counter.portletId)) {
+				counter.counter++;
+				return;
+			}
+		}
+		counters.add(new CounterWrapper(portletId));
+	}
+
+	public boolean isInvokedTooManyTimes(String windowId) {
+		for (Iterator iter = counters.iterator(); iter.hasNext();) {
+			CounterWrapper counter = (CounterWrapper) iter.next();
+			if (windowId.equals(counter.portletId)) {
+				if (counter.counter + 1 > THRESHOLD) {
+					log.info("Portlet " + windowId + " has already been invokated "
+							+ THRESHOLD
+							+ " times and will not be more to avoid infinite cycles");
+					return true;
+				}
+				return false;
+			}
 		}
 		return false;
-	  }
 	}
-	return false;
-  }
 
-  public class CounterWrapper {
-  	public String portletId;
-  
-  	public int counter = 0;
-  
-  	public CounterWrapper(String portletId) {
-  	  this.portletId = portletId;
-  	}
-  }
+	public class CounterWrapper {
+		public String portletId;
+
+		public int counter = 0;
+
+		public CounterWrapper(String portletId) {
+			this.portletId = portletId;
+		}
+	}
 
 }
