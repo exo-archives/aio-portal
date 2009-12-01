@@ -53,7 +53,7 @@ public class UIPortalNavigation extends UIComponent {
     return result;
   }
   
-  public PageNavigation getSelectedNavigation() throws Exception {
+  public PageNavigation getSelectedNavigation() {
     PageNavigation nav = Util.getUIPortal().getSelectedNavigation();
     if(nav != null) return nav;
     if(Util.getUIPortal().getNavigations().size() < 1) return null;
@@ -61,7 +61,7 @@ public class UIPortalNavigation extends UIComponent {
   }
 
   public Object getSelectedParent() { return selectedParent_ ; }
-  public PageNode getSelectedPageNode() throws Exception {
+  public PageNode getSelectedPageNode() {
     if(selectedNode_ != null)  return selectedNode_;
     selectedNode_ = Util.getUIPortal().getSelectedNode();    
     return selectedNode_ ; 

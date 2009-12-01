@@ -105,11 +105,16 @@ public class UIPortal extends UIContainer {
     publicParameters_ = publicParams;
   }
 
-  public List<PageNavigation> getNavigations() throws Exception {
+  public List<PageNavigation> getNavigations() {
   	UserPortalConfigService serv = getApplicationComponent(UserPortalConfigService.class);
   	for (int i = 0; i < navigations.size(); i++) {
   		PageNavigation ele = navigations.get(i);
-  		PageNavigation temp = serv.getPageNavigation(ele.getOwnerType(), ele.getOwnerId());
+  		PageNavigation temp;
+			try {
+				temp = serv.getPageNavigation(ele.getOwnerType(), ele.getOwnerId());
+			} catch (Exception e) {
+				return null;
+			}
   		if (temp.getSerialMark() != ele.getSerialMark()) {
   			UIPortalApplication uiApp = getAncestorOfType(UIPortalApplication.class);
   			LocaleConfig localeConfig = getApplicationComponent(LocaleConfigService.class).getLocaleConfig(uiApp.getLocale().getLanguage()) ;
@@ -120,6 +125,7 @@ public class UIPortal extends UIContainer {
   	}
   	return navigations ;	
   }
+  
   public void setNavigation(List<PageNavigation> navs) throws Exception {
     navigations = navs;
     selectedPaths_ = new ArrayList<PageNode>();
@@ -148,7 +154,7 @@ public class UIPortal extends UIContainer {
   }
 
   public void setSelectedNode(PageNode node) { selectedNode_ = node; }
-  public PageNode getSelectedNode() throws Exception { 
+  public PageNode getSelectedNode() { 
     if(selectedNode_ != null) return selectedNode_;
     if(getSelectedNavigation() == null || selectedNavigation_.getNodes() == null ||
        selectedNavigation_.getNodes().size()< 1) return null;
@@ -159,7 +165,7 @@ public class UIPortal extends UIContainer {
   public List<PageNode> getSelectedPaths() { return selectedPaths_ ; }
   public void setSelectedPaths(List<PageNode> nodes){  selectedPaths_ = nodes; }
   
-  public PageNavigation getSelectedNavigation() throws Exception {
+  public PageNavigation getSelectedNavigation() {
     if(selectedNavigation_ != null && selectedNavigation_.getNodes() != null
         && selectedNavigation_.getNodes().size() > 0) {
       return selectedNavigation_;
