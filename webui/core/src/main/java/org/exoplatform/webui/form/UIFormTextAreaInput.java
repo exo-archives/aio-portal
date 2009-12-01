@@ -24,7 +24,7 @@ import org.exoplatform.webui.application.WebuiRequestContext;
  * Represents a textarea element
  * The value is stored in UIFormInputBase
  */
-public class UIFormTextAreaInput extends UIFormInputBase<String> {
+public class UIFormTextAreaInput extends UIFormStringInput {
   /**
    * number of rows
    */
@@ -35,16 +35,7 @@ public class UIFormTextAreaInput extends UIFormInputBase<String> {
   private int columns = 30;
   
   public UIFormTextAreaInput(String name, String bindingExpression, String value) {
-	  super(name, bindingExpression, String.class);
-	  this.value_ = value ; 
-  }
-  
-  @SuppressWarnings("unused")
-  public void decode(Object input, WebuiRequestContext context) throws Exception {
-    String val = (String) input ;
-    if((val == null || val.length() == 0)) return ; 
-    value_ = val ;
-    if(value_ != null && value_.length() == 0) value_ = null ;
+	  super(name, bindingExpression, value);
   }
   
   public void processRender(WebuiRequestContext context) throws Exception {
