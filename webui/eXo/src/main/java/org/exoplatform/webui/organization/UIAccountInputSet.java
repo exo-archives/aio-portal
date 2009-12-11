@@ -65,13 +65,11 @@ public class UIAccountInputSet extends UIFormInputWithActions {
     addUIFormInput(new UIFormStringInput("firstName", "firstName", null).
     							 addValidator(StringLengthValidator.class, 3, 45).
                    addValidator(MandatoryValidator.class).
-                   addValidator(ExpressionValidator.class, Util.FIRST_CHARACTER_NAME_VALIDATOR_REGEXP, "FirstCharacterNameValidator.msg").
-                   addValidator(ExpressionValidator.class, Util.RESOURCE_VALIDATOR_REGEXP, "ResourceValidator.msg.Invalid-char")) ;
+                   addValidator(ExpressionValidator.class, Util.FIRST_CHARACTER_NAME_VALIDATOR_REGEXP, "FirstCharacterNameValidator.msg"));
     addUIFormInput(new UIFormStringInput("lastName", "lastName", null).
     							 addValidator(StringLengthValidator.class, 3, 45).
                    addValidator(MandatoryValidator.class).
-                   addValidator(ExpressionValidator.class, Util.FIRST_CHARACTER_NAME_VALIDATOR_REGEXP, "FirstCharacterNameValidator.msg").
-                   addValidator(ExpressionValidator.class, Util.RESOURCE_VALIDATOR_REGEXP, "ResourceValidator.msg.Invalid-char")) ;
+                   addValidator(ExpressionValidator.class, Util.FIRST_CHARACTER_NAME_VALIDATOR_REGEXP, "FirstCharacterNameValidator.msg"));
     addUIFormInput(new UIFormStringInput("email", "email", null). 
                    addValidator(MandatoryValidator.class).
                    addValidator(EmailAddressValidator.class));   

@@ -33,7 +33,7 @@ public class Util {
   /**
    * Field must be start with character
    */
-  public final static String FIRST_CHARACTER_NAME_VALIDATOR_REGEXP = "^[\\p{L}][\\p{ASCII}]+$" ;
+  public final static String FIRST_CHARACTER_NAME_VALIDATOR_REGEXP = "^[\\p{L}][\\p{L}._'\\- \\d]+$" ;
   
   /**
    * Only alpha, digit, underscore, dash and dot characters allowed (accept space)
