@@ -46,121 +46,135 @@ import org.exoplatform.webui.core.UIApplication;
 
 public class PortalStateManager extends StateManager {
 
-  protected static Log log = ExoLogger.getLogger("portal:PortalStateManager");  
-  
-  private ConcurrentMap<String, PortalApplicationState> uiApplications = new ConcurrentHashMap<String, PortalApplicationState>();
+  protected static Log                                  log             = ExoLogger.getLogger("portal:PortalStateManager");
+
+  private ConcurrentMap<String, PortalApplicationState> portalAppStates = new ConcurrentHashMap<String, PortalApplicationState>();
 
   /**
-   * This method is used to restore the UI component tree either the current request targets a portlet 
-   * or the portal. 
-   * 
-   * In both cases, if the tree is not stored already it is created and then stored in a local Map 
-   * 
+   * This method is used to restore the UI component tree either the current
+   * request targets a portlet or the portal. In both cases, if the tree is not
+   * stored already it is created and then stored in a local Map
    */
   @SuppressWarnings("unchecked")
   public UIApplication restoreUIRootComponent(WebuiRequestContext context) throws Exception {
-    context.setStateManager(this) ;
-    WebuiApplication app  = (WebuiApplication)context.getApplication() ;
-    
+    context.setStateManager(this);
+    WebuiApplication app = (WebuiApplication) context.getApplication();
+
     /*
-     * If the request context is of type PortletRequestContext, we extract the parent context which will
-     * allow to get access to the PortalApplicationState object thanks to the session id used as the key for the
-     * syncronised Map uiApplications
+     * If the request context is of type PortletRequestContext, we extract the
+     * parent context which will allow to get access to the
+     * PortalApplicationState object thanks to the session id used as the key
+     * for the syncronised Map uiApplications
      */
-    if(context instanceof PortletRequestContext) {
-      WebuiRequestContext preqContext = (WebuiRequestContext) context.getParentAppRequestContext() ;
-      PortalApplicationState state = uiApplications.get(preqContext.getSessionId()) ;
-      PortletRequestContext pcontext = (PortletRequestContext) context ;
-      String key =  pcontext.getApplication().getApplicationId() + "/" + pcontext.getWindowId();
-      UIApplication uiApplication =  state.get(key) ;
-      if(uiApplication != null)  return uiApplication;
-      ConfigurationManager cmanager = app.getConfigurationManager() ;
-      String uirootClass = cmanager.getApplication().getUIRootComponent() ;
-      Class type = Thread.currentThread().getContextClassLoader().loadClass(uirootClass) ;
-      uiApplication = (UIApplication)app.createUIComponent(type, null, null, context) ;
-      state.put(key, uiApplication) ;
-      return uiApplication ;
-    } 
-    
-    PortalRequestContext pcontext = (PortalRequestContext) context ;
-    PortalApplicationState state = uiApplications.get(pcontext.getSessionId()) ;
-    if(state != null) {
-      if((!(Safe.equals(pcontext.getRemoteUser(), state.getUserName()))) ||
-          (!pcontext.getPortalOwner().equals(state.getUIPortalApplication().getOwner()))) {
-        clearSession(pcontext.getRequest().getSession()) ;
-        state = null ;
+    if (context instanceof PortletRequestContext) {
+      WebuiRequestContext preqContext = (WebuiRequestContext) context.getParentAppRequestContext();
+      PortalApplicationState state = portalAppStates.get(preqContext.getSessionId());
+      PortletRequestContext pcontext = (PortletRequestContext) context;
+      String key = pcontext.getApplication().getApplicationId() + "/" + pcontext.getWindowId();
+      UIApplication uiApplication;
+      if (state != null) {
+        uiApplication = state.get(key);
+        if (uiApplication != null)
+          return uiApplication;
+      }
+      ConfigurationManager cmanager = app.getConfigurationManager();
+      String uirootClass = cmanager.getApplication().getUIRootComponent();
+      Class type = Thread.currentThread().getContextClassLoader().loadClass(uirootClass);
+      uiApplication = (UIApplication) app.createUIComponent(type, null, null, context);
+
+      if (state != null)
+        state.put(key, uiApplication);
+      
+      return uiApplication;
+    }
+
+    PortalRequestContext pcontext = (PortalRequestContext) context;
+    PortalApplicationState state = portalAppStates.get(pcontext.getSessionId());
+    if (state != null) {
+      if ((!(Safe.equals(pcontext.getRemoteUser(), state.getUserName())))
+          || (!pcontext.getPortalOwner().equals(state.getUIPortalApplication().getOwner()))) {
+        clearSession(pcontext.getRequest().getSession());
+        state = null;
       }
     }
-    if(state == null) {
-      ConfigurationManager cmanager = app.getConfigurationManager() ;
-      String uirootClass = cmanager.getApplication().getUIRootComponent() ;
-      Class type = Thread.currentThread().getContextClassLoader().loadClass(uirootClass) ;
-      UserPortalConfig config = getUserPortalConfig(pcontext) ;
-      if(config == null) {
+    if (state == null) {
+      UserPortalConfig config = getUserPortalConfig(pcontext);
+      if (config == null) {
         HttpServletResponse response = pcontext.getResponse();
-        if(pcontext.getRemoteUser() == null) {
-          String portalName = pcontext.getPortalOwner() ;
-          portalName = URLEncoder.encode(portalName, "UTF-8") ;
-          String redirect = pcontext.getRequest().getContextPath() + "/private/" + portalName + "/";
-          response.sendRedirect(redirect);
+        String redirect = "/portal/portal-unavailable.jsp";
+        if (pcontext.getRemoteUser() == null) {
+          String portalName = pcontext.getPortalOwner();
+          portalName = URLEncoder.encode(portalName, "UTF-8");
+          redirect = pcontext.getRequest().getContextPath() + "/private/" + portalName + "/";
         }
-        else response.sendRedirect("/portal/portal-unavailable.jsp");
+
+        response.sendRedirect(redirect);
         pcontext.setResponseComplete(true);
         return null;
       }
       pcontext.setAttribute(UserPortalConfig.class, config);
-      UIPortalApplication uiApplication =
-        (UIPortalApplication)app.createUIComponent(type, null, null, context) ;
-      state = new PortalApplicationState(uiApplication, pcontext.getRemoteUser()) ;
-      uiApplications.put(context.getSessionId(), state) ;
-      SessionManagerContainer pcontainer = (SessionManagerContainer) app.getApplicationServiceContainer() ;
-      pcontainer.createSessionContainer(context.getSessionId(), uiApplication.getOwner()) ;
+
+      ConfigurationManager cmanager = app.getConfigurationManager();
+      String uirootClass = cmanager.getApplication().getUIRootComponent();
+      Class type = Thread.currentThread().getContextClassLoader().loadClass(uirootClass);
+      UIPortalApplication uiApplication = (UIPortalApplication) app.createUIComponent(type,
+                                                                                      null,
+                                                                                      null,
+                                                                                      context);
+      state = new PortalApplicationState(uiApplication, pcontext.getRemoteUser());
+      portalAppStates.put(context.getSessionId(), state);
+      SessionManagerContainer pcontainer = (SessionManagerContainer) app.getApplicationServiceContainer();
+      pcontainer.createSessionContainer(context.getSessionId(), uiApplication.getOwner());
     }
-    return state.getUIPortalApplication() ;
+    return state.getUIPortalApplication();
   }
-  
-  @SuppressWarnings("unused")
-  public void storeUIRootComponent(WebuiRequestContext context) {}
-  
+
+  public void storeUIRootComponent(WebuiRequestContext context) {
+  }
+
   public void expire(String sessionId, WebuiApplication app) {
-    PortalApplicationState state = uiApplications.remove(sessionId) ;
-    if(state != null){
+    PortalApplicationState state = portalAppStates.remove(sessionId);
+    if (state != null) {
       log.warn("Session expires, remove application: " + state.getUIPortalApplication());
     }
-    SessionManagerContainer pcontainer = (SessionManagerContainer) app.getApplicationServiceContainer() ;
-    pcontainer.removeSessionContainer(sessionId) ;
+    SessionManagerContainer pcontainer = (SessionManagerContainer) app.getApplicationServiceContainer();
+    pcontainer.removeSessionContainer(sessionId);
   }
-  
-  public UserPortalConfig getUserPortalConfig(PortalRequestContext  context) throws Exception {
-    ExoContainer appContainer  =  context.getApplication().getApplicationServiceContainer() ;
-    UserPortalConfigService service_ = 
-      (UserPortalConfigService)appContainer.getComponentInstanceOfType(UserPortalConfigService.class);
+
+  private UserPortalConfig getUserPortalConfig(PortalRequestContext context) throws Exception {
+    ExoContainer appContainer = context.getApplication().getApplicationServiceContainer();
+    UserPortalConfigService service_ = (UserPortalConfigService) appContainer.getComponentInstanceOfType(UserPortalConfigService.class);
     String remoteUser = context.getRemoteUser();
-    String ownerUser = context.getPortalOwner(); 
-    return service_.getUserPortalConfig(ownerUser, remoteUser) ;
+    String ownerUser = context.getPortalOwner();
+    return service_.getUserPortalConfig(ownerUser, remoteUser);
   }
-  
+
   private void clearSession(HttpSession session) {
-    Enumeration<?> e = session.getAttributeNames() ;
-    while(e.hasMoreElements()) {
-      String name =  (String)e.nextElement() ;
-      session.removeAttribute(name) ;
+    Enumeration<?> e = session.getAttributeNames();
+    while (e.hasMoreElements()) {
+      String name = (String) e.nextElement();
+      session.removeAttribute(name);
     }
   }
-  
+
   @SuppressWarnings("serial")
   static public class PortalApplicationState extends HashMap<String, UIApplication> {
-    
-    private final UIPortalApplication uiPortalApplication_ ;
-    private final String userName_ ;
-    
+
+    private final UIPortalApplication uiPortalApplication_;
+
+    private final String              userName_;
+
     public PortalApplicationState(UIPortalApplication uiPortalApplication, String userName) {
-      uiPortalApplication_ = uiPortalApplication ;
-      userName_ = userName ;
+      uiPortalApplication_ = uiPortalApplication;
+      userName_ = userName;
     }
-    
-    public String getUserName() { return userName_ ; }
-    
-    public UIPortalApplication  getUIPortalApplication() { return uiPortalApplication_ ; }
+
+    public String getUserName() {
+      return userName_;
+    }
+
+    public UIPortalApplication getUIPortalApplication() {
+      return uiPortalApplication_;
+    }
   }
 }

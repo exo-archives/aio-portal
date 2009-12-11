@@ -25,6 +25,8 @@ import org.exoplatform.container.RootContainer;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.portletcontainer.helper.WindowInfosContainer;
 import org.exoplatform.web.WebAppController;
+import org.exoplatform.web.application.RequestContext;
+import org.exoplatform.webui.application.WebuiRequestContext;
 
 /**
  * Created by The eXo Platform SAS        
@@ -59,23 +61,36 @@ public class PortalSessionListener implements HttpSessionListener {
    * 
    */
   public void sessionDestroyed(HttpSessionEvent event) {
+    RequestContext reqContext = WebuiRequestContext.getCurrentInstance();
     try {
       String portalContainerName = event.getSession().getServletContext().getServletContextName() ;
       log.warn("Destroy session from '" + portalContainerName + "' portal");
-      RootContainer rootContainer = RootContainer.getInstance() ;
-      PortalContainer portalContainer = rootContainer.getPortalContainer(portalContainerName) ;
-      PortalContainer.setInstance(portalContainer); 
-      WebAppController controller = 
-        (WebAppController)portalContainer.getComponentInstanceOfType(WebAppController.class) ;
-      PortalApplication portalApp =  controller.getApplication(PortalApplication.PORTAL_APPLICATION_ID) ;
-      portalApp.getStateManager().expire(event.getSession().getId(), portalApp) ;
-      
+
+      PortalContainer portalContainer;
+
+      // TODO: This condition statement indicates that whether the session was
+      // destroyed by a explicit invalidation call OR a Session Timeout.
+      // A null value is appropriate to a Session Timeout which is automatically
+      // called by the Web Server.
+      // This is a bug fix for PORTAL-3665 and we should consider the fix to
+      // have a better solution later
+      if (reqContext == null) {
+        RootContainer rootContainer = RootContainer.getInstance();
+        portalContainer = rootContainer.getPortalContainer(portalContainerName);
+        PortalContainer.setInstance(portalContainer);
+      } else {
+        portalContainer = PortalContainer.getInstance();
+      }
+      WebAppController controller = (WebAppController) portalContainer.getComponentInstanceOfType(WebAppController.class);
+      PortalApplication portalApp = controller.getApplication(PortalApplication.PORTAL_APPLICATION_ID);
+      portalApp.getStateManager().expire(event.getSession().getId(), portalApp);
+
       WindowInfosContainer.removeInstance(portalContainer, event.getSession().getId());
-    } catch(Exception ex) {
-      log.error("Error while destroying a portal session",ex);
+    } catch (Exception ex) {
+      log.error("Error while destroying a portal session", ex);
     } finally {
-      PortalContainer.setInstance(null) ;
+      if (reqContext == null)
+        PortalContainer.setInstance(null);
     }
   }
-  
 }
