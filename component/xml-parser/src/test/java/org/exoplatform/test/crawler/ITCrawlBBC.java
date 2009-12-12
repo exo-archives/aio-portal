@@ -24,7 +24,7 @@ import org.exoplatform.test.BasicTestCase;
  *          laivankhoi46pm1@yahoo.com
  * Dec 1, 2006  
  */
-public class TestCrawlBBC extends BasicTestCase {
+public class ITCrawlBBC extends BasicTestCase {
   
   public void testCrawlBBC() throws Exception{
     CrawlerService crawl = new CrawlerService();
