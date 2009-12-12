@@ -1,16 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>org.exoplatform.portal</groupId>
-    <artifactId>config</artifactId>
+    <artifactId>portal-parent</artifactId>
     <version>2.5.7-SNAPSHOT</version>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
   <artifactId>exo.portal.webui.core</artifactId>
-  <packaging>jar</packaging>
-  <name>eXo portal webui core</name>
-  <url>http://www.exoplatform.org</url>
-  <description>eXo portal webui core</description>
+  <name>eXo Portal webui core</name>
 
   <dependencies>
     <dependency>
