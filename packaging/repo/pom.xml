@@ -47,61 +47,66 @@
   </dependencies>
 
   <!-- Packaging -->
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>sources</id>
-            <phase>package</phase>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
+  <profiles>
+    <profile>
+    <id>repo</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>sources</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>copy-dependencies</goal>
+                </goals>
+                <configuration>
+                  <classifier>sources</classifier>
+                  <includeGroupIds>org.exoplatform</includeGroupIds>
+                  <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
+                  <outputDirectory>${project.build.directory}/dependency</outputDirectory>
+                  <useRepositoryLayout>true</useRepositoryLayout>
+                  <copyPom>true</copyPom>
+                </configuration>
+              </execution>
+              <execution>
+                <id>copy-dependencies</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>copy-dependencies</goal>
+                </goals>
+                <configuration>
+                  <includeGroupIds>org.exoplatform</includeGroupIds>
+                  <outputDirectory>${project.build.directory}/dependency</outputDirectory>
+                  <useRepositoryLayout>true</useRepositoryLayout>
+                  <copyPom>true</copyPom>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
             <configuration>
-              <classifier>sources</classifier>
-              <includeGroupIds>org.exoplatform</includeGroupIds>
-              <failOnMissingClassifierArtifact>false</failOnMissingClassifierArtifact>
-              <outputDirectory>${project.build.directory}/dependency</outputDirectory>
-              <useRepositoryLayout>true</useRepositoryLayout>
-              <copyPom>true</copyPom>
+              <descriptors>
+                <descriptor>assemble-repository.xml</descriptor>
+              </descriptors>
             </configuration>
-          </execution>
-          <execution>
-            <id>copy-dependencies</id>
-            <phase>package</phase>
-            <goals>
-              <goal>copy-dependencies</goal>
-            </goals>
-            <configuration>
-              <includeGroupIds>org.exoplatform</includeGroupIds>
-              <outputDirectory>${project.build.directory}/dependency</outputDirectory>
-              <useRepositoryLayout>true</useRepositoryLayout>
-              <copyPom>true</copyPom>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <configuration>
-          <descriptors>
-            <descriptor>assemble-repository.xml</descriptor>
-          </descriptors>
-        </configuration>
-        <executions>
-          <execution>
-            <id>make-assembly</id> <!-- this is used for inheritance merges -->
-            <phase>package</phase> <!-- append to the packaging phase. -->
-            <goals>
-              <goal>attached</goal> <!-- goals == mojos -->
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+            <executions>
+              <execution>
+                <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                <phase>package</phase> <!-- append to the packaging phase. -->
+                <goals>
+                  <goal>attached</goal> <!-- goals == mojos -->
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>
