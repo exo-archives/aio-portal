@@ -34,7 +34,7 @@
    <properties>
       <product>portal</product>
       <deploy>tomcat</deploy>
-   		<exo.project.working.dir>${basedir}/target</exo.project.working.dir><!-- Default value for server installation dir -->
+   		<exo.working.dir>${basedir}/target</exo.working.dir><!-- Default value for server installation dir -->
    </properties>
 
    <dependencies>
