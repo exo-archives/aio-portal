@@ -34,7 +34,6 @@
    <properties>
       <product>portal</product>
       <deploy>tomcat</deploy>
-   		<exo.working.dir>${basedir}/target</exo.working.dir><!-- Default value for server installation dir -->
    </properties>
 
    <dependencies>
@@ -104,6 +103,9 @@
                             <phase>install</phase><goals><goal>exobuild</goal></goals>
                         </execution>
                     </executions>
+                    <configuration>
+                      <exobuildExoDirectoryBase>${basedir}/target</exobuildExoDirectoryBase>
+                    </configuration>
                 </plugin>
             </plugins>
         </build>
