@@ -7,7 +7,8 @@ function getProduct(version) {
   product.name = "eXoPortal" ;
   product.portalwar = "portal.war" ;
   product.codeRepo = "portal" ;
-  product.serverPluginVersion = "${project.version}"
+  product.version = "${project.version}" ;
+  product.serverPluginVersion = "${project.version}" ;
 
   var kernel = Module.GetModule("kernel") ;
   var core = Module.GetModule("core") ;
@@ -34,7 +35,7 @@ function getProduct(version) {
   product.addServerPatch("jboss",  portal.server.jboss.patch) ;
   product.addServerPatch("jbossear",  portal.server.jbossear.patch) ;
   product.addServerPatch("jonas",  portal.server.jonas.patch) ;
-  product.addServerPatch("ear",  portal.server.websphere.patch) ;
+  product.addServerPatch("wasear",  portal.server.websphere.patch) ;
 
 	/* cleanup duplicated lib */
   product.removeDependency(new Project("commons-httpclient", "commons-httpclient", "jar", "3.0"));
