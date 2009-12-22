@@ -258,6 +258,8 @@ public class DataStorageImpl implements DataStorage, Startable {
         PageNavigation originalNavigation = mapper_.toPageNavigation(navigation.document);
         merge(new NavigationNodeContainer(originalNavigation), new NavigationNodeContainer(navigation), new NavigationNodeContainer(existingNavigation));
         saved = existingNavigation;
+        saved.setPriority(navigation.getPriority());
+        saved.setDescription(navigation.getDescription());
       } else {
         saved = navigation;
       }

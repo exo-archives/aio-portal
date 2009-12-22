@@ -17,14 +17,11 @@
 package org.exoplatform.portal.webui.navigation;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.DataStorage;
-import org.exoplatform.portal.config.Query;
-import org.exoplatform.portal.config.UserPortalConfig;
 import org.exoplatform.portal.config.UserPortalConfigService;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PortalConfig;
@@ -73,12 +70,12 @@ public class UIPageNavigationForm extends UIForm {
     }
 
     // check navigation has user type
-    
+
     UIPortal uiPortal = Util.getUIPortal();
-    
-    UIPortalApplication uiPortalApp = uiPortal.getAncestorOfType(UIPortalApplication.class);  
+
+    UIPortalApplication uiPortalApp = uiPortal.getAncestorOfType(UIPortalApplication.class);
     UIPageNodeSelector uiPageNodeSelector = uiPortalApp.findFirstComponentOfType(UIPageNodeSelector.class);
-    
+
     List<PageNavigation> navis = uiPageNodeSelector.getPageNavigations();
     List<PageNavigation> pnavigations = getExistedNavigation(navis);
 
@@ -98,22 +95,19 @@ public class UIPageNavigationForm extends UIForm {
     // addUIFormInput(new UIFormStringInput("ownerType", "ownerType",
     // PortalConfig.GROUP_TYPE).setEditable(false)).
     UIFormSelectBox uiOwnerType = new UIFormSelectBox("ownerType", null, ownerType);
-    uiOwnerType.setOnChange("ChangeOwnerType") ;
+    uiOwnerType.setOnChange("ChangeOwnerType");
     addUIFormInput(uiOwnerType).addUIFormInput(uiSelectBoxOwnerId)
-                                                                     .addUIFormInput(new UIFormStringInput("creator",
-                                                                                                           "creator",
-                                                                                                           pContext.getRemoteUser()).setEditable(false))
-                                                                     .addUIFormInput(new UIFormStringInput("modifier",
-                                                                                                           "modifier",
-                                                                                                           null).setEditable(false))
-                                                                     .addUIFormInput(new UIFormTextAreaInput("description",
-                                                                                                             "description",
-                                                                                                             null).addValidator(StringLengthValidator.class,
-                                                                                                                                0,
-                                                                                                                                255))
-                                                                     .addUIFormInput(new UIFormSelectBox("priority",
-                                                                                                         null,
-                                                                                                         priorties));
+                               .addUIFormInput(new UIFormStringInput("creator",
+                                                                     "creator",
+                                                                     pContext.getRemoteUser()).setEditable(false))
+                               .addUIFormInput(new UIFormStringInput("modifier", "modifier", null).setEditable(false))
+                               .addUIFormInput(new UIFormTextAreaInput("description",
+                                                                       "description",
+                                                                       null).addValidator(StringLengthValidator.class,
+                                                                                          0,
+                                                                                          255))
+                               .addUIFormInput(new UIFormSelectBox("priority", null, priorties));
+    setActions(new String[] { "Save", "Close" });
   }
 
   private List<PageNavigation> getExistedNavigation(List<PageNavigation> navis) throws Exception {
@@ -130,14 +124,19 @@ public class UIPageNavigationForm extends UIForm {
   public void setValues(PageNavigation pageNavigation) throws Exception {
     pageNav_ = pageNavigation;
     invokeGetBindingBean(pageNavigation);
-    removeChildById("ownerId");
     getUIStringInput("creator").setValue(pageNavigation.getCreator());
-    UIFormStringInput ownerId = new UIFormStringInput("ownerId",
-                                                      "ownerId",
-                                                      pageNavigation.getOwnerId());
-    ownerId.setEditable(false);
-    ownerId.setParent(this);
-    getChildren().add(1, ownerId);
+    UIFormStringInput ownerIdStringInput = new UIFormStringInput("ownerId",
+                                                                 "ownerId",
+                                                                 pageNavigation.getOwnerId());
+    ownerIdStringInput.setEditable(false);
+    replaceChild("ownerId", ownerIdStringInput);
+    
+    UIFormStringInput ownerTypeStringInput = new UIFormStringInput("ownerType",
+                                                                 "ownerType",
+                                                                 pageNavigation.getOwnerType());
+    ownerTypeStringInput.setEditable(false);
+    replaceChild("ownerType", ownerTypeStringInput);
+    
     UIFormSelectBox uiSelectBox = findComponentById("priority");
     uiSelectBox.setValue(String.valueOf(pageNavigation.getPriority()));
   }
@@ -171,7 +170,7 @@ public class UIPageNavigationForm extends UIForm {
       pageNav.setPriority(priority);
       pageNav.setModifiable(true);
       pageNav.setCreator(pcontext.getRemoteUser());
-     
+
       UIPortalApplication uiPortalApp = uiForm.getAncestorOfType(UIPortalApplication.class);
       UIPageNodeSelector uiPageNodeSelector = uiPortalApp.findFirstComponentOfType(UIPageNodeSelector.class);
 
@@ -207,7 +206,7 @@ public class UIPageNavigationForm extends UIForm {
       return true;
     }
   }
-  
+
   static public class ChangeOwnerTypeActionListener extends EventListener<UIPageNavigationForm> {
     public void execute(Event<UIPageNavigationForm> event) throws Exception {
       UIPageNavigationForm uiForm = event.getSource();
@@ -215,12 +214,9 @@ public class UIPageNavigationForm extends UIForm {
       UIFormSelectBox uiOwnerType = uiForm.findComponentById("ownerType");
       UIFormSelectBox uiOwnerId = uiForm.findComponentById("ownerId");
       if (uiOwnerType.getValue().equals(PortalConfig.USER_TYPE)) {
-
-        
-  
         List<SelectItemOption<String>> ownerId = new ArrayList<SelectItemOption<String>>();
         ownerId.add(new SelectItemOption<String>(pcontext.getRemoteUser(), pcontext.getRemoteUser()));
-        
+
         uiOwnerId.setOptions(ownerId);
         uiOwnerId.setEditable(false);
       } else {
