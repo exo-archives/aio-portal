@@ -10,7 +10,7 @@
   <groupId>org.exoplatform.portal</groupId>
   <artifactId>portal-parent</artifactId>
   <name>eXo Portal Parent</name>
-  <version>2.5.7-SNAPSHOT</version>
+  <version>2.5.7</version>
   <packaging>pom</packaging>
   
   <properties>
@@ -33,9 +33,9 @@
   </properties>
   
   <scm>
-    <connection>scm:svn:http://svn.exoplatform.org/svnroot/exoplatform/projects/portal/branches/2.5.x</connection>
-    <developerConnection>scm:svn:http://svn.exoplatform.org/svnroot/exoplatform/projects/portal/branches/2.5.x</developerConnection>
-    <url>http://fisheye.exoplatform.org/browse/projects/portal/branches/2.5.x</url>
+    <connection>scm:svn:http://svn.exoplatform.org/svnroot/exoplatform/projects/portal/tags//2.5.7</connection>
+    <developerConnection>scm:svn:http://svn.exoplatform.org/svnroot/exoplatform/projects/portal/tags/2.5.7</developerConnection>
+    <url>http://fisheye.exoplatform.org/browse/projects/portal/tags/2.5.7</url>
   </scm>
 
   <modules>
