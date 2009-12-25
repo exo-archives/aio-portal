@@ -63,11 +63,9 @@
 	          %>
 			          <div class="UITabContent" style="display: $display;">
 			            <div id="<%=uicomponent.getUIPortlet().getId()%>">
-				            <%= uicomponent.getEditModeContent() %>
-				            <%
-				              String strExec = "eXo.core.DOMUtil.removeElement('VIEW-" + uicomponent.getUIPortlet().getId() + "');" ;
-				              rcontext.getJavascriptManager().addCustomizedOnLoadScript(strExec) ;
-				            %>
+			            	<div class="PORTLET-FRAGMENT">
+				            	<%= uicomponent.getEditModeContent() %>
+				            </div>
 				          </div>
 			          </div>
 	          <%}%>

@@ -19,6 +19,7 @@ package org.exoplatform.dashboard.webui.component;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 
+import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.application.portlet.PortletRequestContext;
@@ -110,7 +111,7 @@ public class UIDashboardEditForm extends UIForm {
           .getChild(UIDashboard.class).getChild(UIDashboardContainer.class);
       uiDashboardContainer.setColumns(totalCols);
       uiDashboardContainer.save();
-      pcontext.setApplicationMode(PortletMode.VIEW);
+      if(!Util.getUIPortalApplication().isEditting()) pcontext.setApplicationMode(PortletMode.VIEW);
     }
   }
 }

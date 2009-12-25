@@ -19,6 +19,7 @@ package org.exoplatform.portal.webui.component;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
 
+import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.application.portlet.PortletRequestContext;
@@ -77,7 +78,7 @@ public class UIIFrameEditMode extends UIForm {
       PortletPreferences pref = pcontext.getRequest().getPreferences();
       pref.setValue("url", uiForm.getUIStringInput(FIELD_URL).getValue());
       pref.store();
-      pcontext.setApplicationMode(PortletMode.VIEW);
+      if(!Util.getUIPortalApplication().isEditting()) pcontext.setApplicationMode(PortletMode.VIEW);
     }
   }
 

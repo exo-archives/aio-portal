@@ -30,6 +30,7 @@ import org.exoplatform.application.registry.ApplicationRegistryService;
 import org.exoplatform.portal.config.UserACL;
 import org.exoplatform.portal.webui.application.GadgetUtil;
 import org.exoplatform.portal.webui.application.UIGadget;
+import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.application.portlet.PortletRequestContext;
@@ -129,7 +130,7 @@ public class UIGadgetEditMode extends UIForm {
           uiGadget.setUrl(url);
           uiGadget.freeMetadata();
           uiGadgetEditMode.getUIStringInput(FIELD_URL).setValue(url) ;
-          pcontext.setApplicationMode(PortletMode.VIEW);
+          if(!Util.getUIPortalApplication().isEditting()) pcontext.setApplicationMode(PortletMode.VIEW);
         } catch (Exception e) {
           uiGadgetEditMode.getUIStringInput(FIELD_URL).setValue(UIGadgetPortlet.getUrl());
         }
@@ -149,8 +150,10 @@ public class UIGadgetEditMode extends UIForm {
         uiGadget.setUrl(localUrl);
         uiGadget.freeMetadata();
         uiGadgetEditMode.getUIStringInput(FIELD_URL).setValue(localUrl) ;
-        pcontext.setApplicationMode(PortletMode.VIEW) ;
-        pcontext.addUIComponentToUpdateByAjax(uiPortlet) ;
+        if(!Util.getUIPortalApplication().isEditting()) {
+          pcontext.setApplicationMode(PortletMode.VIEW) ;
+          pcontext.addUIComponentToUpdateByAjax(uiPortlet) ;
+        }
       }
     }
   }
@@ -185,7 +188,6 @@ public class UIGadgetEditMode extends UIForm {
           }
         }
       }  
-      event.getRequestContext().addUIComponentToUpdateByAjax(uiGadgetEdit) ;
     }
   }
 }

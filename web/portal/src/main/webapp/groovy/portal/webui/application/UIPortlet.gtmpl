@@ -11,11 +11,13 @@
 
   String onControlOver  = "eXo.webui.UIPortlet.onControlOver(this, true);" ;
   String onControlOut    = "eXo.webui.UIPortlet.onControlOver(this, false);" ;
+  
+  boolean isPortalAppEditting = rcontext.getUIApplication().isEditting(); 
 
   WindowState windowState = uicomponent.getCurrentWindowState();  
   boolean isDesktop = "Window".equals(uicomponent.getPortletStyle());
   String portletId = uicomponent.getId() ;
-  if(!isDesktop && rcontext.getUIApplication().isEditting()) {
+  if(!isDesktop && isPortalAppEditting) {
 %>
 	  <div class="UIPortlet" id="UIPortlet-$portletId">
 		  <div class="META-DATA-BLOCK" style="display: none">
@@ -267,7 +269,7 @@
       <div class="MiddleDecoratorLeft">
         <div class="MiddleDecoratorRight">
           <div class="MiddleDecoratorCenter">
-            <div id="${portletId}" style="width: 100%">
+            <div id="<%=isPortalAppEditting ? "EditMode-"+portletId : portletId%>" style="width: 100%">
               <div class="PORTLET-FRAGMENT UIResizableBlock UIApplication" style="width: 100%; height: $windowHeight;">
 			          <% if(windowState != WindowState.MINIMIZED) out.println(portletContent) %>
 		          </div>    
@@ -302,7 +304,7 @@
 	    cssStyle += "height: "+ windowHeight +";" ;
 	    cssStyle += "\"";
 %>      
-	    <div id="${portletId}">
+	    <div id="<%=isPortalAppEditting ? "EditMode-"+portletId : portletId %>">
 	      <div class="PORTLET-FRAGMENT"  ${cssStyle}>
 	       <% out.println(portletContent); %>
 	      </div>
@@ -310,7 +312,7 @@
 <%
     } 
   }
-  if(!isDesktop && rcontext.getUIApplication().isEditting()) {
+  if(!isDesktop && isPortalAppEditting) {
 %>  
 	    </div>
 		</div>

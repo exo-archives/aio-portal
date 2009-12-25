@@ -37,7 +37,6 @@ public class UIMaskWorkspace extends UIComponentDecorator {
   private int width_  = -1 ;
   private int height_ =  -1 ;
   private boolean isShow = false ;
-  private boolean isUpdated = false ;
   
   public int getWindowWidth() { return width_ ; }
   public int getWindowHeight() { return height_ ; }
@@ -49,12 +48,8 @@ public class UIMaskWorkspace extends UIComponentDecorator {
   public boolean isShow() { return isShow; }
   public void setShow(boolean bln) {
     this.isShow = bln;
-    if(bln == false) isUpdated = false ;
   }
 
-  public boolean isUpdated() { return isUpdated ; }
-  public void setUpdated(boolean bln) { this.isUpdated = bln ; }
-  
   public <T extends UIComponent> T createUIComponent(Class<T> clazz, String configId, String id)throws Exception {
     T uicomponent = super.createUIComponent(clazz, configId, id);
     setUIComponent(uicomponent);
