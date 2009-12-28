@@ -330,8 +330,8 @@
 	float: left;		/* orientation=lt */
 	float: right;		/* orientation=rt */
 	width: 24px;
-	margin-left: 4px;		/* orientation=lt */
-	margin-right: 4px;	/* orientation=rt */
+	margin-left: 3px;		/* orientation=lt */
+	margin-right: 3px;	/* orientation=rt */
 }
 
 .UIOrganizationPortlet .UIGroupInfo .UIGroupMembershipForm .SearchIcon { 
