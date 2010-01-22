@@ -26,10 +26,6 @@
     
     <org.shindig.version>0.8.1-1-r719456</org.shindig.version>
     
-    
-    <!-- ignore test failures -->
-    <maven.test.failure.ignore>true</maven.test.failure.ignore>
-    <maven.test.skip>true</maven.test.skip>
   </properties>
   
   <scm>
