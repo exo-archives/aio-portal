@@ -9,7 +9,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.exoplatform.portal</groupId>
   <artifactId>portal-parent</artifactId>
-  <name>eXo Portal Parent</name>
+  <name>eXo Portal</name>
   <version>2.5.8-SNAPSHOT</version>
   <packaging>pom</packaging>
   
