@@ -1,56 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2003-2010 eXo Platform SAS.
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Affero General Public License
+    as published by the Free Software Foundation; either version 3
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, see <http://www.gnu.org/licenses/>.
+
+-->
 <project>
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.exoplatform.portal</groupId>
     <artifactId>portal-parent</artifactId>
     <version>2.5.8-SNAPSHOT</version>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
   <artifactId>topic</artifactId>
   <packaging>eXo Portal Sample Topics demo</packaging>
-
   <dependencies>
-
     <dependency>
       <groupId>org.exoplatform.portletcontainer</groupId>
       <artifactId>exo.pc.component.core</artifactId>
       <version>${org.exoplatform.pc.version}</version>
       <scope>compile</scope>
     </dependency>
-
     <dependency>
       <groupId>org.exoplatform.portletcontainer</groupId>
       <artifactId>exo.pc.component.plugins.pc</artifactId>
       <version>${org.exoplatform.pc.version}</version>
       <scope>compile</scope>
     </dependency>
-
     <dependency>
       <groupId>javax.portlet</groupId>
       <artifactId>portlet-api</artifactId>
       <version>2.0</version>
       <scope>compile</scope>
     </dependency>
-
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
       <version>2.5</version>
       <scope>compile</scope>
     </dependency>
-
     <dependency>
       <groupId>org.exoplatform.portletcontainer</groupId>
       <artifactId>exo.pc.portlets2events</artifactId>
       <version>${org.exoplatform.pc.version}</version>
       <scope>compile</scope>
     </dependency>
-
   </dependencies>
-
   <build>
     <finalName>topic</finalName>
     <plugins>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
@@ -62,15 +72,12 @@
           </archive>
         </configuration>
       </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-exopc-plugin</artifactId>
-        <extensions>true</extensions>
         <configuration>
           <sharedDir>${basedir}/patches</sharedDir>
-          <excludeProjects>
-            junit, jmock, bcel, ehcache, xercesImpl, msv, servlet-api, jibx-bind, isorelax,
+          <excludeProjects>junit, jmock, bcel, ehcache, xercesImpl, msv, servlet-api, jibx-bind, isorelax,
             relaxngDatatype, velocity-dep, saxpath, exo-platform.test.framework, xerces,
             xmldb-api, castor, drools-smftest, jsp-api, xml-apis, xml-resolver, jaxen,
             xjavadoc, xdoclet-hibernate-module, xdoclet-xdoclet-module, xdoclet,
@@ -80,13 +87,11 @@
             exo-platform.services.ldap.impl, exo-platform.services.remote.api,
             exo-platform.services.remote.impl, exo-platform.services.templates.api,
             exo-platform.services.templates.impl, groovy-all-1.0-jsr, howl-logger, janino,
-            jgroups-all, jotm, jotm_jrmp_stubs, jstl, log4j, soap, velocity, commons-beanutils
-          </excludeProjects>
+            jgroups-all, jotm, jotm_jrmp_stubs, jstl, log4j, soap, velocity, commons-beanutils</excludeProjects>
           <includeToWarClasspath/>
         </configuration>
+        <extensions>true</extensions>
       </plugin>
-
     </plugins>
   </build>
-
 </project>

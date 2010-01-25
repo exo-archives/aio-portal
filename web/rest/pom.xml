@@ -1,15 +1,32 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2003-2010 eXo Platform SAS.
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Affero General Public License
+    as published by the Free Software Foundation; either version 3
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, see <http://www.gnu.org/licenses/>.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.exoplatform.portal</groupId>
     <artifactId>portal-parent</artifactId>
     <version>2.5.8-SNAPSHOT</version>
   </parent>
-
-  <modelVersion>4.0.0</modelVersion>
   <artifactId>exo.portal.web.rest</artifactId>
   <packaging>war</packaging>
   <name>eXo Portal REST web application</name>
-
   <dependencies>
     <dependency>
       <groupId>org.exoplatform.ws</groupId>
@@ -18,24 +35,22 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
-
   <build>
-  <finalName>rest</finalName>
+    <finalName>rest</finalName>
     <plugins>
       <plugin>
-           <artifactId>maven-war-plugin</artifactId>
-           <configuration>
-             <!-- This is broken in maven-war-plugin 2.0, works in 2.0.1 -->
-             <warSourceExcludes>WEB-INF/lib/*.jar</warSourceExcludes>
-             <archive>
-               <manifest>
-                 <addClasspath>false</addClasspath>
-                 <classpathPrefix>lib/</classpathPrefix>
-               </manifest>
-             </archive>
-           </configuration>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <!-- This is broken in maven-war-plugin 2.0, works in 2.0.1 -->
+          <warSourceExcludes>WEB-INF/lib/*.jar</warSourceExcludes>
+          <archive>
+            <manifest>
+              <addClasspath>false</addClasspath>
+              <classpathPrefix>lib/</classpathPrefix>
+            </manifest>
+          </archive>
+        </configuration>
       </plugin>
     </plugins>
   </build>
-
 </project>

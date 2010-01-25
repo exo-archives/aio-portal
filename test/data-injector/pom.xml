@@ -1,20 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2003-2010 eXo Platform SAS.
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Affero General Public License
+    as published by the Free Software Foundation; either version 3
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, see <http://www.gnu.org/licenses/>.
+
+-->
 <project>
+  <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.exoplatform.portal</groupId>
     <artifactId>portal-parent</artifactId>
     <version>2.5.8-SNAPSHOT</version>
   </parent>
-  
-  <modelVersion>4.0.0</modelVersion>
   <artifactId>exo.portal.test.data-injector</artifactId>
   <packaging>jar</packaging>
   <name>eXo Portal Data Initializer</name>
   <description>eXo Portal Data Initializer</description>
-
   <properties>
     <maven.test.skip>true</maven.test.skip>
   </properties>
-  
   <dependencies>
     <dependency>
       <groupId>org.exoplatform.core</groupId>
@@ -22,30 +38,25 @@
       <version>${org.exoplatform.core.version}</version>
       <scope>compile</scope>
     </dependency>
-    
     <dependency>
       <groupId>org.exoplatform.jcr</groupId>
       <artifactId>exo.jcr.component.ext</artifactId>
       <version>${org.exoplatform.jcr.version}</version>
     </dependency>
-    
     <dependency>
       <groupId>org.exoplatform.portletcontainer</groupId>
       <artifactId>exo.pc.component.plugins.pc</artifactId>
       <version>${org.exoplatform.pc.version}</version>
     </dependency>
-    
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.component.web</artifactId>
       <version>2.5.8-SNAPSHOT</version>
     </dependency>
-    
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.component.portal</artifactId>
       <version>2.5.8-SNAPSHOT</version>
     </dependency>
-    
   </dependencies>
 </project>

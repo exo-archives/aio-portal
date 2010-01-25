@@ -1,140 +1,150 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <parent>
-        <groupId>org.exoplatform.portal</groupId>
-        <artifactId>exo.portal.gadgets</artifactId>
-        <version>2.5.8-SNAPSHOT</version>
-    </parent>
-    
-    <modelVersion>4.0.0</modelVersion>
-    <artifactId>exo.portal.gadgets-server</artifactId>
-    <packaging>war</packaging>
-    <name>eXo Portal Gadgets Web App</name>
-    <description>Server war containing both the gadget rendering code code.</description>
+<!--
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <dependentWarExcludes>gadgets/**</dependentWarExcludes>
-                    <dependentWarExcludes>WEB-INF/web**</dependentWarExcludes>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    Copyright (C) 2003-2010 eXo Platform SAS.
 
-    <dependencies>
-        <!-- project dependencies -->
-        <dependency>
-            <groupId>org.apache.shindig</groupId>
-            <artifactId>shindig-server</artifactId>
-            <version>${org.shindig.version}</version>
-            <type>war</type>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shindig</groupId>
-            <version>${org.shindig.version}</version>
-            <artifactId>shindig-features</artifactId>
-            <scope>provided</scope>
-        </dependency>
-	<dependency>
-            <groupId>org.apache.shindig</groupId>
-            <version>${org.shindig.version}</version>
-            <artifactId>shindig-social-api</artifactId>
-            <scope>provided</scope>
-        </dependency>
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Affero General Public License
+    as published by the Free Software Foundation; either version 3
+    of the License, or (at your option) any later version.
 
-        <!-- external dependencies -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20070829</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>caja</groupId>
-            <artifactId>caja</artifactId>
-            <version>r2438</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>caja</groupId>
-            <artifactId>json_simple</artifactId>
-            <version>r1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.oauth</groupId>
-            <artifactId>core</artifactId>
-            <version>20080621</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.google-collections</groupId>
-            <artifactId>google-collect</artifactId>
-            <version>snapshot-20080321</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.guice</groupId>
-            <artifactId>guice</artifactId>
-            <version>1.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
-            <version>2.3</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>rome</groupId>
-            <artifactId>rome</artifactId>
-            <version>0.9</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.ibm.icu</groupId>
-            <artifactId>icu4j</artifactId>
-            <version>3.8</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.sourceforge.nekohtml</groupId>
-            <artifactId>nekohtml</artifactId>
-            <version>1.9.9</version>
-            <scope>provided</scope>
-        </dependency>
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-        <dependency>
-            <groupId>xerces</groupId>
-            <artifactId>xercesImpl</artifactId>
-            <version>2.9.1</version>
-            <scope>provided</scope>
-        </dependency>
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, see <http://www.gnu.org/licenses/>.
 
-	    <dependency>
-	        <groupId>jaxen</groupId>
-	        <artifactId>jaxen</artifactId>
-	        <version>1.1.1</version>
-	        <scope>provided</scope>
-	    </dependency>
-	
-        <dependency>
-            <groupId>nu.validator.htmlparser</groupId>
-            <artifactId>htmlparser</artifactId>
-            <version>1.0.7</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-digester</groupId>
-            <artifactId>commons-digester</artifactId>
-            <version>1.7</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.exoplatform.portal</groupId>
+    <artifactId>exo.portal.gadgets</artifactId>
+    <version>2.5.8-SNAPSHOT</version>
+  </parent>
+  <artifactId>exo.portal.gadgets-server</artifactId>
+  <packaging>war</packaging>
+  <name>eXo Portal Gadgets Web App</name>
+  <description>Server war containing both the gadget rendering code code.</description>
+  <dependencies>
+    <!-- project dependencies -->
+    <dependency>
+      <groupId>org.apache.shindig</groupId>
+      <artifactId>shindig-server</artifactId>
+      <version>${org.shindig.version}</version>
+      <scope>provided</scope>
+      <type>war</type>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.shindig</groupId>
+      <artifactId>shindig-features</artifactId>
+      <version>${org.shindig.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.shindig</groupId>
+      <artifactId>shindig-social-api</artifactId>
+      <version>${org.shindig.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- external dependencies -->
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20070829</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>caja</groupId>
+      <artifactId>caja</artifactId>
+      <version>r2438</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>caja</groupId>
+      <artifactId>json_simple</artifactId>
+      <version>r1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.oauth</groupId>
+      <artifactId>core</artifactId>
+      <version>20080621</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.google-collections</groupId>
+      <artifactId>google-collect</artifactId>
+      <version>snapshot-20080321</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.guice</groupId>
+      <artifactId>guice</artifactId>
+      <version>1.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.3</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>rome</groupId>
+      <artifactId>rome</artifactId>
+      <version>0.9</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.ibm.icu</groupId>
+      <artifactId>icu4j</artifactId>
+      <version>3.8</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.nekohtml</groupId>
+      <artifactId>nekohtml</artifactId>
+      <version>1.9.9</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+      <version>2.9.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jaxen</groupId>
+      <artifactId>jaxen</artifactId>
+      <version>1.1.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>nu.validator.htmlparser</groupId>
+      <artifactId>htmlparser</artifactId>
+      <version>1.0.7</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>commons-digester</groupId>
+      <artifactId>commons-digester</artifactId>
+      <version>1.7</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <dependentWarExcludes>gadgets/**</dependentWarExcludes>
+          <dependentWarExcludes>WEB-INF/web**</dependentWarExcludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
