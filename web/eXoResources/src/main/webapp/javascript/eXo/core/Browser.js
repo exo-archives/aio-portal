@@ -312,13 +312,11 @@ Browser.prototype.addOnLoadCallback = function(id, method) {
  * and clean the array
  */
 Browser.prototype.onLoad = function() {
-	try {
-  	var callback = eXo.core.Browser.onLoadCallback ;
-	  for(var name in callback.properties) {
-	    var method = callback.get(name) ;
-	    if (typeof(method) == "function") method() ;
-	  }
-	} catch(e) {}
+	var callback = eXo.core.Browser.onLoadCallback ;
+  for(var name in callback.properties) {
+    var method = callback.get(name) ;
+    if (typeof(method) == "function") method() ;
+  }
   this.onLoadCallback = new eXo.core.HashMap();
 } ;
 /**
@@ -333,10 +331,10 @@ Browser.prototype.addOnResizeCallback = function(id, method) {
 
 Browser.prototype.onResize = function(event) {
 	var callback = eXo.core.Browser.onResizeCallback ;
- for(var name in callback.properties) {
-   var method = callback.get(name) ;
-   if (typeof(method) == "function") method(event) ;
- }
+	for(var name in callback.properties) {
+		var method = callback.get(name) ;
+		if (typeof(method) == "function") method(event) ;
+	}
 } ;
 /**
  * Adds a function to the list of functions to call when the user scrolls
