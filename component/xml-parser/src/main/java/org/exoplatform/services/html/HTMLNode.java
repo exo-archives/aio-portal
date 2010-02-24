@@ -59,7 +59,8 @@ public abstract class HTMLNode implements Node<Name> {
 
   public void addChild(HTMLNode ele){
     NodeConfig config = getConfig();
-    if(config.end() == Tag.FORBIDDEN) return;    
+    if(config.end() == Tag.FORBIDDEN) return;
+    if(children == null) children = new LinkedList<HTMLNode>();
     children.add(ele);
   }
 

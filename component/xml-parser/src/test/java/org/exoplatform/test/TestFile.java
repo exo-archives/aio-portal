@@ -36,7 +36,7 @@ public class TestFile extends TestCase{
   public static boolean found=false;
   
   public void testFile() throws  Exception {
-    File file = new File("D:\\java\\projects\\v2.x\\experiments\\exo-groupware\\services\\parser\\src\\resources\\normal.html");
+    File file = new File("src"+File.separatorChar+"test"+File.separatorChar+"resources"+File.separatorChar+"normal.html");
     FileInputStream input= new FileInputStream(file);
     BufferedInputStream buffer = new BufferedInputStream(input);
     byte[] data = new byte[buffer.available()];

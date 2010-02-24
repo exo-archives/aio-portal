@@ -36,7 +36,7 @@
       <init-params>
         <value-param>
           <name>locale.config.file</name>
-          <value>war:/conf/locales-config.xml</value>
+          <value>classpath:/conf/locales-config.xml</value>
         </value-param>
       </init-params>
   </component>    

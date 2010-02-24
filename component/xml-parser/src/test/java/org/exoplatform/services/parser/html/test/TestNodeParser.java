@@ -21,7 +21,6 @@ import java.io.File;
 import org.exoplatform.services.html.HTMLDocument;
 import org.exoplatform.services.html.HTMLNode;
 import org.exoplatform.services.html.Name;
-import org.exoplatform.services.html.parser.HTML;
 import org.exoplatform.services.html.parser.HTMLParser;
 import org.exoplatform.services.html.parser.NodeImpl;
 import org.exoplatform.services.html.path.NodePath;
@@ -40,7 +39,7 @@ public class TestNodeParser extends BasicTestCase {
   private File file_;
   
   public void setUp() throws Exception {
-    this.file_ = new File("src"+File.separatorChar+"resources"+File.separatorChar+"normal.html");
+    this.file_ = new File("src"+File.separatorChar+"test"+File.separatorChar+"resources"+File.separatorChar+"normal.html");
     //assertNotNull(this.file_ );
     System.out.println("FILE PATH: " + this.file_.getAbsolutePath());
   }

@@ -39,7 +39,7 @@ public class TestExceptionParser extends BasicTestCase {
   private File file_;
   
   public void setUp()throws Exception{
-    this.file_= new File("src"+File.separatorChar+"resources"+File.separatorChar+"normal.html");
+    this.file_= new File("src"+File.separatorChar+"test"+File.separatorChar+"resources"+File.separatorChar+"normal.html");
     //assertNotNull(this.file_);
     System.out.println("\n\nFILE PATH: " + this.file_.getCanonicalPath());
   }

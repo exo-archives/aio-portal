@@ -315,7 +315,7 @@ Browser.prototype.onLoad = function() {
 	var callback = eXo.core.Browser.onLoadCallback ;
   for(var name in callback.properties) {
     var method = callback.get(name) ;
-    if (typeof(method) == "function") method() ;
+    if (typeof(method) == "function") try{method()}catch(e){} ;
   }
   this.onLoadCallback = new eXo.core.HashMap();
 } ;

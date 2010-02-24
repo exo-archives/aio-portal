@@ -44,7 +44,7 @@ public class TestHTMLParser extends BasicTestCase {
   
   public void setUp() throws Exception {
     //initializes the File object.
-    file_ = new File("src"+File.separatorChar+"resources"+File.separatorChar+"normal.html");
+    file_ = new File("src"+File.separatorChar+"test"+File.separatorChar+"resources"+File.separatorChar+"normal.html");
     System.out.println(file_.getAbsolutePath());
   }
   
