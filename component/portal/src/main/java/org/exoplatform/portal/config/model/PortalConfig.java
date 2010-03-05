@@ -31,7 +31,6 @@ public class PortalConfig {
   final public static String PORTAL_TYPE = "portal";
   
 	private String    name ;
-//	private String    factoryId;
   private String    locale ;
   
   private String[]  accessPermissions ;
@@ -40,7 +39,6 @@ public class PortalConfig {
   private String    skin;
   private String    title;
   
-  private Container widgetLayout;
   private Container portalLayout;
   
   private String    creator ;
@@ -75,12 +73,7 @@ public class PortalConfig {
   
   public boolean isModifiable() { return modifiable ; }
   public void  setModifiable(boolean b) { modifiable = b ; }
-  
-//  public String getFactoryId() { 
-//    return factoryId; 
-//  }
-//  public void setFactoryId(String factoryId) { this.factoryId = factoryId; }
-  
+
   public String getCreator()  {  return creator ; }
   public void   setCreator(String s) { creator = s ; }
   
