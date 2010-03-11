@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
-import org.exoplatform.commons.utils.PageList;
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.ExoContainerContext;
 import org.exoplatform.container.component.ComponentPlugin;
@@ -376,7 +375,7 @@ public class UserPortalConfigService implements Startable {
 			}
 		}
 		
-		return navigation;
+		return navigation != null ? navigation.clone() : null;
 	}
 
 	public void create(Gadgets gadgets) throws Exception {
