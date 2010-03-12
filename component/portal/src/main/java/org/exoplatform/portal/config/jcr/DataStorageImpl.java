@@ -69,7 +69,7 @@ public class DataStorageImpl implements DataStorage, Startable {
 	final private static String PORTAL_CONFIG_FILE_NAME = "portal-xml";
 	final private static String NAVIGATION_CONFIG_FILE_NAME = "navigation-xml";
 	final private static String GADGETS_CONFIG_FILE_NAME = "gadgets-xml"; // TODO:
-																			// dang.tung
+	// dang.tung
 	final private static String PAGE_SET_NODE = "pages";
 	final private static String PORTLET_PREFERENCES_SET_NODE = "portletPreferences";
 
@@ -345,22 +345,13 @@ public class DataStorageImpl implements DataStorage, Startable {
 			return null;
 		}
 
-		protected void update(String name, PageNode updateNode) {
+		protected void update(NodeContainer updateContainer) {
 			List<PageNode> nodes = getNodes();
-			List<PageNode> tmpNodes = new ArrayList<PageNode>();
-			if (nodes != null) {
-				for (PageNode node : nodes) {
-					if (node.getName().equals(name)) {
-						tmpNodes.add(updateNode);
-					} else {
-						tmpNodes.add(node);
-					}
-				}
-
-				nodes.clear();
-
-				for (PageNode node : tmpNodes) {
-					nodes.add(node);
+			nodes.clear();
+			List<PageNode> updateNodes = updateContainer.getNodes();
+			if (updateNodes != null) {
+				for (PageNode pageNode : updateNodes) {
+					nodes.add(pageNode);
 				}
 			}
 		}
@@ -475,7 +466,7 @@ public class DataStorageImpl implements DataStorage, Startable {
 			//
 			if (targetNode != null) {
 				// We perform the merge
-				target.update(toNode.getName(), toNode);
+				target.update(to);
 				modified |= merge(new PageNodeContainer(fromNode),
 						new PageNodeContainer(toNode), new PageNodeContainer(
 								targetNode));
