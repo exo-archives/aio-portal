@@ -68,7 +68,10 @@ public class UIPortalManagementControlBar extends UIToolbar {
     UIPortalApplication uiPortalApp = getAncestorOfType(UIPortalApplication.class);    
     
     PortalConfig portalConfig  = PortalDataMapper.toPortal(uiPortal);    
-    UserPortalConfigService configService = getApplicationComponent(UserPortalConfigService.class);     
+    UserPortalConfigService configService = getApplicationComponent(UserPortalConfigService.class);
+    
+    SkinService skinService = getApplicationComponent(SkinService.class);
+    skinService.invalidatePortalSkinCache(uiPortal.getName(), uiPortal.getSkin());
     configService.update(portalConfig);
     uiPortalApp.getUserPortalConfig().setPortal(portalConfig) ;
     PortalRequestContext prContext = Util.getPortalRequestContext();
@@ -97,8 +100,6 @@ public class UIPortalManagementControlBar extends UIToolbar {
     //----------------------------------------------------------------------------------------------------
     uiPortalApp.setSkin(uiPortal.getSkin());
     prContext.refreshResourceBundle();
-    SkinService skinService = getApplicationComponent(SkinService.class);
-    skinService.invalidatePortalSkinCache(uiPortal.getName(), uiPortal.getSkin());
   }
   
   @Override
