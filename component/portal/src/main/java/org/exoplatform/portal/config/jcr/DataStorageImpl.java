@@ -19,10 +19,10 @@ package org.exoplatform.portal.config.jcr;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
@@ -39,8 +39,8 @@ import org.exoplatform.portal.config.Query;
 import org.exoplatform.portal.config.model.Gadgets;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
-import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.config.model.PageNode;
+import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
 import org.exoplatform.services.jcr.ext.registry.RegistryEntry;
 import org.exoplatform.services.jcr.ext.registry.RegistryService;
@@ -655,7 +655,7 @@ public class DataStorageImpl implements DataStorage, Startable {
 				.getSimpleName());
 		generateContainScript(builder, DataMapper.EXO_OWNER_TYPE, q
 				.getOwnerType());
-		generateContainScript(builder, DataMapper.EXO_OWNER_ID, q.getOwnerId());
+		generateLikeScript(builder, DataMapper.EXO_OWNER_ID, q.getOwnerId());
 		generateContainScript(builder, DataMapper.EXO_NAME, q.getName());
 		generateContainScript(builder, DataMapper.EXO_TITLE, q.getTitle());
 		Session session = regService_.getRegistry(sessionProvider).getNode()
