@@ -25,11 +25,10 @@
 	rcontext.getJavascriptManager().importJavascript('eXo.webui.UIPopupWindow');
 %>
 <div class="UIPageSelector" id="<%=uicomponent.getId();%>" >
-	<div class="PageSelectorTitle">
+	<div class="PageSelectorTitle ClearFix">
 	  <div class="Icon BlueInfoBox16x16Icon"><span></span></div>
 	  <div class="Title"><%=_ctx.appRes(uicomponent.getId()+".label.currentSelectedPage")%></div>
-	  <div class="ClearLeft"><span></span></div>
-  </div>
+	</div>
 	<div class="UIFormInfo">
 	  <div class="FormInfoBG">
 		  <div class="FormInfoIcon">

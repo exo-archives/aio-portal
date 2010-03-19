@@ -20,13 +20,12 @@
         <div class="UITabContent" style="display: block">
           <div class="UIAddPortlet">
             <div class="UIItemSelector">
-              <div class="LeftColumnStyle">
+              <div class="LeftColumnStyle ClearFix">
                 <div class="ItemListContainer">
                 
-                  <div class="ItemListTitle">
+                  <div class="ItemListTitle ClearFix">
                     <div class="TitleIcon ItemListIcon"><span></span></div>
                     <div class="Title"><%=_ctx.appRes("UIAddNewApplication.label.Categories")%></div>
-                    <div class="ClearLeft"><span></span></div>
                   </div>
                   <div class="ItemList">
 	                <%
@@ -47,10 +46,9 @@
                 </div>
                 
                 <div class="ItemDetailList">
-                    <div class="ItemDetailTitle">
+                    <div class="ItemDetailTitle ClearFix">
                       <div class="TitleIcon ViewListIcon"><span></span></div>
                       <div class="Title"><%=_ctx.appRes("UIAddNewApplication.label.Select")%></div>
-                      <div class="ClearLeft"><span></span></div>
                     </div>
                     <div class="ApplicationListContainer">
                     <% if(appCategories==null || appCategories.isEmpty()){ %>
@@ -77,7 +75,7 @@
                                String addApplicationURL = uicomponent.event(callingAction, application.getId());
                                String addToStartup = uicomponent.event("AddToStartup", application.getId());
                         %>
-                        <div class="Application">
+                        <div class="Application ClearFix">
 	                        <div class="ApplicationDescription">
 		                        <div onclick="$addApplicationURL" title="<%= application.getDisplayName() %>" class="PortletIcon">
 		                            <span><img src="/$srcBG" alt="" onError="src='$srcNormalBG'" /></span>
@@ -96,19 +94,18 @@
 	                              <div class="ContentLabel">
                                     <span class="LeftLabel"><%=_ctx.appRes("UIAddNewApplication.label.Type")%></span>
                                     <span class="RightLabel"><%=application.getApplicationType()%></span>
-                                </div>
-                                <div class="ContentLabel">
-                                    <span class="LeftLabel"><%=_ctx.appRes("UIAddNewApplication.label.Created")%></span>
-                                    <span class="RightLabel">eXo Platform SAS.</span>
-                                </div>
-                                <div class="ContentLabel">
-                                    <span class="LeftLabel"><%=_ctx.appRes("UIAddNewApplication.label.Description")%></span>
-                                    <span class="RightLabel"><%= application.getDescription() %></span>
-                                </div>
+									</div>
+									<div class="ContentLabel">
+										<span class="LeftLabel"><%=_ctx.appRes("UIAddNewApplication.label.Created")%></span>
+										<span class="RightLabel">eXo Platform SAS.</span>
+									</div>
+									<div class="ContentLabel">
+										<span class="LeftLabel"><%=_ctx.appRes("UIAddNewApplication.label.Description")%></span>
+										<span class="RightLabel"><%= application.getDescription() %></span>
+									</div>
 	                            </div>
                             </div>
 	                        </div>
-	                        <div class="ClearRight"><span ></span></div>
                         </div>
                         <% 
                            }
@@ -121,7 +118,6 @@
 	                  %>
                     </div>
                 </div>
-                 <div class="ClearLeft"><span></span></div>
               </div>
             </div>
           </div>

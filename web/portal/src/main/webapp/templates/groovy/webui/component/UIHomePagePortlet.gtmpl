@@ -15,17 +15,15 @@
 				<div class="RightAccountsContainer">
 					<div class="MiddleAccountsContainer">
 						<div class="InstructionTitle"><%=_ctx.appRes("UIHomePagePortlet.Label.Title")%></div>
-						<div class="AccountsContainerDeco">
+						<div class="AccountsContainerDeco ClearFix">
 							<div class="AccountBlock AdministratorUser">
 								<div class="AccountInfos">
 									<div class="AccountTitle">Administrator</div>
 									<div class="Username">
 										<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Username")%></div><span>root</span>
-										<div class="ClearBoth"><span></span></div>
 									</div>
 									<div class="Passwords">
 										<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Password")%></div><span>exo</span>
-										<div class="ClearBoth"><span></span></div>
 									</div>
 								</div>
 							</div>	
@@ -35,11 +33,9 @@
 									<div class="AccountTitle">Manager</div>
 									<div class="Username">
 										<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Username")%></div><span>john</span>
-										<div class="ClearBoth"><span></span></div>
 									</div>
 									<div class="Passwords">
 										<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Password")%></div><span>exo</span>
-										<div class="ClearBoth"><span></span></div>
 									</div>
 								</div>
 							</div>
@@ -49,11 +45,9 @@
 									<div class="AccountTitle">User</div>
 									<div class="Username">
 										<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Username")%></div><span>marry</span>
-										<div class="ClearBoth"><span></span></div>
 									</div>
 									<div class="Passwords">
 										<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Password")%></div><span>exo</span>
-										<div class="ClearBoth"><span></span></div>
 									</div>
 								</div>
 							</div>
@@ -63,15 +57,12 @@
 									<div class="AccountTitle">Demo</div>
 									<div class="Username">
 										<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Username")%></div><span>demo</span>
-										<div class="ClearBoth"><span></span></div>
 									</div>
 									<div class="Passwords">
 										<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Password")%></div><span>exo</span>
-										<div class="ClearBoth"><span></span></div>
 									</div>
 								</div>
 							</div>
-							<div class="ClearBoth"><span></span></div>
 						</div>
 					</div>
 				</div>

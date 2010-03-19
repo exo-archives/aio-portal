@@ -40,7 +40,7 @@
 		        <div class="LeftBar">
 		          <div class="RightBar">
 				        <div class="MiddleBar">
-				        	<div class="FixHeight">
+				        	<div class="FixHeight ClearFix">
 					          <div class="DragControlArea" title="<%=_ctx.appRes("UIPortlet.tooltip.DragControl");%>"><span></span></div>
 					          <% 
 					            String portletIcon = uicomponent.getIcon();
@@ -52,10 +52,9 @@
 					            if(title.length() > 30) title = title.substring(0,27) + "..." ;
 					          %>
 					          <div class="Icon $portletIcon WindowPortletIcon NovaPortletIcon"><span></span></div>
-			              <div class="Title">$title</div>
+							<div class="Title">$title</div>
 				            <a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeletePortletIcon" title="<%=_ctx.appRes("UIPortlet.tooltip.deletePortlet");%>"><span></span></a>
 				            <a href="<%=uicomponent.event("EditPortlet","$uicomponent.id")%>" class="EditPortletPropertiesIcon" title="<%=_ctx.appRes("UIPortlet.tooltip.editPortlet");%>"><span></span></a>
-				            <div class="ClearBoth"><span></span></div>
 				          </div>
 				        </div>
 		          </div>
@@ -157,7 +156,7 @@
       <div class="WindowBarLeft">
         <div class="WindowBarRight">
           <div class="WindowBarCenter">
-            <div class="FixHeight">
+            <div class="FixHeight ClearFix">
 	              <%
 	                
 	                String restoreDown = _ctx.appRes("UIPortlet.tooltip.MaximizeRestore");
@@ -258,8 +257,6 @@
 			            if(portletIcon == null) portletIcon = "PortletIcon";
 	            	%>
 	              <div class="$portletIcon WindowPortletIcon NovaPortletIcon WindowPortletInfo"><div class="PortletName">$title</div></div>
-	             
-	            <div class="ClearBoth"><span></span></div>
 	          </div>
           </div>
         </div>
@@ -282,11 +279,10 @@
       <div class="BottomDecoratorLeft">
         <div class="BottomDecoratorRight">
           <div class="BottomDecoratorCenter">
-          	<div class="FixHeight">
+          	<div class="FixHeight ClearFix">
 	            <div class="ResizeArea" title="<%=_ctx.appRes("UIPortlet.tooltip.ResizeWindow");%>"><span></span></div>
 	            <div class="Information"><%=_ctx.appRes("UIPortlet.lable.information");%></div>
-	            <div class="ClearRight"><span></span></div>
-						</div>
+			</div>
           </div>
         </div>
       </div>

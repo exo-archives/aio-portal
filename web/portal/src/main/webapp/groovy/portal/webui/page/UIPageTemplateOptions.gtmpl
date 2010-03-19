@@ -71,10 +71,9 @@
         templates = category.getSelectItemOptions();
 		%>
 		    <div class="ItemDetailList" style="display: $display;">
-    			<div class="ItemDetailTitle">
+    			<div class="ItemDetailTitle ClearFix">
     			  <div class="TitleIcon ViewListIcon"><span></span></div>
 						<div class="Title"><%=_ctx.appRes("UIItemSelector.lable.ItemDetailTitle")%></div>
-						<div class="ClearLeft"><span></span></div>
     			</div>
 			    <%
 			    	//int i = 0;    			     

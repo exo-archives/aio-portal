@@ -303,14 +303,13 @@
 */  
 %>
 <div class="UIExoStart" id="UIExoStart">
-  <div class="StartBarContainer">
+  <div class="StartBarContainer ClearFix">
     <div class="ExoStartButton ButtonNormal" onclick="$onclick" title="<%=_ctx.appRes("UIExoStart.tooltip.begin")%>"><span></span></div>
     <div class="VLineSeparator"><span></span></div>
     <div class="DigitalClockContainer">
       <div class="DigitalClock" id="DigitalClock"><span></span></div>
     </div>
     <div class="VLineSeparator"><span></span></div>
-    <div class="ClearBoth"><span></span></div>
   </div>
   
   
@@ -321,7 +320,7 @@
       <div class="StartMenuML">
         <div class="StartMenuMR">
           <div class="StartMenuBG">      
-            <div class="MenuItemContainer" style="top: -1000px;">
+            <div class="MenuItemContainer ClearFix" style="top: -1000px;">
               <%
                 for(menu in uicomponent.getMenus())  {
                   for(item in menu)  {
@@ -348,7 +347,6 @@
 				        </div>
 				      </div>
             </div>
-            <div class="ClearLeft"><span></span></div>
           </div>
         </div>
       </div>      
