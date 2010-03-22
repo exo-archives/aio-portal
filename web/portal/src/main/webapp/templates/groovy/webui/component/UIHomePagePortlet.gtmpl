@@ -19,10 +19,10 @@
 							<div class="AccountBlock AdministratorUser">
 								<div class="AccountInfos">
 									<div class="AccountTitle">Administrator</div>
-									<div class="Username">
+									<div class="Username ClearFix">
 										<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Username")%></div><span>root</span>
 									</div>
-									<div class="Passwords">
+									<div class="Passwords ClearFix">
 										<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Password")%></div><span>exo</span>
 									</div>
 								</div>
@@ -31,10 +31,10 @@
 							<div class="AccountBlock ManagerUser">
 								<div class="AccountInfos">
 									<div class="AccountTitle">Manager</div>
-									<div class="Username">
+									<div class="Username ClearFix">
 										<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Username")%></div><span>john</span>
 									</div>
-									<div class="Passwords">
+									<div class="Passwords ClearFix">
 										<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Password")%></div><span>exo</span>
 									</div>
 								</div>
@@ -43,10 +43,10 @@
 							<div class="AccountBlock NormalUser">
 								<div class="AccountInfos">
 									<div class="AccountTitle">User</div>
-									<div class="Username">
+									<div class="Username ClearFix">
 										<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Username")%></div><span>marry</span>
 									</div>
-									<div class="Passwords">
+									<div class="Passwords ClearFix">
 										<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Password")%></div><span>exo</span>
 									</div>
 								</div>
@@ -55,10 +55,10 @@
 							<div class="AccountBlock DemoUser" style="margin-right: 0px;">
 								<div class="AccountInfos">
 									<div class="AccountTitle">Demo</div>
-									<div class="Username">
+									<div class="Username ClearFix">
 										<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Username")%></div><span>demo</span>
 									</div>
-									<div class="Passwords">
+									<div class="Passwords ClearFix">
 										<div class="Lable"><%=_ctx.appRes("UIHomePagePortlet.Label.Password")%></div><span>exo</span>
 									</div>
 								</div>
