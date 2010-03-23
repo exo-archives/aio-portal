@@ -152,13 +152,13 @@
 
 .UIPopupWindow .CaledarStyle .UIWindowContent {
 	padding: 0px; margin: 0px;
-	background: url('null') no-repeat;
+	background: none;
 }
 
 .UIPopupWindow .CaledarStyle .UIWindowContent .Content {
 	padding: 0px; margin: 0px;
 	border: none;
-	background: url('null') no-repeat;
+	background: none;
 }
 
 .UIPopupWindow .CaledarStyle .CloseButton {
