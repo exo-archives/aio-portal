@@ -3,7 +3,7 @@
 	String srcBGError = "/eXoResources/skin/sharedImages/Icon80x80/DefaultPortlet.png";
 %>
 <div class="UIGadgetInfo" id="$uicomponent.id">
-	<div class="UIBreadcumb">
+	<div class="UIBreadcumb ClearFix">
 		<div class="LeftBlock"><%=_ctx.appRes("UIGadgetInfo.label.gadgetDetails")%></div>
 		<% if(gadget.isLocal()) {%>
 		<div class="EditIcon ControlIcon" title="<%=_ctx.appRes("UIGadgetInfo.title.editGadget")%>" onclick="<%= uicomponent.event("Edit") %>"><span></span></div>
@@ -11,7 +11,6 @@
 		<div class="DownLoadIcon ControlIcon" title="<%=_ctx.appRes("UIGadgetInfo.title.copy")%>" onclick="<%= uicomponent.event("Copy") %>"><span></span></div>
 		<% } %>
 		<div class="Refresh16x16Icon ControlIcon" title="<%=_ctx.appRes("UIGadgetInfo.title.refresh")%>" onclick="<%= uicomponent.event("Refresh") %>"><span></span></div>
-		<div class="ClearBoth"><span></span></div>
 	</div>
  	<div class="Application">
  		<div class="PortletIcons">

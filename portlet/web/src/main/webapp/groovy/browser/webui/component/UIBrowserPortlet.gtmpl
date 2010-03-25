@@ -5,7 +5,7 @@
 %>
 <div class="UIBrowserPortlet" id="$uicomponent.id">
 	<div class="UIToolbar">
-		<div class="ButtonContainer">
+		<div class="ButtonContainer ClearFix">
 			<div class="Separators"><span></span></div>
 			<div class="ToolbarButton">
 				<div class="BackButton" title="<%=_ctx.appRes("UIBrowserPortlet.Back")%>" onclick="eXo.application.browser.BrowserApplication.goBack(this)"><span></span></div>
@@ -20,24 +20,21 @@
 			<div class="ToolbarButton">
 				<div class="StopButton" title="<%=_ctx.appRes("UIBrowserPortlet.Stop")%>" onclick="eXo.application.browser.BrowserApplication.stopLoad()"><span></span></div>
 			</div>
-			<div class="ClearLeft"><span></span></div>
 		</div>
-		<div class="RightAddressBarContainer">
+		<div class="RightAddressBarContainer ClearFix">
 			<div class="StatusButton"><span></span></div>
 			<a class="GoButton" href="javascript:void(0);" onclick="javascript:eXo.application.browser.BrowserApplication.getUrl(this);" title="<%=_ctx.appRes("UIBrowserPortlet.Goto")%>"><%=_ctx.appRes("UIBrowserPortlet.Go")%></a>
-			<div class="AddressBarContainer">
+			<div class="AddressBarContainer ClearFix">
 				<div class="ArrowDownButton"><span></span></div>
 				<div class="TextBox">
 					<input type="text" name="txtAddress" class="txtAddress" style="width: 98%; border:0px;" value="" onkeypress="eXo.application.browser.BrowserApplication.onKeyPress(event)"/>
 				</div>
-				<div class="ClearRight"><span></span></div>
 			</div>
-			<div class="ClearRight"><span></span></div>
 		</div>
 	</div>
 	<div class="BrowserContent">
-		<div class="TabBackground">
-			<div class="TabContainer">
+		<div class="TabBackground ClearFix">
+			<div class="TabContainer ClearFix">
 				<div class="Separator"><span></span></div>
 				<div class="ActiveTabDetailBackground TabMenuItem">
 					<div class="TabDetail">
@@ -55,9 +52,7 @@
 						<div class="MiddleNewTab"><span></span></div>
 					</div>
 				</div>
-				<div class="ClearLeft"><span></span></div>
 			</div>
-			<div class="ClearRight"><span></span></div>
 		</div>
 		<div class="TabContent UIResizableBlock">
 			<iframe class="IFrame" name="iframe" frameBorder="0"></iframe>

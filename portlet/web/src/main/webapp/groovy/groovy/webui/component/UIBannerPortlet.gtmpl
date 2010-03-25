@@ -19,7 +19,7 @@
 	        	<div class="BannerTitle"><span></span></div>
 						<div class="LeftLoginContainer">
 							<div class="RightLoginContainer">
-								<div class="MiddleLoginContainer">
+								<div class="MiddleLoginContainer" >
 									<div class="Name">
 										<%=_ctx.appRes("UILogged.note.loggedUser")%>
 										<a style="padding: 0px 10px 0px 2px; color: red; font-weight:bold; cursor:pointer;" href="$accountSetting">
@@ -28,25 +28,22 @@
 									</div>
 									<a class="Logout" onclick="eXo.portal.logout();"><%=_ctx.appRes("UILogged.action.signout")%></a>
 									<a class="Language" onclick="$changeLanguageAction"><%=_ctx.appRes("UIExoStart.item.ChangeLanguage")%></a>
-									<div class="ClearBoth"><span></span></div>	
+									<div class="ClearBoth"><span></span></div>
 								</div>							
 					<%} else {%>
-					<div class="MiddleBanner MiddleBannerSignin">
+					<div class="MiddleBanner MiddleBannerSignin ClearFix">
 	        	<div class="BannerTitle"><span></span></div>
-						<div class="LeftLoginContainer">
+						<div class="LeftLoginContainer ClearFix">
 							<div class="RightLoginContainer">
 								<div class="MiddleLoginContainer Signin">
 									<a class="Login" onclick="$signInAction"><%=_ctx.appRes("UILoginForm.label.Signin")%></a>								
 									<a class="Language" onclick="$changeLanguageAction">
 										<%=_ctx.appRes("UIExoStart.item.ChangeLanguage")%>
 									</a>		
-									<div class="ClearBoth"><span></span></div>
 								</div>
 					<%}%>   
 							</div>
-							<div style="clear:both"><span></span></div>
 						</div>
-						<div class="ClearBoth"><span></span></div>
 	        </div>
 	      </div>   
 	    </div>
