@@ -52,9 +52,9 @@
 					            if(title.length() > 30) title = title.substring(0,27) + "..." ;
 					          %>
 					          <div class="Icon $portletIcon WindowPortletIcon NovaPortletIcon"><span></span></div>
-							<div class="Title">$title</div>
 				            <a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeletePortletIcon" title="<%=_ctx.appRes("UIPortlet.tooltip.deletePortlet");%>"><span></span></a>
 				            <a href="<%=uicomponent.event("EditPortlet","$uicomponent.id")%>" class="EditPortletPropertiesIcon" title="<%=_ctx.appRes("UIPortlet.tooltip.editPortlet");%>"><span></span></a>
+										<div class="Title">$title</div>
 				          </div>
 				        </div>
 		          </div>

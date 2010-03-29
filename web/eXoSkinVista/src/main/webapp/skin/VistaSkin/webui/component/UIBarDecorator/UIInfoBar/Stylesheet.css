@@ -62,10 +62,10 @@
 .UIInfoBar .BlueRoundedStyle .Title {
 	color: black;
 	line-height: 22px; 
-	float: left;	/* orientation=lt */
-	float: right;	/* orientation=rt */
 	text-align: left; /* orientation=lt */
 	text-align: right;	/* orientation=rt */
+	margin-left: 60px;
+	margin-right: 60px;
 	text-overflow: ellipsis;
 }
 
