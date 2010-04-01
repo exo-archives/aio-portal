@@ -67,6 +67,7 @@
 	margin-left: 60px;
 	margin-right: 60px;
 	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .UIInfoBar .BlueRoundedStyle .Icon {

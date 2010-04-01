@@ -71,6 +71,7 @@
 	padding-right: 3px; /* orientation=rt */
 	margin-left: 60px;
 	margin-right: 60px;
+	white-space: nowrap;
 }
 
 .UIInfoBar .BlueRoundedStyle .Icon {
