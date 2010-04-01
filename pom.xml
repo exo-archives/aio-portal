@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.exoplatform</groupId>
     <artifactId>exo.parent</artifactId>
-    <version>8-SNAPSHOT</version>
+    <version>8</version>
   </parent>
   <groupId>org.exoplatform.portal</groupId>
   <artifactId>portal-parent</artifactId>
@@ -46,7 +46,7 @@
     <org.exoplatform.ws.version>1.3.6-SNAPSHOT</org.exoplatform.ws.version>
     <org.exoplatform.jcr.version>1.10.7-SNAPSHOT</org.exoplatform.jcr.version>
     <org.exoplatform.pc.version>2.0.9-SNAPSHOT</org.exoplatform.pc.version>
-    <org.exoplatform.exopackage.version>1.2.1-SNAPSHOT</org.exoplatform.exopackage.version>
+    <org.exoplatform.exopackage.version>1.2.2-SNAPSHOT</org.exoplatform.exopackage.version>
     <org.shindig.version>0.8.1-1-r719456</org.shindig.version>
   </properties>
   <build>
