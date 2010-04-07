@@ -1,3 +1,199 @@
+
+Release Notes - exo-portal - Version portal-2.5.8
+
+** Bug
+    * [PORTAL-3657] - Cannot modify portlet added in right or left container
+    * [PORTAL-3703] - Gadget RSS is not working in an SSL environment
+    * [PORTAL-3704] - the protocol is hardcoded in the URL in Gadgets.js
+    * [PORTAL-3716] - Can't upload empty file
+    * [PORTAL-3720] - Create an Upload MutiValued filed
+    * [PORTAL-3744] - UTF8 encoding in a jboss bundle
+    * [PORTAL-3745] -  Edit Navigation(Cannot edit label node)
+    * [PORTAL-3747] - User's research is case sensitive
+    * [PORTAL-3750] - Navigation ordering doesn't get saved
+    * [PORTAL-3760] - NPE when managing the publication in a portal containing a dash in it's name
+    * [PORTAL-3764] - GET null error  in the exo message popup 
+    * [PORTAL-3765] - exception is occurred after inserting gadgets
+
+
+** Improvement
+    * [PORTAL-3683] - Should not update whole the mask layer when editing a portlet
+    * [PORTAL-3710] - Fire event when Edit current portal action is executed
+    * [PORTAL-3723] - Build, quality and automation improvements
+    * [PORTAL-3741] - Message Modification
+    * [PORTAL-3748] - allow adding listeners as component plugins in SkinService
+    * [PORTAL-3762] - Database Initialization when using LDAP
+
+
+** Task
+    * [PORTAL-3714] - Create Portal 2.5.8-SNAPSHOT for deployment
+    * [PORTAL-3761] - Enable generation of text reports in surefire
+    * [PORTAL-3768] - Release PORTAL 2.5.8
+
+
+** Sub-task
+    * [PORTAL-3696] - TestCrawlBBC hangs during tests
+    * [PORTAL-3722] - Cleanup and reactivate tests
+    * [PORTAL-3724] - Upgrade to exo parent 8
+    * [PORTAL-3725] - Cleanup POMs
+    * [PORTAL-3749] - Remove usage of property org.exoplatform.mvnexobuild.version
+    * [PORTAL-3751] - org.exoplatform.test.crawler.ITCrawlBBC is freezing in hudson
+    * [PORTAL-3752] - Fix/Remove tests failures
+
+
+
+Release Notes - exo-portal - Version 2.5.7
+
+** Bug
+    * [PORTAL-3379] - Session will be destroyed if there is a request to a portal not exist
+    * [PORTAL-3435] - Change site to current - navigation is changing, page is not.
+    * [PORTAL-3604] - Problem with URL of portal 
+    * [PORTAL-3616] - Double '*' membership type visible when selecting permissions to newly added drive
+    * [PORTAL-3650] - Calculator gadget: when user input many numeral characters, the textbox for displaying will be overflowed characters.
+    * [PORTAL-3659] - [feed back] user has no edit right on page but can edit the page
+    * [PORTAL-3660] - Cannot use @owner@ in portal template anymore
+    * [PORTAL-3675] - ClassCastException in Application registry when creating new category
+    * [PORTAL-3676] - Error when delete a portal.
+    * [PORTAL-3677] - IPC error with simple example
+    * [PORTAL-3682] - UIFormTextAreaInput.java doesn't extend UIFormStringInput anymore: breaks build in other products!
+    * [PORTAL-3689] -  No possible accented characters in the user profile
+    * [PORTAL-3702] - The user which was revoved from platform/users group can not login the Portal
+    * [PORTAL-3707] - Show 'Change Owner type' button when edit page& navigation
+
+** Improvement
+    * [PORTAL-2640] - Internationalize session timeout message
+    * [PORTAL-3664] - Changing logging level
+    * [PORTAL-3665] - Session destroyed exception
+
+** Task
+    * [PORTAL-3503] - Refresh navigation after a navigation is saved in datastorage
+    * [PORTAL-3663] - Release Portal 2.5.7
+    * [PORTAL-3667] - Upgrade to use JCR 1.10.5.1
+    * [PORTAL-3680] - Add capability to generate a maven repository extract (useful for support patch delivery)
+    * [PORTAL-3681] - Revert some code change in UIPortal
+    * [PORTAL-3692] - Cleanup the build process to be able to deploy on eXo Nexus with the release plugin for 2.5.x
+
+** Sub-task
+    * [PORTAL-3693] - Build - Cleanup the profile with properties, remove the reporting and emma config, add parent pom v6
+    * [PORTAL-3701] - Patches are empty (wrong resources declaration in portal parent pom)
+
+
+
+Release Notes - exo-portal - Version 2.5.6.2
+
+** Bug
+    * [PORTAL-3660] - Cannot use @owner@ in portal template anymore
+
+
+
+Release Notes - exo-portal - Version 2.5.6.1
+
+** Bug
+    * [PORTAL-3604] - Problem with URL of portal 
+
+
+
+Release Notes - exo-portal - Version 2.5.6
+
+** Bug
+    * [PORTAL-3118] - Cannot build eXo Gadgets Web App (The attribute "Implementation-Title" may not occur more than once in the same section)
+    * [PORTAL-3139] - UIUserSelector uses PageList.getAll() but it is not supported by the LDAP implementation of the Organization Service
+    * [PORTAL-3146] - Can not check validate for input which can not editable.
+    * [PORTAL-3150] - When Invalid configuration in Portal we need to show the location of the file explicitly
+    * [PORTAL-3151] - Error when start tomcat if it has a exo-conf folder
+    * [PORTAL-3242] - Generali : Patch for no localized string
+    * [PORTAL-3243] - Sitemap portlet should NOT use Ajax when clicking on a page. (when using ajax it is not usable at all)
+    * [PORTAL-3391] - A div class of UIForm is not correct
+
+** Documentation
+    * [PORTAL-3577] - [DOC] Wiki doc about the ability to change easily the view template of all the basic portlets
+
+** Improvement
+    * [PORTAL-3355] - Proposal for bugfixes in the component exo.portal.component.portal
+    * [PORTAL-3366] - Add the ability to change the view template of Breadcrumb portlet
+    * [PORTAL-3472] - Create a eXo-dev.sh to run portal with debug param
+
+** Task
+    * [PORTAL-3110] - Remove alert message form cometd.js file
+    * [PORTAL-3141] - Indent the code convention for templates
+
+** Sub-task
+    * [PORTAL-3349] -  org.exoplatform.webui.form.UIFormDateTimeInput does not work when a bundle is missing / Breaking the full html page
+
+
+
+Release Notes - exo-portal - Version 2.5.5
+
+** Bug
+    * [PORTAL-1581] - Error when preview Iframe porlet with 3 skins
+    * [PORTAL-1682] - Current password checking  has a problem
+    * [PORTAL-1810] - Internationalization Portlet: the list should stay on the same page after deleting an entry
+    * [PORTAL-2060] - IE6: Error displaying in Tree Container when create/edit page wizard
+    * [PORTAL-2588] - Gadgets Should be imported by default in the Application Registry
+    * [PORTAL-2676] - Error when create page wizard have 2 columns when have ( or not) UI Windown in Arabic language with all skin
+    * [PORTAL-2683] - Community Management Portlet: cannot use a username that contains numeric value
+    * [PORTAL-2690] - IE6: The popup window show is not correct in Mac and Vista skin
+    * [PORTAL-2766] - I18n managed diffrently over the portal
+    * [PORTAL-2800] - Bug in Login form in private mode when change language of browser with some language
+    * [PORTAL-2837] - Incomplete & Invalid Portal translation in Portal/webui_fr.propertie bundle
+    * [PORTAL-2857] - Bug JS: Error UI in Portal Navigation when change skin
+    * [PORTAL-2858] - Wrong version declaration in pom.xml
+    * [PORTAL-2885] - Error when change date& time when create/edit page wizard
+    * [PORTAL-2901] - the whole of UIFormTabPane be re-loaded when select a tab
+    * [PORTAL-2933] - Have problem when select Sample FCK portelt in special case
+    * [PORTAL-2934] - Error when change URL in edit mode portelt 
+    * [PORTAL-2936] - Have problem when delete Iframe portlet
+    * [PORTAL-2942] - IE7: Error UI Navigation tab on toolbar portlet with Default skin
+    * [PORTAL-2944] - FF: Lose border in FCK editor portlet when preview page with Default and Mac skin
+    * [PORTAL-2946] - Error displaying Mask layer when right click in Edit page & Navi with all skin
+    * [PORTAL-2954] - IE6: Error UI in Icon tab when edit this node with Mac & Vista skin
+    * [PORTAL-2964] - IE6: Little error in toolbar portlet when change language to Arabic with Default skin
+    * [PORTAL-2967] - Error displaying icon in UIRightPopUpMenu in Edit page & Navi
+    * [PORTAL-2978] - icon of node is display not well on site map page with Arabic lang and Vista or Mac Skin on IE6,7
+    * [PORTAL-3019] - The param "multiValues" doesn't work in UIFormMultiValueInputSet
+    * [PORTAL-3049] - Wrong usage of NullPointerException - probably thrown by mistake instead of RuntimeException!
+    * [PORTAL-3081] - uploading is frozen when upload file again
+    * [PORTAL-3103] - Strange name appear when download an Arabic file name
+    * [PORTAL-3106] - The mandatory symbol "*" doesn't appear in UIFormMultiValueInputset
+    * [PORTAL-3114] - Misseing translation keywords
+
+** Delivery Item
+    * [PORTAL-2893] - Make a service to migrate JCR data from 2.2.x to 2.5
+
+** Improvement
+    * [PORTAL-2242] - add a special right for adding gadgets by URL
+    * [PORTAL-2579] - reuse the UIGagdet.java in UIgadgetPortlet
+    * [PORTAL-2822] - Limit size of the upload file
+    * [PORTAL-2827] - UI in menu when click on eXo logo not good
+    * [PORTAL-3006] - Logout icon in eXo start menu should logout the user, not only the link
+    * [PORTAL-3068] - Clone page node with all preferences 
+
+** Task
+    * [PORTAL-2330] - Cache user profile in conversation state using a new filter
+    * [PORTAL-2586] - [Gadget] some different  between displaying of gadget on Control work space area and on Dashboard page
+    * [PORTAL-2632] - Change some filed in Portal when change language to VNese
+    * [PORTAL-2674] - [dashboard] should move scrollbar at Dashboard page
+    * [PORTAL-2938] - Change tooltip for Month/Year icon in pop-up calendar when change language to VNese
+    * [PORTAL-3102] - Change 2.5.4-SNAPSHOT to 2.5.5-SNAPSHOT in portal branch 2.5.x
+    * [PORTAL-3140] - Upgrade to JCR 1.10.4
+
+** Sub-task
+    * [PORTAL-2909] - [Test] Error when change date& time when create/edit page wizard
+    * [PORTAL-2910] - [TEST] : Don't keep title name of page after edit page wizard
+    * [PORTAL-2911] - [Test] Bug in Login form in private mode when change language of browser with some language
+    * [PORTAL-2913] - [Test] Change some filed in Portal when change language to VNese
+    * [PORTAL-2916] - [Test] Check all message of Portal when create new user/page/group/portal/node start with alpha, digit, dash and underscore characters in Name
+    * [PORTAL-2917] - [Test] Change test case create new user/page/group/portal/node start with alpha, digit, dash and underscore characters in Name
+
+
+
+Release Notes - exo-portal - Version 2.5.4
+
+** Task
+    * [PORTAL-3078] - Create tag 2.5.4 based on JCR 1.10.4
+
+
+
 Release Notes - exo-portal - Version 2.5.1
 
 ** Bug
