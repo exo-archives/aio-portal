@@ -252,19 +252,17 @@ public class UIPortletActionListener {
         ResourceOutput output = portletContainer.serveResource(request,
             (HttpServletResponse) context.getResponse(), input);
 
-        //Manage headers
         context.setHeaders(output.getHeaderProperties());
-        
-        if (resourceId != null)
-          return;
-        
+
         String contentType = output.getContentType();
-        log.info("Try to get a resource of type: " + contentType
-            + " for the portlet: " + uiPortlet.getWindowId());
+        if (log.isInfoEnabled()) {
+          log.info("Try to get a resource of type: " + contentType + " for the portlet: "
+              + uiPortlet.getWindowId());
+        }
+        response.setContentType(contentType);
         if (contentType.startsWith("text")) {
           context.getWriter().write(output.getContent());
         } else {
-          response.setContentType(contentType);
           OutputStream stream = response.getOutputStream();
           stream.write(output.getBinContent());
         }
