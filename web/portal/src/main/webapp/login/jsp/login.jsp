@@ -88,6 +88,7 @@
 		          <div class="ClearLeft"><span></span></div>
 		          <script type='text/javascript'>			            
               function login() {
+		document.getElementById('UIPortalLoginFormAction').onclick='';
                 document.loginForm.submit();                   
               }
             </script>
