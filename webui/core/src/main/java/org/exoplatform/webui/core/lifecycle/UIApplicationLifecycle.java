@@ -53,8 +53,7 @@ public class UIApplicationLifecycle  extends Lifecycle {
     }
     UIPortletApplication uiApp = (UIPortletApplication) uicomponent;
     context.getWriter().append("<div id=\"").append(uicomponent.getId()).append("\"").
-    append(" style=\"min-width:").append(String.valueOf(uiApp.getMinWidth())).
-    append("px\" class=\"").append(uicomponent.getId()).append("\">");
+    append(" class=\"").append(uicomponent.getId()).append("\">");
     uiApp.renderChildren();
     context.getWriter().append("</div>");
   }

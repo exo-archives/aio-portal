@@ -23,21 +23,12 @@ import org.exoplatform.webui.application.WebuiApplication;
 import org.exoplatform.webui.application.WebuiRequestContext;
 
 abstract public class UIPortletApplication extends  UIApplication {
-  private int minWidth = 300 ;
-  private int minHeight = 300 ;
-  
   static public String VIEW_MODE = "ViewMode" ;
   static public String EDIT_MODE = "EditMode" ;
   static public String HELP_MODE = "HelpMode" ;
   static public String CONFIG_MODE = "ConfigMode" ;
 
   public UIPortletApplication() throws Exception {}
-  
-  public int getMinWidth() { return minWidth ; }
-  public void setMinWidth(int minWidth) { this.minWidth = minWidth ; }
-  
-  public int getMinHeight() { return minHeight ; }
-  public void setMinHeight(int minHeight) { this.minHeight = minHeight ; }
   
   /**
    * The default processRender for an UIPortletApplication handles two cases:
