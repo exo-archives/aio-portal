@@ -60,7 +60,7 @@ Topic.prototype.isSubscribed = function(/*String*/ topic, /*Function*/ func) {
 	for (var i=0;i<callbacks.length;i++) {
 		callback = callbacks[i];
 
-		if (callback["func"] == func) {
+		if (callback["func"].toString() == func.toString()) {
 			return true;
 		}
 	}
