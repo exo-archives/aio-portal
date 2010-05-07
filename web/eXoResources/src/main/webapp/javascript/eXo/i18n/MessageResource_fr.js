@@ -1,3 +1,4 @@
+
 /**
  * Copyright (C) 2009 eXo Platform SAS.
  * 
@@ -17,13 +18,8 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-eXo.i18n.I18NMessage.SessionTimeout = "Session expirée! Rechargez la page.";
-eXo.i18n.I18NMessage.TargetBlockNotFound = " L'élément à mettre à jour est introuvable : {0}";
-eXo.i18n.I18NMessage.BlockUpdateNotFound = " L'élément à mettre à jour est introuvable : {0}";
+eXo.i18n.I18NMessage.SessionTimeout = "Votre session \340 expir\351e! Veuillez rafra\356chir le navigateur.";
+eXo.i18n.I18NMessage.TargetBlockNotFound = "L'objet blockId \340 mettre \340 jour ne se trouve pas : {0}";
+eXo.i18n.I18NMessage.BlockUpdateNotFound = "Le blockId \340 mettre \340 jour ne se trouve pas : {0}";=======
 
-/**
- * UICalendar.js
- */
 
-eXo.i18n.Calendar = {} || new Calendar();
-eXo.i18n.Calendar.weekdays = ["L", "M", "M", "J", "V", "S", "D"];
