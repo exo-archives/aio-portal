@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.net.URL;
 
 import org.apache.commons.lang.StringUtils;
@@ -54,24 +55,29 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
 
   private ConfigurationManager cmanager_;
 
-  private DataStorage          pdcService_;
+  private DataStorage          storageServ_;
+  
+  private UserPortalConfigService portalConfigService_;
 
-  private List<?>              configs;
+  private List<NewPortalConfig>              configs;
 
   private PageTemplateConfig   pageTemplateConfig_;
 
   private String               defaultPortal;
 
   private boolean              isUseTryCatch;
+  
+  private boolean              isOverwrited = false;
 
   private Log                  log = ExoLogger.getLogger("Portal:NewPortalConfigListener");
 
-  public NewPortalConfigListener(DataStorage pdcService,
+  public NewPortalConfigListener(UserPortalConfigService portalConfigService, DataStorage pdcService,
                                  ConfigurationManager cmanager,
                                  InitParams params) throws Exception {
     cmanager_ = cmanager;
-    pdcService_ = pdcService;
-
+    storageServ_ = pdcService;
+    portalConfigService_ = portalConfigService;
+    
     ObjectParameter objectParam = params.getObjectParam("page.templates");
     if (objectParam != null)
       pageTemplateConfig_ = (PageTemplateConfig) objectParam.getObject();
@@ -92,16 +98,33 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     } else {
       isUseTryCatch = true;
     }
+
+    valueParam = params.getValueParam("overwrite");
+    if (valueParam != null) {
+      isOverwrited = (valueParam.getValue().toLowerCase().equals("true"));
+    }
   }
 
   public void run() throws Exception {
-    if (isInitedDB(defaultPortal))
+    if(isOverwrited) {
+      for (NewPortalConfig config : configs) {
+        Set<String> owners = config.getPredefinedOwner();
+        for (String owner : owners) {
+            try {
+                portalConfigService_.removeUserPortalConfig(owner);
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+        }
+    }
+    }
+    
+    if (storageServ_.getPortalConfig(defaultPortal) != null)
       return;
 
     if (isUseTryCatch) {
-      for (Object ele : configs) {
+      for (NewPortalConfig portalConfig : configs) {
         try {
-          NewPortalConfig portalConfig = (NewPortalConfig) ele;
           if (portalConfig.getOwnerType().equals("user")) {
             initUserTypeDB(portalConfig);
           } else if (portalConfig.getOwnerType().equals(PortalConfig.GROUP_TYPE)) {
@@ -117,8 +140,7 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
 
       }
     } else {
-      for (Object ele : configs) {
-        NewPortalConfig portalConfig = (NewPortalConfig) ele;
+      for (NewPortalConfig portalConfig : configs) {
         if (portalConfig.getOwnerType().equals("user")) {
           initUserTypeDB(portalConfig);
         } else if (portalConfig.getOwnerType().equals(PortalConfig.GROUP_TYPE)) {
@@ -132,18 +154,12 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
 
   }
 
-  NewPortalConfig getPortalConfig(String ownerType) {
-    for (Object object : configs) {
-      NewPortalConfig portalConfig = (NewPortalConfig) object;
+  public NewPortalConfig getPortalConfig(String ownerType) {
+    for (NewPortalConfig portalConfig : configs) {
       if (portalConfig.getOwnerType().equals(ownerType))
         return portalConfig;
     }
     return null;
-  }
-
-  private boolean isInitedDB(String user) throws Exception {
-    PortalConfig pconfig = pdcService_.getPortalConfig(user);
-    return pconfig != null;
   }
 
   public void initUserTypeDB(NewPortalConfig config) throws Exception {
@@ -196,7 +212,7 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
         xml = StringUtils.replace(xml, "@owner@", owner);
       }
       PortalConfig pconfig = fromXML(xml, PortalConfig.class);
-      pdcService_.create(pconfig);
+      storageServ_.create(pconfig);
     } catch (Exception e) {
       log.error(e.getMessage() + " file: " + path);
     }
@@ -223,7 +239,7 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
       PageSet pageSet = fromXML(xml, PageSet.class);
       ArrayList<Page> list = pageSet.getPages();
       for (Page page : list) {
-        pdcService_.create(page);
+        storageServ_.create(page);
       }
     } catch (JiBXException e) {
       log.error(e.getMessage() + " file: " + path);
@@ -248,10 +264,10 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
       }
 
       PageNavigation navigation = fromXML(xml, PageNavigation.class);
-      if (pdcService_.getPageNavigation(navigation.getOwner()) == null) {
-        pdcService_.create(navigation);
+      if (storageServ_.getPageNavigation(navigation.getOwner()) == null) {
+        storageServ_.create(navigation);
       } else {
-        pdcService_.save(navigation);
+        storageServ_.save(navigation);
       }
     } catch (JiBXException e) {
       log.error(e.getMessage() + " file: " + path);
@@ -276,10 +292,10 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     if (xml == null)
       return;
     Gadgets gadgets = fromXML(xml, Gadgets.class);
-    if (pdcService_.getGadgets(gadgets.getId()) == null) {
-      pdcService_.create(gadgets);
+    if (storageServ_.getGadgets(gadgets.getId()) == null) {
+      storageServ_.create(gadgets);
     } else {
-      pdcService_.save(gadgets);
+      storageServ_.save(gadgets);
     }
   }
 
@@ -303,7 +319,7 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
       PortletPreferencesSet portletSet = fromXML(xml, PortletPreferencesSet.class);
       ArrayList<PortletPreferences> list = portletSet.getPortlets();
       for (PortletPreferences portlet : list) {
-        pdcService_.save(portlet);
+        storageServ_.save(portlet);
       }
     } catch (JiBXException e) {
       log.error(e.getMessage() + " file: " + path);
