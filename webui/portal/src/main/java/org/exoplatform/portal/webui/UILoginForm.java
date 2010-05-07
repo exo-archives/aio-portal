@@ -74,12 +74,6 @@ public class UILoginForm extends UIForm {
       String username = uiForm.getUIStringInput("username").getValue();
       String password = uiForm.getUIStringInput("password").getValue();
       
-      OrganizationService orgService = uiForm.getApplicationComponent(OrganizationService.class);
-      boolean authentication = orgService.getUserHandler().authenticate(username, password);
-      if(!authentication){
-        throw new MessageException(new ApplicationMessage("UILoginForm.msg.Invalid-account", null));
-      }
-        
       PortalRequestContext prContext = Util.getPortalRequestContext();
       HttpServletRequest request = prContext.getRequest();
       HttpSession session = request.getSession();
