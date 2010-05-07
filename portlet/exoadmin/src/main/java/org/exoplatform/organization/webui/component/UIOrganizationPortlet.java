@@ -24,7 +24,6 @@ import org.exoplatform.webui.core.UIPortletApplication;
 import org.exoplatform.webui.core.lifecycle.UIApplicationLifecycle;
 import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
-import org.exoplatform.webui.organization.account.UIGroupSelector;
 
 /**
  * Created by The eXo Platform SARL
@@ -48,10 +47,9 @@ public class UIOrganizationPortlet extends UIPortletApplication {
   public UIOrganizationPortlet() throws Exception {
 //    setMinWidth(730) ;
 //  	addChild(UIViewMode.class, null, UIPortletApplication.VIEW_MODE);
-    //addChild(UIUserManagement.class, null, null);
+    addChild(UIUserManagement.class, null, null);
     addChild(UIGroupManagement.class, null, null).setRendered(false);
     addChild(UIMembershipManagement.class, null, null).setRendered(false);
-    addChild(UIGroupSelector.class, null, null);
   }
 
 //  @ComponentConfig(
