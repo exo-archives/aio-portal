@@ -100,6 +100,11 @@
 	          <description>In the run method, use try catch or not (value is true/false)</description>
 	          <value>true</value>
 	        </value-param>
+	        <value-param>
+	          <name>overwrite</name>
+	          <description>Whether to allow to overwrite portal navigation metadata each time the server restart</description>
+	          <value>false</value>
+	        </value-param>
 	        <object-param>
 	          <name>portal.configuration</name>
 	          <description>description</description>
