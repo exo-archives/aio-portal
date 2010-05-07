@@ -17,14 +17,13 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-eXo.i18n.I18NMessage.SessionTimeout = "Session timeout ! Refresh your browser.";
-eXo.i18n.I18NMessage.TargetBlockNotFound = "The target blockId to update is not found : {0}";
-eXo.i18n.I18NMessage.BlockUpdateNotFound = "The blockId to update is not found : {0}";
+eXo.i18n.I18NMessage.SessionTimeout = "Session expirée! Rechargez la page.";
+eXo.i18n.I18NMessage.TargetBlockNotFound = " L'élément à mettre à jour est introuvable : {0}";
+eXo.i18n.I18NMessage.BlockUpdateNotFound = " L'élément à mettre à jour est introuvable : {0}";
 
 /**
  * UICalendar.js
  */
 
 eXo.i18n.Calendar = {} || new Calendar();
-eXo.i18n.Calendar.weekdays = ["M", "T", "W", "T", "F", "S", "S"];
-
+eXo.i18n.Calendar.weekdays = ["L", "M", "M", "J", "V", "S", "D"];

@@ -42,6 +42,7 @@ UICalendar.prototype.init = function(field, isDisplayTime, datePattern, value, m
     iframe.style.height = blockClnd.offsetHeight + "px";
   }
   field.parentNode.insertBefore(cld, field) ;
+  alert(def);
 }
 
 UICalendar.prototype.create = function() {
@@ -171,6 +172,10 @@ UICalendar.prototype.renderCalendar = function() {
   var dayOfMonth = 1 ;
   var validDay = 0 ;
   var startDayOfWeek = this.getDayOfWeek(this.currentDate.getFullYear(), this.currentDate.getMonth() + 1, dayOfMonth) ;
+  // The calendar start on monday instead of start on sunday so startDayOfWeek must change
+  // 0 -> 6, 6 -> 5, 5 -> 4, 4 -> 3, 3 -> 2, 2 -> 1, 1 -> 0
+  startDayOfWeek = (startDayOfWeek + 6) % 7;
+  
   var daysInMonth = this.getDaysInMonth(this.currentDate.getFullYear(), this.currentDate.getMonth()) ;
   var clazz = null;
 	var table = '<div id="BlockCaledar" class="BlockCalendar">' ;
@@ -186,9 +191,13 @@ UICalendar.prototype.renderCalendar = function() {
 	table += 		'	</table>' ;
 	table += 		'	<div style="margin-top: 6px;padding: 0px 5px;">' ;
 	table += 		'		<table>' ;
-	table += 		'			<tr>' ;
-	table += 		'				<td><font color="red">S</font></td><td>M</td><td>T</td><td>W</td><td>T</td><td>F</td><td>S</td>' ;
-	table += 		'			</tr>' ;
+	table += 		'			<tr>';
+	for(var i = 0; i < 5; i++) {
+		table += 	'				<td>' + eXo.i18n.Calendar.weekdays[i] + '</td>';
+	}
+	table += 		'				<td><font color="blue">' + eXo.i18n.Calendar.weekdays[5] + '</font></td>';
+	table += 		'				<td><font color="red">' + eXo.i18n.Calendar.weekdays[6] + '</font></td>';
+	table += 		'			</tr>';
 	table += 		'		</table>' ;
 	table += 		'	</div>' ;
 	table += 		'	<div class="CalendarGrid">' ;
@@ -204,7 +213,7 @@ UICalendar.prototype.renderCalendar = function() {
       if (validDay) {
         if (dayOfMonth == this.selectedDate.getDate() && this.currentDate.getFullYear() == this.selectedDate.getFullYear() && this.currentDate.getMonth() == this.selectedDate.getMonth()) {
           clazz = 'Current';
-        } else if (dayOfWeek == 0 || dayOfWeek == 6) {
+        } else if (dayOfWeek == 5 || dayOfWeek == 6) {
           clazz = 'Weekend';
         } else {
           clazz = 'Weekday';

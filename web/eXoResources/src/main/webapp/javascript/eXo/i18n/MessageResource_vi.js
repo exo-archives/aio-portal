@@ -20,3 +20,10 @@
 eXo.i18n.I18NMessage.SessionTimeout = "Phiên làm việc hết hạn! Tải lại trang này.";
 eXo.i18n.I18NMessage.TargetBlockNotFound = "Không tìm thấy vùng đích với ID là : {0}";
 eXo.i18n.I18NMessage.BlockUpdateNotFound = "Không tìm thấy vùng cần cập nhật : {0}";
+
+/**
+ * 
+ */
+
+eXo.i18n.Calendar = {} || new Calendar();
+eXo.i18n.Calendar.weekdays = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
