@@ -54,7 +54,6 @@ public class FCKEditor {
   private String toolbarSet; 
   private String width;
   private String height; 
-  private String defaultBasePath; 
 
   /**
    * Main constructor.<br>
@@ -215,7 +214,7 @@ public class FCKEditor {
   public String createHtml() {
     StringBuffer strEditor = new StringBuffer();
 
-    strEditor.append("<div>");
+    strEditor.append("<div class=\"FCKEditor\">");
     String encodedValue = escapeXml(value.replaceAll("((\r?\n)+|\t*)", ""));
 
     if (check(request.getHeader("user-agent"))) {
