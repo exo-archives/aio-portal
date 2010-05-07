@@ -115,7 +115,7 @@ public class UIPortal extends UIContainer {
 			} catch (Exception e) {
 				return null;
 			}
-  		if (ele != null && temp.getSerialMark() != ele.getSerialMark()) {
+  		if (temp != null && temp.getSerialMark() != ele.getSerialMark()) {
   			UIPortalApplication uiApp = getAncestorOfType(UIPortalApplication.class);
   			LocaleConfig localeConfig = getApplicationComponent(LocaleConfigService.class).getLocaleConfig(uiApp.getLocale().getLanguage()) ;
   			temp.setModifiable(ele.isModifiable());
