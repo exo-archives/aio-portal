@@ -25,45 +25,9 @@
     <version>2.5.9-SNAPSHOT</version>
   </parent>
   <artifactId>cometd-demo</artifactId>
-  <packaging>exopc-war</packaging>
+  <packaging>war</packaging>
   <name>eXo Portal Cometd demo</name>
   <dependencies>
-    <dependency>
-      <groupId>org.exoplatform.portletcontainer</groupId>
-      <artifactId>exo.pc.component.core</artifactId>
-      <version>${org.exoplatform.pc.version}</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.portletcontainer</groupId>
-      <artifactId>exo.pc.component.plugins.pc</artifactId>
-      <version>${org.exoplatform.pc.version}</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>javax.portlet</groupId>
-      <artifactId>portlet-api</artifactId>
-      <version>2.0</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.5</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.portletcontainer</groupId>
-      <artifactId>exo.pc.portlets2events</artifactId>
-      <version>${org.exoplatform.pc.version}</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.exoplatform.portal</groupId>
-      <artifactId>exo.portal.component.web</artifactId>
-      <version>2.5.9-SNAPSHOT</version>
-      <scope>provided</scope>
-    </dependency>
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.webui.portal</artifactId>
@@ -91,27 +55,6 @@
             </manifest>
           </archive>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-exopc-plugin</artifactId>
-        <version>1.0</version>
-        <configuration>
-          <sharedDir>${basedir}/patches</sharedDir>
-          <excludeProjects>junit, jmock, bcel, ehcache, xercesImpl, msv, servlet-api, jibx-bind, isorelax,
-            relaxngDatatype, velocity-dep, saxpath, exo-platform.test.framework, xerces,
-            xmldb-api, castor, drools-smftest, jsp-api, xml-apis, xml-resolver, jaxen,
-            xjavadoc, xdoclet-hibernate-module, xdoclet-xdoclet-module, xdoclet,
-            commons-logging, saaj-api, exo-weblogic-authproviders, exo-weblogic-loginmodule,
-            carol, commons-fileupload, commons-io, drools-base, drools-core, drools-java,
-            drools-smf, exo-platform.services.backup.api, exo-platform.services.ldap.api,
-            exo-platform.services.ldap.impl, exo-platform.services.remote.api,
-            exo-platform.services.remote.impl, exo-platform.services.templates.api,
-            exo-platform.services.templates.impl, groovy-all-1.0-jsr, howl-logger, janino,
-            jgroups-all, jotm, jotm_jrmp_stubs, jstl, log4j, soap, velocity, commons-beanutils</excludeProjects>
-          <includeToWarClasspath/>
-        </configuration>
-        <extensions>true</extensions>
       </plugin>
     </plugins>
   </build>
