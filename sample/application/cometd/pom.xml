@@ -95,6 +95,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-exopc-plugin</artifactId>
+        <version>1.0</version>
         <configuration>
           <sharedDir>${basedir}/patches</sharedDir>
           <excludeProjects>junit, jmock, bcel, ehcache, xercesImpl, msv, servlet-api, jibx-bind, isorelax,
