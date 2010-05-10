@@ -155,6 +155,7 @@
     <module>portlet/exoadmin</module>
     <module>portlet/web</module>
     <module>portlet/dashboard</module>
+    <module>portlet/test</module>
     <module>web/eXoResources</module>
     <module>web/eXoSkinMac</module>
     <module>web/eXoSkinVista</module>
@@ -170,7 +171,10 @@
     <module>server/websphere/patch</module>
     <module>server/websphere/plugin</module>
     <module>sample/application/map</module>
+    <module>sample/application/cometd</module>
+    <module>sample/gadgets/gwt</module>
     <module>sample/portlets</module>
+    <module>test</module>
     <module>packaging</module>
   </modules>
 </project>
