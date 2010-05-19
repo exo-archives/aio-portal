@@ -14,7 +14,7 @@
 	</div>
  	<div class="Application">
  		<div class="PortletIcons">
-  			<img src="<%= gadget.getThumbnail() %>" onError="src='$srcBGError'" alt=""/>
+  			<img src="<%= (gadget.getThumbnail()!=null && gadget.getThumbnail().trim().length()>0)?gadget.getThumbnail():srcBGError %>"  alt=""/>
   	</div>
   	<div class="ApplicationContent">
 			  <table class="TitleBarApplication">
