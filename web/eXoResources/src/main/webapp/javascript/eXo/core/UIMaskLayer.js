@@ -67,7 +67,9 @@ UIMaskLayer.prototype.createMask = function(blockContainerId, object, opacity, p
 		this.object = object ;
 		this.blockContainer = blockContainer ;
 		this.position = position ;
+		blockContainer.appendChild(maskLayer) ;
 		
+		maskLayer.className = "MaskLayer" ;
 		if (document.getElementById("MaskLayer")) {
 			/*
 			 * minh.js.exo
@@ -76,9 +78,7 @@ UIMaskLayer.prototype.createMask = function(blockContainerId, object, opacity, p
 			 */
 			document.getElementById("MaskLayer").id = "subMaskLayer";
 		}
-		blockContainer.appendChild(maskLayer) ;
 		
-		maskLayer.className = "MaskLayer" ;
 		maskLayer.id = "MaskLayer" ;
 		maskLayer.maxZIndex = 3 ;
 		maskLayer.style.width = "100%"  ;
