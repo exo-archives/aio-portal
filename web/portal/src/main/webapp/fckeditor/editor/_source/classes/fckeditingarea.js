@@ -356,7 +356,8 @@ function FCKEditingArea_Cleanup()
 	if ( this.Document )
 	{
 		// Avoid IE crash if an object is selected on unload #2201
-		this.Document.selection.empty() ;
+                //     have to revert this patch because it causes a worse crash. cf WCM-2825
+		// this.Document.selection.empty() ;
 		this.Document.body.innerHTML = "" ;
 	}
 	
