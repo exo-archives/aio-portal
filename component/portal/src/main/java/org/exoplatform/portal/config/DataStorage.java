@@ -133,21 +133,58 @@ public interface DataStorage {
    */
   public void remove(PageNavigation navigation) throws Exception ;
   
+  /**
+   * Save PortletPreferences config node, if it doesn't exist, new one'll be created
+   * @param portletPreferences - PortletPreferences object
+   */
   public void save(PortletPreferences portletPreferences)  throws Exception;
   
+  /**
+   * Return PortletPreferences config node, path to this node is retrieved from WindowId object
+   * @param windowID - WindowID object
+   */
   public PortletPreferences getPortletPreferences(WindowID windowID)  throws Exception;
   
+  /** 
+   * Remove PorletPreferences config node from database
+   * @param portletPreferences - PortletPreferences object to be removed
+   */
   public void remove(PortletPreferences portletPreferences) throws Exception ;
   
+  /**
+   * Return list of objects (unsorted,object's type provided in classType property of Query object) in registry entry 
+   * @param q - Query object
+   */
   public  PageList find(Query<?> q) throws Exception ;
   
+  /**
+   * Query for objects (sorted, object's type provided in Query object) in registry entry
+   * @param q - Query object
+   * @param sortComparator - Comparator object, used to sort result list
+   */
   public  PageList find(Query<?> q, Comparator<?> sortComparator) throws Exception ;
   
+  /**
+   * create Gadgets config node 
+   * @param gadgets - Gadgets config object 
+   */
   public void create(Gadgets gadgets)  throws Exception ;
   
+  /**
+   * Save new info of Gadgets config object in database
+   * @param gadgets - Gadgets object
+   */
   public void save(Gadgets gadgets)  throws Exception ;
   
+  /**
+   * Remove Gadgets config node from database
+   * @param gadgets - Gadgets object
+   */
   public void remove(Gadgets gadgets)  throws Exception ;
   
+  /**
+   * Return Gadgets object which id is provided in parameter
+   * @param id - id of Gadgets object
+   */
   public Gadgets getGadgets(String id) throws Exception ;
 }

@@ -24,12 +24,29 @@ package org.exoplatform.application.gadget;
  */
 public interface SourceStorage {
 
+  /**
+   * Return Source object which is retrieved from db
+   * @param sourcePath
+   */
   public Source getSource(String sourcePath) throws Exception ;
   
+  /**
+   * create or update a Source node in db
+   * @param dirPath - if not null, path to node will be created in db
+   * @param source - Source object that will be saved
+   */
   public void saveSource(String dirPath, Source source) throws Exception ;
   
+  /**
+   * delete source node from db
+   * @param sourcePath - path to node
+   */
   public void removeSource(String sourcePath) throws Exception ;
   
+  /**
+   * Return uri to source
+   * @param sourcePath
+   */
   public String getSourceURI(String sourcePath) ;
 
 }
