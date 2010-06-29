@@ -14,6 +14,9 @@ function PortalDragDrop() {
 
 PortalDragDrop.prototype.init = function(e) {
 	if (!e) e = window.event;
+	
+	if(e && e.preventDefault) e.preventDefault();
+	
 	if(((e.which) && (e.which == 2 || e.which == 3)) || ((e.button) && (e.button == 2)))	return;
 	
 	var DOMUtil = eXo.core.DOMUtil ;
