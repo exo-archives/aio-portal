@@ -127,8 +127,12 @@ public class ResourceRequestFilter implements Filter  {
         public Appendable append(CharSequence csq, int start, int end) throws IOException {
           throw new UnsupportedOperationException("Should no be called");
         }
+
         public Appendable append(char c) throws IOException {
-          encoder.encode(c, out);
+          try {
+            encoder.encode(c, out);
+          } catch (IOException ignore) {
+          }
           return this;
         }
       };

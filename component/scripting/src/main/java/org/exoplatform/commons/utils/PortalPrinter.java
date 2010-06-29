@@ -29,10 +29,8 @@ public class PortalPrinter extends OutputStreamPrinter {
 		super(encoder, out);
 	}
   
-  public void println() {
-    try {
-      write('\n');
-    } catch (IOException e) {}
+  public PortalPrinter(TextEncoder encoder, OutputStream out, IOFailureFlow fuilureFlow, boolean ignoreOnFailure) throws IllegalArgumentException {
+    super(encoder, out, fuilureFlow, ignoreOnFailure);
   }
   
   public void print(Object o) {

@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.exoplatform.Constants;
+import org.exoplatform.commons.utils.IOFailureFlow;
 import org.exoplatform.commons.utils.WriterPrinter;
 import org.exoplatform.commons.utils.PortalPrinter;
 import org.exoplatform.commons.utils.CharsetTextEncoder;
@@ -190,7 +191,7 @@ public class PortalRequestContext extends WebuiRequestContext {
     if(writer_ == null) {
 
       //
-      PortalPrinter printer = new PortalPrinter(encoder, response_.getOutputStream());
+      PortalPrinter printer = new PortalPrinter(encoder, response_.getOutputStream(), IOFailureFlow.IGNORE, false);
 
       //
       if (HtmlValidator.DEBUG_MODE) {
