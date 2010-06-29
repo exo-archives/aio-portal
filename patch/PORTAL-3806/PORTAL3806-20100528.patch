@@ -1,0 +1,56 @@
+Index: component/scripting/src/main/java/org/exoplatform/commons/utils/PortalPrinter.java
+===================================================================
+--- component/scripting/src/main/java/org/exoplatform/commons/utils/PortalPrinter.java	(revision 48007)
++++ component/scripting/src/main/java/org/exoplatform/commons/utils/PortalPrinter.java	(working copy)
+@@ -29,10 +29,8 @@
+ 		super(encoder, out);
+ 	}
+   
+-  public void println() {
+-    try {
+-      write('\n');
+-    } catch (IOException e) {}
++  public PortalPrinter(TextEncoder encoder, OutputStream out, IOFailureFlow fuilureFlow, boolean ignoreOnFailure) throws IllegalArgumentException {
++    super(encoder, out, fuilureFlow, ignoreOnFailure);
+   }
+   
+   public void print(Object o) {
+Index: webui/portal/src/main/java/org/exoplatform/portal/application/ResourceRequestFilter.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/application/ResourceRequestFilter.java	(revision 48007)
++++ webui/portal/src/main/java/org/exoplatform/portal/application/ResourceRequestFilter.java	(working copy)
+@@ -127,8 +127,12 @@
+         public Appendable append(CharSequence csq, int start, int end) throws IOException {
+           throw new UnsupportedOperationException("Should no be called");
+         }
++
+         public Appendable append(char c) throws IOException {
+-          encoder.encode(c, out);
++          try {
++            encoder.encode(c, out);
++          } catch (IOException ignore) {
++          }
+           return this;
+         }
+       };
+Index: webui/portal/src/main/java/org/exoplatform/portal/application/PortalRequestContext.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/application/PortalRequestContext.java	(revision 48007)
++++ webui/portal/src/main/java/org/exoplatform/portal/application/PortalRequestContext.java	(working copy)
+@@ -31,6 +31,7 @@
+ 
+ import org.apache.commons.logging.Log;
+ import org.exoplatform.Constants;
++import org.exoplatform.commons.utils.IOFailureFlow;
+ import org.exoplatform.commons.utils.WriterPrinter;
+ import org.exoplatform.commons.utils.PortalPrinter;
+ import org.exoplatform.commons.utils.CharsetTextEncoder;
+@@ -190,7 +191,7 @@
+     if(writer_ == null) {
+ 
+       //
+-      PortalPrinter printer = new PortalPrinter(encoder, response_.getOutputStream());
++      PortalPrinter printer = new PortalPrinter(encoder, response_.getOutputStream(), IOFailureFlow.IGNORE, false);
+ 
+       //
+       if (HtmlValidator.DEBUG_MODE) {
