@@ -1,9 +1,13 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html><head>
-<title>404 Not Found</title>
-</head><body>
-<h1>Not Found</h1>
-<p>The requested URL /secure/attachment/22943/2010-06-15-PORTAL-3816.patch was not found on this server.</p>
-<hr>
-<address>Apache/2.2.3 (CentOS) Server at jira.exoplatform.org Port 80</address>
-</body></html>
+Index: component/portal/src/main/java/org/exoplatform/portal/config/UserACL.java
+===================================================================
+--- component/portal/src/main/java/org/exoplatform/portal/config/UserACL.java	(revision 48044)
++++ component/portal/src/main/java/org/exoplatform/portal/config/UserACL.java	(working copy)
+@@ -147,7 +147,7 @@
+ 
+   public boolean hasPermission(Page page, String remoteUser) throws Exception {
+     if(PortalConfig.USER_TYPE.equals(page.getOwnerType())){
+-      if( remoteUser.equals(page.getOwnerId())){
++      if(page.getOwnerId().equals(remoteUser)){
+         page.setModifiable(true);
+         return true;
+       } 
