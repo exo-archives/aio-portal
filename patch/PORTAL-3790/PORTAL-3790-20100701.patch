@@ -1,0 +1,414 @@
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/navigation/UIPageNavigationControlBar.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/navigation/UIPageNavigationControlBar.java	(revision 49032)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/navigation/UIPageNavigationControlBar.java	(working copy)
+@@ -67,7 +67,12 @@
+   }
+   
+   static public class RollbackActionListener extends EventListener<UIPageNavigationControlBar> {
+-    public void execute(Event<UIPageNavigationControlBar> event) throws Exception {
++    public void execute(Event<UIPageNavigationControlBar> event) throws Exception {
++    	
++    	//Clear registered PortletPreferencesTask
++    	//TODO: Find a nicer place to put below code
++    	Util.clearPortletPreferencesTaskCollection();
++    	
+       UIPageNavigationControlBar uiPageNav = event.getSource();
+       UIPortalApplication uiPortalApp = uiPageNav.getAncestorOfType(UIPortalApplication.class);
+       UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+@@ -131,6 +136,9 @@
+     public void execute(Event<UIPageNavigationControlBar> event) throws Exception {
+       UIPageManagement uiPageManagement = event.getSource().getParent(); 
+       uiPageManagement.getChild(UIPageEditBar.class).savePage();
++      
++      //Execute PortletPreferencesTask in session-layer cache
++      Util.executePortletPreferencesTasks();
+       
+       UIPageNodeSelector uiNodeSelector = uiPageManagement.getChild(UIPageNodeSelector.class);
+       UserPortalConfigService dataService = uiPageManagement.getApplicationComponent(UserPortalConfigService.class);
+@@ -165,7 +173,12 @@
+   }
+ 
+  
+-  public void abort(Event<UIPageNavigationControlBar> event) throws Exception {
++  public void abort(Event<UIPageNavigationControlBar> event) throws Exception {
++  	
++  	//Clear registered DeletePortletPreferencesTask
++  	//TODO: Find a nicer place to put below code
++  	Util.clearPortletPreferencesTaskCollection();
++  	
+     UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
+     uiPortalApp.setEditting(false) ;
+     PortalRequestContext prContext = Util.getPortalRequestContext();  
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalManagementControlBar.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalManagementControlBar.java	(revision 49032)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalManagementControlBar.java	(working copy)
+@@ -63,7 +63,11 @@
+     setJavascript("Preview","onclick='eXo.portal.UIPortal.switchMode(this);'") ;
+   }
+   
+-  public void save() throws Exception {
++  public void save() throws Exception {
++  	
++  	//Execute PortletPreferencesTask in session-layer cache
++  	Util.executePortletPreferencesTasks();
++  	
+     UIPortal uiPortal = Util.getUIPortal();     
+     UIPortalApplication uiPortalApp = getAncestorOfType(UIPortalApplication.class);    
+     
+@@ -126,6 +130,11 @@
+   */
+   static public class RollbackActionListener  extends EventListener<UIPortalManagementControlBar> {
+     public void execute(Event<UIPortalManagementControlBar> event) throws Exception {
++    	
++    	//Clear registered DeletePortletPreferencesTask
++    	//TODO: Find a nicer place to put below code
++    	Util.clearPortletPreferencesTaskCollection();
++    	
+       UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
+       UIWorkingWorkspace uiWorkingWS = Util.updateUIApplication(event);
+       
+@@ -183,7 +192,12 @@
+   }
+   
+   static public class AbortActionListener  extends EventListener<UIPortalManagementControlBar> {
+-    public void execute(Event<UIPortalManagementControlBar> event) throws Exception {
++    public void execute(Event<UIPortalManagementControlBar> event) throws Exception {
++    	
++    	//Clear registered DeletePortletPreferencesTask
++    	//TODO: Find a nicer place to put below code
++    	Util.clearPortletPreferencesTaskCollection();
++    	
+       UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
+       UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+       
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalComponentActionListener.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalComponentActionListener.java	(revision 49032)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalComponentActionListener.java	(working copy)
+@@ -22,12 +22,16 @@
+ 
+ import org.exoplatform.commons.utils.PageList;
+ import org.exoplatform.portal.application.PortalRequestContext;
++import org.exoplatform.portal.application.PortletPreferences;
++import org.exoplatform.portal.config.DataStorage;
+ import org.exoplatform.portal.config.UserPortalConfigService;
+ import org.exoplatform.portal.config.model.Container;
+ import org.exoplatform.portal.config.model.Page;
+ import org.exoplatform.portal.config.model.PortalConfig;
+ import org.exoplatform.portal.webui.application.UIPortlet;
+ import org.exoplatform.portal.webui.application.UIPortletOptions;
++import org.exoplatform.portal.webui.application.task.DeletePortletPreferencesTask;
++import org.exoplatform.portal.webui.application.task.PortletPreferencesTaskCollection;
+ import org.exoplatform.portal.webui.container.UIContainerConfigOptions;
+ import org.exoplatform.portal.webui.login.UILogin;
+ import org.exoplatform.portal.webui.login.UIResetPassword;
+@@ -42,6 +46,7 @@
+ import org.exoplatform.services.organization.OrganizationService;
+ import org.exoplatform.services.organization.Query;
+ import org.exoplatform.services.organization.User;
++import org.exoplatform.services.portletcontainer.pci.WindowID;
+ import org.exoplatform.web.application.ApplicationMessage;
+ import org.exoplatform.webui.core.UIComponent;
+ import org.exoplatform.webui.core.UIContainer;
+@@ -104,6 +109,12 @@
+         return;
+       }
+       
++      if(uiComponent instanceof UIPortlet)
++      {
++      	DataStorage dataStorage = uiComponent.getApplicationComponent(DataStorage.class);
++      	registerDeletePortletPreferencesTask((UIPortlet)uiComponent, dataStorage);
++      }
++      
+       uiParent.removeChildById(id);
+       UIPage uiPage = uiParent.getAncestorOfType(UIPage.class);
+       if(uiPage != null && uiPage.getMaximizedUIPortlet() != null) {
+@@ -133,6 +144,21 @@
+       pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
+       pcontext.setFullRender(true);
+     }
++    
++    private void registerDeletePortletPreferencesTask(UIPortlet uiPortlet, DataStorage dataStorage)
++    {
++    	WindowID windowID = uiPortlet.getExoWindowID();
++			try {
++				PortletPreferences targetedPP = dataStorage.getPortletPreferences(windowID);
++				if(targetedPP != null)
++				{
++					PortletPreferencesTaskCollection ppTaskCollection = Util.getUIPortalApplication().getPPTaskCollection();
++					ppTaskCollection.addTask(new DeletePortletPreferencesTask(targetedPP));
++				}
++			} catch (Exception ex) {
++				ex.printStackTrace();
++			}
++    }
+   }
+     
+   static public class MoveChildActionListener  extends EventListener<UIContainer> {    
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/task/PortletPreferencesTaskCollection.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/task/PortletPreferencesTaskCollection.java	(revision 0)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/task/PortletPreferencesTaskCollection.java	(revision 0)
+@@ -0,0 +1,42 @@
++/**
++ * 
++ */
++package org.exoplatform.portal.webui.application.task;
++
++import java.util.ArrayList;
++import java.util.List;
++
++import org.exoplatform.portal.config.DataStorage;
++
++/**
++ * @author Minh Hoang TO
++ *
++ * hoang281283@gmail.com
++ */
++public class PortletPreferencesTaskCollection{
++
++	private List<PortletPreferencesTask<DataStorage>> cache;
++	
++	public PortletPreferencesTaskCollection()
++	{
++		this.cache = new ArrayList<PortletPreferencesTask<DataStorage>>();
++	}
++	
++	public void addTask(PortletPreferencesTask<DataStorage> task)
++	{
++		this.cache.add(task);
++	}
++	
++	public synchronized void clearTasks()
++	{
++		this.cache.clear();
++	}
++	
++	public void executeTasks(DataStorage persistentService) throws Exception
++	{
++		for(PortletPreferencesTask<DataStorage> task : cache)
++		{
++			task.run(persistentService);
++		}
++	}
++}
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/task/PortletPreferencesTask.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/task/PortletPreferencesTask.java	(revision 0)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/task/PortletPreferencesTask.java	(revision 0)
+@@ -0,0 +1,18 @@
++/**
++ * 
++ */
++package org.exoplatform.portal.webui.application.task;
++
++/**
++ * 
++ * Generic is used here to avoid hardcoded dependence of PortletPreferenceTask on persistent service type
++ * 
++ * @author Minh Hoang TO
++ *
++ * hoang281283@gmail.com
++ */
++public interface PortletPreferencesTask <S>{
++
++	public void run(S persistentService) throws Exception;
++	
++}
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditWizard.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditWizard.java	(revision 49032)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditWizard.java	(working copy)
+@@ -22,12 +22,14 @@
+ import java.util.List;
+ 
+ import org.exoplatform.portal.application.PortalRequestContext;
++import org.exoplatform.portal.config.DataStorage;
+ import org.exoplatform.portal.config.UserPortalConfigService;
+ import org.exoplatform.portal.config.model.Page;
+ import org.exoplatform.portal.config.model.PageNavigation;
+ import org.exoplatform.portal.config.model.PageNode;
+ import org.exoplatform.portal.webui.UIWelcomeComponent;
+ import org.exoplatform.portal.webui.application.UIPortletOptions;
++import org.exoplatform.portal.webui.application.task.PortletPreferencesTaskCollection;
+ import org.exoplatform.portal.webui.navigation.UIPageNodeSelector;
+ import org.exoplatform.portal.webui.portal.PageNodeEvent;
+ import org.exoplatform.portal.webui.portal.UIPortal;
+@@ -82,6 +84,9 @@
+   
+   private void saveData() throws Exception {
+     UserPortalConfigService service = getApplicationComponent(UserPortalConfigService.class);
++    
++    //Execute PortletPreferencesTask in session-layer cache
++    Util.executePortletPreferencesTasks();
+     
+     UIPagePreview uiPagePreview = getChild(UIPagePreview.class);
+     UIPage uiPage = (UIPage)uiPagePreview.getUIComponent();
+@@ -129,6 +134,10 @@
+       UIPageWizard uiWizard = event.getSource();
+       UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
+       PortalRequestContext pcontext = Util.getPortalRequestContext() ;
++      
++      //Remove the DeletePortletPreferencesTask which might be registered in step 3. 
++      //TODO: Find a nicer place to put below code
++      Util.clearPortletPreferencesTaskCollection();
+       
+       uiWizard.updateWizardComponent();
+       UIWizardPageSetInfo uiPageInfo = uiWizard.getChild(UIWizardPageSetInfo.class); 
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageCreationWizard.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageCreationWizard.java	(revision 49032)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageCreationWizard.java	(working copy)
+@@ -30,6 +30,7 @@
+ import org.exoplatform.portal.config.model.PortalConfig;
+ import org.exoplatform.portal.webui.UIWelcomeComponent;
+ import org.exoplatform.portal.webui.application.UIPortletOptions;
++import org.exoplatform.portal.webui.application.task.PortletPreferencesTaskCollection;
+ import org.exoplatform.portal.webui.navigation.UIPageNodeSelector;
+ import org.exoplatform.portal.webui.portal.PageNodeEvent;
+ import org.exoplatform.portal.webui.portal.UIPortal;
+@@ -82,7 +83,11 @@
+   }     
+ 
+   private void saveData() throws Exception {
+-    UserPortalConfigService service = getApplicationComponent(UserPortalConfigService.class);
++    UserPortalConfigService service = getApplicationComponent(UserPortalConfigService.class);
++    
++    //Execute PortletPreferencesTask in session-layer cache
++    Util.executePortletPreferencesTasks();
++    
+     UIPagePreview uiPagePreview = getChild(UIPagePreview.class);
+     UIPage uiPage = (UIPage)uiPagePreview.getUIComponent();
+     UIPortal uiPortal = Util.getUIPortal();
+@@ -170,7 +175,8 @@
+       uiWizard.setDescriptionWizard(2);
+ 
+       uiWizard.updateWizardComponent();
+-      uiWizard.viewStep(2);
++      uiWizard.viewStep(2);
++      
+     }
+   }
+ 
+@@ -180,7 +186,11 @@
+       UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
+       WebuiRequestContext context = Util.getPortalRequestContext() ;
+       uiWizard.viewStep(3);
+-
++
++      //Remove the DeletePortletPreferencesTask which might be registered in step 3. 
++      //TODO: Find a nicer place to put below code
++      Util.clearPortletPreferencesTaskCollection();
++      
+       if(uiWizard.getSelectedStep() < 3){
+         uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.StepByStep",null)) ;
+         uiWizard.setDescriptionWizard(2);
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageWizard.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageWizard.java	(revision 49032)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageWizard.java	(working copy)
+@@ -18,6 +18,7 @@
+ 
+ import org.exoplatform.portal.application.PortalRequestContext;
+ import org.exoplatform.portal.webui.UIWelcomeComponent;
++import org.exoplatform.portal.webui.application.task.PortletPreferencesTaskCollection;
+ import org.exoplatform.portal.webui.portal.UIPortal;
+ import org.exoplatform.portal.webui.util.Util;
+ import org.exoplatform.portal.webui.workspace.UIControlWorkspace;
+@@ -155,6 +156,10 @@
+ 	static public class AbortActionListener extends EventListener<UIPageWizard> {
+ 		public void execute(Event<UIPageWizard> event) throws Exception {
+ 			UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
++			
++			//Clear PortletPreferencesTask
++			Util.clearPortletPreferencesTaskCollection();
++			
+ 			uiPortalApp.setEditting(false);
+ 			PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext();
+ 
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/util/Util.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/util/Util.java	(revision 49032)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/util/Util.java	(working copy)
+@@ -34,10 +34,12 @@
+ import java.util.List;
+ 
+ import org.exoplatform.portal.application.PortalRequestContext;
++import org.exoplatform.portal.config.DataStorage;
+ import org.exoplatform.portal.config.UserPortalConfigService;
+ import org.exoplatform.portal.config.model.Page;
+ import org.exoplatform.portal.config.model.PageNode;
+ import org.exoplatform.portal.webui.application.UIPortlet;
++import org.exoplatform.portal.webui.application.task.PortletPreferencesTaskCollection;
+ import org.exoplatform.portal.webui.container.UIContainer;
+ import org.exoplatform.portal.webui.page.UIDesktopPage;
+ import org.exoplatform.portal.webui.page.UIPage;
+@@ -241,4 +243,24 @@
+     return uiWorkingWS;
+   }
+   
++  static public void clearPortletPreferencesTaskCollection()
++  {
++  	getUIPortalApplication().getPPTaskCollection().clearTasks();
++  }
++  
++  static public void executePortletPreferencesTasks()
++  {
++  	UIPortalApplication uiPortalApp = getUIPortalApplication();
++  	DataStorage dataStorage = uiPortalApp.getApplicationComponent(DataStorage.class);
++  	PortletPreferencesTaskCollection taskCollection = uiPortalApp.getPPTaskCollection();
++  	try{
++  		taskCollection.executeTasks(dataStorage);
++  	}catch(Exception ex)
++  	{
++  		ex.printStackTrace();
++  	}finally
++  	{
++  		taskCollection.clearTasks();
++  	}
++  }
+ }
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIPortalApplication.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIPortalApplication.java	(revision 49032)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIPortalApplication.java	(working copy)
+@@ -28,6 +28,7 @@
+ import org.exoplatform.portal.config.UserACL;
+ import org.exoplatform.portal.config.UserPortalConfig;
+ import org.exoplatform.portal.webui.application.UIPortlet;
++import org.exoplatform.portal.webui.application.task.PortletPreferencesTaskCollection;
+ import org.exoplatform.portal.webui.portal.PageNodeEvent;
+ import org.exoplatform.portal.webui.portal.UIPortal;
+ import org.exoplatform.portal.webui.skin.Skin;
+@@ -82,6 +83,17 @@
+   private UserPortalConfig userPortalConfig_;
+ 
+   /**
++   *  A session-level cache of PortletPreferencesTask. That is used to cleaned the PortletPreferences properly.
++   * In term of code structure, it's more logical to put this cache in portal/page-edit classes such as UIPageEditWizard,
++   * UIPortalManagement,... Unfortunately, relevant UI code is so badly organized that setting cache there would violate
++   * the DRY (Don't Repeat Yourself) principle, the code become more messy, and performance is affected as more search
++   * in UI components tree would be invoked
++   * 
++   * TODO: Refactor this after portal/page-edit components are better organized
++   */
++  private final PortletPreferencesTaskCollection ppTaskCollection = new PortletPreferencesTaskCollection();
++  
++  /**
+    * The constructor of this class is used to build the tree of UI components that will be aggregated
+    * in the portal page. 
+    * 
+@@ -139,6 +151,11 @@
+     setOwner(context.getPortalOwner());
+   }
+ 
++  public PortletPreferencesTaskCollection getPPTaskCollection()
++  {
++  	return this.ppTaskCollection;
++  }
++  
+   public Orientation getOrientation() {
+     return orientation_;
+   }
