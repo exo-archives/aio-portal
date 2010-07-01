@@ -147,7 +147,7 @@ public class UserACL {
 
   public boolean hasPermission(Page page, String remoteUser) throws Exception {
     if(PortalConfig.USER_TYPE.equals(page.getOwnerType())){
-      if( remoteUser.equals(page.getOwnerId())){
+      if(page.getOwnerId().equals(remoteUser)){
         page.setModifiable(true);
         return true;
       } 
