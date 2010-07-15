@@ -226,6 +226,7 @@ public class UIPageCreationWizard extends UIPageWizard {
     public void execute(Event<UIPageCreationWizard> event) throws Exception {
       UIPageCreationWizard uiWizard = event.getSource();
       UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
+      uiPortalApp.setModeState(uiPortalApp.APP_EDIT_MODE);
       WebuiRequestContext context = Util.getPortalRequestContext() ;
       
       if(uiWizard.isSelectedNodeExist()) {
@@ -305,6 +306,7 @@ public class UIPageCreationWizard extends UIPageWizard {
     public void execute(Event<UIPageCreationWizard> event) throws Exception {
       UIPageCreationWizard uiWizard = event.getSource();
       UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
+      uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
       if(uiWizard.isSelectedNodeExist()) {
         uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.NameNotSame", null)) ;
         uiWizard.setDescriptionWizard(2) ;
@@ -312,7 +314,6 @@ public class UIPageCreationWizard extends UIPageWizard {
         uiWizard.updateWizardComponent() ;
         return;
       }
-      uiPortalApp.setEditting(false) ;
       uiWizard.saveData();
       uiWizard.updateUIPortal(uiPortalApp, event);   
     }

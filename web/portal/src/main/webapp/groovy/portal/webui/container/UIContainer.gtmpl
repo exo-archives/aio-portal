@@ -1,8 +1,11 @@
 <%
   import org.exoplatform.commons.utils.ExpressionUtil;
-  
+ 	import org.exoplatform.portal.webui.workspace.UIPortalApplication;
+
   def rcontext = _ctx.getRequestContext() ;
+  UIPortalApplication uiPortalApp = rcontext.getUIApplication();
   ResourceBundle res = rcontext.getApplicationResourceBundle() ;
+  int portalMode = uiPortalApp.getModeState();
 
 	String cssStyle = "";
 	String uiComponentWidth = uicomponent.getWidth();
@@ -14,14 +17,14 @@
 %>
 
 <div class="UIContainer" id="UIContainer-${uicomponent.id}" ${cssStyle}>
-<%if(rcontext.getUIApplication().isEditting()){%>
+<%if (uiPortalApp.isEditting()) {%>
   <div class="META-DATA-BLOCK" style="display: none">
     <div class="id">$uicomponent.id</div>
     <div class="title"><%=_ctx.appRes("UIContainer.title.Container")%></div>
     <div class="description"><%=_ctx.appRes("UIContainer.label.Thecontainer")%></div>
   </div>
   
-  <div class="CONTROL-CONTAINER CONTROL-BLOCK" style="display: none">
+  <div class="CONTROL-CONTAINER CONTROL-BLOCK" <%if(portalMode != UIPortalApplication.CONTAINER_EDIT_MODE) print("style=\"display: none\"")%>>
     <%/*Begin InfoBar*/%>
    	<div class="UIInfoBar">
       <div class="BlueRoundedStyle">
@@ -29,20 +32,20 @@
           <div class="RightBar">
 		        <div class="MiddleBar">
 		        	<div class="FixHeight ClearFix">
-						<div class="DragControlArea" title="<%=_ctx.appRes("UIContainer.title.DragControlArea")%>"><span></span></div>
-						<div class="ContainerIcon"><span></span></div>             
-						<a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeleteContainerIcon" title="<%=_ctx.appRes("UIContainer.tooltip.closeContainer")%>"><span></span></a>
-						<a href="<%=uicomponent.event("EditContainer","$uicomponent.id")%>" class="EditContainerIcon" title="<%=_ctx.appRes("UIContainer.tooltip.editContainer")%>"><span></span></a>
-						<div class="Title">
-							<% 
-								if(uicomponent.getTitle() != null) {
-								println(ExpressionUtil.getExpressionValue(res, uicomponent.getTitle())) ;
-								} else {
-							%>
-							<%=_ctx.appRes("UIContainer.title.Container")%>
-							<%}%>
-						</div>            
-					</div>
+								<div class="DragControlArea" onmousedown="eXo.portal.PortalDragDrop.init.call(this, event)" title="<%=_ctx.appRes("UIContainer.title.DragControlArea")%>"><span></span></div>
+								<div class="ContainerIcon"><span></span></div>             
+								<a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeleteContainerIcon" title="<%=_ctx.appRes("UIContainer.tooltip.closeContainer")%>"><span></span></a>
+								<a href="<%=uicomponent.event("EditContainer","$uicomponent.id")%>" class="EditContainerIcon" title="<%=_ctx.appRes("UIContainer.tooltip.editContainer")%>"><span></span></a>
+								<div class="Title">
+									<% 
+										if(uicomponent.getTitle() != null) {
+										println(ExpressionUtil.getExpressionValue(res, uicomponent.getTitle())) ;
+										} else {
+									%>
+									<%=_ctx.appRes("UIContainer.title.Container")%>
+									<%}%>
+								</div>            
+							</div>
 		        </div>
           </div>
         </div>
@@ -51,9 +54,10 @@
     <%/*End InfoBar*/ %>
   </div>
   
-  <div class="LAYOUT-CONTAINER" style="display: none"></div>
-<%}%>
+  <div class="LAYOUT-CONTAINER">
+<%} else {%>
   <div class="VIEW-CONTAINER">
+<%}%>
     <div id="$uicomponent.id">
       <div class="UIRowContainer"><%uicomponent.renderChildren()%></div>
 	  </div>

@@ -45,7 +45,7 @@ import org.exoplatform.webui.event.EventListener;
 @ComponentConfig(    
   template = "system:/groovy/webui/core/UIToolbar.gtmpl",
   events = {   
-    @EventConfig(listeners = UIPortalManagementEditBar.PreviewActionListener.class),
+    @EventConfig(listeners = UIWorkingWorkspace.PreviewActionListener.class),
     @EventConfig(listeners = UIPortalManagementEditBar.EditPortalActionListener.class),
     @EventConfig(listeners = UIPortalManagementEditBar.EditContainerActionListener.class),
     @EventConfig(listeners = UIPortalManagementEditBar.EditPortletActionListener.class)
@@ -55,7 +55,6 @@ public class UIPortalManagementEditBar extends UIToolbar {
   
   public UIPortalManagementEditBar() throws Exception {
     setToolbarStyle("EditToolbar") ;
-    setJavascript("Preview","onclick='eXo.portal.UIPortal.switchMode(this);'") ;
   }
   
   public <T extends UIComponent> T setRendered(boolean b) { 
@@ -66,12 +65,6 @@ public class UIPortalManagementEditBar extends UIToolbar {
     }
     return super.<T>setRendered(b) ;    
   } 
-  
-  @SuppressWarnings("unused")
-  static public class PreviewActionListener  extends EventListener<UIPortalManagementEditBar> {
-    public void execute(Event<UIPortalManagementEditBar> event) throws Exception {
-    }
-  }
   
   static public class EditPortalActionListener  extends EventListener<UIPortalManagementEditBar> {
     public void execute(Event<UIPortalManagementEditBar> event) throws Exception {
@@ -98,6 +91,7 @@ public class UIPortalManagementEditBar extends UIToolbar {
       
       PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext() ;
       UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
+      uiPortalApp.setModeState(UIPortalApplication.CONTAINER_EDIT_MODE);
       
       UIControlWorkspace uiControl = uiPortalApp.getChildById(UIPortalApplication.UI_CONTROL_WS_ID);
       pcontext.addUIComponentToUpdateByAjax(uiControl);
@@ -111,6 +105,8 @@ public class UIPortalManagementEditBar extends UIToolbar {
   static public class EditPortletActionListener  extends EventListener<UIPortalManagementEditBar> {
     public void execute(Event<UIPortalManagementEditBar> event) throws Exception {
       UIPortalManagementEditBar uiEditBar = event.getSource();
+      UIPortalApplication uiPortalApp = uiEditBar.getAncestorOfType(UIPortalApplication.class);
+      uiPortalApp.setModeState(UIPortalApplication.APP_EDIT_MODE);
       UIPortal uiPortal = Util.getUIPortal();
       uiPortal.setRenderSibbling(UIPortal.class);
       

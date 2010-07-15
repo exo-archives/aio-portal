@@ -67,7 +67,7 @@ public class UIPageActionListener {
         UserPortalConfig portalConfig = configService.getUserPortalConfig(uiPortal.getOwner(), remoteUser) ;
         uiPortal.getChildren().clear() ;
         PortalDataMapper.toUIPortal(uiPortal, portalConfig) ;
-        uiPortalApp.setEditting(false) ;
+        uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE) ;
         uiPortal.broadcast(event, event.getExecutionPhase()) ;
         return ;
       }

@@ -115,6 +115,7 @@ public class Util {
     return uiWork;
   }
 
+  //TODO: trong.tran this seems not to be used
   static public void showPortalComponentLayoutMode(UIPortalApplication uiPortalApp){   
     UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
     uiWorkingWS.setRenderedChild(UIPortal.class) ;
@@ -128,8 +129,9 @@ public class Util {
     if(uiContainer != null && uiContainer.isShowEditControl())  name = "'UIContainer'";
     else if(uiPage != null && uiPage.isShowEditControl())  name = "'UIPage'";
     else if(uiPortlet != null  && uiPortlet.isShowEditControl()) name = "'UIPortlet'";
-
-    getPortalRequestContext().getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIPortal.showLayoutModeForPortal("+name+");");
+    
+    //commented by tungdt
+    //getPortalRequestContext().getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIPortal.showLayoutModeForPortal("+name+");");
   }
   
 //  public UIPortlet getFirstUIPortlet(UIContainer uiContainer){
@@ -140,6 +142,7 @@ public class Util {
 //    return (UIContainer)Util.findUIComponent(UIContainer uiContainer, UIContainer.class, UIPage.class);
 //  }
 
+  //TODO: trong.tran this seems not to be used
   static public void showPageComponentLayoutMode(UIPortalApplication uiPortalApp){   
     UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
     uiWorkingWS.setRenderedChild(UIPortalToolPanel.class) ;
@@ -152,8 +155,9 @@ public class Util {
     String name = "";
     if(uiContainer != null && uiContainer.isShowEditControl())  name = "UIContainer";      
     else if(uiPortlet != null  && uiPortlet.isShowEditControl()) name = "UIPortlet";
-
-    getPortalRequestContext().getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIPortal.showLayoutModeForPage('"+name+"');");
+    
+    //commented by tungdt
+    //getPortalRequestContext().getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIPortal.showLayoutModeForPage('"+name+"');");
   }
 
   @SuppressWarnings("unchecked")
@@ -221,11 +225,13 @@ public class Util {
     setShowEditControl(uiParent, clazz);
     
     PortalRequestContext context = Util.getPortalRequestContext() ;
-    if(uiParent instanceof UIPortal){
+    
+    //commented by tungdt
+/*    if(uiParent instanceof UIPortal){
       context.getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIPortal.showLayoutModeForPortal('"+layoutMode+"');") ;
     } else {
       context.getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIPortal.showLayoutModeForPage('"+layoutMode+"');") ;
-    }
+    }*/
   }
   
   static public UIWorkingWorkspace updateUIApplication(Event<? extends UIComponent> event){

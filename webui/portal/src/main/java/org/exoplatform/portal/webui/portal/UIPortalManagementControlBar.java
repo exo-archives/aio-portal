@@ -58,9 +58,7 @@ import org.exoplatform.webui.event.EventListener;
 public class UIPortalManagementControlBar extends UIToolbar {
   
   public UIPortalManagementControlBar() throws Exception {
-    super();
     setToolbarStyle("ControlToolbar") ;
-    setJavascript("Preview","onclick='eXo.portal.UIPortal.switchMode(this);'") ;
   }
   
   public void save() throws Exception {
@@ -174,7 +172,7 @@ public class UIPortalManagementControlBar extends UIToolbar {
       }
       
       UIPortal uiPortal = Util.getUIPortal();
-      Util.getUIPortalApplication().setEditting(false) ;
+      Util.getUIPortalApplication().setModeState(UIPortalApplication.NORMAL_MODE);
       PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal, 
            PageNodeEvent.CHANGE_PAGE_NODE, 
            (uiPortal.getSelectedNode() != null ? uiPortal.getSelectedNode().getUri() : null)) ;
@@ -190,7 +188,8 @@ public class UIPortalManagementControlBar extends UIToolbar {
       PortalRequestContext prContext = Util.getPortalRequestContext();  
       UserPortalConfigService configService = uiPortalApp.getApplicationComponent(UserPortalConfigService.class);
       configService.update(uiPortalApp.getUserPortalConfig().getPortalConfig());
-      uiPortalApp.setEditting(false) ;
+      uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
+      Util.getUIPortalApplication().setModeState(UIPortalApplication.NORMAL_MODE);
       
       String remoteUser = prContext.getRemoteUser();
       String ownerUser = prContext.getPortalOwner();   

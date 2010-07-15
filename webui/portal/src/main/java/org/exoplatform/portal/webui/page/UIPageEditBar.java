@@ -51,10 +51,10 @@ import org.exoplatform.webui.event.EventListener;
  * Jun 23, 2006
  * 10:07:15 AM
  */
-@ComponentConfig(  
+@ComponentConfig(
     template = "system:/groovy/webui/core/UIToolbar.gtmpl",
     events = {
-        @EventConfig(listeners = UIPageEditBar.PagePreviewActionListener.class),
+        @EventConfig(listeners = UIWorkingWorkspace.PreviewActionListener.class, name = "PagePreview"),
         @EventConfig(listeners = UIPageEditBar.EditPageActionListener.class),        
         @EventConfig(listeners = UIPageEditBar.EditContainerActionListener.class),
         @EventConfig(listeners = UIPageEditBar.EditPortletActionListener.class),
@@ -64,10 +64,9 @@ import org.exoplatform.webui.event.EventListener;
 public class UIPageEditBar extends UIToolbar { 
 
   transient UIPage uiPage_;
-
+  
   public UIPageEditBar() throws Exception {
     setToolbarStyle("EditToolbar") ;
-    setJavascript("PagePreview","onclick='eXo.portal.UIPortal.switchModeForPage(this)';") ;
   }
   
   public <T extends UIComponent> T setRendered(boolean b) { 
@@ -88,11 +87,6 @@ public class UIPageEditBar extends UIToolbar {
     uiToolPanel.setUIComponent(uiPage_);    
   }
 
-  static public class PagePreviewActionListener  extends EventListener<UIPageEditBar> {
-    public void execute(Event<UIPageEditBar> event) throws Exception {
-    }
-  }
-
   static public class EditContainerActionListener  extends EventListener<UIPageEditBar> {
     public void execute(Event<UIPageEditBar> event) throws Exception {      
       UIPageEditBar uiEditBar = event.getSource();
@@ -106,9 +100,10 @@ public class UIPageEditBar extends UIToolbar {
         childrenToRender = new Class<?>[]{UIPageEditBar.class, UIContainerConfigOptions.class, UIPageBrowseControlBar.class};
       }
       uiPManagement.setRenderedChildrenOfTypes(childrenToRender);
-      
+
       PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext() ;
       UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
+      uiPortalApp.setModeState(UIPortalApplication.CONTAINER_EDIT_MODE);
       UIControlWorkspace uiControl = uiPortalApp.getChildById(UIPortalApplication.UI_CONTROL_WS_ID);
       pcontext.addUIComponentToUpdateByAjax(uiControl);
       UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);   
@@ -132,15 +127,16 @@ public class UIPageEditBar extends UIToolbar {
         childrenToRender = new Class[]{UIPageEditBar.class, UIPortletOptions.class, UIPageBrowseControlBar.class};
       }
       uiPManagement.setRenderedChildrenOfTypes(childrenToRender);
-      
+
       PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext() ;
       UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
+      uiPortalApp.setModeState(UIPortalApplication.APP_EDIT_MODE);
       UIControlWorkspace uiControl = uiPortalApp.getChildById(UIPortalApplication.UI_CONTROL_WS_ID);
       pcontext.addUIComponentToUpdateByAjax(uiControl);
       UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID); 
       UIPortalToolPanel toolPanel = uiPortalApp.findFirstComponentOfType(UIPortalToolPanel.class);
       toolPanel.setShowMaskLayer(false);
-      pcontext.addUIComponentToUpdateByAjax(uiWorkingWS) ;    
+      pcontext.addUIComponentToUpdateByAjax(uiWorkingWS) ;
       pcontext.setFullRender(true);
     }
   }
@@ -167,7 +163,7 @@ public class UIPageEditBar extends UIToolbar {
     UserPortalConfigService dataService = getApplicationComponent(UserPortalConfigService.class);
     dataService.update(page); 
   }
-  
+
   static public class SavePageActionListener  extends EventListener<UIPageEditBar> {
     public void execute(Event<UIPageEditBar> event) throws Exception {
       UIPageEditBar uiEditBar = event.getSource();
@@ -190,5 +186,4 @@ public class UIPageEditBar extends UIToolbar {
       }
     }
   }
-  
 }

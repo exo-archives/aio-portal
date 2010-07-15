@@ -81,7 +81,7 @@ PortalDragDrop.prototype.init = function(e) {
     var dragObject = dndEvent.dragObject ;
     /* Control Scroll */
     eXo.portal.PortalDragDrop.scrollOnDrag(dragObject, dndEvent) ;
-//    window.status = "foundTargetObject: " + dndEvent.foundTargetObject + "    lastFoundTargetObject: " + dndEvent.lastFoundTargetObject;
+    // window.status = "foundTargetObject: " + dndEvent.foundTargetObject + "    lastFoundTargetObject: " + dndEvent.lastFoundTargetObject;
     if((dndEvent.foundTargetObject) && (dndEvent.lastFoundTargetObject)) {
       /*Check and asign UIPage to uiComponentLayout when DND on UIPage*/
       var uiComponentLayout ;
@@ -288,14 +288,15 @@ PortalDragDrop.prototype.doDropCallback = function(dndEvent) {
   ajaxGet(eXo.env.server.createPortalURL("UIPortal", "MoveChild", true, params)) ;
 };
 
-/* Find components in dropable target */
+/**
+ * Return all components that are droppable in the DOM
+ */
 PortalDragDrop.prototype.findDropableTargets = function() {
   var dropableTargets = new Array() ;
   var uiWorkingWorkspace = document.getElementById("UIWorkingWorkspace") ;
   var uiPortal = eXo.core.DOMUtil.findFirstDescendantByClass(uiWorkingWorkspace, "div", "UIPortal") ;
-  var viewPagebody = eXo.core.DOMUtil.findFirstDescendantByClass(uiWorkingWorkspace, "div", "VIEW-PAGEBODY") ;
   var uiContainers = eXo.core.DOMUtil.findDescendantsByClass(uiWorkingWorkspace, "div", "UIContainer") ;
-  if(viewPagebody && viewPagebody.style.display == "none") {
+  if(uiPortal) {
     dropableTargets.push(uiPortal) ;
   } else {
   	var uiPage = eXo.core.DOMUtil.findFirstDescendantByClass(uiWorkingWorkspace, "div", "UIPage") ;

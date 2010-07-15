@@ -18,6 +18,8 @@ package org.exoplatform.webui.core;
 
 import java.util.List;
 
+import org.exoplatform.webui.config.Event;
+
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
@@ -47,7 +49,7 @@ public abstract class UIToolbar extends UIComponent {
   public String getToolbarStyle() { return toolbarStyle_ ; }
   public void setToolbarStyle(String toolbarStyle) { toolbarStyle_ = toolbarStyle ;  }
   
-  public List getEvents() { return getComponentConfig().getEvents() ; }
+  public List<Event> getEvents() { return getComponentConfig().getEvents() ; }
   
   public String getJavascript() { return strJavascript_ ; }
   public String getEventName() { return eventName_ ; }

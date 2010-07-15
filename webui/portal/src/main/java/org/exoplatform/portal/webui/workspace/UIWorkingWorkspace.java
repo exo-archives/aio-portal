@@ -17,8 +17,14 @@
 package org.exoplatform.portal.webui.workspace;
 
 import org.exoplatform.portal.webui.portal.UIPortal;
+import org.exoplatform.portal.webui.util.Util;
+import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
+import org.exoplatform.webui.config.annotation.EventConfig;
+import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.UIContainer;
+import org.exoplatform.webui.event.Event;
+import org.exoplatform.webui.event.EventListener;
 
 /**
  * Created by The eXo Platform SARL
@@ -29,13 +35,31 @@ import org.exoplatform.webui.core.UIContainer;
 
 @ComponentConfig(
   id = "UIWorkingWorkspace",
-  template = "system:/groovy/portal/webui/workspace/UIWorkingWorkspace.gtmpl"
+  template = "system:/groovy/portal/webui/workspace/UIWorkingWorkspace.gtmpl",
+  events = {
+    @EventConfig(listeners = UIWorkingWorkspace.PreviewActionListener.class)
+  }
 )
 public class UIWorkingWorkspace extends UIContainer {
-  
+
   private UIPortal backupUIPortal = null;
   
   public UIPortal getBackupUIPortal() { return backupUIPortal; }
   
   public void setBackupUIPortal(UIPortal uiPortal) { backupUIPortal = uiPortal;   }
+  
+  static public class PreviewActionListener extends EventListener<UIComponent> {
+    public void execute(Event<UIComponent> event) throws Exception {
+      WebuiRequestContext context = event.getRequestContext();
+      UIPortalApplication uiPortalApp = (UIPortalApplication) context.getUIApplication();
+      if(uiPortalApp.getModeState() == UIPortalApplication.PREVIEW_MODE) {
+        uiPortalApp.setModeState(uiPortalApp.getPreviousMode());
+        context.getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIPortal.hideMaskLayer() ;");
+      } else {
+        uiPortalApp.setPreviousMode(uiPortalApp.getModeState());
+        uiPortalApp.setModeState(UIPortalApplication.PREVIEW_MODE);
+      }
+      Util.updateUIApplication(event) ;
+    }
+  }
 }

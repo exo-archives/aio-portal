@@ -192,6 +192,10 @@ public class UIPageEditWizard extends UIPageWizard {
       UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
       UIWizardPageSetInfo uiPageInfo = uiWizard.getChild(UIWizardPageSetInfo.class);
       UserPortalConfigService userService = uiWizard.getApplicationComponent(UserPortalConfigService.class) ;
+      
+      uiPortalApp.setModeState(uiPortalApp.APP_EDIT_MODE);
+ 
+      
       if(uiPageInfo.getSelectedPageNode() == null) {
         uiPortalApp.addMessage(new ApplicationMessage("UIPageEditWizard.msg.notSelectedPage", null)) ;
         return ;
@@ -277,6 +281,7 @@ public class UIPageEditWizard extends UIPageWizard {
       uiWizard.saveData();
       UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
       uiWizard.updateUIPortal(uiPortalApp, event);
+      uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
     }
   }
 }

@@ -155,7 +155,7 @@ public abstract class UIPageWizard extends UIWizard {
 	static public class AbortActionListener extends EventListener<UIPageWizard> {
 		public void execute(Event<UIPageWizard> event) throws Exception {
 			UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
-			uiPortalApp.setEditting(false);
+			uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
 			PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext();
 
 			UIControlWorkspace uiControl = uiPortalApp.getChildById(UIPortalApplication.UI_CONTROL_WS_ID);
@@ -170,6 +170,8 @@ public abstract class UIPageWizard extends UIWizard {
 
 			UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
 			pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
+			
+			uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
 		}
 	}
 }

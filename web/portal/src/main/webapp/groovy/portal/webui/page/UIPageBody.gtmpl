@@ -1,12 +1,23 @@
+<%
+  import org.exoplatform.portal.webui.workspace.UIPortalApplication;
+  
+  def rcontext = _ctx.getRequestContext() ;
+  UIPortalApplication uiPortalApp = rcontext.getUIApplication();
+  
+  boolean isPortalAppEditting = uiPortalApp.isEditting(); 
+  int portalMode = uiPortalApp.getModeState(); 
+%>
 <div class="UIPageBody UIComponent" id="${uicomponent.id}">
+<%if (isPortalAppEditting){%>
   <div class="META-DATA-BLOCK" style="display: none">
     <div class="id">$uicomponent.id</div>
     <div class="title"><%=_ctx.appRes("UIPage.label.title")%></div>
     <div class="description"><%=_ctx.appRes("UIPage.label.description")%></div>
   </div>
-  <div class="CONTROL-PAGEBODY CONTROL-BLOCK" style="display: none"><span></span></div>
 
-  <div class="LAYOUT-PAGEBODY DragControlArea" style="display: none;" onmousedown="eXo.portal.PortalDragDrop.init.call(eXo.core.DOMUtil.findAncestorByClass(this, 'UIPageBody'), event);">
+  <div class="CONTROL-PAGEBODY CONTROL-BLOCK" style="display: none" ><span></span></div>
+
+  <div class="LAYOUT-PAGEBODY DragControlArea" onmousedown="eXo.portal.PortalDragDrop.init.call(eXo.core.DOMUtil.findAncestorByClass(this, 'UIPageBody'), event);">
   	<div class="PageLayoutDecorator">
 			<%/*Begin Top Decorator*/%>
 			<div class="TopLeftPage">
@@ -36,9 +47,11 @@
 			</div>
 				
 		</div>  	
-  </div>
-  <div class="VIEW-PAGEBODY">
-		<% if(uicomponent.getUIComponent() == null){ %>
+	</div>
+
+<%} else { %>
+	<div class="VIEW-PAGEBODY">
+	<%if (uicomponent.getUIComponent() == null) {%>
 		<div class="Empty">
 			<div class="UIPortalWarning">
 				<div class="LeftTopWarning">
@@ -64,6 +77,7 @@
 				</div>
 			</div>
 		</div>
-		<% } else { uicomponent.renderChildren() ; } %>
+	<%} else { uicomponent.renderChildren() ; }%>
 	</div>
+<%}%>
 </div>

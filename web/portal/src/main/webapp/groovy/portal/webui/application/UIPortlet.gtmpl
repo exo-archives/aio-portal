@@ -2,8 +2,10 @@
   import org.exoplatform.portal.webui.page.UIPage;
   import javax.portlet.WindowState;
   import org.exoplatform.web.application.JavascriptManager;
+  import org.exoplatform.portal.webui.workspace.UIPortalApplication;
   
   def rcontext = _ctx.getRequestContext() ;
+  UIPortalApplication uiPortalApp = rcontext.getUIApplication();
   JavascriptManager jsmanager = rcontext.getJavascriptManager();
   
   jsmanager.importJavascript('eXo.webui.UIPopupSelectCategory') ;
@@ -13,111 +15,112 @@
   String onControlOut    = "eXo.webui.UIPortlet.onControlOver(this, false);" ;
   
   boolean isPortalAppEditting = rcontext.getUIApplication().isEditting(); 
+  int portalMode = uiPortalApp.getModeState(); 
 
   WindowState windowState = uicomponent.getCurrentWindowState();  
   boolean isDesktop = "Window".equals(uicomponent.getPortletStyle());
   String portletId = uicomponent.getId() ;
   if(!isDesktop && isPortalAppEditting) {
 %>
-	  <div class="UIPortlet" id="UIPortlet-$portletId">
-		  <div class="META-DATA-BLOCK" style="display: none">
-		    <div class="id"><%=uicomponent.getId();%></div>
-		    <div class="title"><%=_ctx.appRes("UIPortlet.label.title");%></div>
-		    <div class="description">
-		    
-		      <%if(uicomponent.getDescription() != null) {%>
-  		      <%=uicomponent.getDescription();%>
-		      <%} else {%>
-		        <%=_ctx.appRes("UIPortlet.label.description");%>
-		      <%}%>
-		    </div>
-		  </div>
+  <div class="UIPortlet" id="UIPortlet-$portletId">
+	  <div class="META-DATA-BLOCK" style="display: none">
+	    <div class="id"><%=uicomponent.getId();%></div>
+	    <div class="title"><%=_ctx.appRes("UIPortlet.label.title");%></div>
+	    <div class="description">
+	    
+	      <%if(uicomponent.getDescription() != null) {%>
+		      <%=uicomponent.getDescription();%>
+	      <%} else {%>
+	        <%=_ctx.appRes("UIPortlet.label.description");%>
+	      <%}%>
+	    </div>
+	  </div>
 		   
-		  <div class="CONTROL-PORTLET CONTROL-BLOCK" style="display: none;">
-		   	<%/*Begin InfoBar*/%>
-		   	<div class="UIInfoBar">
-		      <div class="BlueRoundedStyle">
-		        <div class="LeftBar">
-		          <div class="RightBar">
-				        <div class="MiddleBar">
-				        	<div class="FixHeight ClearFix">
-					          <div class="DragControlArea" title="<%=_ctx.appRes("UIPortlet.tooltip.DragControl");%>"><span></span></div>
-					          <% 
-					            String portletIcon = uicomponent.getIcon();
-					            if(portletIcon == null) portletIcon = "PortletIcon";
-					            
-					            String title = portletTitle;
-					            if(uicomponent.getId() !=null) title = uicomponent.getId() ;
-					            if(uicomponent.getTitle() !=null) title = uicomponent.getTitle() ;
-					            if(title.length() > 30) title = title.substring(0,27) + "..." ;
-					          %>
-					          <div class="Icon $portletIcon WindowPortletIcon NovaPortletIcon"><span></span></div>
-				            <a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeletePortletIcon" title="<%=_ctx.appRes("UIPortlet.tooltip.deletePortlet");%>"><span></span></a>
-				            <a href="<%=uicomponent.event("EditPortlet","$uicomponent.id")%>" class="EditPortletPropertiesIcon" title="<%=_ctx.appRes("UIPortlet.tooltip.editPortlet");%>"><span></span></a>
-										<div class="Title">$title</div>
-				          </div>
-				        </div>
-		          </div>
-		        </div>
-		      </div>
-		    </div>
-		    <%/*End InfoBar*/ %>
-		  </div>
+	  <div class="CONTROL-PORTLET CONTROL-BLOCK"  <%if(portalMode != UIPortalApplication.APP_EDIT_MODE) print("style=\"display: none\"")%>>
+	   	<%/*Begin InfoBar*/%>
+	   	<div class="UIInfoBar">
+	      <div class="BlueRoundedStyle">
+	        <div class="LeftBar">
+	          <div class="RightBar">
+			        <div class="MiddleBar">
+			        	<div class="FixHeight ClearFix">
+				          <div class="DragControlArea" onmousedown="eXo.portal.PortalDragDrop.init.call(this, event)" title="<%=_ctx.appRes("UIPortlet.tooltip.DragControl");%>"><span></span></div>
+				          <% 
+				            String portletIcon = uicomponent.getIcon();
+				            if(portletIcon == null) portletIcon = "PortletIcon";
+				            
+				            String title = portletTitle;
+				            if(uicomponent.getId() !=null) title = uicomponent.getId() ;
+				            if(uicomponent.getTitle() !=null) title = uicomponent.getTitle() ;
+				            if(title.length() > 30) title = title.substring(0,27) + "..." ;
+				          %>
+				          <div class="Icon $portletIcon WindowPortletIcon NovaPortletIcon"><span></span></div>
+			            <a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeletePortletIcon" title="<%=_ctx.appRes("UIPortlet.tooltip.deletePortlet");%>"><span></span></a>
+			            <a href="<%=uicomponent.event("EditPortlet","$uicomponent.id")%>" class="EditPortletPropertiesIcon" title="<%=_ctx.appRes("UIPortlet.tooltip.editPortlet");%>"><span></span></a>
+									<div class="Title">$title</div>
+			          </div>
+			        </div>
+	          </div>
+	        </div>
+	      </div>
+	    </div>
+	    <%/*End InfoBar*/ %>
+	  </div>
 		  
-		  <div class="LAYOUT-PORTLET" style="display: none;">
-		    <div class="PortletLayoutDecorator">
-		    
-		      <%/*Begin Top Portlet Layout Decorator*/%>
-		      <div class="TopLeft">
-		        <div class="TopRight">
-		          <div class="TopMiddle">
-		            <div class="TopMiddleCenter">
-		            	<div class="FixHeight"><span></span></div>
-		            </div>
-		          </div>
-		        </div>
-		      </div>
-		      
-		      <%/*Begin Middle Portlet Layout Decorator*/%>
-		      <div class="MiddleLeft">
-		        <div class="MiddleRight">
-		          <div class="CenterBackground">
-		            <div class="GardientBackground">		            
-		            <%if(uicomponent.getDescription() != null) {	
-		            		String description = ""; int count = 1;
-		            		for(c in uicomponent.getDescription()){
-		            			if(c=="\n"){
-		            				c="<br/>";
-		            				count++;
-		            			}
-		            			description+=c;
-		            			if(count>5) break;
-		            		}
-		            %>
-		            	<%=description;%>
-		            <%} else {%>
-		                 <%= _ctx.appRes("UIPortlet.label.portletContent"); %>		               
-      		      <%}%>
-      		      </div>
-		          </div>
-		        </div>
-		      </div>
-		      
-		      <%/*Begin Bottom Portlet Layout Decorator*/%>
-		      <div class="BottomLeft">
-		        <div class="BottomRight">
-		          <div class="BottomMiddle">
-		          	<div class="FixHeight"><span></span></div>
-		          </div>
-		        </div>
-		      </div>
-		      
-		    </div>
-		  </div>
-		  
-		  <div class="VIEW-PORTLET" id="VIEW-${portletId}">
+	  <div class="LAYOUT-PORTLET">
+	    <div class="PortletLayoutDecorator">
+	    
+	      <%/*Begin Top Portlet Layout Decorator*/%>
+	      <div class="TopLeft">
+	        <div class="TopRight">
+	          <div class="TopMiddle">
+	            <div class="TopMiddleCenter">
+	            	<div class="FixHeight"><span></span></div>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	      
+	      <%/*Begin Middle Portlet Layout Decorator*/%>
+	      <div class="MiddleLeft">
+	        <div class="MiddleRight">
+	          <div class="CenterBackground">
+	            <div class="GardientBackground">		            
+	            <%if(uicomponent.getDescription() != null) {	
+	            		String description = ""; int count = 1;
+	            		for(c in uicomponent.getDescription()){
+	            			if(c=="\n"){
+	            				c="<br/>";
+	            				count++;
+	            			}
+	            			description+=c;
+	            			if(count>5) break;
+	            		}
+	            %>
+	            	<%=description;%>
+	            <%} else {%>
+	                 <%= _ctx.appRes("UIPortlet.label.portletContent"); %>		               
+    		      <%}%>
+    		      </div>
+	          </div>
+	        </div>
+	      </div>
+	      
+	      <%/*Begin Bottom Portlet Layout Decorator*/%>
+	      <div class="BottomLeft">
+	        <div class="BottomRight">
+	          <div class="BottomMiddle">
+	          	<div class="FixHeight"><span></span></div>
+	          </div>
+	        </div>
+	      </div>
+	      
+	    </div>
+	  </div>
+
+		<div class="VIEW-PORTLET" id="VIEW-${portletId}">
 <%
-  }
+  } else {
 	if(uicomponent.getShowInfoBar()) {
   	String title = uicomponent.getTitle() ;
     if(title == null || title.trim().length() < 1) title = portletId;
@@ -252,7 +255,6 @@
 	              <%}%>
 
 	            	<%
-	            		/*TODO: modify: dang.tung - fixed icon themes*/
 	            		String portletIcon = uicomponent.getIcon();
 			            if(portletIcon == null) portletIcon = "PortletIcon";
 	            	%>
@@ -282,7 +284,7 @@
           	<div class="FixHeight ClearFix">
 	            <div class="ResizeArea" title="<%=_ctx.appRes("UIPortlet.tooltip.ResizeWindow");%>"><span></span></div>
 	            <div class="Information"><%=_ctx.appRes("UIPortlet.lable.information");%></div>
-			</div>
+						</div>
           </div>
         </div>
       </div>
@@ -307,7 +309,7 @@
 	    </div>  
 <%
     } 
-  }
+  }}
   if(!isDesktop && isPortalAppEditting) {
 %>  
 	    </div>

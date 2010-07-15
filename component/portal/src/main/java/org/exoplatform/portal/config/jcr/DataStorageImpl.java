@@ -51,7 +51,46 @@ import org.picocontainer.Startable;
 
 /**
  * Created by The eXo Platform SARL Author : Tung Pham thanhtungty@gmail.com Nov
- * 14, 2007
+ * <p>
+ * Data storage structure :<pre>
+ * [exo:registry]
+ *      |
+ *      |--->[ApplicationRegistry]
+ *      |       |
+ *      |       |--->${applicationCategory}
+ *      |                 |
+ *      |                 |--->[applications]
+ *      |                           |
+ *      |                           |--->${applicationId}
+ *      |
+ *      |--->[exo:applications]
+ *      |       |
+ *      |       |--->[MainPortalData]
+ *      |                 |
+ *      |                 |--->${portalName}
+ *      |                           |
+ *      |                           |--->[navigation-xml]
+ *      |                           |
+ *      |                           |--->[pages]
+ *      |                           |
+ *      |                           |--->[portal-xml]
+ *      |                           |
+ *      |                           |--->[portletPreferences] 
+ *      |     
+ *      |--->[exo:groups]
+ *      |       |
+ *      |       |--->${groupId}
+ *      |                 |
+ *      |                 |--->[SharedPortalData]
+ *      |                           |
+ *      |                           |--->[navigation-xml]
+ *      |                           |
+ *      |                           |--->[pages]
+ *      |                           |
+ *      |                           |--->[portletPreferences] 
+ *      |
+ *      |--->[exo:users]
+ * </pre>
  */
 public class DataStorageImpl implements DataStorage, Startable {
 

@@ -63,7 +63,6 @@ public class UIPageNavigationControlBar extends UIToolbar {
 
   public UIPageNavigationControlBar() throws Exception {
     setToolbarStyle("ControlToolbar") ;
-    setJavascript("Preview","onclick='eXo.portal.UIPortal.switchMode(this);'") ;
   }
   
   static public class RollbackActionListener extends EventListener<UIPageNavigationControlBar> {
@@ -148,7 +147,7 @@ public class UIPageNavigationControlBar extends UIToolbar {
         }
         dataService.create(nav) ;
       }
-      Util.getUIPortalApplication().setEditting(false) ;
+      Util.getUIPortalApplication().setModeState(UIPortalApplication.NORMAL_MODE) ;
       UIPortal uiPortal = Util.getUIPortal();
       UserPortalConfig portalConfig  = dataService.getUserPortalConfig(uiPortal.getName(), accessUser);
       uiPortal.setNavigation(portalConfig.getNavigations());
@@ -167,7 +166,7 @@ public class UIPageNavigationControlBar extends UIToolbar {
  
   public void abort(Event<UIPageNavigationControlBar> event) throws Exception {
     UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
-    uiPortalApp.setEditting(false) ;
+    uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE) ;
     PortalRequestContext prContext = Util.getPortalRequestContext();  
     UIPortal portal = Util.getUIPortal();
     UIControlWorkspace uiControl = uiPortalApp.getChildById(UIPortalApplication.UI_CONTROL_WS_ID);

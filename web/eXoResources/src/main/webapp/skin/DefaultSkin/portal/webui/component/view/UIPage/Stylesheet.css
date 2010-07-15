@@ -69,12 +69,17 @@
 }
 
 .UIPage {
+	margin: auto
   width: 99.8%;
   *width: auto;
 }
 
 .UIPage .UIRowContainer {
 	padding: 1px;
+}
+
+.UIPage .LAYOUT-PAGE .UIRowContainer {
+  min-height: 60px;
 }
 
 .UIPage .VIEW-PAGE {

@@ -1,5 +1,6 @@
 <%
- import org.exoplatform.web.application.JavascriptManager;
+	import org.exoplatform.web.application.JavascriptManager;
+	import org.exoplatform.portal.webui.workspace.UIPortalApplication;
     
 
   def rcontext = _ctx.getRequestContext() ;
@@ -12,3 +13,9 @@
 <div id="UIWorkingWorkspace" class="UIWorkingWorkspace" style="position:relative; z-index: 0;">
   <%uicomponent.renderChildren()%>
 </div>
+<%
+	UIPortalApplication uiPortalApp = rcontext.getUIApplication();
+	if(uiPortalApp.getModeState() == UIPortalApplication.PREVIEW_MODE) {
+		rcontext.getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIPortal.showMaskLayer() ;");
+	}
+%>

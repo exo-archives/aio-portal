@@ -67,16 +67,23 @@ import org.exoplatform.webui.event.Event;
     template = "system:/groovy/portal/webui/workspace/UIPortalApplication.gtmpl"
 )
 public class UIPortalApplication extends UIApplication {
-
-  private boolean isEditting = false ;
+  
+  public static final int NORMAL_MODE = 0;
+  public static final int APP_EDIT_MODE = 1;
+  public static final int CONTAINER_EDIT_MODE = 2;
+  public static final int PREVIEW_MODE = 3;
+  
+  final static public String UI_CONTROL_WS_ID = "UIControlWorkspace" ;
+  final static public String UI_WORKING_WS_ID = "UIWorkingWorkspace" ;
+  final static public String UI_MASK_WS_ID = "UIMaskWorkspace" ;
+  
   private String nodePath_;
   private Locale locale_ = Locale.ENGLISH  ;
   private Orientation orientation_ = Orientation.LT;
 
-  final static public String UI_CONTROL_WS_ID = "UIControlWorkspace" ;
-  final static public String UI_WORKING_WS_ID = "UIWorkingWorkspace" ;
-  final static public String UI_MASK_WS_ID = "UIMaskWorkspace" ;
-
+  private int modeState = NORMAL_MODE;
+  private int previousMode ;
+  
   private String skin_ = "Default" ;
 
   private UserPortalConfig userPortalConfig_;
@@ -138,7 +145,7 @@ public class UIPortalApplication extends UIApplication {
     if(currentSkin != null && currentSkin.trim().length() > 0) skin_ = currentSkin;
     setOwner(context.getPortalOwner());
   }
-
+  
   public Orientation getOrientation() {
     return orientation_;
   }
@@ -150,9 +157,40 @@ public class UIPortalApplication extends UIApplication {
   public Locale getLocale() {  return locale_ ; }
   public void   setLocale(Locale locale) { locale_ = locale ; }
 
-  public void setEditting(boolean bln) { this.isEditting = bln ; }  
-  public boolean isEditting() { return isEditting ; }
+  /**
+   * @deprecated use {@link #setModeState(int)} instead
+   * 
+   * @param bln
+   */
+  public void setEditting(boolean bln) {}  
+  public boolean isEditting() { return (modeState == APP_EDIT_MODE || modeState == CONTAINER_EDIT_MODE); }
 
+  public int getModeState() {
+    return modeState;
+  }
+  
+  public void setModeState(int modeState) {
+    this.modeState = modeState;
+  }
+  
+  /**
+   * Return the previous mode which was before switching to {@link UIPortalApplication#PREVIEW_MODE}
+   * 
+   * @return the previousMode
+   */
+  public int getPreviousMode() {
+    return previousMode;
+  }
+  
+  /**
+   * Set the mode which will be restored after finishing {@link UIPortalApplication#PREVIEW_MODE} mode
+   * 
+   * @return the previousMode the mode will be kept
+   */
+  public void setPreviousMode(int modeState) {
+    previousMode = modeState;
+  }
+  
   public Collection<String> getJavascriptURLs() {
     JavascriptConfigService service = getApplicationComponent(JavascriptConfigService.class);
     return service.getAvailableScriptsPaths();

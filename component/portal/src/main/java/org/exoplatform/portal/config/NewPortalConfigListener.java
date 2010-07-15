@@ -125,7 +125,7 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
     if (isUseTryCatch) {
       for (NewPortalConfig portalConfig : configs) {
         try {
-          if (portalConfig.getOwnerType().equals("user")) {
+          if (portalConfig.getOwnerType().equals(PortalConfig.USER_TYPE)) {
             initUserTypeDB(portalConfig);
           } else if (portalConfig.getOwnerType().equals(PortalConfig.GROUP_TYPE)) {
             initGroupTypeDB(portalConfig);
@@ -134,14 +134,16 @@ public class NewPortalConfigListener extends BaseComponentPlugin {
           }
           portalConfig.getPredefinedOwner().clear();
         } catch (Exception e) {
-          // TODO handle error properly
-          System.err.println("NewPortalConfig error: " + e.getMessage());
+          if (log.isErrorEnabled()) {
+            log.error("Can not initialize " + portalConfig.getOwnerType() + " new portal config : "
+                + e.getMessage());
+          }
         }
 
       }
     } else {
       for (NewPortalConfig portalConfig : configs) {
-        if (portalConfig.getOwnerType().equals("user")) {
+        if (portalConfig.getOwnerType().equals(PortalConfig.USER_TYPE)) {
           initUserTypeDB(portalConfig);
         } else if (portalConfig.getOwnerType().equals(PortalConfig.GROUP_TYPE)) {
           initGroupTypeDB(portalConfig);

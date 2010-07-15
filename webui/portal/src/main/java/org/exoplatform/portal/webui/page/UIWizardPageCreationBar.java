@@ -17,10 +17,11 @@
 package org.exoplatform.portal.webui.page;
 
 import java.io.Writer;
-
 import org.exoplatform.portal.webui.application.UIPortletOptions;
 import org.exoplatform.portal.webui.container.UIContainerConfigOptions;
 import org.exoplatform.portal.webui.util.Util;
+import org.exoplatform.portal.webui.workspace.UIPortalApplication;
+import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
 import org.exoplatform.webui.application.WebuiRequestContext;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.ComponentConfigs;
@@ -43,7 +44,7 @@ import org.exoplatform.webui.event.EventListener;
       type = UIPageEditBar.class,
       template = "system:/groovy/webui/core/UIToolbar.gtmpl" ,
       events = {
-        @EventConfig(listeners = UIPageEditBar.PagePreviewActionListener.class),
+        @EventConfig(listeners = UIWorkingWorkspace.PreviewActionListener.class, name = "PagePreview"),
         @EventConfig(listeners = UIWizardPageCreationBar.EditContainerActionListener.class),
         @EventConfig(listeners = UIWizardPageCreationBar.EditPortletActionListener.class)
       }
@@ -84,6 +85,7 @@ public class UIWizardPageCreationBar extends UIContainer {
       Class<?> [] childrenToRender ={UIPageEditBar.class, UIContainerConfigOptions.class }; 
       uiParent.setRenderedChildrenOfTypes(childrenToRender);
       Util.updateUIApplication(event);
+      Util.getUIPortalApplication().setModeState(UIPortalApplication.CONTAINER_EDIT_MODE);
     }    
   }
 
@@ -94,6 +96,7 @@ public class UIWizardPageCreationBar extends UIContainer {
       Class<?> [] childrenToRender = { UIPageEditBar.class, UIPortletOptions.class}; 
       uiParent.setRenderedChildrenOfTypes(childrenToRender);
       Util.updateUIApplication(event);
+      Util.getUIPortalApplication().setModeState(UIPortalApplication.APP_EDIT_MODE);
     }
   }
 

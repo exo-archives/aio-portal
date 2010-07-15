@@ -200,7 +200,7 @@ public class UIExoStart extends UIComponent {
       UIExoStart uiComp = event.getSource() ;
       uiComp.setUIControlWSWorkingComponent(UIPageManagement.class) ;
       PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext() ;
-      ((UIPortalApplication)pcontext.getUIApplication()).setEditting(true) ;
+      ((UIPortalApplication)pcontext.getUIApplication()).setModeState(UIPortalApplication.APP_EDIT_MODE) ;
       pcontext.addUIComponentToUpdateByAjax(uiComp);
 
       UIPageManagement uiManagement = uiComp.getUIControlWSWorkingComponent();      
@@ -230,7 +230,9 @@ public class UIExoStart extends UIComponent {
       }
       uiComp.setUIControlWSWorkingComponent(UIPortalManagement.class) ;
       PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext() ;
-      ((UIPortalApplication)pcontext.getUIApplication()).setEditting(true) ;
+      UIPortalApplication uiApp = (UIPortalApplication)pcontext.getUIApplication() ;
+      uiApp.setModeState(UIPortalApplication.APP_EDIT_MODE);
+
       UIPortalManagement uiManagement = uiComp.getUIControlWSWorkingComponent();      
       uiManagement.setMode(ManagementMode.EDIT, event);
     }
@@ -259,7 +261,7 @@ public class UIExoStart extends UIComponent {
       UIExoStart uiExoStart = event.getSource();
       uiExoStart.setUIControlWSWorkingComponent(UIWizardPageCreationBar.class);
       UIPortalApplication uiApp = uiExoStart.getAncestorOfType(UIPortalApplication.class);
-      uiApp.setEditting(true) ;
+      uiApp.setModeState(UIPortalApplication.APP_EDIT_MODE);
       UIWorkingWorkspace uiWorkingWS = uiApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);      
       uiWorkingWS.setRenderedChild(UIPortalToolPanel.class) ;
       UIPortalToolPanel uiToolPanel = uiWorkingWS.getChild(UIPortalToolPanel.class) ;
@@ -281,7 +283,7 @@ public class UIExoStart extends UIComponent {
     public void execute(Event<UIExoStart> event) throws Exception {
       UIExoStart uiExoStart = event.getSource();
       UIPortalApplication uiApp = uiExoStart.getAncestorOfType(UIPortalApplication.class);
-      uiApp.setEditting(true) ;
+      uiApp.setModeState(UIPortalApplication.APP_EDIT_MODE) ;
       UIWorkingWorkspace uiWorkingWS = uiApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
       uiWorkingWS.setRenderedChild(UIPortalToolPanel.class) ;
       UIPortalToolPanel uiToolPanel = uiWorkingWS.getChild(UIPortalToolPanel.class) ;

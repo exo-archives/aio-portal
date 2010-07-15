@@ -1,20 +1,30 @@
 <%
+	import org.exoplatform.portal.webui.workspace.UIPortalApplication;
+
   def rcontext = _ctx.getRequestContext() ;
 	rcontext.getJavascriptManager().importJavascript('eXo.portal.PortalDragDrop') ;
+	
+	UIPortalApplication uiPortalApp = rcontext.getUIApplication();
 %>
 <div class="UIPortal" id="UIPortal-$uicomponent.id">
+	<%if(uiPortalApp.isEditting()){%>
   <div class="META-DATA-BLOCK" style="display: none">
 	  <div class="id">$uicomponent.id</div>
 	  <div class="title"><%=_ctx.appRes("UIPortal.label.title")%></div>
     <div class="description"><%=_ctx.appRes("UIPortal.label.description")%></div>
   </div>	
 	<div class="CONTROL-PORTAL CONTROL-BLOCK" style="display: none;"><span></span></div>
-	<div class="LAYOUT-PORTAL" style="display: none;"></div>
+	
+	<div class="LAYOUT-PORTAL">
+	<%} else {%>
   <div class="VIEW-PORTAL">
-    <div id="$uicomponent.id">
+  <%}%>
+  
+	  <div id="$uicomponent.id">
 	    <div class="UIRowContainer">
       	<%uicomponent.renderChildren();%>
 	    </div>
 	  </div>
+
   </div>
 </div>

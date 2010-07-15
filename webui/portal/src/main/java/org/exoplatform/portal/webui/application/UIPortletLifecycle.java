@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.portlet.PortletMode;
 import javax.portlet.WindowState;
 
 import org.apache.commons.logging.Log;
@@ -39,6 +40,8 @@ import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.lifecycle.Lifecycle;
 import org.exoplatform.webui.core.lifecycle.WebuiBindingContext;
 import org.exoplatform.webui.event.Event;
+import org.exoplatform.portal.webui.util.Util;
+import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 
 /**
  * Created by The eXo Platform SAS May 8, 2006
@@ -159,8 +162,19 @@ public class UIPortletLifecycle extends Lifecycle {
         if("Window".equals(uiPortlet.getPortletStyle()) && !("SHOW".equals(appStatus) || "HIDE".equals(appStatus))) {
           markup = Text.create("<span></span>") ;
         } else {
-          output = portletContainer.render(prcontext.getRequest(), prcontext.getResponse(), input);
-          markup = output.getMarkup();
+          int portalMode = Util.getUIPortalApplication().getModeState();
+          if (portalMode == UIPortalApplication.NORMAL_MODE || portalMode == UIPortalApplication.PREVIEW_MODE
+              || uiPortlet.getCurrentPortletMode().equals(PortletMode.EDIT)) 
+          {
+            output = portletContainer.render(prcontext.getRequest(), prcontext.getResponse(), input);
+            markup = output.getMarkup();
+          }
+          else
+          {
+            markup = Text.create("<span></span>") ;
+          }
+
+          
         }
       }
     } catch (Throwable ex) {

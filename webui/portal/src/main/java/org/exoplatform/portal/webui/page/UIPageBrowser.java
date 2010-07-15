@@ -241,7 +241,7 @@ public class UIPageBrowser extends UISearch {
 		public void execute(Event<UIPageBrowser> event) throws Exception {
 			UIPageBrowser uiPageBrowser = event.getSource();
 			UIPortalApplication uiPortalApp = uiPageBrowser.getAncestorOfType(UIPortalApplication.class);
-			uiPortalApp.setEditting(true);
+			uiPortalApp.setModeState(UIPortalApplication.APP_EDIT_MODE);
 			PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext();
 			String id = pcontext.getRequestParameter(OBJECTID);
 			UserPortalConfigService service = uiPageBrowser.getApplicationComponent(UserPortalConfigService.class);
@@ -314,7 +314,7 @@ public class UIPageBrowser extends UISearch {
         return;
       }
 		
-
+      uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
 			UIPage uiPage = uiPageBrowser.createUIComponent(event.getRequestContext(), UIPage.class, null, null);
 			PortalDataMapper.toUIPage(uiPage, page);
 			UIPortalToolPanel uiToolPanel = Util.getUIPortalToolPanel();
