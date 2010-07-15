@@ -1,0 +1,1747 @@
+Index: component/portal/src/main/java/org/exoplatform/portal/config/NewPortalConfigListener.java
+===================================================================
+--- component/portal/src/main/java/org/exoplatform/portal/config/NewPortalConfigListener.java	(revision 48605)
++++ component/portal/src/main/java/org/exoplatform/portal/config/NewPortalConfigListener.java	(working copy)
+@@ -125,7 +125,7 @@
+     if (isUseTryCatch) {
+       for (NewPortalConfig portalConfig : configs) {
+         try {
+-          if (portalConfig.getOwnerType().equals("user")) {
++          if (portalConfig.getOwnerType().equals(PortalConfig.USER_TYPE)) {
+             initUserTypeDB(portalConfig);
+           } else if (portalConfig.getOwnerType().equals(PortalConfig.GROUP_TYPE)) {
+             initGroupTypeDB(portalConfig);
+@@ -134,14 +134,16 @@
+           }
+           portalConfig.getPredefinedOwner().clear();
+         } catch (Exception e) {
+-          // TODO handle error properly
+-          System.err.println("NewPortalConfig error: " + e.getMessage());
++          if (log.isErrorEnabled()) {
++            log.error("Can not initialize " + portalConfig.getOwnerType() + " new portal config : "
++                + e.getMessage());
++          }
+         }
+ 
+       }
+     } else {
+       for (NewPortalConfig portalConfig : configs) {
+-        if (portalConfig.getOwnerType().equals("user")) {
++        if (portalConfig.getOwnerType().equals(PortalConfig.USER_TYPE)) {
+           initUserTypeDB(portalConfig);
+         } else if (portalConfig.getOwnerType().equals(PortalConfig.GROUP_TYPE)) {
+           initGroupTypeDB(portalConfig);
+Index: component/portal/src/main/java/org/exoplatform/portal/config/jcr/DataStorageImpl.java
+===================================================================
+--- component/portal/src/main/java/org/exoplatform/portal/config/jcr/DataStorageImpl.java	(revision 48605)
++++ component/portal/src/main/java/org/exoplatform/portal/config/jcr/DataStorageImpl.java	(working copy)
+@@ -51,7 +51,46 @@
+ 
+ /**
+  * Created by The eXo Platform SARL Author : Tung Pham thanhtungty@gmail.com Nov
+- * 14, 2007
++ * <p>
++ * Data storage structure :<pre>
++ * [exo:registry]
++ *      |
++ *      |--->[ApplicationRegistry]
++ *      |       |
++ *      |       |--->${applicationCategory}
++ *      |                 |
++ *      |                 |--->[applications]
++ *      |                           |
++ *      |                           |--->${applicationId}
++ *      |
++ *      |--->[exo:applications]
++ *      |       |
++ *      |       |--->[MainPortalData]
++ *      |                 |
++ *      |                 |--->${portalName}
++ *      |                           |
++ *      |                           |--->[navigation-xml]
++ *      |                           |
++ *      |                           |--->[pages]
++ *      |                           |
++ *      |                           |--->[portal-xml]
++ *      |                           |
++ *      |                           |--->[portletPreferences] 
++ *      |     
++ *      |--->[exo:groups]
++ *      |       |
++ *      |       |--->${groupId}
++ *      |                 |
++ *      |                 |--->[SharedPortalData]
++ *      |                           |
++ *      |                           |--->[navigation-xml]
++ *      |                           |
++ *      |                           |--->[pages]
++ *      |                           |
++ *      |                           |--->[portletPreferences] 
++ *      |
++ *      |--->[exo:users]
++ * </pre>
+  */
+ public class DataStorageImpl implements DataStorage, Startable {
+ 
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/navigation/UIPageNavigationControlBar.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/navigation/UIPageNavigationControlBar.java	(revision 48605)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/navigation/UIPageNavigationControlBar.java	(working copy)
+@@ -63,7 +63,6 @@
+ 
+   public UIPageNavigationControlBar() throws Exception {
+     setToolbarStyle("ControlToolbar") ;
+-    setJavascript("Preview","onclick='eXo.portal.UIPortal.switchMode(this);'") ;
+   }
+   
+   static public class RollbackActionListener extends EventListener<UIPageNavigationControlBar> {
+@@ -148,7 +147,7 @@
+         }
+         dataService.create(nav) ;
+       }
+-      Util.getUIPortalApplication().setEditting(false) ;
++      Util.getUIPortalApplication().setModeState(UIPortalApplication.NORMAL_MODE) ;
+       UIPortal uiPortal = Util.getUIPortal();
+       UserPortalConfig portalConfig  = dataService.getUserPortalConfig(uiPortal.getName(), accessUser);
+       uiPortal.setNavigation(portalConfig.getNavigations());
+@@ -167,7 +166,7 @@
+  
+   public void abort(Event<UIPageNavigationControlBar> event) throws Exception {
+     UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
+-    uiPortalApp.setEditting(false) ;
++    uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE) ;
+     PortalRequestContext prContext = Util.getPortalRequestContext();  
+     UIPortal portal = Util.getUIPortal();
+     UIControlWorkspace uiControl = uiPortalApp.getChildById(UIPortalApplication.UI_CONTROL_WS_ID);
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalManagementControlBar.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalManagementControlBar.java	(revision 48605)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalManagementControlBar.java	(working copy)
+@@ -58,9 +58,7 @@
+ public class UIPortalManagementControlBar extends UIToolbar {
+   
+   public UIPortalManagementControlBar() throws Exception {
+-    super();
+     setToolbarStyle("ControlToolbar") ;
+-    setJavascript("Preview","onclick='eXo.portal.UIPortal.switchMode(this);'") ;
+   }
+   
+   public void save() throws Exception {
+@@ -174,7 +172,7 @@
+       }
+       
+       UIPortal uiPortal = Util.getUIPortal();
+-      Util.getUIPortalApplication().setEditting(false) ;
++      Util.getUIPortalApplication().setModeState(UIPortalApplication.NORMAL_MODE);
+       PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal, 
+            PageNodeEvent.CHANGE_PAGE_NODE, 
+            (uiPortal.getSelectedNode() != null ? uiPortal.getSelectedNode().getUri() : null)) ;
+@@ -190,7 +188,8 @@
+       PortalRequestContext prContext = Util.getPortalRequestContext();  
+       UserPortalConfigService configService = uiPortalApp.getApplicationComponent(UserPortalConfigService.class);
+       configService.update(uiPortalApp.getUserPortalConfig().getPortalConfig());
+-      uiPortalApp.setEditting(false) ;
++      uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
++      Util.getUIPortalApplication().setModeState(UIPortalApplication.NORMAL_MODE);
+       
+       String remoteUser = prContext.getRemoteUser();
+       String ownerUser = prContext.getPortalOwner();   
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalManagementEditBar.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalManagementEditBar.java	(revision 48605)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalManagementEditBar.java	(working copy)
+@@ -16,25 +16,25 @@
+  */
+ package org.exoplatform.portal.webui.portal;
+ 
+-import java.util.ArrayList;
+-import java.util.List;
+-
+-import org.exoplatform.portal.application.PortalRequestContext;
+-import org.exoplatform.portal.webui.application.UIPortlet;
+-import org.exoplatform.portal.webui.application.UIPortletOptions;
+-import org.exoplatform.portal.webui.container.UIContainerConfigOptions;
+-import org.exoplatform.portal.webui.util.Util;
+-import org.exoplatform.portal.webui.workspace.UIControlWorkspace;
+-import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
+-import org.exoplatform.portal.webui.workspace.UIPortalApplication;
+-import org.exoplatform.portal.webui.workspace.UIPortalToolPanel;
+-import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
+-import org.exoplatform.webui.config.annotation.ComponentConfig;
+-import org.exoplatform.webui.config.annotation.EventConfig;
+-import org.exoplatform.webui.core.UIComponent;
+-import org.exoplatform.webui.core.UIToolbar;
+-import org.exoplatform.webui.event.Event;
+-import org.exoplatform.webui.event.EventListener;
++import java.util.ArrayList;
++import java.util.List;
++
++import org.exoplatform.portal.application.PortalRequestContext;
++import org.exoplatform.portal.webui.application.UIPortlet;
++import org.exoplatform.portal.webui.application.UIPortletOptions;
++import org.exoplatform.portal.webui.container.UIContainerConfigOptions;
++import org.exoplatform.portal.webui.util.Util;
++import org.exoplatform.portal.webui.workspace.UIControlWorkspace;
++import org.exoplatform.portal.webui.workspace.UIMaskWorkspace;
++import org.exoplatform.portal.webui.workspace.UIPortalApplication;
++import org.exoplatform.portal.webui.workspace.UIPortalToolPanel;
++import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
++import org.exoplatform.webui.config.annotation.ComponentConfig;
++import org.exoplatform.webui.config.annotation.EventConfig;
++import org.exoplatform.webui.core.UIComponent;
++import org.exoplatform.webui.core.UIToolbar;
++import org.exoplatform.webui.event.Event;
++import org.exoplatform.webui.event.EventListener;
+ /**
+  * Created by The eXo Platform SARL
+  * Author : chungnv
+@@ -45,7 +45,7 @@
+ @ComponentConfig(    
+   template = "system:/groovy/webui/core/UIToolbar.gtmpl",
+   events = {   
+-    @EventConfig(listeners = UIPortalManagementEditBar.PreviewActionListener.class),
++    @EventConfig(listeners = UIWorkingWorkspace.PreviewActionListener.class),
+     @EventConfig(listeners = UIPortalManagementEditBar.EditPortalActionListener.class),
+     @EventConfig(listeners = UIPortalManagementEditBar.EditContainerActionListener.class),
+     @EventConfig(listeners = UIPortalManagementEditBar.EditPortletActionListener.class)
+@@ -55,7 +55,6 @@
+   
+   public UIPortalManagementEditBar() throws Exception {
+     setToolbarStyle("EditToolbar") ;
+-    setJavascript("Preview","onclick='eXo.portal.UIPortal.switchMode(this);'") ;
+   }
+   
+   public <T extends UIComponent> T setRendered(boolean b) { 
+@@ -65,14 +64,8 @@
+       uiPortlet.setShowEditControl(b);
+     }
+     return super.<T>setRendered(b) ;    
+-  } 
++  } 
+   
+-  @SuppressWarnings("unused")
+-  static public class PreviewActionListener  extends EventListener<UIPortalManagementEditBar> {
+-    public void execute(Event<UIPortalManagementEditBar> event) throws Exception {
+-    }
+-  }
+-  
+   static public class EditPortalActionListener  extends EventListener<UIPortalManagementEditBar> {
+     public void execute(Event<UIPortalManagementEditBar> event) throws Exception {
+       UIPortal uiPortal = Util.getUIPortal();
+@@ -97,7 +90,8 @@
+       uiPManagement.setRenderedChildrenOfTypes(childrenToRender);
+       
+       PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext() ;
+-      UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
++      UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
++      uiPortalApp.setModeState(UIPortalApplication.CONTAINER_EDIT_MODE);
+       
+       UIControlWorkspace uiControl = uiPortalApp.getChildById(UIPortalApplication.UI_CONTROL_WS_ID);
+       pcontext.addUIComponentToUpdateByAjax(uiControl);
+@@ -110,7 +104,9 @@
+   
+   static public class EditPortletActionListener  extends EventListener<UIPortalManagementEditBar> {
+     public void execute(Event<UIPortalManagementEditBar> event) throws Exception {
+-      UIPortalManagementEditBar uiEditBar = event.getSource();
++      UIPortalManagementEditBar uiEditBar = event.getSource();
++      UIPortalApplication uiPortalApp = uiEditBar.getAncestorOfType(UIPortalApplication.class);
++      uiPortalApp.setModeState(UIPortalApplication.APP_EDIT_MODE);
+       UIPortal uiPortal = Util.getUIPortal();
+       uiPortal.setRenderSibbling(UIPortal.class);
+       
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletLifecycle.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletLifecycle.java	(revision 48605)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletLifecycle.java	(working copy)
+@@ -20,6 +20,7 @@
+ import java.util.HashMap;
+ import java.util.Map;
+ 
++import javax.portlet.PortletMode;
+ import javax.portlet.WindowState;
+ 
+ import org.apache.commons.logging.Log;
+@@ -39,6 +40,8 @@
+ import org.exoplatform.webui.core.lifecycle.Lifecycle;
+ import org.exoplatform.webui.core.lifecycle.WebuiBindingContext;
+ import org.exoplatform.webui.event.Event;
++import org.exoplatform.portal.webui.util.Util;
++import org.exoplatform.portal.webui.workspace.UIPortalApplication;
+ 
+ /**
+  * Created by The eXo Platform SAS May 8, 2006
+@@ -159,8 +162,19 @@
+         if("Window".equals(uiPortlet.getPortletStyle()) && !("SHOW".equals(appStatus) || "HIDE".equals(appStatus))) {
+           markup = Text.create("<span></span>") ;
+         } else {
+-          output = portletContainer.render(prcontext.getRequest(), prcontext.getResponse(), input);
+-          markup = output.getMarkup();
++          int portalMode = Util.getUIPortalApplication().getModeState();
++          if (portalMode == UIPortalApplication.NORMAL_MODE || portalMode == UIPortalApplication.PREVIEW_MODE
++              || uiPortlet.getCurrentPortletMode().equals(PortletMode.EDIT)) 
++          {
++            output = portletContainer.render(prcontext.getRequest(), prcontext.getResponse(), input);
++            markup = output.getMarkup();
++          }
++          else
++          {
++            markup = Text.create("<span></span>") ;
++          }
++
++          
+         }
+       }
+     } catch (Throwable ex) {
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditWizard.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditWizard.java	(revision 48605)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditWizard.java	(working copy)
+@@ -192,6 +192,10 @@
+       UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
+       UIWizardPageSetInfo uiPageInfo = uiWizard.getChild(UIWizardPageSetInfo.class);
+       UserPortalConfigService userService = uiWizard.getApplicationComponent(UserPortalConfigService.class) ;
++      
++      uiPortalApp.setModeState(uiPortalApp.APP_EDIT_MODE);
++ 
++      
+       if(uiPageInfo.getSelectedPageNode() == null) {
+         uiPortalApp.addMessage(new ApplicationMessage("UIPageEditWizard.msg.notSelectedPage", null)) ;
+         return ;
+@@ -277,6 +281,7 @@
+       uiWizard.saveData();
+       UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
+       uiWizard.updateUIPortal(uiPortalApp, event);
++      uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
+     }
+   }
+ }
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIWizardPageCreationBar.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIWizardPageCreationBar.java	(revision 48605)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIWizardPageCreationBar.java	(working copy)
+@@ -17,10 +17,11 @@
+ package org.exoplatform.portal.webui.page;
+ 
+ import java.io.Writer;
+-
+ import org.exoplatform.portal.webui.application.UIPortletOptions;
+-import org.exoplatform.portal.webui.container.UIContainerConfigOptions;
++import org.exoplatform.portal.webui.container.UIContainerConfigOptions;
+ import org.exoplatform.portal.webui.util.Util;
++import org.exoplatform.portal.webui.workspace.UIPortalApplication;
++import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
+ import org.exoplatform.webui.application.WebuiRequestContext;
+ import org.exoplatform.webui.config.annotation.ComponentConfig;
+ import org.exoplatform.webui.config.annotation.ComponentConfigs;
+@@ -43,7 +44,7 @@
+       type = UIPageEditBar.class,
+       template = "system:/groovy/webui/core/UIToolbar.gtmpl" ,
+       events = {
+-        @EventConfig(listeners = UIPageEditBar.PagePreviewActionListener.class),
++        @EventConfig(listeners = UIWorkingWorkspace.PreviewActionListener.class, name = "PagePreview"),
+         @EventConfig(listeners = UIWizardPageCreationBar.EditContainerActionListener.class),
+         @EventConfig(listeners = UIWizardPageCreationBar.EditPortletActionListener.class)
+       }
+@@ -83,7 +84,8 @@
+       UIWizardPageCreationBar uiParent = uiEditBar.getParent();
+       Class<?> [] childrenToRender ={UIPageEditBar.class, UIContainerConfigOptions.class }; 
+       uiParent.setRenderedChildrenOfTypes(childrenToRender);
+-      Util.updateUIApplication(event);
++      Util.updateUIApplication(event);
++      Util.getUIPortalApplication().setModeState(UIPortalApplication.CONTAINER_EDIT_MODE);
+     }    
+   }
+ 
+@@ -93,7 +95,8 @@
+       UIWizardPageCreationBar uiParent = uiEditBar.getParent();
+       Class<?> [] childrenToRender = { UIPageEditBar.class, UIPortletOptions.class}; 
+       uiParent.setRenderedChildrenOfTypes(childrenToRender);
+-      Util.updateUIApplication(event);
++      Util.updateUIApplication(event);
++      Util.getUIPortalApplication().setModeState(UIPortalApplication.APP_EDIT_MODE);
+     }
+   }
+ 
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditBar.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditBar.java	(revision 48605)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditBar.java	(working copy)
+@@ -51,10 +51,10 @@
+  * Jun 23, 2006
+  * 10:07:15 AM
+  */
+-@ComponentConfig(  
++@ComponentConfig(
+     template = "system:/groovy/webui/core/UIToolbar.gtmpl",
+     events = {
+-        @EventConfig(listeners = UIPageEditBar.PagePreviewActionListener.class),
++        @EventConfig(listeners = UIWorkingWorkspace.PreviewActionListener.class, name = "PagePreview"),
+         @EventConfig(listeners = UIPageEditBar.EditPageActionListener.class),        
+         @EventConfig(listeners = UIPageEditBar.EditContainerActionListener.class),
+         @EventConfig(listeners = UIPageEditBar.EditPortletActionListener.class),
+@@ -64,10 +64,9 @@
+ public class UIPageEditBar extends UIToolbar { 
+ 
+   transient UIPage uiPage_;
+-
++  
+   public UIPageEditBar() throws Exception {
+     setToolbarStyle("EditToolbar") ;
+-    setJavascript("PagePreview","onclick='eXo.portal.UIPortal.switchModeForPage(this)';") ;
+   }
+   
+   public <T extends UIComponent> T setRendered(boolean b) { 
+@@ -88,11 +87,6 @@
+     uiToolPanel.setUIComponent(uiPage_);    
+   }
+ 
+-  static public class PagePreviewActionListener  extends EventListener<UIPageEditBar> {
+-    public void execute(Event<UIPageEditBar> event) throws Exception {
+-    }
+-  }
+-
+   static public class EditContainerActionListener  extends EventListener<UIPageEditBar> {
+     public void execute(Event<UIPageEditBar> event) throws Exception {      
+       UIPageEditBar uiEditBar = event.getSource();
+@@ -106,9 +100,10 @@
+         childrenToRender = new Class<?>[]{UIPageEditBar.class, UIContainerConfigOptions.class, UIPageBrowseControlBar.class};
+       }
+       uiPManagement.setRenderedChildrenOfTypes(childrenToRender);
+-      
++
+       PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext() ;
+       UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
++      uiPortalApp.setModeState(UIPortalApplication.CONTAINER_EDIT_MODE);
+       UIControlWorkspace uiControl = uiPortalApp.getChildById(UIPortalApplication.UI_CONTROL_WS_ID);
+       pcontext.addUIComponentToUpdateByAjax(uiControl);
+       UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);   
+@@ -132,15 +127,16 @@
+         childrenToRender = new Class[]{UIPageEditBar.class, UIPortletOptions.class, UIPageBrowseControlBar.class};
+       }
+       uiPManagement.setRenderedChildrenOfTypes(childrenToRender);
+-      
++
+       PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext() ;
+       UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
++      uiPortalApp.setModeState(UIPortalApplication.APP_EDIT_MODE);
+       UIControlWorkspace uiControl = uiPortalApp.getChildById(UIPortalApplication.UI_CONTROL_WS_ID);
+       pcontext.addUIComponentToUpdateByAjax(uiControl);
+       UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID); 
+       UIPortalToolPanel toolPanel = uiPortalApp.findFirstComponentOfType(UIPortalToolPanel.class);
+       toolPanel.setShowMaskLayer(false);
+-      pcontext.addUIComponentToUpdateByAjax(uiWorkingWS) ;    
++      pcontext.addUIComponentToUpdateByAjax(uiWorkingWS) ;
+       pcontext.setFullRender(true);
+     }
+   }
+@@ -167,7 +163,7 @@
+     UserPortalConfigService dataService = getApplicationComponent(UserPortalConfigService.class);
+     dataService.update(page); 
+   }
+-  
++
+   static public class SavePageActionListener  extends EventListener<UIPageEditBar> {
+     public void execute(Event<UIPageEditBar> event) throws Exception {
+       UIPageEditBar uiEditBar = event.getSource();
+@@ -190,5 +186,4 @@
+       }
+     }
+   }
+-  
+ }
+\ No newline at end of file
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageActionListener.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageActionListener.java	(revision 48605)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageActionListener.java	(working copy)
+@@ -67,7 +67,7 @@
+         UserPortalConfig portalConfig = configService.getUserPortalConfig(uiPortal.getOwner(), remoteUser) ;
+         uiPortal.getChildren().clear() ;
+         PortalDataMapper.toUIPortal(uiPortal, portalConfig) ;
+-        uiPortalApp.setEditting(false) ;
++        uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE) ;
+         uiPortal.broadcast(event, event.getExecutionPhase()) ;
+         return ;
+       }
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageBrowser.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageBrowser.java	(revision 48605)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageBrowser.java	(working copy)
+@@ -241,7 +241,7 @@
+ 		public void execute(Event<UIPageBrowser> event) throws Exception {
+ 			UIPageBrowser uiPageBrowser = event.getSource();
+ 			UIPortalApplication uiPortalApp = uiPageBrowser.getAncestorOfType(UIPortalApplication.class);
+-			uiPortalApp.setEditting(true);
++			uiPortalApp.setModeState(UIPortalApplication.APP_EDIT_MODE);
+ 			PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext();
+ 			String id = pcontext.getRequestParameter(OBJECTID);
+ 			UserPortalConfigService service = uiPageBrowser.getApplicationComponent(UserPortalConfigService.class);
+@@ -314,7 +314,7 @@
+         return;
+       }
+ 		
+-
++      uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
+ 			UIPage uiPage = uiPageBrowser.createUIComponent(event.getRequestContext(), UIPage.class, null, null);
+ 			PortalDataMapper.toUIPage(uiPage, page);
+ 			UIPortalToolPanel uiToolPanel = Util.getUIPortalToolPanel();
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageCreationWizard.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageCreationWizard.java	(revision 48605)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageCreationWizard.java	(working copy)
+@@ -226,6 +226,7 @@
+     public void execute(Event<UIPageCreationWizard> event) throws Exception {
+       UIPageCreationWizard uiWizard = event.getSource();
+       UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
++      uiPortalApp.setModeState(uiPortalApp.APP_EDIT_MODE);
+       WebuiRequestContext context = Util.getPortalRequestContext() ;
+       
+       if(uiWizard.isSelectedNodeExist()) {
+@@ -305,6 +306,7 @@
+     public void execute(Event<UIPageCreationWizard> event) throws Exception {
+       UIPageCreationWizard uiWizard = event.getSource();
+       UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
++      uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
+       if(uiWizard.isSelectedNodeExist()) {
+         uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.NameNotSame", null)) ;
+         uiWizard.setDescriptionWizard(2) ;
+@@ -312,7 +314,6 @@
+         uiWizard.updateWizardComponent() ;
+         return;
+       }
+-      uiPortalApp.setEditting(false) ;
+       uiWizard.saveData();
+       uiWizard.updateUIPortal(uiPortalApp, event);   
+     }
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageWizard.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageWizard.java	(revision 48605)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageWizard.java	(working copy)
+@@ -155,7 +155,7 @@
+ 	static public class AbortActionListener extends EventListener<UIPageWizard> {
+ 		public void execute(Event<UIPageWizard> event) throws Exception {
+ 			UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
+-			uiPortalApp.setEditting(false);
++			uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
+ 			PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext();
+ 
+ 			UIControlWorkspace uiControl = uiPortalApp.getChildById(UIPortalApplication.UI_CONTROL_WS_ID);
+@@ -170,6 +170,8 @@
+ 
+ 			UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+ 			pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
++			
++			uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
+ 		}
+ 	}
+ }
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/util/Util.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/util/Util.java	(revision 48605)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/util/Util.java	(working copy)
+@@ -114,7 +114,8 @@
+     uiWorkingWS.setRenderedChild(UIPortalToolPanel.class) ;
+     return uiWork;
+   }
+-
++
++  //TODO: trong.tran this seems not to be used
+   static public void showPortalComponentLayoutMode(UIPortalApplication uiPortalApp){   
+     UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+     uiWorkingWS.setRenderedChild(UIPortal.class) ;
+@@ -128,8 +129,9 @@
+     if(uiContainer != null && uiContainer.isShowEditControl())  name = "'UIContainer'";
+     else if(uiPage != null && uiPage.isShowEditControl())  name = "'UIPage'";
+     else if(uiPortlet != null  && uiPortlet.isShowEditControl()) name = "'UIPortlet'";
+-
+-    getPortalRequestContext().getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIPortal.showLayoutModeForPortal("+name+");");
++    
++    //commented by tungdt
++    //getPortalRequestContext().getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIPortal.showLayoutModeForPortal("+name+");");
+   }
+   
+ //  public UIPortlet getFirstUIPortlet(UIContainer uiContainer){
+@@ -139,7 +141,8 @@
+ //  public UIContainer getFirstUIContainer(){
+ //    return (UIContainer)Util.findUIComponent(UIContainer uiContainer, UIContainer.class, UIPage.class);
+ //  }
+-
++
++  //TODO: trong.tran this seems not to be used
+   static public void showPageComponentLayoutMode(UIPortalApplication uiPortalApp){   
+     UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+     uiWorkingWS.setRenderedChild(UIPortalToolPanel.class) ;
+@@ -152,8 +155,9 @@
+     String name = "";
+     if(uiContainer != null && uiContainer.isShowEditControl())  name = "UIContainer";      
+     else if(uiPortlet != null  && uiPortlet.isShowEditControl()) name = "UIPortlet";
+-
+-    getPortalRequestContext().getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIPortal.showLayoutModeForPage('"+name+"');");
++    
++    //commented by tungdt
++    //getPortalRequestContext().getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIPortal.showLayoutModeForPage('"+name+"');");
+   }
+ 
+   @SuppressWarnings("unchecked")
+@@ -220,12 +224,14 @@
+     String layoutMode = clazz.getSimpleName();
+     setShowEditControl(uiParent, clazz);
+     
+-    PortalRequestContext context = Util.getPortalRequestContext() ;
+-    if(uiParent instanceof UIPortal){
++    PortalRequestContext context = Util.getPortalRequestContext() ;
++    
++    //commented by tungdt
++/*    if(uiParent instanceof UIPortal){
+       context.getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIPortal.showLayoutModeForPortal('"+layoutMode+"');") ;
+     } else {
+       context.getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIPortal.showLayoutModeForPage('"+layoutMode+"');") ;
+-    }
++    }*/
+   }
+   
+   static public UIWorkingWorkspace updateUIApplication(Event<? extends UIComponent> event){
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIPortalApplication.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIPortalApplication.java	(revision 48605)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIPortalApplication.java	(working copy)
+@@ -67,16 +67,23 @@
+     template = "system:/groovy/portal/webui/workspace/UIPortalApplication.gtmpl"
+ )
+ public class UIPortalApplication extends UIApplication {
+-
+-  private boolean isEditting = false ;
++  
++  public static final int NORMAL_MODE = 0;
++  public static final int APP_EDIT_MODE = 1;
++  public static final int CONTAINER_EDIT_MODE = 2;
++  public static final int PREVIEW_MODE = 3;
++  
++  final static public String UI_CONTROL_WS_ID = "UIControlWorkspace" ;
++  final static public String UI_WORKING_WS_ID = "UIWorkingWorkspace" ;
++  final static public String UI_MASK_WS_ID = "UIMaskWorkspace" ;
++  
+   private String nodePath_;
+   private Locale locale_ = Locale.ENGLISH  ;
+   private Orientation orientation_ = Orientation.LT;
+ 
+-  final static public String UI_CONTROL_WS_ID = "UIControlWorkspace" ;
+-  final static public String UI_WORKING_WS_ID = "UIWorkingWorkspace" ;
+-  final static public String UI_MASK_WS_ID = "UIMaskWorkspace" ;
+-
++  private int modeState = NORMAL_MODE;
++  private int previousMode ;
++  
+   private String skin_ = "Default" ;
+ 
+   private UserPortalConfig userPortalConfig_;
+@@ -138,7 +145,7 @@
+     if(currentSkin != null && currentSkin.trim().length() > 0) skin_ = currentSkin;
+     setOwner(context.getPortalOwner());
+   }
+-
++  
+   public Orientation getOrientation() {
+     return orientation_;
+   }
+@@ -150,9 +157,40 @@
+   public Locale getLocale() {  return locale_ ; }
+   public void   setLocale(Locale locale) { locale_ = locale ; }
+ 
+-  public void setEditting(boolean bln) { this.isEditting = bln ; }  
+-  public boolean isEditting() { return isEditting ; }
++  /**
++   * @deprecated use {@link #setModeState(int)} instead
++   * 
++   * @param bln
++   */
++  public void setEditting(boolean bln) {}  
++  public boolean isEditting() { return (modeState == APP_EDIT_MODE || modeState == CONTAINER_EDIT_MODE); }
+ 
++  public int getModeState() {
++    return modeState;
++  }
++  
++  public void setModeState(int modeState) {
++    this.modeState = modeState;
++  }
++  
++  /**
++   * Return the previous mode which was before switching to {@link UIPortalApplication#PREVIEW_MODE}
++   * 
++   * @return the previousMode
++   */
++  public int getPreviousMode() {
++    return previousMode;
++  }
++  
++  /**
++   * Set the mode which will be restored after finishing {@link UIPortalApplication#PREVIEW_MODE} mode
++   * 
++   * @return the previousMode the mode will be kept
++   */
++  public void setPreviousMode(int modeState) {
++    previousMode = modeState;
++  }
++  
+   public Collection<String> getJavascriptURLs() {
+     JavascriptConfigService service = getApplicationComponent(JavascriptConfigService.class);
+     return service.getAvailableScriptsPaths();
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIExoStart.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIExoStart.java	(revision 48605)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIExoStart.java	(working copy)
+@@ -200,7 +200,7 @@
+       UIExoStart uiComp = event.getSource() ;
+       uiComp.setUIControlWSWorkingComponent(UIPageManagement.class) ;
+       PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext() ;
+-      ((UIPortalApplication)pcontext.getUIApplication()).setEditting(true) ;
++      ((UIPortalApplication)pcontext.getUIApplication()).setModeState(UIPortalApplication.APP_EDIT_MODE) ;
+       pcontext.addUIComponentToUpdateByAjax(uiComp);
+ 
+       UIPageManagement uiManagement = uiComp.getUIControlWSWorkingComponent();      
+@@ -230,7 +230,9 @@
+       }
+       uiComp.setUIControlWSWorkingComponent(UIPortalManagement.class) ;
+       PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext() ;
+-      ((UIPortalApplication)pcontext.getUIApplication()).setEditting(true) ;
++      UIPortalApplication uiApp = (UIPortalApplication)pcontext.getUIApplication() ;
++      uiApp.setModeState(UIPortalApplication.APP_EDIT_MODE);
++
+       UIPortalManagement uiManagement = uiComp.getUIControlWSWorkingComponent();      
+       uiManagement.setMode(ManagementMode.EDIT, event);
+     }
+@@ -259,7 +261,7 @@
+       UIExoStart uiExoStart = event.getSource();
+       uiExoStart.setUIControlWSWorkingComponent(UIWizardPageCreationBar.class);
+       UIPortalApplication uiApp = uiExoStart.getAncestorOfType(UIPortalApplication.class);
+-      uiApp.setEditting(true) ;
++      uiApp.setModeState(UIPortalApplication.APP_EDIT_MODE);
+       UIWorkingWorkspace uiWorkingWS = uiApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);      
+       uiWorkingWS.setRenderedChild(UIPortalToolPanel.class) ;
+       UIPortalToolPanel uiToolPanel = uiWorkingWS.getChild(UIPortalToolPanel.class) ;
+@@ -281,7 +283,7 @@
+     public void execute(Event<UIExoStart> event) throws Exception {
+       UIExoStart uiExoStart = event.getSource();
+       UIPortalApplication uiApp = uiExoStart.getAncestorOfType(UIPortalApplication.class);
+-      uiApp.setEditting(true) ;
++      uiApp.setModeState(UIPortalApplication.APP_EDIT_MODE) ;
+       UIWorkingWorkspace uiWorkingWS = uiApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+       uiWorkingWS.setRenderedChild(UIPortalToolPanel.class) ;
+       UIPortalToolPanel uiToolPanel = uiWorkingWS.getChild(UIPortalToolPanel.class) ;
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIWorkingWorkspace.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIWorkingWorkspace.java	(revision 48605)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIWorkingWorkspace.java	(working copy)
+@@ -17,8 +17,14 @@
+ package org.exoplatform.portal.webui.workspace;
+ 
+ import org.exoplatform.portal.webui.portal.UIPortal;
++import org.exoplatform.portal.webui.util.Util;
++import org.exoplatform.webui.application.WebuiRequestContext;
+ import org.exoplatform.webui.config.annotation.ComponentConfig;
++import org.exoplatform.webui.config.annotation.EventConfig;
++import org.exoplatform.webui.core.UIComponent;
+ import org.exoplatform.webui.core.UIContainer;
++import org.exoplatform.webui.event.Event;
++import org.exoplatform.webui.event.EventListener;
+ 
+ /**
+  * Created by The eXo Platform SARL
+@@ -29,13 +35,31 @@
+ 
+ @ComponentConfig(
+   id = "UIWorkingWorkspace",
+-  template = "system:/groovy/portal/webui/workspace/UIWorkingWorkspace.gtmpl"
++  template = "system:/groovy/portal/webui/workspace/UIWorkingWorkspace.gtmpl",
++  events = {
++    @EventConfig(listeners = UIWorkingWorkspace.PreviewActionListener.class)
++  }
+ )
+ public class UIWorkingWorkspace extends UIContainer {
++
++  private UIPortal backupUIPortal = null;
+   
+-  private UIPortal backupUIPortal = null;
+-  
+   public UIPortal getBackupUIPortal() { return backupUIPortal; }
+   
+   public void setBackupUIPortal(UIPortal uiPortal) { backupUIPortal = uiPortal;   }
++  
++  static public class PreviewActionListener extends EventListener<UIComponent> {
++    public void execute(Event<UIComponent> event) throws Exception {
++      WebuiRequestContext context = event.getRequestContext();
++      UIPortalApplication uiPortalApp = (UIPortalApplication) context.getUIApplication();
++      if(uiPortalApp.getModeState() == UIPortalApplication.PREVIEW_MODE) {
++        uiPortalApp.setModeState(uiPortalApp.getPreviousMode());
++        context.getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIPortal.hideMaskLayer() ;");
++      } else {
++        uiPortalApp.setPreviousMode(uiPortalApp.getModeState());
++        uiPortalApp.setModeState(UIPortalApplication.PREVIEW_MODE);
++      }
++      Util.updateUIApplication(event) ;
++    }
++  }
+ }
+Index: webui/core/src/main/java/org/exoplatform/webui/core/UIToolbar.java
+===================================================================
+--- webui/core/src/main/java/org/exoplatform/webui/core/UIToolbar.java	(revision 48605)
++++ webui/core/src/main/java/org/exoplatform/webui/core/UIToolbar.java	(working copy)
+@@ -17,6 +17,8 @@
+ package org.exoplatform.webui.core;
+ 
+ import java.util.List;
++
++import org.exoplatform.webui.config.Event;
+ 
+ /**
+  * Created by The eXo Platform SARL
+@@ -47,7 +49,7 @@
+   public String getToolbarStyle() { return toolbarStyle_ ; }
+   public void setToolbarStyle(String toolbarStyle) { toolbarStyle_ = toolbarStyle ;  }
+   
+-  public List getEvents() { return getComponentConfig().getEvents() ; }
++  public List<Event> getEvents() { return getComponentConfig().getEvents() ; }
+   
+   public String getJavascript() { return strJavascript_ ; }
+   public String getEventName() { return eventName_ ; }
+Index: web/portal/src/main/webapp/groovy/portal/webui/portal/UIPortal.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/portal/webui/portal/UIPortal.gtmpl	(revision 48605)
++++ web/portal/src/main/webapp/groovy/portal/webui/portal/UIPortal.gtmpl	(working copy)
+@@ -1,20 +1,30 @@
+ <%
++	import org.exoplatform.portal.webui.workspace.UIPortalApplication;
++
+   def rcontext = _ctx.getRequestContext() ;
+ 	rcontext.getJavascriptManager().importJavascript('eXo.portal.PortalDragDrop') ;
++	
++	UIPortalApplication uiPortalApp = rcontext.getUIApplication();
+ %>
+ <div class="UIPortal" id="UIPortal-$uicomponent.id">
++	<%if(uiPortalApp.isEditting()){%>
+   <div class="META-DATA-BLOCK" style="display: none">
+ 	  <div class="id">$uicomponent.id</div>
+ 	  <div class="title"><%=_ctx.appRes("UIPortal.label.title")%></div>
+     <div class="description"><%=_ctx.appRes("UIPortal.label.description")%></div>
+   </div>	
+ 	<div class="CONTROL-PORTAL CONTROL-BLOCK" style="display: none;"><span></span></div>
+-	<div class="LAYOUT-PORTAL" style="display: none;"></div>
++	
++	<div class="LAYOUT-PORTAL">
++	<%} else {%>
+   <div class="VIEW-PORTAL">
+-    <div id="$uicomponent.id">
++  <%}%>
++  
++	  <div id="$uicomponent.id">
+ 	    <div class="UIRowContainer">
+       	<%uicomponent.renderChildren();%>
+ 	    </div>
+ 	  </div>
++
+   </div>
+ </div>
+\ No newline at end of file
+Index: web/portal/src/main/webapp/groovy/portal/webui/container/UIContainer.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/portal/webui/container/UIContainer.gtmpl	(revision 48605)
++++ web/portal/src/main/webapp/groovy/portal/webui/container/UIContainer.gtmpl	(working copy)
+@@ -1,8 +1,11 @@
+ <%
+   import org.exoplatform.commons.utils.ExpressionUtil;
+-  
++ 	import org.exoplatform.portal.webui.workspace.UIPortalApplication;
++
+   def rcontext = _ctx.getRequestContext() ;
++  UIPortalApplication uiPortalApp = rcontext.getUIApplication();
+   ResourceBundle res = rcontext.getApplicationResourceBundle() ;
++  int portalMode = uiPortalApp.getModeState();
+ 
+ 	String cssStyle = "";
+ 	String uiComponentWidth = uicomponent.getWidth();
+@@ -14,14 +17,14 @@
+ %>
+ 
+ <div class="UIContainer" id="UIContainer-${uicomponent.id}" ${cssStyle}>
+-<%if(rcontext.getUIApplication().isEditting()){%>
++<%if (uiPortalApp.isEditting()) {%>
+   <div class="META-DATA-BLOCK" style="display: none">
+     <div class="id">$uicomponent.id</div>
+     <div class="title"><%=_ctx.appRes("UIContainer.title.Container")%></div>
+     <div class="description"><%=_ctx.appRes("UIContainer.label.Thecontainer")%></div>
+   </div>
+   
+-  <div class="CONTROL-CONTAINER CONTROL-BLOCK" style="display: none">
++  <div class="CONTROL-CONTAINER CONTROL-BLOCK" <%if(portalMode != UIPortalApplication.CONTAINER_EDIT_MODE) print("style=\"display: none\"")%>>
+     <%/*Begin InfoBar*/%>
+    	<div class="UIInfoBar">
+       <div class="BlueRoundedStyle">
+@@ -29,20 +32,20 @@
+           <div class="RightBar">
+ 		        <div class="MiddleBar">
+ 		        	<div class="FixHeight ClearFix">
+-						<div class="DragControlArea" title="<%=_ctx.appRes("UIContainer.title.DragControlArea")%>"><span></span></div>
+-						<div class="ContainerIcon"><span></span></div>             
+-						<a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeleteContainerIcon" title="<%=_ctx.appRes("UIContainer.tooltip.closeContainer")%>"><span></span></a>
+-						<a href="<%=uicomponent.event("EditContainer","$uicomponent.id")%>" class="EditContainerIcon" title="<%=_ctx.appRes("UIContainer.tooltip.editContainer")%>"><span></span></a>
+-						<div class="Title">
+-							<% 
+-								if(uicomponent.getTitle() != null) {
+-								println(ExpressionUtil.getExpressionValue(res, uicomponent.getTitle())) ;
+-								} else {
+-							%>
+-							<%=_ctx.appRes("UIContainer.title.Container")%>
+-							<%}%>
+-						</div>            
+-					</div>
++								<div class="DragControlArea" onmousedown="eXo.portal.PortalDragDrop.init.call(this, event)" title="<%=_ctx.appRes("UIContainer.title.DragControlArea")%>"><span></span></div>
++								<div class="ContainerIcon"><span></span></div>             
++								<a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeleteContainerIcon" title="<%=_ctx.appRes("UIContainer.tooltip.closeContainer")%>"><span></span></a>
++								<a href="<%=uicomponent.event("EditContainer","$uicomponent.id")%>" class="EditContainerIcon" title="<%=_ctx.appRes("UIContainer.tooltip.editContainer")%>"><span></span></a>
++								<div class="Title">
++									<% 
++										if(uicomponent.getTitle() != null) {
++										println(ExpressionUtil.getExpressionValue(res, uicomponent.getTitle())) ;
++										} else {
++									%>
++									<%=_ctx.appRes("UIContainer.title.Container")%>
++									<%}%>
++								</div>            
++							</div>
+ 		        </div>
+           </div>
+         </div>
+@@ -51,9 +54,10 @@
+     <%/*End InfoBar*/ %>
+   </div>
+   
+-  <div class="LAYOUT-CONTAINER" style="display: none"></div>
++  <div class="LAYOUT-CONTAINER">
++<%} else {%>
++  <div class="VIEW-CONTAINER">
+ <%}%>
+-  <div class="VIEW-CONTAINER">
+     <div id="$uicomponent.id">
+       <div class="UIRowContainer"><%uicomponent.renderChildren()%></div>
+ 	  </div>
+Index: web/portal/src/main/webapp/groovy/portal/webui/container/UITableColumnContainer.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/portal/webui/container/UITableColumnContainer.gtmpl	(revision 48605)
++++ web/portal/src/main/webapp/groovy/portal/webui/container/UITableColumnContainer.gtmpl	(working copy)
+@@ -1,21 +1,25 @@
+ <%
+- import org.exoplatform.web.application.JavascriptManager;
+- import org.exoplatform.commons.utils.ExpressionUtil;
++ 	import org.exoplatform.web.application.JavascriptManager;
++	import org.exoplatform.commons.utils.ExpressionUtil;
++ 	import org.exoplatform.portal.webui.workspace.UIPortalApplication;
+ 
+   def rcontext = _ctx.getRequestContext() ;
++  UIPortalApplication uiPortalApp = rcontext.getUIApplication();
+   JavascriptManager jsmanager = rcontext.getJavascriptManager();
+   ResourceBundle res = rcontext.getApplicationResourceBundle() ;
++  jsmanager.importJavascript('eXo.portal.PortalDragDrop');
+   
+-  jsmanager.importJavascript('eXo.portal.PortalDragDrop');
++  int portalMode = uiPortalApp.getModeState();
+ %>
+ <div class="UIContainer" id="UIContainer-${uicomponent.id}">
++<%if(uiPortalApp.isEditting()){%>
+   <div class="META-DATA-BLOCK" style="display: none">
+     <div class="id">$uicomponent.id</div>
+     <div class="title"><%=_ctx.appRes("UITableColumnContainer.label.title")%></div>
+     <div class="description"><%=_ctx.appRes("UITableColumnContainer.label.description")%></div>
+   </div>
+   
+-  <div class="CONTROL-CONTAINER CONTROL-BLOCK" style="display: none">
++  <div class="CONTROL-CONTAINER CONTROL-BLOCK" <%if(portalMode != UIPortalApplication.CONTAINER_EDIT_MODE) print("style=\"display: none\"")%>>
+     <%/*Begin InfoBar*/%>
+      <div class="UIInfoBar">
+       <div class="BlueRoundedStyle">
+@@ -23,7 +27,7 @@
+           <div class="RightBar">
+             <div class="MiddleBar">
+             	<div class="FixHeight ClearFix">
+-	              <div class="DragControlArea" title="<%=_ctx.appRes("UIContainer.tooltip.drag")%>"><span></span></div>
++	              <div class="DragControlArea" onmousedown="eXo.portal.PortalDragDrop.init.call(this, event)" title="<%=_ctx.appRes("UIContainer.tooltip.drag")%>"><span></span></div>
+ 	              <div class="ContainerIcon DefaultContainer16x16Icon"><span></span></div>
+ 	              <a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeleteContainerIcon" title="<%=_ctx.appRes("UIContainer.tooltip.closeContainer")%>"></a>
+ 	              <a href="<%=uicomponent.event("EditContainer","$uicomponent.id")%>" class="EditContainerIcon" title="<%=_ctx.appRes("UIContainer.tooltip.editContainer")%>"></a>
+@@ -45,15 +49,17 @@
+     <%/*End InfoBar*/ %>
+   </div>
+   
+-  <div class="LAYOUT-CONTAINER" style="display: none;"><span></span></div>
+-  <% 
+-     String style = "";
+-     String width  = uicomponent.getWidth();
+-     String height  = uicomponent.getHeight();
+-     if(width != null) style += "width:"+width+";";
+-     if(height != null) style += "height:"+height+";";
+-  %>
++  <div class="LAYOUT-CONTAINER">
++<%} else {%>
+   <div class="VIEW-CONTAINER" >
++<%}
++	
++	  String style = "";
++	  String width  = uicomponent.getWidth();
++	  String height  = uicomponent.getHeight();
++	  if(width != null) style += "width:"+width+";";
++	  if(height != null) style += "height:"+height+";";
++%>
+     <div id="$uicomponent.id">    
+       <table class="UITableColumnContainer" style="table-layout: fixed; margin: 0px auto; width: 99%; $style">
+         <tr class="TRContainer">
+Index: web/portal/src/main/webapp/groovy/portal/webui/application/UIPortlet.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/portal/webui/application/UIPortlet.gtmpl	(revision 48605)
++++ web/portal/src/main/webapp/groovy/portal/webui/application/UIPortlet.gtmpl	(working copy)
+@@ -2,8 +2,10 @@
+   import org.exoplatform.portal.webui.page.UIPage;
+   import javax.portlet.WindowState;
+   import org.exoplatform.web.application.JavascriptManager;
++  import org.exoplatform.portal.webui.workspace.UIPortalApplication;
+   
+   def rcontext = _ctx.getRequestContext() ;
++  UIPortalApplication uiPortalApp = rcontext.getUIApplication();
+   JavascriptManager jsmanager = rcontext.getJavascriptManager();
+   
+   jsmanager.importJavascript('eXo.webui.UIPopupSelectCategory') ;
+@@ -13,111 +15,112 @@
+   String onControlOut    = "eXo.webui.UIPortlet.onControlOver(this, false);" ;
+   
+   boolean isPortalAppEditting = rcontext.getUIApplication().isEditting(); 
++  int portalMode = uiPortalApp.getModeState(); 
+ 
+   WindowState windowState = uicomponent.getCurrentWindowState();  
+   boolean isDesktop = "Window".equals(uicomponent.getPortletStyle());
+   String portletId = uicomponent.getId() ;
+   if(!isDesktop && isPortalAppEditting) {
+ %>
+-	  <div class="UIPortlet" id="UIPortlet-$portletId">
+-		  <div class="META-DATA-BLOCK" style="display: none">
+-		    <div class="id"><%=uicomponent.getId();%></div>
+-		    <div class="title"><%=_ctx.appRes("UIPortlet.label.title");%></div>
+-		    <div class="description">
+-		    
+-		      <%if(uicomponent.getDescription() != null) {%>
+-  		      <%=uicomponent.getDescription();%>
+-		      <%} else {%>
+-		        <%=_ctx.appRes("UIPortlet.label.description");%>
+-		      <%}%>
+-		    </div>
+-		  </div>
++  <div class="UIPortlet" id="UIPortlet-$portletId">
++	  <div class="META-DATA-BLOCK" style="display: none">
++	    <div class="id"><%=uicomponent.getId();%></div>
++	    <div class="title"><%=_ctx.appRes("UIPortlet.label.title");%></div>
++	    <div class="description">
++	    
++	      <%if(uicomponent.getDescription() != null) {%>
++		      <%=uicomponent.getDescription();%>
++	      <%} else {%>
++	        <%=_ctx.appRes("UIPortlet.label.description");%>
++	      <%}%>
++	    </div>
++	  </div>
+ 		   
+-		  <div class="CONTROL-PORTLET CONTROL-BLOCK" style="display: none;">
+-		   	<%/*Begin InfoBar*/%>
+-		   	<div class="UIInfoBar">
+-		      <div class="BlueRoundedStyle">
+-		        <div class="LeftBar">
+-		          <div class="RightBar">
+-				        <div class="MiddleBar">
+-				        	<div class="FixHeight ClearFix">
+-					          <div class="DragControlArea" title="<%=_ctx.appRes("UIPortlet.tooltip.DragControl");%>"><span></span></div>
+-					          <% 
+-					            String portletIcon = uicomponent.getIcon();
+-					            if(portletIcon == null) portletIcon = "PortletIcon";
+-					            
+-					            String title = portletTitle;
+-					            if(uicomponent.getId() !=null) title = uicomponent.getId() ;
+-					            if(uicomponent.getTitle() !=null) title = uicomponent.getTitle() ;
+-					            if(title.length() > 30) title = title.substring(0,27) + "..." ;
+-					          %>
+-					          <div class="Icon $portletIcon WindowPortletIcon NovaPortletIcon"><span></span></div>
+-				            <a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeletePortletIcon" title="<%=_ctx.appRes("UIPortlet.tooltip.deletePortlet");%>"><span></span></a>
+-				            <a href="<%=uicomponent.event("EditPortlet","$uicomponent.id")%>" class="EditPortletPropertiesIcon" title="<%=_ctx.appRes("UIPortlet.tooltip.editPortlet");%>"><span></span></a>
+-										<div class="Title">$title</div>
+-				          </div>
+-				        </div>
+-		          </div>
+-		        </div>
+-		      </div>
+-		    </div>
+-		    <%/*End InfoBar*/ %>
+-		  </div>
++	  <div class="CONTROL-PORTLET CONTROL-BLOCK"  <%if(portalMode != UIPortalApplication.APP_EDIT_MODE) print("style=\"display: none\"")%>>
++	   	<%/*Begin InfoBar*/%>
++	   	<div class="UIInfoBar">
++	      <div class="BlueRoundedStyle">
++	        <div class="LeftBar">
++	          <div class="RightBar">
++			        <div class="MiddleBar">
++			        	<div class="FixHeight ClearFix">
++				          <div class="DragControlArea" onmousedown="eXo.portal.PortalDragDrop.init.call(this, event)" title="<%=_ctx.appRes("UIPortlet.tooltip.DragControl");%>"><span></span></div>
++				          <% 
++				            String portletIcon = uicomponent.getIcon();
++				            if(portletIcon == null) portletIcon = "PortletIcon";
++				            
++				            String title = portletTitle;
++				            if(uicomponent.getId() !=null) title = uicomponent.getId() ;
++				            if(uicomponent.getTitle() !=null) title = uicomponent.getTitle() ;
++				            if(title.length() > 30) title = title.substring(0,27) + "..." ;
++				          %>
++				          <div class="Icon $portletIcon WindowPortletIcon NovaPortletIcon"><span></span></div>
++			            <a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeletePortletIcon" title="<%=_ctx.appRes("UIPortlet.tooltip.deletePortlet");%>"><span></span></a>
++			            <a href="<%=uicomponent.event("EditPortlet","$uicomponent.id")%>" class="EditPortletPropertiesIcon" title="<%=_ctx.appRes("UIPortlet.tooltip.editPortlet");%>"><span></span></a>
++									<div class="Title">$title</div>
++			          </div>
++			        </div>
++	          </div>
++	        </div>
++	      </div>
++	    </div>
++	    <%/*End InfoBar*/ %>
++	  </div>
+ 		  
+-		  <div class="LAYOUT-PORTLET" style="display: none;">
+-		    <div class="PortletLayoutDecorator">
+-		    
+-		      <%/*Begin Top Portlet Layout Decorator*/%>
+-		      <div class="TopLeft">
+-		        <div class="TopRight">
+-		          <div class="TopMiddle">
+-		            <div class="TopMiddleCenter">
+-		            	<div class="FixHeight"><span></span></div>
+-		            </div>
+-		          </div>
+-		        </div>
+-		      </div>
+-		      
+-		      <%/*Begin Middle Portlet Layout Decorator*/%>
+-		      <div class="MiddleLeft">
+-		        <div class="MiddleRight">
+-		          <div class="CenterBackground">
+-		            <div class="GardientBackground">		            
+-		            <%if(uicomponent.getDescription() != null) {	
+-		            		String description = ""; int count = 1;
+-		            		for(c in uicomponent.getDescription()){
+-		            			if(c=="\n"){
+-		            				c="<br/>";
+-		            				count++;
+-		            			}
+-		            			description+=c;
+-		            			if(count>5) break;
+-		            		}
+-		            %>
+-		            	<%=description;%>
+-		            <%} else {%>
+-		                 <%= _ctx.appRes("UIPortlet.label.portletContent"); %>		               
+-      		      <%}%>
+-      		      </div>
+-		          </div>
+-		        </div>
+-		      </div>
+-		      
+-		      <%/*Begin Bottom Portlet Layout Decorator*/%>
+-		      <div class="BottomLeft">
+-		        <div class="BottomRight">
+-		          <div class="BottomMiddle">
+-		          	<div class="FixHeight"><span></span></div>
+-		          </div>
+-		        </div>
+-		      </div>
+-		      
+-		    </div>
+-		  </div>
+-		  
+-		  <div class="VIEW-PORTLET" id="VIEW-${portletId}">
++	  <div class="LAYOUT-PORTLET">
++	    <div class="PortletLayoutDecorator">
++	    
++	      <%/*Begin Top Portlet Layout Decorator*/%>
++	      <div class="TopLeft">
++	        <div class="TopRight">
++	          <div class="TopMiddle">
++	            <div class="TopMiddleCenter">
++	            	<div class="FixHeight"><span></span></div>
++	            </div>
++	          </div>
++	        </div>
++	      </div>
++	      
++	      <%/*Begin Middle Portlet Layout Decorator*/%>
++	      <div class="MiddleLeft">
++	        <div class="MiddleRight">
++	          <div class="CenterBackground">
++	            <div class="GardientBackground">		            
++	            <%if(uicomponent.getDescription() != null) {	
++	            		String description = ""; int count = 1;
++	            		for(c in uicomponent.getDescription()){
++	            			if(c=="\n"){
++	            				c="<br/>";
++	            				count++;
++	            			}
++	            			description+=c;
++	            			if(count>5) break;
++	            		}
++	            %>
++	            	<%=description;%>
++	            <%} else {%>
++	                 <%= _ctx.appRes("UIPortlet.label.portletContent"); %>		               
++    		      <%}%>
++    		      </div>
++	          </div>
++	        </div>
++	      </div>
++	      
++	      <%/*Begin Bottom Portlet Layout Decorator*/%>
++	      <div class="BottomLeft">
++	        <div class="BottomRight">
++	          <div class="BottomMiddle">
++	          	<div class="FixHeight"><span></span></div>
++	          </div>
++	        </div>
++	      </div>
++	      
++	    </div>
++	  </div>
++
++		<div class="VIEW-PORTLET" id="VIEW-${portletId}">
+ <%
+-  }
++  } else {
+ 	if(uicomponent.getShowInfoBar()) {
+   	String title = uicomponent.getTitle() ;
+     if(title == null || title.trim().length() < 1) title = portletId;
+@@ -252,7 +255,6 @@
+ 	              <%}%>
+ 
+ 	            	<%
+-	            		/*TODO: modify: dang.tung - fixed icon themes*/
+ 	            		String portletIcon = uicomponent.getIcon();
+ 			            if(portletIcon == null) portletIcon = "PortletIcon";
+ 	            	%>
+@@ -282,7 +284,7 @@
+           	<div class="FixHeight ClearFix">
+ 	            <div class="ResizeArea" title="<%=_ctx.appRes("UIPortlet.tooltip.ResizeWindow");%>"><span></span></div>
+ 	            <div class="Information"><%=_ctx.appRes("UIPortlet.lable.information");%></div>
+-			</div>
++						</div>
+           </div>
+         </div>
+       </div>
+@@ -307,7 +309,7 @@
+ 	    </div>  
+ <%
+     } 
+-  }
++  }}
+   if(!isDesktop && isPortalAppEditting) {
+ %>  
+ 	    </div>
+Index: web/portal/src/main/webapp/groovy/portal/webui/page/UIPageBody.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/portal/webui/page/UIPageBody.gtmpl	(revision 48605)
++++ web/portal/src/main/webapp/groovy/portal/webui/page/UIPageBody.gtmpl	(working copy)
+@@ -1,12 +1,23 @@
++<%
++  import org.exoplatform.portal.webui.workspace.UIPortalApplication;
++  
++  def rcontext = _ctx.getRequestContext() ;
++  UIPortalApplication uiPortalApp = rcontext.getUIApplication();
++  
++  boolean isPortalAppEditting = uiPortalApp.isEditting(); 
++  int portalMode = uiPortalApp.getModeState(); 
++%>
+ <div class="UIPageBody UIComponent" id="${uicomponent.id}">
++<%if (isPortalAppEditting){%>
+   <div class="META-DATA-BLOCK" style="display: none">
+     <div class="id">$uicomponent.id</div>
+     <div class="title"><%=_ctx.appRes("UIPage.label.title")%></div>
+     <div class="description"><%=_ctx.appRes("UIPage.label.description")%></div>
+   </div>
+-  <div class="CONTROL-PAGEBODY CONTROL-BLOCK" style="display: none"><span></span></div>
+ 
+-  <div class="LAYOUT-PAGEBODY DragControlArea" style="display: none;" onmousedown="eXo.portal.PortalDragDrop.init.call(eXo.core.DOMUtil.findAncestorByClass(this, 'UIPageBody'), event);">
++  <div class="CONTROL-PAGEBODY CONTROL-BLOCK" style="display: none" ><span></span></div>
++
++  <div class="LAYOUT-PAGEBODY DragControlArea" onmousedown="eXo.portal.PortalDragDrop.init.call(eXo.core.DOMUtil.findAncestorByClass(this, 'UIPageBody'), event);">
+   	<div class="PageLayoutDecorator">
+ 			<%/*Begin Top Decorator*/%>
+ 			<div class="TopLeftPage">
+@@ -36,9 +47,11 @@
+ 			</div>
+ 				
+ 		</div>  	
+-  </div>
+-  <div class="VIEW-PAGEBODY">
+-		<% if(uicomponent.getUIComponent() == null){ %>
++	</div>
++
++<%} else { %>
++	<div class="VIEW-PAGEBODY">
++	<%if (uicomponent.getUIComponent() == null) {%>
+ 		<div class="Empty">
+ 			<div class="UIPortalWarning">
+ 				<div class="LeftTopWarning">
+@@ -64,6 +77,7 @@
+ 				</div>
+ 			</div>
+ 		</div>
+-		<% } else { uicomponent.renderChildren() ; } %>
++	<%} else { uicomponent.renderChildren() ; }%>
+ 	</div>
++<%}%>
+ </div>
+Index: web/portal/src/main/webapp/groovy/portal/webui/page/UIPage.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/portal/webui/page/UIPage.gtmpl	(revision 48605)
++++ web/portal/src/main/webapp/groovy/portal/webui/page/UIPage.gtmpl	(working copy)
+@@ -1,15 +1,25 @@
+ <%
++	import org.exoplatform.portal.webui.workspace.UIPortalApplication;
++
+   def rcontext = _ctx.getRequestContext() ;
+ 	rcontext.getJavascriptManager().importJavascript('eXo.portal.PortalDragDrop');
++	
++	UIPortalApplication uiPortalApp = rcontext.getUIApplication();
++
+ %>
+ 
+ <div class="UIPage" id="UIPage-${uicomponent.id}">
++<%if (uiPortalApp.isEditting()) {%>
+ 	<div class="META-DATA-BLOCK" style="display: none">
+     <div class="id">$uicomponent.id</div>
+     <div class="title"><%=_ctx.appRes("UIPage.label.title")%></div>
+     <div class="description"><%=_ctx.appRes("UIPage.label.description")%></div>
+   </div>
++	
++  <div class="VIEW-PAGE LAYOUT-PAGE">
++<%} else {%>
+ 	<div class="VIEW-PAGE">
++<%}%>
+ 		<div id="UIPage">
+ 	    <div class="UIRowContainer">
+ 	      <%uicomponent.renderChildren()%>
+Index: web/portal/src/main/webapp/groovy/portal/webui/workspace/UIWorkingWorkspace.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/portal/webui/workspace/UIWorkingWorkspace.gtmpl	(revision 48605)
++++ web/portal/src/main/webapp/groovy/portal/webui/workspace/UIWorkingWorkspace.gtmpl	(working copy)
+@@ -1,5 +1,6 @@
+ <%
+- import org.exoplatform.web.application.JavascriptManager;
++	import org.exoplatform.web.application.JavascriptManager;
++	import org.exoplatform.portal.webui.workspace.UIPortalApplication;
+     
+ 
+   def rcontext = _ctx.getRequestContext() ;
+@@ -11,4 +12,10 @@
+ %>
+ <div id="UIWorkingWorkspace" class="UIWorkingWorkspace" style="position:relative; z-index: 0;">
+   <%uicomponent.renderChildren()%>
+-</div>
+\ No newline at end of file
++</div>
++<%
++	UIPortalApplication uiPortalApp = rcontext.getUIApplication();
++	if(uiPortalApp.getModeState() == UIPortalApplication.PREVIEW_MODE) {
++		rcontext.getJavascriptManager().addCustomizedOnLoadScript("eXo.portal.UIPortal.showMaskLayer() ;");
++	}
++%>
+\ No newline at end of file
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIPage/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIPage/Stylesheet.css	(revision 48605)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIPage/Stylesheet.css	(working copy)
+@@ -69,6 +69,7 @@
+ }
+ 
+ .UIPage {
++	margin: auto
+   width: 99.8%;
+   *width: auto;
+ }
+@@ -77,6 +78,10 @@
+ 	padding: 1px;
+ }
+ 
++.UIPage .LAYOUT-PAGE .UIRowContainer {
++  min-height: 60px;
++}
++
+ .UIPage .VIEW-PAGE {
+   padding: 0px;
+ }
+\ No newline at end of file
+Index: web/eXoResources/src/main/webapp/javascript/eXo/portal/PortalDragDrop.js
+===================================================================
+--- web/eXoResources/src/main/webapp/javascript/eXo/portal/PortalDragDrop.js	(revision 48605)
++++ web/eXoResources/src/main/webapp/javascript/eXo/portal/PortalDragDrop.js	(working copy)
+@@ -78,7 +78,7 @@
+     var dragObject = dndEvent.dragObject ;
+     /* Control Scroll */
+     eXo.portal.PortalDragDrop.scrollOnDrag(dragObject, dndEvent) ;
+-//    window.status = "foundTargetObject: " + dndEvent.foundTargetObject + "    lastFoundTargetObject: " + dndEvent.lastFoundTargetObject;
++    window.status = "foundTargetObject: " + dndEvent.foundTargetObject + "    lastFoundTargetObject: " + dndEvent.lastFoundTargetObject;
+     if((dndEvent.foundTargetObject) && (dndEvent.lastFoundTargetObject)) {
+       /*Check and asign UIPage to uiComponentLayout when DND on UIPage*/
+       var uiComponentLayout ;
+@@ -285,14 +285,15 @@
+   ajaxGet(eXo.env.server.createPortalURL("UIPortal", "MoveChild", true, params)) ;
+ };
+ 
+-/* Find components in dropable target */
++/**
++ * Return all components that are droppable in the DOM
++ */
+ PortalDragDrop.prototype.findDropableTargets = function() {
+   var dropableTargets = new Array() ;
+   var uiWorkingWorkspace = document.getElementById("UIWorkingWorkspace") ;
+   var uiPortal = eXo.core.DOMUtil.findFirstDescendantByClass(uiWorkingWorkspace, "div", "UIPortal") ;
+-  var viewPagebody = eXo.core.DOMUtil.findFirstDescendantByClass(uiWorkingWorkspace, "div", "VIEW-PAGEBODY") ;
+   var uiContainers = eXo.core.DOMUtil.findDescendantsByClass(uiWorkingWorkspace, "div", "UIContainer") ;
+-  if(viewPagebody && viewPagebody.style.display == "none") {
++  if(uiPortal) {
+     dropableTargets.push(uiPortal) ;
+   } else {
+   	var uiPage = eXo.core.DOMUtil.findFirstDescendantByClass(uiWorkingWorkspace, "div", "UIPage") ;
+Index: web/eXoResources/src/main/webapp/javascript/eXo/portal/UIPortal.js
+===================================================================
+--- web/eXoResources/src/main/webapp/javascript/eXo/portal/UIPortal.js	(revision 48605)
++++ web/eXoResources/src/main/webapp/javascript/eXo/portal/UIPortal.js	(working copy)
+@@ -37,270 +37,6 @@
+   this.portalUIComponentDragDrop = false;
+ };
+ 
+-UIPortal.prototype.getUIPortlets = function() {
+-  var uiWorkingWorkspace = document.getElementById("UIWorkingWorkspace") ;
+-  var founds =  eXo.core.DOMUtil.findDescendantsByClass(uiWorkingWorkspace, "div", "UIPortlet") ;
+-  var components =  new Array() ;
+-  for(j = 0; j < founds.length; j++) {
+-    components[components.length] = new UIComponent(founds[j]) ;
+-  }
+-  return components ;
+-} ;
+-
+-UIPortal.prototype.getUIPortletsInUIPortal = function() {
+-  var uiWorkingWorkspace = document.getElementById("UIWorkingWorkspace") ;
+-  var founds =  eXo.core.DOMUtil.findDescendantsByClass(uiWorkingWorkspace, "div", "UIPortlet") ;
+-  var components =  new Array() ;
+-  for(var j = 0; j < founds.length; j++) {
+-    if(eXo.core.DOMUtil.findAncestorByClass(founds[j], 'UIPage') == null) {
+-      components[components.length] = new UIComponent(founds[j]) ;
+-    }
+-  }
+-  return components ;
+-} ;
+-
+-UIPortal.prototype.getUIPortletsInUIPage = function() {
+-  var uiPage = document.getElementById("UIPage") ;
+-  var founds =  eXo.core.DOMUtil.findDescendantsByClass(uiPage, "div", "UIPortlet");
+-  var components =  new Array() ;
+-  for(var j = 0; j < founds.length; j++) {
+-    components[components.length] = new UIComponent(founds[j]) ;
+-  }
+-  return components ;
+-} ;
+-
+-UIPortal.prototype.getUIContainers = function() {
+-  var uiWorkingWorkspace = document.getElementById("UIWorkingWorkspace") ;
+-  var  founds = eXo.core.DOMUtil.findDescendantsByClass(uiWorkingWorkspace, "div", "UIContainer");
+-  var components =  new Array() ;
+-  for(var j = 0; j < founds.length; j++) {
+-    components[j] = new UIComponent(founds[j]) ;
+-  }
+-  return components ;
+-};
+-
+-UIPortal.prototype.getUIPageBody = function() {
+-//  var uiPortal = document.getElementById("UIPortal") ;
+-//  return new UIComponent(eXo.core.DOMUtil.findFirstDescendantByClass(uiPortal, "div", "UIPage")) ;
+-	return new UIComponent(document.getElementById("UIPageBody")) ;
+-};
+-
+-UIPortal.prototype.getUIPortal = function() {
+-  var uiWorkingWorkspace = document.getElementById("UIWorkingWorkspace") ;
+-  return new UIComponent(eXo.core.DOMUtil.findFirstDescendantByClass(uiWorkingWorkspace, "div", "UIPortal"));
+-};
+-
+-UIPortal.prototype.switchViewModeToLayoutMode = function(uicomponent, swapContent) {
+-  var layoutBlock = uicomponent.getLayoutBlock() ;
+-  if(!layoutBlock || layoutBlock.style.display == 'block') return ;
+-  var viewBlock = uicomponent.getViewBlock() ;
+-  if(swapContent) {
+-    var contentNode = eXo.core.DOMUtil.findDescendantById(viewBlock, uicomponent.getId()) ;
+-    if(contentNode != null) {
+-      layoutBlock.appendChild(contentNode) ;
+-    }
+-  }
+-  
+-  try {
+-	  viewBlock.style.display = "none" ;
+-  	layoutBlock.style.display = "block" ;
+-  } catch (err) {
+-  	
+-  }
+-};
+-
+-UIPortal.prototype.switchLayoutModeToViewMode = function(uicomponent, swapContent) {
+-  var viewBlock =  uicomponent.getViewBlock() ;
+-  if(!viewBlock || viewBlock.style.display == 'block') return ;
+-  var layoutBlock = uicomponent.getLayoutBlock() ;
+-  if(swapContent) {
+-    var contentNode = eXo.core.DOMUtil.findDescendantById(layoutBlock, uicomponent.getId()) ;
+-    if(contentNode != null) {
+-      viewBlock.appendChild(contentNode) ;
+-    }
+-  }
+-  viewBlock.style.display = "block" ;
+-  layoutBlock.style.display = "none" ;
+-} ;
+-
+-UIPortal.prototype.switchMode = function(elemtClicked) {
+-	if(elemtClicked.className == "Icon PreviewIcon") {
+-		elemtClicked.className = "Icon LayoutModeIcon" ;
+-		this.showViewMode() ;
+-		this.showMaskLayer() ;
+-//		eXo.core.Browser.onScrollCallback("", eXo.portal.UIPortal.showMaskLayer()) ;
+-	} else {
+-		this.hideMaskLayer() ;
+-		elemtClicked.className = "Icon PreviewIcon" ;
+-		this.showLayoutModeForPortal() ;
+-	}
+-	/*
+-	* minh.js.exo
+-	* fix bug portal 1757;
+-	*/
+-	//eXo.portal.PortalDragDrop.fixCss();
+-} ;
+-
+-UIPortal.prototype.switchModeForPage = function(elemtClicked) {
+-	var layoutMode  = this.showViewLayoutModeForPage();
+-	if(layoutMode == 1) {
+-		elemtClicked.className = "Icon PagePreviewIcon" ;
+-		this.hideMaskLayer() ;
+-	} else if(layoutMode == 0) {
+-		elemtClicked.className = "Icon PageLayoutModeIcon" ;
+-		this.showMaskLayer() ;
+-	}
+-} ;
+-
+-UIPortal.prototype.showUIComponentControl = function(uicomponent, flag) {
+-  var controlBlock = uicomponent.getControlBlock() ;
+-  if(!controlBlock) return ;
+-  var clickObject = eXo.core.DOMUtil.findFirstDescendantByClass(controlBlock, "div", "DragControlArea") ;
+-  if(flag) {
+-    clickObject.onmousedown = eXo.portal.PortalDragDrop.init ;
+-    controlBlock.style.display = 'block' ;
+-  } else {
+-    controlBlock.onmousedown = null ;
+-    controlBlock.style.display = 'none' ;
+-  }
+-};
+-
+-UIPortal.prototype.showViewLayoutModeForPage = function() {
+-	/*
+-	 * minh.js.exo;
+-	 */
+-  var layoutMode = -1;
+-  var container = this.getUIContainers() ;
+-  var portlet = this.getUIPortletsInUIPage() ;
+-  
+-  if(portlet.length > 0 && container.length >= 0) {
+-	
+-	  for(var i = 0; i < container.length; i++) {
+-	  	var viewBlock = container[i].getViewBlock() ;  
+-	    if(viewBlock.style.display == 'block') {
+-	    	this.switchViewModeToLayoutMode(container[i], true) ;
+-	      this.showUIComponentControl(container[i], this.component == 'UIContainer') ;
+-	    	if(layoutMode == -1) layoutMode = 1;
+-	    } else if(viewBlock.style.display == 'none') {
+-	    	this.switchLayoutModeToViewMode(container[i], true) ;
+-	    	this.showUIComponentControl(container[i], false) ;
+-	    	if(layoutMode == -1) layoutMode = 0;
+-	    }
+-	  }
+-	  for(var i = 0; i < portlet.length; i++) {
+-	  	var viewBlock = portlet[i].getViewBlock() ;
+-	    if(viewBlock.style.display == 'block') {
+-	    	this.switchViewModeToLayoutMode(portlet[i], false) ;
+-	    	this.showUIComponentControl(portlet[i], this.component == 'UIPortlet') ;
+-	    	if(layoutMode == -1) layoutMode = 1;
+-	    } else if(viewBlock.style.display == 'none') {
+-	    	this.switchLayoutModeToViewMode(portlet[i], false) ;
+-	    	this.showUIComponentControl(portlet[i], false) ;
+-	    	if(layoutMode == -1) layoutMode = 0;
+-	    }    
+-	  }
+-	
+-	} 
+-	
+-  return layoutMode;
+-};
+-
+- /**Repaired: by Vu Duy Tu 25/04/07**/
+-UIPortal.prototype.showLayoutModeForPage = function(control) {
+-	var uiPage = eXo.core.DOMUtil.findFirstDescendantByClass(document.body, "div", "UIPage") ;
+-	if(uiPage == null) return;
+-	var viewPage = eXo.core.DOMUtil.findFirstChildByClass(uiPage, "div", "VIEW-PAGE") ;
+-	var uiPageDesktop = document.getElementById("UIPageDesktop") ;
+-	var uiPortalApplication = document.getElementById("UIPortalApplication");
+-	if(uiPortalApplication.className != "Vista") {
+-	 viewPage.style.border = "solid 3px #dadada" ;
+-	}
+-	
+-	viewPage.style.paddingTop = "50px" ;
+-	viewPage.style.paddingRight = "0px";
+-	viewPage.style.paddingBottom = "50px";
+-	viewPage.style.paddingLeft = "0px";
+-		
+-	if(control) this.component = control ;
+-	var container = this.getUIContainers() ;
+-  for(var i = 0; i < container.length; i++) {
+-    this.switchViewModeToLayoutMode(container[i], true) ;
+-    this.showUIComponentControl(container[i], this.component == 'UIContainer') ;
+-
+-	  var uiContainer = eXo.core.DOMUtil.findFirstDescendantByClass(viewPage, "div", "UIContainer") ;
+-	  if(uiContainer != null) {
+-	  	viewPage.style.border = "none" ;
+-	  	viewPage.style.paddingTop = "5px" ;
+-	  	viewPage.style.paddingRight = "5px";
+-	  	viewPage.style.paddingBottom = "5px";
+-	  	viewPage.style.paddingLeft = "5px";
+-	  }
+-  }
+-	
+-	var portlet = this.getUIPortletsInUIPage() ;
+-  for(var i = 0; i < portlet.length; i++) {
+-    this.switchViewModeToLayoutMode(portlet[i], false) ;
+-    this.showUIComponentControl(portlet[i], this.component == 'UIPortlet') ;
+-    
+-	  var uiPortlet = eXo.core.DOMUtil.findFirstDescendantByClass(viewPage, "div", "UIPortlet") ;
+-	  if(uiPortlet != null) {
+-	  	viewPage.style.border = "none" ;
+-	  	viewPage.style.paddingTop = "5px" ;
+-	  	viewPage.style.paddingRight = "5px" ;
+-			viewPage.style.paddingBottom = "5px" ;
+-			viewPage.style.paddingLeft = "5px" ;
+-	  }
+-  }
+-};
+-
+-UIPortal.prototype.showViewMode = function() {
+-  var portal = this.getUIPortal() ;
+-  this.switchLayoutModeToViewMode(portal, true) ;
+-  this.showUIComponentControl(portal, false) ;
+-  
+-  var uiPageDesktop = document.getElementById("UIPageDesktop") ;
+-  if(!uiPageDesktop) {
+-  	var pageBody = this.getUIPageBody() ;
+-  	this.switchLayoutModeToViewMode(pageBody, true) ;
+-  	this.showUIComponentControl(pageBody, false) ;
+-  }
+-
+-  var container = this.getUIContainers() ;
+-  for(var i = 0; i < container.length; i++) {
+-    this.switchLayoutModeToViewMode(container[i], true) ;
+-    this.showUIComponentControl(container[i], false) ;
+-  }
+-
+-  var portlet  = this.getUIPortletsInUIPortal() ;
+-  for(var i = 0; i < portlet.length; i++) {
+-    this.switchLayoutModeToViewMode(portlet[i], false) ;
+-    this.showUIComponentControl(portlet[i], false) ;
+-  }
+-};
+-
+-UIPortal.prototype.showLayoutModeForPortal = function(control) {
+-	if(control) this.component = control;
+-  var portal = this.getUIPortal() ;
+-  this.switchViewModeToLayoutMode(portal, true) ;
+-  this.showUIComponentControl(portal, this.component == 'UIPortal') ;
+-
+-  var pageBody = this.getUIPageBody() ;
+-  this.switchViewModeToLayoutMode(pageBody, false) ;
+-  this.showUIComponentControl(pageBody, this.component == 'UIPageBody') ;
+-
+-  var container = this.getUIContainers() ;
+-  for(var i = 0; i < container.length; i++) {
+-    this.switchViewModeToLayoutMode(container[i], true) ;
+-    this.showUIComponentControl(container[i], this.component == 'UIContainer') ;
+-  }
+-    
+-	var portlet  = this.getUIPortletsInUIPortal() ;
+-  for(var i = 0; i < portlet.length; i++) {
+-    this.switchViewModeToLayoutMode(portlet[i], false) ;
+-    this.showUIComponentControl(portlet[i], this.component == 'UIPortlet') ;
+-  }  
+-} ;
+-
+ UIPortal.prototype.findUIComponentOf = function(element) {
+   var parent = element.parentNode ;
+   while(parent != null) {
+@@ -315,6 +51,7 @@
+ };
+ 
+ UIPortal.prototype.showMaskLayer = function() {
++	
+ 	var uiPortalApplication = document.getElementById("UIPortalApplication") ;
+ 	var object = document.createElement("div") ;
+ 	object.className = "PreviewMode" ;
+@@ -325,16 +62,7 @@
+ 	this.maskLayer.title = this.previewTitle ;
+ 	this.maskLayer.style.cursor = "pointer" ;
+ 	this.maskLayer.onclick = function() {
+-		var layoutModeIcon = eXo.core.DOMUtil.findFirstDescendantByClass(uiPortalApplication, "a", "LayoutModeIcon") ;
+-		var pageLayoutModeIcon = eXo.core.DOMUtil.findFirstDescendantByClass(uiPortalApplication, "a", "PageLayoutModeIcon") ;
+-		
+-		if(layoutModeIcon) {
+-			eXo.portal.UIPortal.switchMode(layoutModeIcon) ;
+-		}
+-		
+-		if(pageLayoutModeIcon) {
+-			eXo.portal.UIPortal.switchModeForPage(pageLayoutModeIcon) ;
+-		}
++		ajaxGet(eXo.env.server.createPortalURL("UIWorkingWorkspace", "Preview", true, null));
+ 	}
+ 	this.maskLayer.style.zIndex = parseInt(object.style.zIndex) + 1 ;
+ 	eXo.core.Browser.addOnScrollCallback("3743892", eXo.core.UIMaskLayer.setPosition) ;
+@@ -374,33 +102,6 @@
+   window.location = eXo.env.server.context + "/" + accessPath + "/" + portal+"/";
+ } ;
+ 
+-/** Created: by Lxchiati **/
+-UIPortal.prototype.popupButton = function(url, action) {
+-	if(action == undefined) action = '';  
+-  window.location = url + '&action='+ action ;
+-} ;
+-
+-/*
+-* This method will start the creation of a new javascript application such as a widget
+-*
+-* - The application parameter is the full javascript class for the application (for example "eXo.widget.web.info.UIInfoWidget")
+-* - The application id is an id shared among all the application instance
+-* - The instance id is unique among all the javascript application deployed in the layout
+-* - The appLocation is the root path location of the jstmpl file on the server (for example /eXoWidgetWeb/javascript/)
+-*
+-*  If the application class name is not null, the associated .js file on the server is loaded using the eXo.require() method
+-*
+-*  Once loaded the initApplication() method is called; in other words, the application is lazy instantiated and initialized
+-*  on the client browser
+-*/
+-//UIPortal.prototype.createJSApplication = function(application, applicationId, instanceId, appLocation) {
+-//	if(application) {
+-//	  eXo.require(application, appLocation);
+-//	  var createApplication = application + '.initApplication(\''+applicationId+'\',\''+instanceId+'\');' ;
+-//	  eval(createApplication);
+-//	}
+-//} ;
+-
+ eXo.portal.UIPortalComponent = UIComponent.prototype.constructor ;
+ eXo.portal.UIPortal = new UIPortal() ;
+ eXo.portal.UIComponent = UIPortal.prototype.constructor ;
