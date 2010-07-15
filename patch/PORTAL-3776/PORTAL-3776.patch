@@ -1,6 +1,6 @@
 Index: component/portal/src/main/java/org/exoplatform/portal/config/NewPortalConfigListener.java
 ===================================================================
---- component/portal/src/main/java/org/exoplatform/portal/config/NewPortalConfigListener.java	(revision 48605)
+--- component/portal/src/main/java/org/exoplatform/portal/config/NewPortalConfigListener.java	(revision 49341)
 +++ component/portal/src/main/java/org/exoplatform/portal/config/NewPortalConfigListener.java	(working copy)
 @@ -125,7 +125,7 @@
      if (isUseTryCatch) {
@@ -33,7 +33,7 @@ Index: component/portal/src/main/java/org/exoplatform/portal/config/NewPortalCon
            initGroupTypeDB(portalConfig);
 Index: component/portal/src/main/java/org/exoplatform/portal/config/jcr/DataStorageImpl.java
 ===================================================================
---- component/portal/src/main/java/org/exoplatform/portal/config/jcr/DataStorageImpl.java	(revision 48605)
+--- component/portal/src/main/java/org/exoplatform/portal/config/jcr/DataStorageImpl.java	(revision 49341)
 +++ component/portal/src/main/java/org/exoplatform/portal/config/jcr/DataStorageImpl.java	(working copy)
 @@ -51,7 +51,46 @@
  
@@ -85,7 +85,7 @@ Index: component/portal/src/main/java/org/exoplatform/portal/config/jcr/DataStor
  
 Index: webui/portal/src/main/java/org/exoplatform/portal/webui/navigation/UIPageNavigationControlBar.java
 ===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/navigation/UIPageNavigationControlBar.java	(revision 48605)
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/navigation/UIPageNavigationControlBar.java	(revision 49341)
 +++ webui/portal/src/main/java/org/exoplatform/portal/webui/navigation/UIPageNavigationControlBar.java	(working copy)
 @@ -63,7 +63,6 @@
  
@@ -115,7 +115,7 @@ Index: webui/portal/src/main/java/org/exoplatform/portal/webui/navigation/UIPage
      UIControlWorkspace uiControl = uiPortalApp.getChildById(UIPortalApplication.UI_CONTROL_WS_ID);
 Index: webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalManagementControlBar.java
 ===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalManagementControlBar.java	(revision 48605)
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalManagementControlBar.java	(revision 49341)
 +++ webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalManagementControlBar.java	(working copy)
 @@ -58,9 +58,7 @@
  public class UIPortalManagementControlBar extends UIToolbar {
@@ -148,7 +148,7 @@ Index: webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalMa
        String ownerUser = prContext.getPortalOwner();   
 Index: webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalManagementEditBar.java
 ===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalManagementEditBar.java	(revision 48605)
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalManagementEditBar.java	(revision 49341)
 +++ webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalManagementEditBar.java	(working copy)
 @@ -16,25 +16,25 @@
   */
@@ -251,7 +251,7 @@ Index: webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalMa
        
 Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletLifecycle.java
 ===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletLifecycle.java	(revision 48605)
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletLifecycle.java	(revision 49341)
 +++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletLifecycle.java	(working copy)
 @@ -20,6 +20,7 @@
  import java.util.HashMap;
@@ -294,7 +294,7 @@ Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPor
      } catch (Throwable ex) {
 Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditWizard.java
 ===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditWizard.java	(revision 48605)
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditWizard.java	(revision 49341)
 +++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditWizard.java	(working copy)
 @@ -192,6 +192,10 @@
        UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
@@ -315,56 +315,9 @@ Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditWi
      }
    }
  }
-Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIWizardPageCreationBar.java
-===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIWizardPageCreationBar.java	(revision 48605)
-+++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIWizardPageCreationBar.java	(working copy)
-@@ -17,10 +17,11 @@
- package org.exoplatform.portal.webui.page;
- 
- import java.io.Writer;
--
- import org.exoplatform.portal.webui.application.UIPortletOptions;
--import org.exoplatform.portal.webui.container.UIContainerConfigOptions;
-+import org.exoplatform.portal.webui.container.UIContainerConfigOptions;
- import org.exoplatform.portal.webui.util.Util;
-+import org.exoplatform.portal.webui.workspace.UIPortalApplication;
-+import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
- import org.exoplatform.webui.application.WebuiRequestContext;
- import org.exoplatform.webui.config.annotation.ComponentConfig;
- import org.exoplatform.webui.config.annotation.ComponentConfigs;
-@@ -43,7 +44,7 @@
-       type = UIPageEditBar.class,
-       template = "system:/groovy/webui/core/UIToolbar.gtmpl" ,
-       events = {
--        @EventConfig(listeners = UIPageEditBar.PagePreviewActionListener.class),
-+        @EventConfig(listeners = UIWorkingWorkspace.PreviewActionListener.class, name = "PagePreview"),
-         @EventConfig(listeners = UIWizardPageCreationBar.EditContainerActionListener.class),
-         @EventConfig(listeners = UIWizardPageCreationBar.EditPortletActionListener.class)
-       }
-@@ -83,7 +84,8 @@
-       UIWizardPageCreationBar uiParent = uiEditBar.getParent();
-       Class<?> [] childrenToRender ={UIPageEditBar.class, UIContainerConfigOptions.class }; 
-       uiParent.setRenderedChildrenOfTypes(childrenToRender);
--      Util.updateUIApplication(event);
-+      Util.updateUIApplication(event);
-+      Util.getUIPortalApplication().setModeState(UIPortalApplication.CONTAINER_EDIT_MODE);
-     }    
-   }
- 
-@@ -93,7 +95,8 @@
-       UIWizardPageCreationBar uiParent = uiEditBar.getParent();
-       Class<?> [] childrenToRender = { UIPageEditBar.class, UIPortletOptions.class}; 
-       uiParent.setRenderedChildrenOfTypes(childrenToRender);
--      Util.updateUIApplication(event);
-+      Util.updateUIApplication(event);
-+      Util.getUIPortalApplication().setModeState(UIPortalApplication.APP_EDIT_MODE);
-     }
-   }
- 
 Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditBar.java
 ===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditBar.java	(revision 48605)
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditBar.java	(revision 49341)
 +++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditBar.java	(working copy)
 @@ -51,10 +51,10 @@
   * Jun 23, 2006
@@ -450,22 +403,56 @@ Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageEditBa
 -  
  }
 \ No newline at end of file
-Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageActionListener.java
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIWizardPageCreationBar.java
 ===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageActionListener.java	(revision 48605)
-+++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageActionListener.java	(working copy)
-@@ -67,7 +67,7 @@
-         UserPortalConfig portalConfig = configService.getUserPortalConfig(uiPortal.getOwner(), remoteUser) ;
-         uiPortal.getChildren().clear() ;
-         PortalDataMapper.toUIPortal(uiPortal, portalConfig) ;
--        uiPortalApp.setEditting(false) ;
-+        uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE) ;
-         uiPortal.broadcast(event, event.getExecutionPhase()) ;
-         return ;
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIWizardPageCreationBar.java	(revision 49341)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIWizardPageCreationBar.java	(working copy)
+@@ -17,10 +17,11 @@
+ package org.exoplatform.portal.webui.page;
+ 
+ import java.io.Writer;
+-
+ import org.exoplatform.portal.webui.application.UIPortletOptions;
+-import org.exoplatform.portal.webui.container.UIContainerConfigOptions;
++import org.exoplatform.portal.webui.container.UIContainerConfigOptions;
+ import org.exoplatform.portal.webui.util.Util;
++import org.exoplatform.portal.webui.workspace.UIPortalApplication;
++import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
+ import org.exoplatform.webui.application.WebuiRequestContext;
+ import org.exoplatform.webui.config.annotation.ComponentConfig;
+ import org.exoplatform.webui.config.annotation.ComponentConfigs;
+@@ -43,7 +44,7 @@
+       type = UIPageEditBar.class,
+       template = "system:/groovy/webui/core/UIToolbar.gtmpl" ,
+       events = {
+-        @EventConfig(listeners = UIPageEditBar.PagePreviewActionListener.class),
++        @EventConfig(listeners = UIWorkingWorkspace.PreviewActionListener.class, name = "PagePreview"),
+         @EventConfig(listeners = UIWizardPageCreationBar.EditContainerActionListener.class),
+         @EventConfig(listeners = UIWizardPageCreationBar.EditPortletActionListener.class)
        }
+@@ -83,7 +84,8 @@
+       UIWizardPageCreationBar uiParent = uiEditBar.getParent();
+       Class<?> [] childrenToRender ={UIPageEditBar.class, UIContainerConfigOptions.class }; 
+       uiParent.setRenderedChildrenOfTypes(childrenToRender);
+-      Util.updateUIApplication(event);
++      Util.updateUIApplication(event);
++      Util.getUIPortalApplication().setModeState(UIPortalApplication.CONTAINER_EDIT_MODE);
+     }    
+   }
+ 
+@@ -93,7 +95,8 @@
+       UIWizardPageCreationBar uiParent = uiEditBar.getParent();
+       Class<?> [] childrenToRender = { UIPageEditBar.class, UIPortletOptions.class}; 
+       uiParent.setRenderedChildrenOfTypes(childrenToRender);
+-      Util.updateUIApplication(event);
++      Util.updateUIApplication(event);
++      Util.getUIPortalApplication().setModeState(UIPortalApplication.APP_EDIT_MODE);
+     }
+   }
+ 
 Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageBrowser.java
 ===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageBrowser.java	(revision 48605)
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageBrowser.java	(revision 49341)
 +++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageBrowser.java	(working copy)
 @@ -241,7 +241,7 @@
  		public void execute(Event<UIPageBrowser> event) throws Exception {
@@ -485,9 +472,22 @@ Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageBrowse
  			UIPage uiPage = uiPageBrowser.createUIComponent(event.getRequestContext(), UIPage.class, null, null);
  			PortalDataMapper.toUIPage(uiPage, page);
  			UIPortalToolPanel uiToolPanel = Util.getUIPortalToolPanel();
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageActionListener.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageActionListener.java	(revision 49341)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageActionListener.java	(working copy)
+@@ -67,7 +67,7 @@
+         UserPortalConfig portalConfig = configService.getUserPortalConfig(uiPortal.getOwner(), remoteUser) ;
+         uiPortal.getChildren().clear() ;
+         PortalDataMapper.toUIPortal(uiPortal, portalConfig) ;
+-        uiPortalApp.setEditting(false) ;
++        uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE) ;
+         uiPortal.broadcast(event, event.getExecutionPhase()) ;
+         return ;
+       }
 Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageCreationWizard.java
 ===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageCreationWizard.java	(revision 48605)
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageCreationWizard.java	(revision 49341)
 +++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageCreationWizard.java	(working copy)
 @@ -226,6 +226,7 @@
      public void execute(Event<UIPageCreationWizard> event) throws Exception {
@@ -515,7 +515,7 @@ Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageCreati
      }
 Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageWizard.java
 ===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageWizard.java	(revision 48605)
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageWizard.java	(revision 49341)
 +++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageWizard.java	(working copy)
 @@ -155,7 +155,7 @@
  	static public class AbortActionListener extends EventListener<UIPageWizard> {
@@ -537,7 +537,7 @@ Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageWizard
  }
 Index: webui/portal/src/main/java/org/exoplatform/portal/webui/util/Util.java
 ===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/util/Util.java	(revision 48605)
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/util/Util.java	(revision 49341)
 +++ webui/portal/src/main/java/org/exoplatform/portal/webui/util/Util.java	(working copy)
 @@ -114,7 +114,8 @@
      uiWorkingWS.setRenderedChild(UIPortalToolPanel.class) ;
@@ -603,7 +603,7 @@ Index: webui/portal/src/main/java/org/exoplatform/portal/webui/util/Util.java
    static public UIWorkingWorkspace updateUIApplication(Event<? extends UIComponent> event){
 Index: webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIPortalApplication.java
 ===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIPortalApplication.java	(revision 48605)
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIPortalApplication.java	(revision 49341)
 +++ webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIPortalApplication.java	(working copy)
 @@ -67,16 +67,23 @@
      template = "system:/groovy/portal/webui/workspace/UIPortalApplication.gtmpl"
@@ -689,7 +689,7 @@ Index: webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIPorta
      return service.getAvailableScriptsPaths();
 Index: webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIExoStart.java
 ===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIExoStart.java	(revision 48605)
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIExoStart.java	(revision 49341)
 +++ webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIExoStart.java	(working copy)
 @@ -200,7 +200,7 @@
        UIExoStart uiComp = event.getSource() ;
@@ -731,7 +731,7 @@ Index: webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIExoSt
        UIPortalToolPanel uiToolPanel = uiWorkingWS.getChild(UIPortalToolPanel.class) ;
 Index: webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIWorkingWorkspace.java
 ===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIWorkingWorkspace.java	(revision 48605)
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIWorkingWorkspace.java	(revision 49341)
 +++ webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIWorkingWorkspace.java	(working copy)
 @@ -17,8 +17,14 @@
  package org.exoplatform.portal.webui.workspace;
@@ -785,7 +785,7 @@ Index: webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIWorki
  }
 Index: webui/core/src/main/java/org/exoplatform/webui/core/UIToolbar.java
 ===================================================================
---- webui/core/src/main/java/org/exoplatform/webui/core/UIToolbar.java	(revision 48605)
+--- webui/core/src/main/java/org/exoplatform/webui/core/UIToolbar.java	(revision 49341)
 +++ webui/core/src/main/java/org/exoplatform/webui/core/UIToolbar.java	(working copy)
 @@ -17,6 +17,8 @@
  package org.exoplatform.webui.core;
@@ -807,7 +807,7 @@ Index: webui/core/src/main/java/org/exoplatform/webui/core/UIToolbar.java
    public String getEventName() { return eventName_ ; }
 Index: web/portal/src/main/webapp/groovy/portal/webui/portal/UIPortal.gtmpl
 ===================================================================
---- web/portal/src/main/webapp/groovy/portal/webui/portal/UIPortal.gtmpl	(revision 48605)
+--- web/portal/src/main/webapp/groovy/portal/webui/portal/UIPortal.gtmpl	(revision 49341)
 +++ web/portal/src/main/webapp/groovy/portal/webui/portal/UIPortal.gtmpl	(working copy)
 @@ -1,20 +1,30 @@
  <%
@@ -845,7 +845,7 @@ Index: web/portal/src/main/webapp/groovy/portal/webui/portal/UIPortal.gtmpl
 \ No newline at end of file
 Index: web/portal/src/main/webapp/groovy/portal/webui/container/UIContainer.gtmpl
 ===================================================================
---- web/portal/src/main/webapp/groovy/portal/webui/container/UIContainer.gtmpl	(revision 48605)
+--- web/portal/src/main/webapp/groovy/portal/webui/container/UIContainer.gtmpl	(revision 49341)
 +++ web/portal/src/main/webapp/groovy/portal/webui/container/UIContainer.gtmpl	(working copy)
 @@ -1,8 +1,11 @@
  <%
@@ -927,7 +927,7 @@ Index: web/portal/src/main/webapp/groovy/portal/webui/container/UIContainer.gtmp
  	  </div>
 Index: web/portal/src/main/webapp/groovy/portal/webui/container/UITableColumnContainer.gtmpl
 ===================================================================
---- web/portal/src/main/webapp/groovy/portal/webui/container/UITableColumnContainer.gtmpl	(revision 48605)
+--- web/portal/src/main/webapp/groovy/portal/webui/container/UITableColumnContainer.gtmpl	(revision 49341)
 +++ web/portal/src/main/webapp/groovy/portal/webui/container/UITableColumnContainer.gtmpl	(working copy)
 @@ -1,21 +1,25 @@
  <%
@@ -996,7 +996,7 @@ Index: web/portal/src/main/webapp/groovy/portal/webui/container/UITableColumnCon
          <tr class="TRContainer">
 Index: web/portal/src/main/webapp/groovy/portal/webui/application/UIPortlet.gtmpl
 ===================================================================
---- web/portal/src/main/webapp/groovy/portal/webui/application/UIPortlet.gtmpl	(revision 48605)
+--- web/portal/src/main/webapp/groovy/portal/webui/application/UIPortlet.gtmpl	(revision 49341)
 +++ web/portal/src/main/webapp/groovy/portal/webui/application/UIPortlet.gtmpl	(working copy)
 @@ -2,8 +2,10 @@
    import org.exoplatform.portal.webui.page.UIPage;
@@ -1246,7 +1246,7 @@ Index: web/portal/src/main/webapp/groovy/portal/webui/application/UIPortlet.gtmp
  	    </div>
 Index: web/portal/src/main/webapp/groovy/portal/webui/page/UIPageBody.gtmpl
 ===================================================================
---- web/portal/src/main/webapp/groovy/portal/webui/page/UIPageBody.gtmpl	(revision 48605)
+--- web/portal/src/main/webapp/groovy/portal/webui/page/UIPageBody.gtmpl	(revision 49341)
 +++ web/portal/src/main/webapp/groovy/portal/webui/page/UIPageBody.gtmpl	(working copy)
 @@ -1,12 +1,23 @@
 +<%
@@ -1300,7 +1300,7 @@ Index: web/portal/src/main/webapp/groovy/portal/webui/page/UIPageBody.gtmpl
  </div>
 Index: web/portal/src/main/webapp/groovy/portal/webui/page/UIPage.gtmpl
 ===================================================================
---- web/portal/src/main/webapp/groovy/portal/webui/page/UIPage.gtmpl	(revision 48605)
+--- web/portal/src/main/webapp/groovy/portal/webui/page/UIPage.gtmpl	(revision 49341)
 +++ web/portal/src/main/webapp/groovy/portal/webui/page/UIPage.gtmpl	(working copy)
 @@ -1,15 +1,25 @@
  <%
@@ -1330,7 +1330,7 @@ Index: web/portal/src/main/webapp/groovy/portal/webui/page/UIPage.gtmpl
  	      <%uicomponent.renderChildren()%>
 Index: web/portal/src/main/webapp/groovy/portal/webui/workspace/UIWorkingWorkspace.gtmpl
 ===================================================================
---- web/portal/src/main/webapp/groovy/portal/webui/workspace/UIWorkingWorkspace.gtmpl	(revision 48605)
+--- web/portal/src/main/webapp/groovy/portal/webui/workspace/UIWorkingWorkspace.gtmpl	(revision 49341)
 +++ web/portal/src/main/webapp/groovy/portal/webui/workspace/UIWorkingWorkspace.gtmpl	(working copy)
 @@ -1,5 +1,6 @@
  <%
@@ -1356,7 +1356,7 @@ Index: web/portal/src/main/webapp/groovy/portal/webui/workspace/UIWorkingWorkspa
 \ No newline at end of file
 Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIPage/Stylesheet.css
 ===================================================================
---- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIPage/Stylesheet.css	(revision 48605)
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIPage/Stylesheet.css	(revision 49341)
 +++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIPage/Stylesheet.css	(working copy)
 @@ -69,6 +69,7 @@
  }
@@ -1380,18 +1380,18 @@ Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/
 \ No newline at end of file
 Index: web/eXoResources/src/main/webapp/javascript/eXo/portal/PortalDragDrop.js
 ===================================================================
---- web/eXoResources/src/main/webapp/javascript/eXo/portal/PortalDragDrop.js	(revision 48605)
+--- web/eXoResources/src/main/webapp/javascript/eXo/portal/PortalDragDrop.js	(revision 49341)
 +++ web/eXoResources/src/main/webapp/javascript/eXo/portal/PortalDragDrop.js	(working copy)
-@@ -78,7 +78,7 @@
+@@ -81,7 +81,7 @@
      var dragObject = dndEvent.dragObject ;
      /* Control Scroll */
      eXo.portal.PortalDragDrop.scrollOnDrag(dragObject, dndEvent) ;
 -//    window.status = "foundTargetObject: " + dndEvent.foundTargetObject + "    lastFoundTargetObject: " + dndEvent.lastFoundTargetObject;
-+    window.status = "foundTargetObject: " + dndEvent.foundTargetObject + "    lastFoundTargetObject: " + dndEvent.lastFoundTargetObject;
++    // window.status = "foundTargetObject: " + dndEvent.foundTargetObject + "    lastFoundTargetObject: " + dndEvent.lastFoundTargetObject;
      if((dndEvent.foundTargetObject) && (dndEvent.lastFoundTargetObject)) {
        /*Check and asign UIPage to uiComponentLayout when DND on UIPage*/
        var uiComponentLayout ;
-@@ -285,14 +285,15 @@
+@@ -288,14 +288,15 @@
    ajaxGet(eXo.env.server.createPortalURL("UIPortal", "MoveChild", true, params)) ;
  };
  
@@ -1412,7 +1412,7 @@ Index: web/eXoResources/src/main/webapp/javascript/eXo/portal/PortalDragDrop.js
    	var uiPage = eXo.core.DOMUtil.findFirstDescendantByClass(uiWorkingWorkspace, "div", "UIPage") ;
 Index: web/eXoResources/src/main/webapp/javascript/eXo/portal/UIPortal.js
 ===================================================================
---- web/eXoResources/src/main/webapp/javascript/eXo/portal/UIPortal.js	(revision 48605)
+--- web/eXoResources/src/main/webapp/javascript/eXo/portal/UIPortal.js	(revision 49341)
 +++ web/eXoResources/src/main/webapp/javascript/eXo/portal/UIPortal.js	(working copy)
 @@ -37,270 +37,6 @@
    this.portalUIComponentDragDrop = false;
