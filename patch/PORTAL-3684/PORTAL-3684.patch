@@ -1,0 +1,13 @@
+Index: webui/portal/src/main/java/org/exoplatform/portal/application/PortalRequestContext.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/application/PortalRequestContext.java	(revision 47778)
++++ webui/portal/src/main/java/org/exoplatform/portal/application/PortalRequestContext.java	(working copy)
+@@ -95,7 +95,7 @@
+     if(cache != null) cacheLevel_ = cache;
+ 
+     requestURI_ = URLDecoder.decode(req.getRequestURI(), "UTF-8");
+-    String pathInfo = req.getPathInfo() ;
++    String pathInfo = URLDecoder.decode(req.getPathInfo(), "UTF-8") ;
+     if(pathInfo == null) pathInfo = "/" ;
+     int colonIndex = pathInfo.indexOf("/", 1)  ;
+     if(colonIndex < 0) colonIndex = pathInfo.length();
