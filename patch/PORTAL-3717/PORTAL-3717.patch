@@ -1,0 +1,13 @@
+Index: web/portal/src/main/webapp/groovy/webui/form/UIFormUploadInput.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/webui/form/UIFormUploadInput.gtmpl	(revision 48044)
++++ web/portal/src/main/webapp/groovy/webui/form/UIFormUploadInput.gtmpl	(working copy)
+@@ -3,7 +3,7 @@
+   boolean isAutoUpload = uicomponent.isAutoUpload();
+   def rcontext = _ctx.getRequestContext() ;
+   rcontext.getJavascriptManager().importJavascript('eXo.webui.UIUpload') ;
+-  rcontext.getJavascriptManager().addJavascript("eXo.webui.UIUpload.initUploadEntry('"+uploadId+"',"+isAutoUpload+");") ;
++  rcontext.getJavascriptManager().addCustomizedOnLoadScript("eXo.webui.UIUpload.initUploadEntry('"+uploadId+"',"+isAutoUpload+");") ;
+ %>
+ <div class="UIFormUploadInput" id="$uploadId">
+   <div class="LimitMessage" style="display: none;"><%= _ctx.appRes("UIFormUploadInput.msg.limit"); %></div>
