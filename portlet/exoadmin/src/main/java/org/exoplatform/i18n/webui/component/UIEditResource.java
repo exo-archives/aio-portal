@@ -19,8 +19,12 @@ package org.exoplatform.i18n.webui.component;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import org.exoplatform.commons.utils.PageList;
+import org.exoplatform.portal.webui.portal.UIPortal;
+import org.exoplatform.portal.webui.util.Util;
+import org.exoplatform.portal.webui.workspace.UIPortalApplication;
 import org.exoplatform.services.resources.LocaleConfig;
 import org.exoplatform.services.resources.LocaleConfigService;
 import org.exoplatform.services.resources.Query;
@@ -119,7 +123,14 @@ public class UIEditResource extends UIForm {
       uiI18n.getChild(UIEditResource.class).setRendered(false) ;
       
       event.getRequestContext().addUIComponentToUpdateByAjax(uiI18n) ;
-
+      // Refresh the navigation label if language field in editted resource is
+      // currently selected language of Portal system
+      UIPortalApplication uiPortalApp = Util.getUIPortalApplication();
+      Locale locale = uiPortalApp.getLocale();
+      if (locale != null && locale.getLanguage().equals(language)) {
+        UIPortal uiPortal = uiPortalApp.findFirstComponentOfType(UIPortal.class);
+        uiPortal.refreshNavigation(locale);
+      }
     }
   }
   
