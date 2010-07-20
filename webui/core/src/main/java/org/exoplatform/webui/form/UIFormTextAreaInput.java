@@ -51,7 +51,7 @@ public class UIFormTextAreaInput extends UIFormStringInput {
     w.write(">");
     if(value != null) w.write(value) ;  
     w.write("</textarea>");
-    if (this.isMandatory()) w.write(" *");
+    if (this.isMandatory()) w.write("<span class=\"MandatorySignal\"> *</span>");
   }
 
   public int getColumns() { return columns; }

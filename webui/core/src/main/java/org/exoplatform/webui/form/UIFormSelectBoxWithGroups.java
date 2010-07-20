@@ -263,7 +263,7 @@ public class UIFormSelectBoxWithGroups extends UIFormStringInput {
     	}
     }
     w.write("</select>\n") ;
-    if (this.isMandatory()) w.write(" *");
+    if (this.isMandatory()) w.write("<span class=\"MandatorySignal\"> *</span>");
   }
   
   private String renderOption(SelectOption option, String label) {

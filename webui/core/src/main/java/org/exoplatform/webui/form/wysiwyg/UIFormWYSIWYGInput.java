@@ -128,7 +128,7 @@ public class UIFormWYSIWYGInput extends UIFormInputBase<String> {
 		editor.setValue(value_);
 		Writer w =  context.getWriter();            
 		w.write(editor.createHtml());
-		if (this.isMandatory()) w.write(" *");    
+		if (this.isMandatory()) w.write("<span class=\"MandatorySignal\"> *</span>");    
 	}
 
 	private void configureFCKConfig(final FCKEditorConfig config){

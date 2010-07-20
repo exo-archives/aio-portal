@@ -77,7 +77,7 @@ public class UIFormWYSIWYGInput extends UIFormInputBase<String> {
     value_ = value_.replaceAll("'", "\\\\'");
     value_ = value_.replaceAll("[\r\n]", "");
     w.write("<textarea id='" + getName() + "' rows='" + String.valueOf(rows) + "' cols='" + String.valueOf(columns) + "' name='" + getName() + "'>" + value_ + "</textarea>");
-    if (this.isMandatory()) w.write(" *");
+    if (this.isMandatory()) w.write("<span class=\"MandatorySignal\"> *</span>");
     context.getJavascriptManager().addJavascript(jsExec.toString());
   }
 }

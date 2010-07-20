@@ -91,7 +91,7 @@ public class UIFormStringInput extends UIFormInputBase<String> {
   	if (readonly_) w.write(" readonly ") ;
   	if (!enable_) w.write(" disabled ");
   	w.write("/>") ;
-  	if (this.isMandatory()) w.write(" *");
+  	if (this.isMandatory()) w.write("<span class=\"MandatorySignal\"> *</span>");
   }
   
   private StringBuilder encodeValue(String value){
