@@ -1,0 +1,23 @@
+Index: component/dashboard/src/main/java/org/exoplatform/dashboard/webui/component/UIDashboardContainer.java
+===================================================================
+--- component/dashboard/src/main/java/org/exoplatform/dashboard/webui/component/UIDashboardContainer.java	(revision 47778)
++++ component/dashboard/src/main/java/org/exoplatform/dashboard/webui/component/UIDashboardContainer.java	(working copy)
+@@ -422,18 +422,11 @@
+     uiContainer.setHeight(model.getHeight());
+     uiContainer.setTitle(model.getTitle());
+     uiContainer.setIcon(model.getIcon());
+-    uiContainer.setTitle(model.getTitle());
+-    uiContainer.setIcon(model.getIcon());
+     uiContainer.setDescription(model.getDescription());
+     uiContainer.setFactoryId(model.getFactoryId());
+     uiContainer.setName(model.getName());
+     uiContainer.setTemplate(model.getTemplate());
+     
+-    uiContainer.setDescription(model.getDescription());
+-    uiContainer.setFactoryId(model.getFactoryId());
+-    uiContainer.setName(model.getName());
+-    uiContainer.setTemplate(model.getTemplate());
+-    
+     List<Object> children  = model.getChildren();
+     if(children == null)  return;
+     for (int i = 0; i < children.size() ; i++) {
