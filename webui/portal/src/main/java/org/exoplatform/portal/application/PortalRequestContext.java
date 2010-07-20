@@ -96,7 +96,7 @@ public class PortalRequestContext extends WebuiRequestContext {
     if(cache != null) cacheLevel_ = cache;
 
     requestURI_ = URLDecoder.decode(req.getRequestURI(), "UTF-8");
-    String pathInfo = req.getPathInfo() ;
+    String pathInfo = URLDecoder.decode(req.getPathInfo(), "UTF-8") ;
     if(pathInfo == null) pathInfo = "/" ;
     int colonIndex = pathInfo.indexOf("/", 1)  ;
     if(colonIndex < 0) colonIndex = pathInfo.length();
