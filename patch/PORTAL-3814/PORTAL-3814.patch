@@ -1,0 +1,93 @@
+Index: core/src/main/java/org/exoplatform/webui/form/wysiwyg/UIFormWYSIWYGInput.java
+===================================================================
+--- core/src/main/java/org/exoplatform/webui/form/wysiwyg/UIFormWYSIWYGInput.java	(revision 48405)
++++ core/src/main/java/org/exoplatform/webui/form/wysiwyg/UIFormWYSIWYGInput.java	(working copy)
+@@ -128,7 +128,7 @@
+ 		editor.setValue(value_);
+ 		Writer w =  context.getWriter();            
+ 		w.write(editor.createHtml());
+-		if (this.isMandatory()) w.write(" *");    
++		if (this.isMandatory()) w.write("<span class=\"MandatorySignal\"> *</span>");    
+ 	}
+ 
+ 	private void configureFCKConfig(final FCKEditorConfig config){
+Index: core/src/main/java/org/exoplatform/webui/form/UIFormSelectBoxWithGroups.java
+===================================================================
+--- core/src/main/java/org/exoplatform/webui/form/UIFormSelectBoxWithGroups.java	(revision 48405)
++++ core/src/main/java/org/exoplatform/webui/form/UIFormSelectBoxWithGroups.java	(working copy)
+@@ -263,7 +263,7 @@
+     	}
+     }
+     w.write("</select>\n") ;
+-    if (this.isMandatory()) w.write(" *");
++    if (this.isMandatory()) w.write("<span class=\"MandatorySignal\"> *</span>");
+   }
+   
+   private String renderOption(SelectOption option, String label) {
+Index: core/src/main/java/org/exoplatform/webui/form/UIFormStringInput.java
+===================================================================
+--- core/src/main/java/org/exoplatform/webui/form/UIFormStringInput.java	(revision 48405)
++++ core/src/main/java/org/exoplatform/webui/form/UIFormStringInput.java	(working copy)
+@@ -91,7 +91,7 @@
+   	if (readonly_) w.write(" readonly ") ;
+   	if (!enable_) w.write(" disabled ");
+   	w.write("/>") ;
+-  	if (this.isMandatory()) w.write(" *");
++  	if (this.isMandatory()) w.write("<span class=\"MandatorySignal\"> *</span>");
+   }
+   
+   private StringBuilder encodeValue(String value){
+Index: core/src/main/java/org/exoplatform/webui/form/UIFormSelectBox.java
+===================================================================
+--- core/src/main/java/org/exoplatform/webui/form/UIFormSelectBox.java	(revision 48405)
++++ core/src/main/java/org/exoplatform/webui/form/UIFormSelectBox.java	(working copy)
+@@ -199,6 +199,6 @@
+     }
+     
+     w.write("</select>\n") ;
+-    if (this.isMandatory()) w.write(" *");
++    if (this.isMandatory()) w.write("<span class=\"MandatorySignal\"> *</span>");
+   }  
+ }
+\ No newline at end of file
+Index: core/src/main/java/org/exoplatform/webui/form/UIFormTextAreaInput.java
+===================================================================
+--- core/src/main/java/org/exoplatform/webui/form/UIFormTextAreaInput.java	(revision 48405)
++++ core/src/main/java/org/exoplatform/webui/form/UIFormTextAreaInput.java	(working copy)
+@@ -51,7 +51,7 @@
+     w.write(">");
+     if(value != null) w.write(value) ;  
+     w.write("</textarea>");
+-    if (this.isMandatory()) w.write(" *");
++    if (this.isMandatory()) w.write("<span class=\"MandatorySignal\"> *</span>");
+   }
+ 
+   public int getColumns() { return columns; }
+Index: core/src/main/java/org/exoplatform/webui/form/UIFormWYSIWYGInput.java
+===================================================================
+--- core/src/main/java/org/exoplatform/webui/form/UIFormWYSIWYGInput.java	(revision 48405)
++++ core/src/main/java/org/exoplatform/webui/form/UIFormWYSIWYGInput.java	(working copy)
+@@ -77,7 +77,7 @@
+     value_ = value_.replaceAll("'", "\\\\'");
+     value_ = value_.replaceAll("[\r\n]", "");
+     w.write("<textarea id='" + getName() + "' rows='" + String.valueOf(rows) + "' cols='" + String.valueOf(columns) + "' name='" + getName() + "'>" + value_ + "</textarea>");
+-    if (this.isMandatory()) w.write(" *");
++    if (this.isMandatory()) w.write("<span class=\"MandatorySignal\"> *</span>");
+     context.getJavascriptManager().addJavascript(jsExec.toString());
+   }
+ }
+\ No newline at end of file
+Index: core/src/main/java/org/exoplatform/webui/form/UIFormCheckBoxInput.java
+===================================================================
+--- core/src/main/java/org/exoplatform/webui/form/UIFormCheckBoxInput.java	(revision 48405)
++++ core/src/main/java/org/exoplatform/webui/form/UIFormCheckBoxInput.java	(working copy)
+@@ -100,7 +100,7 @@
+     if(checked) w.write(" checked ") ;
+     if (!enable_)  w.write(" disabled ");    
+     w.write(" class='checkbox'/>") ;
+-    if (this.isMandatory()) w.write(" *");
++    if (this.isMandatory()) w.write("<span class=\"MandatorySignal\"> *</span>");
+   }
+  
+ }
+\ No newline at end of file
