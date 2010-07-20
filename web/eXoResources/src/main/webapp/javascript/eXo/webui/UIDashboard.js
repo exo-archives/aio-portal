@@ -236,6 +236,8 @@ eXo.webui.UIDashboard = {
 		var uiContainer = DOMUtil.findFirstDescendantByClass(uiDashboard, "div", "UIDashboardContainer");
 		if(!uiContainer) return;
 		
+		eXo.webui.UIDashboard.setHeightForDashboardColumn(uiDashboard);
+		
 		var uiWindow = DOMUtil.findAncestorByClass(portletWindow, "UIWindow") ;
 		if(uiWindow) {
 			if(!uiWindow.resizeCallback) uiWindow.resizeCallback = new eXo.core.HashMap() ;
@@ -406,6 +408,13 @@ eXo.webui.UIDashboard = {
 			else uiContainer.style.marginRight = "211px" ;
 		}
 		ajaxAsyncGetRequest(url, false);
+		
+		if(uiSelectContainer.style.display != "none") {
+			eXo.webui.UIDashboard.setHeightForDashboardColumn(uiDashboardPortlet);
+		}
+		else{
+			eXo.webui.UIDashboard.setMinHeightForDashboardColumn(uiDashboardPortlet);
+		}
 	}, 
 	
 	onTabClick : function(clickElement, normalStyle, selectedType) {
@@ -484,6 +493,28 @@ eXo.webui.UIDashboard = {
 		}	else {
 			if(objTop < 0 && deltaY > 0) gadgetContainer.scrollTop -= 5;
 		}
-	}	
+	},
+	
+	setHeightForDashboardColumn : function(uiDashboard){
+		var DOMUtil = eXo.core.DOMUtil ;
+		var uiGadget = columnsElement = DOMUtil.findFirstDescendantByClass(uiDashboard, "div", "GadgetApplication");
+		if(!uiGadget){
+			var columnsElement = DOMUtil.findFirstDescendantByClass(uiDashboard, "div", "UIColumns");
+			var uIDashboardSelectContainer = DOMUtil.findFirstDescendantByClass(uiDashboard, "div", "UIDashboardSelectContainer");
+			var uiContainer = DOMUtil.findFirstDescendantByClass(uiDashboard, "div", "UIDashboardContainer");	
+			var containerControlBarL = DOMUtil.findFirstDescendantByClass(uiContainer, "div", "ContainerControlBarL");
+			columnsElement.style.height = (uIDashboardSelectContainer.clientHeight -containerControlBarL.clientHeight) + "px";
+		}
+	},
+	
+	setMinHeightForDashboardColumn : function(uiDashboard){
+		var DOMUtil = eXo.core.DOMUtil ;
+		var uiGadget = columnsElement = DOMUtil.findFirstDescendantByClass(uiDashboard, "div", "GadgetApplication");
+		if(!uiGadget){
+			var columnsElement = DOMUtil.findFirstDescendantByClass(uiDashboard, "div", "UIColumns");
+			columnsElement.style.height = 0 +  "px";
+		}
+	}
+	
 	
 }
