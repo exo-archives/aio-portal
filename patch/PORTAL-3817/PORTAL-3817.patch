@@ -1,0 +1,72 @@
+Index: web/portal/src/main/webapp/groovy/webui/form/UISearchForm.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/webui/form/UISearchForm.gtmpl	(revision 48813)
++++ web/portal/src/main/webapp/groovy/webui/form/UISearchForm.gtmpl	(working copy)
+@@ -6,14 +6,17 @@
+ 	        <div class="MiddleBar">
+ 					  <div class="UISearchForm">
+ 					    <%uiform.begin()%>
+-				      <div class="QuickSet">
++					    <%String quickSearchlink = uicomponent.event("QuickSearch") ;%>
++					    <script type="text/javascript">
++							var executeScript = "<%=quickSearchlink%>";
++						</script>
++				      <div class="QuickSet" onkeypress="eXo.portal.UIPortalControl.onEnterPress(event, executeScript)">
+ 				        <div class="SearchTitle"><%=_ctx.appRes("UISearch.label.Search")%>:</div>
+ 				        <% 
+ 				          QuickSearchInputSet = uiform.getQuickSearchInputSet();
+ 				          for(field in QuickSearchInputSet.getChildren()) {
+ 				            uiform.renderField(field) 
+ 				          }   
+-				          String quickSearchlink = uicomponent.event("QuickSearch") ;
+ 		            %>
+ 		            <a class="SimpleSearchIcon" href="$quickSearchlink" title="<%= _ctx.appRes("UISearch.label.QuickSearch") %>">
+ 		            	<span></span>
+Index: web/eXoResources/src/main/webapp/javascript/eXo/portal/UIPortalControl.js
+===================================================================
+--- web/eXoResources/src/main/webapp/javascript/eXo/portal/UIPortalControl.js	(revision 48813)
++++ web/eXoResources/src/main/webapp/javascript/eXo/portal/UIPortalControl.js	(working copy)
+@@ -61,21 +61,31 @@
+   	}
+   }
+ } ;
++/**
++ * Process enter key press
++ * @param {Event} e this event
++ * @param {String} executeScript javascript command to execute if enter key was pressed
++ */
++UIPortalControl.prototype.onEnterPress = function(e, executeScript) {
++	var e = window.event || e;
+ 
+-UIPortalControl.prototype.onEnterPress = function(e) {
+-	var e = window.event || e;
+-	var uiPortalLoginFormAction = document.getElementById("UIPortalLoginFormAction");
+-	if(uiPortalLoginFormAction) {
+-		var code;
+-		if(!e) e = window.event;
+-		if(e.keyCode) code = e.keyCode;
+-		else if (e.which) code = e.which;
+-		if(code ==13) {
+-			if(this.t != 13) {
+-		    uiPortalLoginFormAction.onclick() ;
++	var code;
++	if(!e) e = window.event;
++	if(e.keyCode) code = e.keyCode;
++	else if (e.which) code = e.which;
++	if(code ==13) {
++		if(this.t != 13) {
++			var uiPortalLoginFormAction = document.getElementById("UIPortalLoginFormAction");
++			if(uiPortalLoginFormAction) {
++				uiPortalLoginFormAction.onclick() ;
+ 			}
+-		  this.t = code;
++			else
++			{
++				if(executeScript)
++					eval(executeScript);
++			}
+ 		}
++	  this.t = code;
+ 	}
+ };
+ 
