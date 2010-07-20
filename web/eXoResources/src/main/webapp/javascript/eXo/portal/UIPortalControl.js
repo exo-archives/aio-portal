@@ -61,21 +61,31 @@ UIPortalControl.prototype.fixHeight = function() {
   	}
   }
 } ;
-
-UIPortalControl.prototype.onEnterPress = function(e) {
+/**
+ * Process enter key press
+ * @param {Event} e this event
+ * @param {String} executeScript javascript command to execute if enter key was pressed
+ */
+UIPortalControl.prototype.onEnterPress = function(e, executeScript) {
 	var e = window.event || e;
-	var uiPortalLoginFormAction = document.getElementById("UIPortalLoginFormAction");
-	if(uiPortalLoginFormAction) {
-		var code;
-		if(!e) e = window.event;
-		if(e.keyCode) code = e.keyCode;
-		else if (e.which) code = e.which;
-		if(code ==13) {
-			if(this.t != 13) {
-		    uiPortalLoginFormAction.onclick() ;
+
+	var code;
+	if(!e) e = window.event;
+	if(e.keyCode) code = e.keyCode;
+	else if (e.which) code = e.which;
+	if(code ==13) {
+		if(this.t != 13) {
+			var uiPortalLoginFormAction = document.getElementById("UIPortalLoginFormAction");
+			if(uiPortalLoginFormAction) {
+				uiPortalLoginFormAction.onclick() ;
 			}
-		  this.t = code;
+			else
+			{
+				if(executeScript)
+					eval(executeScript);
+			}
 		}
+	  this.t = code;
 	}
 };
 
