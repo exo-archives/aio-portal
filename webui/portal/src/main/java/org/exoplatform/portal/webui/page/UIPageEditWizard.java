@@ -22,12 +22,14 @@ import java.util.Date;
 import java.util.List;
 
 import org.exoplatform.portal.application.PortalRequestContext;
+import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.UserPortalConfigService;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.webui.UIWelcomeComponent;
 import org.exoplatform.portal.webui.application.UIPortletOptions;
+import org.exoplatform.portal.webui.application.task.PortletPreferencesTaskCollection;
 import org.exoplatform.portal.webui.navigation.UIPageNodeSelector;
 import org.exoplatform.portal.webui.portal.PageNodeEvent;
 import org.exoplatform.portal.webui.portal.UIPortal;
@@ -83,6 +85,9 @@ public class UIPageEditWizard extends UIPageWizard {
   private void saveData() throws Exception {
     UserPortalConfigService service = getApplicationComponent(UserPortalConfigService.class);
     
+    //Execute PortletPreferencesTask in session-layer cache
+    Util.executePortletPreferencesTasks();
+    
     UIPagePreview uiPagePreview = getChild(UIPagePreview.class);
     UIPage uiPage = (UIPage)uiPagePreview.getUIComponent();
     Page page = PortalDataMapper.toPageModel(uiPage);
@@ -129,6 +134,10 @@ public class UIPageEditWizard extends UIPageWizard {
       UIPageWizard uiWizard = event.getSource();
       UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
       PortalRequestContext pcontext = Util.getPortalRequestContext() ;
+      
+      //Remove the DeletePortletPreferencesTask which might be registered in step 3. 
+      //TODO: Find a nicer place to put below code
+      Util.clearPortletPreferencesTaskCollection();
       
       uiWizard.updateWizardComponent();
       UIWizardPageSetInfo uiPageInfo = uiWizard.getChild(UIWizardPageSetInfo.class); 

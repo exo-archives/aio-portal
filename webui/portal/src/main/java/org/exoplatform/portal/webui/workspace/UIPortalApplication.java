@@ -28,6 +28,7 @@ import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.config.UserACL;
 import org.exoplatform.portal.config.UserPortalConfig;
 import org.exoplatform.portal.webui.application.UIPortlet;
+import org.exoplatform.portal.webui.application.task.PortletPreferencesTaskCollection;
 import org.exoplatform.portal.webui.portal.PageNodeEvent;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.skin.Skin;
@@ -89,6 +90,17 @@ public class UIPortalApplication extends UIApplication {
   private UserPortalConfig userPortalConfig_;
 
   /**
+   *  A session-level cache of PortletPreferencesTask. That is used to cleaned the PortletPreferences properly.
+   * In term of code structure, it's more logical to put this cache in portal/page-edit classes such as UIPageEditWizard,
+   * UIPortalManagement,... Unfortunately, relevant UI code is so badly organized that setting cache there would violate
+   * the DRY (Don't Repeat Yourself) principle, the code become more messy, and performance is affected as more search
+   * in UI components tree would be invoked
+   * 
+   * TODO: Refactor this after portal/page-edit components are better organized
+   */
+  private final PortletPreferencesTaskCollection ppTaskCollection = new PortletPreferencesTaskCollection();
+  
+  /**
    * The constructor of this class is used to build the tree of UI components that will be aggregated
    * in the portal page. 
    * 
@@ -145,6 +157,12 @@ public class UIPortalApplication extends UIApplication {
     if(currentSkin != null && currentSkin.trim().length() > 0) skin_ = currentSkin;
     setOwner(context.getPortalOwner());
   }
+  
+  public PortletPreferencesTaskCollection getPPTaskCollection()
+  {
+    return this.ppTaskCollection;
+  }
+
   
   public Orientation getOrientation() {
     return orientation_;

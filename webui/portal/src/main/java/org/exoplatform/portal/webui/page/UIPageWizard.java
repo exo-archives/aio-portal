@@ -18,6 +18,7 @@ package org.exoplatform.portal.webui.page;
 
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.webui.UIWelcomeComponent;
+import org.exoplatform.portal.webui.application.task.PortletPreferencesTaskCollection;
 import org.exoplatform.portal.webui.portal.UIPortal;
 import org.exoplatform.portal.webui.util.Util;
 import org.exoplatform.portal.webui.workspace.UIControlWorkspace;
@@ -155,6 +156,9 @@ public abstract class UIPageWizard extends UIWizard {
 	static public class AbortActionListener extends EventListener<UIPageWizard> {
 		public void execute(Event<UIPageWizard> event) throws Exception {
 			UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
+			//Clear PortletPreferencesTask
+      Util.clearPortletPreferencesTaskCollection();
+      
 			uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
 			PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext();
 

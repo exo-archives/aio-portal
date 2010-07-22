@@ -22,12 +22,16 @@ import java.util.List;
 
 import org.exoplatform.commons.utils.PageList;
 import org.exoplatform.portal.application.PortalRequestContext;
+import org.exoplatform.portal.application.PortletPreferences;
+import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.UserPortalConfigService;
 import org.exoplatform.portal.config.model.Container;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.webui.application.UIPortlet;
 import org.exoplatform.portal.webui.application.UIPortletOptions;
+import org.exoplatform.portal.webui.application.task.DeletePortletPreferencesTask;
+import org.exoplatform.portal.webui.application.task.PortletPreferencesTaskCollection;
 import org.exoplatform.portal.webui.container.UIContainerConfigOptions;
 import org.exoplatform.portal.webui.login.UILogin;
 import org.exoplatform.portal.webui.login.UIResetPassword;
@@ -42,6 +46,7 @@ import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.Query;
 import org.exoplatform.services.organization.User;
+import org.exoplatform.services.portletcontainer.pci.WindowID;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webui.core.UIComponent;
 import org.exoplatform.webui.core.UIContainer;
@@ -104,6 +109,12 @@ public class UIPortalComponentActionListener {
         return;
       }
       
+      if(uiComponent instanceof UIPortlet)
+      {
+      	DataStorage dataStorage = uiComponent.getApplicationComponent(DataStorage.class);
+      	registerDeletePortletPreferencesTask((UIPortlet)uiComponent, dataStorage);
+      }
+      
       uiParent.removeChildById(id);
       UIPage uiPage = uiParent.getAncestorOfType(UIPage.class);
       if(uiPage != null && uiPage.getMaximizedUIPortlet() != null) {
@@ -132,6 +143,21 @@ public class UIPortalComponentActionListener {
       UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
       pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
       pcontext.setFullRender(true);
+    }
+    
+    private void registerDeletePortletPreferencesTask(UIPortlet uiPortlet, DataStorage dataStorage)
+    {
+    	WindowID windowID = uiPortlet.getExoWindowID();
+			try {
+				PortletPreferences targetedPP = dataStorage.getPortletPreferences(windowID);
+				if(targetedPP != null)
+				{
+					PortletPreferencesTaskCollection ppTaskCollection = Util.getUIPortalApplication().getPPTaskCollection();
+					ppTaskCollection.addTask(new DeletePortletPreferencesTask(targetedPP));
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
     }
   }
     

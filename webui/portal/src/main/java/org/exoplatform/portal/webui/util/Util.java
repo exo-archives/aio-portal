@@ -34,10 +34,12 @@ package org.exoplatform.portal.webui.util;
 import java.util.List;
 
 import org.exoplatform.portal.application.PortalRequestContext;
+import org.exoplatform.portal.config.DataStorage;
 import org.exoplatform.portal.config.UserPortalConfigService;
 import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.webui.application.UIPortlet;
+import org.exoplatform.portal.webui.application.task.PortletPreferencesTaskCollection;
 import org.exoplatform.portal.webui.container.UIContainer;
 import org.exoplatform.portal.webui.page.UIDesktopPage;
 import org.exoplatform.portal.webui.page.UIPage;
@@ -247,4 +249,24 @@ public class Util {
     return uiWorkingWS;
   }
   
+  static public void clearPortletPreferencesTaskCollection()
+  {
+  	getUIPortalApplication().getPPTaskCollection().clearTasks();
+  }
+  
+  static public void executePortletPreferencesTasks()
+  {
+  	UIPortalApplication uiPortalApp = getUIPortalApplication();
+  	DataStorage dataStorage = uiPortalApp.getApplicationComponent(DataStorage.class);
+  	PortletPreferencesTaskCollection taskCollection = uiPortalApp.getPPTaskCollection();
+  	try{
+  		taskCollection.executeTasks(dataStorage);
+  	}catch(Exception ex)
+  	{
+  		ex.printStackTrace();
+  	}finally
+  	{
+  		taskCollection.clearTasks();
+  	}
+  }
 }

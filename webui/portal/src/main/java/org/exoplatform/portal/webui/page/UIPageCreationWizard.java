@@ -30,6 +30,7 @@ import org.exoplatform.portal.config.model.PageNode;
 import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.webui.UIWelcomeComponent;
 import org.exoplatform.portal.webui.application.UIPortletOptions;
+import org.exoplatform.portal.webui.application.task.PortletPreferencesTaskCollection;
 import org.exoplatform.portal.webui.navigation.UIPageNodeSelector;
 import org.exoplatform.portal.webui.portal.PageNodeEvent;
 import org.exoplatform.portal.webui.portal.UIPortal;
@@ -83,6 +84,10 @@ public class UIPageCreationWizard extends UIPageWizard {
 
   private void saveData() throws Exception {
     UserPortalConfigService service = getApplicationComponent(UserPortalConfigService.class);
+    
+    //Execute PortletPreferencesTask in session-layer cache
+    Util.executePortletPreferencesTasks();
+    
     UIPagePreview uiPagePreview = getChild(UIPagePreview.class);
     UIPage uiPage = (UIPage)uiPagePreview.getUIComponent();
     UIPortal uiPortal = Util.getUIPortal();
@@ -171,6 +176,7 @@ public class UIPageCreationWizard extends UIPageWizard {
 
       uiWizard.updateWizardComponent();
       uiWizard.viewStep(2);
+      
     }
   }
 
@@ -181,6 +187,10 @@ public class UIPageCreationWizard extends UIPageWizard {
       WebuiRequestContext context = Util.getPortalRequestContext() ;
       uiWizard.viewStep(3);
 
+      //Remove the DeletePortletPreferencesTask which might be registered in step 3. 
+      //TODO: Find a nicer place to put below code
+      Util.clearPortletPreferencesTaskCollection();
+      
       if(uiWizard.getSelectedStep() < 3){
         uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.StepByStep",null)) ;
         uiWizard.setDescriptionWizard(2);
