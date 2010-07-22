@@ -22,12 +22,19 @@ How the problem is fixed ?
 Patch informations:
 
 Patches files:
-* File PORTAL3790-20100531.patch
+* File PORTAL-3790-bis.patch
 
 Tests to perform
 
 Which test should have detect the issue ?
-*
+
+    * Create/Edit a page, and add a portlet window associatied with a preference (such as the URL in the IFrame portlet).
+    * Save the preference, you can check that it exists in WebDav (Example URL)
+    * Save the page on which you added the portlet.
+      If the page is not saved (i.e. you click on abort), the portlet preference(s) previsously saved cannot be deleted anymore.
+    * Edit the page again and remove the portlet window added earlier, save the page.
+    * Check the JCR workspace via WebDAV service again, the PortletPreferences entity has disappeared.
+
 
 Is a test missing in the TestCase file ?
 *
