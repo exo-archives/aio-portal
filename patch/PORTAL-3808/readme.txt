@@ -3,19 +3,17 @@ Summary
     * Status: Internationalization of navigation is applied only when user logout
     * CCP Issue: CCP-428, Product Jira Issue : PORTAL-3808
     * Complexity: HIGH
-    * Impacted Client(s): AMG, spff, and probably all.
-    * Client expectations (date/content): N/A
-
+    
 The Proposal
 Problem description
 
-What is the problem to fix ?
+What is the problem to fix?
 
     * Any change of navigation internationalization is taken into effect once the user logouts and re-logins, or changes the language setting. The localized navigation is cached to improve performance. It is only refreshed when the session is renewed or the language is changed. 
 
 Fix description
 
-How the problem is fixed ?
+How is the problem fixed?
    On persisting the L10n resource changes (via I18n portlet), there are two cases:
 
   1. Language of edited L10n resource is portal 's current language
@@ -27,7 +25,7 @@ How the problem is fixed ?
       In this case, we need not localize the navigation of portal. As to view the newly updated L10n resource, user needs to make a change of language. Which
     relocalize all navigation implicitely
 
-Patch informations:
+Patch information:
 
     * Final files to use should be attached to this page (Jira is for the dicussion)
 
@@ -38,13 +36,13 @@ PORTAL-3808.patch
 
 Tests to perform
 
-Which test should have detect the issue ?
+Which test should have detect the issue?
 *
 
-Is a test missing in the TestCase file ?
+Is a test missing in the TestCase file?
 *
 
-Added UnitTest ?
+Added UnitTest?
 * No
 
 Recommended Performance test?
@@ -52,7 +50,7 @@ Recommended Performance test?
 
 Documentation changes
 
-Where is the documentation for this feature ?
+Where is the documentation for this feature?
 * none
 
 Changes Needed:
@@ -60,7 +58,7 @@ Changes Needed:
 
 Configuration changes
 
-Is this bug changing the product configuration ?
+Is this bug changing the product configuration?
 * No
 
 Describe configuration changes:
@@ -72,10 +70,10 @@ Previous configuration will continue to work?
 
 Risks and impacts
 
-Is there a risk applying this bug fix ?
+Is there a risk applying this bug fix?
 * No
 
-Is this bug fix can have an impact on current client projects ?
+Can this bug fix have an impact on current client projects?
 * No
 
 Is there a performance risk/cost?
