@@ -3,23 +3,21 @@ Summary
     * Status: Plus ('+') symbol in an URL causes an ERROR 500
     * CCP Issue: CCPID, Product Jira Issue: PORTAL-3684
     * Complexity: N/A
-    * Impacted Client(s): N/A
-    * Client expectations (date/content): N/A
-
+    
 The Proposal
 Problem description
 
-What is the problem to fix ?
+What is the problem to fix?
 
     *  Exception when user types a "+" symbol in URL
 
 Fix description
 
-How is the problem fixed ?
+How is the problem fixed?
 
     * Encode URL in full
 
-Patch informations:
+Patch information:
 
     * Final files to use should be attached to this page (Jira is for the dicussion)
 
@@ -30,13 +28,13 @@ PORTAL-3684.patch
 
 Tests to perform
 
-Which test should have detect the issue ?
+Which test should have detect the issue?
 *
 
-Is a test missing in the TestCase file ?
+Is a test missing in the TestCase file?
 *NO
 
-Added UnitTest ?
+Added UnitTest?
 *NO
 
 Recommended Performance test?
@@ -45,7 +43,7 @@ Recommended Performance test?
 
 Documentation changes
 
-Where is the documentation for this feature ?
+Where is the documentation for this feature?
 *NO
 
 Changes Needed:
@@ -54,7 +52,7 @@ Changes Needed:
 
 Configuration changes
 
-Is this bug changing the product configuration ?
+Is this bug changing the product configuration?
 *NO
 
 Describe configuration changes:
@@ -66,10 +64,10 @@ Will previous configuration continue to work?
 
 Risks and impacts
 
-Is there a risk applying this bug fix ?
+Is there a risk applying this bug fix?
 *NO
 
-Is this bug fix can have an impact on current client projects ?
+Can this bug fix have an impact on current client projects?
 *NO
 
 Is there a performance risk/cost?
