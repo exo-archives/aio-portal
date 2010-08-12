@@ -1,0 +1,114 @@
+h1. Summary
+{panel}
+* *Status:* {excerpt}Portlet is dropped automatically when exceeds screen's border (using IE7){excerpt}
+* *CCP Issue:* [CCP-499@JIRA], Product Jira Issue:[PORTAL-3823@JIRA]
+* *Complexity:* N/A
+{panel}
+
+h1. The Proposal
+
+h2. Problem description
+{panel}
+*What is the problem to fix?*
+* When edit page and edit current portal, if moving portlet outside page border, it is dropped automatically.
+{panel}
+
+h2. Fix description
+{panel}
+*How is the problem fixed?*
+* Only allow drop event after drag event.
+* In IE, keep dragging after moving mouse out of browser.
+{panel}
+
+*Patch information:*
+{panel}
+
+Patch file:
+PORTAL-3823.patch
+{panel}
+
+h2. Tests to perform
+
+{panel}
+*Which test should have detected the issue?*
+\* When moving portlet outside page border, it is dropped automatically.
+To reproduce the problem, you should follow this steps:
+1- Using IE7, Edit the current layout of acme site
+2- Drag Document Portlet to the right. It is dropped whenever the screen border are exceeded (not where the user expects).
+
+In FF, the behavior is different. The portlet is not dropped while it is not inside screen border.
+
+
+*Is a test missing in the TestCase file?*
+\*
+
+*Added UnitTest?*
+\*No
+
+*Recommended Performance test?*
+\*no
+
+{panel}
+
+h2. Documentation changes
+
+{panel}
+*Where is the documentation for this feature?*
+\*No
+
+*Changes Needed:*
+\*No
+
+{panel}
+
+h2. Configuration changes
+
+{panel}
+*Is this bug changing the product configuration?*
+\*No
+
+*Describe configuration changes:*
+\*No
+
+*Will previous configuration continue to work?*
+\*Yes
+
+{panel}
+
+h2. Risks and impacts
+
+{panel}
+*Is there a risk applying this bug fix?*
+\*No
+
+*Can this bug fix have an impact on current client projects?*
+\*No
+
+*Is there a performance risk/cost?*
+\*No
+
+{panel}
+
+
+h1. Validation By PM & Support
+
+{panel}
+*PM Comment*
+\*
+{panel}
+
+{panel}
+*Support Comment*
+\*
+{panel}
+
+
+h1. QA Feedbacks
+
+{panel}
+*Performed Tests*
+\*
+
+{panel}
+{panel}
+{panel} 

@@ -1,0 +1,61 @@
+Index: web/eXoResources/src/main/webapp/javascript/eXo/portal/PortalDragDrop.js
+===================================================================
+--- web/eXoResources/src/main/webapp/javascript/eXo/portal/PortalDragDrop.js	(revision 49382)
++++ web/eXoResources/src/main/webapp/javascript/eXo/portal/PortalDragDrop.js	(working copy)
+@@ -13,6 +13,7 @@
+  */
+ 
+ PortalDragDrop.prototype.init = function(e) {
++	if (eXo.core.DragDrop.dndEvent && eXo.core.DragDrop.dndEvent.clickObject == this) return;
+ 	if (!e) e = window.event;
+ 	
+ 	if(e && e.preventDefault) e.preventDefault();
+@@ -202,11 +203,6 @@
+         /*Set properties for drag object */
+         eXo.portal.PortalDragDrop.setDragObjectProperties(dragObject, tdElementList, "column", dndEvent.backupMouseEvent) ;
+       }
+-			//when dragObject out of page
+-			if ((Browser.findPosY(dragObject) < 2)  || (Browser.findPosX(dragObject) + 64 > eXo.core.Browser.getBrowserWidth())) {
+-				DragDrop.dropCallback(dndEvent);
+-				document.onmousemove = null;
+-			} 
+     } 
+   } ;
+ 
+@@ -257,20 +253,19 @@
+   var targetElement = dndEvent.foundTargetObject ;
+   
+   var newComponent = false;
+-  if(eXo.core.DOMUtil.hasDescendantClass(srcElement, "DragControlArea") && (targetElement.foundIndex != null)) {
+-//  	alert("My Test: " + eXo.portal.PortalDragDrop.layoutTypeElementNode);
++  
++  
++  if(eXo.core.DOMUtil.findFirstChildByClass(dndEvent.dragObject, "div", "CONTROL-BLOCK") == null) {
++    dndEvent.dragObject.parentNode.removeChild(dndEvent.dragObject) ;
++    newComponent = true;
++  } else {
++  	if (targetElement.foundIndex == null) return;
+     if(eXo.portal.PortalDragDrop.layoutTypeElementNode != null) {
+       eXo.portal.PortalDragDrop.divRowContainerAddChild(srcElement, targetElement, targetElement.foundIndex) ;
+     } else {
+-//    	alert("Table is OK");
+       eXo.portal.PortalDragDrop.tableColumnContainerAddChild(srcElement, targetElement, targetElement.foundIndex) ;
+     }
+   }
+-  
+-  if(eXo.core.DOMUtil.findFirstChildByClass(dndEvent.dragObject, "div", "CONTROL-BLOCK") == null) {
+-    dndEvent.dragObject.parentNode.removeChild(dndEvent.dragObject) ;
+-    newComponent = true;
+-  }
+ 
+   var params = [
+     {name: "srcID", value: (srcElement.id.replace(/^UIPortlet-/, "")).replace(/^UIContainer-/,"")},
+@@ -280,7 +275,7 @@
+   ] ;
+   
+   try {
+-    dndEvent.lastFoundTargetObject.foundIndex = -1;
++    dndEvent.lastFoundTargetObject.foundIndex = null;
+   } catch(err) {
+   	
+   }
