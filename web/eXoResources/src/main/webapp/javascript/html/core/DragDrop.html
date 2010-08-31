@@ -1,0 +1,117 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" dir="ltr">
+<head>  
+    <title>DragDrop</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link href="css/UIMaskWorkspace/Stylesheet.css" type="text/css" rel="stylesheet">
+    <link href="css/UIWorkspace/Stylesheet.css" type="text/css" rel="stylesheet">
+    
+ 	<script src="../../eXo.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/Util.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/DOMUtil.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/Browser.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/MouseEventManager.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/UIMaskLayer.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/Skin.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/JSON.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/Cometd.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/I18n.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/DragDrop.js" type="text/javascript"></script>
+    
+    <script src="../../eXo/core/DragDrop2.js" type="text/javascript"></script> 
+
+    <script src="../../eXo/webui/UIItemSelector.js" type="text/javascript"></script>
+
+    <script src="../../eXo/webui/UIForm.js" type="text/javascript"></script>
+
+    <script src="../../eXo/webui/UIDropDownControl.js" type="text/javascript"></script>
+
+    <script src="../../eXo/webui/UIRightClickPopupMenu.js" type="text/javascript"></script>
+
+    <script src="../../eXo/portal/PortalHttpRequest.js" type="text/javascript"></script>
+
+    <script src="../../eXo/portal/UIPortal.js" type="text/javascript"></script>
+    
+	<script src="../../eXo/portal/UIExoStartMenu.js" type="text/javascript"></script>
+
+    <script src="../../eXo/portal/UIWorkspace.js" type="text/javascript"></script>
+
+    <script src="../../eXo/portal/UIPortalControl.js" type="text/javascript"></script>
+
+    <script src="../../eXo/portal/PortalDragDrop.js" type="text/javascript"></script>
+
+    <script src="../../eXo/portal/UIPortalNavigation.js" type="text/javascript"></script>
+
+    <script src="../../eXo/portal/UIMaskWorkspace.js" type="text/javascript"></script>
+    <script src="../../eXo/portal/UIBrowseContent.js" type="text/javascript"></script>
+    <script src="../../eXo/webui/UIPortlet.js" type="text/javascript"></script>
+    <script src="../../eXo/i18n/I18NMessage.js" type="text/javascript"></script>
+    <script src="../../eXo/i18n/MessageResource_en.js" type="text/javascript"></script>
+ 	
+ 	<script language="javascript" type="text/javascript">
+		function initDnD(evt) {
+		  var event = evt || window.event;
+		  var DragDrop = eXo.core.DragDrop ;
+
+		  DragDrop.initCallback = function (dndEvent) {
+		  }
+
+		  DragDrop.dragCallback = function (dndEvent) {
+		  }
+
+		  DragDrop.dropCallback = function (dndEvent) {
+		  }
+		  
+		  var clickBlock = document.getElementById('UIDragObject');
+		  var dragBlock =  eXo.core.DOMUtil.findAncestorByClass(clickBlock, "UIDragObjectComponent");
+		  var targetObject = document.getElementById('UITargetObject');
+		  var targetObject1 = document.getElementById('UITargetObject1');
+		  var dropableTargets=[targetObject, targetObject1];
+		  
+		  DragDrop.init(dropableTargets, clickBlock, dragBlock, event) ;
+		} ;
+
+		function initDnD2() {
+			var uiDragObject = document.getElementById('UIDragObject');
+			var dragHandleArea = eXo.core.DOMUtil.findFirstDescendantByClass(uiDragObject, "div", "UIObjectBody");
+			eXo.core.DragDrop2.init(dragHandleArea, uiDragObject);
+			
+			uiDragObject.onDragStart = function(x, y, lastMouseX, lastMouseY, e) {
+			}
+			
+			uiDragObject.onDrag = function(nx, ny, ex, ey, e) {
+			    if (nx < 0) uiDragObject.style.left = "0px";
+			    if (ny < 0) uiDragObject.style.top = "0px";
+			}
+			
+		    uiDragObject.onDragEnd = function(x, y, clientX, clientY) {
+		        uiDragObject.style.top = y + "px";
+		        uiDragObject.style.left = x + "px";
+		    }			   
+		}
+ 	</script>
+ 	
+</head>
+<body style="height: 100%;">
+
+	<div id="UIPageDesktop" class="UIPageDesktop">
+	</div>
+	
+	<div class="UIDragObjectComponent">
+		<div class="UIDragObject" id="UIDragObject" style="position:absolute;top:0px; left:0px;">
+			<div class="UIObjectBody"  onmousedown="initDnD2(this);">
+			 	<button title="Please drag me!" cursor style="position:absolute;width:146px;height:156px;border-style:solid;cursor:move;"/>
+			</div>
+		</div>
+	</div>
+	
+</body></html>

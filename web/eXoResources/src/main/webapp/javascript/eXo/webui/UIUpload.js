@@ -3,7 +3,11 @@ function UIUpload() {
   this.isAutoUpload = false;
   //this.listLimitMB = new Array();
 };
-
+/**
+ * Initialize upload
+ * @param {String} uploadId identifier upload
+ * @param {boolean} isAutoUpload
+ */
 UIUpload.prototype.initUploadEntry = function(uploadId, isAutoUpload) {
 	var url = eXo.env.server.context + "/command?" ;
 	url += "type=org.exoplatform.web.command.handler.UploadHandler&action=progress&uploadId="+uploadId ;
@@ -129,7 +133,10 @@ UIUpload.prototype.showUploaded = function(id, fileName) {
   var  input = parent.document.getElementById('input' + id);
 	input.value = "true" ;  
 };
-
+/**
+ * Abort upload process
+ * @param {String} id upload identifier
+ */
 UIUpload.prototype.abortUpload = function(id) {
   eXo.webui.UIUpload.listUpload.remove(id);
   var url = eXo.env.server.context + "/command?" ;
@@ -159,7 +166,10 @@ UIUpload.prototype.abortUpload = function(id) {
   var  input = parent.document.getElementById('input' + id);
   input.value = "false";
 };
-
+/**
+ * Delete upload file
+ * @param {String} id upload identifier
+ */
 UIUpload.prototype.deleteUpload = function(id) {
 	var url = eXo.env.server.context + "/command?";
 	url += "type=org.exoplatform.web.command.handler.UploadHandler&uploadId=" +id+"&action=delete" ;

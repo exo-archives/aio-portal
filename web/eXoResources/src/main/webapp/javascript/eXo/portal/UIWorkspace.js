@@ -9,7 +9,11 @@ eXo.portal.UIWorkspace = new UIWorkspace("UIWorkspace") ;
 if(!eXo.portal.UIControlWorkspace) {
   eXo.portal.UIControlWorkspace = new UIWorkspace("UIControlWorkspace") ;
 };
-
+/**
+ * Resize UIControlWorkspace document object
+ * @param {Number} width new width
+ * @param {Number} height new height
+ */
 eXo.portal.UIControlWorkspace.onResize = function(width, height) {	
 	this.width = width ;
 	this.height = height ;
@@ -42,7 +46,9 @@ eXo.portal.UIControlWorkspace.onResize = function(width, height) {
 		uiWorkspace.style.width = width + 1 + "px" ; 
 	}
 } ;
-
+/**
+ * Change UIControlWorkspace to default size (left edge of screen)
+ */
 eXo.portal.UIControlWorkspace.onResizeDefault = function() {
 	var cws = eXo.portal.UIControlWorkspace ;
 	cws.defaultWidth = 250 ;
@@ -61,7 +67,9 @@ eXo.portal.UIControlWorkspace.onResizeDefault = function() {
 		cws.onResize(cws.slidebar.offsetWidth, eXo.core.Browser.getBrowserHeight()) ;
 	}
 };
-
+/**
+ * Set visibility property for UIControlWorkspace object
+ */
 eXo.portal.UIControlWorkspace.setVisible = function(visible) {
 	var cws = eXo.portal.UIControlWorkspace ;
 	if(cws.isFirstTime == true && visible && cws.showControlWorkspace == false) {
@@ -73,7 +81,9 @@ eXo.portal.UIControlWorkspace.setVisible = function(visible) {
 /* TODO: too many function were added in this function, 
  * need to find another way to manage them!
  * */
-   	
+/**
+ * Show or hide control workspace
+ */
 eXo.portal.UIControlWorkspace.showWorkspace = function() {
 	var cws = eXo.portal.UIControlWorkspace ;
 	var uiWorkspace = document.getElementById(this.id) ;
@@ -187,7 +197,9 @@ eXo.portal.UIControlWorkspace.showWorkspace = function() {
 if(eXo.portal.UIWorkingWorkspace == undefined) {
   eXo.portal.UIWorkingWorkspace = new UIWorkspace("UIWorkingWorkspace") ;
 };
-
+/**
+ * Resize UIWorkingWorkspace to fit beside on UIControlWorkspace on the screen
+ */
 eXo.portal.UIWorkingWorkspace.onResize = function() {
 	var uiWorkspace = document.getElementById(eXo.portal.UIWorkingWorkspace.id) ;
 	var uiControlWorkspace = document.getElementById("UIControlWorkspace") ;
@@ -204,7 +216,10 @@ eXo.portal.UIWorkingWorkspace.onResize = function() {
   	else uiWorkspace.style.marginRight = "0px" ;
   }
 };
-
+/**
+ * Resize UIWorkspacePanel document object
+ * @param {Number} h new height
+ */
 eXo.portal.UIWorkingWorkspace.resizeWorkspacePanel = function(h) {
   var workspacePanel = document.getElementById("UIWorkspacePanel");
   workspacePanel.style.height = h + "px";

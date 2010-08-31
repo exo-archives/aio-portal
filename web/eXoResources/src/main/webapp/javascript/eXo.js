@@ -1,3 +1,6 @@
+/**
+ * This class contains common js object that used in whole portal
+ */
 var eXo  = {
   animation : { },
   
@@ -38,7 +41,7 @@ var eXo  = {
   i18n : { }
 } ;
 
-/*
+/**
 * This method will : 
 *   1) dynamically load a javascript module from the server (if no root location is set 
 *      then use '/eXoResources/javascript/', aka files
@@ -74,6 +77,15 @@ eXo.loadJS = function(path) {
   }
 } ;
 
+/**
+ * Make url request with parameters
+ * 
+ * @param targetComponentId identifier of component
+ * @param actionName name of action
+ * @param useAjax indicate Ajax request or not
+ * @param params array contains others parameters
+ * @return full url request
+ */
 eXo.env.server.createPortalURL = function(targetComponentId, actionName, useAjax, params) {
   var href = eXo.env.server.portalBaseURL + "?portal:componentId=" + targetComponentId + "&portal:action=" + actionName ;
 
@@ -87,6 +99,9 @@ eXo.env.server.createPortalURL = function(targetComponentId, actionName, useAjax
   return  href ;
 } ;
 
+/**
+ * log out of user session
+ */
 eXo.portal.logout = function() {
 	window.location = eXo.env.server.createPortalURL("UIPortal", "Logout", false) ;
 }

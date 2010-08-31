@@ -576,7 +576,10 @@ function doRequest(method, url, queryString, callback) {
   eXo.portal.CurrentRequest = request ;
   request.process() ;
 }	;
-
+/**
+ * Abort an ajax request
+ * @return
+ */
 function ajaxAbort() {	
   eXo.core.UIMaskLayer.removeMasks(eXo.portal.AjaxRequest.maskLayer) ;
   eXo.portal.AjaxRequest.maskLayer = null ;	  
@@ -585,7 +588,12 @@ function ajaxAbort() {
   eXo.portal.CurrentRequest.aborted = true ;
   eXo.portal.CurrentRequest = null ;
 } ;
-
+/**
+ * 
+ * @param url
+ * @param async
+ * @return
+ */
 function ajaxAsyncGetRequest(url, async) {
 	if(async == undefined) async = true ;
 	var request =  eXo.core.Browser.createHttpRequest() ;
@@ -594,7 +602,11 @@ function ajaxAsyncGetRequest(url, async) {
   request.send(null) ;
 	if(!async) return request.responseText ;
 }
-
+/**
+ * Redirect browser to url
+ * @param url
+ * @return
+ */
 function ajaxRedirect(url) {
 	url =	url.replace(/&amp;/g, "&") ;
 	window.location.href = url ;

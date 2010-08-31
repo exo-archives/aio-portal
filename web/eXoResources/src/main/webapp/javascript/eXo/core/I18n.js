@@ -1,3 +1,8 @@
+/**
+ * This class used to internationalize and localize content from .js files
+ * 
+ * @return
+ */
 function I18n() {
   this.init();
 }
@@ -16,6 +21,10 @@ I18n.prototype.getLanguage = function() {
   return this.lang;
 }
 
+/**
+ * return orientation (right to left, left to right), 
+ * some languages (such as Arabic) used "right to left" view
+ */
 I18n.prototype.getOrientation = function() {
   return this.orientation;
 }

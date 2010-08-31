@@ -2,7 +2,11 @@ function UIPortalControl() {
   this.scrollManagers = new Array();
   this.t = 0;
 };
-
+/**
+ * Change state of window
+ * @param {String} id object identifier
+ * @param {String} state state will be displayed (maximized, minimized, normal)
+ */
 UIPortalControl.prototype.changeWindowState = function(id, state) {
   var params = [
     {name: "portletId", value: id},
@@ -10,7 +14,10 @@ UIPortalControl.prototype.changeWindowState = function(id, state) {
   ] ;
 	ajaxGet(eXo.env.server.createPortalURL("UIPortal", "ChangeWindowState", true, params));
 };
-
+/**
+ * Collapse tree
+ * @param {Object} selectedElement first object of tree
+ */
 /*For Navigation Tree*/
 UIPortalControl.prototype.collapseTree = function(selectedElement ) {
   var DOMUtil = eXo.core.DOMUtil ;
@@ -27,8 +34,9 @@ UIPortalControl.prototype.collapseTree = function(selectedElement ) {
   eXo.portal.UIPortalControl.fixHeight();
 };
 
-/** Created: by Duy Tu - fixHeight function to UIControlWorkspace
- **/
+/** 
+ * Created: by Duy Tu - fixHeight function to UIControlWorkspace
+ */
 UIPortalControl.prototype.fixHeight = function() {
 	var objectParent = document.getElementById("UIControlWorkspace");
 	if(!objectParent) return;

@@ -325,7 +325,9 @@ DOMUtil.prototype.getStyle = function(element, style, intValue) {
 DOMUtil.prototype.hideElements = function() {
 	document.onclick = eXo.core.DOMUtil.cleanUpHiddenElements;
 };
-
+/**
+ * clean hidden elements
+ */
 DOMUtil.prototype.cleanUpHiddenElements = function() {
 	var ln = eXo.core.DOMUtil.hideElementList.length ;
 	if (ln > 0) {

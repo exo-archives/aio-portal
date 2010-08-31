@@ -1,5 +1,7 @@
 function MouseEventManager () {} ;
-
+/**
+ * Add a method into mousedown handler chains.
+ */
 MouseEventManager.prototype.addMouseDownHandler = function(method) {
 	document.onmousedown = this.docMouseDownEvt ;
 	this.onMouseDownHandlers = method ;
@@ -14,7 +16,9 @@ MouseEventManager.prototype.docMouseDownEvt = function(evt) {
 	else eXo.core.MouseEventManager.onMouseDownHandlers(evt) ;
 	document.onmousedown = null ;
 } ;
-
+/**
+ * Add a method into mouse up handler chains.
+ */
 MouseEventManager.prototype.addMouseUpHandler = function(method) {
 	document.onmouseup = this.docMouseUpEvt ;
 	this.onMouseUpHandlers = method ;

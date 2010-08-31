@@ -1,0 +1,96 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" dir="ltr">
+<head>  
+    <title>UIWorkspace</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link href="../css/UIMaskWorkspace/Stylesheet.css" type="text/css" rel="stylesheet">
+    <link href="../css/UIWorkspace/Stylesheet.css" type="text/css" rel="stylesheet">
+    
+ <script src="../../eXo.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/Util.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/DOMUtil.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/Browser.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/MouseEventManager.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/UIMaskLayer.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/Skin.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/JSON.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/Cometd.js" type="text/javascript"></script>
+
+    <script src="../../eXo/core/I18n.js" type="text/javascript"></script>
+
+    <script src="../../eXo/webui/UIItemSelector.js" type="text/javascript"></script>
+
+    <script src="../../eXo/webui/UIForm.js" type="text/javascript"></script>
+
+    <script src="../../eXo/webui/UIDropDownControl.js" type="text/javascript"></script>
+
+    <script src="../../eXo/webui/UIRightClickPopupMenu.js" type="text/javascript"></script>
+
+    <script src="../../eXo/portal/PortalHttpRequest.js" type="text/javascript"></script>
+
+    <script src="../../eXo/portal/UIPortal.js" type="text/javascript"></script>
+
+    <script src="../../eXo/portal/UIWorkspace.js" type="text/javascript"></script>
+
+    <script src="../../eXo/portal/UIPortalControl.js" type="text/javascript"></script>
+
+    <script src="../../eXo/portal/PortalDragDrop.js" type="text/javascript"></script>
+
+    <script src="../../eXo/portal/UIPortalNavigation.js" type="text/javascript"></script>
+
+    <script src="../../eXo/portal/UIMaskWorkspace.js" type="text/javascript"></script>
+    <script src="../../eXo/portal/UIBrowseContent.js" type="text/javascript"></script>
+    <script src="../../eXo/webui/UIPortlet.js" type="text/javascript"></script>
+    <script src="../../eXo/i18n/I18NMessage.js" type="text/javascript"></script>
+    <script src="../../eXo/i18n/MessageResource_en.js" type="text/javascript"></script>
+ 	
+ 	<script language="javascript" type="text/javascript">
+ 		function testGetUIPortlets() {
+			var uiPortlets = eXo.portal.UIPortal.getUIPortlets();
+			alert(uiPortlets.length + " UIPortlets in this working workspace");
+ 		}
+
+ 		function test() {
+ 			eXo.portal.UIPortal.showLayoutModeForPage();
+ 		}
+ 	</script>
+ 	
+</head>
+<body style="height: 100%;">
+
+<div align="center">Test methods in UIWorkspace.js file</div>
+<br/><br/>
+
+<a href="#" onclick="eXo.portal.UIControlWorkspace.onResize(200, 500);">UIControlWorkspace.onResize(200, 500)</a><br/>
+<a href="#" onclick="eXo.portal.UIControlWorkspace.onResize(250, 400);">UIControlWorkspace.onResize(250, 400)</a><br/>
+<a href="#" onclick="eXo.portal.UIControlWorkspace.onResizeDefault();">UIControlWorkspace.onResizeDefault()</a><br/>
+
+<div id="UIPortalApplication" class="default">
+	<div style="float: left; position: relative; z-index: 1; display: inline; width: 250px; height: 400px; top: 0px;" 
+		 class="UIControlWorkspace UIWorkspace" id="UIControlWorkspace">
+	  		UIControlWorkspace
+	  <div title="Click to open Control Workspace" onclick="eXo.portal.UIControlWorkspace.showWorkspace();" id="ControlWorkspaceSlidebar" class="Slidebar" style="overflow: hidden; display: none; height: 334px;">
+    	<div class="SlidebarButton"><span></span></div>
+  	  </div>
+  
+	  <div style="display: block; width: 250px;" id="UIWorkspaceContainer" class="UIWorkspaceContainer">	    
+	    <div id="UIWorkspacePanel" class="UIWorkspacePanel" style="overflow: hidden; height: 273px;">
+	      <div id="UIControlWSWorkingArea">
+	      </div>
+	    </div>	    
+	  </div>
+	</div>
+	
+	<div class="UIWorkingWorkspace" id="UIWorkingWorkspace">
+		UIWorkingWorkspace
+	</div>
+</div>
+
+</body></html>

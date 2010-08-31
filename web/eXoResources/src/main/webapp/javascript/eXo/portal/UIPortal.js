@@ -1,3 +1,8 @@
+/**
+ * This class contains information that describes a document object
+ * @param node
+ * @return
+ */
 function UIComponent(node) {
   this.node = node ;
   if(node) this.type = node.className ;
@@ -36,7 +41,11 @@ UIComponent.prototype.getViewBlock = function() { return this.view ; };
 function UIPortal() {
   this.portalUIComponentDragDrop = false;
 };
-
+/**
+ * Find a UIComponent (as UIPortlet, UIContainer, UIPageBody, UIPortal) 
+ * that is parent of element parameter
+ * @param element
+ */
 UIPortal.prototype.findUIComponentOf = function(element) {
   var parent = element.parentNode ;
   while(parent != null) {
@@ -49,7 +58,9 @@ UIPortal.prototype.findUIComponentOf = function(element) {
   }
   return null ;
 };
-
+/**
+ * Display Mask layer in front of page's surface
+ */
 UIPortal.prototype.showMaskLayer = function() {
 	
 	var uiPortalApplication = document.getElementById("UIPortalApplication") ;
@@ -67,7 +78,9 @@ UIPortal.prototype.showMaskLayer = function() {
 	this.maskLayer.style.zIndex = parseInt(object.style.zIndex) + 1 ;
 	eXo.core.Browser.addOnScrollCallback("3743892", eXo.core.UIMaskLayer.setPosition) ;
 } ;
-
+/**
+ * Remove mask layer from page's surface
+ */
 UIPortal.prototype.hideMaskLayer = function() {
 	if(this.maskLayer) {
 		var uiPortalApplication = document.getElementById("UIPortalApplication") ;
@@ -77,7 +90,10 @@ UIPortal.prototype.hideMaskLayer = function() {
 		uiPortalApplication.removeChild(maskObject) ;
 	}
 } ;
-
+/**
+ * Change skin of Portal
+ * @param url
+ */
 UIPortal.prototype.changeSkin = function(url) {
  var skin = '';
  if(eXo.webui.UIItemSelector.SelectedItem != undefined) {
@@ -87,7 +103,10 @@ UIPortal.prototype.changeSkin = function(url) {
   //ajaxAsyncGetRequest(url + '&skin='+skin, false);
   window.location = url + '&skin='+skin;
 } ;
-
+/**
+ * Change language of Portal
+ * @param url
+ */
 UIPortal.prototype.changeLanguage = function(url) {
 	var language = '';
 	if(eXo.webui.UIItemSelector.SelectedItem != undefined) {
@@ -97,7 +116,9 @@ UIPortal.prototype.changeLanguage = function(url) {
   //ajaxAsyncGetRequest(url + '&language='+language, false);
   window.location = url + '&language='+language;
 } ;
-
+/**
+ * Change current portal
+ */
 UIPortal.prototype.changePortal = function(accessPath, portal) {
   window.location = eXo.env.server.context + "/" + accessPath + "/" + portal+"/";
 } ;

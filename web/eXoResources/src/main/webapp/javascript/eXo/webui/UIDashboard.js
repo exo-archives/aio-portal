@@ -360,7 +360,11 @@ eXo.webui.UIDashboard = {
 			}
 		}
 	},
-	
+	/**
+	 * Create a document div object with id and class equal "UITarget"
+	 * @param width width for Target object
+	 * @param height height for Target object
+	 */
 	createTarget : function(width, height) {
 		var uiTarget = document.createElement("div");
 		uiTarget.id = "UITarget";
@@ -369,7 +373,10 @@ eXo.webui.UIDashboard = {
 		uiTarget.style.height = height + "px";
 		return uiTarget;
 	},
-	
+	/**
+	 * Create a document div object with id and class equal "UITarget", height is the same obj parameter
+	 * @param obj document object
+	 */
 	createTargetOfAnObject : function(obj) {
 		var ggwidth = obj.offsetWidth;
 		var ggheight = obj.offsetHeight;
@@ -379,7 +386,10 @@ eXo.webui.UIDashboard = {
 		uiTarget.style.height = ggheight + "px";
 		return uiTarget;
 	},
-	
+	/**
+	 * Show and hide gadget list for selecting gadget
+	 * @param {Object} comp indicate action show and hide, if it is close button, action is hide
+	 */
 	showHideSelectContainer : function(comp) {
 		var DOMUtil = eXo.core.DOMUtil;
 		var uiDashboardPortlet = DOMUtil.findAncestorByClass(comp, "UIDashboard");
@@ -416,7 +426,12 @@ eXo.webui.UIDashboard = {
 			eXo.webui.UIDashboard.setMinHeightForDashboardColumn(uiDashboardPortlet);
 		}
 	}, 
-	
+	/**
+	 * Using when click event happens on a dashboard tab
+	 * @param {Object} clickElement
+	 * @param {String} normalStyle a css style
+	 * @param {String} selectedType a css style
+	 */
 	onTabClick : function(clickElement, normalStyle, selectedType) {
 		var DOMUtil = eXo.core.DOMUtil;
 		var category = DOMUtil.findAncestorByClass(clickElement, "GadgetCategory");

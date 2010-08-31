@@ -1,5 +1,8 @@
 function UIToolbar() {};
-
+/**
+ * Display block content
+ * @param {Object} clickedEle clicked object
+ */
 UIToolbar.prototype.displayBlockContent = function(clickedEle) {
 	if(clickedEle == null) return;
   var uiToolbar = eXo.core.DOMUtil.findAncestorByClass(clickedEle, "UIToolbar");

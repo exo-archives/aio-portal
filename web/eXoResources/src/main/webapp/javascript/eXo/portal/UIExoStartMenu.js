@@ -139,7 +139,10 @@ UIExoStartMenu.prototype.onMenuItemOver = function(event) {
 		menuItemContainer.style.top = y + "px" ;
 	}
 };
-
+/**
+ * Find parent
+ * @param {Object} comp object that need to find parent
+ */
 UIExoStartMenu.prototype.findPositionParent = function(comp) {
 	var pr = comp.parentNode ;
 	while(pr) {

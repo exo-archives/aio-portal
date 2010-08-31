@@ -3,7 +3,11 @@
  */
 function UIForm() {
 };
-
+/**
+ * Get form element
+ * @param {String} pattern
+ * The pattern can  be Id#Id, example: Account#UIAccountForm
+ */
 UIForm.prototype.getFormElemt = function(pattern) {
 	if(pattern.indexOf("#") == -1) return document.getElementById(pattern) ;
 	var strArr = pattern.split("#") ;

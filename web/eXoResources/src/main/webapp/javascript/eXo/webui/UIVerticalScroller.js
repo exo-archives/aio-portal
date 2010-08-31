@@ -7,7 +7,10 @@ UIVerticalScroller.prototype.init = function() {
 	eXo.gadget.UIGadget.resizeContainer() ;
 	eXo.webui.UIVerticalScroller.refreshScroll(0) ;
 } ;
-
+/**
+ * Use to refresh vertical workspace scroll
+ * @param {Number} id (0, 1, -1)
+ */
 UIVerticalScroller.prototype.refreshScroll = function(id) {
   var DOMUtil =  eXo.core.DOMUtil ;
 	var container = document.getElementById("UIWorkspaceContainer") ;
