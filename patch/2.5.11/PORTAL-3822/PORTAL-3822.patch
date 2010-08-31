@@ -1,0 +1,18 @@
+Index: webui/core/src/main/java/org/exoplatform/webui/form/UIFormDateTimeInput.java
+===================================================================
+--- webui/core/src/main/java/org/exoplatform/webui/form/UIFormDateTimeInput.java	(revision 49264)
++++ webui/core/src/main/java/org/exoplatform/webui/form/UIFormDateTimeInput.java	(working copy)
+@@ -150,7 +150,12 @@
+   
+   @SuppressWarnings("unused")
+   public void decode(Object input, WebuiRequestContext context) throws Exception {
+-    if(input != null) value_ = ((String)input).trim();
++    if(input != null) {
++       value_ = ((String)input).trim();
++       
++       Calendar currDate = getCalendar();
++       date = currDate != null ? currDate.getTime() : null;
++    }        
+   }
+ 
+   private String getResourceString(ResourceBundle rs, String key) {
