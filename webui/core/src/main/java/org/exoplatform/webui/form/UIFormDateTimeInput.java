@@ -150,7 +150,12 @@ public class UIFormDateTimeInput extends UIFormInputBase<String> {
   
   @SuppressWarnings("unused")
   public void decode(Object input, WebuiRequestContext context) throws Exception {
-    if(input != null) value_ = ((String)input).trim();
+    if(input != null) {
+       value_ = ((String)input).trim();
+       
+       Calendar currDate = getCalendar();
+       date = currDate != null ? currDate.getTime() : null;
+    }        
   }
 
   private String getResourceString(ResourceBundle rs, String key) {
