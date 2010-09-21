@@ -1,0 +1,88 @@
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties	(revision 51494)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties	(working copy)
+@@ -222,6 +222,7 @@
+ UILoginForm.label.NotMember=Not a member?
+ UILoginForm.label.Signup=Signup
+ UILoginForm.label.Signin=Sign in
++UILoginForm.label.SigninFail=Sign in failed. Wrong username or password.
+ UILoginForm.label.ForAccount=Register now for an account
+ 
+   #############################################################################
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties	(revision 51494)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties	(working copy)
+@@ -227,6 +227,7 @@
+ UILoginForm.label.RememberOnComputer=Se souvenir de mon identifiant
+ UILoginForm.label.Signin=Connexion
+ UILoginForm.label.Signup=Enregistrement
++UILoginForm.label.SigninFail=Le nom d'utilisateur ou mot de passe est incorrecte.
+ UILoginForm.label.ForAccount=Créer un compte
+ 
+   #############################################################################
+@@ -1487,4 +1488,4 @@
+ UICalendar.NextMonth=Mois suivant
+ UICalendar.PreMonth=Mois précédent
+ UICalendar.NextYear=Année suivante
+-UICalendar.PreYear=Année précédente
+\ No newline at end of file
++UICalendar.PreYear=Année précédente
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_vi.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_vi.properties	(revision 51494)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_vi.properties	(working copy)
+@@ -222,6 +222,7 @@
+ UILoginForm.label.NotMember=Không là thành viên?
+ UILoginForm.label.Signup=Đăng nhập
+ UILoginForm.label.Signin=Đăng nhập
++UILoginForm.label.SigninFail=Đăng nhập không thành công. Bạn đã nhập sai tên tài khỏan hoặc mật khẩu.
+ UILoginForm.label.ForAccount=Đăng kí tài khoản
+ 
+   #############################################################################
+Index: web/portal/src/main/webapp/login/skin/Stylesheet.css
+===================================================================
+--- web/portal/src/main/webapp/login/skin/Stylesheet.css	(revision 51494)
++++ web/portal/src/main/webapp/login/skin/Stylesheet.css	(working copy)
+@@ -40,7 +40,7 @@
+ 
+ .UILogin .LoginContent .FieldContainer label {
+   float: left;
+-  width: 80px ; height: 20px; 
++  width: 90px ; height: 20px; 
+   line-height: 20px; 
+ 	text-align: right;
+ 	font-weight: bold ;
+Index: web/portal/src/main/webapp/login/jsp/login.jsp
+===================================================================
+--- web/portal/src/main/webapp/login/jsp/login.jsp	(revision 51494)
++++ web/portal/src/main/webapp/login/jsp/login.jsp	(working copy)
+@@ -48,7 +48,7 @@
+ 
+ <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+   <head>
+-    <title>Login</title>
++    <title><%=res.getString("UILoginForm.label.login")%></title>
+     <link rel="shortcut icon" type="image/x-icon"  href="/portal/favicon.ico" />
+     <link rel='stylesheet' type='text/css' href='<%=contextPath%>/login/skin/Stylesheet.css'/>
+     <script type="text/javascript" src="/eXoResources/javascript/eXo.js"></script>
+@@ -56,15 +56,15 @@
+   </head>
+   <body style="text-align: center; background: #f5f5f5; font-family: arial, tahoma, verdana">
+     <div class="UILogin">
+-      <div class="LoginHeader">Sign in</div>
++      <div class="LoginHeader"><%=res.getString("UILoginForm.label.Signin")%></div>
+       <div class="LoginContent">
+-        <div class="WelcomeText">Welcome to eXo Portal</div>
++        <div class="WelcomeText"><%=res.getString("UILoginForm.label.welcome")%></div>
+         <div class="CenterLoginContent">
+           <%/*Begin form*/%>
+           <%
+             if(userName.length() > 0 || password.length() > 0) {
+           %>
+-            <font color="red">Sign in failed. Wrong username or password.</font><%}%>
++            <font color="red"><%=res.getString("UILoginForm.label.SigninFail")%></font><%}%>
+           <form name="loginForm" action="<%=loginAction%>" method="post" style="margin: 0px;">        
+               <div class="FieldContainer">
+ 	              <label><%=res.getString("UILoginForm.label.UserName")%></label><input class="UserName" name="j_username" value="<%=userName%>"/>

@@ -48,7 +48,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
-    <title>Login</title>
+    <title><%=res.getString("UILoginForm.label.login")%></title>
     <link rel="shortcut icon" type="image/x-icon"  href="/portal/favicon.ico" />
     <link rel='stylesheet' type='text/css' href='<%=contextPath%>/login/skin/Stylesheet.css'/>
     <script type="text/javascript" src="/eXoResources/javascript/eXo.js"></script>
@@ -56,15 +56,15 @@
   </head>
   <body style="text-align: center; background: #f5f5f5; font-family: arial, tahoma, verdana">
     <div class="UILogin">
-      <div class="LoginHeader">Sign in</div>
+      <div class="LoginHeader"><%=res.getString("UILoginForm.label.Signin")%></div>
       <div class="LoginContent">
-        <div class="WelcomeText">Welcome to eXo Portal</div>
+        <div class="WelcomeText"><%=res.getString("UILoginForm.label.welcome")%></div>
         <div class="CenterLoginContent">
           <%/*Begin form*/%>
           <%
             if(userName.length() > 0 || password.length() > 0) {
           %>
-            <font color="red">Sign in failed. Wrong username or password.</font><%}%>
+            <font color="red"><%=res.getString("UILoginForm.label.SigninFail")%></font><%}%>
           <form name="loginForm" action="<%=loginAction%>" method="post" style="margin: 0px;">        
               <div class="FieldContainer">
 	              <label><%=res.getString("UILoginForm.label.UserName")%></label><input class="UserName" name="j_username" value="<%=userName%>"/>
