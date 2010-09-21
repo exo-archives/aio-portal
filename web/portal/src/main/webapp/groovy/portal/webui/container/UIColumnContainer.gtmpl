@@ -1,0 +1,105 @@
+<%
+  import org.exoplatform.commons.utils.ExpressionUtil;
+  import org.exoplatform.portal.webui.workspace.UIPortalApplication;
+  import org.exoplatform.portal.webui.container.UIColumnContainer;
+  import org.exoplatform.web.application.JavascriptManager;
+
+  def rcontext = _ctx.getRequestContext() ;
+  JavascriptManager jsmanager = rcontext.getJavascriptManager();
+  jsmanager.importJavascript('eXo.webui.UIPopupSelectCategory') ;
+
+  ResourceBundle res = rcontext.getApplicationResourceBundle() ;
+  UIPortalApplication uiPortalApp = rcontext.getUIApplication();
+  int portalMode = uiPortalApp.getModeState();
+
+	String cssStyle = "";
+	String uiComponentWidth = uicomponent.getWidth();
+	String uiComponentHeight = uicomponent.getHeight();
+	if(uiComponentWidth != null || uiComponentHeight != null) cssStyle = "style=\"";
+	if(uiComponentHeight != null) cssStyle += "height: "+uiComponentHeight+";"
+	if(cssStyle.length() > 0) cssStyle += "\"";
+%>
+
+<div class="UIContainer UIColumnContainer" id="UIContainer-${uicomponent.id}" ${cssStyle}>
+<%if (uiPortalApp.isEditting()) {%>
+  <div class="META-DATA-BLOCK" style="display: none">
+    <div class="id">$uicomponent.id</div>
+    <div class="title"><%=_ctx.appRes("UIColumnContainer.title.Container")%></div>
+    <div class="description"><%=_ctx.appRes("UIColumnContainer.label.Thecontainer")%></div>
+  </div>
+  
+  <div class="CONTROL-CONTAINER CONTROL-BLOCK" <%if(portalMode != UIPortalApplication.CONTAINER_EDIT_MODE) print("style=\"display: none\"")%>>
+    <%/*Begin InfoBar*/%>
+   	<div class="UIInfoBar">
+      <div class="BlueRoundedStyle">
+        <div class="LeftBar">
+          <div class="RightBar">
+		        <div class="MiddleBar">
+		        	<div class="FixHeight ClearFix">
+		        		<% 	String showCategory = "eXo.webui.UIPopupSelectCategory.show(this, event)";
+		        		 %>
+								<div class="DragControlArea" onmousedown="eXo.portal.PortalDragDrop.init.call(this, event)" title="<%=_ctx.appRes("UIColumnContainer.title.DragControlArea")%>"><span></span></div>
+								<div class="ContainerIcon"><span></span></div>             
+								<a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeleteContainerIcon" title="<%=_ctx.appRes("UIColumnContainer.tooltip.closeContainer")%>"><span></span></a>
+								<a href="<%=uicomponent.event("EditContainer","$uicomponent.id")%>" class="EditContainerIcon" title="<%=_ctx.appRes("UIColumnContainer.tooltip.editContainer")%>"><span></span></a>
+						<div class="ControlIcon ArrowDownIcon" onclick="$showCategory" title="<%= _ctx.appRes("UIColumnContainer.tootip.insertColumn") %>">
+							<% /*Begin popup display*/ %>
+							<div style="position: relative; width: 100%">
+						      <div class="UIPopupCategory" style="display: none;">
+						        <div class="PopupCategoryDecorator">
+						          <div class="PopupCategoryTL">
+						            <div class="PopupCategoryTR">
+						              <div class="PopupCategoryTC"><span></span></div>
+						            </div>
+						          </div>
+						          <div class="PopupCategoryML">
+						            <div class="PopupCategoryMR">
+						              <div class="PopupCategoryMC">
+							  			<a class="CategoryItem" href="<%= uicomponent.event("InsertColumn", UIColumnContainer.INSERT_BEFORE) %>"  title="<%= _ctx.appRes("UIColumnContainer.tooltip.insertLeft") %>">
+						                   <div class="CategoryItemLabel"><%= _ctx.appRes("UIColumnContainer.label.insertLeft") %></div>
+					                    </a>          
+					                    <a class="CategoryItem" href="<%= uicomponent.event("InsertColumn", UIColumnContainer.INSERT_AFTER) %>"  title="<%= _ctx.appRes("UIColumnContainer.tooltip.insertRight") %>">
+						                   <div class="CategoryItemLabel"><%= _ctx.appRes("UIColumnContainer.label.insertRight") %></div>
+					                    </a>                     
+						              </div>
+						              
+						            </div>
+						          </div>
+						          <div class="PopupCategoryBL">
+						            <div class="PopupCategoryBR">
+						              <div class="PopupCategoryBC"><span></span></div>
+						            </div>
+						          </div>
+						        </div>
+						      </div>
+						    </div>
+					      <% /*End Popup Menu*/ %>
+						</div>
+								<div class="Title">
+									<% 
+										if(uicomponent.getTitle() != null) {
+										println(ExpressionUtil.getExpressionValue(res, uicomponent.getTitle())) ;
+										} else {
+									%>
+									<%=_ctx.appRes("UIColumnContainer.title.Container")%>
+									<%}%>
+								</div>            
+							</div>
+		        </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%/*End InfoBar*/ %>
+  </div>
+  
+  <div class="LAYOUT-CONTAINER">
+<%} else {%>
+  <div class="VIEW-CONTAINER">
+<%}%>
+    <div id="$uicomponent.id">
+      <div class="UIRowContainer"><%uicomponent.renderChildren()%></div>
+	  </div>
+	</div>  
+</div>
+

@@ -161,7 +161,7 @@
 	float: right; /* orientation=lt */
 	float: left; /* orientation=rt */
 	width: 16px; height: 16px;
-	background: url('background/ContainerIcon.gif') no-repeat top;
+	background: url('background/ContainerIcon.gif') no-repeat center 1px;
 	margin: 4px 5px 2px 0px; /* orientation=lt */
 	margin: 4px 0px 2px 5px; /* orientation=rt */
 }
@@ -170,7 +170,7 @@
 	float: right; /* orientation=lt */
 	float: left; /* orientation=rt */
 	width: 18px; height:18px; 
-	background: url('background/ContainerIcon.gif') no-repeat center -16px;
+	background: url('background/ContainerIcon.gif') no-repeat center -18px;
 	margin: 5px 0px 0px 0px;
 }
 
@@ -180,6 +180,18 @@
 	width: 16px; height: 16px;
 	margin: 3px 5px 0px 5px;
 	background: url('/eXoSkinMac/skin/MacSkin/skinIcons/16x16/icons/DefaultContainerIcon.gif') no-repeat;
+}
+
+.UIColumnContainer .ArrowDownIcon {
+  background-position:center 18px;
+}
+
+.UIColumnContainer .ControlIcon {
+  background: url("/eXoResources/skin/PortletThemes/background/MacTheme.png") no-repeat center -196px;
+  cursor: pointer;
+  float: right;
+  height: 20px;
+  width: 28px;
 }
 
 .UIContainer .ContentPortletIcon {

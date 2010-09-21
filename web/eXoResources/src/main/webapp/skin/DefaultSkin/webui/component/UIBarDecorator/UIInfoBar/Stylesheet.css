@@ -55,15 +55,15 @@
 	
 .UIInfoBar .BlueRoundedStyle .FixHeight {
 	height: 22px;
-	overflow: hidden;
 }
 
 .UIInfoBar .BlueRoundedStyle .Title {
 	text-align: left; /* orientation=lt */
 	text-align: right; /* orientation=rt */
 	font-weight: bold; color: black;
-	line-height: 15px;
+	line-height: 22px;
 	margin: 4px 60px 0px 60px;
+	!margin: 0 60px;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;

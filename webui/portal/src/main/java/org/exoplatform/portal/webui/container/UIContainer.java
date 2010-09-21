@@ -39,14 +39,7 @@ import org.exoplatform.webui.event.EventListener;
           @EventConfig(listeners = EditContainerActionListener.class),
           @EventConfig(listeners = DeleteComponentActionListener.class, confirm = "UIContainer.deleteContainer")
       }
-  ),/*
-  @ComponentConfig( 
-      id = "WidgetContainer",
-      template = "system:/groovy/portal/webui/container/UIWidgetContainer.gtmpl",
-      events = {
-          @EventConfig(listeners = ShowAddNewApplicationActionListener.class)
-      }
-  ),*/
+  ),
   @ComponentConfig( 
       id = "GadgetContainer",
       template = "system:/groovy/portal/webui/container/UIGadgetContainer.gtmpl",

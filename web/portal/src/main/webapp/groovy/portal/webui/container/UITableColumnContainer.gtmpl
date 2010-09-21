@@ -11,7 +11,7 @@
   
   int portalMode = uiPortalApp.getModeState();
 %>
-<div class="UIContainer" id="UIContainer-${uicomponent.id}">
+<div class="UIContainer UITableColumnContainer" id="UIContainer-${uicomponent.id}">
 <%if(uiPortalApp.isEditting()){%>
   <div class="META-DATA-BLOCK" style="display: none">
     <div class="id">$uicomponent.id</div>
@@ -27,17 +27,17 @@
           <div class="RightBar">
             <div class="MiddleBar">
             	<div class="FixHeight ClearFix">
-	              <div class="DragControlArea" onmousedown="eXo.portal.PortalDragDrop.init.call(this, event)" title="<%=_ctx.appRes("UIContainer.tooltip.drag")%>"><span></span></div>
+	              <div class="DragControlArea" onmousedown="eXo.portal.PortalDragDrop.init.call(this, event)" title="<%=_ctx.appRes("UITableColumnContainer.title.DragControlArea")%>"><span></span></div>
 	              <div class="ContainerIcon DefaultContainer16x16Icon"><span></span></div>
-	              <a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeleteContainerIcon" title="<%=_ctx.appRes("UIContainer.tooltip.closeContainer")%>"></a>
-	              <a href="<%=uicomponent.event("EditContainer","$uicomponent.id")%>" class="EditContainerIcon" title="<%=_ctx.appRes("UIContainer.tooltip.editContainer")%>"></a>
+	              <a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeleteContainerIcon" title="<%=_ctx.appRes("UITableColumnContainer.tooltip.closeContainer")%>"></a>
+	              <a href="<%=uicomponent.event("EditContainer","$uicomponent.id")%>" class="EditContainerIcon" title="<%=_ctx.appRes("UITableColumnContainer.tooltip.editContainer")%>"></a>
 	              <div class="Title">
 	                <% 
 	                  if(uicomponent.getTitle() != null) {
 	                    println(ExpressionUtil.getExpressionValue(res, uicomponent.getTitle())) ; 
 	                  } else {
 	                %>
-	                    <%=_ctx.appRes("UIContainer.title.Container")%>
+	                    <%=_ctx.appRes("UITableColumnContainer.title.Container")%>
 	                <%}%>
 	              </div>
 	            </div>
@@ -61,10 +61,10 @@
 	  if(height != null) style += "height:"+height+";";
 %>
     <div id="$uicomponent.id">    
-      <table class="UITableColumnContainer" style="table-layout: fixed; margin: 0px auto; width: 99%; $style">
+      <table class="UITableColumn" style="table-layout: fixed; margin: 0px auto; width: 99%; $style">
         <tr class="TRContainer">
           <% for(uiChild in uicomponent.getChildren()) { %>
-            <td class="${uiChild.id}TDContainer"><% uicomponent.renderUIComponent(uiChild) %></td>
+            <td class="${uiChild.id}TDContainer" <% if(uiChild.getWidth()) { %> width="<%= uiChild.getWidth(); %>" <% } %>><% uicomponent.renderUIComponent(uiChild) %></td>
           <% } %>
        </tr>
       </table>

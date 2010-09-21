@@ -16,7 +16,6 @@
  */
 package org.exoplatform.portal.webui.portal;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,14 +23,13 @@ import org.exoplatform.commons.utils.PageList;
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.application.PortletPreferences;
 import org.exoplatform.portal.config.DataStorage;
-import org.exoplatform.portal.config.UserPortalConfigService;
 import org.exoplatform.portal.config.model.Container;
-import org.exoplatform.portal.config.model.Page;
 import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.webui.application.UIPortlet;
 import org.exoplatform.portal.webui.application.UIPortletOptions;
 import org.exoplatform.portal.webui.application.task.DeletePortletPreferencesTask;
 import org.exoplatform.portal.webui.application.task.PortletPreferencesTaskCollection;
+import org.exoplatform.portal.webui.container.UIColumnContainer;
 import org.exoplatform.portal.webui.container.UIContainerConfigOptions;
 import org.exoplatform.portal.webui.login.UILogin;
 import org.exoplatform.portal.webui.login.UIResetPassword;
@@ -80,25 +78,11 @@ public class UIPortalComponentActionListener {
       event.getRequestContext().addUIComponentToUpdateByAjax(uiMaskWS);
     }
   }
-//  
-//  static public class RemoveJSApplicationToDesktopActionListener  extends EventListener<UIPortalComponent> {    
-//    public void execute(Event<UIPortalComponent> event) throws Exception {
-//     UIPortal uiPortal = Util.getUIPortal();
-//     UIPortalApplication uiApp = uiPortal.getAncestorOfType(UIPortalApplication.class);
-//     UIPage uiPage = uiApp.findFirstComponentOfType(UIPage.class);
-//     String id  = event.getRequestContext().getRequestParameter("jsInstanceId"); 
-//     uiPage.removeChildById(id);
-//     
-//     Page page = PortalDataMapper.toPageModel(uiPage); 
-//     UserPortalConfigService configService = uiPortal.getApplicationComponent(UserPortalConfigService.class);     
-//     if(page.getChildren() == null) page.setChildren(new ArrayList<Object>());
-//     configService.update(page);
-//    }
-//  }
   
   static public class DeleteComponentActionListener extends EventListener<UIComponent> {
     public void execute(Event<UIComponent> event) throws Exception {
       String id  = event.getRequestContext().getRequestParameter(UIComponent.OBJECTID);      
+      PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext() ;
       UIComponent uiComponent = event.getSource();
       UIPortalComponent uiParent = (UIPortalComponent)uiComponent.getParent();
       UIComponent uiRemoveComponent = uiParent.findComponentById(id) ;
@@ -109,13 +93,17 @@ public class UIPortalComponentActionListener {
         return;
       }
       
-      if(uiComponent instanceof UIPortlet)
-      {
-      	DataStorage dataStorage = uiComponent.getApplicationComponent(DataStorage.class);
+      if (uiComponent instanceof UIPortlet) {
+        DataStorage dataStorage = uiComponent.getApplicationComponent(DataStorage.class);
       	registerDeletePortletPreferencesTask((UIPortlet)uiComponent, dataStorage);
+      } else if (uiComponent instanceof UIColumnContainer) {
+        if (uiParent.getChildren().size() == 1) {
+          removeUIComponent(uiParent, pcontext);
+          return;
+        }
       }
       
-      uiParent.removeChildById(id);
+      removeUIComponent(uiRemoveComponent, pcontext);
       UIPage uiPage = uiParent.getAncestorOfType(UIPage.class);
       if(uiPage != null && uiPage.getMaximizedUIPortlet() != null) {
         if(id.equals(uiPage.getMaximizedUIPortlet().getId())) {
@@ -137,12 +125,6 @@ public class UIPortalComponentActionListener {
         }
       }
       Util.showComponentLayoutMode(uiRemoveComponent.getClass());
-      
-      PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext() ;
-      UIPortalApplication uiPortalApp = uiParent.getAncestorOfType(UIPortalApplication.class);
-      UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
-      pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
-      pcontext.setFullRender(true);
     }
     
     private void registerDeletePortletPreferencesTask(UIPortlet uiPortlet, DataStorage dataStorage)
@@ -161,6 +143,15 @@ public class UIPortalComponentActionListener {
     }
   }
     
+  private static void removeUIComponent(UIComponent uiComponent, PortalRequestContext pcontext) {
+    UIContainer uiParent = uiComponent.getParent();
+    uiParent.getChildren().remove(uiComponent);
+    UIPortalApplication uiPortalApp = uiParent.getAncestorOfType(UIPortalApplication.class);
+    UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+    pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
+    pcontext.setFullRender(true);
+  }
+  
   static public class MoveChildActionListener  extends EventListener<UIContainer> {    
     public void execute(Event<UIContainer> event) throws Exception {
       PortalRequestContext pcontext = (PortalRequestContext)event.getRequestContext();

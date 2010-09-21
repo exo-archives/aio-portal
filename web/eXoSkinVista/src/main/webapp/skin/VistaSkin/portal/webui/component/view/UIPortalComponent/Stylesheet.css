@@ -233,6 +233,18 @@
 	float: left;  /* orientation=rt */
 }
 
+.UIColumnContainer .ControlIcon {
+  background: url("/eXoResources/skin/PortletThemes/background/VistaTheme.png") no-repeat center -219px transparent;
+  cursor: pointer;
+  float: right;
+  height: 20px;
+  width: 29px;
+}
+
+.UIColumnContainer .ArrowDownIcon {
+  background-position: center -219px;
+}
+
 .UIContainer .ContainerIcon {
   float: left;  /* orientation=lt */
 	float: right;  /* orientation=rt */

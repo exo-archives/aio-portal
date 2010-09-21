@@ -47,16 +47,19 @@ function UIPortal() {
  * @param element
  */
 UIPortal.prototype.findUIComponentOf = function(element) {
-  var parent = element.parentNode ;
-  while(parent != null) {
-    var className = parent.className ;
-    if(className == 'UIPortlet' || className == 'UIContainer' ||  
-       className == 'UIPageBody' ||  className == 'UIPortal')  {
-      return parent ;
-    }
-    parent = parent.parentNode ;
+  var DOMUtil = eXo.core.DOMUtil;
+  var parent;
+  if (parent = DOMUtil.findAncestorByClass(element, "UIPortlet")) {
+    return parent;
+  } else if (parent = DOMUtil.findAncestorByClass(element, "UIContainer")) {
+    return parent;
+  } else if (parent = DOMUtil.findAncestorByClass(element, "UIPageBody")) {
+    return parent;
+  } else if (parent = DOMUtil.findAncestorByClass(element, "UIPortal")) {
+    return parent;
   }
-  return null ;
+
+  return null;
 };
 /**
  * Display Mask layer in front of page's surface

@@ -1,0 +1,1231 @@
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalComponentActionListener.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalComponentActionListener.java	(revision 51071)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalComponentActionListener.java	(working copy)
+@@ -16,7 +16,6 @@
+  */
+ package org.exoplatform.portal.webui.portal;
+ 
+-import java.util.ArrayList;
+ import java.util.Date;
+ import java.util.List;
+ 
+@@ -24,14 +23,13 @@
+ import org.exoplatform.portal.application.PortalRequestContext;
+ import org.exoplatform.portal.application.PortletPreferences;
+ import org.exoplatform.portal.config.DataStorage;
+-import org.exoplatform.portal.config.UserPortalConfigService;
+ import org.exoplatform.portal.config.model.Container;
+-import org.exoplatform.portal.config.model.Page;
+ import org.exoplatform.portal.config.model.PortalConfig;
+ import org.exoplatform.portal.webui.application.UIPortlet;
+ import org.exoplatform.portal.webui.application.UIPortletOptions;
+ import org.exoplatform.portal.webui.application.task.DeletePortletPreferencesTask;
+ import org.exoplatform.portal.webui.application.task.PortletPreferencesTaskCollection;
++import org.exoplatform.portal.webui.container.UIColumnContainer;
+ import org.exoplatform.portal.webui.container.UIContainerConfigOptions;
+ import org.exoplatform.portal.webui.login.UILogin;
+ import org.exoplatform.portal.webui.login.UIResetPassword;
+@@ -80,25 +78,11 @@
+       event.getRequestContext().addUIComponentToUpdateByAjax(uiMaskWS);
+     }
+   }
+-//  
+-//  static public class RemoveJSApplicationToDesktopActionListener  extends EventListener<UIPortalComponent> {    
+-//    public void execute(Event<UIPortalComponent> event) throws Exception {
+-//     UIPortal uiPortal = Util.getUIPortal();
+-//     UIPortalApplication uiApp = uiPortal.getAncestorOfType(UIPortalApplication.class);
+-//     UIPage uiPage = uiApp.findFirstComponentOfType(UIPage.class);
+-//     String id  = event.getRequestContext().getRequestParameter("jsInstanceId"); 
+-//     uiPage.removeChildById(id);
+-//     
+-//     Page page = PortalDataMapper.toPageModel(uiPage); 
+-//     UserPortalConfigService configService = uiPortal.getApplicationComponent(UserPortalConfigService.class);     
+-//     if(page.getChildren() == null) page.setChildren(new ArrayList<Object>());
+-//     configService.update(page);
+-//    }
+-//  }
+   
+   static public class DeleteComponentActionListener extends EventListener<UIComponent> {
+     public void execute(Event<UIComponent> event) throws Exception {
+       String id  = event.getRequestContext().getRequestParameter(UIComponent.OBJECTID);      
++      PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext() ;
+       UIComponent uiComponent = event.getSource();
+       UIPortalComponent uiParent = (UIPortalComponent)uiComponent.getParent();
+       UIComponent uiRemoveComponent = uiParent.findComponentById(id) ;
+@@ -109,13 +93,17 @@
+         return;
+       }
+       
+-      if(uiComponent instanceof UIPortlet)
+-      {
+-      	DataStorage dataStorage = uiComponent.getApplicationComponent(DataStorage.class);
++      if (uiComponent instanceof UIPortlet) {
++        DataStorage dataStorage = uiComponent.getApplicationComponent(DataStorage.class);
+       	registerDeletePortletPreferencesTask((UIPortlet)uiComponent, dataStorage);
++      } else if (uiComponent instanceof UIColumnContainer) {
++        if (uiParent.getChildren().size() == 1) {
++          removeUIComponent(uiParent, pcontext);
++          return;
++        }
+       }
+       
+-      uiParent.removeChildById(id);
++      removeUIComponent(uiRemoveComponent, pcontext);
+       UIPage uiPage = uiParent.getAncestorOfType(UIPage.class);
+       if(uiPage != null && uiPage.getMaximizedUIPortlet() != null) {
+         if(id.equals(uiPage.getMaximizedUIPortlet().getId())) {
+@@ -137,12 +125,6 @@
+         }
+       }
+       Util.showComponentLayoutMode(uiRemoveComponent.getClass());
+-      
+-      PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext() ;
+-      UIPortalApplication uiPortalApp = uiParent.getAncestorOfType(UIPortalApplication.class);
+-      UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
+-      pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
+-      pcontext.setFullRender(true);
+     }
+     
+     private void registerDeletePortletPreferencesTask(UIPortlet uiPortlet, DataStorage dataStorage)
+@@ -161,6 +143,15 @@
+     }
+   }
+     
++  private static void removeUIComponent(UIComponent uiComponent, PortalRequestContext pcontext) {
++    UIContainer uiParent = uiComponent.getParent();
++    uiParent.getChildren().remove(uiComponent);
++    UIPortalApplication uiPortalApp = uiParent.getAncestorOfType(UIPortalApplication.class);
++    UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
++    pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
++    pcontext.setFullRender(true);
++  }
++  
+   static public class MoveChildActionListener  extends EventListener<UIContainer> {    
+     public void execute(Event<UIContainer> event) throws Exception {
+       PortalRequestContext pcontext = (PortalRequestContext)event.getRequestContext();
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/container/UIContainer.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/container/UIContainer.java	(revision 51071)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/container/UIContainer.java	(working copy)
+@@ -39,14 +39,7 @@
+           @EventConfig(listeners = EditContainerActionListener.class),
+           @EventConfig(listeners = DeleteComponentActionListener.class, confirm = "UIContainer.deleteContainer")
+       }
+-  ),/*
+-  @ComponentConfig( 
+-      id = "WidgetContainer",
+-      template = "system:/groovy/portal/webui/container/UIWidgetContainer.gtmpl",
+-      events = {
+-          @EventConfig(listeners = ShowAddNewApplicationActionListener.class)
+-      }
+-  ),*/
++  ),
+   @ComponentConfig( 
+       id = "GadgetContainer",
+       template = "system:/groovy/portal/webui/container/UIGadgetContainer.gtmpl",
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/container/UIColumnContainer.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/container/UIColumnContainer.java	(revision 0)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/container/UIColumnContainer.java	(revision 0)
+@@ -0,0 +1,98 @@
++/*
++ * Copyright (C) 2003-2010 eXo Platform SAS.
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Affero General Public License
++ * as published by the Free Software Foundation; either version 3
++ * of the License, or (at your option) any later version.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ *
++ * You should have received a copy of the GNU General Public License
++ * along with this program; if not, see<http://www.gnu.org/licenses/>.
++ */
++package org.exoplatform.portal.webui.container;
++
++import java.util.Collections;
++import java.util.List;
++
++import org.exoplatform.portal.application.PortalRequestContext;
++import org.exoplatform.portal.webui.container.UIContainerActionListener.EditContainerActionListener;
++import org.exoplatform.portal.webui.portal.UIPortalComponent;
++import org.exoplatform.portal.webui.portal.UIPortalComponentActionListener.DeleteComponentActionListener;
++import org.exoplatform.portal.webui.util.Util;
++import org.exoplatform.portal.webui.workspace.UIPortalApplication;
++import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
++import org.exoplatform.webui.config.annotation.ComponentConfig;
++import org.exoplatform.webui.config.annotation.EventConfig;
++import org.exoplatform.webui.core.UIComponent;
++import org.exoplatform.webui.event.Event;
++import org.exoplatform.webui.event.EventListener;
++
++/**
++ * Created by The eXo Platform SAS
++ * Author : Nguyen Duc Khoi
++ *          khoi.nguyen@exoplatform.com
++ * Jul 15, 2010  
++ */
++
++@ComponentConfig(template = "system:/groovy/portal/webui/container/UIColumnContainer.gtmpl", events = {
++    @EventConfig(listeners = UIColumnContainer.InsertColumnActionListener.class),
++    @EventConfig(listeners = DeleteComponentActionListener.class, confirm = "UIColumnContainer.deleteColumnContainer"),
++    @EventConfig(listeners = EditContainerActionListener.class)
++}
++)
++public class UIColumnContainer extends UIContainer {
++  public static final String COLUMN_CONTAINER = "ColumnContainer";
++
++  public static final String INSERT_AFTER     = "insertRight";
++
++  public static final String INSERT_BEFORE    = "insertLeft";
++
++  public UIColumnContainer() {
++    super();
++  }
++
++  public static class InsertColumnActionListener extends EventListener<UIColumnContainer> {
++    @Override
++    public void execute(Event<UIColumnContainer> event) throws Exception {
++      String insertPosition = event.getRequestContext().getRequestParameter(UIComponent.OBJECTID);
++      UIColumnContainer uiSelectedColumn = event.getSource();
++      UIPortalComponent uiParent = (UIPortalComponent) uiSelectedColumn.getParent();
++      if (insertPosition.equals(INSERT_AFTER)) {
++        UIColumnContainer.insertColumn(uiSelectedColumn, true);
++      } else if (insertPosition.equals(INSERT_BEFORE)) {
++        UIColumnContainer.insertColumn(uiSelectedColumn, false);
++      }
++
++      Util.showComponentLayoutMode(uiSelectedColumn.getClass());
++
++      PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext();
++      UIPortalApplication uiPortalApp = uiParent.getAncestorOfType(UIPortalApplication.class);
++      UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);
++      pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
++      pcontext.setFullRender(true);
++    }
++
++  }
++
++  private static void insertColumn(UIColumnContainer selectedColumn, boolean isInsertAfter) throws Exception {
++    UIContainer uiParent = selectedColumn.getParent();
++    UIColumnContainer uiNewColumn = uiParent.addChild(UIColumnContainer.class, null, null);
++    
++    uiNewColumn.setTemplate(selectedColumn.getTemplate());
++    uiNewColumn.setFactoryId(selectedColumn.getFactoryId());
++    uiNewColumn.setId(String.valueOf(uiNewColumn.hashCode()));
++
++    List<UIComponent> listColumn = uiParent.getChildren();
++    int position = listColumn.indexOf(selectedColumn);
++    if (isInsertAfter) {
++      position += 1;
++    }
++    Collections.rotate(listColumn.subList(position, listColumn.size()), 1);
++  }
++
++}
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/util/PortalDataMapper.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/util/PortalDataMapper.java	(revision 51071)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/util/PortalDataMapper.java	(working copy)
+@@ -31,6 +31,7 @@
+ import org.exoplatform.portal.webui.application.UIGadget;
+ import org.exoplatform.portal.webui.application.UIGadgets;
+ import org.exoplatform.portal.webui.application.UIPortlet;
++import org.exoplatform.portal.webui.container.UIColumnContainer;
+ import org.exoplatform.portal.webui.container.UIContainer;
+ import org.exoplatform.portal.webui.page.UIPage;
+ import org.exoplatform.portal.webui.page.UIPageBody;
+@@ -393,31 +394,37 @@
+   @SuppressWarnings("unchecked")
+   static private <T extends UIComponent> T buildChild(UIPortalComponent uiParent, Object model) throws Exception {
+     UIComponent uiComponent = null;
+-    WebuiRequestContext  context = Util.getPortalRequestContext() ;
+-    if(model instanceof PageBody){
++    WebuiRequestContext context = Util.getPortalRequestContext();
++    if (model instanceof PageBody) {
+       UIPageBody uiPageBody = uiParent.createUIComponent(context, UIPageBody.class, null, null);
+       uiComponent = uiPageBody;
+-    }else if(model instanceof Application){
++    } else if (model instanceof Application) {
+       Application application = (Application) model;
+-      String factoryId = application.getApplicationType();    
+-      if(factoryId == null || factoryId.equals(org.exoplatform.web.application.Application.EXO_PORTLET_TYPE)){
++      String factoryId = application.getApplicationType();
++      if (factoryId == null
++          || factoryId.equals(org.exoplatform.web.application.Application.EXO_PORTLET_TYPE)) {
+         UIPortlet uiPortlet = uiParent.createUIComponent(context, UIPortlet.class, null, null);
+         toUIPortlet(uiPortlet, application);
+         uiComponent = uiPortlet;
+-      }/*else if(factoryId.equals(org.exoplatform.web.application.Application.EXO_WIDGET_TYPE)) {
+-        UIWidget uiWidget = uiParent.createUIComponent(context, UIWidget.class, null, null);
+-        toUIWidget(uiWidget, application) ;
+-        uiComponent = uiWidget ;
+-      }*/else if(factoryId.equals(org.exoplatform.web.application.Application.EXO_GAGGET_TYPE)) {
+-        UIGadget uiGadget = uiParent.createUIComponent(context, UIGadget.class, null, null) ;
+-        toUIGadget(uiGadget, application) ;
+-        uiComponent = uiGadget ;
++      } else if (factoryId.equals(org.exoplatform.web.application.Application.EXO_GAGGET_TYPE)) {
++        UIGadget uiGadget = uiParent.createUIComponent(context, UIGadget.class, null, null);
++        toUIGadget(uiGadget, application);
++        uiComponent = uiGadget;
+       }
+-    } else if(model instanceof Container){
++    } else if (model instanceof Container) {
+       Container container = (Container) model;
+-      UIContainer uiContainer = uiParent.createUIComponent(context, UIContainer.class, container.getFactoryId(), null);
+-      toUIContainer(uiContainer, (Container)model);
+-      uiComponent = uiContainer;
++      UIContainer uiTempContainer;
++      if (UIColumnContainer.COLUMN_CONTAINER.equals(container.getFactoryId())) {
++        uiTempContainer = uiParent.createUIComponent(context, UIColumnContainer.class, null, null);
++      } else {
++        uiTempContainer = uiParent.createUIComponent(context,
++                                                     UIContainer.class,
++                                                     container.getFactoryId(),
++                                                     null);
++      }
++      toUIContainer(uiTempContainer, (Container) model);
++      uiComponent = uiTempContainer;
++
+     }
+     return (T)uiComponent;
+   }
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css	(revision 51071)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css	(working copy)
+@@ -161,7 +161,7 @@
+ 	float: right; /* orientation=lt */
+ 	float: left; /* orientation=rt */
+ 	width: 16px; height: 16px;
+-	background: url('background/ContainerIcon.gif') no-repeat top;
++	background: url('background/ContainerIcon.gif') no-repeat center 1px;
+ 	margin: 4px 5px 2px 0px; /* orientation=lt */
+ 	margin: 4px 0px 2px 5px; /* orientation=rt */
+ }
+@@ -170,7 +170,7 @@
+ 	float: right; /* orientation=lt */
+ 	float: left; /* orientation=rt */
+ 	width: 18px; height:18px; 
+-	background: url('background/ContainerIcon.gif') no-repeat center -16px;
++	background: url('background/ContainerIcon.gif') no-repeat center -18px;
+ 	margin: 5px 0px 0px 0px;
+ }
+ 
+@@ -182,6 +182,18 @@
+ 	background: url('/eXoSkinMac/skin/MacSkin/skinIcons/16x16/icons/DefaultContainerIcon.gif') no-repeat;
+ }
+ 
++.UIColumnContainer .ArrowDownIcon {
++  background-position:center 18px;
++}
++
++.UIColumnContainer .ControlIcon {
++  background: url("/eXoResources/skin/PortletThemes/background/MacTheme.png") no-repeat center -196px;
++  cursor: pointer;
++  float: right;
++  height: 20px;
++  width: 28px;
++}
++
+ .UIContainer .ContentPortletIcon {
+ 	float: left; /* orientation=lt */
+ 	float: right; /* orientation=rt */
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIBarDecorator/UIInfoBar/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIBarDecorator/UIInfoBar/Stylesheet.css	(revision 51071)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIBarDecorator/UIInfoBar/Stylesheet.css	(working copy)
+@@ -56,7 +56,6 @@
+ 
+ .UIInfoBar .BlueRoundedStyle .FixHeight {
+ 	height: 23px;
+-	overflow: hidden;
+ }
+ 
+ .UIInfoBar .BlueRoundedStyle .MiddleBar {
+Index: web/portal/src/main/webapp/groovy/portal/webui/container/UIColumnContainer.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/portal/webui/container/UIColumnContainer.gtmpl	(revision 0)
++++ web/portal/src/main/webapp/groovy/portal/webui/container/UIColumnContainer.gtmpl	(revision 0)
+@@ -0,0 +1,105 @@
++<%
++  import org.exoplatform.commons.utils.ExpressionUtil;
++  import org.exoplatform.portal.webui.workspace.UIPortalApplication;
++  import org.exoplatform.portal.webui.container.UIColumnContainer;
++  import org.exoplatform.web.application.JavascriptManager;
++
++  def rcontext = _ctx.getRequestContext() ;
++  JavascriptManager jsmanager = rcontext.getJavascriptManager();
++  jsmanager.importJavascript('eXo.webui.UIPopupSelectCategory') ;
++
++  ResourceBundle res = rcontext.getApplicationResourceBundle() ;
++  UIPortalApplication uiPortalApp = rcontext.getUIApplication();
++  int portalMode = uiPortalApp.getModeState();
++
++	String cssStyle = "";
++	String uiComponentWidth = uicomponent.getWidth();
++	String uiComponentHeight = uicomponent.getHeight();
++	if(uiComponentWidth != null || uiComponentHeight != null) cssStyle = "style=\"";
++	if(uiComponentHeight != null) cssStyle += "height: "+uiComponentHeight+";"
++	if(cssStyle.length() > 0) cssStyle += "\"";
++%>
++
++<div class="UIContainer UIColumnContainer" id="UIContainer-${uicomponent.id}" ${cssStyle}>
++<%if (uiPortalApp.isEditting()) {%>
++  <div class="META-DATA-BLOCK" style="display: none">
++    <div class="id">$uicomponent.id</div>
++    <div class="title"><%=_ctx.appRes("UIColumnContainer.title.Container")%></div>
++    <div class="description"><%=_ctx.appRes("UIColumnContainer.label.Thecontainer")%></div>
++  </div>
++  
++  <div class="CONTROL-CONTAINER CONTROL-BLOCK" <%if(portalMode != UIPortalApplication.CONTAINER_EDIT_MODE) print("style=\"display: none\"")%>>
++    <%/*Begin InfoBar*/%>
++   	<div class="UIInfoBar">
++      <div class="BlueRoundedStyle">
++        <div class="LeftBar">
++          <div class="RightBar">
++		        <div class="MiddleBar">
++		        	<div class="FixHeight ClearFix">
++		        		<% 	String showCategory = "eXo.webui.UIPopupSelectCategory.show(this, event)";
++		        		 %>
++								<div class="DragControlArea" onmousedown="eXo.portal.PortalDragDrop.init.call(this, event)" title="<%=_ctx.appRes("UIColumnContainer.title.DragControlArea")%>"><span></span></div>
++								<div class="ContainerIcon"><span></span></div>             
++								<a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeleteContainerIcon" title="<%=_ctx.appRes("UIColumnContainer.tooltip.closeContainer")%>"><span></span></a>
++								<a href="<%=uicomponent.event("EditContainer","$uicomponent.id")%>" class="EditContainerIcon" title="<%=_ctx.appRes("UIColumnContainer.tooltip.editContainer")%>"><span></span></a>
++						<div class="ControlIcon ArrowDownIcon" onclick="$showCategory" title="<%= _ctx.appRes("UIColumnContainer.tootip.insertColumn") %>">
++							<% /*Begin popup display*/ %>
++							<div style="position: relative; width: 100%">
++						      <div class="UIPopupCategory" style="display: none;">
++						        <div class="PopupCategoryDecorator">
++						          <div class="PopupCategoryTL">
++						            <div class="PopupCategoryTR">
++						              <div class="PopupCategoryTC"><span></span></div>
++						            </div>
++						          </div>
++						          <div class="PopupCategoryML">
++						            <div class="PopupCategoryMR">
++						              <div class="PopupCategoryMC">
++							  			<a class="CategoryItem" href="<%= uicomponent.event("InsertColumn", UIColumnContainer.INSERT_BEFORE) %>"  title="<%= _ctx.appRes("UIColumnContainer.tooltip.insertLeft") %>">
++						                   <div class="CategoryItemLabel"><%= _ctx.appRes("UIColumnContainer.label.insertLeft") %></div>
++					                    </a>          
++					                    <a class="CategoryItem" href="<%= uicomponent.event("InsertColumn", UIColumnContainer.INSERT_AFTER) %>"  title="<%= _ctx.appRes("UIColumnContainer.tooltip.insertRight") %>">
++						                   <div class="CategoryItemLabel"><%= _ctx.appRes("UIColumnContainer.label.insertRight") %></div>
++					                    </a>                     
++						              </div>
++						              
++						            </div>
++						          </div>
++						          <div class="PopupCategoryBL">
++						            <div class="PopupCategoryBR">
++						              <div class="PopupCategoryBC"><span></span></div>
++						            </div>
++						          </div>
++						        </div>
++						      </div>
++						    </div>
++					      <% /*End Popup Menu*/ %>
++						</div>
++								<div class="Title">
++									<% 
++										if(uicomponent.getTitle() != null) {
++										println(ExpressionUtil.getExpressionValue(res, uicomponent.getTitle())) ;
++										} else {
++									%>
++									<%=_ctx.appRes("UIColumnContainer.title.Container")%>
++									<%}%>
++								</div>            
++							</div>
++		        </div>
++          </div>
++        </div>
++      </div>
++    </div>
++    <%/*End InfoBar*/ %>
++  </div>
++  
++  <div class="LAYOUT-CONTAINER">
++<%} else {%>
++  <div class="VIEW-CONTAINER">
++<%}%>
++    <div id="$uicomponent.id">
++      <div class="UIRowContainer"><%uicomponent.renderChildren()%></div>
++	  </div>
++	</div>  
++</div>
++
+Index: web/portal/src/main/webapp/groovy/portal/webui/container/UITableColumnContainer.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/portal/webui/container/UITableColumnContainer.gtmpl	(revision 51071)
++++ web/portal/src/main/webapp/groovy/portal/webui/container/UITableColumnContainer.gtmpl	(working copy)
+@@ -11,7 +11,7 @@
+   
+   int portalMode = uiPortalApp.getModeState();
+ %>
+-<div class="UIContainer" id="UIContainer-${uicomponent.id}">
++<div class="UIContainer UITableColumnContainer" id="UIContainer-${uicomponent.id}">
+ <%if(uiPortalApp.isEditting()){%>
+   <div class="META-DATA-BLOCK" style="display: none">
+     <div class="id">$uicomponent.id</div>
+@@ -27,17 +27,17 @@
+           <div class="RightBar">
+             <div class="MiddleBar">
+             	<div class="FixHeight ClearFix">
+-	              <div class="DragControlArea" onmousedown="eXo.portal.PortalDragDrop.init.call(this, event)" title="<%=_ctx.appRes("UIContainer.tooltip.drag")%>"><span></span></div>
++	              <div class="DragControlArea" onmousedown="eXo.portal.PortalDragDrop.init.call(this, event)" title="<%=_ctx.appRes("UITableColumnContainer.title.DragControlArea")%>"><span></span></div>
+ 	              <div class="ContainerIcon DefaultContainer16x16Icon"><span></span></div>
+-	              <a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeleteContainerIcon" title="<%=_ctx.appRes("UIContainer.tooltip.closeContainer")%>"></a>
+-	              <a href="<%=uicomponent.event("EditContainer","$uicomponent.id")%>" class="EditContainerIcon" title="<%=_ctx.appRes("UIContainer.tooltip.editContainer")%>"></a>
++	              <a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeleteContainerIcon" title="<%=_ctx.appRes("UITableColumnContainer.tooltip.closeContainer")%>"></a>
++	              <a href="<%=uicomponent.event("EditContainer","$uicomponent.id")%>" class="EditContainerIcon" title="<%=_ctx.appRes("UITableColumnContainer.tooltip.editContainer")%>"></a>
+ 	              <div class="Title">
+ 	                <% 
+ 	                  if(uicomponent.getTitle() != null) {
+ 	                    println(ExpressionUtil.getExpressionValue(res, uicomponent.getTitle())) ; 
+ 	                  } else {
+ 	                %>
+-	                    <%=_ctx.appRes("UIContainer.title.Container")%>
++	                    <%=_ctx.appRes("UITableColumnContainer.title.Container")%>
+ 	                <%}%>
+ 	              </div>
+ 	            </div>
+@@ -61,10 +61,10 @@
+ 	  if(height != null) style += "height:"+height+";";
+ %>
+     <div id="$uicomponent.id">    
+-      <table class="UITableColumnContainer" style="table-layout: fixed; margin: 0px auto; width: 99%; $style">
++      <table class="UITableColumn" style="table-layout: fixed; margin: 0px auto; width: 99%; $style">
+         <tr class="TRContainer">
+           <% for(uiChild in uicomponent.getChildren()) { %>
+-            <td class="${uiChild.id}TDContainer"><% uicomponent.renderUIComponent(uiChild) %></td>
++            <td class="${uiChild.id}TDContainer" <% if(uiChild.getWidth()) { %> width="<%= uiChild.getWidth(); %>" <% } %>><% uicomponent.renderUIComponent(uiChild) %></td>
+           <% } %>
+        </tr>
+       </table>
+Index: web/portal/src/main/webapp/WEB-INF/conf/portal/template/pages/three-rows-two-columns/page.xml
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/conf/portal/template/pages/three-rows-two-columns/page.xml	(revision 51071)
++++ web/portal/src/main/webapp/WEB-INF/conf/portal/template/pages/three-rows-two-columns/page.xml	(working copy)
+@@ -4,8 +4,8 @@
+   <owner-id></owner-id>
+   <name></name>
+   <container template='system:/groovy/portal/webui/container/UITableColumnContainer.gtmpl'>
+-  	<container template='system:/groovy/portal/webui/container/UIContainer.gtmpl'></container>
+-    <container template='system:/groovy/portal/webui/container/UIContainer.gtmpl'></container>
++  	<container template='system:/groovy/portal/webui/container/UIColumnContainer.gtmpl'><factory-id>ColumnContainer</factory-id></container>
++    <container template='system:/groovy/portal/webui/container/UIColumnContainer.gtmpl'><factory-id>ColumnContainer</factory-id></container>
+   </container>
+   <container template='system:/groovy/portal/webui/container/UIContainer.gtmpl'></container>
+   <container template='system:/groovy/portal/webui/container/UIContainer.gtmpl'></container>
+Index: web/portal/src/main/webapp/WEB-INF/conf/portal/template/pages/three-columns/page.xml
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/conf/portal/template/pages/three-columns/page.xml	(revision 51071)
++++ web/portal/src/main/webapp/WEB-INF/conf/portal/template/pages/three-columns/page.xml	(working copy)
+@@ -4,8 +4,8 @@
+   <owner-id></owner-id>
+   <name></name>
+  	<container template="system:/groovy/portal/webui/container/UITableColumnContainer.gtmpl">
+-  	<container template="system:/groovy/portal/webui/container/UIContainer.gtmpl"></container>
+- 		<container template="system:/groovy/portal/webui/container/UIContainer.gtmpl"></container>
+- 		<container template="system:/groovy/portal/webui/container/UIContainer.gtmpl"></container>
++  		<container template="system:/groovy/portal/webui/container/UIColumnContainer.gtmpl"><factory-id>ColumnContainer</factory-id></container>
++ 		<container template="system:/groovy/portal/webui/container/UIColumnContainer.gtmpl"><factory-id>ColumnContainer</factory-id></container>
++ 		<container template="system:/groovy/portal/webui/container/UIColumnContainer.gtmpl"><factory-id>ColumnContainer</factory-id></container>
+ 	</container>
+ </page>
+\ No newline at end of file
+Index: web/portal/src/main/webapp/WEB-INF/conf/portal/template/pages/two-columns/page.xml
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/conf/portal/template/pages/two-columns/page.xml	(revision 51071)
++++ web/portal/src/main/webapp/WEB-INF/conf/portal/template/pages/two-columns/page.xml	(working copy)
+@@ -4,7 +4,7 @@
+   <owner-id></owner-id>
+   <name></name>
+  	<container template="system:/groovy/portal/webui/container/UITableColumnContainer.gtmpl">
+-  	<container template="system:/groovy/portal/webui/container/UIContainer.gtmpl"></container>
+- 		<container template="system:/groovy/portal/webui/container/UIContainer.gtmpl"></container>
++  		<container template="system:/groovy/portal/webui/container/UIColumnContainer.gtmpl"><factory-id>ColumnContainer</factory-id></container>
++ 		<container template="system:/groovy/portal/webui/container/UIColumnContainer.gtmpl"><factory-id>ColumnContainer</factory-id></container>
+ 	</container>
+ </page>
+\ No newline at end of file
+Index: web/portal/src/main/webapp/WEB-INF/conf/portal/template/pages/one-row-two-columns/page.xml
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/conf/portal/template/pages/one-row-two-columns/page.xml	(revision 51071)
++++ web/portal/src/main/webapp/WEB-INF/conf/portal/template/pages/one-row-two-columns/page.xml	(working copy)
+@@ -5,7 +5,7 @@
+   <name></name>
+   <container template='system:/groovy/portal/webui/container/UIContainer.gtmpl'></container>
+   <container template='system:/groovy/portal/webui/container/UITableColumnContainer.gtmpl'>
+-  	<container template='system:/groovy/portal/webui/container/UIContainer.gtmpl'></container>
+-    <container template='system:/groovy/portal/webui/container/UIContainer.gtmpl'></container>
++  	<container template='system:/groovy/portal/webui/container/UIColumnContainer.gtmpl'><factory-id>ColumnContainer</factory-id></container>
++    <container template='system:/groovy/portal/webui/container/UIColumnContainer.gtmpl'><factory-id>ColumnContainer</factory-id></container>
+   </container>
+ </page>
+\ No newline at end of file
+Index: web/portal/src/main/webapp/WEB-INF/conf/portal/template/pages/two-columns-one-row/page.xml
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/conf/portal/template/pages/two-columns-one-row/page.xml	(revision 51071)
++++ web/portal/src/main/webapp/WEB-INF/conf/portal/template/pages/two-columns-one-row/page.xml	(working copy)
+@@ -4,8 +4,8 @@
+   <owner-id></owner-id>
+   <name></name>
+   <container template='system:/groovy/portal/webui/container/UITableColumnContainer.gtmpl'>
+-  	<container template='system:/groovy/portal/webui/container/UIContainer.gtmpl'></container>
+-    <container template='system:/groovy/portal/webui/container/UIContainer.gtmpl'></container>
++  	<container template='system:/groovy/portal/webui/container/UIColumnContainer.gtmpl'><factory-id>ColumnContainer</factory-id></container>
++    <container template='system:/groovy/portal/webui/container/UIColumnContainer.gtmpl'><factory-id>ColumnContainer</factory-id></container>
+   </container>
+   <container template='system:/groovy/portal/webui/container/UIContainer.gtmpl'></container>
+ </page>
+\ No newline at end of file
+Index: web/portal/src/main/webapp/WEB-INF/conf/uiconf/portal/webui/container/ContainerConfigOption.groovy
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/conf/uiconf/portal/webui/container/ContainerConfigOption.groovy	(revision 51071)
++++ web/portal/src/main/webapp/WEB-INF/conf/uiconf/portal/webui/container/ContainerConfigOption.groovy	(working copy)
+@@ -26,19 +26,20 @@
+   SelectItemCategory column = new SelectItemCategory("column") ;
+     column.addSelectItemOption(new SelectItemOption("oneColumns","" +
+         "<container template=\"system:/groovy/portal/webui/container/UITableColumnContainer.gtmpl\">" +
++        "  <container template=\"system:/groovy/portal/webui/container/UIColumnContainer.gtmpl\"><factory-id>ColumnContainer</factory-id></container>" +
+         "</container>", 
+         "OneRowContainerLayout")) ;
+     column.addSelectItemOption(new SelectItemOption("twoColumns",
+         "<container template=\"system:/groovy/portal/webui/container/UITableColumnContainer.gtmpl\">" +
+-        "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
+-        "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
++        "  <container template=\"system:/groovy/portal/webui/container/UIColumnContainer.gtmpl\"><factory-id>ColumnContainer</factory-id></container>" +
++        "  <container template=\"system:/groovy/portal/webui/container/UIColumnContainer.gtmpl\"><factory-id>ColumnContainer</factory-id></container>" +
+         "</container>",
+         "TwoColumnContainerLayout")) ;
+     column.addSelectItemOption(new SelectItemOption("threeColumns",
+         "<container template=\"system:/groovy/portal/webui/container/UITableColumnContainer.gtmpl\">" +
+-        "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
+-        "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
+-        "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
++        "  <container template=\"system:/groovy/portal/webui/container/UIColumnContainer.gtmpl\"><factory-id>ColumnContainer</factory-id></container>" +
++        "  <container template=\"system:/groovy/portal/webui/container/UIColumnContainer.gtmpl\"><factory-id>ColumnContainer</factory-id></container>" +
++        "  <container template=\"system:/groovy/portal/webui/container/UIColumnContainer.gtmpl\"><factory-id>ColumnContainer</factory-id></container>" +
+         "</container>",
+         "ThreeColumnContainerLayout")) ;
+   templates.add(column);  
+@@ -69,8 +70,8 @@
+     mixed.addSelectItemOption(new SelectItemOption("twoColumnsOneRow",
+         "<container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\">" +
+         "  <container template=\"system:/groovy/portal/webui/container/UITableColumnContainer.gtmpl\">" +
+-        "    <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
+-        "    <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
++        "    <container template=\"system:/groovy/portal/webui/container/UIColumnContainer.gtmpl\"><factory-id>ColumnContainer</factory-id></container>" +
++        "    <container template=\"system:/groovy/portal/webui/container/UIColumnContainer.gtmpl\"><factory-id>ColumnContainer</factory-id></container>" +
+         "  </container>" +
+         "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
+         "</container>",
+@@ -79,8 +80,8 @@
+         "<container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\">" +
+         "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
+         "  <container template=\"system:/groovy/portal/webui/container/UITableColumnContainer.gtmpl\">" +
+-        "    <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
+-        "    <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
++        "    <container template=\"system:/groovy/portal/webui/container/UIColumnContainer.gtmpl\"><factory-id>ColumnContainer</factory-id></container>" +
++        "    <container template=\"system:/groovy/portal/webui/container/UIColumnContainer.gtmpl\"><factory-id>ColumnContainer</factory-id></container>" +
+         "  </container>" +
+         "</container>",
+         "OneRowTwoColumnContainerLayout")) ;
+@@ -88,8 +89,8 @@
+         "<container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\">" +
+         "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
+         "  <container template=\"system:/groovy/portal/webui/container/UITableColumnContainer.gtmpl\">" +
+-        "    <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
+-        "    <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
++        "    <container template=\"system:/groovy/portal/webui/container/UIColumnContainer.gtmpl\"><factory-id>ColumnContainer</factory-id></container>" +
++        "    <container template=\"system:/groovy/portal/webui/container/UIColumnContainer.gtmpl\"><factory-id>ColumnContainer</factory-id></container>" +
+         "  </container>" +
+         "  <container template=\"system:/groovy/portal/webui/container/UIContainer.gtmpl\"></container>" +
+         "</container>",
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties	(revision 51071)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties	(working copy)
+@@ -1043,6 +1043,22 @@
+ UIContainer.tooltip.drag=Drag Container here
+ 
+   ############################################################################
++  #		            org.exoplatform.portal.component.view.UIColumnContainer          #
++  ############################################################################
++  
++UIColumnContainer.title.Container=Column
++UIColumnContainer.title.DragControlArea=Hold this area to drag this column to other place
++UIColumnContainer.label.Thecontainer=The column container
++UIColumnContainer.deleteColumnContainer=Are you sure you want to delete this column?
++UIColumnContainer.tooltip.insertLeft=Insert column left
++UIColumnContainer.tooltip.insertRight=Insert column right
++UIColumnContainer.tootip.insertColumn=Insert new column
++UIColumnContainer.tooltip.closeContainer=Delete Column
++UIColumnContainer.tooltip.editContainer=Edit Column
++UIColumnContainer.label.insertLeft=Insert left
++UIColumnContainer.label.insertRight=Insert right
++
++  ############################################################################
+   #		            org.exoplatform.portal.component.view.UIPage               #
+   ############################################################################
+   
+@@ -1102,6 +1118,10 @@
+   
+ UITableColumnContainer.label.title=Navigation Container
+ UITableColumnContainer.label.description=The navigation container
++UITableColumnContainer.title.Container=Table container
++UITableColumnContainer.title.DragControlArea=Hold this area to drag this table
++UITableColumnContainer.tooltip.closeContainer=Delete Table
++UITableColumnContainer.tooltip.editContainer=Edit Table
+ 
+   ############################################################################
+   #		           org.exoplatform.portal.component.control.UIExoStart         #
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIPortalComponent/background/ContainerIcon.gif
+===================================================================
+Cannot display: file marked as a binary type.
+svn:mime-type = application/octet-stream
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css	(revision 51071)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css	(working copy)
+@@ -195,3 +195,15 @@
+   margin: 0px 12px 10px 12px;
+ }
+ 
++.UIColumnContainer .ControlIcon {
++  float: right;/* orientation=lt */
++  float: left;/* orientation=rt */
++  width: 28px; 
++  height: 20px;
++  cursor: pointer;
++  background: url('/eXoResources/skin/PortletThemes/background/DefaultTheme.png') no-repeat center;
++}
++
++.UIColumnContainer .ArrowDownIcon {
++  background-position: center -346px;
++}
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIBarDecorator/UIInfoBar/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIBarDecorator/UIInfoBar/Stylesheet.css	(revision 51071)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIBarDecorator/UIInfoBar/Stylesheet.css	(working copy)
+@@ -55,15 +55,15 @@
+ 	
+ .UIInfoBar .BlueRoundedStyle .FixHeight {
+ 	height: 22px;
+-	overflow: hidden;
+ }
+ 
+ .UIInfoBar .BlueRoundedStyle .Title {
+ 	text-align: left; /* orientation=lt */
+ 	text-align: right; /* orientation=rt */
+ 	font-weight: bold; color: black;
+-	line-height: 15px;
++	line-height: 22px;
+ 	margin: 4px 60px 0px 60px;
++	!margin: 0 60px;
+ 	text-overflow: ellipsis;
+ 	overflow: hidden;
+ 	white-space: nowrap;
+Index: web/eXoResources/src/main/webapp/javascript/eXo/portal/PortalDragDrop.js
+===================================================================
+--- web/eXoResources/src/main/webapp/javascript/eXo/portal/PortalDragDrop.js	(revision 51071)
++++ web/eXoResources/src/main/webapp/javascript/eXo/portal/PortalDragDrop.js	(working copy)
+@@ -13,7 +13,6 @@
+  */
+ 
+ PortalDragDrop.prototype.init = function(e) {
+-	if (eXo.core.DragDrop.dndEvent && eXo.core.DragDrop.dndEvent.clickObject == this) return;
+ 	if (!e) e = window.event;
+ 	
+ 	if(e && e.preventDefault) e.preventDefault();
+@@ -35,7 +34,7 @@
+   	var PortalDragDrop = eXo.portal.PortalDragDrop ;
+     this.origDragObjectStyle = new eXo.core.HashMap() ;
+     var dragObject = dndEvent.dragObject ;
+-    var properties = ["top", eXo.core.I18n.isLT() ? "left" : "right", "zIndex", "opacity", "filter", "position"] ;
++    var properties = ["top", eXo.core.I18n.isLT() ? "left" : "right", "zIndex", "opacity", "filter", "position", "width"] ;
+     this.origDragObjectStyle.copyProperties(properties, dragObject.style) ;
+    	
+     PortalDragDrop.originalDragObjectTop = Browser.findPosY(dragObject) ;
+@@ -46,12 +45,14 @@
+     PortalDragDrop.deltaXDragObjectAndMouse = originalMousePositionX - originalDragObjectLeft ;
+     
+     PortalDragDrop.parentDragObject = dragObject.parentNode ;
+-    PortalDragDrop.backupDragObjectWidth = dragObject.offsetWidth ;
++    //backup parent's sibling (the next td element), used to restore dragobject position when drag column and press ESC
++    PortalDragDrop.backupParentSibling = DOMUtil.findNextElementByTagName(dragObject.parentNode, "td");
++    /*PortalDragDrop.backupDragObjectWidth = dragObject.offsetWidth ;
+         
+     PortalDragDrop.backupTopPosition = PortalDragDrop.originalDragObjectTop ;
+     PortalDragDrop.backupLeftPosition = originalDragObjectLeft ;
+     PortalDragDrop.backupOffsetWidth = dragObject.offsetWidth ;
+-    PortalDragDrop.backupOffsetHeight = dragObject.offsetHeight ;
++    PortalDragDrop.backupOffsetHeight = dragObject.offsetHeight ;*/
+     
+     /*Case: dragObject out of UIPortal*/
+     if(DOMUtil.findFirstChildByClass(dragObject, "div", "CONTROL-BLOCK") == null) {
+@@ -67,7 +68,7 @@
+       cloneObject.style.top = (PortalDragDrop.originalDragObjectTop - document.documentElement.scrollTop) + "px" ;
+       cloneObject.style.opacity = 0.5 ;
+       cloneObject.style.filter = "alpha(opacity=50)" ;
+-      cloneObject.style.width = PortalDragDrop.backupDragObjectWidth + "px" ;
++      cloneObject.style.width = dragObject.offsetWidth + "px" ;
+     }
+     
+     //fix bug ie in RTL 
+@@ -76,14 +77,18 @@
+     			+ document.getElementById("UIControlWorkspace").offsetWidth + "px" ;
+     }
+     
+-  }
++  };
+   
++  /**
++   * DragDrop will catch mouse move event, update dndEvent.foundTargetObject and call this method
++   * This method will update dragObject and preview block position
++   */
+   DragDrop.dragCallback = function(dndEvent) {
+     var dragObject = dndEvent.dragObject ;
+     /* Control Scroll */
+     eXo.portal.PortalDragDrop.scrollOnDrag(dragObject, dndEvent) ;
+     // window.status = "foundTargetObject: " + dndEvent.foundTargetObject + "    lastFoundTargetObject: " + dndEvent.lastFoundTargetObject;
+-    if((dndEvent.foundTargetObject) && (dndEvent.lastFoundTargetObject)) {
++    if(dndEvent.foundTargetObject) {
+       /*Check and asign UIPage to uiComponentLayout when DND on UIPage*/
+       var uiComponentLayout ;
+       if(dndEvent.foundTargetObject.className == "UIPage") {
+@@ -136,7 +141,7 @@
+         
+         dndEvent.foundTargetObject.listComponentInTarget = listComponent ;
+         /*Set properties for drag object */
+-        eXo.portal.PortalDragDrop.setDragObjectProperties(dragObject, childRowContainer, "row", dndEvent.backupMouseEvent) ;
++        eXo.portal.PortalDragDrop.setDragObjectProperties(dragObject, dndEvent.backupMouseEvent) ;
+         
+         var insertPosition = eXo.portal.PortalDragDrop.findInsertPosition(listComponent, dragObject, "row") ;
+         				        
+@@ -147,65 +152,70 @@
+         dndEvent.foundTargetObject.foundIndex = insertPosition ;
+         
+         /*Undo preview */
+-        if(dndEvent.lastFoundTargetObject != null) {
+-          eXo.portal.PortalDragDrop.backupLastFoundTarget = dndEvent.lastFoundTargetObject ;
+-          eXo.portal.PortalDragDrop.undoPreview(dndEvent) ;
++        if(dndEvent.lastFoundTargetObject) {
++          eXo.portal.PortalDragDrop.backupLastFoundTarget = dndEvent.lastFoundTargetObject ;          
++          //eXo.portal.PortalDragDrop.undoPreview(dndEvent) ;
+         }
++        eXo.portal.PortalDragDrop.removeNullPreview();
+         
+         /* Insert preview block */
+         if(insertPosition >= 0) {
+-          rowContainer.insertBefore(eXo.portal.PortalDragDrop.createPreview("row"), listComponent[insertPosition]) ;
++          rowContainer.insertBefore(eXo.portal.PortalDragDrop.createPreview(), listComponent[insertPosition]) ;
+         } else {
+-          rowContainer.appendChild(eXo.portal.PortalDragDrop.createPreview("row")) ;
++          rowContainer.appendChild(eXo.portal.PortalDragDrop.createPreview()) ;
+         }
+ 
+       } else {
+         /* ===============================CASE COLUMN LAYOUT================================ */
+-        var columnContainer = DOMUtil.findFirstDescendantByClass(uiComponentLayout, "table", "UITableColumnContainer") ;
+-        var trContainer = DOMUtil.findFirstDescendantByClass(uiComponentLayout, "tr", "TRContainer") ;
++    	/*Set properties for drag object */
++        eXo.portal.PortalDragDrop.setDragObjectProperties(dragObject, dndEvent.backupMouseEvent) ;
++
++        var trContainer = eXo.portal.PortalDragDrop.parentDragObject.parentNode;          
+         var tdElementList = DOMUtil.getChildrenByTagName(trContainer, "td") ;
++        var listComponent = new Array();
+         
+-        var listComponent = new Array() ;
+-        for(var i = 0; i < tdElementList.length; i++) {
+-          if(DOMUtil.hasDescendantClass(uiComponentLayout, "DragAndDropPreview")) {
+-            var previewBlock = DOMUtil.findFirstDescendantByClass(trContainer, "div", "DragAndDropPreview") ;
+-            if((tdElementList[i] != previewBlock.parentNode) && (tdElementList[i] != dragObject.parentNode)) {
+-              listComponent.push(tdElementList[i]) ;
+-            }
+-          } else {
+-            listComponent.push(tdElementList[i]) ;
+-          }          
++        for (var i = 0; i < tdElementList.length; i++) {
++      	  if (tdElementList[i] != dragObject.parentNode) {
++      		  listComponent.push(tdElementList[i]);
++      	  }
+         }
+         
+         dndEvent.foundTargetObject.listComponentInTarget = listComponent ;
+         /*Find Insert Position */
+         var insertPosition = eXo.portal.PortalDragDrop.findInsertPosition(listComponent, dragObject, "column") ;
+         
+-        if(dndEvent.foundTargetObject == dndEvent.lastFoundTargetObject &&
++        if(dndEvent.lastFoundTargetObject && dndEvent.foundTargetObject == dndEvent.lastFoundTargetObject &&
+           dndEvent.lastFoundTargetObject.foundIndex == insertPosition) {
+           return ;
+         }
+         
+         dndEvent.foundTargetObject.foundIndex = insertPosition ;
+         /*Undo preview */
+-        if(dndEvent.lastFoundTargetObject != null) {
+-          eXo.portal.PortalDragDrop.undoPreview(dndEvent) ;
+-        }
++        //eXo.portal.PortalDragDrop.removeNullPreview();
++        //We don't need to remove everytime
++        if (DOMUtil.findChildrenByClass(dragObject.parentNode, "div", "DragAndDropPreview").length == 0) {
++          dragObject.parentNode.appendChild(eXo.portal.PortalDragDrop.createPreview());
++        }  
+         
+-        /* Insert preview block */
+-        eXo.portal.PortalDragDrop.tdInserted = document.createElement('td') ;
+-        eXo.portal.PortalDragDrop.tdInserted .appendChild(eXo.portal.PortalDragDrop.createPreview("column")) ;
+         if(insertPosition >= 0) {
+-          trContainer.insertBefore(eXo.portal.PortalDragDrop.tdInserted, listComponent[insertPosition]) ;
++          trContainer.insertBefore(dragObject.parentNode, listComponent[insertPosition]) ;
+         } else {
+-          trContainer.appendChild(eXo.portal.PortalDragDrop.tdInserted) ;
++          trContainer.appendChild(dragObject.parentNode) ;
+         }
+-        /*Set properties for drag object */
+-        eXo.portal.PortalDragDrop.setDragObjectProperties(dragObject, tdElementList, "column", dndEvent.backupMouseEvent) ;
+       }
++			//when dragObject out of page
++      //Can't drag small column with ie6
++//			if ((Browser.findPosY(dragObject) < 2)  || (Browser.findPosX(dragObject) + 64 > eXo.core.Browser.getBrowserWidth())) {
++//				DragDrop.dropCallback(dndEvent);
++//				document.onmousemove = null;
++//			} 
+     } 
+   } ;
+ 
++  /**
++   * DragDrop catch mouse up event, update dndEvent.foundTargetObject and call this function
++   * this foundTargetObject exists, this will call doDropCallback, if not, this will restore original dragObject position
++  */
+   DragDrop.dropCallback = function(dndEvent) {
+   	this.origDragObjectStyle.setProperties(dndEvent.dragObject.style, false) ;
+ 
+@@ -222,49 +232,60 @@
+ 			srcElement.style.width = "auto" ;
+   		
+ 			eXo.portal.PortalDragDrop.removeNullPreview();
++			
++		     if (DOMUtil.hasClass(srcElement, "UIColumnContainer")) {
++				  var tdNode = srcElement.parentNode ;
++				  var lastSibling = eXo.portal.PortalDragDrop.backupParentSibling;
++				  if (lastSibling == null) {
++					  tdNode.parentNode.appendChild(tdNode);
++				  } else {
++					  tdNode.parentNode.insertBefore(tdNode, lastSibling);
++				  }
++			  }
+     }
+-  }
++  };
+   
+   var clickObject = this ;
+   var controlBlock = DOMUtil.findAncestorByClass(clickObject, "CONTROL-BLOCK") ;
+ 
++  var dragBlock;
+   if(controlBlock != null) {
+-    var dragBlock = eXo.portal.UIPortal.findUIComponentOf(controlBlock) ;
+-    DragDrop.init(eXo.portal.PortalDragDrop.findDropableTargets(), clickObject, dragBlock, e) ;
++    dragBlock = eXo.portal.UIPortal.findUIComponentOf(controlBlock) ;    
+   } else {
+-  	var dragBlock = DOMUtil.findAncestorByClass(clickObject, "DragObjectPortlet") ;
+-		if(dragBlock) {
+-  		DragDrop.init(eXo.portal.PortalDragDrop.findDropableTargets(), clickObject, dragBlock, e) ;
+-		} else {
+-    	DragDrop.init(eXo.portal.PortalDragDrop.findDropableTargets(), clickObject, clickObject, e) ;
+-		}
++  	dragBlock = DOMUtil.findAncestorByClass(clickObject, "DragObjectPortlet") ;
++	if(!dragBlock) {
++  		dragBlock = clickObject;
++	}
+   }
++  DragDrop.init(eXo.portal.PortalDragDrop.findDropableTargets(dragBlock), clickObject, dragBlock, e) ;
+ };
+ 
++/**
++ * this will remove preview block and update new postion for dragObject
++ */
+ PortalDragDrop.prototype.doDropCallback = function(dndEvent) {
+ 	if(!dndEvent.lastFoundTargetObject) {
+ 		dndEvent.lastFoundTargetObject = eXo.portal.PortalDragDrop.backupLastFoundTarget ;
+ 	}
+ 
+-	eXo.portal.PortalDragDrop.undoPreview(dndEvent) ;
++	//eXo.portal.PortalDragDrop.undoPreview(dndEvent) ;
++	eXo.portal.PortalDragDrop.removeNullPreview();
+ 	
+ 	var srcElement = dndEvent.dragObject ;
+       
+   var targetElement = dndEvent.foundTargetObject ;
+   
+   var newComponent = false;
++  if(eXo.core.DOMUtil.hasDescendantClass(srcElement, "DragControlArea") && (targetElement.foundIndex != null)) {
++//  	alert("My Test: " + eXo.portal.PortalDragDrop.layoutTypeElementNode);
++    if(eXo.portal.PortalDragDrop.layoutTypeElementNode != null) {
++      eXo.portal.PortalDragDrop.divRowContainerAddChild(srcElement, targetElement, targetElement.foundIndex) ;
++    }
++  }
+   
+-  
+   if(eXo.core.DOMUtil.findFirstChildByClass(dndEvent.dragObject, "div", "CONTROL-BLOCK") == null) {
+     dndEvent.dragObject.parentNode.removeChild(dndEvent.dragObject) ;
+     newComponent = true;
+-  } else {
+-  	if (targetElement.foundIndex == null) return;
+-    if(eXo.portal.PortalDragDrop.layoutTypeElementNode != null) {
+-      eXo.portal.PortalDragDrop.divRowContainerAddChild(srcElement, targetElement, targetElement.foundIndex) ;
+-    } else {
+-      eXo.portal.PortalDragDrop.tableColumnContainerAddChild(srcElement, targetElement, targetElement.foundIndex) ;
+-    }
+   }
+ 
+   var params = [
+@@ -275,7 +296,7 @@
+   ] ;
+   
+   try {
+-    dndEvent.lastFoundTargetObject.foundIndex = null;
++    dndEvent.lastFoundTargetObject.foundIndex = undefined;
+   } catch(err) {
+   	
+   }
+@@ -286,23 +307,34 @@
+ /**
+  * Return all components that are droppable in the DOM
+  */
+-PortalDragDrop.prototype.findDropableTargets = function() {
++PortalDragDrop.prototype.findDropableTargets = function(dragBlock) {
+   var dropableTargets = new Array() ;
+-  var uiWorkingWorkspace = document.getElementById("UIWorkingWorkspace") ;
+-  var uiPortal = eXo.core.DOMUtil.findFirstDescendantByClass(uiWorkingWorkspace, "div", "UIPortal") ;
+-  var uiContainers = eXo.core.DOMUtil.findDescendantsByClass(uiWorkingWorkspace, "div", "UIContainer") ;
+-  if(uiPortal) {
+-    dropableTargets.push(uiPortal) ;
+-  } else {
+-  	var uiPage = eXo.core.DOMUtil.findFirstDescendantByClass(uiWorkingWorkspace, "div", "UIPage") ;
+-    if(uiPage) dropableTargets.push(uiPage) ;
+-  }
+-  for(var i = 0; i < uiContainers.length; i++) {
+-    dropableTargets.push(uiContainers[i]) ;
+-  }
+-   return dropableTargets ;
++  
++  if (dragBlock && eXo.core.DOMUtil.hasClass(dragBlock, "UIColumnContainer")) {
++  	  var uiTableContainer = eXo.core.DOMUtil.findAncestorByClass(dragBlock, "UITableColumnContainer");
++  	  dropableTargets.push(uiTableContainer);
++  	  return dropableTargets ;
++  } else {  
++  	  var uiWorkingWorkspace = document.getElementById("UIWorkingWorkspace") ;
++  	  var uiPortal = eXo.core.DOMUtil.findFirstDescendantByClass(uiWorkingWorkspace, "div", "UIPortal") ;
++  	  var uiContainers = eXo.core.DOMUtil.findDescendantsByClass(uiWorkingWorkspace, "div", "UIContainer") ;
++  	  if(uiPortal) {
++  	    dropableTargets.push(uiPortal) ;
++  	  } else {
++  	  	var uiPage = eXo.core.DOMUtil.findFirstDescendantByClass(uiWorkingWorkspace, "div", "UIPage") ;
++  	    if(uiPage) dropableTargets.push(uiPage) ;
++  	  }
++  	  for(var i = 0; i < uiContainers.length; i++) {
++  		if (eXo.core.DOMUtil.hasClass(uiContainers[i], "UITableColumnContainer")) continue;  
++  	    dropableTargets.push(uiContainers[i]) ;
++  	  }
++  	   return dropableTargets ;
++   }
+ };
+ 
++/**
++ * This will scroll page if we drag out of the page
++ */
+ PortalDragDrop.prototype.scrollOnDrag = function(dragObject, dndEvent) {
+   var dragObjectTop = eXo.core.Browser.findPosY(dragObject) ;
+   var browserHeight = eXo.core.Browser.getBrowserHeight() ;
+@@ -345,7 +377,7 @@
+   }  
+ };
+ 
+-PortalDragDrop.prototype.setDragObjectProperties = function(dragObject, listComponent, layout, e) {
++PortalDragDrop.prototype.setDragObjectProperties = function(dragObject, e) {
+   var uiControlWorkspace = document.getElementById("UIControlWorkspace") ;
+   var uiPage = eXo.core.DOMUtil.findAncestorByClass(dragObject, "UIPage");
+   var csWidth = uiControlWorkspace.offsetWidth ;
+@@ -357,60 +389,33 @@
+    * */
+   if(eXo.core.Browser.isIE7() || (eXo.core.Browser.isIE6() && (uiPage == null))) csWidth = csWidth * 2 ;
+   dragObject.style.position = "absolute" ;
+-  if(eXo.core.DOMUtil.findFirstChildByClass(dragObject, "div", "CONTROL-BLOCK") == null) {
++  if(eXo.core.DOMUtil.findFirstChildByClass(dragObject, "div", "CONTROL-BLOCK") != null) {
+     dragObject.style.top = (eXo.core.Browser.findMouseYInPage(e) - 
+-                            eXo.portal.PortalDragDrop.deltaYDragObjectAndMouse - document.documentElement.scrollTop) + "px" ;
+-    if(eXo.core.I18n.isLT()) dragObject.style.left = (eXo.core.Browser.findMouseXInPage(e) -
+-                              eXo.portal.PortalDragDrop.deltaXDragObjectAndMouse) + "px" ;
+-  } else {
+-    dragObject.style.top = (eXo.core.Browser.findMouseYInPage(e) - 
+                             eXo.portal.PortalDragDrop.deltaYDragObjectAndMouse) + "px" ;
+     if(eXo.core.I18n.isLT()) dragObject.style.left = (eXo.core.Browser.findMouseXInPage(e) - csWidth -
+ 	                              eXo.portal.PortalDragDrop.deltaXDragObjectAndMouse) + "px" ;
+-  }
+-   dragObject.style.width = "300px" ;
++    dragObject.style.width = "300px" ;
++  }   
+ };
+ 
+-PortalDragDrop.prototype.createPreview = function(layoutType) {
++PortalDragDrop.prototype.createPreview = function() {
+ 
+   var previewBlock = document.createElement("div") ;
+   var components = eXo.core.DragDrop.dndEvent.foundTargetObject.listComponentInTarget ;
+   
+   previewBlock.className = "DragAndDropPreview" ;
+   previewBlock.id = "DragAndDropPreview" ;
+-  
+-  if((layoutType == "column") && (components.length > 0)) {
+-    var offsetWidthTR = components[0].parentNode.offsetWidth ;
+-    var widthComponent = 0 ;
+-    
+-    if(eXo.core.DOMUtil.findAncestorByClass(eXo.portal.PortalDragDrop.parentDragObject, "TRContainer") != null) {
+-      widthComponent = Math.round(offsetWidthTR / (components.length)) - 1 ;
+-    } else {
+-      widthComponent = Math.round(offsetWidthTR / (components.length + 1)) - 1 ;
+-    }
+-    
+-    eXo.portal.PortalDragDrop.tdInserted.style.width = widthComponent + "px" ;
+-    
+-    for(var i = 0 ; i < components.length; i++) {
+-      if(components[i] == eXo.portal.PortalDragDrop.parentDragObject) {
+-        components[i].style.width = "0px" ;
+-      } else {
+-        components[i].style.width = widthComponent + "px" ;
+-      }
+-    }
+-    
+-    eXo.portal.PortalDragDrop.widthComponentInTarget = widthComponent ;
+-  }
++   
+   return previewBlock ;
+ };
+ 
+ PortalDragDrop.prototype.removeNullPreview = function() {
+ 	var dropObject = document.getElementById("DragAndDropPreview") ;
+-	if (dropObject && dropObject.innerHTML == "") {
++	if (dropObject) {
+ 		dropObject.parentNode.removeChild(dropObject);
+ 	}
+-}
+-
++};
++/*
+ PortalDragDrop.prototype.undoPreview = function(dndEvent) {
+ 	var DOMUtil = eXo.core.DOMUtil ;
+   var uiComponentLayout ;
+@@ -451,7 +456,7 @@
+   }
+   dragObject.style.border = "none" ;
+ };
+-
++*/
+ PortalDragDrop.prototype.divRowContainerAddChild = function(insertBlock, targetElement, insertPosition) {
+   var listComponent = eXo.core.DragDrop.dndEvent.foundTargetObject.listComponentInTarget ;
+   var uiRowContainer = eXo.core.DOMUtil.findFirstDescendantByClass(targetElement, "div", "UIRowContainer") ;
+@@ -468,30 +473,6 @@
+   }
+ };
+ 
+-PortalDragDrop.prototype.tableColumnContainerAddChild = function(insertBlock, targetElement, insertPosition) {
+-  var listComponent = eXo.core.DragDrop.dndEvent.foundTargetObject.listComponentInTarget ;
+-  var DOMUtil = eXo.core.DOMUtil ;
+-  var trContainer = DOMUtil.findFirstDescendantByClass(targetElement, "tr", "TRContainer") ;
+-  var tdInserted = document.createElement('td') ;
+-  
+-  var checkTRContainerInsertBlock = DOMUtil.findAncestorByClass(insertBlock, "TRContainer") ;
+-      
+-  tdInserted.style.width = eXo.portal.PortalDragDrop.widthComponentInTarget + "px" ;
+-  
+-  tdInserted.appendChild(insertBlock) ;
+-  if(insertPosition >= 0) {
+-    trContainer.insertBefore(tdInserted, listComponent[insertPosition]) ;
+-  } else {
+-    trContainer.appendChild(tdInserted) ;
+-  }
+-
+-  insertBlock.style.width = "auto" ;
+-  
+-  if(checkTRContainerInsertBlock) {
+-    trContainer.removeChild(eXo.portal.PortalDragDrop.parentDragObject) ;
+-  }
+-};
+-
+ PortalDragDrop.prototype.fixCss =  function() {
+ 	return;
+ 	/*
+Index: web/eXoResources/src/main/webapp/javascript/eXo/portal/UIPortal.js
+===================================================================
+--- web/eXoResources/src/main/webapp/javascript/eXo/portal/UIPortal.js	(revision 51071)
++++ web/eXoResources/src/main/webapp/javascript/eXo/portal/UIPortal.js	(working copy)
+@@ -38,16 +38,19 @@
+ };
+ 
+ UIPortal.prototype.findUIComponentOf = function(element) {
+-  var parent = element.parentNode ;
+-  while(parent != null) {
+-    var className = parent.className ;
+-    if(className == 'UIPortlet' || className == 'UIContainer' ||  
+-       className == 'UIPageBody' ||  className == 'UIPortal')  {
+-      return parent ;
+-    }
+-    parent = parent.parentNode ;
++  var DOMUtil = eXo.core.DOMUtil;
++  var parent;
++  if (parent = DOMUtil.findAncestorByClass(element, "UIPortlet")) {
++    return parent;
++  } else if (parent = DOMUtil.findAncestorByClass(element, "UIContainer")) {
++    return parent;
++  } else if (parent = DOMUtil.findAncestorByClass(element, "UIPageBody")) {
++    return parent;
++  } else if (parent = DOMUtil.findAncestorByClass(element, "UIPortal")) {
++    return parent;
+   }
+-  return null ;
++
++  return null;
+ };
+ 
+ UIPortal.prototype.showMaskLayer = function() {
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css	(revision 51071)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css	(working copy)
+@@ -233,6 +233,18 @@
+ 	float: left;  /* orientation=rt */
+ }
+ 
++.UIColumnContainer .ControlIcon {
++  background: url("/eXoResources/skin/PortletThemes/background/VistaTheme.png") no-repeat center -219px transparent;
++  cursor: pointer;
++  float: right;
++  height: 20px;
++  width: 29px;
++}
++
++.UIColumnContainer .ArrowDownIcon {
++  background-position: center -219px;
++}
++
+ .UIContainer .ContainerIcon {
+   float: left;  /* orientation=lt */
+ 	float: right;  /* orientation=rt */
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UIBarDecorator/UIInfoBar/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UIBarDecorator/UIInfoBar/Stylesheet.css	(revision 51071)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UIBarDecorator/UIInfoBar/Stylesheet.css	(working copy)
+@@ -52,7 +52,6 @@
+ 
+ .UIInfoBar .BlueRoundedStyle .FixHeight {
+ 	height: 22px;
+-	overflow: hidden;
+ }
+ 
+ .UIInfoBar .BlueRoundedStyle .MiddleBar {
