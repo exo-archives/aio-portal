@@ -1,0 +1,16 @@
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortal.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortal.java	(revision 61256)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortal.java	(working copy)
+@@ -144,7 +144,10 @@
+     }
+     if(pNav == null) return;
+     //----------------------------------------------------------
+-    selectedNode_ = pNav.getNodes().get(0);
++    if (selectedNode_ == null) {
++      selectedNode_ = pNav.getNodes().get(0);
++    }
++    
+     selectedPaths_.add(selectedNode_);
+     UIPageBody uiPageBody = findFirstComponentOfType(UIPageBody.class);    
+     if(uiPageBody == null) return;
