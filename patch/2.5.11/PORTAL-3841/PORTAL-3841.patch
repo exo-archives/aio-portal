@@ -1,0 +1,14 @@
+Index: portlet/exoadmin/src/main/java/org/exoplatform/organization/webui/component/UIListMembershipType.java
+===================================================================
+--- portlet/exoadmin/src/main/java/org/exoplatform/organization/webui/component/UIListMembershipType.java	(revision 51684)
++++ portlet/exoadmin/src/main/java/org/exoplatform/organization/webui/component/UIListMembershipType.java	(working copy)
+@@ -79,6 +79,9 @@
+       
+       OrganizationService service = uiMembership.getApplicationComponent(OrganizationService.class);
+       MembershipType mt = service.getMembershipTypeHandler().findMembershipType(name);
++      if (mt.getDescription() == null) {
++        mt.setDescription("");
++      }
+       UIMembershipManagement uiMembershipManager = uiMembership.getParent();
+       UIMembershipTypeForm uiForm = uiMembershipManager.getChild(UIMembershipTypeForm.class);
+       uiForm.setMembershipType(mt);     
