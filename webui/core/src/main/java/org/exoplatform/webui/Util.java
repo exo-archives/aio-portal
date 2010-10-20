@@ -71,4 +71,13 @@ public class Util {
     Object[] args =  {params} ;
     return type.getConstructor(CONSTRUCTOR_PARAMS).newInstance(args)  ;
   }
+  /**
+   * Create a unique identifier of Object on UI
+   * The identifier is valid on W3C validation
+   * @param o object to create identifier
+   * @return String identifier of object
+   */
+  static public String getUIObjectId(Object o) {
+    return "uid_" + String.valueOf(o.hashCode());
+  }
 }

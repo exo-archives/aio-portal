@@ -40,7 +40,7 @@ import org.exoplatform.webui.core.lifecycle.UIApplicationLifecycle;
 public class UIGadgetPortlet extends UIPortletApplication {
   public UIGadgetPortlet() throws Exception {
     UIGadget uiGadget = addChild(UIGadget.class, null, null);
-    uiGadget.setId(Integer.toString(uiGadget.hashCode()+1));
+    uiGadget.setId(org.exoplatform.webui.Util.getUIObjectId(uiGadget));
     uiGadget.setUrl(getUrl());
     uiGadget.setView("canvas");
     uiGadget.setDecorator(false);

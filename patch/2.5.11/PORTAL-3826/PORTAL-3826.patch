@@ -1,0 +1,112 @@
+Index: component/dashboard/src/main/java/org/exoplatform/dashboard/webui/component/UIAddGadgetForm.java
+===================================================================
+--- component/dashboard/src/main/java/org/exoplatform/dashboard/webui/component/UIAddGadgetForm.java	(revision 52261)
++++ component/dashboard/src/main/java/org/exoplatform/dashboard/webui/component/UIAddGadgetForm.java	(working copy)
+@@ -93,8 +93,7 @@
+         windowId.append("#").append(context.getRemoteUser());
+         windowId.append(":/dashboard/").append(gadget.getName()).append('/');
+         uiGadget = uiForm.createUIComponent(context, UIGadget.class, null, null);
+-        //TODO why do we do +1
+-        uiGadget.setId(Integer.toString(uiGadget.hashCode()+1));
++        uiGadget.setId(org.exoplatform.webui.Util.getUIObjectId(uiGadget));
+         windowId.append(uiGadget.hashCode());
+         uiGadget.setApplicationInstanceId(windowId.toString());
+       }  catch (Exception e) {
+@@ -116,14 +115,14 @@
+         windowId.append("#").append(context.getRemoteUser());
+         windowId.append(":/dashboard/").append(gadget.getName()).append('/');
+         uiGadget = uiForm.createUIComponent(context, UIGadget.class, null, null);
+-        uiGadget.setId(Integer.toString(url.hashCode()+1));
++        uiGadget.setId(org.exoplatform.webui.Util.getUIObjectId(url));
+         windowId.append(url.hashCode());
+         uiGadget.setApplicationInstanceId(windowId.toString());
+ 
+         String params = "{'rssurl':'" + url + "'}";
+ 
+         UserGadgetStorage userGadgetStorage = uiForm.getApplicationComponent(UserGadgetStorage.class);
+-        userGadgetStorage.save(Util.getPortalRequestContext().getRemoteUser(), gadget.getName(), "" + url.hashCode(), UIGadget.PREF_KEY, params);
++        userGadgetStorage.save(Util.getPortalRequestContext().getRemoteUser(), gadget.getName(), uiGadget.getApplicationInstanceUniqueId(), UIGadget.PREF_KEY, params);
+       }
+       
+ 
+Index: component/dashboard/src/main/java/org/exoplatform/dashboard/webui/component/UIDashboardContainer.java
+===================================================================
+--- component/dashboard/src/main/java/org/exoplatform/dashboard/webui/component/UIDashboardContainer.java	(revision 52261)
++++ component/dashboard/src/main/java/org/exoplatform/dashboard/webui/component/UIDashboardContainer.java	(working copy)
+@@ -493,7 +493,7 @@
+       windowId.append(":/").append(
+           application.getApplicationGroup() + "/" + application.getApplicationName()).append('/');
+       UIGadget uiGadget = event.getSource().createUIComponent(context, UIGadget.class, null, null);
+-      uiGadget.setId(Integer.toString(uiGadget.hashCode()+1));
++      uiGadget.setId(org.exoplatform.webui.Util.getUIObjectId(uiGadget));
+       windowId.append(uiGadget.hashCode());
+       uiGadget.setApplicationInstanceId(windowId.toString());
+       UIDashboardContainer uiDashboardContainer = uiDashboard.getChild(UIDashboardContainer.class);
+Index: portlet/dashboard/src/main/java/org/exoplatform/gadget/webui/component/UIGadgetPortlet.java
+===================================================================
+--- portlet/dashboard/src/main/java/org/exoplatform/gadget/webui/component/UIGadgetPortlet.java	(revision 52261)
++++ portlet/dashboard/src/main/java/org/exoplatform/gadget/webui/component/UIGadgetPortlet.java	(working copy)
+@@ -40,7 +40,7 @@
+ public class UIGadgetPortlet extends UIPortletApplication {
+   public UIGadgetPortlet() throws Exception {
+     UIGadget uiGadget = addChild(UIGadget.class, null, null);
+-    uiGadget.setId(Integer.toString(uiGadget.hashCode()+1));
++    uiGadget.setId(org.exoplatform.webui.Util.getUIObjectId(uiGadget));
+     uiGadget.setUrl(getUrl());
+     uiGadget.setView("canvas");
+     uiGadget.setDecorator(false);
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalComponentActionListener.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalComponentActionListener.java	(revision 52261)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalComponentActionListener.java	(working copy)
+@@ -194,7 +194,7 @@
+           org.exoplatform.portal.webui.container.UIContainer uiContainer =  
+             uiTarget.createUIComponent(org.exoplatform.portal.webui.container.UIContainer.class, null, null);
+           Container container = uiContainerConfig.getContainer(sourceId); 
+-          container.setId(String.valueOf(container.hashCode()));
++          container.setId(org.exoplatform.webui.Util.getUIObjectId(container));
+           PortalDataMapper.toUIContainer(uiContainer, container);      
+           uiSource = uiContainer;   
+         } else {
+Index: webui/core/src/main/java/org/exoplatform/webui/core/UIComponent.java
+===================================================================
+--- webui/core/src/main/java/org/exoplatform/webui/core/UIComponent.java	(revision 52261)
++++ webui/core/src/main/java/org/exoplatform/webui/core/UIComponent.java	(working copy)
+@@ -28,7 +28,8 @@
+ import org.exoplatform.webui.event.Event;
+ import org.exoplatform.webui.event.EventListener;
+ import org.exoplatform.webui.event.MonitorEvent;
+-import org.exoplatform.webui.event.Event.Phase;
++import org.exoplatform.webui.event.Event.Phase;
++import org.exoplatform.webui.Util;
+ /**
+  * Created by The eXo Platform SAS
+  * May 7, 2006
+@@ -46,7 +47,7 @@
+   
+   public String getId() { return this.id ; }  
+   public UIComponent   setId(String id) {
+-    if(id == null) this.id =  Integer.toString(hashCode()) ;
++    if(id == null) this.id =  Util.getUIObjectId(this);
+     else this.id = id ;
+     return this ;
+   }
+Index: webui/core/src/main/java/org/exoplatform/webui/Util.java
+===================================================================
+--- webui/core/src/main/java/org/exoplatform/webui/Util.java	(revision 52261)
++++ webui/core/src/main/java/org/exoplatform/webui/Util.java	(working copy)
+@@ -70,5 +70,14 @@
+     } 
+     Object[] args =  {params} ;
+     return type.getConstructor(CONSTRUCTOR_PARAMS).newInstance(args)  ;
++  }
++  /**
++   * Create a unique identifier of Object on UI
++   * The identifier is valid on W3C validation
++   * @param o object to create identifier
++   * @return String identifier of object
++   */
++  static public String getUIObjectId(Object o) {
++    return "uid_" + String.valueOf(o.hashCode());
+   }
+ }

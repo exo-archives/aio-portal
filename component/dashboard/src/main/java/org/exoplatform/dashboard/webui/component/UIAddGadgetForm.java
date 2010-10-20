@@ -93,8 +93,7 @@ public class UIAddGadgetForm extends UIForm {
         windowId.append("#").append(context.getRemoteUser());
         windowId.append(":/dashboard/").append(gadget.getName()).append('/');
         uiGadget = uiForm.createUIComponent(context, UIGadget.class, null, null);
-        //TODO why do we do +1
-        uiGadget.setId(Integer.toString(uiGadget.hashCode()+1));
+        uiGadget.setId(org.exoplatform.webui.Util.getUIObjectId(uiGadget));
         windowId.append(uiGadget.hashCode());
         uiGadget.setApplicationInstanceId(windowId.toString());
       }  catch (Exception e) {
@@ -116,14 +115,14 @@ public class UIAddGadgetForm extends UIForm {
         windowId.append("#").append(context.getRemoteUser());
         windowId.append(":/dashboard/").append(gadget.getName()).append('/');
         uiGadget = uiForm.createUIComponent(context, UIGadget.class, null, null);
-        uiGadget.setId(Integer.toString(url.hashCode()+1));
+        uiGadget.setId(org.exoplatform.webui.Util.getUIObjectId(url));
         windowId.append(url.hashCode());
         uiGadget.setApplicationInstanceId(windowId.toString());
 
         String params = "{'rssurl':'" + url + "'}";
 
         UserGadgetStorage userGadgetStorage = uiForm.getApplicationComponent(UserGadgetStorage.class);
-        userGadgetStorage.save(Util.getPortalRequestContext().getRemoteUser(), gadget.getName(), "" + url.hashCode(), UIGadget.PREF_KEY, params);
+        userGadgetStorage.save(Util.getPortalRequestContext().getRemoteUser(), gadget.getName(), uiGadget.getApplicationInstanceUniqueId(), UIGadget.PREF_KEY, params);
       }
       
 

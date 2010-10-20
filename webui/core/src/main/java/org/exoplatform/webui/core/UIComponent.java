@@ -29,6 +29,7 @@ import org.exoplatform.webui.event.Event;
 import org.exoplatform.webui.event.EventListener;
 import org.exoplatform.webui.event.MonitorEvent;
 import org.exoplatform.webui.event.Event.Phase;
+import org.exoplatform.webui.Util;
 /**
  * Created by The eXo Platform SAS
  * May 7, 2006
@@ -46,7 +47,7 @@ abstract public class UIComponent {
   
   public String getId() { return this.id ; }  
   public UIComponent   setId(String id) {
-    if(id == null) this.id =  Integer.toString(hashCode()) ;
+    if(id == null) this.id =  Util.getUIObjectId(this);
     else this.id = id ;
     return this ;
   }

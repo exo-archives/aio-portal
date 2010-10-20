@@ -493,7 +493,7 @@ public class UIDashboardContainer extends org.exoplatform.webui.core.UIContainer
       windowId.append(":/").append(
           application.getApplicationGroup() + "/" + application.getApplicationName()).append('/');
       UIGadget uiGadget = event.getSource().createUIComponent(context, UIGadget.class, null, null);
-      uiGadget.setId(Integer.toString(uiGadget.hashCode()+1));
+      uiGadget.setId(org.exoplatform.webui.Util.getUIObjectId(uiGadget));
       windowId.append(uiGadget.hashCode());
       uiGadget.setApplicationInstanceId(windowId.toString());
       UIDashboardContainer uiDashboardContainer = uiDashboard.getChild(UIDashboardContainer.class);
