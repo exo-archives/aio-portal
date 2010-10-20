@@ -1,0 +1,15 @@
+Index: web/eXoResources/src/main/webapp/javascript/eXo/portal/PortalDragDrop.js
+===================================================================
+--- web/eXoResources/src/main/webapp/javascript/eXo/portal/PortalDragDrop.js	(revision 52468)
++++ web/eXoResources/src/main/webapp/javascript/eXo/portal/PortalDragDrop.js	(working copy)
+@@ -13,6 +13,10 @@
+  */
+ 
+ PortalDragDrop.prototype.init = function(e) {
++	if (eXo.core.DragDrop.dndEvent){
++		return;
++	}
++	
+ 	if (!e) e = window.event;
+ 	
+ 	if(e && e.preventDefault) e.preventDefault();

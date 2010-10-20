@@ -13,6 +13,10 @@ function PortalDragDrop() {
  */
 
 PortalDragDrop.prototype.init = function(e) {
+	if (eXo.core.DragDrop.dndEvent){
+		return;
+	}
+	
 	if (!e) e = window.event;
 	
 	if(e && e.preventDefault) e.preventDefault();
