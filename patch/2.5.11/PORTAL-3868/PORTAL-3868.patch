@@ -1,0 +1,28 @@
+Index: web/portal/src/main/webapp/groovy/portal/webui/application/UIPortlet.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/portal/webui/application/UIPortlet.gtmpl	(revision 61861)
++++ web/portal/src/main/webapp/groovy/portal/webui/application/UIPortlet.gtmpl	(working copy)
+@@ -227,17 +227,17 @@
+ 										                    String upper = mode.charAt(0).toString();
+ 										                    mode = mode.replaceFirst(upper, upper.toUpperCase());
+ 										                %>
+-												                  <a class="CategoryItem" href="$actionLink" title="$modeLabel">
+-											                    	<div class="CategoryItemLabel" >$modeLabel</div>
+-											                    </a>
++										                    <div class="CategoryItem" onclick="$actionLink" title="$modeLabel">
++									                    	  <div class="CategoryItemLabel" >$modeLabel</div>
++									                        </div>
+ 										                <%        
+ 									                  }
+ 									                  if(supportModes != null && supportModes.size() > 0 && !supportModes.contains("view")) {
+ 									                  	String modeLabel = _ctx.appRes("PortletMode.label.view") ;
+ 									                %> 
+-																				<a class="CategoryItem" href="<%=uicomponent.event("ChangePortletMode", "view")%>" title="$modeLabel">
+-										                    	<div class="CategoryItemLabel">$modeLabel</div>
+-										                    </a>                        
++														<div class="CategoryItem" onclick="<%=uicomponent.event("ChangePortletMode", "view")%>" title="$modeLabel">
++										                    <div class="CategoryItemLabel">$modeLabel</div>
++										                </div>                        
+ 									                 <%}%> 	
+ 									              </div>
+ 									            </div>
