@@ -43,7 +43,7 @@ public class UIPermissionSelector extends UISelector<String> {
   private Permission permission_;
   private boolean isEditable = true;
 	public UIPermissionSelector() throws Exception {
-    super(null, null) ;		
+    super("UIPermissionSelector", null) ;		
     isEditable = true;
     UIFormPopupWindow uiPopup = addChild(UIFormPopupWindow.class, null, "PopupPermissionSelector");
     uiPopup.setWindowSize(540, 0);  

@@ -53,7 +53,7 @@ public class UIApplicationLifecycle  extends Lifecycle {
     }
     UIPortletApplication uiApp = (UIPortletApplication) uicomponent;
     context.getWriter().append("<div id=\"").append(uicomponent.getId()).append("\"").
-    append(" class=\"").append(uicomponent.getId()).append("\">");
+    append(" class=\"").append(uicomponent.getName()).append("\">");
     uiApp.renderChildren();
     context.getWriter().append("</div>");
   }

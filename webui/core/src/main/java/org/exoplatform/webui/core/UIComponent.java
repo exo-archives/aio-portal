@@ -119,10 +119,13 @@ abstract public class UIComponent {
     this.config =  config ;
     if(componentId == null || componentId.length() == 0) componentId = config.getId() ;
     if(componentId == null) {
-      String type = config.getType() ;
-      componentId = type.substring(type.lastIndexOf('.') + 1) ;
+      if(this.id == null) {
+        String type = config.getType() ;
+        setId(type.substring(type.lastIndexOf('.') + 1));
+      }
+    } else {
+      setId(componentId) ;
     }
-    setId(componentId) ;
   }
   
   public  void setComponentConfig(Class<?> clazz, String id) {

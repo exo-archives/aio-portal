@@ -31,7 +31,9 @@ abstract public class UIPortletApplication extends  UIApplication {
   static public String HELP_MODE = "HelpMode" ;
   static public String CONFIG_MODE = "ConfigMode" ;
 
-  public UIPortletApplication() throws Exception {}
+  public UIPortletApplication() throws Exception {
+    this.setId(getName() + "-" + String.valueOf(this.hashCode()));
+  }
   
   @Deprecated
   public int getMinWidth() { return minWidth ; }
