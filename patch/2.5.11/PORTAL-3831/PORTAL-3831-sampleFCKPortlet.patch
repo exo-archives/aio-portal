@@ -1,0 +1,12 @@
+Index: sample/portlets/src/main/java/org/exoplatform/samples/fck/webui/component/UIFCKEditorPortlet.java
+===================================================================
+--- sample/portlets/src/main/java/org/exoplatform/samples/fck/webui/component/UIFCKEditorPortlet.java	(revision 62310)
++++ sample/portlets/src/main/java/org/exoplatform/samples/fck/webui/component/UIFCKEditorPortlet.java	(working copy)
+@@ -47,6 +47,7 @@
+     static final public String TEXT_FIELD = "text";
+     public UIEditor() throws Exception {
+       UIFormWYSIWYGInput uiInputFCKEditor = new UIFormWYSIWYGInput(TEXT_FIELD, null, null);
++      uiInputFCKEditor.setToolBarName("Default");
+       uiInputFCKEditor.setWidth("99%");
+       addUIFormInput(uiInputFCKEditor);
+     }

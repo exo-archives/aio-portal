@@ -48,7 +48,12 @@ if ( e && e.tagName == "TABLE" )
 // actual values if a table is selected in the editor.
 window.onload = function()
 {
-	// First of all, translate the dialog box texts
+	setTimeout(setTableValues, 500);
+}
+
+function setTableValues() 
+{
+    //First of all, translate the dialog box texts
 	oEditor.FCKLanguageManager.TranslatePage(document) ;
 
 	if (table)
@@ -58,8 +63,8 @@ window.onload = function()
 
 		// Gets the value from the Width or the Style attribute
 		var iWidth  = (table.style.width  ? table.style.width  : table.width ) ;
-		var iHeight = (table.style.height ? table.style.height : table.height ) ;
-
+		var iHeight = (table.style.height ? table.style.height : table.getAttribute("height") ) ;
+		
 		if (iWidth.indexOf('%') >= 0)			// Percentual = %
 		{
 			iWidth = parseInt( iWidth.substr(0,iWidth.length - 1), 10 ) ;
@@ -77,10 +82,13 @@ window.onload = function()
 		document.getElementById('txtWidth').value		= iWidth || '' ;
 		document.getElementById('txtHeight').value		= iHeight || '' ;
 		document.getElementById('txtBorder').value		= GetAttribute( table, 'border', '' ) ;
+		document.getElementById('txtBorderColor').value	= GetAttribute( table, 'borderColor', '#000000' ) ;
+		document.getElementById('txtBgColor').value		= GetAttribute( table, 'bgColor', '#FFFFFF' ) ;
 		document.getElementById('selAlignment').value	= GetAttribute( table, 'align', '' ) ;
 		document.getElementById('txtCellPadding').value	= GetAttribute( table, 'cellPadding', '' ) ;
 		document.getElementById('txtCellSpacing').value	= GetAttribute( table, 'cellSpacing', '' ) ;
 		document.getElementById('txtSummary').value     = GetAttribute( table, 'summary', '' ) ;
+		document.getElementById('txtInlineStyle').value     = GetAttribute( table, 'style', '' ) ;
 //		document.getElementById('cmbFontStyle').value	= table.className ;
 
 		var eCaption = oEditor.FCKDomTools.GetFirstChild( table, 'CAPTION' ) ;
