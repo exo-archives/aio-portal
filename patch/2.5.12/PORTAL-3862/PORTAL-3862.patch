@@ -1,0 +1,112 @@
+Index: component/application-registry/src/main/java/org/exoplatform/application/registry/jcr/ApplicationRegistryServiceImpl.java
+===================================================================
+--- component/application-registry/src/main/java/org/exoplatform/application/registry/jcr/ApplicationRegistryServiceImpl.java	(revision 52289)
++++ component/application-registry/src/main/java/org/exoplatform/application/registry/jcr/ApplicationRegistryServiceImpl.java	(working copy)
+@@ -5,7 +5,6 @@
+ package org.exoplatform.application.registry.jcr;
+ 
+ import java.util.ArrayList;
+-import java.util.Collection;
+ import java.util.Collections;
+ import java.util.Comparator;
+ import java.util.Iterator;
+@@ -36,12 +35,12 @@
+ import org.exoplatform.services.jcr.ext.registry.RegistryEntry;
+ import org.exoplatform.services.jcr.ext.registry.RegistryService;
+ import org.exoplatform.services.log.ExoLogger;
+-import org.exoplatform.services.organization.MembershipHandler;
+-import org.exoplatform.services.organization.OrganizationService;
+ import org.exoplatform.services.portletcontainer.PortletContainerService;
+ import org.exoplatform.services.portletcontainer.pci.PortletData;
+ import org.exoplatform.services.portletcontainer.pci.model.Description;
+ import org.exoplatform.services.portletcontainer.pci.model.DisplayName;
++import org.exoplatform.services.security.Identity;
++import org.exoplatform.services.security.IdentityRegistry;
+ import org.exoplatform.web.application.gadget.GadgetApplication;
+ import org.picocontainer.Startable;
+ 
+@@ -72,12 +71,14 @@
+     List<ApplicationCategory> categories = getApplicationCategories() ;
+     Iterator<ApplicationCategory> cateItr = categories.iterator() ;
+     ExoContainer container = ExoContainerContext.getCurrentContainer() ;
+-    OrganizationService orgService = (OrganizationService) container.getComponentInstanceOfType(OrganizationService.class) ;
++    // here we must use IdentityRegistry Service instead of Organization Service
++    // for retrieving groups and memberships allow JAAS based authorization
++    IdentityRegistry identityRegistry = (IdentityRegistry) container.getComponentInstanceOfType(IdentityRegistry.class);
+     UserACL acl = (UserACL) container.getComponentInstanceOfType(UserACL.class) ;
+     while(cateItr.hasNext()) {
+       ApplicationCategory cate = cateItr.next() ;
+       //TODO: dang.tung: filer category application
+-      if(!hasAccessPermission(orgService, acl, accessUser, cate)){
++      if(!hasAccessPermission(identityRegistry, acl, accessUser, cate)){
+         cateItr.remove() ;
+         continue ;
+       }
+@@ -85,7 +86,7 @@
+       Iterator<Application> appIterator = applications.iterator() ;
+       while(appIterator.hasNext()) {
+         Application app = appIterator.next() ;
+-        if(!hasAccessPermission(orgService, acl, accessUser, app)) appIterator.remove() ;
++        if(!hasAccessPermission(identityRegistry, acl, accessUser, app)) appIterator.remove() ;
+       }
+       cate.setApplications(applications) ;
+     }
+@@ -225,7 +226,6 @@
+     return getApplications(category, null, appTypes);
+   }
+   
+-  @SuppressWarnings("unchecked")
+   public List<Application> getApplications(ApplicationCategory category,
+                                            Comparator<Application> sortComparator,
+                                            String... appTypes) throws Exception {
+@@ -398,39 +398,40 @@
+   public void stop() {}
+   
+   //-------------------------------------Util function-------------------------------/
+-  private boolean hasAccessPermission(OrganizationService orgService, UserACL acl, String remoteUser, Application app) throws Exception {
++  private boolean hasAccessPermission(IdentityRegistry identityRegistry, UserACL acl, String remoteUser, Application app) throws Exception {
+     if(acl.getSuperUser().equals(remoteUser)) return true ;
+     List<String> permissions = app.getAccessPermissions() ; 
+     if(permissions == null) return false ;
+     for(String ele : permissions) {
+-      if(hasViewPermission(orgService, acl, remoteUser, ele)) return true;
++      if(hasViewPermission(identityRegistry, acl, remoteUser, ele)) return true;
+     }
+     return false;
+   }
+   //TODO: dang.tung: check ApplicationCategory permission
+-  private boolean hasAccessPermission(OrganizationService orgService, UserACL acl, String remoteUser, ApplicationCategory app) throws Exception {
++  private boolean hasAccessPermission(IdentityRegistry identityRegistry, UserACL acl, String remoteUser, ApplicationCategory app) throws Exception {
+     if(acl.getSuperUser().equals(remoteUser)) return true ;
+     List<String> permissions = app.getAccessPermissions() ; 
+     if(permissions == null) return false ;
+     for(String ele : permissions) {
+-      if(hasViewPermission(orgService, acl, remoteUser, ele)) return true;
++      if(hasViewPermission(identityRegistry, acl, remoteUser, ele)) return true;
+     }
+     return false;
+   }
+ 
+-  private boolean hasViewPermission(OrganizationService orgService, UserACL acl, String remoteUser, String expPerm) throws Exception {
++  private boolean hasViewPermission(IdentityRegistry identityRegistry, UserACL acl, String remoteUser, String expPerm) throws Exception {
+     if(UserACL.EVERYONE.equals(expPerm)) return true ;
+     String[] temp = expPerm.split(":") ;
+     if(temp.length < 2) return false;
+     String membership = temp[0].trim() ;
+     String groupId= temp[1].trim();
+-    MembershipHandler handler = orgService.getMembershipHandler();
++    Identity authenticatedUserIdentity = identityRegistry.getIdentity(remoteUser);
++    if (authenticatedUserIdentity == null) {
++      return false;
++    }
+     if(membership == null || "*".equals(membership)) {
+-      Collection<?> c = handler.findMembershipsByUserAndGroup(remoteUser, groupId) ;
+-      if(c == null) return false ;
+-      return c.size() > 0 ;
++      return authenticatedUserIdentity.isMemberOf(groupId);
+     } 
+-    return handler.findMembershipByUserGroupAndType(remoteUser, groupId, membership) != null;
++    return authenticatedUserIdentity.isMemberOf(groupId, membership);
+   }
+   
+   private String getCategoryPath(String categoryName) {
