@@ -24,6 +24,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.exoplatform.services.security.IdentityRegistry;
+import org.exoplatform.services.security.Identity;
 import org.apache.commons.logging.Log;
 import org.exoplatform.container.ExoContainer;
 import org.exoplatform.container.ExoContainerContext;
@@ -124,6 +126,7 @@ public class UserPortalConfigService implements Startable {
 	 * @return a UserPortalConfig object that contain the PortalConfig and a list
 	 *         of the PageNavigation objects
 	 */
+    @SuppressWarnings("unchecked")
 	public UserPortalConfig getUserPortalConfig(String portalName,
 			String accessUser) throws Exception {
 		PortalConfig portal = (PortalConfig) portalConfigCache_.get(portalName);
@@ -155,30 +158,33 @@ public class UserPortalConfigService implements Startable {
 				navigation.setModifiable(true);
 				navigations.add(navigation);
 			}
-
-			Collection<?> groups = null;
-			if (userACL_.getSuperUser().equals(accessUser))
-				groups = orgService_.getGroupHandler().getAllGroups();
-			else
-				groups = orgService_.getGroupHandler().findGroupsOfUser(accessUser);
-			Iterator<?> iterator = groups.iterator();
-			while (iterator.hasNext()) {
-				Group m = (Group) iterator.next();
-				String groupId = m.getId().trim();
-				navigation = getPageNavigation(PortalConfig.GROUP_TYPE, groupId);
-				if (navigation == null)
-					continue;
-				navigation.setModifiable(userACL_.hasEditPermission(navigation,
-						accessUser));
-				navigations.add(navigation);
-			}
-		}
-		Gadgets userGadgets = getGadgets(PortalConfig.USER_TYPE + "::" + accessUser);
-		Collections.sort(navigations, new Comparator<PageNavigation>() {
-			public int compare(PageNavigation nav1, PageNavigation nav2) {
-				return nav1.getPriority() - nav2.getPriority();
-			}
-		});
+      Collection<String> groupIds = null;
+      if (userACL_.getSuperUser().equals(accessUser)) {
+        Collection<Group> groups = orgService_.getGroupHandler().getAllGroups();
+        groupIds = extractGroupIds(groups);
+      } else {
+        // here we must retrieve groups to which belongs the user using the
+        // IdentityRegistry Service instead of Organization Service to
+        // allow
+        // JAAS based authorization
+        groupIds = getUserGroupIdsFromIdentityRegistry(accessUser);
+      }
+      if (groupIds != null) {
+        for (String groupId : groupIds) {
+          navigation = getPageNavigation(PortalConfig.GROUP_TYPE, groupId.trim());
+          if (navigation == null)
+            continue;
+          navigation.setModifiable(userACL_.hasEditPermission(navigation, accessUser));
+          navigations.add(navigation);
+        }
+      }
+    }
+    Gadgets userGadgets = getGadgets(PortalConfig.USER_TYPE + "::" + accessUser);
+    Collections.sort(navigations, new Comparator<PageNavigation>() {
+      public int compare(PageNavigation nav1, PageNavigation nav2) {
+        return nav1.getPriority() - nav2.getPriority();
+      }
+    });
 
 		return new UserPortalConfig(portal, navigations, userGadgets);
 	}
@@ -449,7 +455,41 @@ public class UserPortalConfigService implements Startable {
 		}
 		create(page);
 		return page;
-	}
+  }
+
+  /**
+   * this method extracts group id field from group object element in the given
+   * collection and adds it the list to be returned
+   * 
+   * @param groups a collection of group objects to which belong a user
+   * @return list of group ids
+   */
+  private List<String> extractGroupIds(Collection<Group> groups) {
+    List<String> groupIds = new ArrayList<String>();
+    for (Group group : groups) {
+      groupIds.add(new String(group.getId()));
+    }
+    return groupIds;
+  }
+
+  /**
+   * this method retrieves the group ids to which belong the user having the
+   * given id using the IdentityRegistry service instead of the Organization
+   * service to enable JAAS based authorization
+   * 
+   * @param accessUser the authenticated user id
+   * @return a collection of group ids
+   */
+  private Collection<String> getUserGroupIdsFromIdentityRegistry(String accessUser) {
+    ExoContainer container = ExoContainerContext.getCurrentContainer();
+    IdentityRegistry identityRegistry = (IdentityRegistry) container.getComponentInstanceOfType(IdentityRegistry.class);
+    Identity currentUserIdentity = identityRegistry.getIdentity(accessUser);
+    if (currentUserIdentity == null) {
+      return new ArrayList<String>();
+    }
+    return currentUserIdentity.getGroups();
+
+  }
 
 	private void getApplications(List<Application> apps, Object component) {
 		if (component instanceof Application) {
