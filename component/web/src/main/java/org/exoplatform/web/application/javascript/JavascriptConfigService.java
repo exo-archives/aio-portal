@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.ServletContext;
@@ -32,6 +33,8 @@ public class JavascriptConfigService {
   private Collection<String> availableScriptsPaths_;
 
   private String mergedJavascript = "";
+  
+  private long lastModified = Long.MAX_VALUE;
 
   private HashMap<String,String> extendedJavascripts ;
 
@@ -114,10 +117,16 @@ public class JavascriptConfigService {
       } catch (Exception e) {
         e.printStackTrace();
       }
+//    Remove miliseconds because string of date retrieve from Http header doesn't have miliseconds 
+      lastModified = (new Date().getTime() / 1000) * 1000;
     }
     return jsStream_.toByteArray();
   }
-
+  
+  public long getLastModified() {
+    return lastModified;
+  }
+  
   public boolean isModuleLoaded(CharSequence module) {
     return getAvailableScripts().contains(module);
   }

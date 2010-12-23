@@ -17,6 +17,7 @@
 package org.exoplatform.portal.webui.skin;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -110,4 +111,6 @@ public interface SkinService {
     String cssPath,
     ServletContext scontext,
     boolean overwrite);
+  
+  long getLastModified(String path);
 }

@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -92,8 +93,8 @@ public class SkinServiceImpl implements SkinService {
   private final Map<SkinKey, SkinConfig> portalSkins_ ;
   private final Map<SkinKey, SkinConfig> skinConfigs_;
   private final HashSet<String> availableSkins_;
-  private final Map<String, String> ltCache;
-  private final Map<String, String> rtCache;
+  private final Map<String, CachedStylesheet> ltCache;
+  private final Map<String, CachedStylesheet> rtCache;
   private final Map<String, Set<String>> portletThemes_;
   private final MainResourceResolver mainResolver;
 
@@ -108,8 +109,8 @@ public class SkinServiceImpl implements SkinService {
     portalSkins_ = new LinkedHashMap<SkinKey, SkinConfig>() ;
     skinConfigs_ = new LinkedHashMap<SkinKey, SkinConfig>(20);
     availableSkins_ = new HashSet<String>(5);
-    ltCache = new ConcurrentHashMap<String, String>();
-    rtCache = new ConcurrentHashMap<String, String>();
+    ltCache = new ConcurrentHashMap<String, CachedStylesheet>();
+    rtCache = new ConcurrentHashMap<String, CachedStylesheet>();
     portletThemes_ = new HashMap<String, Set<String>>();
     mainResolver = new MainResourceResolver(skinConfigs_);
   }
@@ -144,8 +145,8 @@ public class SkinServiceImpl implements SkinService {
     if (skinConfig == null) {
       portalSkins_.put(key, new SimpleSkin(this, module, skinName, cssPath));
     }
-    ltCache.put(cssPath, cssData);
-    rtCache.put(cssPath, cssData);
+    ltCache.put(cssPath, new CachedStylesheet(cssData));
+    rtCache.put(cssPath, new CachedStylesheet(cssData));
   }
 
   public void addSkin(
@@ -185,8 +186,8 @@ public class SkinServiceImpl implements SkinService {
     if (skinConfig == null) {
       skinConfigs_.put(key, new SimpleSkin(this, module, skinName, cssPath));
     }
-    ltCache.put(cssPath, cssData);
-    rtCache.put(cssPath, cssData);
+    ltCache.put(cssPath, new CachedStylesheet(cssData));
+    rtCache.put(cssPath, new CachedStylesheet(cssData));
   }
 
 
@@ -227,7 +228,7 @@ public class SkinServiceImpl implements SkinService {
         }
         public void setExpiration(long seconds) {
 
-        }
+        }      
       }, cssPath);
       return sb.toString();
     }
@@ -239,7 +240,7 @@ public class SkinServiceImpl implements SkinService {
       log.error("Error while rendering css " + cssPath, e);
       return null;
     }
-  }
+  }    
 
   public void renderCSS(ResourceRenderer renderer, String path) throws RenderingException, IOException {
     Orientation orientation = Orientation.LT;
@@ -251,31 +252,37 @@ public class SkinServiceImpl implements SkinService {
     }
 
     // Try cache first
-    if (!PropertyManager.isDevelopping()) {
+    if (!PropertyManager.isDevelopping()) {           
 
+      //
+      Map<String, CachedStylesheet> cache = orientation == Orientation.LT ? ltCache : rtCache;
+      CachedStylesheet cachedCSS = cache.get(path);      
+      if (cachedCSS == null) {
+        StringBuilder sb = new StringBuilder();
+        processCSS(sb, path, orientation, true);        
+        cachedCSS = new CachedStylesheet(sb.toString());
+        cache.put(path, cachedCSS);
+      }
+      
       if (path.startsWith("/portal/resource")) {
         renderer.setExpiration(ONE_MONTH);
       } else {
         renderer.setExpiration(ONE_HOUR);
-      }
-
-      //
-      Map<String, String> cache = orientation == Orientation.LT ? ltCache : rtCache;
-      String css = cache.get(path);
-      if (css == null) {
-        StringBuilder sb = new StringBuilder();
-        processCSS(sb, path, orientation, true);
-        css = sb.toString();
-        cache.put(path, css);
-      }
-      renderer.getAppendable().append(css);
+      } 
+      
+      renderer.getAppendable().append(cachedCSS.getText());            
     } else {
       processCSS(renderer.getAppendable(), path, orientation, false);
     }
   }
 
   public String getMergedCSS(String cssPath) {
-    return ltCache.get(cssPath);
+    CachedStylesheet cachedCSS = ltCache.get(cssPath);
+    if (cachedCSS == null) {
+      return null;
+    } else {
+      return cachedCSS.getText();
+    }
   }
 
   public Collection<SkinConfig> getPortalSkins(String skinName) {
@@ -433,5 +440,31 @@ public class SkinServiceImpl implements SkinService {
   public void reloadSkin(@ManagedDescription("The skin id") @ManagedName("skinId") String skinId) {
 	  ltCache.remove(skinId);
 	  rtCache.remove(skinId);
+  }
+  
+  /**
+   * Return last modifed date of cached css
+   * Return null if cached css can not be found
+   * @param path - path must not be null
+   */
+  public long getLastModified(String path) {
+    if (path == null) {
+      throw new IllegalArgumentException("path must not be null");
+    }
+    
+    Map<String, CachedStylesheet> cache = ltCache;
+    if (path.endsWith("-lt.css")) {
+      path = path.substring(0, path.length() - "-lt.css".length()) + ".css";
+    } else if (path.endsWith("-rt.css")) {
+      path = path.substring(0, path.length() - "-rt.css".length()) + ".css";
+      cache = rtCache;
+    }
+    
+    CachedStylesheet cachedCSS = cache.get(path);
+    if (cachedCSS == null) {
+      return Long.MAX_VALUE;
+    } else {
+      return cachedCSS.getLastModified();
+    }
   }
 }

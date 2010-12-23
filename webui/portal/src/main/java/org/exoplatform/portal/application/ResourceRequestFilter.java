@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.Writer;
 import java.net.URLDecoder;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -54,7 +53,6 @@ import org.exoplatform.commons.utils.TextEncoder;
 import org.exoplatform.commons.utils.CharsetTextEncoder;
 import org.exoplatform.commons.utils.TableCharEncoder;
 import org.exoplatform.commons.utils.CharsetCharEncoder;
-import org.exoplatform.commons.utils.PortalPrinter;
 
 public class ResourceRequestFilter implements Filter  {
   
@@ -67,7 +65,11 @@ public class ResourceRequestFilter implements Filter  {
   private ConcurrentMap<String, FutureTask<Image>> mirroredImageCache = new ConcurrentHashMap<String, FutureTask<Image>>();
 
   private ExoCache cssCache = new ConcurrentFIFOExoCache(50);
-
+  
+  public static final String IF_MODIFIED_SINCE     = "If-Modified-Since";
+  
+  public static final String LAST_MODIFIED     = "Last-Modified";    
+  
   public void init(FilterConfig filterConfig) {
     cfg = filterConfig;
     log.info("Cache eXo Resource at client: " + !PropertyManager.isDevelopping());
@@ -81,10 +83,18 @@ public class ResourceRequestFilter implements Filter  {
     final String uri = URLDecoder.decode(httpRequest.getRequestURI(),"UTF-8");
     final HttpServletResponse httpResponse = (HttpServletResponse)  response ;
     ExoContainer portalContainer = ExoContainerContext.getCurrentContainer();
-    SkinService skinService = (SkinService) portalContainer.getComponentInstanceOfType(SkinService.class);
+    final SkinService skinService = (SkinService) portalContainer.getComponentInstanceOfType(SkinService.class);
+    long ifModifedSince = httpRequest.getDateHeader(IF_MODIFIED_SINCE);
 
     //
     if(uri.endsWith(".css")) {
+      //Check if cached resource has not been modifed, return 304 code      
+      long cssLastModified = skinService.getLastModified(uri);        
+      if (isNotModified(ifModifedSince, cssLastModified, httpResponse)) {
+        httpResponse.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+        return;      
+      }
+      
       final OutputStream out = response.getOutputStream();
       final Appendable app = new Appendable() {
         public Appendable append(CharSequence csq) throws IOException {
@@ -148,7 +158,10 @@ public class ResourceRequestFilter implements Filter  {
           } else {
             httpResponse.setHeader("Cache-Control", "no-cache");
           }
-        }
+          
+          long lastModified = skinService.getLastModified(uri);
+          processIfModified(lastModified, httpResponse);
+        }       
       };
 
       //
@@ -162,8 +175,8 @@ public class ResourceRequestFilter implements Filter  {
         log.error("Could not render css " + uri, e);
         httpResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
       }
-    } else {
-
+    } else {            
+      
       // Fast matching
       final int len = uri.length();
       if (len >= 7 &&
@@ -210,8 +223,17 @@ public class ResourceRequestFilter implements Filter  {
             try {
               Image img = futureImg.get();
               if (img != null) {
+                //Check if cached resource has not been modifed, return 304 code      
+                long imgLastModified = img.getLastModified();                                                
+                if (isNotModified(ifModifedSince, imgLastModified, httpResponse)) {
+                  httpResponse.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+                  return;
+                }
+                
                 httpResponse.setContentType(img.type.getMimeType());
                 httpResponse.setContentLength(img.bytes.length);
+                processIfModified(imgLastModified, httpResponse);
+                
                 OutputStream out = httpResponse.getOutputStream();
                 out.write(img.bytes);
                 out.close();
@@ -246,6 +268,30 @@ public class ResourceRequestFilter implements Filter  {
       }
       chain.doFilter(request, response) ;
     }
+  }
+
+  /**
+   * Add Last-Modified Http header to HttpServetResponse
+   */
+  public void processIfModified(long lastModified, HttpServletResponse httpResponse) {
+    httpResponse.setDateHeader(ResourceRequestFilter.LAST_MODIFIED, lastModified);
+  }
+
+  /**
+   * If cached resource has not changed since date in http header (If_Modified_Since), set 304 code to HttpServletResponse, return true
+   * Else return false; 
+   * @param ifModifedSince - String, and HttpHeader element
+   * @param lastModified 
+   * @param httpResponse
+   * @return
+   */
+  public boolean isNotModified(long ifModifedSince, long lastModified, HttpServletResponse httpResponse) {
+    if (!PropertyManager.isDevelopping()) {
+      if (ifModifedSince >= lastModified) {        
+        return true;
+      }
+    }
+    return false;
   }
 
   public void destroy() { }
