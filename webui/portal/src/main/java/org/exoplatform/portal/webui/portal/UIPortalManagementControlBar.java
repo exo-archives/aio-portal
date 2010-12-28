@@ -151,6 +151,10 @@ public class UIPortalManagementControlBar extends UIToolbar {
         UIPortal uiPortal = uiWorkingWS.createUIComponent(prContext, UIPortal.class, null, null) ;
         PortalDataMapper.toUIPortal(uiPortal, userPortalConfig);      
         uiWorkingWS.replaceChild(oldUIPortal.getId(), uiPortal);
+        
+        uiPortal.setSelectedNode(oldUIPortal.getSelectedNode());
+        uiPortal.setSelectedPaths(oldUIPortal.getSelectedPaths());
+        uiPortal.setSelectedNavigation(oldUIPortal.getSelectedNavigation());
       }
       
       uiWorkingWS.setRenderedChild(UIPortal.class) ;  
@@ -225,7 +229,7 @@ public class UIPortalManagementControlBar extends UIToolbar {
       uiWorkingWS.setRenderedChild(UIPortal.class) ;  
       PageNodeEvent<UIPortal> pnevent = new PageNodeEvent<UIPortal>(uiPortal, 
            PageNodeEvent.CHANGE_PAGE_NODE, 
-           (uiPortal.getSelectedNode() != null ? uiPortal.getSelectedNode().getUri() : null)) ;
+           (oldUIPortal.getSelectedNode() != null ? oldUIPortal.getSelectedNode().getUri() : null)) ;
       uiPortal.broadcast(pnevent, Event.Phase.PROCESS) ;  
       
     }
