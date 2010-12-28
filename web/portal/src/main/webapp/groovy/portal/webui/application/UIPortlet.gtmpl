@@ -20,6 +20,18 @@
   WindowState windowState = uicomponent.getCurrentWindowState();  
   boolean isDesktop = "Window".equals(uicomponent.getPortletStyle());
   String portletId = uicomponent.getId() ;
+  
+  String title = uicomponent.getTitle();
+  if(title==null || title.trim().length()==0) {
+  	title = portletTitle;
+  }
+  if(title==null || title.trim().length()==0) {
+  	title = uicomponent.getDisplayName();	
+  }
+  if(title==null || title.trim().length()==0){
+  	title = uicomponent.getId();
+  }
+
   if(!isDesktop && isPortalAppEditting) {
 %>
   <div class="UIPortlet" id="UIPortlet-$portletId">
@@ -48,11 +60,8 @@
 				          <% 
 				            String portletIcon = uicomponent.getIcon();
 				            if(portletIcon == null) portletIcon = "PortletIcon";
-				            
-				            String title = portletTitle;
-				            if(uicomponent.getId() !=null) title = uicomponent.getId() ;
-				            if(uicomponent.getTitle() !=null) title = uicomponent.getTitle() ;
-				            if(title.length() > 30) title = title.substring(0,27) + "..." ;
+       
+				            if(title!=null && title.length() > 30) title = title.substring(0,27) + "..." ;
 				          %>
 				          <div class="Icon $portletIcon WindowPortletIcon NovaPortletIcon"><span></span></div>
 			            <a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeletePortletIcon" title="<%=_ctx.appRes("UIPortlet.tooltip.deletePortlet");%>"><span></span></a>
@@ -122,8 +131,7 @@
 <%
   } else {
 	if(uicomponent.getShowInfoBar()) {
-  	String title = uicomponent.getTitle() ;
-    if(title == null || title.trim().length() < 1) title = portletId;
+		
     /*Begin Window Portlet Bar*/
 	  String visibility = "visible" ;
 	  String appDisplay = "block";

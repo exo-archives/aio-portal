@@ -89,8 +89,7 @@ public class UIPortletForm extends UIFormTabPane {
       addUIFormInput(new UIFormStringInput("id", "id", null).
                      addValidator(MandatoryValidator.class).setEditable(false)).
       addUIFormInput(new UIFormStringInput("windowId", "windowId", null).setEditable(false)).
-    	addUIFormInput(new UIFormStringInput("title", "title", null).
-                     addValidator(StringLengthValidator.class, 3, 60)).
+    	addUIFormInput(new UIFormStringInput("title", "title", null)).
   		addUIFormInput(new UIFormStringInput("width", "width", null).
                      addValidator(ExpressionValidator.class, "(^([1-9]\\d*)px$)?",
                          "UIPortletForm.msg.InvalidWidthHeight")).
@@ -243,6 +242,11 @@ public class UIPortletForm extends UIFormTabPane {
       uiMaskWorkspace.setUIComponent(null);
       if (uiPortletForm.hasEditMode()) {
         uiPortlet.setCurrentPortletMode(PortletMode.VIEW);
+      }
+      
+      String title = uiPortlet.getTitle();
+      if (title != null && title.trim().equals("")) {
+        uiPortlet.setTitle(null);
       }
       
       String width = uiPortletForm.getUIStringInput("width").getValue();

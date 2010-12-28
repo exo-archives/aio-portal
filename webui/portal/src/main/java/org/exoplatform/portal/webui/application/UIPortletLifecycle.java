@@ -186,7 +186,7 @@ public class UIPortletLifecycle extends Lifecycle {
       portletTitle = output.getTitle();
       prcontext.setHeaders(output.getHeaderProperties()); 
     }
-    if (portletTitle == null) portletTitle = "Portlet";
+    //if (portletTitle == null) portletTitle = "Portlet";
 
     if (context.useAjax() && !prcontext.getFullRender()) {
       if (markup != null) {

@@ -45,6 +45,9 @@ import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.portletcontainer.PortletContainerService;
 import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
 import org.exoplatform.services.portletcontainer.pci.PortletData;
+import org.exoplatform.services.portletcontainer.pci.model.DisplayName;
+import org.exoplatform.services.portletcontainer.pci.model.Portlet;
+import org.exoplatform.services.portletcontainer.pci.model.PortletApp;
 import org.exoplatform.services.portletcontainer.pci.model.Supports;
 import org.exoplatform.webui.config.annotation.ComponentConfig;
 import org.exoplatform.webui.config.annotation.EventConfig;
@@ -94,6 +97,29 @@ public class UIPortlet extends UIApplication {
   public void   setWindowId(String s) {
     windowId = s ;
     exoWindowId_ = new ExoWindowID(windowId) ;
+  }
+  
+  public String getDisplayName() {
+    PortletContainerService pcServ = getApplicationComponent(PortletContainerService.class);
+    PortletApp portletApp =  pcServ.getPortletApp(exoWindowId_.getPortletApplicationName());
+    Portlet portlet = portletApp.getPortlet(exoWindowId_.getPortletName());
+    List<DisplayName> displayNameList = portlet.getDisplayName();
+   
+    UIPortalApplication uiApp = Util.getUIPortalApplication();
+    String lang = uiApp.getLocale().getLanguage();
+    DisplayName displayName =null;
+    
+    for (DisplayName display : displayNameList) {
+      if(lang.equalsIgnoreCase(display.getLang())){
+        displayName= display;
+        break;
+      }
+    }
+    if(displayName == null && displayNameList.size() > 0){
+      displayName= displayNameList.get(0);
+    }
+    
+    return displayName != null? displayName.getDisplayName() : portlet.getPortletName();
   }
   
   public String getPortletStyle() {  return  portletStyle ; }

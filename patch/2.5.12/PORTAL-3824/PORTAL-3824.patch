@@ -1,0 +1,142 @@
+Index: web/portal/src/main/webapp/groovy/portal/webui/application/UIPortlet.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/portal/webui/application/UIPortlet.gtmpl	(revision 62377)
++++ web/portal/src/main/webapp/groovy/portal/webui/application/UIPortlet.gtmpl	(working copy)
+@@ -20,6 +20,18 @@
+   WindowState windowState = uicomponent.getCurrentWindowState();  
+   boolean isDesktop = "Window".equals(uicomponent.getPortletStyle());
+   String portletId = uicomponent.getId() ;
++  
++  String title = uicomponent.getTitle();
++  if(title==null || title.trim().length()==0) {
++  	title = portletTitle;
++  }
++  if(title==null || title.trim().length()==0) {
++  	title = uicomponent.getDisplayName();	
++  }
++  if(title==null || title.trim().length()==0){
++  	title = uicomponent.getId();
++  }
++
+   if(!isDesktop && isPortalAppEditting) {
+ %>
+   <div class="UIPortlet" id="UIPortlet-$portletId">
+@@ -48,11 +60,8 @@
+ 				          <% 
+ 				            String portletIcon = uicomponent.getIcon();
+ 				            if(portletIcon == null) portletIcon = "PortletIcon";
+-				            
+-				            String title = portletTitle;
+-				            if(uicomponent.getId() !=null) title = uicomponent.getId() ;
+-				            if(uicomponent.getTitle() !=null) title = uicomponent.getTitle() ;
+-				            if(title.length() > 30) title = title.substring(0,27) + "..." ;
++       
++				            if(title!=null && title.length() > 30) title = title.substring(0,27) + "..." ;
+ 				          %>
+ 				          <div class="Icon $portletIcon WindowPortletIcon NovaPortletIcon"><span></span></div>
+ 			            <a href="<%=uicomponent.event("DeleteComponent","$uicomponent.id")%>" class="DeletePortletIcon" title="<%=_ctx.appRes("UIPortlet.tooltip.deletePortlet");%>"><span></span></a>
+@@ -122,8 +131,7 @@
+ <%
+   } else {
+ 	if(uicomponent.getShowInfoBar()) {
+-  	String title = uicomponent.getTitle() ;
+-    if(title == null || title.trim().length() < 1) title = portletId;
++		
+     /*Begin Window Portlet Bar*/
+ 	  String visibility = "visible" ;
+ 	  String appDisplay = "block";
+Index: webui/core/src/main/java/org/exoplatform/webui/application/portlet/PortletApplicationController.java
+===================================================================
+--- webui/core/src/main/java/org/exoplatform/webui/application/portlet/PortletApplicationController.java	(revision 62377)
++++ webui/core/src/main/java/org/exoplatform/webui/application/portlet/PortletApplicationController.java	(working copy)
+@@ -91,6 +91,7 @@
+    */  
+   public  void render(RenderRequest req,  RenderResponse res) throws PortletException, IOException {
+     try {
++      res.setTitle(getTitle(req));
+       getPortletApplication().render(req, res);
+     } catch(Exception ex) {
+       log.error("Error while rendering the porlet", ex);
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortlet.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortlet.java	(revision 62377)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortlet.java	(working copy)
+@@ -45,6 +45,9 @@
+ import org.exoplatform.services.portletcontainer.PortletContainerService;
+ import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
+ import org.exoplatform.services.portletcontainer.pci.PortletData;
++import org.exoplatform.services.portletcontainer.pci.model.DisplayName;
++import org.exoplatform.services.portletcontainer.pci.model.Portlet;
++import org.exoplatform.services.portletcontainer.pci.model.PortletApp;
+ import org.exoplatform.services.portletcontainer.pci.model.Supports;
+ import org.exoplatform.webui.config.annotation.ComponentConfig;
+ import org.exoplatform.webui.config.annotation.EventConfig;
+@@ -94,6 +97,29 @@
+   public void   setWindowId(String s) {
+     windowId = s ;
+     exoWindowId_ = new ExoWindowID(windowId) ;
++  }
++  
++  public String getDisplayName() {
++    PortletContainerService pcServ = getApplicationComponent(PortletContainerService.class);
++    PortletApp portletApp =  pcServ.getPortletApp(exoWindowId_.getPortletApplicationName());
++    Portlet portlet = portletApp.getPortlet(exoWindowId_.getPortletName());
++    List<DisplayName> displayNameList = portlet.getDisplayName();
++   
++    UIPortalApplication uiApp = Util.getUIPortalApplication();
++    String lang = uiApp.getLocale().getLanguage();
++    DisplayName displayName =null;
++    
++    for (DisplayName display : displayNameList) {
++      if(lang.equalsIgnoreCase(display.getLang())){
++        displayName= display;
++        break;
++      }
++    }
++    if(displayName == null && displayNameList.size() > 0){
++      displayName= displayNameList.get(0);
++    }
++    
++    return displayName != null? displayName.getDisplayName() : portlet.getPortletName();
+   }
+   
+   public String getPortletStyle() {  return  portletStyle ; }
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletForm.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletForm.java	(revision 62377)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletForm.java	(working copy)
+@@ -89,8 +89,7 @@
+       addUIFormInput(new UIFormStringInput("id", "id", null).
+                      addValidator(MandatoryValidator.class).setEditable(false)).
+       addUIFormInput(new UIFormStringInput("windowId", "windowId", null).setEditable(false)).
+-    	addUIFormInput(new UIFormStringInput("title", "title", null).
+-                     addValidator(StringLengthValidator.class, 3, 60)).
++    	addUIFormInput(new UIFormStringInput("title", "title", null)).
+   		addUIFormInput(new UIFormStringInput("width", "width", null).
+                      addValidator(ExpressionValidator.class, "(^([1-9]\\d*)px$)?",
+                          "UIPortletForm.msg.InvalidWidthHeight")).
+@@ -245,6 +244,11 @@
+         uiPortlet.setCurrentPortletMode(PortletMode.VIEW);
+       }
+       
++      String title = uiPortlet.getTitle();
++      if (title != null && title.trim().equals("")) {
++        uiPortlet.setTitle(null);
++      }
++      
+       String width = uiPortletForm.getUIStringInput("width").getValue();
+       if (width == null || width.length() == 0) { 
+         uiPortlet.setWidth(null); 
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletLifecycle.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletLifecycle.java	(revision 62377)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletLifecycle.java	(working copy)
+@@ -186,7 +186,7 @@
+       portletTitle = output.getTitle();
+       prcontext.setHeaders(output.getHeaderProperties()); 
+     }
+-    if (portletTitle == null) portletTitle = "Portlet";
++    //if (portletTitle == null) portletTitle = "Portlet";
+ 
+     if (context.useAjax() && !prcontext.getFullRender()) {
+       if (markup != null) {

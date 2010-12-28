@@ -91,6 +91,7 @@ public class PortletApplicationController extends GenericPortlet {
    */  
   public  void render(RenderRequest req,  RenderResponse res) throws PortletException, IOException {
     try {
+      res.setTitle(getTitle(req));
       getPortletApplication().render(req, res);
     } catch(Exception ex) {
       log.error("Error while rendering the porlet", ex);
