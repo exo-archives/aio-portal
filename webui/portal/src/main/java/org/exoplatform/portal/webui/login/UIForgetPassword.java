@@ -83,21 +83,16 @@ public class UIForgetPassword extends UIForm {
         }
         email = orgSrc.getUserHandler().findUserByName(userName).getEmail();
       }
-      //get user
-      PageList userPageList = orgSrc.getUserHandler().findUsers(new Query());
-      List userList = userPageList.currentPage();
-      User user=null;
-      for(int i=0; i<userList.size(); i++) {
-        User tmpUser = (User)userList.get(i);
-        if(tmpUser.getEmail().equals(email)) {
-         user = tmpUser;
-         break;
-        }
-      }
-      if(user==null) {
-        requestContext.getUIApplication().addMessage(new ApplicationMessage("UIForgetPassword.msg.email-not-exist", null));
+      
+      Query findUserByMailQuery = new Query();
+      findUserByMailQuery.setEmail(email);
+      PageList usersPageList = orgSrc.getUserHandler().findUsers(findUserByMailQuery);
+      if (usersPageList.getAvailable() == 0) {
+        requestContext.getUIApplication().addMessage(new ApplicationMessage("UIForgetPassword.msg.email-not-exist",null));
         return;
       }
+      User user = (User) usersPageList.getPage(1).get(0);
+      
       String portalName = URLEncoder.encode(Util.getUIPortal().getName(), "UTF-8");
       Long now = new Date().getTime();
       user.setPassword(now.toString());
