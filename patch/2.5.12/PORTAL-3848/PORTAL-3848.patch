@@ -1,0 +1,13 @@
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/navigation/UIPageNavigationActionListener.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/navigation/UIPageNavigationActionListener.java	(revision 61870)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/navigation/UIPageNavigationActionListener.java	(working copy)
+@@ -92,7 +92,7 @@
+       PageNavigation selectedNavigation = uiPageNodeSelector.getSelectedNavigation();
+       if(selectedNavigation.getOwnerType().equals(PortalConfig.PORTAL_TYPE)){
+         UIApplication uiApp = pcontext.getUIApplication() ;
+-        uiApp.addMessage(new ApplicationMessage("UIPageNodeSelector.msg.deleteNav", null ,ApplicationMessage.ERROR)) ;
++        uiApp.addMessage(new ApplicationMessage("UIPageNodeSelector.msg.deleteNav", null ,ApplicationMessage.WARNING)) ;
+ 
+         return;
+       }
