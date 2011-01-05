@@ -66,7 +66,7 @@
       	    <div class="ItemDetail"  style="display: $displayImage;">
   					  <div class="LayoutHolder">
   					    <div class="LayoutLabel"><%=_ctx.appRes("UIWizardPageSelectLayoutForm.label."+template.getLabel())%></div>
-    					  <div class="<%=template.getIcon();%>" title="<%=template.getLabel();%>"><span></span></div>
+    					  <div class="<%=template.getIcon();%>" title="<%=_ctx.appRes("UIWizardPageSelectLayoutForm.label."+template.getLabel());%>"><span></span></div>
 	  				  </div> 
 		  	    </div> 
 					  <%/*--End Layout Style--*/%>

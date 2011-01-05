@@ -1,0 +1,554 @@
+Index: portlet/exoadmin/src/main/webapp/groovy/applicationregistry/webui/component/UIPortletInfo.gtmpl
+===================================================================
+--- portlet/exoadmin/src/main/webapp/groovy/applicationregistry/webui/component/UIPortletInfo.gtmpl	(revision 64249)
++++ portlet/exoadmin/src/main/webapp/groovy/applicationregistry/webui/component/UIPortletInfo.gtmpl	(working copy)
+@@ -19,7 +19,7 @@
+ 		
+ 
+ 	  <div class="Application">
+-  		<div title="Portlet 1" class="PortletIcons">
++  		<div title="<%=portlet.getDisplayName() %>" class="PortletIcons">
+   				<img src="$srcBG" onError="src='$srcBGError'" alt=""/>
+   		</div>
+   		<!--
+Index: portlet/exoadmin/src/main/webapp/WEB-INF/classes/locale/portlet/exoadmin/ApplicationRegistryPortlet_fr.properties
+===================================================================
+--- portlet/exoadmin/src/main/webapp/WEB-INF/classes/locale/portlet/exoadmin/ApplicationRegistryPortlet_fr.properties	(revision 64249)
++++ portlet/exoadmin/src/main/webapp/WEB-INF/classes/locale/portlet/exoadmin/ApplicationRegistryPortlet_fr.properties	(working copy)
+@@ -25,31 +25,31 @@
+ application.msg.changeNotExist=Impossible d'enregistrer, l'application n'existe plus.
+ gadget.msg.changeNotExist=Impossible d'enregistrer, le gadget n'existe plus.
+ ##      org.exoplatform.applicationregistry.webui.component.UIApplicationRegistryPortlet
+-UIToolbar.label.organize=Categories
++UIToolbar.label.organize=Cat\u00e9gories
+ UIToolbar.label.portlet=Portlet
+ UIToolbar.label.gadget=Gadget
+ 
+ ##      org.exoplatform.applicationregistry.webui.component.UIApplicationOrganizer
+-UIOrganizer.label.addCategory=Ajouter cat\u00e9gorie
+-UIOrganizer.label.autoImport=Importer applications
+-UIOrganizer.label.categories=Categories
+-UIOrganizer.title.editCategory=Editer Categorie
+-UIOrganizer.title.addApplication=Ajouter l'application \u00e0 la cat\u00e9gorie
+-UIOrganizer.title.deleteCategory=Effacer cat\u00e9gorie
+-UIOrganizer.title.deleteApplication=Effacer application
+-UIOrganizer.msg.importAll=Cette action va automatiquement cr\u00e9er des categories et y importer toutes les gadgets et portlets.
++UIOrganizer.label.addCategory=Ajouter une cat\u00e9gorie
++UIOrganizer.label.autoImport=Importer des applications
++UIOrganizer.label.categories=Cat\u00e9gories
++UIOrganizer.title.editCategory=Editer la cat\u00e9gorie
++UIOrganizer.title.addApplication=Ajouter une application \u00e0 la cat\u00e9gorie
++UIOrganizer.title.deleteCategory=Effacer la cat\u00e9gorie
++UIOrganizer.title.deleteApplication=Effacer l'application
++UIOrganizer.msg.importAll=Cette action va automatiquement cr\u00e9er des cat\u00e9gories et y importer toutes les gadgets et portlets.
+ UIOrganizer.msg.deleteCategory=Etes vous s\u00fbr de vouloir effacer cette cat\u00e9gorie et toutes ses applications ?
+ UIOrganizer.msg.deleteApplication=Etes vous s\u00fbr de vouloir effacer cette application ?
+ UIOrganizer.msg.emptyCategory=Cette cat\u00e9gorie ne contient pas d'application, cliquez sur (+) pour en ajouter.
+-UIOrganizer.msg.noCategory=Il n'y a pas de cat\u00e9gorie. Cliquez sur "Ajouter cat\u00e9gorie" pour en ajouter une.
++UIOrganizer.msg.noCategory=Il n'y a pas de cat\u00e9gorie. Cliquez sur "Ajouter une cat\u00e9gorie" pour en ajouter une.
+ UIOrganizer.msg.deleteCategoryInUse=Impossible d'effacer cette cat\u00e9gorie en cours d'utilisation.
+ UIOrganizer.msg.deleteApplicationInUse=Impossible d'effacer cette application en cours d'utilisation.
+ UIOrganizer.msg.categoryNoExist=Cette cat\u00e9gorie n'existe plus
+ UIOrganizer.msg.applicationNoExist=Cette application n'existe plus
+ 
+ ##      org.exoplatform.applicationregistry.webui.component.UIApplicationRegistryEditMode
+-UIApplicationRegistryEditMode.title=Importer Applications
+-UIApplicationRegistryEditMode.label.showImport=Montrer/Cacher le bouton "Importer Applications"
++UIApplicationRegistryEditMode.title=Importer des Applications
++UIApplicationRegistryEditMode.label.showImport=Montrer/Cacher le bouton "Importer des Applications"
+ 
+ ##org.exoplatform.applicationregistry.webui.component.UIApplicationInfo
+ UIApplicationInfo.label.name=Nom: 
+@@ -92,20 +92,20 @@
+ 
+ ##      org.exoplatform.applicationregistry.webui.component.UIPortletManagement
+ UIPortletManagement.title.local=LOCAL
+-UIPortletManagement.title.remote=REMOTE
++UIPortletManagement.title.remote=A DISTANT
+ UIPortletManagement.msg.noPortlet=Il n'y a pas de portlet disponible
+ 
+ ##      org.exoplatform.applicationregistry.webui.component.UIPortletInfo
+ UIPortletInfo.label.name=Nom de portlet: 
+ UIPortletInfo.label.display=#{label.displayName}
+ UIPortletInfo.label.description=#{label.description}
+-UIPortletInfo.title.portletPreferences=Preferences de portlet
+-UIPortletInfo.msg.noPortletPreferences=Pas de preferences de portlet
++UIPortletInfo.title.portletPreferences=Pr\u00e9f\u00e9rences de portlet
++UIPortletInfo.msg.noPortletPreferences=Pas de pr\u00e9f\u00e9rences de portlet
+ 
+ ##      org.exoplatform.portletregistry.webui.component.UIGadgetManagement
+ UIGadgetManagement.label.addRemote=Ajouter un Gadget distant
+ UIGadgetManagement.label.createNew=Cr\u00e9er un nouveau Gadget
+-UIGadgetManagement.title.deleteGadget=Effacer Gadget
++UIGadgetManagement.title.deleteGadget=Effacer le Gadget
+ UIGadgetManagement.msg.noGadget=Il n'y a pas de Gadget disponible.
+ UIGadgetManagement.msg.deleteGadgetInUse=Impossible d'effacer ce Gadget, il est en cours d'utilisation.
+ UIGadgetManagement.msg.deleteGadget=Etes vous s\u00fbr de vouloir effacer ce Gadget?
+@@ -117,13 +117,13 @@
+ UIGadgetInfo.label.description=#{label.description}
+ UIGadgetInfo.label.viewUrl=Voir URL: 
+ UIGadgetInfo.label.editUrl=Editer URL:
+-UIGadgetInfo.label.reference=Reference: 
+-UIGadgetInfo.label.categories=Categories:
++UIGadgetInfo.label.reference=R\u00e9f\u00e9rence: 
++UIGadgetInfo.label.categories=Cat\u00e9gories:
+ UIGadgetInfo.label.categories.guide=vous devez ajouter ce Gadget dans un ou plusieurs cat\u00e9gories pour pouvoir le utiliser dans les dashboards. 
+ UIGadgetInfo.label.categories.clickHere=Cliquez ici pour ajouter dans une cat\u00e9gorie
+ UIGadgetInfo.title.refresh=Rafra\u00eechir
+-UIGadgetInfo.title.editGadget=Editer Gadget
+-UIGadgetInfo.msg.gadgetNotExist=Impossible d'executer cette action sur ce gadget qui n'existe plus. 
++UIGadgetInfo.title.editGadget=Editer le Gadget
++UIGadgetInfo.msg.gadgetNotExist=Impossible d'ex\u00e9cuter cette action sur ce gadget qui n'existe plus. 
+ 
+ UICategorySelector.header.choose=Choisir
+ UICategorySelector.header.categoryName=Nom de cat\u00e9gorie
+Index: portlet/exoadmin/src/main/webapp/WEB-INF/classes/locale/portlet/exoadmin/OrganizationPortlet_en.properties
+===================================================================
+--- portlet/exoadmin/src/main/webapp/WEB-INF/classes/locale/portlet/exoadmin/OrganizationPortlet_en.properties	(revision 64249)
++++ portlet/exoadmin/src/main/webapp/WEB-INF/classes/locale/portlet/exoadmin/OrganizationPortlet_en.properties	(working copy)
+@@ -82,6 +82,8 @@
+ UIUserInfo.label.lastName=#{word.lastName}:
+ UIUserInfo.label.email=Email Address:
+ UIUserInfo.label.user.language: Language
++UIUserInfo.label.option.male=Male
++UIUserInfo.label.option.female=Female
+ UIUserInfo.action.Back=#{word.cancel}
+ UIUserInfo.action.Save=#{word.save}
+ 
+Index: portlet/exoadmin/src/main/webapp/WEB-INF/classes/locale/portlet/exoadmin/OrganizationPortlet_fr.properties
+===================================================================
+--- portlet/exoadmin/src/main/webapp/WEB-INF/classes/locale/portlet/exoadmin/OrganizationPortlet_fr.properties	(revision 64249)
++++ portlet/exoadmin/src/main/webapp/WEB-INF/classes/locale/portlet/exoadmin/OrganizationPortlet_fr.properties	(working copy)
+@@ -14,14 +14,14 @@
+ UIMembershipTypeForm.msg.SameName=Ce r\u00f4le existe d\u00e9j\u00e0, veuillez en choisir un autre !
+ 
+ ##org.exoplatform.organization.webui.component.UIGroupMembershipForm
+-UIGroupEditMembershipForm.label.username=User Name
+-UIGroupEditMembershipForm.label.membership=Membership
+-UIGroupEditMembershipForm.action.Save=Save
+-UIGroupEditMembershipForm.action.Cancel=Cancel
+-UIGroupEditMembershipForm.msg.membership-delete=Can't save, membership removed!.
+-UIGroupEditMembershipForm.msg.membership-exist="Membership type is existing, please enter another one!.
+-EditMembership.title.UIGroupEditMembershipForm=Edit Membership
+-EditMembership.title.EditMembership=Edit Membership
++UIGroupEditMembershipForm.label.username=Nom d'utilisateur
++UIGroupEditMembershipForm.label.membership= R\u00f4le
++UIGroupEditMembershipForm.action.Save=Enregistrer
++UIGroupEditMembershipForm.action.Cancel=Annuler
++UIGroupEditMembershipForm.msg.membership-delete=Impossible d'enregistrer, r\u00f4le supprimé !
++UIGroupEditMembershipForm.msg.membership-exist=R\u00f4le existant, veuillez sélectionner un autre !
++EditMembership.title.UIGroupEditMembershipForm=Modifier le r\u00f4le
++EditMembership.title.EditMembership= Modifier le r\u00f4le
+ UIGroupMembershipForm.label.title=R\u00f4le dans le groupe
+ UIGroupMembershipForm.label.username=Utilisateur 
+ UIGroupMembershipForm.label.membership=R\u00f4le 
+@@ -30,10 +30,10 @@
+ SearchUserForm.label.option.firstName=#{word.firstName}
+ SearchUserForm.label.option.lastName=#{word.lastName}
+ SearchUserForm.label.option.email=#{word.email}
+-SearchUser.title.UIUserSelector=Select User
+-SearchUser.title.SearchUser=Select User
++SearchUser.title.UIUserSelector=S\u00e9lectionner un utilisateur 
++SearchUser.title.SearchUser=S\u00e9lectionner un utilisateur
+ #{0} is the member that the remote memeber enter
+-UIMemberShipForm.msg.membershipType-exist=Le r\u00f4le '{0}' exite d\u00e9j\u00e0
++UIMemberShipForm.msg.membershipType-exist=Le r\u00f4le '{0}' existe d\u00e9j\u00e0
+ 
+ ##org.exoplatform.organization.webui.component.UIMembershipForm
+ UIMembershipForm.label.username=Utilisateur 
+@@ -58,7 +58,7 @@
+ UIListUsers.label.option.firstName=#{word.firstName}
+ UIListUsers.label.option.lastName=#{word.lastName}
+ UIListUsers.label.option.email=#{word.email}
+-UIUserInfo.label.user.language: Language
++UIUserInfo.label.user.language=Langue
+ UIListUsers.msg.DeleteSuperUser={0} est un utilisateur syst\u00e8me, suppression interdite
+ UIListUsers.deleteUser=Confirmez-vous la suppression de cet utilisateur : {0} ?
+ 
+@@ -82,6 +82,8 @@
+ UIUserInfo.label.firstName=#{word.firstName}:
+ UIUserInfo.label.lastName=#{word.lastName}:
+ UIUserInfo.label.email=Adresse email:
++UIUserInfo.label.option.male=Masculin
++UIUserInfo.label.option.female=Femme
+ UIUserInfo.action.Back=#{word.cancel}
+ UIUserInfo.action.Save=#{word.save}
+ 
+@@ -117,7 +119,7 @@
+ UIUserInfo.label.user.business-info.online.uri=#{word.website}:
+ 
+ ##org.exoplatform.organization.webui.component.UIUserInGroup
+-UIUserInGroup.confirm.deleteUser=Confirmez-vous la suppression de l utilisateur {0} du groupe {1}?
++UIUserInGroup.confirm.deleteUser=Confirmez-vous la suppression de l'utilisateur {0} du groupe {1} ?
+ UIUserInGroup.header.userName=#{word.userName}
+ UIUserInGroup.header.lastName=#{word.lastName}
+ UIUserInGroup.header.firstName=#{word.firstName}
+@@ -128,20 +130,20 @@
+ UIUserInGroup.label.username=#{word.userName}
+ UIUserInGroup.label.membership=R\u00f4le 
+ UIUserInGroup.action.title.DeleteUser=Supprimer cet utilisateur
+-UIUserInGroup.action.title.Edit=Edit member
++UIUserInGroup.action.title.Edit=Modifier le membre
+ 
+ ##org.exoplatform.organization.webui.component.UIGroupInfo 
+ UIGroupInfo.tab.label.UIUserInGroup=Utilisateurs dans le groupe
+-UIGroupInfo.label.UIUserInGroup=
++UIGroupInfo.label.UIUserInGroup= Utilisateurs dans le groupe
+ UIGroupInfo.title=Informations sur le groupe
+ 
+ ##org.exoplatform.organization.webui.component.UIMembershipList
+-UIMembershipList.header.name=Membership name
++UIMembershipList.header.name=Nom du r\u00f4le
+ UIMembershipList.header.createdDate=Date de cr\u00e9ation
+ UIMembershipList.header.modifiedDate=Date de modification
+ UIMembershipList.header.action=#{word.action}
+ UIMembershipList.header.description=#{word.description}
+-UIMembershipList.action.title.EditMembership=Editer le r\u00f4le
++UIMembershipList.action.title.EditMembership=Modifier le r\u00f4le
+ UIMembershipList.action.title.DeleteMembership=Supprimer le r\u00f4le
+ UIMembershipList.msg.InUse=Vous ne pouvez pas supprimer ce r\u00f4le car il est utilis\u00e9
+ 
+@@ -223,4 +225,4 @@
+ UITabPane.title.UISharedNavigation=Navigation des pages de groupe
+ UISharedNavigation.label.userNavigation=Nom de la navigation de page utilisateur
+ UISharedNavigation.label.priority=Priorit\u00e9
+-UISharedNavigation.action.Save=Sauver
++UISharedNavigation.action.Save=Enregistrer
+Index: portlet/exoadmin/src/main/webapp/WEB-INF/classes/locale/portlet/exoadmin/I18nPortlet_fr.properties
+===================================================================
+--- portlet/exoadmin/src/main/webapp/WEB-INF/classes/locale/portlet/exoadmin/I18nPortlet_fr.properties	(revision 64249)
++++ portlet/exoadmin/src/main/webapp/WEB-INF/classes/locale/portlet/exoadmin/I18nPortlet_fr.properties	(working copy)
+@@ -1,7 +1,7 @@
+  UIForm.title=Rechercher une ressource
+  UISearchI18n.label.name=Nom
+  UISearchI18n.label.language=Langue
+- UISearchI18n.label.option.All=All
++ UISearchI18n.label.option.All=Tout
+  UIForm.action.Search=Rechercher
+  UIForm.action.NewResource=Nouvelle Ressource
+  UII18nPortlet.header.name=Nom
+@@ -13,8 +13,8 @@
+  UIEditResource.label.resource=Ressource
+  UIEditResource.label.name=Nom
+  UIEditResource.label.language=Langue
+- UIEditResource.action.Save=Sauver
++ UIEditResource.action.Save=Enregistrer
+  UIEditResource.action.Cancel=Annuler
+  UIEditResource.action.Edit=Editer
+  UIEditResource.add.exist=Cette ressource existe d\u00e9j\u00e0, veuillez en cr\u00e9er une autre!
+- UII18n.deleteResource =Etes vous s\u00fbr de vouloir supprimer cette ressource ?
+\ No newline at end of file
++ UII18n.deleteResource =Etes vous s\u00fbr de vouloir supprimer cette ressource ?
+Index: portlet/exoadmin/src/main/webapp/WEB-INF/classes/locale/portlet/exoadmin/OrganizationPortlet_vi.xml
+===================================================================
+--- portlet/exoadmin/src/main/webapp/WEB-INF/classes/locale/portlet/exoadmin/OrganizationPortlet_vi.xml	(revision 64249)
++++ portlet/exoadmin/src/main/webapp/WEB-INF/classes/locale/portlet/exoadmin/OrganizationPortlet_vi.xml	(working copy)
+@@ -220,6 +220,10 @@
+         </business-info>
+       </user>
+       <BusinessInfo>Thông tin doanh nghiệp</BusinessInfo>
++      <option>
++        <male>Nam</male>
++        <female>Nữ</female>
++      </option>
+     </label>
+     <action>
+       <Back>#{word.cancel}</Back>
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/portal/NavigationPortlet_fr.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/portal/NavigationPortlet_fr.properties	(revision 64249)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/portal/NavigationPortlet_fr.properties	(working copy)
+@@ -1 +1 @@
+-javax.portlet.title=Portlet Navigation
++javax.portlet.title=Portlet de navigation
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/portal/ConsolePortlet_fr.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/portal/ConsolePortlet_fr.properties	(revision 64249)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/portal/ConsolePortlet_fr.properties	(working copy)
+@@ -1 +1 @@
+-javax.portlet.title=Portlet Navigateur
++javax.portlet.title=Portlet de navigation
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/BrowserPortlet_fr.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/BrowserPortlet_fr.properties	(revision 64249)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/BrowserPortlet_fr.properties	(working copy)
+@@ -1 +1 @@
+-javax.portlet.title=Portlet Navigateur
++javax.portlet.title=Portlet de navigation
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/GroovyPortlet_fr.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/GroovyPortlet_fr.properties	(revision 64249)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/GroovyPortlet_fr.properties	(working copy)
+@@ -5,5 +5,5 @@
+ UIGroovyPortlet.note.Text=Cette Portlet Groovy pourra \u00eatre utilis\u00e9e comme une application web pochainement.
+ UIIFrameEditMode.title=Modifier l'URL
+ UIIFrameEditMode.label.iframeUrl=URL
+-UIIFrameEditMode.label.editmode=Edit Mode
+-UIIFrameEditMode.action.Save=Sauver
+\ No newline at end of file
++UIIFrameEditMode.label.editmode=Mode Edition
++UIIFrameEditMode.action.Save=Enregistrer
+Index: webui/eXo/src/main/java/org/exoplatform/webui/organization/UIUserProfileInputSet.java
+===================================================================
+--- webui/eXo/src/main/java/org/exoplatform/webui/organization/UIUserProfileInputSet.java	(revision 64249)
++++ webui/eXo/src/main/java/org/exoplatform/webui/organization/UIUserProfileInputSet.java	(working copy)
+@@ -19,6 +19,7 @@
+ import java.util.ArrayList;
+ import java.util.Iterator;
+ import java.util.List;
++import java.util.Locale;
+ 
+ import org.exoplatform.services.organization.OrganizationService;
+ import org.exoplatform.services.organization.UserProfile;
+@@ -81,21 +82,22 @@
+       if(key.equalsIgnoreCase("user.gender")){
+         List<SelectItemOption<String>> ls = new ArrayList<SelectItemOption<String>>() ;
+         ls.add(new SelectItemOption<String>(MALE, MALE)) ;
+-        ls.add(new SelectItemOption<String>(FEMALE, FEMALE)) ;;
++        ls.add(new SelectItemOption<String>(FEMALE, FEMALE)) ;
+         UIFormSelectBox genderSelectBox = new UIFormSelectBox(key, key, ls);
+         set.addUIFormInput(genderSelectBox);  
+         continue;
+       }else if(key.equalsIgnoreCase("user.language")){
++        Locale currentLocale = WebuiRequestContext.getCurrentInstance().getLocale();
+         List<SelectItemOption<String>> lang = new ArrayList<SelectItemOption<String>>() ;
+         LocaleConfigService localeService = getApplicationComponent(LocaleConfigService.class) ;
+         Iterator i = localeService.getLocalConfigs().iterator() ;
+         while (i.hasNext()) {
+           LocaleConfig config = (LocaleConfig) i.next() ;
+           if(config.getLanguage().equals("en")) {
+-            lang.add(0,new SelectItemOption<String>(config.getLocale().getDisplayLanguage(), config.getLanguage()));
++            lang.add(0,new SelectItemOption<String>(config.getLocale().getDisplayLanguage(currentLocale), config.getLanguage()));
+             continue;
+           }
+-          lang.add(new SelectItemOption<String>(config.getLocale().getDisplayLanguage(), config.getLanguage()))  ;
++          lang.add(new SelectItemOption<String>(config.getLocale().getDisplayLanguage(currentLocale), config.getLanguage()))  ;
+         }
+         UIFormSelectBox langSelectBox = new UIFormSelectBox(key, key, lang);
+         set.addUIFormInput(langSelectBox);  
+Index: web/portal/src/main/webapp/groovy/portal/webui/page/UIWizardPageSelectLayoutForm.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/portal/webui/page/UIWizardPageSelectLayoutForm.gtmpl	(revision 64249)
++++ web/portal/src/main/webapp/groovy/portal/webui/page/UIWizardPageSelectLayoutForm.gtmpl	(working copy)
+@@ -66,7 +66,7 @@
+       	    <div class="ItemDetail"  style="display: $displayImage;">
+   					  <div class="LayoutHolder">
+   					    <div class="LayoutLabel"><%=_ctx.appRes("UIWizardPageSelectLayoutForm.label."+template.getLabel())%></div>
+-    					  <div class="<%=template.getIcon();%>" title="<%=template.getLabel();%>"><span></span></div>
++    					  <div class="<%=template.getIcon();%>" title="<%=_ctx.appRes("UIWizardPageSelectLayoutForm.label."+template.getLabel());%>"><span></span></div>
+ 	  				  </div> 
+ 		  	    </div> 
+ 					  <%/*--End Layout Style--*/%>
+Index: web/portal/src/main/webapp/groovy/webui/form/UIFormInputIconSelector.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/webui/form/UIFormInputIconSelector.gtmpl	(revision 64249)
++++ web/portal/src/main/webapp/groovy/webui/form/UIFormInputIconSelector.gtmpl	(working copy)
+@@ -77,7 +77,7 @@
+ 	      				    }
+ 		            %>                                                
+ 	                  <a class="$cssClass" onclick="$submitEvent">
+-	                    <div  class="Icon <%=icon%>" title="Click to select this icon"><span></span></div>
++	                    <div  class="Icon <%=icon%>" title="<%=_ctx.appRes("UIFormInputIconSelector.tooltip")%>"><span></span></div>
+ 	                  </a>
+ 		            <%}%> 
+ 		          </div>
+Index: web/portal/src/main/webapp/groovy/webui/core/UIDescription.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/webui/core/UIDescription.gtmpl	(revision 64249)
++++ web/portal/src/main/webapp/groovy/webui/core/UIDescription.gtmpl	(working copy)
+@@ -8,7 +8,7 @@
+ 		<div class="RightMiddleDescriptionDecorator">	
+ 		  <div class="DecriptionContainer">
+ 			  <div class="DescriptionContent">
+-			  	<div class="DescriptionContentContainer ScrollArea">
++			  	<div class="DescriptionContentContainer">
+ 			  		<div class="DescriptionContentMaxHeight">
+ 			  		  <%=_ctx.appRes("UIDescription.content." + uicomponent.getId());%>
+ 			  		</div>
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/expression_fr.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/expression_fr.properties	(revision 64249)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/expression_fr.properties	(working copy)
+@@ -72,7 +72,7 @@
+ ###################################################################
+ word.locale=Langue
+ word.label=Label
+-word.language=
++word.language=langue
+ word.lastName=Nom
+ 
+ ###################################################################
+@@ -106,7 +106,7 @@
+ ###################################################################
+ #                  EXPRESSION START  WITH 's'                     #
+ ###################################################################
+-word.save=Sauver
++word.save=Enregistrer
+ word.stateProv=Etat/Province
+ word.street=Rue
+ word.style=Style
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties	(revision 64249)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties	(working copy)
+@@ -590,6 +590,7 @@
+ UIFormInputIconSelector.option.IconSet16x16=16x16
+ UIFormInputIconSelector.option.IconSet24x24=24x24
+ UIFormInputIconSelector.option.IconSet32x32=32x32
++UIFormInputIconSelector.tooltip=Click to select this icon
+ Icon.UIDropDown.label.IconSet16x16=IconSet16x16
+ Icon.UIDropDown.label.IconSet24x24=IconSet24x24
+ Icon.UIDropDown.label.IconSet32x32=IconSet32x32
+@@ -1421,6 +1422,7 @@
+ UIDashboardEditForm.label.totalColumns=Number of columns
+ UIDashboard.msg.required=The text field is required.
+ UIDashboard.msg.notUrl=The url is invalid. Please enter a correct url of a gadget xml or of an RSS feed.
++UIDashboardEditForm.action.Save=Save
+ 
+   ################################################################################
+   #		 org.exoplatform.webui.organization.account.UIUserSelector
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties	(revision 64249)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties	(working copy)
+@@ -1,4 +1,4 @@
+-﻿
++
+   ###################################################################
+   #      WARNING THIS FILE MUST BE ENCODED IN UTF-8 FORMAT          #
+   ###################################################################
+@@ -297,12 +297,12 @@
+ UIDescription.content.pageManagement=<strong>Gérer les pages :</strong><br/>Toutes les pages sont présentées sous la forme d'une liste.<br/>Un utilisateur peut pré-visualiser (valable uniquement avec les pages normales),<br/> éditer ou supprimer une page si celui-ci a les droits requis.<br/>Un utilisateur peut rechercher par <em>Type de propriétaire</em> (portal/group/user), par <em>Id du propriétaire</em> (nom du propriétaire), ou par <em>nom de page.</em><br/>Pour créer une nouvelle page, cliquez sur le bouton "Ajouter une nouvelle page" puis remplissez les champs requis.
+ UIDescription.content.portalManagement=<strong>Gérer les portails : </strong><br/>Ceci est la liste de tous les portails existants. Pour en créer un nouveau, cliquez sur le bouton "Créer un nouveau portail" puis remplissez les champs requis.<br/>Un utilisateur peut créer ou supprimer un portail si celui-ci a les droits requis.
+ UIDescription.content.pageWizard=Description de l'assitant de création de page.
+-UIDescription.content.pageWizard2=<strong>Etape 1: Définition des paramètres généraux de la page.</strong><br/> Pour cela vous devez : <br/>- Choisir le type de navigation à partir de la liste <br/>- Choisir une page qui deviendra la page parente de votre page<br/>- Saisir le <em>Nom de la Page</em><br/>- Saisir le <em>Nom affiché</em> (option)<br/>- Check <em>Visible</em> check box (option)<br/>- Check <em>Publication date &amp; time</em> check box (option)<br/>&nbsp;&nbsp;If <em>Publication date &amp; time</em> check box is checked:<br/>&nbsp;&nbsp;- Input <em>Start Publication Date</em><br/>&nbsp;&nbsp;- Input <em>End Publication Date</em><br/>- Cliquer sur "Suivant" pour aller à l'étape suivante
++UIDescription.content.pageWizard2=<strong>Etape 1: Définition des paramètres généraux de la page.</strong><br/> Pour cela vous devez : <br/>- Choisir le type de navigation à partir de la liste <br/>- Choisir une page qui deviendra la page parente de votre page<br/>- Saisir le <em>Nom de la Page</em><br/>- Saisir le <em>Nom affiché</em> (option)<br/>- Ajuster ou ignorer <em>Visible</em> par cocher/décocher ses cases (option)<br/>- Ajuster ou ignorer <em>Date et heure de publication</em> par cocher/décocher ses cases (option)<br/>&nbsp;&nbsp;Si vous ajustez <em>Date et heure de publication</em> :<br/>&nbsp;&nbsp;- Changer <em>Date de début de publication</em> si besoin<br/>&nbsp;&nbsp;- Changer <em>Date de fin de publication</em> si besoin<br/>- Cliquer sur "Suivant" pour aller à l'étape suivante
+ UIDescription.content.pageWizard3=<strong>Etape 2: Choisir le type d'agencement de la page.</strong><br/> Pour cela vous devez :<br/>- Choisir un type d'agencement de la page parmi ceux qui sont proposés <br/>- Ciquer sur "Suivant" pour aller à l'étape suivante ou "Précédent" pour retourner à l'étape précédente
+ UIDescription.content.pageEditWizard=Description de l'assitant de modification de page.
+-UIDescription.content.pageEditWizard1=<strong>Etape 1: Modification du nom Affiché.</strong><br/> Pour cela vous devez : <br/>- Choisir le type de navigation à partir de la liste<br/>- Choisir la page que vous souhaitez éditer<br/>- Modifier le <em>nom affiché</em> si besoin<br/>- Set or ignore <em>Visible</em> by check or uncheck its check box<br/>- Set or ignore <em>Publication date &amp; time</em> by check or uncheck its check box<br/>&nbsp;&nbsp;If set <em>Publication date &amp; time</em>:<br/>&nbsp;&nbsp;&nbsp;&nbsp;- Change <em>Start Publication Date</em> if needed<br/>&nbsp;&nbsp;&nbsp;&nbsp;- Change <em>End Publication Date</em> if needed<br/>- Cliquer sur "Suivant" pour aller à l'étape suivante
+-UIDescription.content.pageEditWizard2=<strong>Etape 2: Modification du type d'agencement de la page.</strong><br/> Pour cela vous devez : <br/>- Choisir un nouveau type d'agencement de la page ou conserver le type actuel<br/>- Ciquer sur "Suivant" pour aller à l'étape suivante ou "Précédent" pour retourner à l'étape précédente
+-UIDescription.content.pageEditWizard3=<strong>Etape 2: Modification du type d'agencement de la page.</strong><br/> Pour cela vous devez : <br/>- Choisir un nouveau type d'agencement de la page ou conserver le type actuel<br/>- Ciquer sur "Suivant" pour aller à l'étape suivante ou "Précédent" pour retourner à l'étape précédente
++UIDescription.content.pageEditWizard1=<strong>Etape 1: Modification du nom de la page.</strong><br/> Pour cela vous devez : <br/>- Choisir le type de navigation à partir de la liste<br/>- Choisir la page que vous souhaitez éditer<br/>- Modifier le <em>nom affiché</em> si besoin<br/>- Ajuster ou ignorer <em>Visible</em> par cocher/décocher ses cases<br/>- Ajuster ou ignorer<em>Date et heure de publication</em> par cocher/décocher ses cases <br/>&nbsp;&nbsp;si ajusté <em> Date et heure de publication </em>:<br/>&nbsp;&nbsp;&nbsp;&nbsp;- Changer <em>Date de début de publication </em> si besoin<br/>&nbsp;&nbsp;&nbsp;&nbsp;- Changer <em> Date de fin de publication </em> si besoin<br/>- Cliquer sur "Suivant" pour aller à l'étape suivante
++UIDescription.content.pageEditWizard2=<strong>Etape 2: Modification du type d'agencement de la page.</strong><br/> Pour cela vous devez : <br/>- Choisir un nouveau type d'agencement de la page ou conserver le type actuel<br/>- Cliquer sur "Suivant" pour aller à l'étape suivante ou "Précédent" pour retourner à l'étape précédente
++UIDescription.content.pageEditWizard3=<strong>Etape 2: Modification du type d'agencement de la page.</strong><br/> Pour cela vous devez : <br/>- Choisir un nouveau type d'agencement de la page ou conserver le type actuel<br/>- Cliquer sur "Suivant" pour aller à l'étape suivante ou "Précédent" pour retourner à l'étape précédente
+ 
+   #############################################################################
+   #              org.exoplatform.portal.component.customization.UIPortalForm#
+@@ -1046,6 +1046,17 @@
+ UIContainer.tooltip.drag=Glisser le conteneur ici
+ 
+   ############################################################################
++  #		            org.exoplatform.portal.component.view.UIColumnContainer          #
++  ############################################################################
++  
++UIColumnContainer.title.DragControlArea=Cliquer cette partie sans relâcher le bouton pour faire glisser cete colonne à d'autre place
++UIColumnContainer.tooltip.insertLeft=Insérer une colonne à gauche
++UIColumnContainer.tooltip.insertRight=Insérer une colonne à droit 
++UIColumnContainer.tootip.insertColumn=Insérer une nouvelle colonne
++UIColumnContainer.tooltip.closeContainer=Supprimer cette colonne
++UIColumnContainer.tooltip.editContainer=Editer cette colonne
++
++  ############################################################################
+   #		            org.exoplatform.portal.component.view.UIPage               #
+   ############################################################################
+   
+@@ -1105,6 +1116,9 @@
+   
+ UITableColumnContainer.label.title=Conteneur de navigation
+ UITableColumnContainer.label.description=Conteneur de navigation
++UITableColumnContainer.title.DragControlArea=Cliquer cette partie sans relâcher le bouton pour faire glisser ce tableau
++UITableColumnContainer.tooltip.closeContainer=Supprimer ce tableau
++UITableColumnContainer.tooltip.editContainer=Editer ce tableau
+ 
+   ############################################################################
+   #		           org.exoplatform.portal.component.control.UIExoStart         #
+@@ -1294,11 +1308,11 @@
+   ################################################################################
+   
+ UIDropDownControl.title.Empty=Control de glissement
+-UIDropDownPageTemp.item.normalPageConfigs=Configs Page
+-UIDropDownPageTemp.item.columnPageConfigs=Configs Page en Colonnes
+-UIDropDownPageTemp.item.mixPageConfigs=Configs Page Mixte
+-UIDropDownPageTemp.item.rowPageConfigs=Configs Page en Lignes
+-UIDropDownPageTemp.item.tabsPageConfigs=Config Page en Onglets
++UIDropDownPageTemp.item.normalPageConfigs=Configuration de la page
++UIDropDownPageTemp.item.columnPageConfigs=Configuration de la page en Colonnes
++UIDropDownPageTemp.item.mixPageConfigs=Configuration de la page Mixte
++UIDropDownPageTemp.item.rowPageConfigs=Configuration de la page en Lignes
++UIDropDownPageTemp.item.tabsPageConfigs=Configuration de la page en Onglets
+ 
+   ################################################################################
+   #		 org.exoplatform.portal.webui.application.UIWidgetContainerManagement
+@@ -1392,8 +1406,8 @@
+   #		 org.exoplatform.dashboard.webui.component.UIDashboard
+   ################################################################################
+   
+-UIDashboardSelectContainer.label.workspace=Espace de travail Dashboard 
+-UIDashboardSelectContainer.tooltip.close=Fermer l'espace de travail Dashboard
++UIDashboardSelectContainer.label.workspace=Espace de travail du tableau de bord 
++UIDashboardSelectContainer.tooltip.close=Fermer l’espace de travail du tableau de bord
+ UIDashboardSelectContainer.action.addGadget=Ajout Gadget
+ UIDashboardContainer.label.openWorkspace=Ajout Gadgets
+ UIDashboardContainer.label.SaveTitle=Sauver
+@@ -1401,6 +1415,7 @@
+ UIDashboardContainer.label.Debug=Debug
+ UIDashboardContainer.label.Cache=Pas de Cache
+ UIDashboardEditForm.label.totalColumns=Nombre de colonnes
++UIDashboardEditForm.action.Save=Enregistrer
+ UIDashboard.msg.required=Le champs text est obligatoire.
+ UIDashboard.msg.notUrl=L'url d'inscription n'est pas valide! Veuillez entrer une URL correcte du code XML du gadget ou du flux RSS!
+ 
+@@ -1489,3 +1504,4 @@
+ UICalendar.PreMonth=Mois précédent
+ UICalendar.NextYear=Année suivante
+ UICalendar.PreYear=Année précédente
++
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_vi.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_vi.properties	(revision 64249)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_vi.properties	(working copy)
+@@ -1396,6 +1396,7 @@
+ UIDashboardContainer.label.Debug=Debug
+ UIDashboardContainer.label.Cache=Không lưu Cache
+ UIDashboardEditForm.label.totalColumns=Số cột
++UIDashboardEditForm.action.Save=Sửa
+ UIDashboard.msg.required=Trường này không được để trống.
+ UIDashboard.msg.notUrl=Nhập URL không hợp lệ! Hãy nhập một URL đúng của Gadget hoặc RSS!
+ 
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/customization/UIDescription/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/customization/UIDescription/Stylesheet.css	(revision 64249)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/customization/UIDescription/Stylesheet.css	(working copy)
+@@ -31,4 +31,5 @@
+ .UIDescription .DescriptionContentMaxHeight {
+   padding: 5px;
+   height: 350px;
++  overflow: auto;
+ }
+\ No newline at end of file
+Index: web/eXoResources/src/main/webapp/javascript/eXo/i18n/MessageResource_fr.js
+===================================================================
+--- web/eXoResources/src/main/webapp/javascript/eXo/i18n/MessageResource_fr.js	(revision 64249)
++++ web/eXoResources/src/main/webapp/javascript/eXo/i18n/MessageResource_fr.js	(working copy)
+@@ -17,7 +17,7 @@
+  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+  */
+ 
+-eXo.i18n.I18NMessage.SessionTimeout = "Session expirée! Rechargez la page.";
++eXo.i18n.I18NMessage.SessionTimeout = "Votre session expirée! Veuillez recharger la page.";
+ eXo.i18n.I18NMessage.TargetBlockNotFound = " L'élément à mettre à jour est introuvable : {0}";
+ eXo.i18n.I18NMessage.BlockUpdateNotFound = " L'élément à mettre à jour est introuvable : {0}";
+ 
+Index: web/eXoResources/src/main/webapp/javascript/eXo/gadget/UIGadget.js
+===================================================================
+--- web/eXoResources/src/main/webapp/javascript/eXo/gadget/UIGadget.js	(revision 64249)
++++ web/eXoResources/src/main/webapp/javascript/eXo/gadget/UIGadget.js	(working copy)
+@@ -255,7 +255,7 @@
+                 containerBlockId = uiGadgetContainer.id;
+                 isInControlWorkspace = true;
+             }
+-            if (confirm("Are you sure you want to delete this gadget ?")) {
++            if (confirm(this.confirmDeleteGadget)) {
+                 var params = [
+                     {name: "objectId", value : gadgetId}
+                 ] ;

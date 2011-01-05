@@ -31,4 +31,5 @@
 .UIDescription .DescriptionContentMaxHeight {
   padding: 5px;
   height: 350px;
+  overflow: auto;
 }

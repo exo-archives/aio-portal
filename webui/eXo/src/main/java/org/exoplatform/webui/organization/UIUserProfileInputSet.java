@@ -19,6 +19,7 @@ package org.exoplatform.webui.organization;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.UserProfile;
@@ -81,21 +82,22 @@ public class UIUserProfileInputSet extends UIFormInputSet {
       if(key.equalsIgnoreCase("user.gender")){
         List<SelectItemOption<String>> ls = new ArrayList<SelectItemOption<String>>() ;
         ls.add(new SelectItemOption<String>(MALE, MALE)) ;
-        ls.add(new SelectItemOption<String>(FEMALE, FEMALE)) ;;
+        ls.add(new SelectItemOption<String>(FEMALE, FEMALE)) ;
         UIFormSelectBox genderSelectBox = new UIFormSelectBox(key, key, ls);
         set.addUIFormInput(genderSelectBox);  
         continue;
       }else if(key.equalsIgnoreCase("user.language")){
+        Locale currentLocale = WebuiRequestContext.getCurrentInstance().getLocale();
         List<SelectItemOption<String>> lang = new ArrayList<SelectItemOption<String>>() ;
         LocaleConfigService localeService = getApplicationComponent(LocaleConfigService.class) ;
         Iterator i = localeService.getLocalConfigs().iterator() ;
         while (i.hasNext()) {
           LocaleConfig config = (LocaleConfig) i.next() ;
           if(config.getLanguage().equals("en")) {
-            lang.add(0,new SelectItemOption<String>(config.getLocale().getDisplayLanguage(), config.getLanguage()));
+            lang.add(0,new SelectItemOption<String>(config.getLocale().getDisplayLanguage(currentLocale), config.getLanguage()));
             continue;
           }
-          lang.add(new SelectItemOption<String>(config.getLocale().getDisplayLanguage(), config.getLanguage()))  ;
+          lang.add(new SelectItemOption<String>(config.getLocale().getDisplayLanguage(currentLocale), config.getLanguage()))  ;
         }
         UIFormSelectBox langSelectBox = new UIFormSelectBox(key, key, lang);
         set.addUIFormInput(langSelectBox);  

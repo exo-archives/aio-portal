@@ -255,7 +255,7 @@ eXo.gadget.UIGadget = {
                 containerBlockId = uiGadgetContainer.id;
                 isInControlWorkspace = true;
             }
-            if (confirm("Are you sure you want to delete this gadget ?")) {
+            if (confirm(this.confirmDeleteGadget)) {
                 var params = [
                     {name: "objectId", value : gadgetId}
                 ] ;

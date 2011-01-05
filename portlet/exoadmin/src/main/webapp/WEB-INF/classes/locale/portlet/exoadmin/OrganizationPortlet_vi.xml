@@ -220,6 +220,10 @@
         </business-info>
       </user>
       <BusinessInfo>Thông tin doanh nghiệp</BusinessInfo>
+      <option>
+        <male>Nam</male>
+        <female>Nữ</female>
+      </option>
     </label>
     <action>
       <Back>#{word.cancel}</Back>

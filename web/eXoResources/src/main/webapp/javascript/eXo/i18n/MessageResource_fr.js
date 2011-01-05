@@ -17,7 +17,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-eXo.i18n.I18NMessage.SessionTimeout = "Session expirée! Rechargez la page.";
+eXo.i18n.I18NMessage.SessionTimeout = "Votre session expirée! Veuillez recharger la page.";
 eXo.i18n.I18NMessage.TargetBlockNotFound = " L'élément à mettre à jour est introuvable : {0}";
 eXo.i18n.I18NMessage.BlockUpdateNotFound = " L'élément à mettre à jour est introuvable : {0}";
 
