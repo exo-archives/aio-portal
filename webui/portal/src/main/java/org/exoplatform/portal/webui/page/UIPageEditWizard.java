@@ -86,7 +86,7 @@ public class UIPageEditWizard extends UIPageWizard {
     UserPortalConfigService service = getApplicationComponent(UserPortalConfigService.class);
     
     //Execute PortletPreferencesTask in session-layer cache
-    Util.executePortletPreferencesTasks();
+    Util.executePortletPreferencesTasks(true);
     
     UIPagePreview uiPagePreview = getChild(UIPagePreview.class);
     UIPage uiPage = (UIPage)uiPagePreview.getUIComponent();
@@ -126,6 +126,8 @@ public class UIPageEditWizard extends UIPageWizard {
       uiWizard.updateWizardComponent();
       uiWizard.setDescriptionWizard(1);
       uiWizard.viewStep(1);   
+      //Delete tranisent portlet preference similar to abort action
+      Util.executePortletPreferencesTasks(false);
     }
   }
   
@@ -135,9 +137,8 @@ public class UIPageEditWizard extends UIPageWizard {
       UIPortalApplication uiPortalApp = uiWizard.getAncestorOfType(UIPortalApplication.class);
       PortalRequestContext pcontext = Util.getPortalRequestContext() ;
       
-      //Remove the DeletePortletPreferencesTask which might be registered in step 3. 
       //TODO: Find a nicer place to put below code
-      Util.clearPortletPreferencesTaskCollection();
+      Util.executePortletPreferencesTasks(false);
       
       uiWizard.updateWizardComponent();
       UIWizardPageSetInfo uiPageInfo = uiWizard.getChild(UIWizardPageSetInfo.class); 

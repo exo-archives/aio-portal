@@ -64,7 +64,7 @@ public class UIPortalManagementControlBar extends UIToolbar {
   public void save() throws Exception {
   	
   	//Execute PortletPreferencesTask in session-layer cache
-  	Util.executePortletPreferencesTasks();
+  	Util.executePortletPreferencesTasks(true);
   	
     UIPortal uiPortal = Util.getUIPortal();     
     UIPortalApplication uiPortalApp = getAncestorOfType(UIPortalApplication.class);    
@@ -129,9 +129,8 @@ public class UIPortalManagementControlBar extends UIToolbar {
   static public class RollbackActionListener  extends EventListener<UIPortalManagementControlBar> {
     public void execute(Event<UIPortalManagementControlBar> event) throws Exception {
     	
-    	//Clear registered DeletePortletPreferencesTask
     	//TODO: Find a nicer place to put below code
-    	Util.clearPortletPreferencesTaskCollection();
+    	Util.executePortletPreferencesTasks(false);
     	
       UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
       UIWorkingWorkspace uiWorkingWS = Util.updateUIApplication(event);
@@ -196,9 +195,8 @@ public class UIPortalManagementControlBar extends UIToolbar {
   static public class AbortActionListener  extends EventListener<UIPortalManagementControlBar> {
     public void execute(Event<UIPortalManagementControlBar> event) throws Exception {
     	
-    	//Clear registered DeletePortletPreferencesTask
     	//TODO: Find a nicer place to put below code
-    	Util.clearPortletPreferencesTaskCollection();
+    	Util.executePortletPreferencesTasks(false);
     	
       UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
       UIWorkingWorkspace uiWorkingWS = uiPortalApp.getChildById(UIPortalApplication.UI_WORKING_WS_ID);

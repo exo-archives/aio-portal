@@ -157,7 +157,7 @@ public abstract class UIPageWizard extends UIWizard {
 		public void execute(Event<UIPageWizard> event) throws Exception {
 			UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
 			//Clear PortletPreferencesTask
-      Util.clearPortletPreferencesTaskCollection();
+      Util.executePortletPreferencesTasks(false);
       
 			uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE);
 			PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext();

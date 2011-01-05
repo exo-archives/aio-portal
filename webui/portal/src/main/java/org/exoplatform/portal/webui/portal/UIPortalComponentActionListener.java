@@ -28,6 +28,8 @@ import org.exoplatform.portal.config.model.PortalConfig;
 import org.exoplatform.portal.webui.application.UIPortlet;
 import org.exoplatform.portal.webui.application.UIPortletOptions;
 import org.exoplatform.portal.webui.application.task.DeletePortletPreferencesTask;
+import org.exoplatform.portal.webui.application.task.DeleteTransientPortletPreferencesTask;
+import org.exoplatform.portal.webui.application.task.PortletPreferencesTask;
 import org.exoplatform.portal.webui.application.task.PortletPreferencesTaskCollection;
 import org.exoplatform.portal.webui.container.UIColumnContainer;
 import org.exoplatform.portal.webui.container.UIContainerConfigOptions;
@@ -44,6 +46,7 @@ import org.exoplatform.portal.webui.workspace.UIWorkingWorkspace;
 import org.exoplatform.services.organization.OrganizationService;
 import org.exoplatform.services.organization.Query;
 import org.exoplatform.services.organization.User;
+import org.exoplatform.services.portletcontainer.pci.ExoWindowID;
 import org.exoplatform.services.portletcontainer.pci.WindowID;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.webui.core.UIComponent;
@@ -135,7 +138,7 @@ public class UIPortalComponentActionListener {
 				if(targetedPP != null)
 				{
 					PortletPreferencesTaskCollection ppTaskCollection = Util.getUIPortalApplication().getPPTaskCollection();
-					ppTaskCollection.addTask(new DeletePortletPreferencesTask(targetedPP));
+					ppTaskCollection.addTask(new DeletePortletPreferencesTask(targetedPP), true);
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -218,6 +221,8 @@ public class UIPortalComponentActionListener {
           uiPortlet.setWindowId(windowId.toString());
           uiPortlet.setShowEditControl(true);
           uiSource = uiPortlet;
+          //Delete preference of trasient portlet if NOT in Finish action
+          registerDeleteTransientPPTask(uiPortlet.getExoWindowID());          
         }
         List<UIComponent> children = uiTarget.getChildren();
         uiSource.setParent(uiTarget);
@@ -245,6 +250,12 @@ public class UIPortalComponentActionListener {
       uiParent.getChildren().remove(uiSource);
       uiTarget.getChildren().add(position, uiSource);
       uiSource.setParent(uiTarget);
+    }
+
+    private void registerDeleteTransientPPTask(ExoWindowID exoWindowID) {
+      PortletPreferencesTaskCollection prefCollection = Util.getUIPortalApplication().getPPTaskCollection();
+      PortletPreferencesTask<DataStorage> task = new DeleteTransientPortletPreferencesTask(exoWindowID);
+      prefCollection.addTask(task, false);
     }
    
   }

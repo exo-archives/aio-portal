@@ -17,26 +17,40 @@ public class PortletPreferencesTaskCollection{
 
 	private List<PortletPreferencesTask<DataStorage>> cache;
 	
+	private List<PortletPreferencesTask<DataStorage>> rollbackCaches;
+	
 	public PortletPreferencesTaskCollection()
 	{
 		this.cache = new ArrayList<PortletPreferencesTask<DataStorage>>();
+		this.rollbackCaches = new ArrayList<PortletPreferencesTask<DataStorage>>();
 	}
 	
-	public void addTask(PortletPreferencesTask<DataStorage> task)
+	public void addTask(PortletPreferencesTask<DataStorage> task, boolean isFinishAction)
 	{
-		this.cache.add(task);
+	  if (isFinishAction) {
+	    this.cache.add(task);
+	  } else {
+	    this.rollbackCaches.add(task);
+	  }
 	}
 	
 	public synchronized void clearTasks()
 	{
 		this.cache.clear();
+		this.rollbackCaches.clear();
 	}
 	
-	public void executeTasks(DataStorage persistentService) throws Exception
+	public void executeTasks(DataStorage persistentService, boolean isFinishAction) throws Exception
 	{
-		for(PortletPreferencesTask<DataStorage> task : cache)
-		{
-			task.run(persistentService);
-		}
+	  List<PortletPreferencesTask<DataStorage>> tempCache;
+	  if (isFinishAction) {
+	    tempCache = cache;	     
+	  } else {
+	    tempCache = rollbackCaches;
+	  }
+	  for(PortletPreferencesTask<DataStorage> task : tempCache)
+    {
+      task.run(persistentService);
+    }
 	}
 }

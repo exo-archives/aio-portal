@@ -162,6 +162,7 @@ public class UIPageEditBar extends UIToolbar {
     Page page = PortalDataMapper.toPageModel(getUIPage());      
     UserPortalConfigService dataService = getApplicationComponent(UserPortalConfigService.class);
     dataService.update(page); 
+    Util.executePortletPreferencesTasks(true);
   }
 
   static public class SavePageActionListener  extends EventListener<UIPageEditBar> {

@@ -302,6 +302,17 @@ public class UIPageNodeSelector extends UIContainer {
     public void execute(Event<UITree> event) throws Exception {      
       String uri  = event.getRequestContext().getRequestParameter(OBJECTID);
       UIPageNodeSelector uiPageNodeSelector = event.getSource().getParent();
+      //Delete transient portlet preference
+      String selectedNodeURI = "";
+      if(uiPageNodeSelector.getSelectedNode() != null) {
+        PageNode pageNode = uiPageNodeSelector.getSelectedNode().getNode();
+        if (pageNode != null) {
+          selectedNodeURI = pageNode.getUri();
+        }
+      }
+      if (!selectedNodeURI.equals(uri)) {
+        Util.executePortletPreferencesTasks(false);
+      }
       uiPageNodeSelector.selectPageNodeByUri(uri);
       
       PortalRequestContext pcontext = (PortalRequestContext)event.getRequestContext();

@@ -86,7 +86,7 @@ public class UIPageCreationWizard extends UIPageWizard {
     UserPortalConfigService service = getApplicationComponent(UserPortalConfigService.class);
     
     //Execute PortletPreferencesTask in session-layer cache
-    Util.executePortletPreferencesTasks();
+    Util.executePortletPreferencesTasks(true);
     
     UIPagePreview uiPagePreview = getChild(UIPagePreview.class);
     UIPage uiPage = (UIPage)uiPagePreview.getUIComponent();
@@ -176,7 +176,8 @@ public class UIPageCreationWizard extends UIPageWizard {
 
       uiWizard.updateWizardComponent();
       uiWizard.viewStep(2);
-      
+      //Delete tranisent portlet preference similar to abort action
+      Util.executePortletPreferencesTasks(false);
     }
   }
 
@@ -187,9 +188,8 @@ public class UIPageCreationWizard extends UIPageWizard {
       WebuiRequestContext context = Util.getPortalRequestContext() ;
       uiWizard.viewStep(3);
 
-      //Remove the DeletePortletPreferencesTask which might be registered in step 3. 
       //TODO: Find a nicer place to put below code
-      Util.clearPortletPreferencesTaskCollection();
+      Util.executePortletPreferencesTasks(false);
       
       if(uiWizard.getSelectedStep() < 3){
         uiPortalApp.addMessage(new ApplicationMessage("UIPageCreationWizard.msg.StepByStep",null)) ;

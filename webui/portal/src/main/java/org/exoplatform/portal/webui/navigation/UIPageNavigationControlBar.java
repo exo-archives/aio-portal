@@ -68,9 +68,8 @@ public class UIPageNavigationControlBar extends UIToolbar {
   static public class RollbackActionListener extends EventListener<UIPageNavigationControlBar> {
     public void execute(Event<UIPageNavigationControlBar> event) throws Exception {
     	
-    	//Clear registered PortletPreferencesTask
     	//TODO: Find a nicer place to put below code
-    	Util.clearPortletPreferencesTaskCollection();
+    	Util.executePortletPreferencesTasks(false);
     	
       UIPageNavigationControlBar uiPageNav = event.getSource();
       UIPortalApplication uiPortalApp = uiPageNav.getAncestorOfType(UIPortalApplication.class);
@@ -136,8 +135,8 @@ public class UIPageNavigationControlBar extends UIToolbar {
       UIPageManagement uiPageManagement = event.getSource().getParent(); 
       uiPageManagement.getChild(UIPageEditBar.class).savePage();
       
-      //Execute PortletPreferencesTask in session-layer cache
-      Util.executePortletPreferencesTasks();
+      //Execute PortletPreferencesTask in session-layer cache      
+      Util.executePortletPreferencesTasks(true);
       
       UIPageNodeSelector uiNodeSelector = uiPageManagement.getChild(UIPageNodeSelector.class);
       UserPortalConfigService dataService = uiPageManagement.getApplicationComponent(UserPortalConfigService.class);
@@ -174,9 +173,8 @@ public class UIPageNavigationControlBar extends UIToolbar {
  
   public void abort(Event<UIPageNavigationControlBar> event) throws Exception {
   	
-  	//Clear registered DeletePortletPreferencesTask
   	//TODO: Find a nicer place to put below code
-  	Util.clearPortletPreferencesTaskCollection();
+  	Util.executePortletPreferencesTasks(false);
   	
     UIPortalApplication uiPortalApp = event.getSource().getAncestorOfType(UIPortalApplication.class);
     uiPortalApp.setModeState(UIPortalApplication.NORMAL_MODE) ;

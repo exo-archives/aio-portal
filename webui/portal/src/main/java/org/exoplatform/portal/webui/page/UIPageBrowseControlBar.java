@@ -83,6 +83,7 @@ public class UIPageBrowseControlBar extends UIToolbar {
       uiManagement.setRenderedChild(UIDescription.class);
       uiManagement.setMode(ManagementMode.BROWSE, event);
       event.getRequestContext().addUIComponentToUpdateByAjax(uiManagement) ;
+      Util.executePortletPreferencesTasks(false);
     }
   }
 

@@ -249,18 +249,13 @@ public class Util {
     return uiWorkingWS;
   }
   
-  static public void clearPortletPreferencesTaskCollection()
-  {
-  	getUIPortalApplication().getPPTaskCollection().clearTasks();
-  }
-  
-  static public void executePortletPreferencesTasks()
+  static public void executePortletPreferencesTasks(boolean isFinishAction)
   {
   	UIPortalApplication uiPortalApp = getUIPortalApplication();
   	DataStorage dataStorage = uiPortalApp.getApplicationComponent(DataStorage.class);
   	PortletPreferencesTaskCollection taskCollection = uiPortalApp.getPPTaskCollection();
   	try{
-  		taskCollection.executeTasks(dataStorage);
+  		taskCollection.executeTasks(dataStorage, isFinishAction);
   	}catch(Exception ex)
   	{
   		ex.printStackTrace();
