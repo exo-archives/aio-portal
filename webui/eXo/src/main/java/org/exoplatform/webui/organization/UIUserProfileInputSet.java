@@ -87,7 +87,8 @@ public class UIUserProfileInputSet extends UIFormInputSet {
         set.addUIFormInput(genderSelectBox);  
         continue;
       }else if(key.equalsIgnoreCase("user.language")){
-        Locale currentLocale = WebuiRequestContext.getCurrentInstance().getLocale();
+        WebuiRequestContext context = WebuiRequestContext.getCurrentInstance();
+        Locale currentLocale = context.getLocale();
         List<SelectItemOption<String>> lang = new ArrayList<SelectItemOption<String>>() ;
         LocaleConfigService localeService = getApplicationComponent(LocaleConfigService.class) ;
         Iterator i = localeService.getLocalConfigs().iterator() ;
