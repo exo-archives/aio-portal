@@ -1,0 +1,14 @@
+Index: webui/eXo/src/main/java/org/exoplatform/webui/organization/UIUserProfileInputSet.java
+===================================================================
+--- webui/eXo/src/main/java/org/exoplatform/webui/organization/UIUserProfileInputSet.java	(revision 64764)
++++ webui/eXo/src/main/java/org/exoplatform/webui/organization/UIUserProfileInputSet.java	(working copy)
+@@ -87,7 +87,8 @@
+         set.addUIFormInput(genderSelectBox);  
+         continue;
+       }else if(key.equalsIgnoreCase("user.language")){
+-        Locale currentLocale = WebuiRequestContext.getCurrentInstance().getLocale();
++        WebuiRequestContext context = WebuiRequestContext.getCurrentInstance();
++        Locale currentLocale = context.getLocale();
+         List<SelectItemOption<String>> lang = new ArrayList<SelectItemOption<String>>() ;
+         LocaleConfigService localeService = getApplicationComponent(LocaleConfigService.class) ;
+         Iterator i = localeService.getLocalConfigs().iterator() ;
