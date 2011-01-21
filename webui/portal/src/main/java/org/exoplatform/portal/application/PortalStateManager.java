@@ -93,7 +93,10 @@ public class PortalStateManager extends StateManager {
     if (state != null) {
       if ((!(Safe.equals(pcontext.getRemoteUser(), state.getUserName())))
           || (!pcontext.getPortalOwner().equals(state.getUIPortalApplication().getOwner()))) {
-        clearSession(pcontext.getRequest().getSession());
+        
+        if (state.getUserName() != null) {
+          clearSession(pcontext.getRequest().getSession());
+        }
         state = null;
       }
     }
