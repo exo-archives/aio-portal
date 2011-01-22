@@ -1,0 +1,13 @@
+Index: web/portal/src/main/webapp/fckeditor/editor/dialog/fck_link/fck_link.js
+===================================================================
+--- web/portal/src/main/webapp/fckeditor/editor/dialog/fck_link/fck_link.js	(revision 65359)
++++ web/portal/src/main/webapp/fckeditor/editor/dialog/fck_link/fck_link.js	(working copy)
+@@ -253,7 +253,7 @@
+ 			for ( var i = 0 ; i < address.length ; i++ )
+ 				aAddressCode.push( address.charCodeAt( i ) ) ;
+ 
+-			return 'javascript:location.href=\'mailto:\'+String.fromCharCode(' + aAddressCode.join( ',' ) + ')+\'?' + aParams.join( '&' ) + '\'' ;
++			return 'javascript:location.href=\'mailto:\'+String.fromCharCode(' + aAddressCode.join( ',' ) + ')+\'?' + aParams.join( '&' ) + '\';void(0);' ;
+ 	}
+ 
+ 	// EMailProtection 'none'
