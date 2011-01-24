@@ -308,21 +308,18 @@ public class UIPageNodeActionListener {
                                      "CutNode", "CloneNode", "DeleteNode", "MoveUp", "MoveDown"});
        
       UserPortalConfigService service = uiPopupMenu.getApplicationComponent(UserPortalConfigService.class);
-      if(targetNode == null) { 
-        newNode.setUri(newNode.getName());
-        targetNav.addNode(newNode);
-        if(selectedNode.isCloneNode()) {
-          clonePageFromNode(newNode, targetNav.getOwnerType(), targetNav.getOwnerId(), service);
-        }
-        return;
-      }
+      
       setNewUri(targetNode, newNode);
-      targetNode.getChildren().add(newNode);
       if(selectedNode.isCloneNode()) {
-        clonePageFromNode(newNode, targetNav.getOwnerType(), targetNav.getOwnerId(), service);
+          clonePageFromNode(newNode, targetNav.getOwnerType(), targetNav.getOwnerId(), service);
       }
-      uiPageNodeSelector.selectPageNodeByUri(targetNode.getUri());
-
+      
+      if(targetNode != null) {
+    	  targetNode.getChildren().add(newNode);
+    	  uiPageNodeSelector.selectPageNodeByUri(targetNode.getUri());
+      } else {
+    	  targetNav.addNode(newNode);
+      }
     }
     
     private void clonePageFromNode(PageNode node, String ownerType,
