@@ -4,6 +4,7 @@
   import org.exoplatform.web.application.JavascriptManager;
   import org.exoplatform.portal.config.model.PageNavigation ;
   import org.exoplatform.portal.webui.util.Util;
+  import org.exoplatform.portal.config.GlobalPortalConfigService;
   
   def rcontext = _ctx.getRequestContext() ;
   JavascriptManager jsmanager = rcontext.getJavascriptManager();
@@ -307,6 +308,7 @@
     <div class="ExoStartButton ButtonNormal" onclick="$onclick" title="<%=_ctx.appRes("UIExoStart.tooltip.begin")%>"><span></span></div>
     <div class="VLineSeparator"><span></span></div>
     <div class="DigitalClockContainer">
+      <div style="display:none" id="Time24hFormat"><%=(uicomponent.getApplicationComponent(GlobalPortalConfigService.class).getTime24hFormat()) ? "true" : "false" %></div>
       <div class="DigitalClock" id="DigitalClock"><span></span></div>
     </div>
     <div class="VLineSeparator"><span></span></div>
