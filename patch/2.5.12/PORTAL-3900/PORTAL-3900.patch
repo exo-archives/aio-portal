@@ -1,0 +1,17 @@
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties	(revision 65112)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties	(working copy)
+@@ -673,9 +673,9 @@
+ UIWizardPageSelectLayoutForm.label.rowPage.ThreeRowsLayout=Disposition à trois lignes
+ UIWizardPageSelectLayoutForm.label.tabsPage.TwoTabsLayout=Deux onglets
+ UIWizardPageSelectLayoutForm.label.tabsPage.ThreeTabsLayout=Trois onglets
+-UIWizardPageSelectLayoutForm.label.mixPage.TwoColumnsOneRowLayout=Disposition à deux colonnes et une ligne
+-UIWizardPageSelectLayoutForm.label.mixPage.OneRowTwoColumnsLayout=Disposition à une ligne et deux colonnes 
+-UIWizardPageSelectLayoutForm.label.mixPage.ThreeRowsTwoColumnsLayout=Disposition à trois lignes et deux colonnes
++UIWizardPageSelectLayoutForm.label.mixPage.TwoColumnsOneRowLayout=Disposition à 2 colonnes et 1 ligne
++UIWizardPageSelectLayoutForm.label.mixPage.OneRowTwoColumnsLayout=Disposition à 1 ligne et 2 colonnes 
++UIWizardPageSelectLayoutForm.label.mixPage.ThreeRowsTwoColumnsLayout=Disposition à 3 lignes et 2 colonnes
+ UIWizardPageSelectLayoutForm.label.UIPageTemplateOptions=invalide
+ 
+   ############################################################################
