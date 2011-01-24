@@ -1,0 +1,70 @@
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortal.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortal.java	(revision 65307)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortal.java	(working copy)
+@@ -28,6 +28,7 @@
+ 
+ import org.exoplatform.portal.account.UIAccountSetting;
+ import org.exoplatform.portal.application.PortalRequestContext;
++import org.exoplatform.portal.config.GlobalPortalConfigService;
+ import org.exoplatform.portal.config.UserPortalConfigService;
+ import org.exoplatform.portal.config.model.PageNavigation;
+ import org.exoplatform.portal.config.model.PageNode;
+@@ -161,7 +162,8 @@
+     if(selectedNode_ != null) return selectedNode_;
+     if(getSelectedNavigation() == null || selectedNavigation_.getNodes() == null ||
+        selectedNavigation_.getNodes().size()< 1) return null;
+-    selectedNode_ = selectedNavigation_.getNodes().get(0);
++    if(!this.getApplicationComponent(GlobalPortalConfigService.class).usedNodeNotFound())
++      selectedNode_ = selectedNavigation_.getNodes().get(0);
+     return selectedNode_;
+   }
+ 
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageActionListener.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageActionListener.java	(revision 65307)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/page/UIPageActionListener.java	(working copy)
+@@ -23,6 +23,7 @@
+ 
+ import org.exoplatform.portal.application.PortalRequestContext;
+ import org.exoplatform.portal.application.UserGadgetStorage;
++import org.exoplatform.portal.config.GlobalPortalConfigService;
+ import org.exoplatform.portal.config.UserPortalConfig;
+ import org.exoplatform.portal.config.UserPortalConfigService;
+ import org.exoplatform.portal.config.model.Page;
+@@ -104,7 +105,7 @@
+               uiPortal.setSelectedNode(child);
+               uiPortal.setSelectedPaths(selectedPaths_);
+               String selectedUri = (uiPortal.getSelectedNode() == null)?null:uiPortal.getSelectedNode().getUri();
+-              if(!currentUri.equals(selectedUri)) {
++              if(currentUri != null && !currentUri.equals(selectedUri)) {
+                 if(uiPageBody.getMaximizedUIComponent() != null) {
+                   UIPortlet currentPortlet =  (UIPortlet) uiPageBody.getMaximizedUIComponent();
+                   currentPortlet.setCurrentWindowState(WindowState.NORMAL);
+@@ -132,14 +133,14 @@
+           	tempNode = tempNode.getChild(nodeNames[i]) ;
+   				}
+         	if(tempNode != null) selectedPaths_.add(selecttedNode = tempNode) ;
+-          
+-          if(selecttedNode != null) {
++        	
++          if(selecttedNode != null && (tempNode != null || !uiPortal.getApplicationComponent(GlobalPortalConfigService.class).usedNodeNotFound())) {
+           	uiPortal.setSelectedNavigation(nav);
+           	break;
+           }
+         }
+         // TODO tam.nguyen: filter navigation, select navigation up to user
+-        if (selecttedNode == null) {
++        if (selecttedNode == null && !uiPortal.getApplicationComponent(GlobalPortalConfigService.class).usedNodeNotFound()) {
+           filter:
+           for(PageNavigation nav: navigations){
+             for(PageNode child: nav.getNodes()){
+@@ -191,7 +192,7 @@
+       pcontext.getJavascriptManager().addCustomizedOnLoadScript("document.title='" + uiPortal.getSelectedNode().getResolvedLabel().replaceAll("'", "\\\\'") + "';") ;
+       uiPortal.setSelectedPaths(selectedPaths_);
+       String selectedUri = (uiPortal.getSelectedNode() == null)?null:uiPortal.getSelectedNode().getUri();
+-      if(!currentUri.equals(selectedUri)) {
++      if(currentUri != null && !currentUri.equals(selectedUri)) {
+         if(uiPageBody.getMaximizedUIComponent() != null) {
+           UIPortlet currentPortlet =  (UIPortlet) uiPageBody.getMaximizedUIComponent();
+           currentPortlet.setCurrentWindowState(WindowState.NORMAL);

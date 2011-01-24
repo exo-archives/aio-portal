@@ -23,6 +23,7 @@ import javax.portlet.WindowState;
 
 import org.exoplatform.portal.application.PortalRequestContext;
 import org.exoplatform.portal.application.UserGadgetStorage;
+import org.exoplatform.portal.config.GlobalPortalConfigService;
 import org.exoplatform.portal.config.UserPortalConfig;
 import org.exoplatform.portal.config.UserPortalConfigService;
 import org.exoplatform.portal.config.model.Page;
@@ -104,7 +105,7 @@ public class UIPageActionListener {
               uiPortal.setSelectedNode(child);
               uiPortal.setSelectedPaths(selectedPaths_);
               String selectedUri = (uiPortal.getSelectedNode() == null)?null:uiPortal.getSelectedNode().getUri();
-              if(!currentUri.equals(selectedUri)) {
+              if(currentUri != null && !currentUri.equals(selectedUri)) {
                 if(uiPageBody.getMaximizedUIComponent() != null) {
                   UIPortlet currentPortlet =  (UIPortlet) uiPageBody.getMaximizedUIComponent();
                   currentPortlet.setCurrentWindowState(WindowState.NORMAL);
@@ -132,14 +133,14 @@ public class UIPageActionListener {
           	tempNode = tempNode.getChild(nodeNames[i]) ;
   				}
         	if(tempNode != null) selectedPaths_.add(selecttedNode = tempNode) ;
-          
-          if(selecttedNode != null) {
+        	
+          if(selecttedNode != null && (tempNode != null || !uiPortal.getApplicationComponent(GlobalPortalConfigService.class).usedNodeNotFound())) {
           	uiPortal.setSelectedNavigation(nav);
           	break;
           }
         }
         // TODO tam.nguyen: filter navigation, select navigation up to user
-        if (selecttedNode == null) {
+        if (selecttedNode == null && !uiPortal.getApplicationComponent(GlobalPortalConfigService.class).usedNodeNotFound()) {
           filter:
           for(PageNavigation nav: navigations){
             for(PageNode child: nav.getNodes()){
@@ -191,7 +192,7 @@ public class UIPageActionListener {
       pcontext.getJavascriptManager().addCustomizedOnLoadScript("document.title='" + uiPortal.getSelectedNode().getResolvedLabel().replaceAll("'", "\\\\'") + "';") ;
       uiPortal.setSelectedPaths(selectedPaths_);
       String selectedUri = (uiPortal.getSelectedNode() == null)?null:uiPortal.getSelectedNode().getUri();
-      if(!currentUri.equals(selectedUri)) {
+      if(currentUri != null && !currentUri.equals(selectedUri)) {
         if(uiPageBody.getMaximizedUIComponent() != null) {
           UIPortlet currentPortlet =  (UIPortlet) uiPageBody.getMaximizedUIComponent();
           currentPortlet.setCurrentWindowState(WindowState.NORMAL);
