@@ -1,0 +1,12 @@
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/UIPortalApplicationSkin.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/UIPortalApplicationSkin.css	(revision 65369)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/UIPortalApplicationSkin.css	(revision 65370)
+@@ -29,7 +29,6 @@
+ 
+ html {
+ 	margin: 0px ; padding: 0px;
+-	*overflow-x: hidden;
+ }
+ 
+ body {
