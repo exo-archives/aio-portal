@@ -1,6 +1,6 @@
 Summary
 
-    * Status: Time's format of WEBOS
+    * Status: Time's format of eXo Start
     * CCP Issue: CCP-456, Product Jira Issue: PORTAL-3815
     * Complexity: minor
 
@@ -8,12 +8,12 @@ The Proposal
 Problem description
 
 What is the problem to fix?
-* Customer wants to display time with 24h format.
+* In User workspace, next to eXo start button, there is a time display. Customer wants to display time with 24h format.
 
 Fix description
 
 How is the problem fixed?
-* Add time 24h format configuration on portal-configuration.xml
+* Add configuration of 24h time format in portal-configuration.xml.
 
 Patch file: PORTAL-3815
 
@@ -28,7 +28,7 @@ Tests performed at QA/Support Level
 Documentation changes
 
 Documentation changes:
-* No
+* Need to add information of this new parameter in Admin guide.
 
 Configuration changes
 
@@ -36,12 +36,13 @@ Configuration changes:
 * A new value is added into portal-configuration.xml file
 
 Will previous configuration continue to work?
-* Yes
+* This issue depends on PORTAL-3895 (add GlobalConfigService class)
+* Any module/product using UIExoStart.gtmpl (eg. DMS) must add GlobalPortalConfigService configuration in portal-configuration.xml (as ECM-5576).
 
 Risks and impacts
 
 Can this bug fix have any side effects on current client projects?
-* None
+* No after applying PORTAL-3895 and updating portal-configuration.xml.
 
 Is there a performance risk/cost?
 * No
