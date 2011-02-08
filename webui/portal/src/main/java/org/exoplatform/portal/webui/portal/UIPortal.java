@@ -28,7 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.exoplatform.portal.account.UIAccountSetting;
 import org.exoplatform.portal.application.PortalRequestContext;
-import org.exoplatform.portal.config.GlobalPortalConfigService;
 import org.exoplatform.portal.config.UserPortalConfigService;
 import org.exoplatform.portal.config.model.PageNavigation;
 import org.exoplatform.portal.config.model.PageNode;
@@ -162,8 +161,7 @@ public class UIPortal extends UIContainer {
     if(selectedNode_ != null) return selectedNode_;
     if(getSelectedNavigation() == null || selectedNavigation_.getNodes() == null ||
        selectedNavigation_.getNodes().size()< 1) return null;
-    if(!this.getApplicationComponent(GlobalPortalConfigService.class).usedNodeNotFound())
-      selectedNode_ = selectedNavigation_.getNodes().get(0);
+    selectedNode_ = selectedNavigation_.getNodes().get(0);
     return selectedNode_;
   }
 
