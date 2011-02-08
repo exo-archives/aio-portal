@@ -1,0 +1,71 @@
+Index: component/portal/src/main/java/org/exoplatform/portal/config/GlobalPortalConfigService.java
+===================================================================
+--- component/portal/src/main/java/org/exoplatform/portal/config/GlobalPortalConfigService.java	(revision 0)
++++ component/portal/src/main/java/org/exoplatform/portal/config/GlobalPortalConfigService.java	(revision 0)
+@@ -0,0 +1,43 @@
++/**
++ * 
++ */
++package org.exoplatform.portal.config;
++
++import org.exoplatform.container.xml.InitParams;
++import org.exoplatform.container.xml.ValueParam;
++import org.picocontainer.Startable;
++
++/**
++ * Created by The eXo Platform SAS
++ * @author Kien Nguyen
++ *		   nguyenanhkien2a@gmail.com
++ *
++ *  Dec 29, 2010
++ */
++public class GlobalPortalConfigService implements Startable {
++  
++  public static String TIME_24h_FORMAT = "time.24h.format"; //true or false
++  
++  private boolean time24hFormat_ = false;
++
++  public void start() {
++
++  }
++
++  public void stop() {
++
++  }
++  
++  public GlobalPortalConfigService(InitParams params) throws Exception {
++    ValueParam timeFormatParam = params.getValueParam(TIME_24h_FORMAT);
++    time24hFormat_ = timeFormatParam.getValue().equalsIgnoreCase("true") ? true : false;
++  }
++
++  public void setTime24hFormat(boolean time24hFormat) {
++    this.time24hFormat_ = time24hFormat;
++  }
++
++  public boolean getTime24hFormat() {
++    return time24hFormat_;
++  }
++}
+Index: web/portal/src/main/webapp/WEB-INF/conf/portal/portal-configuration.xml
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/conf/portal/portal-configuration.xml	(revision 65828)
++++ web/portal/src/main/webapp/WEB-INF/conf/portal/portal-configuration.xml	(working copy)
+@@ -81,6 +81,18 @@
+   </component>
+   
+   <component>
++    <key>org.exoplatform.portal.config.GlobalPortalConfigService</key>
++    <type>org.exoplatform.portal.config.GlobalPortalConfigService</type>   
++    <init-params>	
++      <value-param>
++        <name>time.24h.format</name>
++        <description>Default is 12h format. If value is true, 24h format will be apply for time of portal </description>
++        <value>false</value>
++      </value-param>
++	</init-params>       
++  </component> 
++
++  <component>
+     <key>org.exoplatform.portal.config.UserPortalConfigService</key>
+     <type>org.exoplatform.portal.config.UserPortalConfigService</type>
+     <component-plugins>           

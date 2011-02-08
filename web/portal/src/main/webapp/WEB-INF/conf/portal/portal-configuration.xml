@@ -81,6 +81,18 @@
   </component>
   
   <component>
+    <key>org.exoplatform.portal.config.GlobalPortalConfigService</key>
+    <type>org.exoplatform.portal.config.GlobalPortalConfigService</type>   
+    <init-params>	
+      <value-param>
+        <name>time.24h.format</name>
+        <description>Default is 12h format. If value is true, 24h format will be apply for time of portal </description>
+        <value>false</value>
+      </value-param>
+	</init-params>       
+  </component> 
+
+  <component>
     <key>org.exoplatform.portal.config.UserPortalConfigService</key>
     <type>org.exoplatform.portal.config.UserPortalConfigService</type>
     <component-plugins>           
