@@ -137,18 +137,25 @@ ExoDateTime.prototype.getTime = function() {
   if (hour <= 9) hour = "0" + hour ;
   if (minute <= 9) minute = "0" + minute ;
 
-  var AM_PM = "" ;
-  if (hour < 12) {
-    AM_PM = "AM" ;
-  } else if (hour == 12) {
-    AM_PM = "PM" ;
-  } else {
-    AM_PM = "PM" ;
-    hour = hour - 12 ;
-  }
+  var time24hFormatObject = document.getElementById("Time24hFormat");
+  var time24hFormat = false;
+  if(time24hFormatObject != undefined)
+	time24hFormat = (time24hFormatObject.innerHTML == "true") ? true : false;
   
-  var time = "" ;
-  time += hour + ":" + minute + " " + AM_PM ;
+  var time = hour + ":" + minute ;
+  if(time24hFormat == false) {
+	  var AM_PM = "" ;
+	  if (hour < 12) {
+	    AM_PM = "AM" ;
+	  } else if (hour == 12) {
+	    AM_PM = "PM" ;
+	  } else {
+	    AM_PM = "PM" ;
+	    hour = hour - 12 ;
+	  }
+	  
+	  time = hour + ":" + minute + " " + AM_PM ;
+  }
   var digitalClock = document.getElementById("DigitalClock") ;
   digitalClock.innerHTML = time ;
   setTimeout("eXo.core.ExoDateTime.getTime()", 60000) ;
