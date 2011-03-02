@@ -1,0 +1,189 @@
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/navigation/UIPageNodeActionListener.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/navigation/UIPageNodeActionListener.java	(revision 65621)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/navigation/UIPageNodeActionListener.java	(working copy)
+@@ -282,16 +282,19 @@
+       PageNavigation targetNav = uiPageNodeSelector.getSelectedNavigation();
+       PageNode targetNode = PageNavigationUtils.searchPageNodeByUri(targetNav, targetUri);
+               
+-      if(targetNode != null && newNode.getUri().equals(targetNode.getUri())) {
++      if(targetNode != null && newNode.getUri().equals(targetNode.getUri()) && selectedNode.isDeleteNode()) {
+         UIApplication uiApp = Util.getPortalRequestContext().getUIApplication() ;
+         uiApp.addMessage(new ApplicationMessage("UIPageNodeSelector.msg.paste.sameSrcAndDes", null)) ;
+         return;
+       }
+       
+-      if(isExistChild(targetNode, newNode) || (targetNode == null && isExitChild(targetNav, newNode))) {
+-        UIApplication uiApp = Util.getPortalRequestContext().getUIApplication() ;
+-        uiApp.addMessage(new ApplicationMessage("UIPageNodeSelector.msg.paste.sameName", null)) ;
+-        return;
++//      if(isExistChild(targetNode, newNode) || (targetNode == null && isExitChild(targetNav, newNode))) {
++//        UIApplication uiApp = Util.getPortalRequestContext().getUIApplication() ;
++//        uiApp.addMessage(new ApplicationMessage("UIPageNodeSelector.msg.paste.sameName", null)) ;
++//        return;
++//      }
++      if(isSameParent(selectedNode, targetNode, targetNav) && selectedNode.isDeleteNode()) {
++         return;
+       }
+       if(selectedNode.isDeleteNode()) {
+         if(selectedNode.getParentNode() != null) {
+@@ -308,20 +311,87 @@
+                                      "CutNode", "CloneNode", "DeleteNode", "MoveUp", "MoveDown"});
+        
+       UserPortalConfigService service = uiPopupMenu.getApplicationComponent(UserPortalConfigService.class);
+-      
+-      setNewUri(targetNode, newNode);
++            
+       if(selectedNode.isCloneNode()) {
+           clonePageFromNode(newNode, targetNav.getOwnerType(), targetNav.getOwnerId(), service);
+       }
+       
+       if(targetNode != null) {
++        newNode = processNodeName(newNode, targetNode.getChildren());
+     	  targetNode.getChildren().add(newNode);
+     	  uiPageNodeSelector.selectPageNodeByUri(targetNode.getUri());
+       } else {
++        newNode = processNodeName(newNode, targetNav.getNodes()); 
+     	  targetNav.addNode(newNode);
+       }
++      setNewUri(targetNode, newNode);
+     }
+     
++    private boolean isSameParent(SelectedNode selectedNode, PageNode targetNode, PageNavigation targetNav) {
++      PageNode selectedParent = selectedNode.getParentNode();
++      return (selectedParent == null && targetNode == null && selectedNode.getPageNavigation().getOwner().equals(targetNav.getOwner())) ||
++      (selectedParent != null && targetNode != null && selectedParent.getName().equals(targetNode.getName()));
++    }
++
++    private String trimName(String name) {
++      int index = name.lastIndexOf("_");
++      if(index > -1) {
++        String postfix = name.substring(index + 1, name.length());
++        if (postfix.matches("\\d++"))
++          return name.substring(0, index);
++      }
++      return name;
++    }
++
++    private String trimLabel(String label) {
++      int index = label.lastIndexOf("[");
++      if(index > -1) return label.substring(0,index);
++      return label;
++    }
++
++    //    private int labelIndex(String label){
++    //      int index = label.lastIndexOf("[");
++    //      if (index > -1) {int i = java.lang.Integer.parseInt(label.substring(index,label.length())); 
++    //      System.out.println("index = "+i);
++    //      return i;
++    //      }
++    //      
++    //   return -1;
++    //    }
++
++    private PageNode processNodeName(PageNode node, List<PageNode> siblings) {
++      List<String> nodeNames = new ArrayList<String> () ;
++      int count = 1;
++      String trimed = trimName(node.getName());
++      for(PageNode ele : siblings) {
++        if(trimed.equals(trimName(ele.getName()))) {
++          nodeNames.add(ele.getName());
++          count++;
++        }      
++      }
++
++      if (!nodeNames.contains(node.getName())) {
++        return node;
++      }
++
++      boolean found=false;
++      StringBuilder name = new StringBuilder(trimed + "_0");  
++      for (int i = 1; i <= count ; i++) {
++
++        found = nodeNames.contains(name.replace(name.lastIndexOf("_") + 1, name.length(), String.valueOf(i)).toString());
++
++        if(!found ) {
++          count=i;
++          break;
++        }
++      }
++      if(found) count++;
++
++      node.setLabel(trimLabel(node.getResolvedLabel()) + "[" + count + "]");
++      node.setName(trimName(node.getName()) + "_" + count);
++      return node;
++    }
++
+     private void clonePageFromNode(PageNode node, String ownerType,
+                                    String ownerId, UserPortalConfigService service) throws Exception {
+       String pageId = node.getPageReference();
+@@ -345,30 +415,9 @@
+       child.setUri(newUri) ;
+       List<PageNode> children = child.getChildren() ;
+       if(children != null) for(PageNode node : children) setNewUri(child, node) ; 
+-    }
+-    
+-    private boolean isExistChild(PageNode parent, PageNode child) {
+-      if(parent == null) return false;
+-      List<PageNode> nodes = parent.getChildren();
+-      if(nodes == null) {
+-        parent.setChildren(new ArrayList<PageNode>());
+-        return false;
+-      }
+-      for (PageNode node: nodes) {
+-        if(node.getName().equals(child.getName())) return true;
+-      }
+-      return false;
+-    }
+-    
+-    private boolean isExitChild(PageNavigation nav, PageNode child) {
+-      List<PageNode> nodes = nav.getNodes();
+-      if(nodes.size() == 0) return false;
+-      for(PageNode node : nodes){
+-        if(node.getName().equals(child.getName())) return true;
+-      }
+-      return false;
+-    }
+-  }
++    }    
++  }
++  
+   static public class MoveUpActionListener extends EventListener<UIRightClickPopupMenu> {
+     public void execute(Event<UIRightClickPopupMenu> event) throws Exception {      
+       moveNode(event, -1);
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties	(revision 65621)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties	(working copy)
+@@ -413,7 +413,6 @@
+ UIPageNodeSelector.msg.deleteNav=You can not delete this page navigation.
+ UIPageNodeSelector.msg.NoPageNavigation=You must create a navigation before you can use this function.
+ UIPageNodeSelector.msg.curentPage=Cannot delete this page: The page is used by an other program.
+-UIPageNodeSelector.msg.paste.sameName=This node name already exists.
+ UIPageNodeSelector.msg.paste.sameSrcAndDes=The source and the destination must be different.
+ UIPageNodeSelector.deleteNode=Are you sure you want to delete this navigation?
+ UIPageNodeSelector.deleteNavigation=Are you sure you want to delete this node?
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties	(revision 65621)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties	(working copy)
+@@ -414,7 +414,6 @@
+ UIPageNodeSelector.msg.deleteNav=Suppression de la navigation impossible !
+ UIPageNodeSelector.msg.NoPageNavigation=Vous devez créer la navigation avant de pouvoir utiliser cette fonction !
+ UIPageNodeSelector.msg.curentPage=Impossible de supprimer cette page : elle est actuellement utilisée par un autre programme !
+-UIPageNodeSelector.msg.paste.sameName=Un noeud du même nom existe déjà !
+ UIPageNodeSelector.msg.paste.sameSrcAndDes=La source et la destination sont identiques !
+ UIPageNodeSelector.deleteNode=Confirmez-vous la suppression de cette navigation ?
+ UIPageNodeSelector.deleteNavigation=Confirmez-vous la suppression de ce noeud ?
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_vi.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_vi.properties	(revision 65621)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_vi.properties	(working copy)
+@@ -412,7 +412,6 @@
+ UIPageNodeSelector.msg.deleteNav=Bạn không thể xóa navigation của trang này!
+ UIPageNodeSelector.msg.NoPageNavigation=Bạn phải khởi tạo Navigation trước khi dùng chức năng này!
+ UIPageNodeSelector.msg.curentPage=Bạn không thể xóa trang này: Trang này đang được dùng bởi ứng dụng khác!
+-UIPageNodeSelector.msg.paste.sameName=Tên của node đã tồn tại!
+ UIPageNodeSelector.msg.paste.sameSrcAndDes=Node đích và node nguồn trùng nhau!
+ UIPageNodeSelector.deleteNode=Bạn có chắc chắn muốn xóa Navigation này không?
+ UIPageNodeSelector.deleteNavigation=Bạn có chắc chắn muốn xóa node này không?

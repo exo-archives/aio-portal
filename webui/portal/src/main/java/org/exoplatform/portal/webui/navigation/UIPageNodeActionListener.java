@@ -282,16 +282,19 @@ public class UIPageNodeActionListener {
       PageNavigation targetNav = uiPageNodeSelector.getSelectedNavigation();
       PageNode targetNode = PageNavigationUtils.searchPageNodeByUri(targetNav, targetUri);
               
-      if(targetNode != null && newNode.getUri().equals(targetNode.getUri())) {
+      if(targetNode != null && newNode.getUri().equals(targetNode.getUri()) && selectedNode.isDeleteNode()) {
         UIApplication uiApp = Util.getPortalRequestContext().getUIApplication() ;
         uiApp.addMessage(new ApplicationMessage("UIPageNodeSelector.msg.paste.sameSrcAndDes", null)) ;
         return;
       }
       
-      if(isExistChild(targetNode, newNode) || (targetNode == null && isExitChild(targetNav, newNode))) {
-        UIApplication uiApp = Util.getPortalRequestContext().getUIApplication() ;
-        uiApp.addMessage(new ApplicationMessage("UIPageNodeSelector.msg.paste.sameName", null)) ;
-        return;
+//      if(isExistChild(targetNode, newNode) || (targetNode == null && isExitChild(targetNav, newNode))) {
+//        UIApplication uiApp = Util.getPortalRequestContext().getUIApplication() ;
+//        uiApp.addMessage(new ApplicationMessage("UIPageNodeSelector.msg.paste.sameName", null)) ;
+//        return;
+//      }
+      if(isSameParent(selectedNode, targetNode, targetNav) && selectedNode.isDeleteNode()) {
+         return;
       }
       if(selectedNode.isDeleteNode()) {
         if(selectedNode.getParentNode() != null) {
@@ -308,20 +311,87 @@ public class UIPageNodeActionListener {
                                      "CutNode", "CloneNode", "DeleteNode", "MoveUp", "MoveDown"});
        
       UserPortalConfigService service = uiPopupMenu.getApplicationComponent(UserPortalConfigService.class);
-      
-      setNewUri(targetNode, newNode);
+            
       if(selectedNode.isCloneNode()) {
           clonePageFromNode(newNode, targetNav.getOwnerType(), targetNav.getOwnerId(), service);
       }
       
       if(targetNode != null) {
+        newNode = processNodeName(newNode, targetNode.getChildren());
     	  targetNode.getChildren().add(newNode);
     	  uiPageNodeSelector.selectPageNodeByUri(targetNode.getUri());
       } else {
+        newNode = processNodeName(newNode, targetNav.getNodes()); 
     	  targetNav.addNode(newNode);
       }
+      setNewUri(targetNode, newNode);
     }
     
+    private boolean isSameParent(SelectedNode selectedNode, PageNode targetNode, PageNavigation targetNav) {
+      PageNode selectedParent = selectedNode.getParentNode();
+      return (selectedParent == null && targetNode == null && selectedNode.getPageNavigation().getOwner().equals(targetNav.getOwner())) ||
+      (selectedParent != null && targetNode != null && selectedParent.getName().equals(targetNode.getName()));
+    }
+
+    private String trimName(String name) {
+      int index = name.lastIndexOf("_");
+      if(index > -1) {
+        String postfix = name.substring(index + 1, name.length());
+        if (postfix.matches("\\d++"))
+          return name.substring(0, index);
+      }
+      return name;
+    }
+
+    private String trimLabel(String label) {
+      int index = label.lastIndexOf("[");
+      if(index > -1) return label.substring(0,index);
+      return label;
+    }
+
+    //    private int labelIndex(String label){
+    //      int index = label.lastIndexOf("[");
+    //      if (index > -1) {int i = java.lang.Integer.parseInt(label.substring(index,label.length())); 
+    //      System.out.println("index = "+i);
+    //      return i;
+    //      }
+    //      
+    //   return -1;
+    //    }
+
+    private PageNode processNodeName(PageNode node, List<PageNode> siblings) {
+      List<String> nodeNames = new ArrayList<String> () ;
+      int count = 1;
+      String trimed = trimName(node.getName());
+      for(PageNode ele : siblings) {
+        if(trimed.equals(trimName(ele.getName()))) {
+          nodeNames.add(ele.getName());
+          count++;
+        }      
+      }
+
+      if (!nodeNames.contains(node.getName())) {
+        return node;
+      }
+
+      boolean found=false;
+      StringBuilder name = new StringBuilder(trimed + "_0");  
+      for (int i = 1; i <= count ; i++) {
+
+        found = nodeNames.contains(name.replace(name.lastIndexOf("_") + 1, name.length(), String.valueOf(i)).toString());
+
+        if(!found ) {
+          count=i;
+          break;
+        }
+      }
+      if(found) count++;
+
+      node.setLabel(trimLabel(node.getResolvedLabel()) + "[" + count + "]");
+      node.setName(trimName(node.getName()) + "_" + count);
+      return node;
+    }
+
     private void clonePageFromNode(PageNode node, String ownerType,
                                    String ownerId, UserPortalConfigService service) throws Exception {
       String pageId = node.getPageReference();
@@ -345,30 +415,9 @@ public class UIPageNodeActionListener {
       child.setUri(newUri) ;
       List<PageNode> children = child.getChildren() ;
       if(children != null) for(PageNode node : children) setNewUri(child, node) ; 
-    }
-    
-    private boolean isExistChild(PageNode parent, PageNode child) {
-      if(parent == null) return false;
-      List<PageNode> nodes = parent.getChildren();
-      if(nodes == null) {
-        parent.setChildren(new ArrayList<PageNode>());
-        return false;
-      }
-      for (PageNode node: nodes) {
-        if(node.getName().equals(child.getName())) return true;
-      }
-      return false;
-    }
-    
-    private boolean isExitChild(PageNavigation nav, PageNode child) {
-      List<PageNode> nodes = nav.getNodes();
-      if(nodes.size() == 0) return false;
-      for(PageNode node : nodes){
-        if(node.getName().equals(child.getName())) return true;
-      }
-      return false;
-    }
+    }    
   }
+  
   static public class MoveUpActionListener extends EventListener<UIRightClickPopupMenu> {
     public void execute(Event<UIRightClickPopupMenu> event) throws Exception {      
       moveNode(event, -1);
