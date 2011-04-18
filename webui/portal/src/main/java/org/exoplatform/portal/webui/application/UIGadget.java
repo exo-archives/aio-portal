@@ -158,6 +158,13 @@ public class UIGadget extends UIComponent {
   public String getApplicationInstanceUniqueId() { return applicationInstanceUniqueId_ ;}
   
   /**
+   * Generate unique id
+   * Character "_" is used to make compliance W3C validation if this id is displayed on UI
+   * @return id
+   */
+  public String generateUniqueId() {return "_" + this.hashCode();}
+  
+  /**
    * Gets Properties of gadget application such as locationX, locationY in desktop page
    * @return all properties of gadget application
    * @see org.exoplatform.portal.config.model.Application

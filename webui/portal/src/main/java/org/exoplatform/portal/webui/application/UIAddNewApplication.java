@@ -99,7 +99,7 @@ public class UIAddNewApplication extends UIContainer {
 
         StringBuilder windowId = new StringBuilder(uiPage.getOwnerType());
         windowId.append('#').append(uiPage.getOwnerId());
-        windowId.append(":/").append(application.getApplicationGroup() + "/" + application.getApplicationName()).append('/').append(uiPortlet.hashCode());
+        windowId.append(":/").append(application.getApplicationGroup() + "/" + application.getApplicationName()).append('/').append(uiPortlet.generateUniqueId());
         uiPortlet.setWindowId(windowId.toString());
         uiPortlet.setPortletInPortal(false);
 
@@ -119,7 +119,7 @@ public class UIAddNewApplication extends UIContainer {
 //            null, null);
 //
 //        StringBuilder windowId = new StringBuilder(Util.getUIPortal().getOwner());
-//        windowId.append(":/").append(application.getApplicationGroup() + "/" + application.getApplicationName()).append('/').append(uiWidget.hashCode());
+//        windowId.append(":/").append(application.getApplicationGroup() + "/" + application.getApplicationName()).append('/').append(uiWidget.hashcode());
 //        uiWidget.setApplicationInstanceId(windowId.toString());
 //
 //        //Set Properties For Widget
@@ -135,9 +135,9 @@ public class UIAddNewApplication extends UIContainer {
         UIGadget uiGadget = uiPage.createUIComponent(event.getRequestContext(), UIGadget.class, null, null);
 
         StringBuilder windowId = new StringBuilder(Util.getUIPortal().getOwner());
-        windowId.append(":/").append(application.getApplicationGroup() + "/" + application.getApplicationName()).append('/').append(uiGadget.hashCode());
+        windowId.append(":/").append(application.getApplicationGroup() + "/" + application.getApplicationName()).append('/').append(uiGadget.generateUniqueId());
         uiGadget.setApplicationInstanceId(windowId.toString());
-        uiGadget.setId("_" + uiGadget.hashCode()) ;
+        uiGadget.setId(uiGadget.generateUniqueId()) ;
  
         //Set Properties For gadget
         int posX = (int) (Math.random() * 400);
@@ -182,9 +182,9 @@ public class UIAddNewApplication extends UIContainer {
         windowId.append("#").append(event.getRequestContext().getRemoteUser()) ;
         windowId.append(":/").append(application.getApplicationGroup() + "/" + application.getApplicationName()).append('/');
         UIGadget uiGadget = uiWidgetContainer.createUIComponent(event.getRequestContext(), UIGadget.class, null, null);
-        windowId.append(uiGadget.hashCode());
+        windowId.append(uiGadget.generateUniqueId());
         uiGadget.setApplicationInstanceId(windowId.toString());
-        uiGadget.setId("_" + uiGadget.hashCode()) ;
+        uiGadget.setId(uiGadget.generateUniqueId()) ;
         uiWidgetContainer.addChild(uiGadget);
   
         UIGadgets uiGadgets = uiWidgetContainer.getAncestorOfType(UIGadgets.class);
@@ -259,7 +259,7 @@ public class UIAddNewApplication extends UIContainer {
         StringBuilder windowId = new StringBuilder(uiPage.getOwnerType());
         windowId.append('#').append(uiPage.getOwnerId());
         windowId.append(":/").append(application.getApplicationGroup() + "/" + application.getApplicationName()).append('/')
-          .append(uiPortlet.hashCode());
+          .append(uiPortlet.generateUniqueId());
         uiPortlet.setWindowId(windowId.toString());
         uiPortlet.setPortletInPortal(false);
         uiPortlet.getProperties().setProperty("appStatus", "HIDE");

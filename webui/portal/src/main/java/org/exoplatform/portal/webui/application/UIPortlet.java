@@ -99,6 +99,13 @@ public class UIPortlet extends UIApplication {
     exoWindowId_ = new ExoWindowID(windowId) ;
   }
   
+  /**
+   * Generate unique id
+   * Character "_" is used to make compliance W3C validation if this id is displayed on UI
+   * @return id
+   */
+  public String generateUniqueId() { return "_" + this.hashCode(); }
+  
   public String getDisplayName() {
     PortletContainerService pcServ = getApplicationComponent(PortletContainerService.class);
     PortletApp portletApp =  pcServ.getPortletApp(exoWindowId_.getPortletApplicationName());

@@ -217,7 +217,7 @@ public class UIPortalComponentActionListener {
           windowId.append('#').append(Util.getUIPortal().getOwner()).append(":/");
           uiPortlet.setPortletInPortal(uiTarget instanceof UIPortal) ;
           windowId.append(portlet.getApplicationGroup() + "/" + portlet.getApplicationName()).append('/');
-          windowId.append(uiPortlet.hashCode());
+          windowId.append(uiPortlet.generateUniqueId());
           uiPortlet.setWindowId(windowId.toString());
           uiPortlet.setShowEditControl(true);
           uiSource = uiPortlet;

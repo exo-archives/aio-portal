@@ -406,7 +406,7 @@ public class UIPortalApplication extends UIApplication {
             log.debug("AJAX call: Need to refresh the Portlet " + uiPortlet.getWindowId());
 
           w.write("<div class=\"PortletResponse\" style=\"display: none\">") ;
-          w.  append("<div class=\"PortletResponsePortletId\">" + uiPortlet.getExoWindowID().getUniqueID()+"</div>") ;
+          w.  append("<div class=\"PortletResponsePortletId\">" + uiPortlet.getId() +"</div>") ;
           w.  append("<div class=\"PortletResponsePortletTitle\"></div>") ;
           w.  append("<div class=\"PortletResponsePortletMode\"></div>") ;
           w.  append("<div class=\"PortletResponsePortletState\"></div>") ;

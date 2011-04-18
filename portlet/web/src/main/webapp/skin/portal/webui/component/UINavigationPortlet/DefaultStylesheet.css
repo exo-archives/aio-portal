@@ -4,20 +4,19 @@
  * April 23, 2007
  * version: $Id$
  */
-#toolbar {
-	background: url('DefaultSkin/background/Navigation.gif') repeat-x 1px center;
-	border-top: 1px solid white;
-	line-height: 33px;
-}
-
 *+html .UINavigationPortlet {
   position: relative;
+  background: url('DefaultSkin/background/Navigation.gif') repeat-x 1px center;
+  border-top: 1px solid white;
+  line-height: 33px;
 }
 
 * html .UINavigationPortlet {
   position: relative;
+  background: url('DefaultSkin/background/Navigation.gif') repeat-x 1px center;
+  border-top: 1px solid white;
+  line-height: 33px;
 }
-
 
 .UINavigationPortlet .UINavigationBar {
   white-space: nowrap;
