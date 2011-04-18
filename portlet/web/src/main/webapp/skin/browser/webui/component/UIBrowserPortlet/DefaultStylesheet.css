@@ -146,7 +146,10 @@
 	margin: 1px 108px 0px 9px; /* orientation=lt */
 	margin: 1px 9px 0px 108px; /* orientation=rt */
 	border: inset 1px gray;
-	_padding-right: 32px; /* orientation=rt */
+}
+
+* html .UIBrowserPortlet .AddressBarContainer {
+	padding-right: 32px; /* orientation=rt */
 }
 
 .UIBrowserPortlet .ArrowDownButton {
@@ -197,9 +200,6 @@
 
 .UIBrowserPortlet .ActiveTabDetailBackground {
 	background: url("DefaultSkin/background/UIBrowserPortlet.gif") repeat-x center -96px;
-}
-
-.UIBrowserPortlet .TabDetailBackground {
 }
 
 .UIBrowserPortlet .TabLabel {

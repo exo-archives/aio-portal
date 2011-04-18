@@ -1,7 +1,9 @@
 .UITabContainer {
 	padding: 7px;
-	_padding: 0px; /* orientation=rt */
-	_width: 99%; /* orientation=rt */
+}
+* html .UITabContainer {
+	padding: 0px; /* orientation=rt */
+	width: 99%; /* orientation=rt */
 }
 
 .UITabContainer .UIHorizontalTabs {
@@ -45,7 +47,10 @@
 .UITabContainer .EditIcon {
 	float: left; /* orientation=lt */
 	float: right; /* orientation=rt */
-	_float: none;
+}
+
+* html .UITabContainer .EditIcon {
+	float: none;
 }
 
 .UITabContainer .SelectedTab .EditIcon {

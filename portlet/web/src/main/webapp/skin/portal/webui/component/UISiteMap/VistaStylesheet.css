@@ -94,10 +94,6 @@
 	border: none;
 }
 
-.UISitemap .SitemapItemBox .Item {
-	 border: 1px #c1c1c1 #ffffff;
-}
-
 .UISitemap .SitemapItemBox .Item .SubItem {
   border: solid 1px #474747;
   padding: 10px;

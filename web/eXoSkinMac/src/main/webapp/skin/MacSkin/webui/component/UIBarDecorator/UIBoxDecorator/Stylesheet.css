@@ -159,7 +159,7 @@
 
 .DecoratorBox .ViewBoxStyle .BottomCenterViewBoxStyle {
 	height: 8px;
-	background: url('/eXoResources/skin/DefaultSkin/webui/component/UIBarDecorator/UIBoxDecorator/background/ViewBoxStyle.gif')repet-x left -16px;
+	background: url('/eXoResources/skin/DefaultSkin/webui/component/UIBarDecorator/UIBoxDecorator/background/ViewBoxStyle.gif')repeat-x left -16px;
 }
 
 .DecoratorBox .ViewBoxStyle .BottomRightViewBoxStyle {

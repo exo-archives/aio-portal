@@ -10,15 +10,15 @@
 	min-height: 0;
 }
 
-*html .UIFormTabPane .UIIFramePortlet {
+* html .UIFormTabPane .UIIFramePortlet {
   height: auto;
 }
 
-*html .UIIFramePortlet {
+* html .UIIFramePortlet {
 	height: 400px;
 }
 
-*html .UIPageDesktop .UIIFramePortlet {
+* html .UIPageDesktop .UIIFramePortlet {
 	height: auto;
 }
 

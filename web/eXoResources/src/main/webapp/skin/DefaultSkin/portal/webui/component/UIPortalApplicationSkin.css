@@ -31,6 +31,14 @@ html {
 	margin: 0px ; padding: 0px;
 }
 
+*+html {
+	overflow-x: hidden;
+}
+
+* html {
+	overflow-x: hidden;
+}
+
 body {
 	background: #ebedf2;
 	margin: 0px ; padding: 0px;
@@ -131,8 +139,13 @@ a {
  visibility: hidden;
 }
 
-.ClearFix {
- !display: inline-block;
- !zoom: 1;
- !display: block; 
+*+html .ClearFix {
+ display: inline-block;
+ zoom: 1;
+ display: block; 
+}
+* html .ClearFix {
+ display: inline-block;
+ zoom: 1;
+ display: block; 
 }

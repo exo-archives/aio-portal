@@ -28,9 +28,17 @@ form {
 	padding:	0px ; margin: 0px ;
 }
 
+
 html {
 	margin: 0px ; padding: 0px;
-	*overflow-x: hidden;
+}
+
+*+html {
+	overflow-x: hidden;
+}
+
+* html {
+	overflow-x: hidden;
 }
 
 body {
@@ -140,8 +148,14 @@ a {
  visibility: hidden;
 }
 
-.ClearFix {
- !display: inline-block;
- !zoom: 1;
- !display: block; 
+*+html .ClearFix {
+ display: inline-block;
+ zoom: 1;
+ display: block; 
+}
+
+* html .ClearFix {
+ display: inline-block;
+ zoom: 1;
+ display: block; 
 }

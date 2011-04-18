@@ -1,5 +1,9 @@
-.UINavigationPortlet {
-  !position: relative;
+* html .UINavigationPortlet {
+  position: relative;
+}
+
+*+html .UINavigationPortlet {
+  position: relative;
 }
 
 .UINavigationPortlet .UINavigationBar {
@@ -12,13 +16,24 @@
 
 .UINavigationPortlet .UINavigationBar .UIHorizontalTabs .TabsContainer {
   float: none;
-  _position: relative; /* orientation=rt */
-} 
+}
+
+* html .UINavigationPortlet .UINavigationBar .UIHorizontalTabs .TabsContainer {
+  position: relative; /* orientation=rt */
+}
+
 .UINavigationPortlet .UINavigationBar .MiddleNavigationBar {
   line-height: 36px;
   background: url('VistaSkin/background/NavigationPortlet.png') repeat-x top;
   border-top: 1px solid white;
-	!background-position: center 1px;
+}
+
+* html .UINavigationPortlet .UINavigationBar .MiddleNavigationBar {
+	background-position: center 1px;
+}
+
+*+html .UINavigationPortlet .UINavigationBar .MiddleNavigationBar {
+	background-position: center 1px;
 }
 
 .UINavigationPortlet .MiddleTab .TabLabel {

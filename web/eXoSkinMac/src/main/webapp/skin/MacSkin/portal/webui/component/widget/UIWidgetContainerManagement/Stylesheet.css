@@ -185,9 +185,16 @@
 	font-size: 12px;
 }
 
-.UIWidgetContainerManagement .WidgetContainerView .Detail .InfoContent .FieldComponent {
+*+html .UIWidgetContainerManagement .WidgetContainerView .Detail .InfoContent .FieldComponent {
 	/*modified by tan.pham.dinh
 	 * to break long string (container description) in widget containers management in IE6+
 	 */
-	*word-wrap: break-word;	
+	word-wrap: break-word;	
+}
+
+* html .UIWidgetContainerManagement .WidgetContainerView .Detail .InfoContent .FieldComponent {
+	/*modified by tan.pham.dinh 
+	 * to break long string (container description) in widget containers management in IE6+
+	 */
+	word-wrap: break-word;	
 }

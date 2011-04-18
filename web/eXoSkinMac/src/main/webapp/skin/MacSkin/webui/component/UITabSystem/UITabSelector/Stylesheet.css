@@ -138,12 +138,12 @@
 	padding: 10px;
 }
 
-.UIAccessGroup .UIAccessGroup .PublicCheck input.checkbox {
-	_margin: 0px;
+* html .UIAccessGroup .UIAccessGroup .PublicCheck input.checkbox {
+	margin: 0px;
 }
 
-.UIAccessGroup .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent {
-	_padding: 0px;
+* html  .UIAccessGroup .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent {
+	padding: 0px;
 }
 
 .UIAccessGroup .UIGrid {

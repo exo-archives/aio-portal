@@ -160,12 +160,17 @@
 
 .UIOrganizationPortlet .UISearch .UISearchForm .QuickSet {
 	width: auto;
-	_width: 450px; /* orientation=rt */
+}
+
+
+* html .UIOrganizationPortlet .UISearch .UISearchForm .QuickSet {
+	width: 450px; /* orientation=rt */
 }
 
 .UIOrganizationPortlet .UIUserManagement a.Refresh16x16Icon { 
 	float: right;
-	width: 20px; height: 20px;
+	width: 20px;
+	height: 20px;
 	margin: 10px ;
 }
 

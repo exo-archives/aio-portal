@@ -18,8 +18,11 @@
 	background: #e0e5f7 url('/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIWidgets/background/WidgetDragArea2x2.gif') repeat scroll;
 	padding-top: 12px;
 	cursor: move;
-	_height: 100%;
 	-moz-user-select: none;
+}
+
+* html .BlockCalendar {
+	height: 100%;
 }
 
 .UICalendar {
@@ -29,7 +32,10 @@
   font: normal 12px verdana;
 	text-align: center;
 	cursor: default;
-	_height: 100%;
+}
+
+* html .UICalendar  {
+	height: 100%;
 }
 
 .UICalendar table {

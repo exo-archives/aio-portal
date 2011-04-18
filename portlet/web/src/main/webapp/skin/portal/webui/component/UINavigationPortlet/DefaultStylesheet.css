@@ -10,9 +10,14 @@
 	line-height: 33px;
 }
 
-.UINavigationPortlet {
-  !position: relative;
+*+html .UINavigationPortlet {
+  position: relative;
 }
+
+* html .UINavigationPortlet {
+  position: relative;
+}
+
 
 .UINavigationPortlet .UINavigationBar {
   white-space: nowrap;
@@ -22,10 +27,18 @@
   height: 33px;
 }
 
+*+html .UINavigationPortlet .UINavigationBar .UIHorizontalTabs {
+  height: 34px;
+}
+
 .UINavigationPortlet .UINavigationBar .UIHorizontalTabs .TabsContainer {
   float: none;
-  _position: relative; /* orientation=rt */
 }
+
+* html  .UINavigationPortlet .UINavigationBar .UIHorizontalTabs .TabsContainer {
+ position: relative; /* orientation=rt */
+}
+
 
 .UINavigationPortlet .UINavigationBar .LeftNavigationBar {
   padding-left: 3px; /* orientation=lt */

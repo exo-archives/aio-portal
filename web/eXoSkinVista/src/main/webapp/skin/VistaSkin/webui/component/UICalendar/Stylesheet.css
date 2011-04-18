@@ -18,20 +18,26 @@
 	background: #e0e5f7 url('/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIWidgets/background/WidgetDragArea2x2.gif') repeat scroll;
 	padding-top: 12px;
 	cursor: move;
-	_height: 100%;
 	-moz-user-select: none;
+}
+
+* html .BlockCalendar {
+	height: 100%;
 }
 
 .UICalendar {
   border: 1px solid #ccced7;
-  background: #e0e5f7 url('/eXoResources/skin/DefaultSkin/webui/component/UICalendar/background/CalendarDecorator.gif') repeat-x left -122px;;
+  background: #e0e5f7 url('/eXoResources/skin/DefaultSkin/webui/component/UICalendar/background/CalendarDecorator.gif') repeat-x left -122px;
   padding: 7px 5px;
   font: normal 12px verdana;
 	text-align: center;
 	cursor: default;
-	_height: 100%;
+
 }
 
+* html .UICalendar  {
+	height: 100%;
+}
 .UICalendar table {
   border-collapse: collapse;
   table-layout: fixed;

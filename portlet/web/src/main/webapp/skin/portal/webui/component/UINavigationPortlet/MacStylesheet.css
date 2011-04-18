@@ -1,5 +1,9 @@
-.UINavigationPortlet {
-	!position: relative;
+*+html .UINavigationPortlet {
+	position: relative;
+}
+
+* html .UINavigationPortlet {
+	position: relative;
 }
 
 .UINavigationPortlet .UINavigationBar {
@@ -11,8 +15,16 @@
 	border-top: 1px solid white;
 	padding-left: 8px; /* orientation=lt */
 	padding-right: 8px; /* orientation=rt */
-	!background-position: center 1px;
 }
+
+*+html .UINavigationPortlet .UINavigationBar .MiddleNavigationBar {
+	background-position: center 1px;
+}
+
+* html .UINavigationPortlet .UINavigationBar .MiddleNavigationBar {
+	background-position: center 1px;
+}
+
 
 .UINavigationPortlet .UINavigationBar .UIHorizontalTabs	{
 	height: 42px;
@@ -20,7 +32,10 @@
 
 .UINavigationPortlet .UIHorizontalTabs .TabsContainer {
 	float: none;
-	_position: relative; /* orientation=rt */
+}
+
+* html .UINavigationPortlet .UIHorizontalTabs .TabsContainer {
+	position: relative; /* orientation=rt */
 }
  
 .UINavigationPortlet .MiddleTab .TabLabel {

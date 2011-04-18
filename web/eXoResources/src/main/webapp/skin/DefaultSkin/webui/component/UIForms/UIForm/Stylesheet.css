@@ -19,7 +19,14 @@
 
 .UIForm .UIFormGrid td.FieldComponent {
 	padding: 4px;
-	*padding: 2px 0px 4px 4px;
+}
+
+*+html .UIForm .UIFormGrid td.FieldComponent {
+	padding: 2px 0px 4px 4px;
+}
+
+* html .UIForm .UIFormGrid td.FieldComponent {
+	padding: 2px 0px 4px 4px;
 }
 
 .UIForm .HorizontalLayout .MultiValueContainer {
@@ -177,5 +184,14 @@
 
 .UIPermissionForm .UIForm .UIAccessGroup .UIFormGrid td.FieldComponent {
 	padding: 4px;
-	*padding: 2px 0px 4px 4px;
 }
+
+
+*+html .UIPermissionForm .UIForm .UIAccessGroup .UIFormGrid td.FieldComponent {
+	padding: 2px 0px 4px 4px;
+}
+
+* html .UIPermissionForm .UIForm .UIAccessGroup .UIFormGrid td.FieldComponent {
+	padding: 2px 0px 4px 4px;
+}
+

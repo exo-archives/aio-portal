@@ -47,7 +47,7 @@
 
 .UIGadget .GadgetControl .IconControl {
 	background-image: url('background/Gadget.png');
-	background-position: no-repeat;
+	background-repeat: no-repeat;
 	float: right; /* orientation=lt */
 	float: left; /* orientation=rt */
 	height: 13px;

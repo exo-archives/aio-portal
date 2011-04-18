@@ -336,7 +336,10 @@
 
 .UIOrganizationPortlet .UIGroupInfo .UIGroupMembershipForm .SearchIcon { 
 	margin-top: 3px;
-	_height: 23px;
+}
+
+* html .UIOrganizationPortlet .UIGroupInfo .UIGroupMembershipForm .SearchIcon { 
+	height: 23px;
 }
 
 .UIOrganizationPortlet .UIGroupInfo .UIGroupMembershipForm .Refresh16x16Icon {

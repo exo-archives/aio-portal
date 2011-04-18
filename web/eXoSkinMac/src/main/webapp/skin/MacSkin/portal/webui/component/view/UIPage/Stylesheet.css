@@ -9,17 +9,23 @@
   background: url('background/PageLayout-rt.png') no-repeat right top; /* orientation=rt */
   padding: 0px 0px 0px 142px; /* orientation=lt */
   padding: 0px 142px 0px 0px; /* orientation=rt */
-  _padding: 0px 0px 0px 139px; /* orientation=lt */
-  _padding: 0px 139px 0px 0px; /* orientation=rt */
 }
-		
+
+* html  .UIPageBody .PageLayoutDecorator .TopLeftPage{
+  padding: 0px 0px 0px 139px; /* orientation=lt */
+  padding: 0px 139px 0px 0px; /* orientation=rt */
+}
+	
 .UIPageBody .PageLayoutDecorator .TopRightPage {
 	background: url('background/PageLayout.png') no-repeat right -114px; /* orientation=lt */
 	background: url('background/PageLayout-rt.png') no-repeat left -114px; /* orientation=rt */
 	padding: 0px 72px 0px 0px;	/* orientation=lt */
 	padding: 0px 0px 0px 72px; /* orientation=rt */
-	_padding: 0px 71px 0px 0px;	/* orientation=lt */
-	_padding: 0px 0px 0px 71px; /* orientation=rt */
+}
+
+* html {
+	padding: 0px 71px 0px 0px;	/* orientation=lt */
+	padding: 0px 0px 0px 71px; /* orientation=rt */
 }
 
 .UIPageBody .PageLayoutDecorator .TopCenterPage {

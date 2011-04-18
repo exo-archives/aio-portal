@@ -335,7 +335,7 @@
   cursor: pointer;
   padding: 3px 8px 3px 4px; /* orientation=lt */
   padding: 3px 4px 3px 8px; /* orientation=rt */
-  color: grey; 
+  color: gray; 
   font-size: 12px; 
   font-weight: normal;
 }

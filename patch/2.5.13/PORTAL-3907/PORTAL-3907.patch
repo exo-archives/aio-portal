@@ -1,0 +1,1639 @@
+Index: portlet/exoadmin/src/main/webapp/skin/organization/webui/component/UIOrganizationPortlet/MacStylesheet.css
+===================================================================
+--- portlet/exoadmin/src/main/webapp/skin/organization/webui/component/UIOrganizationPortlet/MacStylesheet.css	(revision 66669)
++++ portlet/exoadmin/src/main/webapp/skin/organization/webui/component/UIOrganizationPortlet/MacStylesheet.css	(working copy)
+@@ -336,9 +336,12 @@
+ 
+ .UIOrganizationPortlet .UIGroupInfo .UIGroupMembershipForm .SearchIcon { 
+ 	margin-top: 3px;
+-	_height: 23px;
+ }
+ 
++* html .UIOrganizationPortlet .UIGroupInfo .UIGroupMembershipForm .SearchIcon { 
++	height: 23px;
++}
++
+ .UIOrganizationPortlet .UIGroupInfo .UIGroupMembershipForm .Refresh16x16Icon {
+   height: 20px;
+ }
+Index: portlet/exoadmin/src/main/webapp/skin/organization/webui/component/UIOrganizationPortlet/DefaultStylesheet.css
+===================================================================
+--- portlet/exoadmin/src/main/webapp/skin/organization/webui/component/UIOrganizationPortlet/DefaultStylesheet.css	(revision 66669)
++++ portlet/exoadmin/src/main/webapp/skin/organization/webui/component/UIOrganizationPortlet/DefaultStylesheet.css	(working copy)
+@@ -160,12 +160,17 @@
+ 
+ .UIOrganizationPortlet .UISearch .UISearchForm .QuickSet {
+ 	width: auto;
+-	_width: 450px; /* orientation=rt */
+ }
+ 
++
++* html .UIOrganizationPortlet .UISearch .UISearchForm .QuickSet {
++	width: 450px; /* orientation=rt */
++}
++
+ .UIOrganizationPortlet .UIUserManagement a.Refresh16x16Icon { 
+ 	float: right;
+-	width: 20px; height: 20px;
++	width: 20px;
++	height: 20px;
+ 	margin: 10px ;
+ }
+ 
+Index: portlet/exoadmin/src/main/webapp/skin/applicationregistry/webui/component/UIApplicationRegistryPortlet/MacStylesheet.css
+===================================================================
+--- portlet/exoadmin/src/main/webapp/skin/applicationregistry/webui/component/UIApplicationRegistryPortlet/MacStylesheet.css	(revision 66669)
++++ portlet/exoadmin/src/main/webapp/skin/applicationregistry/webui/component/UIApplicationRegistryPortlet/MacStylesheet.css	(working copy)
+@@ -1,4 +1,4 @@
+-e/**
++/**
+  * Created by The eXo Platform SARL
+  * Modifile : Nguyen Ngoc Thuy
+  * May 8, 2007
+@@ -191,7 +191,7 @@
+ 	color: #058ee6;
+ }
+ 
+-*html .UIApplicationRegistryPortlet .UIVerticalSlideTabs .TabLabel:hover {
++* html .UIApplicationRegistryPortlet .UIVerticalSlideTabs .TabLabel:hover {
+ 	color: #058ee6;
+ }
+ 
+Index: portlet/exoadmin/src/main/webapp/skin/applicationregistry/webui/component/UIApplicationRegistryPortlet/DefaultStylesheet.css
+===================================================================
+--- portlet/exoadmin/src/main/webapp/skin/applicationregistry/webui/component/UIApplicationRegistryPortlet/DefaultStylesheet.css	(revision 66669)
++++ portlet/exoadmin/src/main/webapp/skin/applicationregistry/webui/component/UIApplicationRegistryPortlet/DefaultStylesheet.css	(working copy)
+@@ -171,7 +171,7 @@
+ 	float: left;		/* orientation=rt */
+ 	margin: 3px;
+ 	filter: alpha(opacity=30);
+-	-moz-opacity: 0.3;
++	opacity: 0.3;
+ }
+ 
+ .UIApplicationRegistryPortlet .ListItem .SelectedItem a.TabLabel {
+@@ -196,7 +196,7 @@
+ 	color: #058ee6;
+ }
+ 
+-*html .UIApplicationRegistryPortlet .UIVerticalSlideTabs .TabLabel:hover {
++* html .UIApplicationRegistryPortlet .UIVerticalSlideTabs .TabLabel:hover {
+ 	color: #058ee6;
+ }
+ 
+@@ -226,7 +226,7 @@
+ 	float: right;		/* orientation=lt */
+ 	float: left;		/* orientation=rt */
+ 	filter: alpha(opacity=100);
+-	-moz-opacity: 1.0;
++	opacity: 1.0;
+ }
+ 
+ .UIApplicationRegistryPortlet .UIVerticalSlideTabs .UIVTabContent .ItemLabel {
+Index: portlet/web/src/main/webapp/skin/portal/webui/component/UISiteMap/VistaStylesheet.css
+===================================================================
+--- portlet/web/src/main/webapp/skin/portal/webui/component/UISiteMap/VistaStylesheet.css	(revision 66669)
++++ portlet/web/src/main/webapp/skin/portal/webui/component/UISiteMap/VistaStylesheet.css	(working copy)
+@@ -94,10 +94,6 @@
+ 	border: none;
+ }
+ 
+-.UISitemap .SitemapItemBox .Item {
+-	 border: 1px #c1c1c1 #ffffff;
+-}
+-
+ .UISitemap .SitemapItemBox .Item .SubItem {
+   border: solid 1px #474747;
+   padding: 10px;
+Index: portlet/web/src/main/webapp/skin/portal/webui/component/UINavigationPortlet/MacStylesheet.css
+===================================================================
+--- portlet/web/src/main/webapp/skin/portal/webui/component/UINavigationPortlet/MacStylesheet.css	(revision 66669)
++++ portlet/web/src/main/webapp/skin/portal/webui/component/UINavigationPortlet/MacStylesheet.css	(working copy)
+@@ -1,7 +1,11 @@
+-.UINavigationPortlet {
+-	!position: relative;
++*+html .UINavigationPortlet {
++	position: relative;
+ }
+ 
++* html .UINavigationPortlet {
++	position: relative;
++}
++
+ .UINavigationPortlet .UINavigationBar {
+ 	white-space: nowrap;
+ }
+@@ -11,17 +15,28 @@
+ 	border-top: 1px solid white;
+ 	padding-left: 8px; /* orientation=lt */
+ 	padding-right: 8px; /* orientation=rt */
+-	!background-position: center 1px;
+ }
+ 
++*+html .UINavigationPortlet .UINavigationBar .MiddleNavigationBar {
++	background-position: center 1px;
++}
++
++* html .UINavigationPortlet .UINavigationBar .MiddleNavigationBar {
++	background-position: center 1px;
++}
++
++
+ .UINavigationPortlet .UINavigationBar .UIHorizontalTabs	{
+ 	height: 42px;
+ }
+ 
+ .UINavigationPortlet .UIHorizontalTabs .TabsContainer {
+ 	float: none;
+-	_position: relative; /* orientation=rt */
+ }
++
++* html .UINavigationPortlet .UIHorizontalTabs .TabsContainer {
++	position: relative; /* orientation=rt */
++}
+  
+ .UINavigationPortlet .MiddleTab .TabLabel {
+ 	padding: 0px 0px 0px 20px; /* orientation=lt */
+Index: portlet/web/src/main/webapp/skin/portal/webui/component/UINavigationPortlet/DefaultStylesheet.css
+===================================================================
+--- portlet/web/src/main/webapp/skin/portal/webui/component/UINavigationPortlet/DefaultStylesheet.css	(revision 66669)
++++ portlet/web/src/main/webapp/skin/portal/webui/component/UINavigationPortlet/DefaultStylesheet.css	(working copy)
+@@ -10,10 +10,15 @@
+ 	line-height: 33px;
+ }
+ 
+-.UINavigationPortlet {
+-  !position: relative;
++*+html .UINavigationPortlet {
++  position: relative;
+ }
+ 
++* html .UINavigationPortlet {
++  position: relative;
++}
++
++
+ .UINavigationPortlet .UINavigationBar {
+   white-space: nowrap;
+ }
+@@ -22,11 +27,19 @@
+   height: 33px;
+ }
+ 
++*+html .UINavigationPortlet .UINavigationBar .UIHorizontalTabs {
++  height: 34px;
++}
++
+ .UINavigationPortlet .UINavigationBar .UIHorizontalTabs .TabsContainer {
+   float: none;
+-  _position: relative; /* orientation=rt */
+ }
+ 
++* html  .UINavigationPortlet .UINavigationBar .UIHorizontalTabs .TabsContainer {
++ position: relative; /* orientation=rt */
++}
++
++
+ .UINavigationPortlet .UINavigationBar .LeftNavigationBar {
+   padding-left: 3px; /* orientation=lt */
+   padding-right: 3px; /* orientation=rt */
+Index: portlet/web/src/main/webapp/skin/portal/webui/component/UINavigationPortlet/VistaStylesheet.css
+===================================================================
+--- portlet/web/src/main/webapp/skin/portal/webui/component/UINavigationPortlet/VistaStylesheet.css	(revision 66669)
++++ portlet/web/src/main/webapp/skin/portal/webui/component/UINavigationPortlet/VistaStylesheet.css	(working copy)
+@@ -1,7 +1,11 @@
+-.UINavigationPortlet {
+-  !position: relative;
++* html .UINavigationPortlet {
++  position: relative;
+ }
+ 
++*+html .UINavigationPortlet {
++  position: relative;
++}
++
+ .UINavigationPortlet .UINavigationBar {
+   white-space: nowrap;
+ }
+@@ -12,15 +16,26 @@
+ 
+ .UINavigationPortlet .UINavigationBar .UIHorizontalTabs .TabsContainer {
+   float: none;
+-  _position: relative; /* orientation=rt */
+-} 
++}
++
++* html .UINavigationPortlet .UINavigationBar .UIHorizontalTabs .TabsContainer {
++  position: relative; /* orientation=rt */
++}
++
+ .UINavigationPortlet .UINavigationBar .MiddleNavigationBar {
+   line-height: 36px;
+   background: url('VistaSkin/background/NavigationPortlet.png') repeat-x top;
+   border-top: 1px solid white;
+-	!background-position: center 1px;
+ }
+ 
++* html .UINavigationPortlet .UINavigationBar .MiddleNavigationBar {
++	background-position: center 1px;
++}
++
++*+html .UINavigationPortlet .UINavigationBar .MiddleNavigationBar {
++	background-position: center 1px;
++}
++
+ .UINavigationPortlet .MiddleTab .TabLabel {
+ 	padding: 0px 0px 0px 20px ; /* orientation=lt */
+ 	padding: 0px 20px 0px 0px ; /* orientation=rt */
+Index: portlet/web/src/main/webapp/skin/portal/webui/component/UIIFramePortlet/DefaultStylesheet.css
+===================================================================
+--- portlet/web/src/main/webapp/skin/portal/webui/component/UIIFramePortlet/DefaultStylesheet.css	(revision 66669)
++++ portlet/web/src/main/webapp/skin/portal/webui/component/UIIFramePortlet/DefaultStylesheet.css	(working copy)
+@@ -10,15 +10,15 @@
+ 	min-height: 0;
+ }
+ 
+-*html .UIFormTabPane .UIIFramePortlet {
++* html .UIFormTabPane .UIIFramePortlet {
+   height: auto;
+ }
+ 
+-*html .UIIFramePortlet {
++* html .UIIFramePortlet {
+ 	height: 400px;
+ }
+ 
+-*html .UIPageDesktop .UIIFramePortlet {
++* html .UIPageDesktop .UIIFramePortlet {
+ 	height: auto;
+ }
+ 
+Index: portlet/web/src/main/webapp/skin/browser/webui/component/UIBrowserPortlet/DefaultStylesheet.css
+===================================================================
+--- portlet/web/src/main/webapp/skin/browser/webui/component/UIBrowserPortlet/DefaultStylesheet.css	(revision 66669)
++++ portlet/web/src/main/webapp/skin/browser/webui/component/UIBrowserPortlet/DefaultStylesheet.css	(working copy)
+@@ -146,9 +146,12 @@
+ 	margin: 1px 108px 0px 9px; /* orientation=lt */
+ 	margin: 1px 9px 0px 108px; /* orientation=rt */
+ 	border: inset 1px gray;
+-	_padding-right: 32px; /* orientation=rt */
+ }
+ 
++* html .UIBrowserPortlet .AddressBarContainer {
++	padding-right: 32px; /* orientation=rt */
++}
++
+ .UIBrowserPortlet .ArrowDownButton {
+ 	float: right; /* orientation=lt */
+ 	float: left; /* orientation=rt */
+@@ -199,9 +202,6 @@
+ 	background: url("DefaultSkin/background/UIBrowserPortlet.gif") repeat-x center -96px;
+ }
+ 
+-.UIBrowserPortlet .TabDetailBackground {
+-}
+-
+ .UIBrowserPortlet .TabLabel {
+ 	line-height: 18px;
+ 	background: url("DefaultSkin/background/UIBrowserPortlet.gif") no-repeat left -193px;	/* orientation=lt */
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/UIPortalApplicationSkin.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/UIPortalApplicationSkin.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/UIPortalApplicationSkin.css	(working copy)
+@@ -28,11 +28,19 @@
+ 	padding:	0px ; margin: 0px ;
+ }
+ 
++
+ html {
+ 	margin: 0px ; padding: 0px;
+-	*overflow-x: hidden;
+ }
+ 
++*+html {
++	overflow-x: hidden;
++}
++
++* html {
++	overflow-x: hidden;
++}
++
+ body {
+ 	background: white ;
+ 	font-family: "Tahoma",Geneva,Arial,Verdana,sans-serif;
+@@ -140,8 +148,14 @@
+  visibility: hidden;
+ }
+ 
+-.ClearFix {
+- !display: inline-block;
+- !zoom: 1;
+- !display: block; 
++*+html .ClearFix {
++ display: inline-block;
++ zoom: 1;
++ display: block; 
++}
++
++* html .ClearFix {
++ display: inline-block;
++ zoom: 1;
++ display: block; 
+ }
+\ No newline at end of file
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/widget/UIWidgetContainerManagement/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/widget/UIWidgetContainerManagement/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/widget/UIWidgetContainerManagement/Stylesheet.css	(working copy)
+@@ -185,9 +185,16 @@
+ 	font-size: 12px;
+ }
+ 
+-.UIWidgetContainerManagement .WidgetContainerView .Detail .InfoContent .FieldComponent {
++*+html .UIWidgetContainerManagement .WidgetContainerView .Detail .InfoContent .FieldComponent {
+ 	/*modified by tan.pham.dinh
+ 	 * to break long string (container description) in widget containers management in IE6+
+ 	 */
+-	*word-wrap: break-word;	
++	word-wrap: break-word;	
++}
++
++* html .UIWidgetContainerManagement .WidgetContainerView .Detail .InfoContent .FieldComponent {
++	/*modified by tan.pham.dinh 
++	 * to break long string (container description) in widget containers management in IE6+
++	 */
++	word-wrap: break-word;	
+ }
+\ No newline at end of file
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/widget/UIWelcomeComponent/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/widget/UIWelcomeComponent/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/widget/UIWelcomeComponent/Stylesheet.css	(working copy)
+@@ -5,8 +5,8 @@
+   margin: 6px 2px;
+ }
+ 
+-.UIWelcomeComponent .ItemSelectorContainer .UIDropDownControl {
+-	_position: static; /* orientation=rt */
++* html .UIWelcomeComponent .ItemSelectorContainer .UIDropDownControl {
++	position: static; /* orientation=rt */
+ }
+ 
+ .UIWelcomeComponent .WelcomeMessage {
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/customization/UIPortletOptions/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/customization/UIPortletOptions/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/customization/UIPortletOptions/Stylesheet.css	(working copy)
+@@ -38,9 +38,12 @@
+ .UIPortletOptions .CategoryContainer {
+ 	background: white;
+ 	padding: 5px 7px 9px 7px;
+-	_width: 205px; /* orientation=rt */
+ }
+ 
++* html .UIPortletOptions .CategoryContainer {
++	width: 205px; /* orientation=rt */
++}
++
+ .UIPortletOptions .Title {
+ 	background: url('background/TitleBG1x25.png') repeat-x;
+ 	height: 25px;
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/customization/UIPageManagement/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/customization/UIPageManagement/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/customization/UIPageManagement/Stylesheet.css	(working copy)
+@@ -10,6 +10,6 @@
+   padding: 0px 5px;
+ }
+ 
+-.UIPageManagement .UIVerticalSlideTabs .TreeContainer {
+-	_width: 92%; 
+-}
+\ No newline at end of file
++* html .UIPageManagement .UIVerticalSlideTabs .TreeContainer {
++	width: 92%; 
++}
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/customization/UIPageSelector/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/customization/UIPageSelector/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/customization/UIPageSelector/Stylesheet.css	(working copy)
+@@ -84,6 +84,6 @@
+ }
+ 
+ .UIPageSelector .FloatBlockHidden {
+-	filter:alpha(opacity=30);-moz-opacity:.30;opacity:.30;
++	filter:alpha(opacity=30);opacity:0.30;
+ 	cursor: default;
+ }
+\ No newline at end of file
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/customization/UIPortalToolPanel/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/customization/UIPortalToolPanel/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/customization/UIPortalToolPanel/Stylesheet.css	(working copy)
+@@ -6,15 +6,18 @@
+  * version: $Id$
+  */
+ 
+-.UIPortalToolPanel {
+-	_height: 100%; /* orientation=rt */
++* html .UIPortalToolPanel {
++	height: 100%; /* orientation=rt */
+ }
+ 
+ .UIPortalToolPanel .Body {
+ 	padding: 1px;
+-  _height: 100%;
+ }
+ 
++* html .UIPortalToolPanel .Body {
++	height: 100%;
++}
++
+ .UIPortalToolPanel .Body .UIPage {
+ }
+ 
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css	(working copy)
+@@ -206,9 +206,11 @@
+ 	background: url('background/PortalBackground1x1.png');
+ 	border: solid 1px white;
+ 	padding: 6px;
+-	_padding: 6px 0px; /* orientation=rt */
+-  _width: 99%; /* orientation=rt */
+ }
++* html .UIPortal .LAYOUT-PORTAL {
++	padding: 6px 0px; /* orientation=rt */
++	width: 99%; /* orientation=rt */
++}
+ 
+ .DragAndDropPreview {
+ 	width: auto; height: 80px;
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UIDashboard/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UIDashboard/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UIDashboard/Stylesheet.css	(working copy)
+@@ -103,7 +103,7 @@
+ 
+ .UIDashboardSelectContainer .DashboardItemContainer .DisableArrowIcon {
+ 	filter: alpha(opacity=30);
+-	-moz-opacity: 0.3;
++	opacity: 0.3;
+ }
+ 
+ .UIDashboardSelectContainer .DashboardItemContainer .MiddleItemContainer {
+@@ -244,7 +244,6 @@
+ .UIDashboardContainer .GadgetContainer {
+ 	overflow: auto;
+ 	height: 100%;
+-//	min-height: 400px;
+ }
+ 
+ /**html .UIDashboardContainer .GadgetContainer {
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UITabContainer/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UITabContainer/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UITabContainer/Stylesheet.css	(working copy)
+@@ -26,9 +26,13 @@
+ .UITabContainer .EditIcon {
+ 	float: left; /* orientation=lt */
+ 	float: right; /* orientation=rt */
+-	_float: none;
+ }
+ 
++* html .UITabContainer .EditIcon {
++	float: none;
++}
++
++
+ .UITabContainer .SelectedTab .EditIcon {
+ 	height: 24px;	width: 16px;
+ 	background: url('/eXoSkinMac/skin/MacSkin/skinIcons/16x16/icons/EditIcon.png') no-repeat center; /* orientation=lt */
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UIGadget/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UIGadget/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UIGadget/Stylesheet.css	(working copy)
+@@ -47,7 +47,7 @@
+ 
+ .UIGadget .GadgetControl .IconControl {
+ 	background-image: url('background/Gadget.png');
+-	background-position: no-repeat;
++	background-repeat: no-repeat;
+ 	float: right; /* orientation=lt */
+ 	float: left; /* orientation=rt */
+ 	height: 13px;
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UIPage/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UIPage/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UIPage/Stylesheet.css	(working copy)
+@@ -9,19 +9,25 @@
+   background: url('background/PageLayout-rt.png') no-repeat right top; /* orientation=rt */
+   padding: 0px 0px 0px 142px; /* orientation=lt */
+   padding: 0px 142px 0px 0px; /* orientation=rt */
+-  _padding: 0px 0px 0px 139px; /* orientation=lt */
+-  _padding: 0px 139px 0px 0px; /* orientation=rt */
+ }
+-		
++
++* html  .UIPageBody .PageLayoutDecorator .TopLeftPage{
++  padding: 0px 0px 0px 139px; /* orientation=lt */
++  padding: 0px 139px 0px 0px; /* orientation=rt */
++}
++	
+ .UIPageBody .PageLayoutDecorator .TopRightPage {
+ 	background: url('background/PageLayout.png') no-repeat right -114px; /* orientation=lt */
+ 	background: url('background/PageLayout-rt.png') no-repeat left -114px; /* orientation=rt */
+ 	padding: 0px 72px 0px 0px;	/* orientation=lt */
+ 	padding: 0px 0px 0px 72px; /* orientation=rt */
+-	_padding: 0px 71px 0px 0px;	/* orientation=lt */
+-	_padding: 0px 0px 0px 71px; /* orientation=rt */
+ }
+ 
++* html {
++	padding: 0px 71px 0px 0px;	/* orientation=lt */
++	padding: 0px 0px 0px 71px; /* orientation=rt */
++}
++
+ .UIPageBody .PageLayoutDecorator .TopCenterPage {
+ 	line-height: 110px; 
+ 	white-space: nowrap;
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIQuickHelp/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIQuickHelp/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIQuickHelp/Stylesheet.css	(working copy)
+@@ -9,14 +9,14 @@
+ 	padding-left: 7px; /* orientation=lt */
+ 	padding-left: 2px; /* orientation=rt */
+ 	background: url('background/QuickHelp.gif') no-repeat left top; /* orientation=lt */
+-	background: url('background/QuickHelp-rt.gif') no-repeat left top; 2px; /* orientation=rt */
++	/*background: url('background/QuickHelp-rt.gif') no-repeat left top; 2px;  orientation=rt */
+ }
+ 
+ .UIQuickHelp .TopBar .TopBarRight {
+ 	padding-right: 2px; /* orientation=lt */
+ 	padding-right: 7px; /* orientation=rt */
+ 	background: url('background/QuickHelp.gif') no-repeat right top; /* orientation=lt */
+-	background: url('background/QuickHelp-rt.gif') no-repeat right top; 2px; /* orientation=rt */
++	/* background: url('background/QuickHelp-rt.gif') no-repeat right top; 2px; orientation=rt */
+ }
+ 	
+ .UIQuickHelp .TopBar .TopBarMiddle {
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIForms/UIForm/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIForms/UIForm/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIForms/UIForm/Stylesheet.css	(working copy)
+@@ -26,9 +26,16 @@
+ 
+ .UIForm .UIFormGrid td.FieldComponent {
+   padding: 4px;
+-	*padding: 0px 0px 4px 4px;
+ }
+ 
++*+html .UIForm .UIFormGrid td.FieldComponent {
++	padding: 0px 0px 4px 4px;
++}
++
++* html .UIForm .UIFormGrid td.FieldComponent {
++	padding: 0px 0px 4px 4px;
++}
++
+ .UIForm .HorizontalLayout .MultiValueContainer {
+   margin-bottom: 5px;
+ }
+@@ -186,5 +193,12 @@
+ 
+ .UIPermissionForm .UIForm .UIAccessGroup .UIFormGrid td.FieldComponent {
+   padding: 5px 2px;
+-  *padding: 4px 0px 5px 4px;
++}
++
++*+html .UIPermissionForm .UIForm .UIAccessGroup .UIFormGrid td.FieldComponent {
++	padding: 4px 0px 5px 4px;
++}
++
++* html .UIPermissionForm .UIForm .UIAccessGroup .UIFormGrid td.FieldComponent {
++	padding: 4px 0px 5px 4px;
+ }
+\ No newline at end of file
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIToolbar/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIToolbar/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIToolbar/Stylesheet.css	(working copy)
+@@ -174,7 +174,7 @@
+ 
+ .UIToolbar .BlueLargeToolbar .SelectItemButton .LablelIcon {
+ 	filter: alpha(opacity=100);
+-	-moz-opacity: 1.0;
++	opacity: 1.0;
+ }
+ 
+ .UIToolbar .BlueLargeToolbar .SelectItemButton .ButtonLabel {
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIBarDecorator/UIBoxDecorator/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIBarDecorator/UIBoxDecorator/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIBarDecorator/UIBoxDecorator/Stylesheet.css	(working copy)
+@@ -159,7 +159,7 @@
+ 
+ .DecoratorBox .ViewBoxStyle .BottomCenterViewBoxStyle {
+ 	height: 8px;
+-	background: url('/eXoResources/skin/DefaultSkin/webui/component/UIBarDecorator/UIBoxDecorator/background/ViewBoxStyle.gif')repet-x left -16px;
++	background: url('/eXoResources/skin/DefaultSkin/webui/component/UIBarDecorator/UIBoxDecorator/background/ViewBoxStyle.gif')repeat-x left -16px;
+ }
+ 
+ .DecoratorBox .ViewBoxStyle .BottomRightViewBoxStyle {
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UICalendar/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UICalendar/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UICalendar/Stylesheet.css	(working copy)
+@@ -18,10 +18,13 @@
+ 	background: #e0e5f7 url('/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIWidgets/background/WidgetDragArea2x2.gif') repeat scroll;
+ 	padding-top: 12px;
+ 	cursor: move;
+-	_height: 100%;
+ 	-moz-user-select: none;
+ }
+ 
++* html .BlockCalendar { 
++	height: 100%;
++}
++
+ .UICalendar {
+   border: 1px solid #ccced7;
+   background: #e0e5f7 url('/eXoResources/skin/DefaultSkin/webui/component/UICalendar/background/CalendarDecorator.gif') repeat-x left -122px;;
+@@ -29,9 +32,12 @@
+   font: normal 12px verdana;
+ 	text-align: center;
+ 	cursor: default;
+-	_height: 100%;
+ }
+ 
++* html .UICalendar { 
++	height: 100%;
++}
++
+ .UICalendar table {
+   border-collapse: collapse;
+   table-layout: fixed;
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIMaskWorkspace/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIMaskWorkspace/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UIMaskWorkspace/Stylesheet.css	(working copy)
+@@ -26,10 +26,11 @@
+ 	overflow-x: hidden;
+ }
+ 
+-.UIMaskWorkspace .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent {
+-	_padding: 0px;
++* html .UIMaskWorkspace .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent {
++	padding: 0px;
+ }
+ 
++
+ .UIMaskWorkspace .IconLayout {
+ 	float: left; /* orientation=lt */
+ 	float: right; /* orientation=rt */
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UITabSystem/UITabSelector/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UITabSystem/UITabSelector/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UITabSystem/UITabSelector/Stylesheet.css	(working copy)
+@@ -138,12 +138,12 @@
+ 	padding: 10px;
+ }
+ 
+-.UIAccessGroup .UIAccessGroup .PublicCheck input.checkbox {
+-	_margin: 0px;
++* html .UIAccessGroup .UIAccessGroup .PublicCheck input.checkbox {
++	margin: 0px;
+ }
+ 
+-.UIAccessGroup .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent {
+-	_padding: 0px;
++* html  .UIAccessGroup .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent {
++	padding: 0px;
+ }
+ 
+ .UIAccessGroup .UIGrid {
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UITabSystem/UITabs/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UITabSystem/UITabs/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UITabSystem/UITabs/Stylesheet.css	(working copy)
+@@ -335,7 +335,7 @@
+   cursor: pointer;
+   padding: 3px 8px 3px 4px; /* orientation=lt */
+   padding: 3px 4px 3px 8px; /* orientation=rt */
+-  color: grey; 
++  color: gray; 
+   font-size: 12px; 
+   font-weight: normal;
+ }
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UISelector/UIPermissionSelector/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UISelector/UIPermissionSelector/Stylesheet.css	(revision 66669)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/webui/component/UISelector/UIPermissionSelector/Stylesheet.css	(working copy)
+@@ -84,8 +84,7 @@
+ 
+ .UIPermissionSelector .PermissionInfoContainer .FloatBlockHidden {
+ 	filter:alpha(opacity=30);
+-	-moz-opacity:.30;
+-	opacity:.30;
++	opacity:0.30;
+ }
+ 
+ .UIPermissionSelector .PermissionInfoContainer a.FloatBlockHidden {
+Index: web/portal/src/main/webapp/templates/skin/webui/component/UIHomePagePortlet/DefaultStylesheet.css
+===================================================================
+--- web/portal/src/main/webapp/templates/skin/webui/component/UIHomePagePortlet/DefaultStylesheet.css	(revision 66669)
++++ web/portal/src/main/webapp/templates/skin/webui/component/UIHomePagePortlet/DefaultStylesheet.css	(working copy)
+@@ -18,19 +18,14 @@
+ 	background: #fff url('DefaultSkin/background/BgRepeat.jpg') repeat-x left top;
+ }
+ 
+-.UIHomePagePortlet .AdImageLeft {
+-}
+ 
+-*html .UIHomePagePortlet .AdImageLeft {
+-}
+-
+ .UIHomePagePortlet .AdImageRight {
+ 	background: url('DefaultSkin/background/RightHome.jpg') no-repeat right; /* orientation=lt */
+ 	background: url('DefaultSkin/background/RightHome-rt.jpg') no-repeat left; /* orientation=rt */
+ 	text-align: right; /* orientation=lt */
+ 	text-align: left; /* orientation=rt */
+ 	height: 289px; 
+-	oveflow: hidden;
++	overflow: hidden;
+ 	padding: 0px 30px 0px 0px; /* orientation=lt */
+ 	padding: 0px 0px 0px 30px; /* orientation=rt */
+ 	letter-spacing: 1px;
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/UIPortalApplicationSkin.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/UIPortalApplicationSkin.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/UIPortalApplicationSkin.css	(working copy)
+@@ -31,6 +31,14 @@
+ 	margin: 0px ; padding: 0px;
+ }
+ 
++*+html {
++	overflow-x: hidden;
++}
++
++* html {
++	overflow-x: hidden;
++}
++
+ body {
+ 	background: #ebedf2;
+ 	margin: 0px ; padding: 0px;
+@@ -131,8 +139,13 @@
+  visibility: hidden;
+ }
+ 
+-.ClearFix {
+- !display: inline-block;
+- !zoom: 1;
+- !display: block; 
++*+html .ClearFix {
++ display: inline-block;
++ zoom: 1;
++ display: block; 
++}
++* html .ClearFix {
++ display: inline-block;
++ zoom: 1;
++ display: block; 
+ }
+\ No newline at end of file
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/control/UIExoStart/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/control/UIExoStart/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/control/UIExoStart/Stylesheet.css	(working copy)
+@@ -208,10 +208,17 @@
+ 	background: #f5f4ff;
+ 	padding-bottom: 5px;
+ 	width: 100%;
+-	*border-right: 1px solid #D0D0D0; /* orientation=lt */
+-	_border-right: 1px solid none; /* orientation=lt */
+ }
+ 
++*+html .UIExoStart .StartMenuContainer .DecoratorBlock .PageOwnerContainer {
++	border-right: 1px solid #D0D0D0; /* orientation=lt */
++}
++
++* html .UIExoStart .StartMenuContainer .DecoratorBlock .PageOwnerContainer {
++	border-right: none ; /* orientation=lt */
++}
++
++
+ .UIExoStart .StartMenuContainer .DecoratorBlock .TitleBar {
+ 	line-height: 18px;
+ 	background: url('background/StartMenuContainer.gif') repeat-x center -73px;
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/widget/UIWidgetContainerManagement/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/widget/UIWidgetContainerManagement/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/widget/UIWidgetContainerManagement/Stylesheet.css	(working copy)
+@@ -173,9 +173,16 @@
+ 	font-size: 12px;
+ }
+ 
+-.UIWidgetContainerManagement .WidgetContainerView .Detail .InfoContent .FieldComponent {
++*+html .UIWidgetContainerManagement .WidgetContainerView .Detail .InfoContent .FieldComponent {
+ 	/*modified by tan.pham.dinh
+ 	 * to break long string (container description) in widget containers management in IE6+
+ 	 */
+-	*word-wrap: break-word;
+-}
+\ No newline at end of file
++	word-wrap: break-word;
++}
++
++* html .UIWidgetContainerManagement .WidgetContainerView .Detail .InfoContent .FieldComponent {
++	/*modified by tan.pham.dinh
++	 * to break long string (container description) in widget containers management in IE6+
++	 */
++	word-wrap: break-word;
++}
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/widget/UIWelcomeComponent/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/widget/UIWelcomeComponent/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/widget/UIWelcomeComponent/Stylesheet.css	(working copy)
+@@ -5,10 +5,9 @@
+   float: left ;
+ }
+ 
+-.UIWelcomeComponent .ItemSelectorContainer .UIDropDownControl {
+-	_position: static; /* orientation=rt */
++* html .UIWelcomeComponent .ItemSelectorContainer .UIDropDownControl {
++	position: static;  /*orientation=rt */
+ }
+-
+ .UIWelcomeComponent .OrangeMessage {
+   color: #fa8006 ;
+   font-weight: bold ;
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/customization/UIPageManagement/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/customization/UIPageManagement/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/customization/UIPageManagement/Stylesheet.css	(working copy)
+@@ -8,6 +8,6 @@
+   margin: 3px 10px 0px 10px;
+ }
+ 
+-.UIPageManagement .UIVerticalSlideTabs .TreeContainer {
+-	_width: 92%;
+-}
++* html .UIPageManagement .UIVerticalSlideTabs .TreeContainer {
++	width: 92%;
++}
+\ No newline at end of file
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/customization/UIPageSelector/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/customization/UIPageSelector/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/customization/UIPageSelector/Stylesheet.css	(working copy)
+@@ -67,6 +67,7 @@
+ }
+ 
+ .UIPageSelector .FloatBlockHidden {
+-	filter:alpha(opacity=30);-moz-opacity:.30;opacity:.30 ;
++	filter:alpha(opacity=30);
++	opacity:0.30 ;
+ 	cursor: default;
+ }
+\ No newline at end of file
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/customization/UIPortalToolPanel/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/customization/UIPortalToolPanel/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/customization/UIPortalToolPanel/Stylesheet.css	(working copy)
+@@ -5,15 +5,20 @@
+  * December 13, 2006
+  * version: $Id$
+  */
+-.UIPortalToolPanel {
+-  _height: 100%; /* orientation=rt */
++
++* html .UIPortalToolPanel {
++  height: 100%; /* orientation=rt */
+ }
+ 
+ .UIPortalToolPanel .Body {
+-  padding: 1px;
+-  _height: 100%;
++  padding: 1px;  
+ }
+ 
++* html .UIPortalToolPanel .Body { 
++  height: 100%;
++}
++
++
+ .UIPortalToolPanel .Body .PageDecoratorContainer {
+   background: #f7f7f7;
+   padding: 5px;
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css	(working copy)
+@@ -182,12 +182,15 @@
+ .UIPortal .LAYOUT-PORTAL {
+   background: url('background/PortalBackground4x4.gif');
+   padding: 8px;
+-  _padding: 8px 0px; /* orientation=rt */
+   margin: auto;
+-  _margin: 0px; /* orientation=rt */
+-  _width: 99%; /* orientation=rt */
+ }
+ 
++* html .UIPortal .LAYOUT-PORTAL {
++  padding: 8px 0px; /* orientation=rt */
++  margin: 0px; /* orientation=rt */
++  width: 99%; /* orientation=rt */
++}
++
+ .DragAndDropPreview {
+   width: auto; height: 80px;
+ 	background: url('background/DragAndDropPreview4x4.gif');
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIDashboard/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIDashboard/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIDashboard/Stylesheet.css	(working copy)
+@@ -68,9 +68,8 @@
+ 	width: 20px;
+ }
+ 
+-.UIDashboardSelectContainer .DashboardItemContainer {
+-}
+ 
++
+ .UIDashboardSelectContainer .DashboardItemContainer .InputContainer {
+ 	padding: 2px;
+ 	background: #ececec;
+@@ -103,7 +102,7 @@
+ 
+ .UIDashboardSelectContainer .DashboardItemContainer .DisableArrowIcon {
+ 	filter: alpha(opacity=30);
+-	-moz-opacity: 0.3;
++	opacity: 0.3;
+ }
+ 
+ .UIDashboardSelectContainer .DashboardItemContainer .MiddleItemContainer {
+@@ -244,12 +243,8 @@
+ .UIDashboardContainer .GadgetContainer {
+ 	overflow: auto;
+ 	height: 100%;
+-//	min-height: 400px;
+ }
+ 
+-/**html .UIDashboardContainer .GadgetContainer {
+-	height: 400px;
+-}*/
+ 
+ .UIDashboardContainer .GadgetContainer .ContainerControlBarL {
+ 	padding: 5px 10px;
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UITabContainer/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UITabContainer/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UITabContainer/Stylesheet.css	(working copy)
+@@ -22,9 +22,12 @@
+ .UITabContainer .EditIcon {
+ 	float: left; /* orientation=lt */
+ 	float: right; /* orientation=rt */
+-	_float: none;
+ }
+ 
++* html .UITabContainer .EditIcon {
++	float: none;
++}
++
+ .UITabContainer .UIHorizontalTabs .UITab {
+ 	height: 24px; 
+ }
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIGadget/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIGadget/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIGadget/Stylesheet.css	(working copy)
+@@ -47,7 +47,7 @@
+ 
+ .UIGadget .GadgetControl .IconControl {
+ 	background-image: url('background/Gadget.png');
+-	background-position: no-repeat;
++	background-repeat: no-repeat;
+ 	float: right; /* orientation=lt */
+ 	float: left; /* orientation=rt */
+ 	height: 13px;
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIPage/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIPage/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UIPage/Stylesheet.css	(working copy)
+@@ -69,11 +69,18 @@
+ }
+ 
+ .UIPage {
+-	margin: auto
++	margin: auto;
+   width: 99.8%;
+-  *width: auto;
+ }
+ 
++*+html .UIPage {
++	width: auto;
++}
++
++* html .UIPage {
++	width: auto;
++}
++
+ .UIPage .UIRowContainer {
+ 	padding: 1px;
+ }
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIForms/UIForm/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIForms/UIForm/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIForms/UIForm/Stylesheet.css	(working copy)
+@@ -19,9 +19,16 @@
+ 
+ .UIForm .UIFormGrid td.FieldComponent {
+ 	padding: 4px;
+-	*padding: 2px 0px 4px 4px;
+ }
+ 
++*+html .UIForm .UIFormGrid td.FieldComponent {
++	padding: 2px 0px 4px 4px;
++}
++
++* html .UIForm .UIFormGrid td.FieldComponent {
++	padding: 2px 0px 4px 4px;
++}
++
+ .UIForm .HorizontalLayout .MultiValueContainer {
+ 	margin-bottom: 5px;
+ }
+@@ -177,5 +184,14 @@
+ 
+ .UIPermissionForm .UIForm .UIAccessGroup .UIFormGrid td.FieldComponent {
+ 	padding: 4px;
+-	*padding: 2px 0px 4px 4px;
+ }
++
++
++*+html .UIPermissionForm .UIForm .UIAccessGroup .UIFormGrid td.FieldComponent {
++	padding: 2px 0px 4px 4px;
++}
++
++* html .UIPermissionForm .UIForm .UIAccessGroup .UIFormGrid td.FieldComponent {
++	padding: 2px 0px 4px 4px;
++}
++
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIToolbar/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIToolbar/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIToolbar/Stylesheet.css	(working copy)
+@@ -161,7 +161,7 @@
+ 
+ .UIToolbar .BlueLargeToolbar .SelectItemButton .LablelIcon {
+ 	filter: alpha(opacity=100);
+-	-moz-opacity: 1.0;
++	opacity: 1.0;
+ }
+ 
+ .UIToolbar .BlueLargeToolbar .SelectItemButton .ButtonLabel {
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIBarDecorator/UIInfoBar/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIBarDecorator/UIInfoBar/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIBarDecorator/UIInfoBar/Stylesheet.css	(working copy)
+@@ -63,12 +63,18 @@
+ 	font-weight: bold; color: black;
+ 	line-height: 22px;
+ 	margin: 4px 60px 0px 60px;
+-	!margin: 0 60px;
+ 	text-overflow: ellipsis;
+ 	overflow: hidden;
+ 	white-space: nowrap;
+ }
+ 
++*+html .UIInfoBar .BlueRoundedStyle .Title {	
++	margin: 0 60px;
++}
++* html .UIInfoBar .BlueRoundedStyle .Title {	
++	margin: 0 60px;
++}
++
+ .UIInfoBar .BlueRoundedStyle .Icon {
+ 	float: left;/* orientation=lt */
+ 	float: right;/* orientation=rt */
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UICalendar/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UICalendar/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UICalendar/Stylesheet.css	(working copy)
+@@ -18,10 +18,13 @@
+ 	background: #e0e5f7 url('/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIWidgets/background/WidgetDragArea2x2.gif') repeat scroll;
+ 	padding-top: 12px;
+ 	cursor: move;
+-	_height: 100%;
+ 	-moz-user-select: none;
+ }
+ 
++* html .BlockCalendar {
++	height: 100%;
++}
++
+ .UICalendar {
+   border: 1px solid #ccced7;
+   background: #e0e5f7 url('background/CalendarDecorator.gif') repeat-x left -122px;
+@@ -29,9 +32,12 @@
+   font: normal 12px verdana;
+ 	text-align: center;
+ 	cursor: default;
+-	_height: 100%;
+ }
+ 
++* html .UICalendar  {
++	height: 100%;
++}
++
+ .UICalendar table {
+   border-collapse: collapse;
+   table-layout: fixed;
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIMaskWorkspace/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIMaskWorkspace/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIMaskWorkspace/Stylesheet.css	(working copy)
+@@ -74,8 +74,8 @@
+ 	margin: auto;
+ }
+ 
+-.UIMaskWorkspace .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent {
+-  _padding: 0px;
++* html .UIMaskWorkspace .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent {
++  padding: 0px;
+ }
+ 
+ /*********************************** End UITabContent	************************************/
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIGroupInfoContainer/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIGroupInfoContainer/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UIGroupInfoContainer/Stylesheet.css	(working copy)
+@@ -7,9 +7,12 @@
+ 
+ .UIGroupInfoContainer .HorizontalLayout .FormContainer {
+ 	padding: 7px;
+-	_padding: 8px 7px 7px;
+ }
+ 
++* html .UIGroupInfoContainer .HorizontalLayout .FormContainer {
++	padding: 8px 7px 7px;
++}
++
+ .UIGroupInfoContainer .UIGroupMembershipForm .TitleBar {
+ 	font-weight: normal;
+ 	background: url(background/TitleBG1x20.gif) repeat-x;
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UISelector/UIPermissionSelector/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UISelector/UIPermissionSelector/Stylesheet.css	(revision 66669)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/webui/component/UISelector/UIPermissionSelector/Stylesheet.css	(working copy)
+@@ -84,7 +84,8 @@
+ }
+ 
+ .UIPermissionSelector .PermissionInfoContainer .FloatBlockHidden {
+-	filter:alpha(opacity=30);-moz-opacity:.30;opacity:.30;
++	filter:alpha(opacity=30);
++	opacity:0.30;
+ }
+ 
+ .UIPermissionSelector .PermissionInfoContainer a.FloatBlockHidden {
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/UIPortalApplicationSkin.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/UIPortalApplicationSkin.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/UIPortalApplicationSkin.css	(working copy)
+@@ -30,9 +30,16 @@
+ 
+ html {
+ 	margin: 0px ; padding: 0px;
+-	*overflow-x: hidden;
+ }
+ 
++*+html {
++	overflow-x: hidden;
++}
++
++* html {
++	overflow-x: hidden;
++}
++
+ body {
+  background: url('/eXoSkinVista/skin/VistaSkin/background/eXoDesktopBG1.jpg') no-repeat fixed ;
+ 	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif ;
+@@ -135,8 +142,14 @@
+  visibility: hidden;
+ }
+ 
+-.ClearFix {
+- !display: inline-block;
+- !zoom: 1;
+- !display: block; 
++*+html .ClearFix {
++ display: inline-block;
++ zoom: 1;
++ display: block; 
++}
++
++* html .ClearFix {
++ display: inline-block;
++ zoom: 1;
++ display: block; 
+ }
+\ No newline at end of file
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/control/UIExoStart/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/control/UIExoStart/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/control/UIExoStart/Stylesheet.css	(working copy)
+@@ -250,10 +250,15 @@
+   background: white url('background/AddApplicationrBG1x20.gif') repeat-x top;
+   background-position: 0px 23px;
+   width: 100%;
+-  *border-right: 1px solid #D0D0D0; /* orientation=lt */
+-	_border-right: 1px solid none; /* orientation=lt */
+ }
++*+html .UIExoStart .StartMenuContainer .DecoratorBlock .PageOwnerContainer  {
++	border-right: 1px solid #D0D0D0; /* orientation=lt */
++}
+ 
++* html .UIExoStart .StartMenuContainer .DecoratorBlock .PageOwnerContainer  {
++	border-right: none;/* orientation=lt */
++}
++
+ .UIExoStart .StartMenuContainer .StartMenuContent {
+   background: white;
+ }
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/widget/UIWidgetContainerManagement/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/widget/UIWidgetContainerManagement/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/widget/UIWidgetContainerManagement/Stylesheet.css	(working copy)
+@@ -172,9 +172,16 @@
+ 	font-size: 12px;
+ }
+ 
+-.UIWidgetContainerManagement .WidgetContainerView .Detail .InfoContent .FieldComponent {
++*+html .UIWidgetContainerManagement .WidgetContainerView .Detail .InfoContent .FieldComponent {
+ 	/*modified by tan.pham.dinh
+ 	 * to break long string (container description) in widget containers management in IE6+
+ 	 */
+-	*word-wrap: break-word;
++	word-wrap: break-word;
++}
++
++* html .UIWidgetContainerManagement .WidgetContainerView .Detail .InfoContent .FieldComponent {
++	/*modified by tan.pham.dinh
++	 * to break long string (container description) in widget containers management in IE6+
++	 */
++	word-wrap: break-word;
+ }
+\ No newline at end of file
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/widget/UIWelcomeComponent/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/widget/UIWelcomeComponent/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/widget/UIWelcomeComponent/Stylesheet.css	(working copy)
+@@ -5,8 +5,8 @@
+   margin: 7px 0px 0px 0px;
+ }
+ 
+-.UIWelcomeComponent .ItemSelectorContainer .UIDropDownControl {
+-	_position: static; /* orientation=rt */
++* html .UIWelcomeComponent .ItemSelectorContainer .UIDropDownControl {
++	position: static; /* orientation=rt */
+ }
+ 
+ .UIWelcomeComponent .WelcomeMessage {
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/customization/UIPageManagement/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/customization/UIPageManagement/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/customization/UIPageManagement/Stylesheet.css	(working copy)
+@@ -15,6 +15,6 @@
+   padding: 15px 0px 15px 60px;	/* orientation=rt */
+ }
+ 
+-.UIPageManagement .UIVerticalSlideTabs .TreeContainer {
+-	_width: 92%; 
++* html .UIPageManagement .UIVerticalSlideTabs .TreeContainer {
++	width: 92%; 
+ }
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/customization/UIPageSelector/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/customization/UIPageSelector/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/customization/UIPageSelector/Stylesheet.css	(working copy)
+@@ -59,6 +59,6 @@
+ }
+ 
+ .UIPageSelector .FloatBlockHidden {
+-	filter:alpha(opacity=30);-moz-opacity:.30;opacity:.30;
++	filter:alpha(opacity=30);opacity:0.30;
+ 	cursor: default;
+ }
+\ No newline at end of file
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/customization/UIPortalToolPanel/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/customization/UIPortalToolPanel/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/customization/UIPortalToolPanel/Stylesheet.css	(working copy)
+@@ -1,8 +1,11 @@
+ .UIPortalToolPanel {
+   background: none; 
+-  _height: 100%; /* orientation=rt */
+ }
+ 
++* html .UIPortalToolPanel {
++  height: 100%; /* orientation=rt */
++}
++
+ .UIPortalToolPanel .WizardDecorator {
+   margin: 0px;
+   height: 100%;
+@@ -64,9 +67,12 @@
+ 
+ .UIPortalToolPanel .Body {
+   padding: 5px;
+-  _height: 100%;
+ }
+ 
++* html .UIPortalToolPanel .Body {
++  height: 100%;
++}
++
+ /**################################ ItemDetailList ######################*/
+ .UIPortalToolPanel .UIItemSelector .NormalStyle {
+   height: 100% ;
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UIPortalComponent/Stylesheet.css	(working copy)
+@@ -186,7 +186,7 @@
+   min-height: 60px;
+ }
+ 
+-*html .UIContainer .LAYOUT-CONTAINER {
++* html .UIContainer .LAYOUT-CONTAINER {
+ 	height: 60px;
+ }
+ 
+@@ -257,12 +257,16 @@
+   border: solid 1px #696969;
+   background: url('background/LayoutPortalBG.png') repeat;
+   padding: 6px;
+-  _padding: 6px 0px; /* orientation=rt */
+   margin: 0px 8px;
+-  _margin: 0px; /* orientation=rt */
+-  _width: 99%; /* orientation=rt */
+ }
+ 
++
++* html .UIPortal .LAYOUT-PORTAL {
++  padding: 6px 0px; /* orientation=rt */
++  margin: 0px; /* orientation=rt */
++  width: 99%; /* orientation=rt */
++}
++
+ .UIPortal {
+   background: none;
+ }
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UIDashboard/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UIDashboard/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UIDashboard/Stylesheet.css	(working copy)
+@@ -103,7 +103,7 @@
+ 
+ .UIDashboardSelectContainer .DashboardItemContainer .DisableArrowIcon {
+ 	filter: alpha(opacity=30);
+-	-moz-opacity: 0.3;
++	opacity: 0.3;
+ }
+ 
+ .UIDashboardSelectContainer .DashboardItemContainer .MiddleItemContainer {
+@@ -244,7 +244,6 @@
+ .UIDashboardContainer .GadgetContainer {
+ 	overflow: auto;
+ 	height: 100%;
+-//	min-height: 400px;
+ }
+ 
+ /**html .UIDashboardContainer .GadgetContainer {
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UITabContainer/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UITabContainer/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UITabContainer/Stylesheet.css	(working copy)
+@@ -1,8 +1,10 @@
+ .UITabContainer {
+ 	padding: 7px;
+-	_padding: 0px; /* orientation=rt */
+-	_width: 99%; /* orientation=rt */
+ }
++* html .UITabContainer {
++	padding: 0px; /* orientation=rt */
++	width: 99%; /* orientation=rt */
++}
+ 
+ .UITabContainer .UIHorizontalTabs {
+ 	padding: 0px;
+@@ -45,9 +47,12 @@
+ .UITabContainer .EditIcon {
+ 	float: left; /* orientation=lt */
+ 	float: right; /* orientation=rt */
+-	_float: none;
+ }
+ 
++* html .UITabContainer .EditIcon {
++	float: none;
++}
++
+ .UITabContainer .SelectedTab .EditIcon {
+ 	height: 26px;	width: 16px;
+ 	background: url('/eXoSkinVista/skin/VistaSkin/skinIcons/16x16/icons/Pencil.png') no-repeat center ; /* orientation=lt */
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UIGadget/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UIGadget/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UIGadget/Stylesheet.css	(working copy)
+@@ -47,7 +47,7 @@
+ 
+ .UIGadget .GadgetControl .IconControl {
+ 	background-image: url('background/Gadget.png');
+-	background-position: no-repeat;
++	background-repeat: no-repeat;
+ 	float: right; /* orientation=lt */
+ 	float: left; /* orientation=rt */
+ 	height: 13px;
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UIPage/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UIPage/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UIPage/Stylesheet.css	(working copy)
+@@ -8,10 +8,13 @@
+   background: url('background/PageLayout-rt.png') no-repeat right top; /* orientation=rt */
+   padding: 0px 0px 0px 98px ; /* orientation=lt */
+   padding: 0px 98px 0px 0px ; /* orientation=rt */
+-  _padding: 0px 0px 0px 95px ; /* orientation=lt */
+-  _padding: 0px 95px 0px 0px ; /* orientation=rt */
+ }
+ 
++* html .UIPageBody .PageLayoutDecorator .TopLeftPage {
++  padding: 0px 0px 0px 95px ; /* orientation=lt */
++  padding: 0px 95px 0px 0px ; /* orientation=rt */
++}
++
+ .UIPageBody .PageLayoutDecorator .TopRightPage {
+   background: url('background/PageLayout.png') no-repeat right -78px; /* orientation=lt */
+   background: url('background/PageLayout-rt.png') no-repeat left -78px; /* orientation=rt */
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UIForms/UIForm/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UIForms/UIForm/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UIForms/UIForm/Stylesheet.css	(working copy)
+@@ -28,9 +28,15 @@
+ 
+ .UIForm .UIFormGrid td.FieldComponent {
+   padding: 4px;
+-	*padding: 0px 0px 4px 4px;
+ }
+ 
++*+html  .UIForm .UIFormGrid td.FieldComponent {
++  padding: 0px 0px 4px 4px;
++}
++
++* html .UIForm .UIFormGrid td.FieldComponent {
++	padding: 0px 0px 4px 4px;
++}
+ .UIForm .HorizontalLayout .FieldContainer .MultiValueContainer {
+   margin-top: 3px ;
+   margin-left: 145px ;
+@@ -176,6 +182,15 @@
+ 
+ .UIPermissionForm .UIForm .UIAccessGroup .UIFormGrid td.FieldComponent {
+   padding: 3px;
+-  *padding: 1px 0px 5px 4px;
+ }
+ 
++*+html .UIPermissionForm .UIForm .UIAccessGroup .UIFormGrid td.FieldComponent {
++	padding: 1px 0px 5px 4px;
++}
++
++
++* html .UIPermissionForm .UIForm .UIAccessGroup .UIFormGrid td.FieldComponent {
++	padding: 1px 0px 5px 4px;
++}
++
++
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UIToolbar/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UIToolbar/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UIToolbar/Stylesheet.css	(working copy)
+@@ -335,7 +335,7 @@
+ 
+ .UIToolbar .BlueLargeToolbar .SelectItemButton .LablelIcon {
+ 	filter: alpha(opacity=100);
+-	-moz-opacity: 1.0;
++	opacity: 1.0;
+ }
+ 
+ .UIToolbar .BlueLargeToolbar .SelectItemButton .ButtonLabel {
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UIBarDecorator/UIBoxDecorator/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UIBarDecorator/UIBoxDecorator/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UIBarDecorator/UIBoxDecorator/Stylesheet.css	(working copy)
+@@ -138,7 +138,7 @@
+ 
+ .DecoratorBox .ViewBoxStyle .BottomCenterViewBoxStyle {
+   height: 8px ;
+-  background: url('/eXoResources/skin/DefaultSkin/webui/component/UIBarDecorator/UIBoxDecorator/background/ViewBoxStyle.gif')repet-x left -16px;
++  background: url('/eXoResources/skin/DefaultSkin/webui/component/UIBarDecorator/UIBoxDecorator/background/ViewBoxStyle.gif')repeat-x left -16px;
+ }
+ 
+ .DecoratorBox .ViewBoxStyle .BottomRightViewBoxStyle {
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UICalendar/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UICalendar/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UICalendar/Stylesheet.css	(working copy)
+@@ -18,20 +18,26 @@
+ 	background: #e0e5f7 url('/eXoResources/skin/DefaultSkin/portal/webui/component/view/UIWidgets/background/WidgetDragArea2x2.gif') repeat scroll;
+ 	padding-top: 12px;
+ 	cursor: move;
+-	_height: 100%;
+ 	-moz-user-select: none;
+ }
+ 
++* html .BlockCalendar {
++	height: 100%;
++}
++
+ .UICalendar {
+   border: 1px solid #ccced7;
+-  background: #e0e5f7 url('/eXoResources/skin/DefaultSkin/webui/component/UICalendar/background/CalendarDecorator.gif') repeat-x left -122px;;
++  background: #e0e5f7 url('/eXoResources/skin/DefaultSkin/webui/component/UICalendar/background/CalendarDecorator.gif') repeat-x left -122px;
+   padding: 7px 5px;
+   font: normal 12px verdana;
+ 	text-align: center;
+ 	cursor: default;
+-	_height: 100%;
++
+ }
+ 
++* html .UICalendar  {
++	height: 100%;
++}
+ .UICalendar table {
+   border-collapse: collapse;
+   table-layout: fixed;
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UIMaskWorkspace/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UIMaskWorkspace/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UIMaskWorkspace/Stylesheet.css	(working copy)
+@@ -58,8 +58,8 @@
+   margin: auto;
+ }
+ 
+-.UIMaskWorkspace .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent {
+-  _padding: 0px;
++* html .UIMaskWorkspace .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent {
++  padding: 0px;
+ }
+ 
+ .UIMaskWorkspace .UIItemSelector .FloatRightStyle .ItemListContainer .ItemList {
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UITabSystem/UITabSelector/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UITabSystem/UITabSelector/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UITabSystem/UITabSelector/Stylesheet.css	(working copy)
+@@ -133,12 +133,12 @@
+   padding: 10px;
+ }
+ 
+-.UIAccessGroup .UIAccessGroup .PublicCheck input.checkbox{
+-  _margin: 0px;
++* html .UIAccessGroup .UIAccessGroup .PublicCheck input.checkbox{
++  margin: 0px;
+ }
+ 
+-.UIAccessGroup .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent{
+-  _padding: 0px;
++* html .UIAccessGroup .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent{
++  padding: 0px;
+ }
+ 
+ .UIAccessGroup .UIGrid {
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UITabSystem/UITabs/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UITabSystem/UITabs/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UITabSystem/UITabs/Stylesheet.css	(working copy)
+@@ -370,7 +370,7 @@
+   cursor: pointer;
+   padding: 4px 8px 3px 4px; /* orientation=lt */
+   padding: 4px 4px 3px 8px; /* orientation=rt */
+-  color: grey;  font-weight: normal;
++  color: gray;  font-weight: normal;
+ }
+ 
+ .UIHorizontalTabs .MessageTabDialog .DisabledTab .TabIcon {
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UISelector/UIPermissionSelector/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UISelector/UIPermissionSelector/Stylesheet.css	(revision 66669)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/webui/component/UISelector/UIPermissionSelector/Stylesheet.css	(working copy)
+@@ -85,7 +85,7 @@
+ }
+ 
+ .UIPermissionSelector .PermissionInfoContainer .FloatBlockHidden {
+-	filter:alpha(opacity=40); -moz-opacity:.40; opacity:.40;
++	filter:alpha(opacity=40); opacity:0.40;
+ }
+ 
+ .UIPermissionSelector .PermissionInfoContainer a.FloatBlockHidden {

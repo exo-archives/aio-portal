@@ -63,10 +63,16 @@
 	font-weight: bold; color: black;
 	line-height: 22px;
 	margin: 4px 60px 0px 60px;
-	!margin: 0 60px;
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+}
+
+*+html .UIInfoBar .BlueRoundedStyle .Title {	
+	margin: 0 60px;
+}
+* html .UIInfoBar .BlueRoundedStyle .Title {	
+	margin: 0 60px;
 }
 
 .UIInfoBar .BlueRoundedStyle .Icon {

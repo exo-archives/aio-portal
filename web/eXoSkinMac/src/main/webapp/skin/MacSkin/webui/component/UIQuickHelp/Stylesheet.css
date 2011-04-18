@@ -9,14 +9,14 @@
 	padding-left: 7px; /* orientation=lt */
 	padding-left: 2px; /* orientation=rt */
 	background: url('background/QuickHelp.gif') no-repeat left top; /* orientation=lt */
-	background: url('background/QuickHelp-rt.gif') no-repeat left top; 2px; /* orientation=rt */
+	/*background: url('background/QuickHelp-rt.gif') no-repeat left top; 2px;  orientation=rt */
 }
 
 .UIQuickHelp .TopBar .TopBarRight {
 	padding-right: 2px; /* orientation=lt */
 	padding-right: 7px; /* orientation=rt */
 	background: url('background/QuickHelp.gif') no-repeat right top; /* orientation=lt */
-	background: url('background/QuickHelp-rt.gif') no-repeat right top; 2px; /* orientation=rt */
+	/* background: url('background/QuickHelp-rt.gif') no-repeat right top; 2px; orientation=rt */
 }
 	
 .UIQuickHelp .TopBar .TopBarMiddle {

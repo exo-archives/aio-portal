@@ -18,11 +18,6 @@
 	background: #fff url('DefaultSkin/background/BgRepeat.jpg') repeat-x left top;
 }
 
-.UIHomePagePortlet .AdImageLeft {
-}
-
-*html .UIHomePagePortlet .AdImageLeft {
-}
 
 .UIHomePagePortlet .AdImageRight {
 	background: url('DefaultSkin/background/RightHome.jpg') no-repeat right; /* orientation=lt */
@@ -30,7 +25,7 @@
 	text-align: right; /* orientation=lt */
 	text-align: left; /* orientation=rt */
 	height: 289px; 
-	oveflow: hidden;
+	overflow: hidden;
 	padding: 0px 30px 0px 0px; /* orientation=lt */
 	padding: 0px 0px 0px 30px; /* orientation=rt */
 	letter-spacing: 1px;

@@ -6,13 +6,16 @@
  * version: $Id$
  */
 
-.UIPortalToolPanel {
-	_height: 100%; /* orientation=rt */
+* html .UIPortalToolPanel {
+	height: 100%; /* orientation=rt */
 }
 
 .UIPortalToolPanel .Body {
 	padding: 1px;
-  _height: 100%;
+}
+
+* html .UIPortalToolPanel .Body {
+	height: 100%;
 }
 
 .UIPortalToolPanel .Body .UIPage {

@@ -5,8 +5,8 @@
   margin: 7px 0px 0px 0px;
 }
 
-.UIWelcomeComponent .ItemSelectorContainer .UIDropDownControl {
-	_position: static; /* orientation=rt */
+* html .UIWelcomeComponent .ItemSelectorContainer .UIDropDownControl {
+	position: static; /* orientation=rt */
 }
 
 .UIWelcomeComponent .WelcomeMessage {

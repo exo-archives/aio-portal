@@ -26,9 +26,10 @@
 	overflow-x: hidden;
 }
 
-.UIMaskWorkspace .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent {
-	_padding: 0px;
+* html .UIMaskWorkspace .UIAccessGroup .PublicCheck .UIFormGrid td.FieldComponent {
+	padding: 0px;
 }
+
 
 .UIMaskWorkspace .IconLayout {
 	float: left; /* orientation=lt */

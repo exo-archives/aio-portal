@@ -26,8 +26,12 @@
 .UITabContainer .EditIcon {
 	float: left; /* orientation=lt */
 	float: right; /* orientation=rt */
-	_float: none;
 }
+
+* html .UITabContainer .EditIcon {
+	float: none;
+}
+
 
 .UITabContainer .SelectedTab .EditIcon {
 	height: 24px;	width: 16px;

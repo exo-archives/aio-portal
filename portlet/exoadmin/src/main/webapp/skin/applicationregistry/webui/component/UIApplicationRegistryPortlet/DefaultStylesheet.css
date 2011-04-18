@@ -171,7 +171,7 @@
 	float: left;		/* orientation=rt */
 	margin: 3px;
 	filter: alpha(opacity=30);
-	-moz-opacity: 0.3;
+	opacity: 0.3;
 }
 
 .UIApplicationRegistryPortlet .ListItem .SelectedItem a.TabLabel {
@@ -196,7 +196,7 @@
 	color: #058ee6;
 }
 
-*html .UIApplicationRegistryPortlet .UIVerticalSlideTabs .TabLabel:hover {
+* html .UIApplicationRegistryPortlet .UIVerticalSlideTabs .TabLabel:hover {
 	color: #058ee6;
 }
 
@@ -226,7 +226,7 @@
 	float: right;		/* orientation=lt */
 	float: left;		/* orientation=rt */
 	filter: alpha(opacity=100);
-	-moz-opacity: 1.0;
+	opacity: 1.0;
 }
 
 .UIApplicationRegistryPortlet .UIVerticalSlideTabs .UIVTabContent .ItemLabel {

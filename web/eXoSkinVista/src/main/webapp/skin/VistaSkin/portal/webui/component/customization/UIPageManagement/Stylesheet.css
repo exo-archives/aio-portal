@@ -15,6 +15,6 @@
   padding: 15px 0px 15px 60px;	/* orientation=rt */
 }
 
-.UIPageManagement .UIVerticalSlideTabs .TreeContainer {
-	_width: 92%; 
+* html .UIPageManagement .UIVerticalSlideTabs .TreeContainer {
+	width: 92%; 
 }

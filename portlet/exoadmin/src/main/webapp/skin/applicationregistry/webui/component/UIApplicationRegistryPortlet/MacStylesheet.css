@@ -1,4 +1,4 @@
-e/**
+/**
  * Created by The eXo Platform SARL
  * Modifile : Nguyen Ngoc Thuy
  * May 8, 2007
@@ -191,7 +191,7 @@ e/**
 	color: #058ee6;
 }
 
-*html .UIApplicationRegistryPortlet .UIVerticalSlideTabs .TabLabel:hover {
+* html .UIApplicationRegistryPortlet .UIVerticalSlideTabs .TabLabel:hover {
 	color: #058ee6;
 }
 

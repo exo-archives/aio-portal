@@ -370,7 +370,7 @@
   cursor: pointer;
   padding: 4px 8px 3px 4px; /* orientation=lt */
   padding: 4px 4px 3px 8px; /* orientation=rt */
-  color: grey;  font-weight: normal;
+  color: gray;  font-weight: normal;
 }
 
 .UIHorizontalTabs .MessageTabDialog .DisabledTab .TabIcon {

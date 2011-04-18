@@ -22,7 +22,10 @@
 .UITabContainer .EditIcon {
 	float: left; /* orientation=lt */
 	float: right; /* orientation=rt */
-	_float: none;
+}
+
+* html .UITabContainer .EditIcon {
+	float: none;
 }
 
 .UITabContainer .UIHorizontalTabs .UITab {

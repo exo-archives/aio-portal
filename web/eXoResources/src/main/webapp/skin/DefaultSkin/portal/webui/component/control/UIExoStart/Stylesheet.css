@@ -208,9 +208,16 @@
 	background: #f5f4ff;
 	padding-bottom: 5px;
 	width: 100%;
-	*border-right: 1px solid #D0D0D0; /* orientation=lt */
-	_border-right: 1px solid none; /* orientation=lt */
 }
+
+*+html .UIExoStart .StartMenuContainer .DecoratorBlock .PageOwnerContainer {
+	border-right: 1px solid #D0D0D0; /* orientation=lt */
+}
+
+* html .UIExoStart .StartMenuContainer .DecoratorBlock .PageOwnerContainer {
+	border-right: none ; /* orientation=lt */
+}
+
 
 .UIExoStart .StartMenuContainer .DecoratorBlock .TitleBar {
 	line-height: 18px;

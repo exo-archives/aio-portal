@@ -59,6 +59,6 @@
 }
 
 .UIPageSelector .FloatBlockHidden {
-	filter:alpha(opacity=30);-moz-opacity:.30;opacity:.30;
+	filter:alpha(opacity=30);opacity:0.30;
 	cursor: default;
 }

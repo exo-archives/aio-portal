@@ -5,14 +5,19 @@
  * December 13, 2006
  * version: $Id$
  */
-.UIPortalToolPanel {
-  _height: 100%; /* orientation=rt */
+
+* html .UIPortalToolPanel {
+  height: 100%; /* orientation=rt */
 }
 
 .UIPortalToolPanel .Body {
-  padding: 1px;
-  _height: 100%;
+  padding: 1px;  
 }
+
+* html .UIPortalToolPanel .Body { 
+  height: 100%;
+}
+
 
 .UIPortalToolPanel .Body .PageDecoratorContainer {
   background: #f7f7f7;

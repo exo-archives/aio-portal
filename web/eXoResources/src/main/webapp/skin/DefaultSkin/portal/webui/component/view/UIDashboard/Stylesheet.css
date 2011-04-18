@@ -68,8 +68,7 @@
 	width: 20px;
 }
 
-.UIDashboardSelectContainer .DashboardItemContainer {
-}
+
 
 .UIDashboardSelectContainer .DashboardItemContainer .InputContainer {
 	padding: 2px;
@@ -103,7 +102,7 @@
 
 .UIDashboardSelectContainer .DashboardItemContainer .DisableArrowIcon {
 	filter: alpha(opacity=30);
-	-moz-opacity: 0.3;
+	opacity: 0.3;
 }
 
 .UIDashboardSelectContainer .DashboardItemContainer .MiddleItemContainer {
@@ -244,12 +243,8 @@
 .UIDashboardContainer .GadgetContainer {
 	overflow: auto;
 	height: 100%;
-//	min-height: 400px;
 }
 
-/**html .UIDashboardContainer .GadgetContainer {
-	height: 400px;
-}*/
 
 .UIDashboardContainer .GadgetContainer .ContainerControlBarL {
 	padding: 5px 10px;
