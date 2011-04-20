@@ -1,38 +1,37 @@
-Index: portlet/web/src/main/webapp/skin/portal/webui/component/UINavigationPortlet/DefaultStylesheet.css
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortlet.java
 ===================================================================
---- portlet/web/src/main/webapp/skin/portal/webui/component/UINavigationPortlet/DefaultStylesheet.css	(revision 68370)
-+++ portlet/web/src/main/webapp/skin/portal/webui/component/UINavigationPortlet/DefaultStylesheet.css	(working copy)
-@@ -4,21 +4,20 @@
-  * April 23, 2007
-  * version: $Id$
-  */
--#toolbar {
--	background: url('DefaultSkin/background/Navigation.gif') repeat-x 1px center;
--	border-top: 1px solid white;
--	line-height: 33px;
--}
--
- *+html .UINavigationPortlet {
-   position: relative;
-+  background: url('DefaultSkin/background/Navigation.gif') repeat-x 1px center;
-+  border-top: 1px solid white;
-+  line-height: 33px;
- }
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortlet.java	(revision 68372)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortlet.java	(working copy)
+@@ -99,6 +99,13 @@
+     exoWindowId_ = new ExoWindowID(windowId) ;
+   }
+   
++  /**
++   * Generate unique id
++   * Character "_" is used to make compliance W3C validation if this id is displayed on UI
++   * @return id
++   */
++  public String generateUniqueId() { return "_" + this.hashCode(); }
++  
+   public String getDisplayName() {
+     PortletContainerService pcServ = getApplicationComponent(PortletContainerService.class);
+     PortletApp portletApp =  pcServ.getPortletApp(exoWindowId_.getPortletApplicationName());
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIPortalApplication.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIPortalApplication.java	(revision 68372)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIPortalApplication.java	(working copy)
+@@ -406,7 +406,7 @@
+             log.debug("AJAX call: Need to refresh the Portlet " + uiPortlet.getWindowId());
  
- * html .UINavigationPortlet {
-   position: relative;
-+  background: url('DefaultSkin/background/Navigation.gif') repeat-x 1px center;
-+  border-top: 1px solid white;
-+  line-height: 33px;
- }
- 
--
- .UINavigationPortlet .UINavigationBar {
-   white-space: nowrap;
- }
+           w.write("<div class=\"PortletResponse\" style=\"display: none\">") ;
+-          w.  append("<div class=\"PortletResponsePortletId\">" + uiPortlet.getExoWindowID().getUniqueID()+"</div>") ;
++          w.  append("<div class=\"PortletResponsePortletId\">" + uiPortlet.getId() +"</div>") ;
+           w.  append("<div class=\"PortletResponsePortletTitle\"></div>") ;
+           w.  append("<div class=\"PortletResponsePortletMode\"></div>") ;
+           w.  append("<div class=\"PortletResponsePortletState\"></div>") ;
 Index: webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalComponentActionListener.java
 ===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalComponentActionListener.java	(revision 68363)
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalComponentActionListener.java	(revision 68372)
 +++ webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalComponentActionListener.java	(working copy)
 @@ -217,7 +217,7 @@
            windowId.append('#').append(Util.getUIPortal().getOwner()).append(":/");
@@ -43,9 +42,27 @@ Index: webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalCo
            uiPortlet.setWindowId(windowId.toString());
            uiPortlet.setShowEditControl(true);
            uiSource = uiPortlet;
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIGadget.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIGadget.java	(revision 68372)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIGadget.java	(working copy)
+@@ -158,6 +158,13 @@
+   public String getApplicationInstanceUniqueId() { return applicationInstanceUniqueId_ ;}
+   
+   /**
++   * Generate unique id
++   * Character "_" is used to make compliance W3C validation if this id is displayed on UI
++   * @return id
++   */
++  public String generateUniqueId() {return "_" + this.hashCode();}
++  
++  /**
+    * Gets Properties of gadget application such as locationX, locationY in desktop page
+    * @return all properties of gadget application
+    * @see org.exoplatform.portal.config.model.Application
 Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIAddNewApplication.java
 ===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIAddNewApplication.java	(revision 68363)
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIAddNewApplication.java	(revision 68372)
 +++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIAddNewApplication.java	(working copy)
 @@ -99,7 +99,7 @@
  
@@ -98,52 +115,40 @@ Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIAdd
          uiPortlet.setWindowId(windowId.toString());
          uiPortlet.setPortletInPortal(false);
          uiPortlet.getProperties().setProperty("appStatus", "HIDE");
-Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortlet.java
+Index: portlet/web/src/main/webapp/skin/portal/webui/component/UINavigationPortlet/DefaultStylesheet.css
 ===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortlet.java	(revision 68363)
-+++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortlet.java	(working copy)
-@@ -99,6 +99,13 @@
-     exoWindowId_ = new ExoWindowID(windowId) ;
-   }
-   
-+  /**
-+   * Generate unique id
-+   * Character "_" is used to make compliance W3C validation if this id is displayed on UI
-+   * @return id
-+   */
-+  public String generateUniqueId() { return "_" + this.hashCode(); }
-+  
-   public String getDisplayName() {
-     PortletContainerService pcServ = getApplicationComponent(PortletContainerService.class);
-     PortletApp portletApp =  pcServ.getPortletApp(exoWindowId_.getPortletApplicationName());
-Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIGadget.java
-===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIGadget.java	(revision 68363)
-+++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIGadget.java	(working copy)
-@@ -158,6 +158,13 @@
-   public String getApplicationInstanceUniqueId() { return applicationInstanceUniqueId_ ;}
-   
-   /**
-+   * Generate unique id
-+   * Character "_" is used to make compliance W3C validation if this id is displayed on UI
-+   * @return id
-+   */
-+  public String generateUniqueId() {return "_" + this.hashCode();}
-+  
-+  /**
-    * Gets Properties of gadget application such as locationX, locationY in desktop page
-    * @return all properties of gadget application
-    * @see org.exoplatform.portal.config.model.Application
-Index: webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIPortalApplication.java
-===================================================================
---- webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIPortalApplication.java	(revision 68363)
-+++ webui/portal/src/main/java/org/exoplatform/portal/webui/workspace/UIPortalApplication.java	(working copy)
-@@ -406,7 +406,7 @@
-             log.debug("AJAX call: Need to refresh the Portlet " + uiPortlet.getWindowId());
+--- portlet/web/src/main/webapp/skin/portal/webui/component/UINavigationPortlet/DefaultStylesheet.css	(revision 68372)
++++ portlet/web/src/main/webapp/skin/portal/webui/component/UINavigationPortlet/DefaultStylesheet.css	(working copy)
+@@ -4,21 +4,27 @@
+  * April 23, 2007
+  * version: $Id$
+  */
+-#toolbar {
+-	background: url('DefaultSkin/background/Navigation.gif') repeat-x 1px center;
+-	border-top: 1px solid white;
+-	line-height: 33px;
++.UINavigationPortlet {
++  position: relative;
++  background: url('DefaultSkin/background/Navigation.gif') repeat-x 1px center;
++  border-top: 1px solid white;
++  line-height: 33px;
+ }
  
-           w.write("<div class=\"PortletResponse\" style=\"display: none\">") ;
--          w.  append("<div class=\"PortletResponsePortletId\">" + uiPortlet.getExoWindowID().getUniqueID()+"</div>") ;
-+          w.  append("<div class=\"PortletResponsePortletId\">" + uiPortlet.getId() +"</div>") ;
-           w.  append("<div class=\"PortletResponsePortletTitle\"></div>") ;
-           w.  append("<div class=\"PortletResponsePortletMode\"></div>") ;
-           w.  append("<div class=\"PortletResponsePortletState\"></div>") ;
+ *+html .UINavigationPortlet {
+   position: relative;
++  background: url('DefaultSkin/background/Navigation.gif') repeat-x 1px center;
++  border-top: 1px solid white;
++  line-height: 33px;
+ }
+ 
+ * html .UINavigationPortlet {
+   position: relative;
++  background: url('DefaultSkin/background/Navigation.gif') repeat-x 1px center;
++  border-top: 1px solid white;
++  line-height: 33px;
+ }
+ 
+-
+ .UINavigationPortlet .UINavigationBar {
+   white-space: nowrap;
+ }
