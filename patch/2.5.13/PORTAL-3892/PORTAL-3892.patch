@@ -1,0 +1,162 @@
+Index: portlet/exoadmin/src/main/java/org/exoplatform/applicationregistry/webui/component/UIGadgetManagement.java
+===================================================================
+--- portlet/exoadmin/src/main/java/org/exoplatform/applicationregistry/webui/component/UIGadgetManagement.java	(revision 68510)
++++ portlet/exoadmin/src/main/java/org/exoplatform/applicationregistry/webui/component/UIGadgetManagement.java	(working copy)
+@@ -22,7 +22,12 @@
+ import org.exoplatform.application.gadget.GadgetRegistryService;
+ import org.exoplatform.application.gadget.Source;
+ import org.exoplatform.application.gadget.SourceStorage;
++import org.exoplatform.application.registry.Application;
++import org.exoplatform.application.registry.ApplicationCategory;
++import org.exoplatform.application.registry.ApplicationRegistryService;
+ import org.exoplatform.applicationregistry.webui.Util;
++import org.exoplatform.container.ExoContainer;
++import org.exoplatform.container.ExoContainerContext;
+ import org.exoplatform.web.WebAppController;
+ import org.exoplatform.web.application.ApplicationMessage;
+ import org.exoplatform.web.application.gadget.GadgetApplication;
+@@ -158,9 +163,22 @@
+         sourceStorage.removeSource(name + ".xml");
+       }
+       uiManagement.reload();
++      removeFromApplicationRegistry(name);
+       ctx.addUIComponentToUpdateByAjax(uiManagement) ;
+     }
+     
++    private void removeFromApplicationRegistry(String name) throws Exception {
++      ApplicationRegistryService regService = (ApplicationRegistryService) ExoContainerContext.getCurrentContainer()
++                                                                                  .getComponentInstanceOfType(ApplicationRegistryService.class);
++      List<ApplicationCategory> cates = regService.getApplicationCategories();
++      for (ApplicationCategory cate : cates)
++      {
++         Application app = regService.getApplication(cate.getName(), name);
++         if (app != null)
++           regService.remove(app);
++      }      
++    }
++    
+   }
+   
+   public static class AddLocalGadgetActionListener extends EventListener<UIGadgetManagement> {
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIGadget.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIGadget.java	(revision 68510)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIGadget.java	(working copy)
+@@ -175,6 +175,22 @@
+     return properties_; 
+   }
+   
++  public boolean isLossData()
++  {
++     try
++     {
++        if (getApplication() == null)
++        {
++           throw new Exception();
++        }
++     }
++     catch (Exception e)
++     {
++        return true;
++     }
++     return false;
++  }
++  
+   /**
+    * Sets Properties of gadget application such as locationX, locationY in desktop page
+    * @param properties Properties that is the properties of gadget application
+Index: web/portal/src/main/webapp/groovy/portal/webui/application/UIGadget.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/portal/webui/application/UIGadget.gtmpl	(revision 68510)
++++ web/portal/src/main/webapp/groovy/portal/webui/application/UIGadget.gtmpl	(working copy)
+@@ -3,21 +3,27 @@
+ 	
+   def rcontext = _ctx.getRequestContext() ;
+   JavascriptManager jsmanager = rcontext.getJavascriptManager();
+-  def url = uicomponent.getUrl();
+-  def metadata = uicomponent.getMetadata();
++  def url = null;
++  def metadata = "";
+   def posX = uicomponent.getProperties().getIntValue("locationX") + "px";
+   def posY = uicomponent.getProperties().getIntValue("locationY") + "px";
+   def zIndex = uicomponent.getProperties().getIntValue("zIndex") ;
+-  def id = uicomponent.getId();
++  def id = uicomponent.getId() != null ? uicomponent.getId() : "UIGadget";
+   def isDev = uicomponent.isGadgetDeveloper();
+   def noCache = uicomponent.isNoCache();
+   def isDebug = uicomponent.isDebug();
+   def view = uicomponent.getView();
+-  def userPref = uicomponent.getUserPref() ;
++  def userPref = null;
++  def isLossData = uicomponent.isLossData();
++  if(!isLossData) {
++    url = uicomponent.getUrl();
++	metadata = uicomponent.getMetadata();
++	userPref = uicomponent.getUserPref();
+ 	jsmanager.importJavascript("eXo.gadget.UIGadget") ;
+ 	rcontext.getJavascriptManager().addCustomizedOnLoadScript("eXo.gadget.UIGadget.confirmDeleteGadget = '" + _ctx.appRes("UIGadgetContainerManagement.confirm.DeleteGadget") + "';") ;
+ 	jsmanager.addCustomizedOnLoadScript("eXo.gadget.UIGadget.createGadget('$url','$id', $metadata, $userPref, '$view', " + (isDev ? 1 : 0)
+-                                                                            + ", " + (isDebug ? 1 : 0) + ", " + (noCache ? 1 : 0) + ");")
++                                                                            + ", " + (isDebug ? 1 : 0) + ", " + (noCache ? 1 : 0) + ");");
++  }                                                                      
+ %>
+ <div class="UIGadget ClearFix" id="<%= uicomponent.getApplicationInstanceUniqueId() %>" style="left: $posX; top: $posY; z-Index: $zIndex; width: 320px" >
+ 	<% if(uicomponent.hasDecorator()) {%>
+@@ -25,7 +31,7 @@
+ 		<div class="LeftControlBar">
+ 			<div class="RightControlBar">
+ 				<div class="CenterControlBar ClearFix">
+-					<div class="GadgetTitle" style="display: none"><%= uicomponent.getApplicationName() %></div>
++					<div class="GadgetTitle" style="display: <%=isLossData ? "block" : "none"; %> ; float: none; width: auto; margin-right: 75px"><%= uicomponent.getApplicationName() %></div>
+ 			  		<div class="CloseGadget IconControl" onclick="eXo.gadget.UIGadget.deleteGadget(this)" onmousedown="event.cancelBubble=true;"><span></span></div>
+ 					<div class="<%=Boolean.parseBoolean(uicomponent.getProperties().get("minimized")) ? "RestoreGadget": "MinimizeGadget";%> MinimizeAction IconControl" 
+ 									onclick="eXo.gadget.UIGadget.minimizeGadget(this)" onmousedown="event.cancelBubble=true;" style="display:none;"><span></span></div>
+@@ -44,7 +50,11 @@
+ 		</div>
+ 		<div class="MLGadget">
+ 			<div class="MRGadget">
++			  <% if(isLossData) {%>
++ 	 	 	    <div id="content-$id" class="MCGadget"><%=_ctx.appRes("UIGadgetContainerManagement.message.isLossData")%></div>
++ 	 	 	  <% } else {%>
+ 				<div id="$id" class="MCGadget"></div>
++			  <% } %>
+ 			</div>
+ 		</div>
+ 		<div class="BLGadget">
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties	(revision 68510)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties	(working copy)
+@@ -1354,6 +1354,7 @@
+ UIGadgetContainerManagement.tooltip.remove=Remove selected gadget container
+ UIGadgetContainerManagement.tooltip.edit=Edit selected gadget container
+ UIGadgetContainerManagement.tooltip.addnew=Add new gadget container
++UIGadgetContainerManagement.message.isLossData=This gadget may be deleted from the database or there is a database error that prevents to read the content of the gadget
+ 
+   ################################################################################
+   #		 org.exoplatform.portal.webui.application.UIGadgetContainerForm
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties	(revision 68510)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties	(working copy)
+@@ -1349,7 +1349,7 @@
+ UIGadgetContainerManagement.tooltip.remove=Supprimer le conteneur de Gadget sélectionné
+ UIGadgetContainerManagement.tooltip.edit==Editer le conteneur de Gadget sélectionné
+ UIGadgetContainerManagement.tooltip.addnew=Ajouter le conteneur de Gadget sélectionné
+-
++UIGadgetContainerManagement.message.isLossData=Ce Gadget peut être supprimé dans la base de données ou il y a des erreurs de la base de données qui empêchent de lire le contenu du gadget
+   ################################################################################
+   #		 org.exoplatform.portal.webui.application.UIGadgetContainerForm
+   ################################################################################
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_vi.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_vi.properties	(revision 68510)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_vi.properties	(working copy)
+@@ -1330,6 +1330,7 @@
+ UIGadgetContainerManagement.tooltip.remove=Xóa Container Gadget đã được chọn
+ UIGadgetContainerManagement.tooltip.edit=Chỉnh sửa Container Gadget đã được chọn
+ UIGadgetContainerManagement.tooltip.addnew=Thêm mới container Gadget
++UIGadgetContainerManagement.message.isLossData=Gadget này có thể đã bị xóa khỏi cơ sở dữ liệu hoặc việc đọc gadget từ cơ sở dữ liệu xảy ra lỗi
+ 
+   ################################################################################
+   #		 org.exoplatform.portal.webui.application.UIGadgetContainerForm

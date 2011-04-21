@@ -175,6 +175,22 @@ public class UIGadget extends UIComponent {
     return properties_; 
   }
   
+  public boolean isLossData()
+  {
+     try
+     {
+        if (getApplication() == null)
+        {
+           throw new Exception();
+        }
+     }
+     catch (Exception e)
+     {
+        return true;
+     }
+     return false;
+  }
+  
   /**
    * Sets Properties of gadget application such as locationX, locationY in desktop page
    * @param properties Properties that is the properties of gadget application

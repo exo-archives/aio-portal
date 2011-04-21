@@ -3,21 +3,27 @@
 	
   def rcontext = _ctx.getRequestContext() ;
   JavascriptManager jsmanager = rcontext.getJavascriptManager();
-  def url = uicomponent.getUrl();
-  def metadata = uicomponent.getMetadata();
+  def url = null;
+  def metadata = "";
   def posX = uicomponent.getProperties().getIntValue("locationX") + "px";
   def posY = uicomponent.getProperties().getIntValue("locationY") + "px";
   def zIndex = uicomponent.getProperties().getIntValue("zIndex") ;
-  def id = uicomponent.getId();
+  def id = uicomponent.getId() != null ? uicomponent.getId() : "UIGadget";
   def isDev = uicomponent.isGadgetDeveloper();
   def noCache = uicomponent.isNoCache();
   def isDebug = uicomponent.isDebug();
   def view = uicomponent.getView();
-  def userPref = uicomponent.getUserPref() ;
+  def userPref = null;
+  def isLossData = uicomponent.isLossData();
+  if(!isLossData) {
+    url = uicomponent.getUrl();
+	metadata = uicomponent.getMetadata();
+	userPref = uicomponent.getUserPref();
 	jsmanager.importJavascript("eXo.gadget.UIGadget") ;
 	rcontext.getJavascriptManager().addCustomizedOnLoadScript("eXo.gadget.UIGadget.confirmDeleteGadget = '" + _ctx.appRes("UIGadgetContainerManagement.confirm.DeleteGadget") + "';") ;
 	jsmanager.addCustomizedOnLoadScript("eXo.gadget.UIGadget.createGadget('$url','$id', $metadata, $userPref, '$view', " + (isDev ? 1 : 0)
-                                                                            + ", " + (isDebug ? 1 : 0) + ", " + (noCache ? 1 : 0) + ");")
+                                                                            + ", " + (isDebug ? 1 : 0) + ", " + (noCache ? 1 : 0) + ");");
+  }                                                                      
 %>
 <div class="UIGadget ClearFix" id="<%= uicomponent.getApplicationInstanceUniqueId() %>" style="left: $posX; top: $posY; z-Index: $zIndex; width: 320px" >
 	<% if(uicomponent.hasDecorator()) {%>
@@ -25,7 +31,7 @@
 		<div class="LeftControlBar">
 			<div class="RightControlBar">
 				<div class="CenterControlBar ClearFix">
-					<div class="GadgetTitle" style="display: none"><%= uicomponent.getApplicationName() %></div>
+					<div class="GadgetTitle" style="display: <%=isLossData ? "block" : "none"; %> ; float: none; width: auto; margin-right: 75px"><%= uicomponent.getApplicationName() %></div>
 			  		<div class="CloseGadget IconControl" onclick="eXo.gadget.UIGadget.deleteGadget(this)" onmousedown="event.cancelBubble=true;"><span></span></div>
 					<div class="<%=Boolean.parseBoolean(uicomponent.getProperties().get("minimized")) ? "RestoreGadget": "MinimizeGadget";%> MinimizeAction IconControl" 
 									onclick="eXo.gadget.UIGadget.minimizeGadget(this)" onmousedown="event.cancelBubble=true;" style="display:none;"><span></span></div>
@@ -44,7 +50,11 @@
 		</div>
 		<div class="MLGadget">
 			<div class="MRGadget">
+			  <% if(isLossData) {%>
+ 	 	 	    <div id="content-$id" class="MCGadget"><%=_ctx.appRes("UIGadgetContainerManagement.message.isLossData")%></div>
+ 	 	 	  <% } else {%>
 				<div id="$id" class="MCGadget"></div>
+			  <% } %>
 			</div>
 		</div>
 		<div class="BLGadget">

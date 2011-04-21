@@ -22,7 +22,12 @@ import org.exoplatform.application.gadget.Gadget;
 import org.exoplatform.application.gadget.GadgetRegistryService;
 import org.exoplatform.application.gadget.Source;
 import org.exoplatform.application.gadget.SourceStorage;
+import org.exoplatform.application.registry.Application;
+import org.exoplatform.application.registry.ApplicationCategory;
+import org.exoplatform.application.registry.ApplicationRegistryService;
 import org.exoplatform.applicationregistry.webui.Util;
+import org.exoplatform.container.ExoContainer;
+import org.exoplatform.container.ExoContainerContext;
 import org.exoplatform.web.WebAppController;
 import org.exoplatform.web.application.ApplicationMessage;
 import org.exoplatform.web.application.gadget.GadgetApplication;
@@ -158,7 +163,20 @@ public class UIGadgetManagement extends UIContainer {
         sourceStorage.removeSource(name + ".xml");
       }
       uiManagement.reload();
+      removeFromApplicationRegistry(name);
       ctx.addUIComponentToUpdateByAjax(uiManagement) ;
+    }
+    
+    private void removeFromApplicationRegistry(String name) throws Exception {
+      ApplicationRegistryService regService = (ApplicationRegistryService) ExoContainerContext.getCurrentContainer()
+                                                                                  .getComponentInstanceOfType(ApplicationRegistryService.class);
+      List<ApplicationCategory> cates = regService.getApplicationCategories();
+      for (ApplicationCategory cate : cates)
+      {
+         Application app = regService.getApplication(cate.getName(), name);
+         if (app != null)
+           regService.remove(app);
+      }      
     }
     
   }
