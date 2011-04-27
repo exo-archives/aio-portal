@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bundle>
   <!--
+  ##portlet title
+  -->
+  <javax>
+    <portlet>
+    	<title>Tài khoản mới</title>
+    </portlet>
+  </javax>
+  <!--
   ##org.exoplatform.account.webui.component.UIAccountForm
   -->
   <UIAccountForm>

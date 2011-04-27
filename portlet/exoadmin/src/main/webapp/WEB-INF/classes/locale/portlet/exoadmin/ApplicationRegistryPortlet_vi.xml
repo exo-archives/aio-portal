@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bundle>
   <!--
+  ##portlet title
+  -->
+  <javax>
+    <portlet>
+    	<title>Quản lý ứng dụng</title>
+    </portlet>
+  </javax>
+  <!--
   ##expression
   -->
   <word>

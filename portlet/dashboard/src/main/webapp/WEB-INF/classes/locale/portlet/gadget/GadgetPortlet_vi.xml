@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bundle>
+  <!--
+  ##portlet title
+  -->
+  <javax>
+    <portlet>
+    	<title>Gadget Portlet</title>
+    </portlet>
+  </javax>
   <UIGadgetEditMode>
     <title>Thiết định URL cho gadget</title>
     <label>
