@@ -21,17 +21,8 @@
   boolean isDesktop = "Window".equals(uicomponent.getPortletStyle());
   String portletId = uicomponent.getId() ;
   
-  String title = uicomponent.getTitle();
-  if(title==null || title.trim().length()==0) {
-  	title = portletTitle;
-  }
-  if(title==null || title.trim().length()==0) {
-  	title = uicomponent.getDisplayName();	
-  }
-  if(title==null || title.trim().length()==0){
-  	title = uicomponent.getId();
-  }
-
+  String title = uicomponent.getDisplayTitle();
+  
   if(!isDesktop && isPortalAppEditting) {
 %>
   <div class="UIPortlet" id="UIPortlet-$portletId">

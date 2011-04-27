@@ -68,7 +68,8 @@ import org.exoplatform.webui.form.validator.StringLengthValidator;
     events = {
       @EventConfig(listeners = UIPortletForm.SaveActionListener.class),
       @EventConfig(listeners = UIPortletForm.CloseActionListener.class, phase = Phase.DECODE),
-      @EventConfig(listeners = UIFormTabPane.SelectTabActionListener.class, phase = Phase.DECODE)
+      @EventConfig(listeners = UIFormTabPane.SelectTabActionListener.class, phase = Phase.DECODE),
+      @EventConfig(listeners = UIPortletForm.CheckShowEditedTitleActionListener.class, phase = Phase.DECODE)
     }
 )   
 public class UIPortletForm extends UIFormTabPane {	
@@ -85,12 +86,15 @@ public class UIPortletForm extends UIFormTabPane {
   	UIFormInputSet uiPortletPrefSet = new UIFormInputSet(FIELD_PORTLET_PREF).setRendered(false);
   	addUIFormInput(uiPortletPrefSet);
     UIFormInputSet uiSettingSet = new UIFormInputSet("PortletSetting");
-  	uiSettingSet.
+    UIFormCheckBoxInput showEditedTitle = new UIFormCheckBoxInput("showEditedTitle", "showEditedTitle", false);
+    showEditedTitle.setOnChange("CheckShowEditedTitle");
+    uiSettingSet.
       addUIFormInput(new UIFormStringInput("id", "id", null).
                      addValidator(MandatoryValidator.class).setEditable(false)).
       addUIFormInput(new UIFormStringInput("windowId", "windowId", null).setEditable(false)).
     	addUIFormInput(new UIFormStringInput("title", "title", null)).
-  		addUIFormInput(new UIFormStringInput("width", "width", null).
+    	addUIFormInput(showEditedTitle).
+    	addUIFormInput(new UIFormStringInput("width", "width", null).
                      addValidator(ExpressionValidator.class, "(^([1-9]\\d*)px$)?",
                          "UIPortletForm.msg.InvalidWidthHeight")).
   		addUIFormInput(new UIFormStringInput("height", "height", null).
@@ -162,6 +166,13 @@ public class UIPortletForm extends UIFormTabPane {
     if (icon == null || icon.length() < 0) { icon = "PortletIcon"; }
     getChild(UIFormInputIconSelector.class).setSelectedIcon(icon);
     getChild(UIFormInputThemeSelector.class).getChild(UIItemThemeSelector.class).setSelectedTheme(uiPortlet.getSuitedTheme(null));
+    UIFormInputSet portletSetting = getChildById("PortletSetting");
+    portletSetting.getUIFormCheckBoxInput("showEditedTitle").setChecked(uiPortlet_.getShowEditedTitle());
+    if(uiPortlet_.getShowEditedTitle()) {      
+      portletSetting.getUIStringInput("title").setEditable(true);
+    } else {
+      portletSetting.getUIStringInput("title").setEditable(false);
+    }
     WebuiRequestContext contextres = WebuiRequestContext.getCurrentInstance();
     ResourceBundle res = contextres.getApplicationResourceBundle();
     if (hasEditMode()) {
@@ -244,11 +255,6 @@ public class UIPortletForm extends UIFormTabPane {
         uiPortlet.setCurrentPortletMode(PortletMode.VIEW);
       }
       
-      String title = uiPortlet.getTitle();
-      if (title != null && title.trim().equals("")) {
-        uiPortlet.setTitle(null);
-      }
-      
       String width = uiPortletForm.getUIStringInput("width").getValue();
       if (width == null || width.length() == 0) { 
         uiPortlet.setWidth(null); 
@@ -285,6 +291,27 @@ public class UIPortletForm extends UIFormTabPane {
       pcontext.addUIComponentToUpdateByAjax(uiWorkingWS);
       pcontext.setFullRender(true);
       Util.showComponentLayoutMode(UIPortlet.class);  
+    }
+  }
+  
+  static public class CheckShowEditedTitleActionListener extends EventListener<UIPortletForm> {
+      public void execute(final Event<UIPortletForm> event) throws Exception {
+      UIPortletForm form = event.getSource();
+      UIPortlet uiPortlet = form.getUIPortlet();
+      UIFormInputSet portletSetting = form.getChildById("PortletSetting");
+      UIFormStringInput titleBox = portletSetting.getUIStringInput("title");
+      UIFormCheckBoxInput checkBox = portletSetting.getUIFormCheckBoxInput("showEditedTitle");
+      if(checkBox.isChecked()) {//enable edit title box
+        titleBox.setEditable(true);
+        uiPortlet.setShowEditedTitle(true);
+      } else {
+        titleBox.setEditable(false);
+        uiPortlet.setShowEditedTitle(false);
+      }
+      
+      PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext();
+      pcontext.addUIComponentToUpdateByAjax(form);
+      pcontext.setFullRender(true);
     }
   }
 }

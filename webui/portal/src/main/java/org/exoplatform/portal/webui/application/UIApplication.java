@@ -31,6 +31,7 @@ public class UIApplication  extends UIPortalComponent {
   
   private boolean  showInfoBar = true ;
   private boolean  showWindowState = true ;
+  private boolean  showEditedTitle = true;
   
   private String   description;
   private String   icon;
@@ -55,6 +56,9 @@ public class UIApplication  extends UIPortalComponent {
   
   public boolean getShowInfoBar() { return showInfoBar ; }
   public void    setShowInfoBar(Boolean b) {showInfoBar = b ;}
+  
+  public boolean getEditedTitle() { return showEditedTitle ; }
+  public void    setEditedTitle(Boolean b) {showEditedTitle = b ;}
   
   public String getDescription() {  return  description ; }
   public void   setDescription(String s) { description = s ;}

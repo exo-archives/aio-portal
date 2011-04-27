@@ -16,8 +16,11 @@
  */
 package org.exoplatform.portal.webui.application;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletMode;
@@ -149,7 +152,14 @@ public class UIPortletLifecycle extends Lifecycle {
     input.setPortletMode(uiPortlet.getCurrentPortletMode());
     input.setWindowState(uiPortlet.getCurrentWindowState());
     input.setMarkup("text/html");
-    input.setTitle(uiPortlet.getTitle());
+    if(uiPortlet.getShowEditedTitle()) {
+      input.setTitle(uiPortlet.getTitle());
+    }
+    
+    List<Locale> locales = new ArrayList<Locale>();
+    locales.add(context.getLocale());
+    input.setLocales(locales);
+    
     input.setInternalWindowID(uiPortlet.getExoWindowID());
     input.setRenderParameters(getRenderParameterMap(uiPortlet));
     input.setPublicParamNames(uiPortlet.getPublicRenderParamNames());
@@ -184,6 +194,7 @@ public class UIPortletLifecycle extends Lifecycle {
     }
     if (output != null) {
       portletTitle = output.getTitle();
+      uiPortlet.setTitle(portletTitle);
       prcontext.setHeaders(output.getHeaderProperties()); 
     }
     //if (portletTitle == null) portletTitle = "Portlet";
@@ -199,7 +210,6 @@ public class UIPortletLifecycle extends Lifecycle {
           .getWriter(), uiPortlet, prcontext);
       bcontext.put("uicomponent", uiPortlet);
       bcontext.put("portletContent", markup);
-      bcontext.put("portletTitle", portletTitle);
       try {
         renderTemplate(uiPortlet.getTemplate(), bcontext);
       } catch (Throwable ex) {}

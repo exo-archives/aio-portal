@@ -118,6 +118,7 @@ public class PortalDataMapper {
     model.setShowInfoBar(uiPortlet.getShowInfoBar());
     model.setShowApplicationState(uiPortlet.getShowWindowState());
     model.setShowApplicationMode(uiPortlet.getShowPortletMode());    
+    model.setShowEditedTitle(uiPortlet.getShowEditedTitle());
     model.setDescription(uiPortlet.getDescription());
     model.setIcon(uiPortlet.getIcon());
     model.setProperties(uiPortlet.getProperties());
@@ -244,6 +245,7 @@ public class PortalDataMapper {
     uiPortlet.setShowInfoBar(model.getShowInfoBar());
     uiPortlet.setShowWindowState(model.getShowApplicationState());
     uiPortlet.setShowPortletMode(model.getShowApplicationMode());
+    uiPortlet.setShowEditedTitle(model.getShowEditedTitle());
     uiPortlet.setProperties(model.getProperties());
     uiPortlet.setTheme(model.getTheme());
     PortletContainerService portletContainer =  uiPortlet.getApplicationComponent(PortletContainerService.class);

@@ -36,6 +36,7 @@ public class Application {
   private boolean  showInfoBar = true ;
   private boolean  showApplicationState = true ;
   private boolean  showApplicationMode = true ;
+  private boolean  showEditedTitle = true;
   private String theme;
   private String width ;
   private String height ;
@@ -64,6 +65,9 @@ public class Application {
   
   public boolean getShowApplicationMode() { return showApplicationMode ; }
   public void    setShowApplicationMode(Boolean b) { showApplicationMode = b ; }
+  
+  public boolean getShowEditedTitle() { return showEditedTitle ; }
+  public void    setShowEditedTitle(Boolean b) { showEditedTitle = b ; }
   
   public String getIcon() { return icon ; }
   public void setIcon(String value) { icon = value ; }

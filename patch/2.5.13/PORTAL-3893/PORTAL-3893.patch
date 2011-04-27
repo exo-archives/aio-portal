@@ -1,0 +1,339 @@
+Index: component/portal/src/main/java/org/exoplatform/portal/config/model/Application.java
+===================================================================
+--- component/portal/src/main/java/org/exoplatform/portal/config/model/Application.java	(revision 68442)
++++ component/portal/src/main/java/org/exoplatform/portal/config/model/Application.java	(working copy)
+@@ -36,6 +36,7 @@
+   private boolean  showInfoBar = true ;
+   private boolean  showApplicationState = true ;
+   private boolean  showApplicationMode = true ;
++  private boolean  showEditedTitle = true;
+   private String theme;
+   private String width ;
+   private String height ;
+@@ -64,6 +65,9 @@
+   
+   public boolean getShowApplicationMode() { return showApplicationMode ; }
+   public void    setShowApplicationMode(Boolean b) { showApplicationMode = b ; }
++  
++  public boolean getShowEditedTitle() { return showEditedTitle ; }
++  public void    setShowEditedTitle(Boolean b) { showEditedTitle = b ; }
+   
+   public String getIcon() { return icon ; }
+   public void setIcon(String value) { icon = value ; }
+Index: component/portal/src/main/resources/binding.xml
+===================================================================
+--- component/portal/src/main/resources/binding.xml	(revision 68442)
++++ component/portal/src/main/resources/binding.xml	(working copy)
+@@ -16,6 +16,7 @@
+     <value name="show-info-bar" field="showInfoBar" usage="optional" />
+     <value name="show-application-state" field="showApplicationState" usage="optional" />
+     <value name="show-application-mode" field="showApplicationMode" usage="optional" />
++    <value name="show-edited-title" field="showEditedTitle" usage="optional" />
+     <value name="description" field="description" usage="optional"/>
+     <value name="icon" field="icon" usage="optional"/>
+     <value name="width" usage="optional" field="width"  />
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIApplication.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIApplication.java	(revision 68442)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIApplication.java	(working copy)
+@@ -31,6 +31,7 @@
+   
+   private boolean  showInfoBar = true ;
+   private boolean  showWindowState = true ;
++  private boolean  showEditedTitle = true;
+   
+   private String   description;
+   private String   icon;
+@@ -55,6 +56,9 @@
+   
+   public boolean getShowInfoBar() { return showInfoBar ; }
+   public void    setShowInfoBar(Boolean b) {showInfoBar = b ;}
++  
++  public boolean getEditedTitle() { return showEditedTitle ; }
++  public void    setEditedTitle(Boolean b) {showEditedTitle = b ;}
+   
+   public String getDescription() {  return  description ; }
+   public void   setDescription(String s) { description = s ;}
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletLifecycle.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletLifecycle.java	(revision 68442)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletLifecycle.java	(working copy)
+@@ -16,8 +16,11 @@
+  */
+ package org.exoplatform.portal.webui.application;
+ 
++import java.util.ArrayList;
+ import java.util.Collections;
+ import java.util.HashMap;
++import java.util.List;
++import java.util.Locale;
+ import java.util.Map;
+ 
+ import javax.portlet.PortletMode;
+@@ -149,7 +152,14 @@
+     input.setPortletMode(uiPortlet.getCurrentPortletMode());
+     input.setWindowState(uiPortlet.getCurrentWindowState());
+     input.setMarkup("text/html");
+-    input.setTitle(uiPortlet.getTitle());
++    if(uiPortlet.getShowEditedTitle()) {
++      input.setTitle(uiPortlet.getTitle());
++    }
++    
++    List<Locale> locales = new ArrayList<Locale>();
++    locales.add(context.getLocale());
++    input.setLocales(locales);
++    
+     input.setInternalWindowID(uiPortlet.getExoWindowID());
+     input.setRenderParameters(getRenderParameterMap(uiPortlet));
+     input.setPublicParamNames(uiPortlet.getPublicRenderParamNames());
+@@ -184,6 +194,7 @@
+     }
+     if (output != null) {
+       portletTitle = output.getTitle();
++      uiPortlet.setTitle(portletTitle);
+       prcontext.setHeaders(output.getHeaderProperties()); 
+     }
+     //if (portletTitle == null) portletTitle = "Portlet";
+@@ -199,7 +210,6 @@
+           .getWriter(), uiPortlet, prcontext);
+       bcontext.put("uicomponent", uiPortlet);
+       bcontext.put("portletContent", markup);
+-      bcontext.put("portletTitle", portletTitle);
+       try {
+         renderTemplate(uiPortlet.getTemplate(), bcontext);
+       } catch (Throwable ex) {}
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletForm.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletForm.java	(revision 68442)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletForm.java	(working copy)
+@@ -68,7 +68,8 @@
+     events = {
+       @EventConfig(listeners = UIPortletForm.SaveActionListener.class),
+       @EventConfig(listeners = UIPortletForm.CloseActionListener.class, phase = Phase.DECODE),
+-      @EventConfig(listeners = UIFormTabPane.SelectTabActionListener.class, phase = Phase.DECODE)
++      @EventConfig(listeners = UIFormTabPane.SelectTabActionListener.class, phase = Phase.DECODE),
++      @EventConfig(listeners = UIPortletForm.CheckShowEditedTitleActionListener.class, phase = Phase.DECODE)
+     }
+ )   
+ public class UIPortletForm extends UIFormTabPane {	
+@@ -85,12 +86,15 @@
+   	UIFormInputSet uiPortletPrefSet = new UIFormInputSet(FIELD_PORTLET_PREF).setRendered(false);
+   	addUIFormInput(uiPortletPrefSet);
+     UIFormInputSet uiSettingSet = new UIFormInputSet("PortletSetting");
+-  	uiSettingSet.
++    UIFormCheckBoxInput showEditedTitle = new UIFormCheckBoxInput("showEditedTitle", "showEditedTitle", false);
++    showEditedTitle.setOnChange("CheckShowEditedTitle");
++    uiSettingSet.
+       addUIFormInput(new UIFormStringInput("id", "id", null).
+                      addValidator(MandatoryValidator.class).setEditable(false)).
+       addUIFormInput(new UIFormStringInput("windowId", "windowId", null).setEditable(false)).
+     	addUIFormInput(new UIFormStringInput("title", "title", null)).
+-  		addUIFormInput(new UIFormStringInput("width", "width", null).
++    	addUIFormInput(showEditedTitle).
++    	addUIFormInput(new UIFormStringInput("width", "width", null).
+                      addValidator(ExpressionValidator.class, "(^([1-9]\\d*)px$)?",
+                          "UIPortletForm.msg.InvalidWidthHeight")).
+   		addUIFormInput(new UIFormStringInput("height", "height", null).
+@@ -162,6 +166,13 @@
+     if (icon == null || icon.length() < 0) { icon = "PortletIcon"; }
+     getChild(UIFormInputIconSelector.class).setSelectedIcon(icon);
+     getChild(UIFormInputThemeSelector.class).getChild(UIItemThemeSelector.class).setSelectedTheme(uiPortlet.getSuitedTheme(null));
++    UIFormInputSet portletSetting = getChildById("PortletSetting");
++    portletSetting.getUIFormCheckBoxInput("showEditedTitle").setChecked(uiPortlet_.getShowEditedTitle());
++    if(uiPortlet_.getShowEditedTitle()) {      
++      portletSetting.getUIStringInput("title").setEditable(true);
++    } else {
++      portletSetting.getUIStringInput("title").setEditable(false);
++    }
+     WebuiRequestContext contextres = WebuiRequestContext.getCurrentInstance();
+     ResourceBundle res = contextres.getApplicationResourceBundle();
+     if (hasEditMode()) {
+@@ -244,11 +255,6 @@
+         uiPortlet.setCurrentPortletMode(PortletMode.VIEW);
+       }
+       
+-      String title = uiPortlet.getTitle();
+-      if (title != null && title.trim().equals("")) {
+-        uiPortlet.setTitle(null);
+-      }
+-      
+       String width = uiPortletForm.getUIStringInput("width").getValue();
+       if (width == null || width.length() == 0) { 
+         uiPortlet.setWidth(null); 
+@@ -287,4 +293,25 @@
+       Util.showComponentLayoutMode(UIPortlet.class);  
+     }
+   }
++  
++  static public class CheckShowEditedTitleActionListener extends EventListener<UIPortletForm> {
++      public void execute(final Event<UIPortletForm> event) throws Exception {
++      UIPortletForm form = event.getSource();
++      UIPortlet uiPortlet = form.getUIPortlet();
++      UIFormInputSet portletSetting = form.getChildById("PortletSetting");
++      UIFormStringInput titleBox = portletSetting.getUIStringInput("title");
++      UIFormCheckBoxInput checkBox = portletSetting.getUIFormCheckBoxInput("showEditedTitle");
++      if(checkBox.isChecked()) {//enable edit title box
++        titleBox.setEditable(true);
++        uiPortlet.setShowEditedTitle(true);
++      } else {
++        titleBox.setEditable(false);
++        uiPortlet.setShowEditedTitle(false);
++      }
++      
++      PortalRequestContext pcontext = (PortalRequestContext) event.getRequestContext();
++      pcontext.addUIComponentToUpdateByAjax(form);
++      pcontext.setFullRender(true);
++    }
++  }
+ }
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortlet.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortlet.java	(revision 68442)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortlet.java	(working copy)
+@@ -79,7 +79,7 @@
+   private String portletStyle ;
+ 
+   private boolean  showPortletMode = true ;
+-  
++  private boolean  showEditedTitle = true;
+   private Map<String, String[]> renderParametersMap_ ;
+   private ExoWindowID exoWindowId_ ;
+   private PortletMode currentPortletMode_ = PortletMode.VIEW;
+@@ -127,13 +127,27 @@
+     }
+     
+     return displayName != null? displayName.getDisplayName() : portlet.getPortletName();
+-  }
++  }
+   
++  public String getDisplayTitle() {
++    String title = this.getTitle();
++    if(title==null || title.trim().length()==0) {
++      title = this.getDisplayName(); 
++    }
++    if(title==null || title.trim().length()==0){
++      title = this.getId();
++    }    
++    return title;
++  }
++  
+   public String getPortletStyle() {  return  portletStyle ; }
+   public void   setPortletStyle(String s) { portletStyle = s ;}
+   
+   public boolean getShowPortletMode() { return showPortletMode ; }
+   public void    setShowPortletMode(Boolean b) { showPortletMode = b ; }
++  
++  public boolean getShowEditedTitle() { return showEditedTitle ; }
++  public void    setShowEditedTitle(Boolean b) {showEditedTitle = b ;}
+   
+   public void setPortletInPortal(boolean b) {
+     portletInPortal_  = b;
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/util/PortalDataMapper.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/util/PortalDataMapper.java	(revision 68442)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/util/PortalDataMapper.java	(working copy)
+@@ -118,6 +118,7 @@
+     model.setShowInfoBar(uiPortlet.getShowInfoBar());
+     model.setShowApplicationState(uiPortlet.getShowWindowState());
+     model.setShowApplicationMode(uiPortlet.getShowPortletMode());    
++    model.setShowEditedTitle(uiPortlet.getShowEditedTitle());
+     model.setDescription(uiPortlet.getDescription());
+     model.setIcon(uiPortlet.getIcon());
+     model.setProperties(uiPortlet.getProperties());
+@@ -244,6 +245,7 @@
+     uiPortlet.setShowInfoBar(model.getShowInfoBar());
+     uiPortlet.setShowWindowState(model.getShowApplicationState());
+     uiPortlet.setShowPortletMode(model.getShowApplicationMode());
++    uiPortlet.setShowEditedTitle(model.getShowEditedTitle());
+     uiPortlet.setProperties(model.getProperties());
+     uiPortlet.setTheme(model.getTheme());
+     PortletContainerService portletContainer =  uiPortlet.getApplicationComponent(PortletContainerService.class);
+Index: webui/core/src/main/java/org/exoplatform/webui/application/portlet/PortletApplicationController.java
+===================================================================
+--- webui/core/src/main/java/org/exoplatform/webui/application/portlet/PortletApplicationController.java	(revision 68442)
++++ webui/core/src/main/java/org/exoplatform/webui/application/portlet/PortletApplicationController.java	(working copy)
+@@ -98,6 +98,21 @@
+     }
+   }
+   
++  @Override
++  protected java.lang.String getTitle(RenderRequest request) {
++    PortletConfig config = getPortletConfig();
++    if (config == null)
++      throw new java.lang.IllegalStateException(
++          "Config is null, please ensure that your init(config) method calls super.init(config)");
++    //get from resource bundle
++    String title = config.getResourceBundle(request.getLocale()).getString("javax.portlet.title");
++    if(title == null) {
++      //get from portlet.xml configuration
++      title = config.getInitParameter("title");
++    }
++    return title;
++  }
++  
+   /**
+    * try to obtain the PortletApplication from the WebAppController.
+    * 
+Index: web/portal/src/main/webapp/groovy/portal/webui/application/UIPortlet.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/portal/webui/application/UIPortlet.gtmpl	(revision 68442)
++++ web/portal/src/main/webapp/groovy/portal/webui/application/UIPortlet.gtmpl	(working copy)
+@@ -21,17 +21,8 @@
+   boolean isDesktop = "Window".equals(uicomponent.getPortletStyle());
+   String portletId = uicomponent.getId() ;
+   
+-  String title = uicomponent.getTitle();
+-  if(title==null || title.trim().length()==0) {
+-  	title = portletTitle;
+-  }
+-  if(title==null || title.trim().length()==0) {
+-  	title = uicomponent.getDisplayName();	
+-  }
+-  if(title==null || title.trim().length()==0){
+-  	title = uicomponent.getId();
+-  }
+-
++  String title = uicomponent.getDisplayTitle();
++  
+   if(!isDesktop && isPortalAppEditting) {
+ %>
+   <div class="UIPortlet" id="UIPortlet-$portletId">
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties	(revision 68442)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_en.properties	(working copy)
+@@ -280,7 +280,7 @@
+ UIPortletForm.Theme.title.SetDefault=Get Default
+ UIPortletForm.Icon.title.SetDefault=Get Default
+ UIPortletForm.msg.InvalidWidthHeight=You must enter a pixel value in field "{0}".
+-
++UIPortletForm.label.showEditedTitle=Show edited title
+   #############################################################################
+   #       org.exoplatform.portal.component.customization.UIDescription        #
+   #############################################################################
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties	(revision 68442)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_fr.properties	(working copy)
+@@ -285,7 +285,7 @@
+ UIPortletForm.Theme.title.SetDefault=Utiliser la valeur par défaut
+ UIPortletForm.Icon.title.SetDefault=Utiliser la valeur par défaut
+ UIPortletForm.msg.InvalidWidthHeight=Le champ "{0}" doit être une valeur en pixel!
+-
++UIPortletForm.label.showEditedTitle=Afficher le titre édité
+   #############################################################################
+   #       org.exoplatform.portal.component.customization.UIDescription        #
+   #############################################################################
+Index: web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_vi.properties
+===================================================================
+--- web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_vi.properties	(revision 68442)
++++ web/portal/src/main/webapp/WEB-INF/classes/locale/portal/webui_vi.properties	(working copy)
+@@ -280,7 +280,7 @@
+ UIPortletForm.Theme.title.SetDefault=Lấy mặc định
+ UIPortletForm.Icon.title.SetDefault=Lấy mặc định
+ UIPortletForm.msg.InvalidWidthHeight=Dữ liệu mục "{0}" phải là pixel!
+-
++UIPortletForm.label.showEditedTitle=Hiển thị tiêu đề đã chỉnh sửa
+   #############################################################################
+   #       org.exoplatform.portal.component.customization.UIDescription        #
+   #############################################################################

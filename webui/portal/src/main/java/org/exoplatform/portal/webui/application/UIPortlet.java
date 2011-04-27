@@ -79,7 +79,7 @@ public class UIPortlet extends UIApplication {
   private String portletStyle ;
 
   private boolean  showPortletMode = true ;
-  
+  private boolean  showEditedTitle = true;
   private Map<String, String[]> renderParametersMap_ ;
   private ExoWindowID exoWindowId_ ;
   private PortletMode currentPortletMode_ = PortletMode.VIEW;
@@ -129,11 +129,25 @@ public class UIPortlet extends UIApplication {
     return displayName != null? displayName.getDisplayName() : portlet.getPortletName();
   }
   
+  public String getDisplayTitle() {
+    String title = this.getTitle();
+    if(title==null || title.trim().length()==0) {
+      title = this.getDisplayName(); 
+    }
+    if(title==null || title.trim().length()==0){
+      title = this.getId();
+    }    
+    return title;
+  }
+  
   public String getPortletStyle() {  return  portletStyle ; }
   public void   setPortletStyle(String s) { portletStyle = s ;}
   
   public boolean getShowPortletMode() { return showPortletMode ; }
   public void    setShowPortletMode(Boolean b) { showPortletMode = b ; }
+  
+  public boolean getShowEditedTitle() { return showEditedTitle ; }
+  public void    setShowEditedTitle(Boolean b) {showEditedTitle = b ;}
   
   public void setPortletInPortal(boolean b) {
     portletInPortal_  = b;
