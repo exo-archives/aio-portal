@@ -1,0 +1,130 @@
+Index: web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UITabContainer/Stylesheet.css
+===================================================================
+--- web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UITabContainer/Stylesheet.css	(revision 68748)
++++ web/eXoSkinMac/src/main/webapp/skin/MacSkin/portal/webui/component/view/UITabContainer/Stylesheet.css	(working copy)
+@@ -11,17 +11,22 @@
+ .UITabContainer .HorizontalLayout .UITabContentContainer .UITabContent {
+ 	padding: 5px;
+ }
++	
++.UITabContainer .UIHorizontalTabs .UITab	{
++	height: 24px;
++	max-width: 210px;
++}
+ 
+-.UITabContainer .TabLabel {
++.UITabContainer .UIHorizontalTabs .UITab .TabLabel {
++	max-width: 150px;
++	overflow: hidden;
++	white-space: nowrap;
++	display: block;
+ 	padding: 0px 10px 0px 2px; /* orientation=lt */
+ 	padding: 0px 2px 0px 10px; /* orientation=rt */
+ 	line-height: 24px; 
+ 	height: 24px;
+ }
+-	
+-.UITabContainer .UIHorizontalTabs .UITab	{
+-	height: 24px;
+-}
+ 
+ .UITabContainer .EditIcon {
+ 	float: left; /* orientation=lt */
+@@ -40,8 +45,6 @@
+ }
+ 
+ .UITabContainer .NormalTab .EditIcon	{
+-	margin: 0px 6px 0px 0px; /* orientation=lt */
+-	margin: 0px 0px 0px 6px; /* orientation=rt */
+ 	height: 24px;	
+ 	width: 16px;
+ 	background: url('/eXoSkinMac/skin/MacSkin/skinIcons/16x16/icons/DisableEditIcon.gif') no-repeat center; /* orientation=lt */
+Index: web/portal/src/main/webapp/groovy/portal/webui/container/UITabContainer.gtmpl
+===================================================================
+--- web/portal/src/main/webapp/groovy/portal/webui/container/UITabContainer.gtmpl	(revision 68748)
++++ web/portal/src/main/webapp/groovy/portal/webui/container/UITabContainer.gtmpl	(working copy)
+@@ -56,15 +56,14 @@
+ 				              		  if(uiChild.isShowEditControl()){
+ 				              		  	String actionLink = uicomponent.event("EditContainer", "$uiChild.id") - "javascript:";
+ 				              		%>
+-									<div class="MiddleTab ClearFix"> 
+-										<div class="TabLabel FloatLeft" onclick="eXo.webui.UIHorizontalTabs.changeTabForUITabPane(this,'$id', '$tabId' );<%= selectTab %>"><%=title%></div>
+-					              	    <div class="EditIcon" onclick="<%=actionLink%>"></div>
+-					              	    <div class="ClearLeft"><span></span></div>
+-									</div>
+-					              	<%} else {%>
+-										<div class="MiddleTab"> 
+-						           			<a class="TabLabel" onclick="eXo.webui.UIHorizontalTabs.changeTabForUITabPane(this,'$id', '$tabId' );<%= selectTab %>"><%=title%></a>
+-										</div>
++													<div class="MiddleTab ClearFix"> 
++														<div class="TabLabel FloatLeft" onclick="eXo.webui.UIHorizontalTabs.changeTabForUITabPane(this,'$id', '$tabId' );<%= selectTab %>" title="<%=title%>"><%=title%></div>
++									          <div class="EditIcon" onclick="<%=actionLink%>"></div>
++													</div>
++									        <%} else {%>
++													<div class="MiddleTab"> 
++														<a class="TabLabel" onclick="eXo.webui.UIHorizontalTabs.changeTabForUITabPane(this,'$id', '$tabId' );<%= selectTab %>" title="<%=title%>"><%=title%></a>
++													</div>
+ 						           		<%} %>
+ 					              
+ 				            	</div>
+Index: web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UITabContainer/Stylesheet.css
+===================================================================
+--- web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UITabContainer/Stylesheet.css	(revision 68748)
++++ web/eXoResources/src/main/webapp/skin/DefaultSkin/portal/webui/component/view/UITabContainer/Stylesheet.css	(working copy)
+@@ -13,12 +13,6 @@
+ 	padding: 5px;
+ }
+ 
+-.UITabContainer a.TabLabel {
+-	padding: 0px 10px 0px 2px; /* orientation=lt */
+-	padding: 0px 2px 0px 10px; /* orientation=rt */
+-	line-height: 22px; 
+-}
+-
+ .UITabContainer .EditIcon {
+ 	float: left; /* orientation=lt */
+ 	float: right; /* orientation=rt */
+@@ -30,8 +24,19 @@
+ 
+ .UITabContainer .UIHorizontalTabs .UITab {
+ 	height: 24px; 
++	max-width: 222px;
+ }
+ 
++.UITabContainer .UIHorizontalTabs .UITab .TabLabel {
++	max-width: 150px;
++	overflow: hidden;
++	white-space: nowrap;
++	display: block;
++	padding: 0px 10px 0px 2px; /* orientation=lt */
++	padding: 0px 2px 0px 10px; /* orientation=rt */
++	line-height: 22px;
++}
++
+ .UITabContainer .SelectedTab .EditIcon {
+ 	width: 16px; height: 24px;
+ 	background: url('/eXoResources/skin/DefaultSkin/skinIcons/16x16/icons/SelectedEditTab.gif') no-repeat center; /* orientation=lt */
+Index: web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UITabContainer/Stylesheet.css
+===================================================================
+--- web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UITabContainer/Stylesheet.css	(revision 68748)
++++ web/eXoSkinVista/src/main/webapp/skin/VistaSkin/portal/webui/component/view/UITabContainer/Stylesheet.css	(working copy)
+@@ -23,11 +23,19 @@
+ 	height: auto;
+ }
+ 
++.UITabContainer .UIHorizontalTabs .UITab	{
++	max-width: 205px;
++}
++
+ .UITabContainer .TabLabel {
+ 	padding: 0px 10px 0px 2px; /* orientation=lt */
+ 	padding: 0px 2px 0px 10px; /* orientation=rt */
+ 	height: 26px; 
+ 	line-height: 26px;
++	max-width: 150px;
++	overflow: hidden;
++	white-space: nowrap;
++	display: block;
+ }
+ 
+ .UITabContainer .SelectedTab .CloseIcon {

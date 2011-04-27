@@ -23,11 +23,19 @@
 	height: auto;
 }
 
+.UITabContainer .UIHorizontalTabs .UITab	{
+	max-width: 205px;
+}
+
 .UITabContainer .TabLabel {
 	padding: 0px 10px 0px 2px; /* orientation=lt */
 	padding: 0px 2px 0px 10px; /* orientation=rt */
 	height: 26px; 
 	line-height: 26px;
+	max-width: 150px;
+	overflow: hidden;
+	white-space: nowrap;
+	display: block;
 }
 
 .UITabContainer .SelectedTab .CloseIcon {

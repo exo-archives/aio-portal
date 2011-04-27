@@ -13,12 +13,6 @@
 	padding: 5px;
 }
 
-.UITabContainer a.TabLabel {
-	padding: 0px 10px 0px 2px; /* orientation=lt */
-	padding: 0px 2px 0px 10px; /* orientation=rt */
-	line-height: 22px; 
-}
-
 .UITabContainer .EditIcon {
 	float: left; /* orientation=lt */
 	float: right; /* orientation=rt */
@@ -30,6 +24,17 @@
 
 .UITabContainer .UIHorizontalTabs .UITab {
 	height: 24px; 
+	max-width: 222px;
+}
+
+.UITabContainer .UIHorizontalTabs .UITab .TabLabel {
+	max-width: 150px;
+	overflow: hidden;
+	white-space: nowrap;
+	display: block;
+	padding: 0px 10px 0px 2px; /* orientation=lt */
+	padding: 0px 2px 0px 10px; /* orientation=rt */
+	line-height: 22px;
 }
 
 .UITabContainer .SelectedTab .EditIcon {

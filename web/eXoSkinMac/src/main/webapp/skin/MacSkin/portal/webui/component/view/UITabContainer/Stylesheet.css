@@ -11,15 +11,20 @@
 .UITabContainer .HorizontalLayout .UITabContentContainer .UITabContent {
 	padding: 5px;
 }
+	
+.UITabContainer .UIHorizontalTabs .UITab	{
+	height: 24px;
+	max-width: 210px;
+}
 
-.UITabContainer .TabLabel {
+.UITabContainer .UIHorizontalTabs .UITab .TabLabel {
+	max-width: 150px;
+	overflow: hidden;
+	white-space: nowrap;
+	display: block;
 	padding: 0px 10px 0px 2px; /* orientation=lt */
 	padding: 0px 2px 0px 10px; /* orientation=rt */
 	line-height: 24px; 
-	height: 24px;
-}
-	
-.UITabContainer .UIHorizontalTabs .UITab	{
 	height: 24px;
 }
 
@@ -40,8 +45,6 @@
 }
 
 .UITabContainer .NormalTab .EditIcon	{
-	margin: 0px 6px 0px 0px; /* orientation=lt */
-	margin: 0px 0px 0px 6px; /* orientation=rt */
 	height: 24px;	
 	width: 16px;
 	background: url('/eXoSkinMac/skin/MacSkin/skinIcons/16x16/icons/DisableEditIcon.gif') no-repeat center; /* orientation=lt */
