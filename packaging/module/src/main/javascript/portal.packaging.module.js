@@ -119,10 +119,10 @@ function getModule(params) {
 		addDependency(new Project("jaxen", "jaxen", "jar", "1.1.1")).
 		addDependency(new Project("joda-time", "joda-time", "jar", "1.5.2")).
 		addDependency(new Project("org.json", "json", "jar", "20070829")).
-		addDependency(new Project("org.apache.shindig", "shindig-common", "jar", "0.8.1-1-r719456")).
-		addDependency(new Project("org.apache.shindig", "shindig-gadgets", "jar", "0.8.1-1-r719456")).
-		addDependency(new Project("org.apache.shindig", "shindig-features", "jar", "0.8.1-1-r719456")).		
-		addDependency(new Project("org.apache.shindig", "shindig-social-api", "jar", "0.8.1-1-r719456")).
+		addDependency(new Project("org.apache.shindig", "shindig-common", "jar", "trunk-r719456-eXo03")).
+		addDependency(new Project("org.apache.shindig", "shindig-gadgets", "jar", "trunk-r719456-eXo03")).
+		addDependency(new Project("org.apache.shindig", "shindig-features", "jar", "trunk-r719456-eXo03")).		
+		addDependency(new Project("org.apache.shindig", "shindig-social-api", "jar", "trunk-r719456-eXo03")).
 		addDependency(new Project("jdom", "jdom", "jar", "1.0")).
 //		addDependency(new Project("commons-codec", "commons-codec", "jar", "1.2")).
 		addDependency(new Project("commons-httpclient", "commons-httpclient", "jar", "3.1")).
