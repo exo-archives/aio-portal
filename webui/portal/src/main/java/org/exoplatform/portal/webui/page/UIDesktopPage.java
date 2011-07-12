@@ -147,13 +147,12 @@ public class UIDesktopPage extends UIPage {
       
       /*########################## Save Window status (SHOW / HIDE) ##########################*/
       String appStatus = event.getRequestContext().getRequestParameter(UIApplication.appStatus);
-      if(appStatus != null) uiApp.getProperties().put(UIApplication.appStatus, appStatus);
-      
-//      if(!uiPage.isModifiable()) return;
-//      Page page = PortalDataMapper.toPageModel(uiPage);
-//      UserPortalConfigService configService = uiPage.getApplicationComponent(UserPortalConfigService.class);
-//      if(page.getChildren() == null) page.setChildren(new ArrayList<Object>());
-//      configService.update(page);
+      if(appStatus != null) {
+        uiApp.getProperties().put(UIApplication.appStatus, appStatus);
+        Page page = PortalDataMapper.toPageModel(uiPage);
+        UserPortalConfigService configService = uiPage.getApplicationComponent(UserPortalConfigService.class);
+        configService.update(page);
+      }
     }
   }
   
