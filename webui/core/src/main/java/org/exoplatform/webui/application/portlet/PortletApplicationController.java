@@ -98,21 +98,6 @@ public class PortletApplicationController extends GenericPortlet {
     }
   }
   
-  @Override
-  protected java.lang.String getTitle(RenderRequest request) {
-    PortletConfig config = getPortletConfig();
-    if (config == null)
-      throw new java.lang.IllegalStateException(
-          "Config is null, please ensure that your init(config) method calls super.init(config)");
-    //get from resource bundle
-    String title = config.getResourceBundle(request.getLocale()).getString("javax.portlet.title");
-    if(title == null) {
-      //get from portlet.xml configuration
-      title = config.getInitParameter("title");
-    }
-    return title;
-  }
-  
   /**
    * try to obtain the PortletApplication from the WebAppController.
    * 

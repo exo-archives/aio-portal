@@ -86,7 +86,8 @@ public class UIPortletForm extends UIFormTabPane {
   	UIFormInputSet uiPortletPrefSet = new UIFormInputSet(FIELD_PORTLET_PREF).setRendered(false);
   	addUIFormInput(uiPortletPrefSet);
     UIFormInputSet uiSettingSet = new UIFormInputSet("PortletSetting");
-    UIFormCheckBoxInput showEditedTitle = new UIFormCheckBoxInput("showEditedTitle", "showEditedTitle", false);
+    UIFormCheckBoxInput showEditedTitle = new UIFormCheckBoxInput("showEditedTitle", "showEditedTitle", true);
+    showEditedTitle.setChecked(true);
     showEditedTitle.setOnChange("CheckShowEditedTitle");
     uiSettingSet.
       addUIFormInput(new UIFormStringInput("id", "id", null).

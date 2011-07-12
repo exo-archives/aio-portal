@@ -102,6 +102,7 @@ public class UIAddNewApplication extends UIContainer {
         windowId.append(":/").append(application.getApplicationGroup() + "/" + application.getApplicationName()).append('/').append(uiPortlet.generateUniqueId());
         uiPortlet.setWindowId(windowId.toString());
         uiPortlet.setPortletInPortal(false);
+        uiPortlet.setShowEditedTitle(false);
 
         if (application != null) {
           if (application.getDisplayName() != null) {
@@ -261,6 +262,7 @@ public class UIAddNewApplication extends UIContainer {
         windowId.append(":/").append(application.getApplicationGroup() + "/" + application.getApplicationName()).append('/')
           .append(uiPortlet.generateUniqueId());
         uiPortlet.setWindowId(windowId.toString());
+        uiPortlet.setShowEditedTitle(false);
         uiPortlet.setPortletInPortal(false);
         uiPortlet.getProperties().setProperty("appStatus", "HIDE");
 

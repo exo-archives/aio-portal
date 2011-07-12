@@ -27,7 +27,7 @@
       <mime-type>text/html</mime-type>
     </supports>
     <supported-locale>en</supported-locale>
-    <resource-bundle>locale.portlet.web.GroovyPortlet</resource-bundle>
+    <resource-bundle>locale.portlet.web.BannerPortlet</resource-bundle>
     <portlet-info>
       <title>Banner Portlet</title>
       <short-title>Banner Portlet</short-title>
@@ -60,7 +60,7 @@
       <mime-type>text/html</mime-type>
     </supports>
     <supported-locale>en</supported-locale>
-    <resource-bundle>locale.portlet.web.GroovyPortlet</resource-bundle>
+    <resource-bundle>locale.portlet.web.FooterPortlet</resource-bundle>
     <portlet-info>
       <title>Footer Portlet</title>
       <short-title>Footer Portlet</short-title>
@@ -169,7 +169,7 @@
       <portlet-mode>help</portlet-mode>
     </supports>
     <supported-locale>en</supported-locale>
-    <resource-bundle>locale.portlet.web.GroovyPortlet</resource-bundle>
+    <resource-bundle>locale.portlet.web.SiteMapPortlet</resource-bundle>
     
     <portlet-info>
       <title>Site map Portlet</title>
@@ -260,7 +260,7 @@
       <portlet-mode>edit</portlet-mode>
     </supports>
     <supported-locale>en</supported-locale>
-    <resource-bundle>locale.portlet.web.GroovyPortlet</resource-bundle>
+    <resource-bundle>locale.portlet.web.IframePortlet</resource-bundle>
     <portlet-info>
       <title>Footer Portlet</title>
       <short-title>Footer Portlet</short-title>
@@ -297,7 +297,7 @@
       <portlet-mode>help</portlet-mode>
     </supports>
     <supported-locale>en</supported-locale>
-    <resource-bundle>locale.portlet.web.GroovyPortlet</resource-bundle>
+    <resource-bundle>locale.portlet.web.HomePagePortlet</resource-bundle>
     
     <portlet-info>
       <title>HomePage Portlet</title>

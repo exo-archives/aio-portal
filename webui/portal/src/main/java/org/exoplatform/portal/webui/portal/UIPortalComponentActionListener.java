@@ -220,6 +220,7 @@ public class UIPortalComponentActionListener {
           windowId.append(uiPortlet.generateUniqueId());
           uiPortlet.setWindowId(windowId.toString());
           uiPortlet.setShowEditControl(true);
+          uiPortlet.setShowEditedTitle(false);
           uiSource = uiPortlet;
           //Delete preference of trasient portlet if NOT in Finish action
           registerDeleteTransientPPTask(uiPortlet.getExoWindowID());          

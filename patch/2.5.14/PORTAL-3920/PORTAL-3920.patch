@@ -1,0 +1,280 @@
+Index: component/portal/src/main/resources/binding.xml
+===================================================================
+--- component/portal/src/main/resources/binding.xml	(revision 69980)
++++ component/portal/src/main/resources/binding.xml	(working copy)
+@@ -16,7 +16,7 @@
+     <value name="show-info-bar" field="showInfoBar" usage="optional" />
+     <value name="show-application-state" field="showApplicationState" usage="optional" />
+     <value name="show-application-mode" field="showApplicationMode" usage="optional" />
+-    <value name="show-edited-title" field="showEditedTitle" usage="optional" />
++    <value name="show-edited-title" field="showEditedTitle" usage="optional" default="true"/>
+     <value name="description" field="description" usage="optional"/>
+     <value name="icon" field="icon" usage="optional"/>
+     <value name="width" usage="optional" field="width"  />
+Index: portlet/web/src/main/webapp/WEB-INF/portlet.xml
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/portlet.xml	(revision 69980)
++++ portlet/web/src/main/webapp/WEB-INF/portlet.xml	(working copy)
+@@ -27,7 +27,7 @@
+       <mime-type>text/html</mime-type>
+     </supports>
+     <supported-locale>en</supported-locale>
+-    <resource-bundle>locale.portlet.web.GroovyPortlet</resource-bundle>
++    <resource-bundle>locale.portlet.web.BannerPortlet</resource-bundle>
+     <portlet-info>
+       <title>Banner Portlet</title>
+       <short-title>Banner Portlet</short-title>
+@@ -60,7 +60,7 @@
+       <mime-type>text/html</mime-type>
+     </supports>
+     <supported-locale>en</supported-locale>
+-    <resource-bundle>locale.portlet.web.GroovyPortlet</resource-bundle>
++    <resource-bundle>locale.portlet.web.FooterPortlet</resource-bundle>
+     <portlet-info>
+       <title>Footer Portlet</title>
+       <short-title>Footer Portlet</short-title>
+@@ -169,7 +169,7 @@
+       <portlet-mode>help</portlet-mode>
+     </supports>
+     <supported-locale>en</supported-locale>
+-    <resource-bundle>locale.portlet.web.GroovyPortlet</resource-bundle>
++    <resource-bundle>locale.portlet.web.SiteMapPortlet</resource-bundle>
+     
+     <portlet-info>
+       <title>Site map Portlet</title>
+@@ -260,7 +260,7 @@
+       <portlet-mode>edit</portlet-mode>
+     </supports>
+     <supported-locale>en</supported-locale>
+-    <resource-bundle>locale.portlet.web.GroovyPortlet</resource-bundle>
++    <resource-bundle>locale.portlet.web.IframePortlet</resource-bundle>
+     <portlet-info>
+       <title>Footer Portlet</title>
+       <short-title>Footer Portlet</short-title>
+@@ -297,7 +297,7 @@
+       <portlet-mode>help</portlet-mode>
+     </supports>
+     <supported-locale>en</supported-locale>
+-    <resource-bundle>locale.portlet.web.GroovyPortlet</resource-bundle>
++    <resource-bundle>locale.portlet.web.HomePagePortlet</resource-bundle>
+     
+     <portlet-info>
+       <title>HomePage Portlet</title>
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/HomePagePortlet_fr.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/HomePagePortlet_fr.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/HomePagePortlet_fr.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=HomePage Portlet
+\ No newline at end of file
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/FooterPortlet_en.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/FooterPortlet_en.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/FooterPortlet_en.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=Footer Portlet
+\ No newline at end of file
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/HomePagePortlet_vi.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/HomePagePortlet_vi.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/HomePagePortlet_vi.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=HomePage Portlet
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/SiteMapPortlet_en.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/SiteMapPortlet_en.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/SiteMapPortlet_en.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=SiteMap Portlet
+\ No newline at end of file
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/ConsolePortlet_en.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/ConsolePortlet_en.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/ConsolePortlet_en.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=Console Portlet
+\ No newline at end of file
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/FooterPortlet_fr.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/FooterPortlet_fr.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/FooterPortlet_fr.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=Portlet de bas de page
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/IframePortlet_en.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/IframePortlet_en.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/IframePortlet_en.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=IFrame Portlet
+\ No newline at end of file
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/BannerPortlet_en.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/BannerPortlet_en.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/BannerPortlet_en.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=Banner Portlet
+\ No newline at end of file
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/ConsolePortlet_fr.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/ConsolePortlet_fr.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/ConsolePortlet_fr.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=Console Portlet
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/SiteMapPortlet_fr.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/SiteMapPortlet_fr.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/SiteMapPortlet_fr.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=Plan du site
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/IframePortlet_fr.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/IframePortlet_fr.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/IframePortlet_fr.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=IFrame Portlet
+\ No newline at end of file
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/FooterPortlet_vi.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/FooterPortlet_vi.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/FooterPortlet_vi.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=Footer Portlet
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/BannerPortlet_fr.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/BannerPortlet_fr.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/BannerPortlet_fr.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=Portlet bannière
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/ConsolePortlet_vi.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/ConsolePortlet_vi.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/ConsolePortlet_vi.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=Console Portlet
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/SiteMapPortlet_vi.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/SiteMapPortlet_vi.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/SiteMapPortlet_vi.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=SiteMap Portlet
+\ No newline at end of file
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/IframePortlet_vi.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/IframePortlet_vi.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/IframePortlet_vi.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=IFrame Portlet
+\ No newline at end of file
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/BannerPortlet_vi.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/BannerPortlet_vi.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/BannerPortlet_vi.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=Banner Portlet
+Index: portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/HomePagePortlet_en.properties
+===================================================================
+--- portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/HomePagePortlet_en.properties	(revision 0)
++++ portlet/web/src/main/webapp/WEB-INF/classes/locale/portlet/web/HomePagePortlet_en.properties	(revision 0)
+@@ -0,0 +1 @@
++javax.portlet.title=HomePage Portlet
+\ No newline at end of file
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalComponentActionListener.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalComponentActionListener.java	(revision 69980)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/portal/UIPortalComponentActionListener.java	(working copy)
+@@ -220,6 +220,7 @@
+           windowId.append(uiPortlet.generateUniqueId());
+           uiPortlet.setWindowId(windowId.toString());
+           uiPortlet.setShowEditControl(true);
++          uiPortlet.setShowEditedTitle(false);
+           uiSource = uiPortlet;
+           //Delete preference of trasient portlet if NOT in Finish action
+           registerDeleteTransientPPTask(uiPortlet.getExoWindowID());          
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIApplication.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIApplication.java	(revision 69980)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIApplication.java	(working copy)
+@@ -30,8 +30,7 @@
+   private Properties properties;
+   
+   private boolean  showInfoBar = true ;
+-  private boolean  showWindowState = true ;
+-  private boolean  showEditedTitle = true;
++  private boolean  showWindowState = true ;
+   
+   private String   description;
+   private String   icon;
+@@ -55,10 +54,7 @@
+   public void    setShowWindowState(Boolean b) { showWindowState = b ; }
+   
+   public boolean getShowInfoBar() { return showInfoBar ; }
+-  public void    setShowInfoBar(Boolean b) {showInfoBar = b ;}
+-  
+-  public boolean getEditedTitle() { return showEditedTitle ; }
+-  public void    setEditedTitle(Boolean b) {showEditedTitle = b ;}
++  public void    setShowInfoBar(Boolean b) {showInfoBar = b ;}
+   
+   public String getDescription() {  return  description ; }
+   public void   setDescription(String s) { description = s ;}
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletForm.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletForm.java	(revision 69980)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIPortletForm.java	(working copy)
+@@ -86,7 +86,8 @@
+   	UIFormInputSet uiPortletPrefSet = new UIFormInputSet(FIELD_PORTLET_PREF).setRendered(false);
+   	addUIFormInput(uiPortletPrefSet);
+     UIFormInputSet uiSettingSet = new UIFormInputSet("PortletSetting");
+-    UIFormCheckBoxInput showEditedTitle = new UIFormCheckBoxInput("showEditedTitle", "showEditedTitle", false);
++    UIFormCheckBoxInput showEditedTitle = new UIFormCheckBoxInput("showEditedTitle", "showEditedTitle", true);
++    showEditedTitle.setChecked(true);
+     showEditedTitle.setOnChange("CheckShowEditedTitle");
+     uiSettingSet.
+       addUIFormInput(new UIFormStringInput("id", "id", null).
+Index: webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIAddNewApplication.java
+===================================================================
+--- webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIAddNewApplication.java	(revision 69980)
++++ webui/portal/src/main/java/org/exoplatform/portal/webui/application/UIAddNewApplication.java	(working copy)
+@@ -101,7 +101,8 @@
+         windowId.append('#').append(uiPage.getOwnerId());
+         windowId.append(":/").append(application.getApplicationGroup() + "/" + application.getApplicationName()).append('/').append(uiPortlet.generateUniqueId());
+         uiPortlet.setWindowId(windowId.toString());
+-        uiPortlet.setPortletInPortal(false);
++        uiPortlet.setPortletInPortal(false);
++        uiPortlet.setShowEditedTitle(false);
+ 
+         if (application != null) {
+           if (application.getDisplayName() != null) {
+@@ -261,6 +262,7 @@
+         windowId.append(":/").append(application.getApplicationGroup() + "/" + application.getApplicationName()).append('/')
+           .append(uiPortlet.generateUniqueId());
+         uiPortlet.setWindowId(windowId.toString());
++        uiPortlet.setShowEditedTitle(false);
+         uiPortlet.setPortletInPortal(false);
+         uiPortlet.getProperties().setProperty("appStatus", "HIDE");
+ 
+Index: webui/core/src/main/java/org/exoplatform/webui/application/portlet/PortletApplicationController.java
+===================================================================
+--- webui/core/src/main/java/org/exoplatform/webui/application/portlet/PortletApplicationController.java	(revision 69980)
++++ webui/core/src/main/java/org/exoplatform/webui/application/portlet/PortletApplicationController.java	(working copy)
+@@ -98,21 +98,6 @@
+     }
+   }
+   
+-  @Override
+-  protected java.lang.String getTitle(RenderRequest request) {
+-    PortletConfig config = getPortletConfig();
+-    if (config == null)
+-      throw new java.lang.IllegalStateException(
+-          "Config is null, please ensure that your init(config) method calls super.init(config)");
+-    //get from resource bundle
+-    String title = config.getResourceBundle(request.getLocale()).getString("javax.portlet.title");
+-    if(title == null) {
+-      //get from portlet.xml configuration
+-      title = config.getInitParameter("title");
+-    }
+-    return title;
+-  }
+-  
+   /**
+    * try to obtain the PortletApplication from the WebAppController.
+    * 

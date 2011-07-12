@@ -16,7 +16,7 @@
     <value name="show-info-bar" field="showInfoBar" usage="optional" />
     <value name="show-application-state" field="showApplicationState" usage="optional" />
     <value name="show-application-mode" field="showApplicationMode" usage="optional" />
-    <value name="show-edited-title" field="showEditedTitle" usage="optional" />
+    <value name="show-edited-title" field="showEditedTitle" usage="optional" default="true"/>
     <value name="description" field="description" usage="optional"/>
     <value name="icon" field="icon" usage="optional"/>
     <value name="width" usage="optional" field="width"  />
