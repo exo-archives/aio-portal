@@ -1,0 +1,16 @@
+Index: component/xml-parser/src/main/java/org/exoplatform/services/html/refs/RefsDecoder.java
+===================================================================
+--- component/xml-parser/src/main/java/org/exoplatform/services/html/refs/RefsDecoder.java	(revision 78804)
++++ component/xml-parser/src/main/java/org/exoplatform/services/html/refs/RefsDecoder.java	(working copy)
+@@ -42,7 +42,10 @@
+     while (index < chars.length) {      
+       if(temp < index) copy(chars, decode, temp, index);
+       end = CharsUtil.indexOf(chars, ';', index);
+-      if(end < 0) break;
++      if(end < 0) {
++	    temp=index;
++		break;
++      }
+       if(chars[index+1] == '#'){
+         ckey = new char[end - index - 2];
+         System.arraycopy(chars, index + 2, ckey, 0, ckey.length);

@@ -42,7 +42,10 @@ public class RefsDecoder {
     while (index < chars.length) {      
       if(temp < index) copy(chars, decode, temp, index);
       end = CharsUtil.indexOf(chars, ';', index);
-      if(end < 0) break;
+      if(end < 0) {
+	    temp=index;
+		break;
+      }
       if(chars[index+1] == '#'){
         ckey = new char[end - index - 2];
         System.arraycopy(chars, index + 2, ckey, 0, ckey.length);
