@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.exoplatform.portal</groupId>
     <artifactId>exo.portal.packaging</artifactId>
-    <version>2.5.15</version>
+    <version>2.5.16-SNAPSHOT</version>
   </parent>
   <artifactId>portal.packaging.product</artifactId>
   <packaging>pom</packaging>
@@ -189,210 +189,210 @@
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.component.application-registry</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.component.dashboard</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.component.portal</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.component.resources</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.component.scripting</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.component.web</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.component.xml-parser</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.eXoGadgets</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.gadgets-core</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.gadgets-server</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.portlet.dashboard</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.portlet.exoadmin</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.portlet.web</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.server.tomcat.patch</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.server.tomcat.plugin</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.server.jboss.patch</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.server.jboss.patch-ear</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.server.jboss.plugin</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.server.jonas.patch</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.server.jonas.plugin</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.server.websphere.patch</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.server.websphere.plugin</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.web.eXoResources</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.web.eXoSkinMac</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.web.eXoSkinVista</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.web.portal</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.web.rest</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>war</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.webui.core</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.webui.eXo</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->
     <dependency>
       <groupId>org.exoplatform.portal</groupId>
       <artifactId>exo.portal.webui.portal</artifactId>
-      <version>2.5.15</version>
+      <version>2.5.16-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <!-- 2.5.7-SNAPSHOT-->

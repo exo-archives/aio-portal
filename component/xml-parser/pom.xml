@@ -22,7 +22,7 @@
   <parent>
     <groupId>org.exoplatform.portal</groupId>
     <artifactId>portal-parent</artifactId>
-    <version>2.5.15</version>
+    <version>2.5.16-SNAPSHOT</version>
   </parent>
   <artifactId>exo.portal.component.xml-parser</artifactId>
   <name>eXo Portal XML Parser</name>
